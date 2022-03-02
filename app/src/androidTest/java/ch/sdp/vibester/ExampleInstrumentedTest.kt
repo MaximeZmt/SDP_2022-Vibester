@@ -3,7 +3,6 @@ package ch.sdp.vibester
 import android.app.Activity
 import android.app.Instrumentation
 import android.content.Intent
-import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
@@ -12,7 +11,6 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intending
 import androidx.test.espresso.intent.matcher.IntentMatchers.toPackage
-import androidx.test.espresso.intent.rule.IntentsTestRule
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
@@ -50,9 +48,9 @@ class ExampleInstrumentedTest {
     fun endToEndTest() {
         // Context of the app under test.
         val name = "Maxime"
-        Espresso.onView(withId(R.id.mainNameInput)).perform(ViewActions.typeText(name), closeSoftKeyboard())
-        Espresso.onView(withId(R.id.mainButton)).perform(click())
-        Espresso.onView(withId(R.id.greetName)).check(matches(withText("Hello $name!")))
+        onView(withId(R.id.mainNameInput)).perform(ViewActions.typeText(name), closeSoftKeyboard())
+        onView(withId(R.id.mainButton)).perform(click())
+        onView(withId(R.id.greetName)).check(matches(withText("Hello $name!")))
     }
     
 

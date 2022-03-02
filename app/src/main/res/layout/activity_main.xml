@@ -13,10 +13,11 @@
         android:layout_marginStart="158dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="159dp"
-        android:layout_marginBottom="315dp"
+        android:layout_marginBottom="440dp"
         android:text="@string/button_txt"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mainNameInput" />
 
@@ -25,15 +26,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
-        android:layout_marginTop="307dp"
+        android:layout_marginTop="207dp"
         android:layout_marginEnd="101dp"
         android:layout_marginBottom="16dp"
         android:ems="10"
+        android:hint="@string/hint_input_txt"
         android:inputType="textPersonName"
         android:minHeight="48dp"
-        android:hint="@string/hint_input_txt"
         app:layout_constraintBottom_toTopOf="@+id/mainButton"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Vibester</string>
+    <string name="greeting_txt">Greeting:</string>
+    <string name="default_txtview_txt">empty text view</string>
+    <string name="button_txt">Enter</string>
+    <string name="hint_input_txt">Enter</string>
+</resources>

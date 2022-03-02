@@ -56,6 +56,7 @@ class ExampleInstrumentedTest {
     }
     
 
+    /*
     @Test
     fun greetingActivity(){
         // Build the result to return when the activity is launched.
@@ -75,5 +76,6 @@ class ExampleInstrumentedTest {
         onView(withId(R.id.greetName)).check(matches(withText(name)))
         //Intents.release()
     }
+     */
 
 }

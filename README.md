@@ -1,5 +1,5 @@
-﻿# SDP_2022-Vibester
- 
+# SDP_2022-Vibester
+
 [![Maintainability](https://img.shields.io/codeclimate/maintainability/MaximeZmt/SDP_2022-Vibester?style=flat-square&logo=codeclimate&logoColor=white&color=52b2bf)](https://codeclimate.com/github/MaximeZmt/SDP_2022-Vibester/maintainability)
 [![Test Coverage](https://img.shields.io/codeclimate/coverage/MaximeZmt/SDP_2022-Vibester?style=flat-square&logo=codeclimate&logoColor=white&color=52b2bf)](https://codeclimate.com/github/MaximeZmt/SDP_2022-Vibester/test_coverage)
 [![Contributors](https://img.shields.io/github/contributors/MaximeZmt/SDP_2022-Vibester?style=flat-square&logo=github&logoColor=white&color=52b2bf)](https://github.com/MaximeZmt/SDP_2022-Vibester/graphs/contributors)
@@ -22,20 +22,35 @@ The game will also offer a customization where the user can create a game from i
 
 1. [TODO](#todo)
 2. [Guide & Useful Link](#guideAndLink)
+2. [Team](#team)
 
 
 
 ## TODO <a name="todo"></a>
 
 - [x] Create a Github repository
-- [ ] Setup all Github feature (params, ...)
-- [ ] Add continuous integration
+- [x] Setup all Github feature (params, ...)
+- [x] Add continuous integration
 - [ ] 
 
 
 
 ## Guide & Useful Link <a name="guideAndLink"></a>
 
+- [DSLab SDP website](https://dslab.epfl.ch/teaching/sweng/proj)
 - [Github rules and advice for SDP](https://github.com/sweng-epfl/public/blob/main/sdp/guides/GitHub.md)
 - [Automated operations for SDP Project](https://github.com/sweng-epfl/public/blob/main/sdp/guides/Operations.md)
 - [Sweng ScrumBoard](https://github.com/sweng-epfl/public/blob/main/exercises/dev-processes/scrum-board.md)
+
+
+
+## Team <a name="tean"></a>
+
+| Name | GitHub username |
+|:--------|---------:|
+| Derin Arda Alpay | [Tsathogguaa](https://github.com/Tsathogguaa) |
+| Kamila Babayeva | [kamilababayeva14](https://github.com/kamilababayeva14) |
+| Laurynas Lopata | [laurislopata](https://github.com/laurislopata) |
+| Jiabao Wen | [jiabaow](https://github.com/jiabaow) |
+| Maxime Zammit | [MaximeZmt](https://github.com/MaximeZmt) |
+| Margaux Zwierski | [zwierski](https://github.com/zwierski) |

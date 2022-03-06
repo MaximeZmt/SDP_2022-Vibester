@@ -6,6 +6,9 @@
         <entry key="..\:/Users/Maxime/Desktop/SDP/MyApplication/app/src/main/res/layout/activity_greeting.xml" value="0.3145833333333333" />
         <entry key="..\:/Users/Maxime/Desktop/SDP/MyApplication/app/src/main/res/layout/activity_main.xml" value="0.3145833333333333" />
         <entry key="..\:/Users/Maxime/Desktop/SDP/app/src/main/res/layout/activity_greeting.xml" value="0.19384057971014493" />
+        <entry key="app/src/main/res/layout/scoreboard_content_scrolling.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/scoreboard_item_player.xml" value="0.23229166666666667" />
+        <entry key="app/src/main/res/layout/scoreboard_scoreboard.xml" value="0.1" />
       </map>
     </option>
   </component>

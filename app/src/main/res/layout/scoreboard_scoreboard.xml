@@ -13,8 +13,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:layout_collapseMode="none"
-            app:popupTheme="y">
+            app:layout_collapseMode="none">
 
             <TextView
                 android:layout_width="match_parent"

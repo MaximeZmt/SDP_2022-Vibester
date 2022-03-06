@@ -2,7 +2,7 @@
 
 [![Maintainability](https://img.shields.io/codeclimate/maintainability/MaximeZmt/SDP_2022-Vibester?style=flat-square&logo=codeclimate&logoColor=white&color=52b2bf)](https://codeclimate.com/github/MaximeZmt/SDP_2022-Vibester/maintainability)
 [![Test Coverage](https://img.shields.io/codeclimate/coverage/MaximeZmt/SDP_2022-Vibester?style=flat-square&logo=codeclimate&logoColor=white&color=52b2bf)](https://codeclimate.com/github/MaximeZmt/SDP_2022-Vibester/test_coverage)
-[![Contributors](https://img.shields.io/github/contributors/MaximeZmt/SDP_2022-Vibester?style=flat-square&logo=github&logoColor=white&color=52b2bf)](https://github.com/MaximeZmt/SDP_2022-Vibester/graphs/contributors)
+[![Contributors](https://img.shields.io/badge/Contributor-6-informational?style=flat-square&logo=github&logoColor=white&color=52b2bf)](https://github.com/MaximeZmt/SDP_2022-Vibester/graphs/contributors)
 [![CI](https://img.shields.io/cirrus/github/MaximeZmt/SDP_2022-Vibester?style=flat-square&logo=github&logoColor=white&color=52b2bf)](https://cirrus-ci.com/github/MaximeZmt/SDP_2022-Vibester)
 
 
@@ -31,7 +31,7 @@ The game will also offer a customization where the user can create a game from i
 - [x] Create a Github repository
 - [x] Setup all Github feature (params, ...)
 - [x] Add continuous integration
-- [ ] 
+- [ ] Clean ScrumBoard
 
 
 
@@ -44,7 +44,7 @@ The game will also offer a customization where the user can create a game from i
 
 
 
-## Team <a name="tean"></a>
+## Team <a name="team"></a>
 
 | Name | GitHub username |
 |:--------|---------:|

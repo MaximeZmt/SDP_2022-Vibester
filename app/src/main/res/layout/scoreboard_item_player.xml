@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:textColor="@color/black"
+            android:textColor="@color/colorText"
             android:textStyle="bold"
             android:textSize="18sp"
             tools:text="11"/>
@@ -46,7 +46,7 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             tools:text="awidiyadew"
-            android:textColor="@color/black"
+            android:textColor="@color/colorText"
             android:textStyle="bold"
             android:textAllCaps="true"
             android:textSize="18sp" />
@@ -65,7 +65,7 @@
             android:layout_height="wrap_content"
             android:textSize="30sp"
             android:textStyle="bold"
-            android:textColor="@color/black"
+            android:textColor="@color/colorBtpn"
             tools:text="54" />
     </LinearLayout>
 

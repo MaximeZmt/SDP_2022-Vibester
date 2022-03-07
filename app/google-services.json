@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "7687769601",
+    "project_id": "vibester-sdp",
+    "storage_bucket": "vibester-sdp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:7687769601:android:28d7dc817a81937c417a00",
+        "android_client_info": {
+          "package_name": "ch.sdp.vibester"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "7687769601-qiqrp6kt48v89ub76k9lkpefh9ls36ha.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBENfKsqZt2RM98Gfqvs9uKbrWDxUc2XCE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "7687769601-qiqrp6kt48v89ub76k9lkpefh9ls36ha.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

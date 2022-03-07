@@ -27,9 +27,9 @@ class ScoreBoardActivity : AppCompatActivity() {
     private fun loadPlayers() {
         //TODO: replace hard-coded players by firebase query
         val players: List<Player> = listOf(
-            Player(111, "Brownie","https://images.app.goo.gl/QJFUc8JwEs5aNHVJA", 687 ),
-            Player(555, "Cheesecake", "https://images.app.goo.gl/STS3nKqSLdxogekF7", 678),
-            Player(444, "Scone", "https://images.app.goo.gl/WiSfZupnUQrMZZfs9", 659),
+            Player(111, "Brownie","https://images.app.goo.gl/yiPpy7JDRFaZRiAg9", 687 ),
+            Player(555, "Cheesecake", "https://images.app.goo.gl/REJnoWR2t3mi2kYJA", 678),
+            Player(444, "Scone", "https://images.app.goo.gl/YkBi16zwyjB7ejj96", 659),
             Player(333, "Cookie", "https://images.app.goo.gl/49955BeModw7Q1Ls5", 593),
             Player(981, "Cinnamon Roll", "https://images.app.goo.gl/o8oYg2jAjQc757nn6", 568),
             Player(267, "Fruits Tart", "https://images.app.goo.gl/uMstJPy6SrbpZC3v6", 523),

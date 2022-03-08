@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -15,7 +17,6 @@ class googleLogIn : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_google_log_in)
@@ -23,13 +24,22 @@ class googleLogIn : AppCompatActivity() {
         // Initialize Firebase Auth
         auth = Firebase.auth
 
-        val btCreateAcc = findViewById<Button>(R.id.logIn)
+        val btCreateAcc = findViewById<Button>(R.id.createAcc)
+        val btLogIn = findViewById<Button>(R.id.logIn)
+
+
+        val username = findViewById<EditText>(R.id.username)
+        val password = findViewById<EditText>(R.id.password)
+        val email = findViewById<TextView>(R.id.email)
 
         btCreateAcc.setOnClickListener {
-            Log.d(TAG, "hello there!")
-//            createAccount("test@test.com", "password")
-            signIn("test@test.com", "password")
+            createAccount(username.text.toString(), password.text.toString(), email)
         }
+
+        btLogIn.setOnClickListener {
+            signIn(username.text.toString(), password.text.toString(), email)
+        }
+
 
     }
 
@@ -42,15 +52,17 @@ class googleLogIn : AppCompatActivity() {
         }
     }
 
-    private fun createAccount(email: String, password: String) {
+    private fun createAccount(email: String, password: String, emailText: TextView) {
         // [START create_user_with_email]
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
-                    Log.d(TAG, "createUserWithEmail:success")
+                    Toast.makeText(
+                        baseContext, "You have created an acc successfully",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     val user = auth.currentUser
-                    updateUI(user)
+                    updateUI(user, emailText)
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "createUserWithEmail:failure", task.exception)
@@ -58,26 +70,27 @@ class googleLogIn : AppCompatActivity() {
                         baseContext, task.exception.toString(),
                         Toast.LENGTH_SHORT
                     ).show()
-                    updateUI(null)
+                    updateUI(null, emailText)
                 }
             }
     }
 
-    private fun signIn(email: String, password: String) {
+    private fun signIn(email: String, password: String, emailText: TextView) {
         // [START sign_in_with_email]
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
-                    Log.d(TAG, "signInWithEmail:success")
+                    Toast.makeText(
+                        baseContext, "You have logged in successfully",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     val user = auth.currentUser
-                    updateUI(user)
+                    updateUI(user, emailText)
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "signInWithEmail:failure", task.exception)
                     Toast.makeText(baseContext, "Authentication failed.",
                         Toast.LENGTH_SHORT).show()
-                    updateUI(null)
                 }
             }
         // [END sign_in_with_email]
@@ -88,10 +101,9 @@ class googleLogIn : AppCompatActivity() {
 
     }
 
-    private fun updateUI(user: FirebaseUser?) {
+    private fun updateUI(user: FirebaseUser?, emailText: TextView) {
         if (user != null) {
-            Toast.makeText(baseContext, user.getEmail(),
-                Toast.LENGTH_SHORT).show()
+            emailText.text = user.email
         }
     }
 }

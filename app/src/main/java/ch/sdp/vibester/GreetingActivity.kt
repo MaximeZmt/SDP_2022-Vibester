@@ -19,6 +19,5 @@ class GreetingActivity : AppCompatActivity() {
 
         textViewActivity.text = "Hello $name!"
 
-
     }
 }

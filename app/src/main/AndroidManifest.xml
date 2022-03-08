@@ -10,10 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
         <activity
-            android:name="ch.sdp.vibester.GreetingActivity"
+            android:name=".googleLogIn"
+            android:exported="true" />
+        <activity
+            android:name=".GreetingActivity"
             android:exported="false" />
         <activity
-            android:name="ch.sdp.vibester.MainActivity"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

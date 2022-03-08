@@ -1,6 +1,6 @@
 package ch.sdp.vibester.model
 
-import ch.sdp.vibester.util.json.JsonHelper
+
 import org.junit.Assert.*
 import org.junit.Test
 

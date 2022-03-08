@@ -1,4 +1,4 @@
-package ch.sdp.vibester
+package ch.sdp.vibester.scoreboard
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView

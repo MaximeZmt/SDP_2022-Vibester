@@ -8,9 +8,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
 
-class PlayerAdapter : RecyclerView.Adapter<PlayerAdapter.PlayerViewHolder>() {
+class PlayerAdapter(playersInit: List<Player>) : RecyclerView.Adapter<PlayerAdapter.PlayerViewHolder>() {
 
-    private var players: MutableList<Player> = mutableListOf()
+    var players: MutableList<Player> = playersInit.toMutableList()
 
     override fun getItemCount(): Int = players.size
 

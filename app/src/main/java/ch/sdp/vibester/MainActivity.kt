@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
 
         btnGreeting.setOnClickListener {
             greetingIntent.putExtra("name", txtInput.text.toString())
-            ItunesMusicApi.playFromQuery(txtInput.text.toString(), this)
+            //ItunesMusicApi.playFromQuery(txtInput.text.toString(), this)
             startActivity(greetingIntent)
         }
     }

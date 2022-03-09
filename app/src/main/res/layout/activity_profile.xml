@@ -5,31 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".profile.ProfileSetup"
-    android:layout_marginTop="@dimen/mtrl_toolbar_default_height">
-
-    <TextView
-        android:id="@+id/ranking"
-        android:layout_width="236dp"
-        android:layout_height="34dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bestScore" />
-
-    <TextView
-        android:id="@+id/bestScore"
-        android:layout_width="236dp"
-        android:layout_height="34dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/correctSongs" />
-
-    <TextView
-        android:id="@+id/correctSongs"
-        android:layout_width="236dp"
-        android:layout_height="34dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/totalGames" />
+    android:layout_marginTop="@dimen/mtrl_toolbar_default_height"
+    >
 
     <ImageView
         android:id="@+id/avatar"
@@ -40,35 +17,134 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.145"
+        app:layout_constraintVertical_bias="0.151"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/totalGames"
-        android:layout_width="236dp"
-        android:layout_height="34dp"
-        android:layout_marginTop="80dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/username" />
-
-    <TextView
         android:id="@+id/handle"
-        android:layout_width="84dp"
-        android:layout_height="0dp"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
         android:layout_marginTop="36dp"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/avatar" />
 
     <TextView
         android:id="@+id/username"
-        android:layout_width="84dp"
-        android:layout_height="0dp"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/handle" />
+
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="136dp"
+        android:background="@drawable/table_shape"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:padding="18dip"
+                android:text="@string/ranking"
+                android:textAlignment="viewStart"
+                android:textColor="#000"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/ranking"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="monospace"
+                android:padding="18dip"
+                android:textAlignment="viewEnd"
+                android:textColor="#000"
+                android:textSize="12sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="18dip"
+                android:text="@string/total_games"
+                android:textColor="#000"
+                android:textSize="12sp"
+                android:typeface="monospace" />
+
+            <TextView
+                android:id="@+id/totalGames"
+                android:layout_width="147dp"
+                android:layout_height="wrap_content"
+                android:padding="18dip"
+                android:textAlignment="viewEnd"
+                android:textColor="#000"
+                android:textSize="12sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="18dip"
+                android:text="@string/best_score"
+                android:textColor="#000"
+                android:textSize="12sp"
+                android:typeface='monospace' />
+
+            <TextView
+                android:id="@+id/bestScore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="18dip"
+                android:textAlignment="viewEnd"
+                android:textColor="#000"
+                android:textSize="12sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:padding="18dip"
+                android:text="@string/correct_songs"
+                android:textColor="#000"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/correctSongs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="18dip"
+                android:textAlignment="viewEnd"
+                android:textColor="#000"
+                android:textSize="12sp" />
+
+        </TableRow>
+    </TableLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

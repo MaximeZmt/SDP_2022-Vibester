@@ -2,39 +2,42 @@ package ch.sdp.vibester.api
 
 import android.content.Context
 import android.media.AudioManager
+import android.media.MediaPlayer
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import ch.sdp.vibester.MainActivity
+import ch.sdp.vibester.model.Song
 import org.junit.Assert.*
 import org.junit.Rule
 import org.junit.Test
+import org.junit.rules.ExpectedException
 import org.junit.runner.RunWith
+import java.io.IOException
 import kotlin.concurrent.thread
 
-/*
-@RunWith(AndroidJUnit4::class)
+
+
 class ItunesMusicApiTest{
 
     @get:Rule
-    val testRule = ActivityScenarioRule(
-        MainActivity::class.java
-    )
-
+    var exception = ExpectedException.none()
 
     @Test
-    fun useAppContext() {
-        // Context of the app under test.
-        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("ch.sdp.vibester", appContext.packageName)
-        ItunesMusicApi.playFromQuery("imagine dragons believer", appContext)
-        var manager = appContext.getSystemService(Context.AUDIO_SERVICE) as AudioManager?
-        assertEquals(true, manager!!.isMusicActive)
+    fun itunesMediaPlayAudioError() {
+        exception.expect(IllegalArgumentException::class.java)
+        ItunesMusicApi.playAudio("")
+    }
+
+    @Test
+    fun itunesMediaPlayAudio() {
+        var mediaPlayer = ItunesMusicApi.playAudio("https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/bc/71/fc/bc71fca4-e0bb-609b-5b6e-92296df7b4b6/mzaf_8907306752631175088.plus.aac.p.m4a")
+        mediaPlayer.setOnPreparedListener(MediaPlayer.OnPreparedListener {
+            mediaPlayer.start()
+            assertEquals(false, mediaPlayer.isPlaying)
+        })
+
     }
 
 
-
-
-
 }
-*/

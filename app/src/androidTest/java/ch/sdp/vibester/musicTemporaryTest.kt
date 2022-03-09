@@ -21,7 +21,7 @@ class musicTemporaryTest{
         //improve this test to recognize music
         @Test
         fun musicTemporaryTest() {
-            val inputName = "Imagine Dragons Believer"
+            val inputName = "Imagine Dragons Believerlllllllllll"
             val intent =
                 Intent(ApplicationProvider.getApplicationContext(), musicTemporary::class.java)
             val scn: ActivityScenario<GreetingActivity> = ActivityScenario.launch(intent)

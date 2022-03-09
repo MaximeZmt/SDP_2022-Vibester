@@ -9,11 +9,11 @@ import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import java.io.IOException
+import java.lang.IllegalArgumentException
 
 class ItunesMusicApi private constructor(){
 
     companion object{
-        private var mediaPlayer: MediaPlayer? = null
         private val LOOKUP_URL_BASE = "https://itunes.apple.com/search?limit=1&term="
 
         /**
@@ -26,32 +26,33 @@ class ItunesMusicApi private constructor(){
             val req = StringRequest(Request.Method.GET, buildedUrl, { response ->
                 run {
                     val mySong = Song(response)
-                    playAudio(mySong.getPreviewUrl())
+                    var mediaPlayer = playAudio(mySong.getPreviewUrl())
+                    mediaPlayer.setOnPreparedListener(MediaPlayer.OnPreparedListener {
+                        mediaPlayer.start()
+                    })
                 }
             }, {})
             queue.add(req)
             return resp
         }
 
-        private fun playAudio(audioUrl: String){
-            mediaPlayer = MediaPlayer()
-            mediaPlayer?.setAudioAttributes(
+        fun playAudio(audioUrl: String): MediaPlayer{
+            var mediaPlayer: MediaPlayer = MediaPlayer()
+            mediaPlayer.setAudioAttributes(
                 AudioAttributes.Builder()
                     .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
                     .build()
             )
             try {
-                mediaPlayer!!.setDataSource(audioUrl)
-                mediaPlayer!!.prepare()
+                mediaPlayer.setDataSource(audioUrl)
+                mediaPlayer.prepare()
 
-                mediaPlayer!!.setOnPreparedListener(MediaPlayer.OnPreparedListener {
-                    mediaPlayer!!.start()
-                })
 
             }catch (e: IOException){
                 Log.e("[PlayAudio]", "Error see stacktrace")
-                e.printStackTrace()
+                throw IllegalArgumentException("ItunesMusicApi.playAudio bad Url")
             }
+            return mediaPlayer
         }
     }
 

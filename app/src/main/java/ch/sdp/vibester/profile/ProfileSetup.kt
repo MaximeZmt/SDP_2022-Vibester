@@ -25,11 +25,5 @@ class ProfileSetup: AppCompatActivity() {
         findViewById<TextView>(R.id.correctSongs).text = user.correctSongs.toString()
         findViewById<TextView>(R.id.bestScore).text = user.bestScore.toString()
         findViewById<TextView>(R.id.ranking).text = user.ranking.toString()
-        Glide.with(this)
-            .load(image)
-            .circleCrop()
-            .into(binding.imageView)
     }
-
-
 }

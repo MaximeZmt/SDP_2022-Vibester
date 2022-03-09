@@ -17,6 +17,9 @@
         <activity android:name=".scoreboard.ScoreBoardActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".profile.ProfileSetup"
+            android:exported="false" />
+        <activity
             android:name="ch.sdp.vibester.MainActivity"
             android:exported="true">
             <intent-filter>

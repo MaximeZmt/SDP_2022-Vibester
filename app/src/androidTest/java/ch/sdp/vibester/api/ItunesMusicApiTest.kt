@@ -12,7 +12,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import kotlin.concurrent.thread
 
-
+/*
 @RunWith(AndroidJUnit4::class)
 class ItunesMusicApiTest{
 
@@ -21,7 +21,7 @@ class ItunesMusicApiTest{
         MainActivity::class.java
     )
 
-    /*
+
     @Test
     fun useAppContext() {
         // Context of the app under test.
@@ -32,8 +32,9 @@ class ItunesMusicApiTest{
         assertEquals(true, manager!!.isMusicActive)
     }
 
-     */
+
 
 
 
 }
+*/

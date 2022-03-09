@@ -19,7 +19,7 @@ class GamescreenActivity: AppCompatActivity() {
 
         val buzzers = findViewById<LinearLayout>(R.id.buzzersLayout)
 
-        val greetingIntent = Intent(this, GamescreenActivity::class.java)
+        val gamescreenIntent = Intent(this, GamescreenActivity::class.java)
 
         var i = 1
 
@@ -32,7 +32,7 @@ class GamescreenActivity: AppCompatActivity() {
             button.text = pName
             buttons.set(i-1, button)
             button.setOnClickListener {
-                startActivity(greetingIntent)
+                startActivity(gamescreenIntent)
             }
             buzzers.addView(findViewById<Button>(buttonId))
             i = i + 1

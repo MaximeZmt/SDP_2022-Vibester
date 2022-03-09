@@ -22,7 +22,7 @@ class Song(jsonMeta: String) {
             trackName = jsonRes.getString("trackName")
             artistName = jsonRes.getString("artistName")
         } catch(e: Exception){
-            throw IllegalArgumentException("JsonHelper.parseJsonPreviewURL, bad argument")
+            throw IllegalArgumentException("Song constructor, bad argument")
         }
     }
 

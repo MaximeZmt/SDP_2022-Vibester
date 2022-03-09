@@ -1,8 +1,11 @@
 package ch.sdp.vibester.model
 
 
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
+import org.junit.Rule
 import org.junit.Test
+import org.junit.rules.ExpectedException
+
 
 class SongTest{
 
@@ -31,21 +34,15 @@ class SongTest{
         assertEquals(trackName, mySong.getTrackName())
     }
 
-/*
+
+    @get:Rule
+    var exception = ExpectedException.none()
 
     @Test
     fun jsonPreviewParseErrorText() {
-        val inputTxt = """
-                test
-            """
-        assertThrows(IllegalArgumentException::class.java){ val mySong = Song(inputTxt)}
+        exception.expect(IllegalArgumentException::class.java)
+        exception.expectMessage("Song constructor, bad argument")
+        Song("")
     }
 
-    @Test
-    fun jsonPreviewParseNoneText() {
-        assertThrows(IllegalArgumentException::class.java){ val mySong = Song(String())}
-    }
-
-
-*/
 }

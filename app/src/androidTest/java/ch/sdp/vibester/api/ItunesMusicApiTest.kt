@@ -21,6 +21,7 @@ class ItunesMusicApiTest{
         MainActivity::class.java
     )
 
+    /*
     @Test
     fun useAppContext() {
         // Context of the app under test.
@@ -30,6 +31,8 @@ class ItunesMusicApiTest{
         var manager = appContext.getSystemService(Context.AUDIO_SERVICE) as AudioManager?
         assertEquals(true, manager!!.isMusicActive)
     }
+
+     */
 
 
 

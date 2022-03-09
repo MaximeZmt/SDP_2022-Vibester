@@ -10,6 +10,14 @@ class ProfileSetup: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
+        val bundle = intent.extras;
+        val userID: String? = bundle?.getString("userID")
+        val dataProvider = userID?.let { ProfileDataProvider(it) }
+        val user = dataProvider!!.getUserData()
+
+        setupProfile(user);
+    }
+
     private fun setupProfile(user: UserProfile){
         findViewById<TextView>(R.id.handle).text =  user.handle
         findViewById<TextView>(R.id.username).text = user.username

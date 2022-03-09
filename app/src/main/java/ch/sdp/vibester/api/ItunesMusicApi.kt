@@ -16,6 +16,9 @@ class ItunesMusicApi private constructor(){
         private var mediaPlayer: MediaPlayer? = null
         private val LOOKUP_URL_BASE = "https://itunes.apple.com/search?limit=1&term="
 
+        /**
+         * Given a String query it will provide the music url preview
+         */
         fun playFromQuery(query: String, ctx: Context): String {
             var resp: String = ""
             val buildedUrl = LOOKUP_URL_BASE+query.replace(' ', '+')

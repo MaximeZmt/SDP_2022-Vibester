@@ -31,8 +31,15 @@ class PlayerAdapter(playersInit: List<Player>) : RecyclerView.Adapter<PlayerAdap
         notifyDataSetChanged()
     }
 
+    /**
+     * Customer ViewHolder class for PlayerAdapter
+     */
     inner class PlayerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
+        /**
+         * @param player
+         * @param position position of the player
+         */
         fun bind(player: Player, position: Int) {
             val newPosition = position + 1
             itemView.findViewById<TextView>(R.id.tv_position).text = (newPosition).toString()

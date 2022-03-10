@@ -23,7 +23,8 @@ class ProfileSetup: AppCompatActivity() {
         findViewById<TextView>(R.id.correctSongs).text = user.correctSongs.toString()
         findViewById<TextView>(R.id.bestScore).text = user.bestScore.toString()
         findViewById<TextView>(R.id.ranking).text = user.ranking.toString()
-        findViewById<ImageView>(R.id.avatar).loadImg(user.image)
+        /* TODO: add functionality to display the image
+        findViewById<ImageView>(R.id.avatar).loadImg(user.image)*/
     }
 }
 

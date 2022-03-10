@@ -4,6 +4,119 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".welcome_screen">
+    android:background="#FF00E0"
+    tools:context=".WelcomeScreen">
+
+    <ImageView
+        android:id="@+id/vibester_welcome_logo"
+        android:layout_width="156dp"
+        android:layout_height="157dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="40dp"
+        android:contentDescription="app_logo"
+        app:layout_constraintBottom_toTopOf="@+id/welcome_play_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/vibester_welcome_text"
+        app:srcCompat="@android:drawable/star_big_on" />
+
+    <TextView
+        android:id="@+id/vibester_welcome_text"
+        android:layout_width="232dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="65dp"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="casual"
+        android:gravity="center_horizontal"
+        android:text="Welcome to Vibester!"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:typeface="normal"
+        app:layout_constraintBottom_toTopOf="@+id/vibester_welcome_logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/welcome_play_button"
+        android:layout_width="200dp"
+        android:layout_height="55dp"
+        android:backgroundTint="#90953D"
+        android:text="PLAY A GAME"
+        app:icon="@android:drawable/btn_star_big_on"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.472" />
+
+    <Button
+        android:id="@+id/welcome_profile"
+        android:layout_width="200dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="#90953D"
+        android:text="PROFILE"
+        app:icon="@android:drawable/ic_menu_edit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/welcome_play_button" />
+
+    <Button
+        android:id="@+id/welcome_scoreboard"
+        android:layout_width="200dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="#90953D"
+        android:text="SCOREBOARD"
+        app:icon="@android:drawable/ic_menu_share"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/welcome_profile" />
+
+    <Button
+        android:id="@+id/welcome_listen"
+        android:layout_width="200dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="#90953D"
+        android:text="LISTEN TO MUSIC"
+        app:icon="@android:drawable/stat_sys_headset"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/welcome_scoreboard" />
+
+    <Button
+        android:id="@+id/welcome_login"
+        android:layout_width="200dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="50dp"
+        android:backgroundTint="#90953D"
+        android:text="LOG IN"
+        app:icon="@android:drawable/ic_popup_sync"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/welcome_settings" />
+
+    <Button
+        android:id="@+id/welcome_settings"
+        android:layout_width="200dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="#90953D"
+        android:text="SETTINGS"
+        app:icon="@android:drawable/ic_menu_manage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/welcome_listen" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,14 +1,33 @@
 package ch.sdp.vibester.profile
 
-class ProfileDataProvider(userID: String, users: List<UserProfile> = emptyList()) {
+class ProfileDataProvider(userID: String, users: List<UserProfile> = emptyList(), scoreboard: List<Int> = emptyList()) {
     private lateinit var user: UserProfile
     private val userID:Int = userID.toInt()
     private lateinit var users: List<UserProfile>
+    private lateinit var scoreboard: List<Int>
 
     init {
         setUsers(users)
+        setScoreboard(scoreboard)
     }
 
+    /**
+     * Hardcoded list will be changed to Firebase.
+     * Used for testing.
+     * @param scoreboard
+     */
+    private fun setScoreboard(scoreboard: List<Int>){
+        if(scoreboard.isEmpty()){
+            this.scoreboard = listOf(6,3,4,2,1,5)
+        }
+        else{this.scoreboard  = scoreboard}
+    }
+
+    /**
+     * Hardcoded list will be changed to Firebase.
+     * Used for testing.
+     * @param users
+     */
     private fun setUsers(users: List<UserProfile>){
         if(users.isEmpty()){
              this.users =  listOf(
@@ -24,16 +43,27 @@ class ProfileDataProvider(userID: String, users: List<UserProfile> = emptyList()
     }
 
 
-    private val ranking: List<Int> = listOf(6,3,4,2,1,5)
-
-    fun getUserData():UserProfile {
-        user = users[userID]
+    /**
+     * Combine user data profile and user ranking for profile.
+     */
+    fun getUserProfileData(): UserProfile{
+        user = getUserData()
         user.ranking = getUserRanking()
         return user
     }
 
+    /**
+     * Retrieve profile data of user.
+     */
+    private fun getUserData():UserProfile {
+        return users[userID]
+    }
+
+    /**
+     * Retrieve ranking from the scoreboard.
+     */
     private fun getUserRanking(): Int {
-        return ranking[userID]
+        return scoreboard[userID]
     }
 
 }

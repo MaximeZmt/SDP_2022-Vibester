@@ -1,8 +1,8 @@
 package ch.sdp.vibester.api
 
 import org.junit.Assert.assertEquals
-import org.mockito.Mockito.times
-import org.mockito.Mockito.verify
+//import org.mockito.Mockito.times
+//import org.mockito.Mockito.verify
 
 
 import android.media.MediaPlayer
@@ -11,9 +11,9 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.ExpectedException
 import java.io.IOException
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+//import org.mockito.InjectMocks;
+//import org.mockito.Mock;
+//import org.mockito.MockitoAnnotations;
 
 
 class ItunesMusicApiTest{
@@ -38,7 +38,7 @@ class ItunesMusicApiTest{
             if(!mediaPlayer.isPlaying){
                 throw IOException()
             }
-            
+
             //assertEquals(false, mediaPlayer.isPlaying)
         })
 

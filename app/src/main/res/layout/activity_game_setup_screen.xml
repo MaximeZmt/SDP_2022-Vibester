@@ -27,10 +27,27 @@
         android:id="@+id/nb_player_spinner"
         android:layout_width="204dp"
         android:layout_height="48dp"
-        android:layout_marginBottom="325dp"
+        android:layout_marginBottom="388dp"
         android:entries="@array/nb_players"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/nb_players_selected"
+        android:layout_width="200dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="81dp"
+        android:layout_marginBottom="100dp"
+        android:backgroundTint="#90953D"
+        android:onClick="proceedToGame"
+        android:text="PROCEED"
+        app:icon="@android:drawable/btn_star_big_on"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nb_player_spinner"
+        app:layout_constraintVertical_bias="1.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>

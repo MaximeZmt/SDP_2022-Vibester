@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import ch.sdp.vibester.scoreboard.ScoreBoardActivity
 
 class WelcomeScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -12,32 +13,32 @@ class WelcomeScreen : AppCompatActivity() {
     }
 
     fun switchToPlay(view: View) {
-        val intent = Intent()
+        val intent = Intent(this, GameSetupScreen::class.java)
         startActivity(intent)
     }
 
-    fun switchToProfile(view: View) {
-        val intent = Intent()
+    fun switchToProfile(view: View) { //FILLER INTENT
+        val intent = Intent(this, GameSetupScreen::class.java)
         startActivity(intent)
     }
 
     fun switchToScoreboard(view: View) {
-        val intent = Intent()
+        val intent = Intent(this, ScoreBoardActivity::class.java)
         startActivity(intent)
     }
 
-    fun switchToListen(view: View) {
-        val intent = Intent()
+    fun switchToListen(view: View) { //FILLER INTENT
+        val intent = Intent(this, GameSetupScreen::class.java)
         startActivity(intent)
     }
 
-    fun switchToSettings(view: View) {
-        val intent = Intent()
+    fun switchToSettings(view: View) { //FILLER INTENT
+        val intent = Intent(this, GameSetupScreen::class.java)
         startActivity(intent)
     }
 
-    fun switchToLogin(view: View) {
-        val intent = Intent()
+    fun switchToLogin(view: View) { //FILLER INTENT
+        val intent = Intent(this, GameSetupScreen::class.java)
         startActivity(intent)
     }
 }

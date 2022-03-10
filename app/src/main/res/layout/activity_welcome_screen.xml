@@ -11,7 +11,7 @@
         android:id="@+id/vibester_welcome_logo"
         android:layout_width="130dp"
         android:layout_height="120dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="8dp"
         android:contentDescription="@string/app_logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -23,7 +23,7 @@
         android:id="@+id/vibester_welcome_text"
         android:layout_width="232dp"
         android:layout_height="41dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="28dp"
         android:fontFamily="casual"
         android:gravity="center_horizontal"
         android:text="@string/welcome_text"
@@ -48,10 +48,10 @@
         app:icon="@android:drawable/btn_star_big_on"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/vibester_welcome_logo"
-        app:layout_constraintVertical_bias="0.258" />
+        app:layout_constraintVertical_bias="0.052" />
 
     <Button
         android:id="@+id/welcome_profile"

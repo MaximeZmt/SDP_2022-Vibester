@@ -14,6 +14,14 @@
         <activity
             android:name=".MusicTemporary"
             android:exported="false" />
+       <activity
+            android:name=".GameSetupScreen"
+            android:exported="false" />
+        <activity android:name=".scoreboard.ScoreBoardActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".WelcomeScreen"
+            android:exported="false" />
         <activity
             android:name=".GreetingActivity"
             android:exported="false" />

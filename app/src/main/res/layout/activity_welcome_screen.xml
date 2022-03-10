@@ -12,9 +12,7 @@
         android:layout_width="156dp"
         android:layout_height="157dp"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="40dp"
         android:contentDescription="app_logo"
-        app:layout_constraintBottom_toTopOf="@+id/welcome_play"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,8 +23,7 @@
         android:id="@+id/vibester_welcome_text"
         android:layout_width="232dp"
         android:layout_height="41dp"
-        android:layout_marginTop="65dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginTop="20dp"
         android:fontFamily="casual"
         android:gravity="center_horizontal"
         android:text="Welcome to Vibester!"
@@ -35,16 +32,16 @@
         android:textSize="20sp"
         android:textStyle="bold"
         android:typeface="normal"
-        app:layout_constraintBottom_toTopOf="@+id/vibester_welcome_logo"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/welcome_play"
         android:layout_width="200dp"
-        android:layout_height="55dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="5dp"
         android:backgroundTint="#90953D"
         android:onClick="switchToPlay"
         android:text="PLAY A GAME"
@@ -53,13 +50,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.417" />
+        app:layout_constraintTop_toBottomOf="@+id/vibester_welcome_logo"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/welcome_profile"
         android:layout_width="200dp"
-        android:layout_height="55dp"
+        android:layout_height="50dp"
         android:layout_marginTop="8dp"
         android:backgroundTint="#90953D"
         android:onClick="switchToProfile"
@@ -73,7 +70,7 @@
     <Button
         android:id="@+id/welcome_scoreboard"
         android:layout_width="200dp"
-        android:layout_height="55dp"
+        android:layout_height="50dp"
         android:layout_marginTop="8dp"
         android:backgroundTint="#90953D"
         android:onClick="switchToScoreboard"
@@ -87,7 +84,7 @@
     <Button
         android:id="@+id/welcome_listen"
         android:layout_width="200dp"
-        android:layout_height="55dp"
+        android:layout_height="50dp"
         android:layout_marginTop="8dp"
         android:backgroundTint="#90953D"
         android:onClick="switchToListen"
@@ -100,7 +97,7 @@
     <Button
         android:id="@+id/welcome_login"
         android:layout_width="200dp"
-        android:layout_height="55dp"
+        android:layout_height="50dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="50dp"
         android:backgroundTint="#90953D"
@@ -112,13 +109,13 @@
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/welcome_settings"
-        app:layout_constraintVertical_bias="0.03" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/welcome_settings"
         android:layout_width="200dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="4dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
         android:backgroundTint="#90953D"
         android:onClick="switchToSettings"
         android:text="SETTINGS"

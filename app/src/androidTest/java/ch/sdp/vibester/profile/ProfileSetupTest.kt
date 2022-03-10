@@ -24,20 +24,20 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class ProfileSetupTest {
 
-//    @get:Rule
-//    val testRule = ActivityScenarioRule(
-//        ProfileSetup::class.java
-//    )
-//
-//    @Before
-//    fun setUp() {
-//        Intents.init()
-//    }
-//
-//    @After
-//    fun clean() {
-//        Intents.release()
-//    }
+    @get:Rule
+    val testRule = ActivityScenarioRule(
+        ProfileSetup::class.java
+    )
+
+    @Before
+    fun setUp() {
+        Intents.init()
+    }
+
+    @After
+    fun clean() {
+        Intents.release()
+    }
 
     @Test
     fun checkProfileLayout() {
@@ -48,20 +48,20 @@ class ProfileSetupTest {
         onView(withId(R.id.profileStatistics)).check(matches(isDisplayed()))
         onView(withId(R.id.handle)).check(matches(isDisplayed()))
         onView(withId(R.id.username)).check(matches(isDisplayed()))
-//        onView(withId(R.id.avatar)).check(matches(isDisplayed()))
-
-
+        onView(withId(R.id.avatar)).check(matches(isDisplayed()))
     }
 
-//    @Test
-//    fun checkCorrectExtra() {
-//        val inputName = "0"
-//        val intent = Intent(ApplicationProvider.getApplicationContext(), ProfileSetup::class.java)
-//        intent.putExtra("userID", inputName)
-//        val scn: ActivityScenario<ProfileSetup> = ActivityScenario.launch(intent)
-//
-////        onView(withId(R.id.greetName)).check(matches(withText("Hello $inputName!")))
-//
-//    }
 
+    @Test
+    fun checkProfileData() {
+        val inputName = "0"
+        val intent = Intent(ApplicationProvider.getApplicationContext(), ProfileSetup::class.java)
+        intent.putExtra("userID", inputName)
+        val scn: ActivityScenario<ProfileSetup> = ActivityScenario.launch(intent)
+        onView(withId(R.id.handle)).check(matches(withText("user0")))
+        onView(withId(R.id.username)).check(matches(withText("username0")))
+        onView(withId(R.id.correctSongs)).check(matches(withText(34)))
+        onView(withId(R.id.totalGames)).check(matches(withText(5)))
+    }
+    
 }

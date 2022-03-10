@@ -14,6 +14,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
@@ -102,22 +104,7 @@ class Register : AppCompatActivity() {
         // [START create_user_with_email]
         authenticator.createAccount(email, password)
             .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    Toast.makeText(
-                        baseContext, "You have created an acc successfully",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    val user = authenticator.auth.currentUser
-                    updateUI(user, emailText)
-                } else {
-                    // If sign in fails, display a message to the user.
-                    Log.w(TAG, "createUserWithEmail:failure", task.exception)
-                    Toast.makeText(
-                        baseContext, task.exception.toString(),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    updateUI(null, emailText)
-                }
+                onCompleteSignIn(task, emailText)
             }
     }
 
@@ -125,22 +112,26 @@ class Register : AppCompatActivity() {
         // [START sign_in_with_email]
         authenticator.signIn(email, password)
             .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    Toast.makeText(
-                        baseContext, "You have logged in successfully",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    val user = authenticator.auth.currentUser
-                    updateUI(user, emailText)
-                } else {
-                    // If sign in fails, display a message to the user.
-                    Log.w(TAG, "signInWithEmail:failure", task.exception)
-                    Toast.makeText(baseContext, "Authentication failed.",
-                        Toast.LENGTH_SHORT).show()
-                    updateUI(null, emailText)
-                }
+                onCompleteSignIn(task, emailText)
             }
         // [END sign_in_with_email]
+    }
+
+    private fun onCompleteSignIn(task: Task<AuthResult>, emailText: TextView) {
+        if (task.isSuccessful) {
+            Toast.makeText(
+                baseContext, "You have logged in successfully",
+                Toast.LENGTH_SHORT
+            ).show()
+            val user = authenticator.auth.currentUser
+            updateUI(user, emailText)
+        } else {
+            // If sign in fails, display a message to the user.
+            Log.w(TAG, "signInWithEmail:failure", task.exception)
+            Toast.makeText(baseContext, "Authentication failed.",
+                Toast.LENGTH_SHORT).show()
+            updateUI(null, emailText)
+        }
     }
 
     private fun reload() {

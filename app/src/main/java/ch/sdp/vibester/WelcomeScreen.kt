@@ -37,8 +37,8 @@ class WelcomeScreen : AppCompatActivity() {
         startActivity(intent)
     }
 
-    fun switchToLogin(view: View) { //FILLER INTENT
+    /*fun switchToLogin(view: View) { //FILLER INTENT
         val intent = Intent(this, GameSetupScreen::class.java)
         startActivity(intent)
-    }
+    }*/
 }

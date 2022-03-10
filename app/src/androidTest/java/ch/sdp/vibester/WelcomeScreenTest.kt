@@ -57,9 +57,9 @@ class WelcomeScreenTest {
         intended(hasComponent(GameSetupScreen::class.java.name))
     }
 
-    @Test
+    /*@Test
     fun checkIntentOnLogin(){ //FILLER TESTING
         onView(withId(R.id.welcome_login)).perform(click())
         intended(hasComponent(GameSetupScreen::class.java.name))
-    }
+    }*/
 }

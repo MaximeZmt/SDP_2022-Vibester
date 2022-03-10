@@ -29,12 +29,12 @@ class ProfileDataProvider(userID: String, users: List<UserProfile> = emptyList()
     private fun setUsers(users: List<UserProfile>){
         if(users.isEmpty()){
              this.users =  listOf(
-                UserProfile("user0", "username0","bit.ly/3IUnyAF",  5, 8, 34),
-                UserProfile("user1", "username1", "bit.ly/3CxcRBR", 5, 8, 34),
-                UserProfile("user2", "username2", "bit.ly/3IZl6Ji", 5, 8, 34),
-                UserProfile("user3", "username3", "bit.ly/3tO0k8W", 5, 8, 34),
-                UserProfile("user4", "username4", "bit.ly/3IUnyAF", 5, 8, 34),
-                UserProfile("user5", "username5", "bit.ly/3sZhbXm", 5, 8, 34)
+                UserProfile("@lisa", "Lalisa Bon","bit.ly/3IUnyAF",  12, 8, 29),
+                UserProfile("@flowergirl", "Viktor Gerard", "bit.ly/3CxcRBR", 3, 15, 324),
+                UserProfile("@smartie", "Big Mountain", "bit.ly/3IZl6Ji", 115, 22, 62),
+                UserProfile("@swanlake", "Sleeping Beauty", "bit.ly/3tO0k8W", 32, 12, 71),
+                UserProfile("@lateevening", "Sleepy Bear", "bit.ly/3IUnyAF", 98, 6, 211),
+                UserProfile("@swenguy", "Code nonstop", "bit.ly/3sZhbXm", 64, 14, 111)
             )
         }
         else{this.users  = users}

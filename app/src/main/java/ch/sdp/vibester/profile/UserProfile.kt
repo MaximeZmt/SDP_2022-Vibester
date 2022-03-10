@@ -1,10 +1,10 @@
 package ch.sdp.vibester.profile
 
 data class UserProfile(
-    val handle: String = "",
-    val username: String = "",
-    val image: String = "",
-    val totalGames: Int = 0,
-    val bestScore: Int = 0,
-    val correctSongs: Int = 0,
-    val ranking: Int = 0)
+    var handle: String = "",
+    var username: String = "",
+    var image: String = "",
+    var totalGames: Int = 0,
+    var bestScore: Int = 0,
+    var correctSongs: Int = 0,
+    var ranking: Int = 0)

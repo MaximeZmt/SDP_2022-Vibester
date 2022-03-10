@@ -25,12 +25,14 @@
 
     <TextView
         android:id="@+id/handle"
-        android:layout_width="100dp"
+        android:layout_width="200dp"
         android:layout_height="30dp"
         android:layout_marginTop="216dp"
+        android:fontFamily="monospace"
         android:textAlignment="center"
         android:textColor="#000"
         android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,11 +40,13 @@
 
     <TextView
         android:id="@+id/username"
-        android:layout_width="100dp"
+        android:layout_width="200dp"
         android:layout_height="30dp"
+        android:fontFamily="monospace"
         android:textAlignment="center"
         android:textColor="#000"
         android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"

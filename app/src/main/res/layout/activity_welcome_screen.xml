@@ -99,7 +99,6 @@
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="50dp"
         android:backgroundTint="#90953D"
         android:onClick="switchToLogin"
         android:text="LOG IN"

@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
         <activity
-            android:name="ch.sdp.vibester.GreetingActivity"
+            android:name=".GameSetupScreen"
             android:exported="false" />
         <activity android:name=".scoreboard.ScoreBoardActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -20,7 +20,13 @@
             android:name=".profile.ProfileSetup"
             android:exported="false" />
         <activity
-            android:name="ch.sdp.vibester.MainActivity"
+            android:name=".WelcomeScreen"
+            android:exported="false" />
+        <activity
+            android:name=".GreetingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

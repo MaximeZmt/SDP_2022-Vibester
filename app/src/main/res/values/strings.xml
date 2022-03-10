@@ -9,4 +9,21 @@
     <string name="total_games">Total Games</string>
     <string name="correct_songs">Correct Songs</string>
     <string name="ranking">Ranking</string>
+    <string name="ask_nb_players">Please choose the number of players in your game</string>
+    <string name="proceed">PROCEED</string>
+    <string name="welcome_screen">WELCOME SCREEN</string>
+    <string name="app_logo">app_logo</string>
+    <string name="welcome_text">Welcome to Vibester!</string>
+    <string name="play_a_game">PLAY A GAME</string>
+    <string name="profile">PROFILE</string>
+    <string name="welcome_scoreboard">SCOREBOARD</string>
+    <string name="listen_to_music">LISTEN TO MUSIC</string>
+    <string name="settings">SETTINGS</string>
+
+    <string-array name="nb_players">
+        <item>One</item>
+        <item>Two</item>
+        <item>Three</item>
+        <item>Four</item>
+    </string-array>
 </resources>

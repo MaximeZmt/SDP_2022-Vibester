@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FF00E0"
+    tools:context=".GameSetupScreen">
+
+    <TextView
+        android:id="@+id/getPlayerNumberText"
+        android:layout_width="325dp"
+        android:layout_height="79dp"
+        android:layout_marginTop="192dp"
+        android:layout_marginBottom="87dp"
+        android:fontFamily="casual"
+        android:text="@string/ask_nb_players"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/nb_player_spinner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/nb_player_spinner"
+        android:layout_width="204dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="388dp"
+        android:entries="@array/nb_players"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/nb_players_selected"
+        android:layout_width="200dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="81dp"
+        android:layout_marginBottom="100dp"
+        android:backgroundTint="#90953D"
+        android:onClick="proceedToGame"
+        android:text="@string/proceed"
+        app:icon="@android:drawable/btn_star_big_on"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nb_player_spinner"
+        app:layout_constraintVertical_bias="1.0" />
+</androidx.constraintlayout.widget.ConstraintLayout>

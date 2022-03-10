@@ -56,5 +56,9 @@ class MainActivityTest {
         intended(hasComponent(ProfileSetup::class.qualifiedName))
     }
 
-
+    @Test
+    fun checkIntentOnWelcome(){ //FILLER TESTING
+        onView(withId(R.id.placeholder_welcome)).perform(click())
+        intended(hasComponent(WelcomeScreen::class.qualifiedName))
+    }
 }

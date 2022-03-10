@@ -3,31 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Anime/Desktop/Studies/SDP/SDP_2022-Vibester/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2985" />
-        <entry key="..\:/Users/Anime/Desktop/Studies/SDP/SDP_2022-Vibester/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2985" />
-        <entry key="..\:/Users/Anime/Desktop/Studies/SDP/SDP_2022-Vibester/app/src/main/res/layout/activity_game_setup_screen.xml" value="0.358695652173913" />
-        <entry key="..\:/Users/Anime/Desktop/Studies/SDP/SDP_2022-Vibester/app/src/main/res/layout/activity_main.xml" value="0.358695652173913" />
-        <entry key="..\:/Users/Anime/Desktop/Studies/SDP/SDP_2022-Vibester/app/src/main/res/layout/activity_welcome_screen.xml" value="0.358695652173913" />
         <entry key="..\:/Users/Maxime/Desktop/SDP/MyApplication/app/src/main/res/layout/activity_greeting.xml" value="0.3145833333333333" />
         <entry key="..\:/Users/Maxime/Desktop/SDP/MyApplication/app/src/main/res/layout/activity_main.xml" value="0.3145833333333333" />
         <entry key="..\:/Users/Maxime/Desktop/SDP/app/src/main/res/layout/activity_greeting.xml" value="0.19384057971014493" />
-<<<<<<< HEAD
         <entry key="app/src/main/res/layout/activity_google_log_in.xml" value="0.19067028985507245" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.19067028985507245" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
-=======
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.23229166666666667" />
-        <entry key="app/src/main/res/layout/scoreboard_content_scrolling.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/scoreboard_item_player.xml" value="0.23229166666666667" />
-        <entry key="app/src/main/res/layout/scoreboard_scoreboard.xml" value="0.1" />
-      </map>
-    </option>
-  </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
->>>>>>> a5c1fb253746a93230b759676bad231bc9e6ceed
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_X" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

@@ -64,18 +64,15 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:29.1.0')
     implementation 'com.google.dagger:dagger:2.38.1'
     implementation 'com.google.firebase:firebase-analytics-ktx'
-<<<<<<< HEAD
-    implementation 'com.google.android.gms:play-services-auth:20.1.0'
-=======
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'androidx.appcompat:appcompat:1.4.1'
+    implementation 'com.google.android.gms:play-services-auth:20.1.0'
     implementation ('com.github.bumptech.glide:glide:4.13.0', {
         exclude group: 'com.android.support'
     })
     kapt 'com.github.bumptech.glide:compiler:4.13.0'
     kapt 'com.google.dagger:dagger-compiler:2.28.3'
->>>>>>> a5c1fb253746a93230b759676bad231bc9e6ceed
 }
 
 tasks.withType(Test) {

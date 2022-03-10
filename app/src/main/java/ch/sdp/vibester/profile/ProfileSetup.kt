@@ -5,16 +5,14 @@ import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
 import ch.sdp.vibester.R
-const val EXTRA_ID = "userID"
+const val EXTRA_ID = "userProfile"
 
 class ProfileSetup: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
         val bundle = intent.extras;
-        val userID: String? = bundle?.getString(EXTRA_ID)
-        val dataProvider = userID?.let { ProfileDataProvider(it) }
-        val user = dataProvider!!.getUserProfileData()
+        val user: UserProfile = bundle?.getSerializable(EXTRA_ID) as UserProfile
         setupProfile(user)
     }
 

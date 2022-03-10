@@ -38,6 +38,7 @@ class ItunesMusicApiTest{
             if(!mediaPlayer.isPlaying){
                 throw IOException()
             }
+            
             //assertEquals(false, mediaPlayer.isPlaying)
         })
 

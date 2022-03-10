@@ -5,4 +5,11 @@
     <string name="button_txt">Enter</string>
     <string name="hint_input_txt">Enter</string>
     <string name="scoreboard">S C O R E B O A R D</string>
+
+    <string-array name="nb_players">
+        <item>One</item>
+        <item>Two</item>
+        <item>Three</item>
+        <item>Four</item>
+    </string-array>
 </resources>

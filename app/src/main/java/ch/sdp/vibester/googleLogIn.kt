@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import ch.sdp.vibester.auth.FireBaseAuthenticator
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -20,9 +21,11 @@ import com.google.firebase.ktx.Firebase
 
 class googleLogIn : AppCompatActivity() {
 
-    private lateinit var auth: FirebaseAuth
+//    private lateinit var auth: FirebaseAuth
 
     private lateinit var googleSignInClient: GoogleSignInClient
+
+    private lateinit var authenticator: FireBaseAuthenticator
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +40,10 @@ class googleLogIn : AppCompatActivity() {
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
         // Initialize Firebase Auth
-        auth = Firebase.auth
+        authenticator = FireBaseAuthenticator()
+//        auth = Firebase.auth
+
+
 
         val btCreateAcc = findViewById<Button>(R.id.createAcc)
         val btLogIn = findViewById<Button>(R.id.logIn)
@@ -52,8 +58,8 @@ class googleLogIn : AppCompatActivity() {
         }
 
         btLogIn.setOnClickListener {
-            signInGoogle()
-//            signIn(username.text.toString(), password.text.toString(), email)
+//            signInGoogle()
+            signIn(username.text.toString(), password.text.toString(), email)
         }
 
 
@@ -62,7 +68,7 @@ class googleLogIn : AppCompatActivity() {
     public override fun onStart() {
         super.onStart()
         // Check if user is signed in (non-null) and update UI accordingly.
-        val currentUser = auth.currentUser
+        val currentUser = authenticator.auth.currentUser
         if(currentUser != null){
             reload();
         }
@@ -92,14 +98,14 @@ class googleLogIn : AppCompatActivity() {
 
     private fun createAccount(email: String, password: String, emailText: TextView) {
         // [START create_user_with_email]
-        auth.createUserWithEmailAndPassword(email, password)
+        authenticator.signIn(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     Toast.makeText(
                         baseContext, "You have created an acc successfully",
                         Toast.LENGTH_SHORT
                     ).show()
-                    val user = auth.currentUser
+                    val user = authenticator.auth.currentUser
                     updateUI(user, emailText)
                 } else {
                     // If sign in fails, display a message to the user.
@@ -115,14 +121,14 @@ class googleLogIn : AppCompatActivity() {
 
     private fun signIn(email: String, password: String, emailText: TextView) {
         // [START sign_in_with_email]
-        auth.signInWithEmailAndPassword(email, password)
+        authenticator.signIn(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     Toast.makeText(
                         baseContext, "You have logged in successfully",
                         Toast.LENGTH_SHORT
                     ).show()
-                    val user = auth.currentUser
+                    val user = authenticator.auth.currentUser
                     updateUI(user, emailText)
                 } else {
                     // If sign in fails, display a message to the user.

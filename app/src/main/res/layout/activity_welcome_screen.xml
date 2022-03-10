@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/vibester_welcome_logo"
-        android:layout_width="156dp"
-        android:layout_height="157dp"
+        android:layout_width="130dp"
+        android:layout_height="120dp"
         android:layout_marginTop="10dp"
         android:contentDescription="app_logo"
         app:layout_constraintEnd_toEndOf="parent"
@@ -40,7 +40,7 @@
     <Button
         android:id="@+id/welcome_play"
         android:layout_width="200dp"
-        android:layout_height="50dp"
+        android:layout_height="48dp"
         android:layout_marginTop="5dp"
         android:backgroundTint="#90953D"
         android:onClick="switchToPlay"
@@ -56,7 +56,7 @@
     <Button
         android:id="@+id/welcome_profile"
         android:layout_width="200dp"
-        android:layout_height="50dp"
+        android:layout_height="48dp"
         android:layout_marginTop="8dp"
         android:backgroundTint="#90953D"
         android:onClick="switchToProfile"
@@ -70,7 +70,7 @@
     <Button
         android:id="@+id/welcome_scoreboard"
         android:layout_width="200dp"
-        android:layout_height="50dp"
+        android:layout_height="48dp"
         android:layout_marginTop="8dp"
         android:backgroundTint="#90953D"
         android:onClick="switchToScoreboard"
@@ -84,7 +84,7 @@
     <Button
         android:id="@+id/welcome_listen"
         android:layout_width="200dp"
-        android:layout_height="50dp"
+        android:layout_height="48dp"
         android:layout_marginTop="8dp"
         android:backgroundTint="#90953D"
         android:onClick="switchToListen"
@@ -96,32 +96,36 @@
 
     <Button
         android:id="@+id/welcome_login"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
+        android:layout_width="150dp"
+        android:layout_height="48dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="10dp"
         android:backgroundTint="#90953D"
         android:onClick="switchToLogin"
         android:text="LOG IN"
         app:icon="@android:drawable/ic_popup_sync"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintEnd_toStartOf="@+id/welcome_settings"
+        app:layout_constraintHorizontal_bias="0.871"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/welcome_settings"
+        app:layout_constraintTop_toBottomOf="@+id/welcome_listen"
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/welcome_settings"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
+        android:layout_width="150dp"
+        android:layout_height="48dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginBottom="10dp"
         android:backgroundTint="#90953D"
         android:onClick="switchToSettings"
         android:text="SETTINGS"
         app:icon="@android:drawable/ic_menu_manage"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/welcome_listen" />
+        app:layout_constraintTop_toBottomOf="@+id/welcome_listen"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

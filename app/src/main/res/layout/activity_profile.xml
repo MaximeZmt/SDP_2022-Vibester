@@ -49,7 +49,7 @@
         app:layout_constraintTop_toBottomOf="@+id/handle" />
 
     <TableLayout
-        android:id="@+id/tableLayout"
+        android:id="@+id/profileStatistics"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/table_shape"

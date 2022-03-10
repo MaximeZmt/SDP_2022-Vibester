@@ -22,6 +22,8 @@ class MainActivity : AppCompatActivity() {
             startActivity(greetingIntent)
         }
 
+        // button to scoreboard
+        // FIXME: scoreboard enter button need to be move to the welcome screen
         val btnScoreboard = findViewById<Button>(R.id.scoreboardButton)
         val scoreboardIntent = Intent(this, ScoreBoardActivity::class.java)
 

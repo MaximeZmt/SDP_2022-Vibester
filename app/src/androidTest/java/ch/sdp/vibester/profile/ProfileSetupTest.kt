@@ -11,8 +11,7 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withText
+import androidx.test.espresso.matcher.ViewMatchers.*
 import ch.sdp.vibester.GreetingActivity
 import ch.sdp.vibester.R
 import org.junit.After
@@ -26,18 +25,32 @@ import org.junit.runner.RunWith
 class ProfileSetupTest {
 
 //    @get:Rule
-//    val testRule = ActivitytestRule(
+//    val testRule = ActivityScenarioRule(
 //        ProfileSetup::class.java
 //    )
+//
+//    @Before
+//    fun setUp() {
+//        Intents.init()
+//    }
+//
+//    @After
+//    fun clean() {
+//        Intents.release()
+//    }
 
-    @Before
-    fun setUp() {
-        Intents.init()
-    }
+    @Test
+    fun checkProfileLayout() {
+        val inputName = "0"
+        val intent = Intent(ApplicationProvider.getApplicationContext(), ProfileSetup::class.java)
+        intent.putExtra("userID", inputName)
+        val scn: ActivityScenario<ProfileSetup> = ActivityScenario.launch(intent)
+        onView(withId(R.id.profileStatistics)).check(matches(isDisplayed()))
+        onView(withId(R.id.handle)).check(matches(isDisplayed()))
+        onView(withId(R.id.username)).check(matches(isDisplayed()))
+//        onView(withId(R.id.avatar)).check(matches(isDisplayed()))
 
-    @After
-    fun clean() {
-        Intents.release()
+
     }
 
 //    @Test

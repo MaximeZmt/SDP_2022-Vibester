@@ -17,11 +17,22 @@ class MainActivity : AppCompatActivity() {
 
         val btnGreeting = findViewById<Button>(R.id.mainButton)
 
-        val greetingIntent = Intent(this, ProfileSetup::class.java)
+        val greetingIntent = Intent(this, GreetingActivity::class.java)
 
             btnGreeting.setOnClickListener {
-                greetingIntent.putExtra("userID", txtInput.text.toString())
+                greetingIntent.putExtra("name", txtInput.text.toString())
                 startActivity(greetingIntent)
+        }
+
+
+
+        val btnProfile = findViewById<Button>(R.id.profileButton)
+        val profileIntent = Intent(this, ProfileSetup::class.java)
+
+        btnProfile.setOnClickListener{
+            val user = (0..5).random().toString()
+            profileIntent.putExtra("userID", user)
+            startActivity(profileIntent)
         }
 
         val btnScoreboard = findViewById<Button>(R.id.scoreboardButton)

@@ -14,7 +14,7 @@ class ProfileSetup: AppCompatActivity() {
         val bundle = intent.extras;
         val userID: String? = bundle?.getString(EXTRA_ID)
         val dataProvider = userID?.let { ProfileDataProvider(it) }
-        val user = dataProvider!!.getUserData()
+        val user = dataProvider!!.getUserProfileData()
         setupProfile(user)
     }
 

@@ -14,6 +14,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.random.Random
 
 
 /**
@@ -33,17 +34,12 @@ class SignInActivityTest {
 
     @get:Rule
     val testRule = ActivityScenarioRule(
-        googleLogIn::class.java
+        Register::class.java
     )
 
 
     @Test
-    fun createAccTest() {
-        // Context of the app under test.
-    }
-
-    @Test
-    fun createAccountCorrect() {
+    fun logInCorrect() {
         val username = "john@test.com"
         val password = "password"
         onView(withId(R.id.username)).perform(ViewActions.typeText(username), closeSoftKeyboard())
@@ -51,6 +47,40 @@ class SignInActivityTest {
         onView(withId(R.id.logIn)).perform(click())
         Thread.sleep(3_000)
         onView(withId(R.id.email)).check(matches(withText("john@test.com")))
+    }
+
+    @Test
+    fun logInIncorrect() {
+        val username = "johnyyy@test.com"
+        val password = "password"
+        onView(withId(R.id.username)).perform(ViewActions.typeText(username), closeSoftKeyboard())
+        onView(withId(R.id.password)).perform(ViewActions.typeText(password), closeSoftKeyboard())
+        onView(withId(R.id.logIn)).perform(click())
+        Thread.sleep(3_000)
+        onView(withId(R.id.email)).check(matches(withText("Authentication error")))
+    }
+
+    @Test
+    fun createAccountIncorrect() {
+        val username = "john@test.com"
+        val password = "password"
+        onView(withId(R.id.username)).perform(ViewActions.typeText(username), closeSoftKeyboard())
+        onView(withId(R.id.password)).perform(ViewActions.typeText(password), closeSoftKeyboard())
+        onView(withId(R.id.logIn)).perform(click())
+        Thread.sleep(3_000)
+        onView(withId(R.id.email)).check(matches(withText("Authentication error")))
+    }
+
+    @Test
+    fun createAccountCorrect() {
+        val randomInt = Random.nextInt(0, 1000)
+        val username = "newUser".plus(randomInt.toString()).plus("@test.com")
+        val password = "password"
+        onView(withId(R.id.username)).perform(ViewActions.typeText(username), closeSoftKeyboard())
+        onView(withId(R.id.password)).perform(ViewActions.typeText(password), closeSoftKeyboard())
+        onView(withId(R.id.logIn)).perform(click())
+        Thread.sleep(3_000)
+        onView(withId(R.id.email)).check(matches(withText(username)))
     }
 
     @Test

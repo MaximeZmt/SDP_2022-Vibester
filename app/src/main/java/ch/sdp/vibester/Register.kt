@@ -19,7 +19,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
-class googleLogIn : AppCompatActivity() {
+class Register : AppCompatActivity() {
 
 //    private lateinit var auth: FirebaseAuth
 
@@ -137,6 +137,7 @@ class googleLogIn : AppCompatActivity() {
                     Log.w(TAG, "signInWithEmail:failure", task.exception)
                     Toast.makeText(baseContext, "Authentication failed.",
                         Toast.LENGTH_SHORT).show()
+                    updateUI(null, emailText)
                 }
             }
         // [END sign_in_with_email]
@@ -149,6 +150,9 @@ class googleLogIn : AppCompatActivity() {
     private fun updateUI(user: FirebaseUser?, emailText: TextView) {
         if (user != null) {
             emailText.text = user.email
+        }
+        else {
+            emailText.text = "Authentication error"
         }
     }
 }

@@ -20,7 +20,7 @@
             android:name=".WelcomeScreen"
             android:exported="false" />
         <activity
-            android:name=".googleLogIn"
+            android:name=".Register"
             android:exported="true" />
         <activity
             android:name=".GreetingActivity"

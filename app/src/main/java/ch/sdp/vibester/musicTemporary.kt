@@ -16,7 +16,7 @@ class musicTemporary : AppCompatActivity() {
         val btnValidate = findViewById<Button>(R.id.validate)
 
         btnValidate.setOnClickListener({
-            ItunesMusicApi.playFromQuery(txtInput.text.toString(), this)
+            //ItunesMusicApi.playFromQuery(txtInput.text.toString(), this)
         })
 
 

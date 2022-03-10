@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.PopupMenu
 import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
@@ -14,14 +15,14 @@ class MainActivity : AppCompatActivity() {
         val txtInput = findViewById<EditText>(R.id.mainNameInput)
 
         val btnGreeting = findViewById<Button>(R.id.mainButton)
-        val greetingIntent = Intent(this, GreetingActivity::class.java)
 
-
-
+        val gamescreenIntent = Intent(this, GamescreenActivity::class.java)
 
         btnGreeting.setOnClickListener {
-            greetingIntent.putExtra("name", txtInput.text.toString())
-            startActivity(greetingIntent)
+            //gamescreenIntent.putExtra("name", txtInput.text.toString())
+            startActivity(gamescreenIntent)
         }
+
+
     }
 }

@@ -15,6 +15,8 @@
         android:layout_marginEnd="159dp"
         android:layout_marginBottom="440dp"
         android:text="@string/button_txt"
+        app:layout_constrainedHeight="false"
+        app:layout_constrainedWidth="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

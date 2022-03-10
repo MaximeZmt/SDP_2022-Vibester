@@ -31,9 +31,7 @@ class GameSetupScreen : AppCompatActivity(), AdapterView.OnItemSelectedListener 
         text = parent.getItemAtPosition(position).toString()
     }
 
-    override fun onNothingSelected(parent: AdapterView<*>) {
-        text = parent.getItemAtPosition(0).toString()
-    }
+    override fun onNothingSelected(parent: AdapterView<*>) {text = "One"}
 
     fun proceedToGame(view: View) { //FILLER INTENT
         val intent = Intent(this, WelcomeScreen::class.java)

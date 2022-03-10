@@ -57,6 +57,11 @@ class WelcomeScreenTest {
         intended(hasComponent(GameSetupScreen::class.java.name))
     }
 
+    /*
+     * Belongs to a previously implemented button, taken out for UI purposes.
+     * Might bring it back, thus leaving the code for now.
+     */
+
     /*@Test
     fun checkIntentOnLogin(){ //FILLER TESTING
         onView(withId(R.id.welcome_login)).perform(click())

@@ -12,33 +12,37 @@ class WelcomeScreen : AppCompatActivity() {
         setContentView(R.layout.activity_welcome_screen)
     }
 
-    fun switchToPlay(view: View) {
-        val intent = Intent(this, GameSetupScreen::class.java)
+    private fun sendDirectIntent(arg: Class<*>?) {
+        val intent = Intent(this, arg)
         startActivity(intent)
+    }
+
+    fun switchToPlay(view: View) {
+        sendDirectIntent(GameSetupScreen::class.java)
     }
 
     fun switchToProfile(view: View) { //FILLER INTENT
-        val intent = Intent(this, GameSetupScreen::class.java)
-        startActivity(intent)
+        sendDirectIntent(GameSetupScreen::class.java)
     }
 
     fun switchToScoreboard(view: View) {
-        val intent = Intent(this, ScoreBoardActivity::class.java)
-        startActivity(intent)
+        sendDirectIntent(ScoreBoardActivity::class.java)
     }
 
     fun switchToListen(view: View) { //FILLER INTENT
-        val intent = Intent(this, GameSetupScreen::class.java)
-        startActivity(intent)
+        sendDirectIntent(GameSetupScreen::class.java)
     }
 
     fun switchToSettings(view: View) { //FILLER INTENT
-        val intent = Intent(this, GameSetupScreen::class.java)
-        startActivity(intent)
+        sendDirectIntent(GameSetupScreen::class.java)
     }
 
+    /*
+     * Belongs to a previously implemented button, taken out for UI purposes.
+     * Might bring it back, thus leaving the code for now.
+     */
+
     /*fun switchToLogin(view: View) { //FILLER INTENT
-        val intent = Intent(this, GameSetupScreen::class.java)
-        startActivity(intent)
+        sendDirectIntent(GameSetupScreen::class.java)
     }*/
 }

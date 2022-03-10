@@ -1,5 +1,7 @@
 package ch.sdp.vibester.profile
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.widget.ImageView
 import com.bumptech.glide.Glide
     /**
@@ -9,5 +11,7 @@ import com.bumptech.glide.Glide
         Glide.with(context).load(url)
             .fitCenter()
             .circleCrop()
+            .error(ColorDrawable(Color.RED))
+            .placeholder(ColorDrawable(Color.GRAY))
             .into(this)
     }

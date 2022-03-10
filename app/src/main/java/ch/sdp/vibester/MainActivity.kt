@@ -2,11 +2,9 @@ package ch.sdp.vibester
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
-import ch.sdp.vibester.api.ItunesMusicApi
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,7 +15,6 @@ class MainActivity : AppCompatActivity() {
 
         val btnGreeting = findViewById<Button>(R.id.mainButton)
         val greetingIntent = Intent(this, GreetingActivity::class.java)
-
 
 
 

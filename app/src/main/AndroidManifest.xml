@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
         <activity
-            android:name=".musicTemporary"
+            android:name=".MusicTemporary"
             android:exported="false" />
         <activity
             android:name=".GreetingActivity"

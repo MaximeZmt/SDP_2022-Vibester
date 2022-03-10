@@ -2,7 +2,6 @@ package ch.sdp.vibester.api
 
 
 
-import android.util.Log
 import ch.sdp.vibester.model.Song
 import okhttp3.OkHttpClient
 import org.junit.Assert.assertEquals

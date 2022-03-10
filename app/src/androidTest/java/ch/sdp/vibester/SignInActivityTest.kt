@@ -66,7 +66,7 @@ class SignInActivityTest {
         val password = "password"
         onView(withId(R.id.username)).perform(ViewActions.typeText(username), closeSoftKeyboard())
         onView(withId(R.id.password)).perform(ViewActions.typeText(password), closeSoftKeyboard())
-        onView(withId(R.id.logIn)).perform(click())
+        onView(withId(R.id.createAcc)).perform(click())
         Thread.sleep(3_000)
         onView(withId(R.id.email)).check(matches(withText("Authentication error")))
     }
@@ -74,13 +74,13 @@ class SignInActivityTest {
     @Test
     fun createAccountCorrect() {
         val randomInt = Random.nextInt(0, 1000)
-        val username = "newUser".plus(randomInt.toString()).plus("@test.com")
         val password = "password"
+        val username = randomInt.toString().plus("@gg.com")
         onView(withId(R.id.username)).perform(ViewActions.typeText(username), closeSoftKeyboard())
         onView(withId(R.id.password)).perform(ViewActions.typeText(password), closeSoftKeyboard())
-        onView(withId(R.id.logIn)).perform(click())
+        onView(withId(R.id.createAcc)).perform(click())
         Thread.sleep(3_000)
-        onView(withId(R.id.email)).check(matches(withText(username)))
+        onView(withId(R.id.email)).check(matches(withText(randomInt.toString().plus("@gg.com"))))
     }
 
     @Test

@@ -98,7 +98,7 @@ class GamescreenActivity: AppCompatActivity() {
 
             val button = Button(this)
             button.text = pName
-            button.width = 0
+            button.width = 100
             button.height = 150
             buttons.set(i, button)
             button.setOnClickListener {

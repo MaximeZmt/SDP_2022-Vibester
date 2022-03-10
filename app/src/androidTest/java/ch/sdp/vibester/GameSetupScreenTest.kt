@@ -38,13 +38,6 @@ class GameSetupScreenTest {
     }
 
     @Test
-    fun checkIntentOnProceed(){ //FILLER TEST
-        onView(withId(R.id.nb_players_selected)).perform(click())
-        intended(hasComponent(WelcomeScreen::class.java.name))
-        intended(hasExtra("Number of players", "One"))
-    }
-
-    @Test
     fun checkDefaultSelect() {
         onView(withId(R.id.nb_player_spinner)).check(matches(withSpinnerText("One")))
     }
@@ -75,5 +68,39 @@ class GameSetupScreenTest {
         onView(withId(R.id.nb_player_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(3).perform(click())
         onView(withId(R.id.nb_player_spinner)).check(matches(withSpinnerText("Four")))
+    }
+
+    @Test
+    fun checkIntentOnProceedOne(){ //FILLER TEST
+        onView(withId(R.id.nb_players_selected)).perform(click())
+        intended(hasComponent(WelcomeScreen::class.java.name))
+        intended(hasExtra("Number of players", "One"))
+    }
+
+    @Test
+    fun checkIntentOnProceedTwo(){ //FILLER TEST
+        onView(withId(R.id.nb_player_spinner)).perform(click())
+        onData(Matchers.anything()).atPosition(1).perform(click())
+        onView(withId(R.id.nb_players_selected)).perform(click())
+        intended(hasComponent(WelcomeScreen::class.java.name))
+        intended(hasExtra("Number of players", "Two"))
+    }
+
+    @Test
+    fun checkIntentOnProceedThree(){ //FILLER TEST
+        onView(withId(R.id.nb_player_spinner)).perform(click())
+        onData(Matchers.anything()).atPosition(2).perform(click())
+        onView(withId(R.id.nb_players_selected)).perform(click())
+        intended(hasComponent(WelcomeScreen::class.java.name))
+        intended(hasExtra("Number of players", "Three"))
+    }
+
+    @Test
+    fun checkIntentOnProceedFour(){ //FILLER TEST
+        onView(withId(R.id.nb_player_spinner)).perform(click())
+        onData(Matchers.anything()).atPosition(3).perform(click())
+        onView(withId(R.id.nb_players_selected)).perform(click())
+        intended(hasComponent(WelcomeScreen::class.java.name))
+        intended(hasExtra("Number of players", "Four"))
     }
 }

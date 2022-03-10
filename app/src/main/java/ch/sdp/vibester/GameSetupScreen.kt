@@ -10,7 +10,7 @@ import android.widget.Spinner
 import android.widget.Toast
 
 class GameSetupScreen : AppCompatActivity(), AdapterView.OnItemSelectedListener {
-    var text = ""
+    var text = "One"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_setup_screen)

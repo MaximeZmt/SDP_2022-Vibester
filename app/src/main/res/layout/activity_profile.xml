@@ -12,36 +12,43 @@
         android:id="@+id/avatar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_max="150dp"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.151"
+        app:layout_constraintVertical_bias="0.06"
+        app:layout_constraintWidth_max="150dp"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/handle"
         android:layout_width="100dp"
         android:layout_height="30dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="196dp"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/avatar" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/username"
         android:layout_width="100dp"
         android:layout_height="30dp"
+        android:layout_marginTop="4dp"
         android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/tableLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/handle" />
+        app:layout_constraintTop_toBottomOf="@+id/handle"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TableLayout
+        android:id="@+id/tableLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="136dp"

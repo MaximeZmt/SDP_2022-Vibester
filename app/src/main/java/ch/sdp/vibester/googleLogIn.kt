@@ -33,7 +33,6 @@ class googleLogIn : AppCompatActivity() {
         setContentView(R.layout.activity_google_log_in)
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-//            .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
 
@@ -41,12 +40,12 @@ class googleLogIn : AppCompatActivity() {
 
         // Initialize Firebase Auth
         authenticator = FireBaseAuthenticator()
-//        auth = Firebase.auth
 
 
 
         val btCreateAcc = findViewById<Button>(R.id.createAcc)
         val btLogIn = findViewById<Button>(R.id.logIn)
+        val googleSignIn = findViewById<Button>(R.id.googleBtn)
 
 
         val username = findViewById<EditText>(R.id.username)
@@ -58,8 +57,11 @@ class googleLogIn : AppCompatActivity() {
         }
 
         btLogIn.setOnClickListener {
-//            signInGoogle()
             signIn(username.text.toString(), password.text.toString(), email)
+        }
+
+        googleSignIn.setOnClickListener {
+            signInGoogle()
         }
 
 
@@ -98,7 +100,7 @@ class googleLogIn : AppCompatActivity() {
 
     private fun createAccount(email: String, password: String, emailText: TextView) {
         // [START create_user_with_email]
-        authenticator.signIn(email, password)
+        authenticator.createAccount(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     Toast.makeText(

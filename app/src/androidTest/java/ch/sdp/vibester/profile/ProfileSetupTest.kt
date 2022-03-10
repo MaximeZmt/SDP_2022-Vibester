@@ -19,49 +19,35 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.io.Serializable
 
 
 @RunWith(AndroidJUnit4::class)
 class ProfileSetupTest {
 
-    @get:Rule
-    val testRule = ActivityScenarioRule(
-        ProfileSetup::class.java
-    )
-
-    @Before
-    fun setUp() {
-        Intents.init()
-    }
-
-    @After
-    fun clean() {
-        Intents.release()
+    @Test
+    fun checkProfileData() {
+        val inputProfile = UserProfile("user0", "username0","bit.ly/3IUnyAF",  5, 8, 34, 2)
+        val intent = Intent(ApplicationProvider.getApplicationContext(), ProfileSetup::class.java)
+        intent.putExtra("userProfile", inputProfile)
+        val scn: ActivityScenario<ProfileSetup> = ActivityScenario.launch(intent)
+        onView(withId(R.id.handle)).check(matches(withText(inputProfile.handle)))
+        onView(withId(R.id.username)).check(matches(withText(inputProfile.username)))
+        onView(withId(R.id.correctSongs)).check(matches(withText(inputProfile.correctSongs.toString())))
+        onView(withId(R.id.totalGames)).check(matches(withText(inputProfile.totalGames.toString())))
+        onView(withId(R.id.ranking)).check(matches(withText(inputProfile.ranking.toString())))
     }
 
     @Test
     fun checkProfileLayout() {
-        val inputName = "0"
+        val inputProfile = UserProfile("user0", "username0","bit.ly/3IUnyAF",  5, 8, 34, 2)
         val intent = Intent(ApplicationProvider.getApplicationContext(), ProfileSetup::class.java)
-        intent.putExtra("userID", inputName)
+        intent.putExtra("userProfile", inputProfile)
         val scn: ActivityScenario<ProfileSetup> = ActivityScenario.launch(intent)
         onView(withId(R.id.profileStatistics)).check(matches(isDisplayed()))
         onView(withId(R.id.handle)).check(matches(isDisplayed()))
         onView(withId(R.id.username)).check(matches(isDisplayed()))
-        onView(withId(R.id.avatar)).check(matches(isDisplayed()))
-    }
-
-
-    @Test
-    fun checkProfileData() {
-        val inputName = "0"
-        val intent = Intent(ApplicationProvider.getApplicationContext(), ProfileSetup::class.java)
-        intent.putExtra("userID", inputName)
-        val scn: ActivityScenario<ProfileSetup> = ActivityScenario.launch(intent)
-        onView(withId(R.id.handle)).check(matches(withText("user0")))
-        onView(withId(R.id.username)).check(matches(withText("username0")))
-        onView(withId(R.id.correctSongs)).check(matches(withText(34)))
-        onView(withId(R.id.totalGames)).check(matches(withText(5)))
+//        onView(withId(R.id.avatar)).check(matches(isDisplayed()))
     }
     
 }

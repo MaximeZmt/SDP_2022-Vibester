@@ -14,7 +14,6 @@ class ProfileDataProvider(userID: String, users: List<UserProfile> = emptyList()
     /**
      * Hardcoded list will be changed to Firebase.
      * Used for testing.
-     * @param scoreboard
      */
     private fun setScoreboard(scoreboard: List<Int>){
         if(scoreboard.isEmpty()){
@@ -26,7 +25,6 @@ class ProfileDataProvider(userID: String, users: List<UserProfile> = emptyList()
     /**
      * Hardcoded list will be changed to Firebase.
      * Used for testing.
-     * @param users
      */
     private fun setUsers(users: List<UserProfile>){
         if(users.isEmpty()){

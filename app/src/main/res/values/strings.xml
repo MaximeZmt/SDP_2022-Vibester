@@ -5,4 +5,7 @@
     <string name="button_txt">Enter</string>
     <string name="hint_input_txt">Enter</string>
     <string name="scoreboard">S C O R E B O A R D</string>
+    <string name="the_song_was">The song was...</string>
+    <string name="wrong">Wrong</string>
+    <string name="correct">Correct</string>
 </resources>

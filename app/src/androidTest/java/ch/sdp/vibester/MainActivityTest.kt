@@ -49,5 +49,9 @@ class MainActivityTest {
         intended(hasComponent(ScoreBoardActivity::class.qualifiedName))
     }
 
-
+    @Test
+    fun gamescreenTest() {
+        onView(withId(R.id.toLocalGameButton)).perform(click())
+        intended(hasComponent(GamescreenActivity::class.qualifiedName))
+    }
 }

@@ -16,21 +16,14 @@ class MainActivity : AppCompatActivity() {
         val txtInput = findViewById<EditText>(R.id.mainNameInput)
 
         val btnGreeting = findViewById<Button>(R.id.mainButton)
-<<<<<<< HEAD
 
-        val gamescreenIntent = Intent(this, GamescreenActivity::class.java)
-=======
         val greetingIntent = Intent(this, GreetingActivity::class.java)
->>>>>>> 10f227f71c430aeb8ad28cad04051b08a126ae15
 
         btnGreeting.setOnClickListener {
-            //gamescreenIntent.putExtra("name", txtInput.text.toString())
-            startActivity(gamescreenIntent)
+            greetingIntent.putExtra("name", txtInput.text.toString())
+            startActivity(greetingIntent)
         }
 
-<<<<<<< HEAD
-
-=======
         // button to scoreboard
         // FIXME: scoreboard enter button need to be move to the welcome screen
         val btnScoreboard = findViewById<Button>(R.id.scoreboardButton)
@@ -39,6 +32,13 @@ class MainActivity : AppCompatActivity() {
         btnScoreboard.setOnClickListener {
             startActivity(scoreboardIntent)
         }
->>>>>>> 10f227f71c430aeb8ad28cad04051b08a126ae15
+
+        // button to local (buzzer) game
+        val btnLocalGame = findViewById<Button>(R.id.toLocalGameButton)
+        val gamescreenIntent = Intent(this, GamescreenActivity::class.java)
+
+        btnLocalGame.setOnClickListener {
+            startActivity(gamescreenIntent)
+        }
     }
 }

@@ -41,19 +41,17 @@ class GamescreenActivity: AppCompatActivity() {
                 "Too bad!", Toast.LENGTH_SHORT).show()
         }
 
-        val popup = buildPopup.create()
+        val allPoints = arrayOf(1, 2, 3, 4)
 
-        val allPoints = arrayOf(1, 3, 2, 4)
-
-        val viewsOfPoints = buildScores(players, allPoints)
-        val buttons = buildBuzzers(players, popup)
+        buildScores(players, allPoints)
+        buildBuzzers(players, buildPopup)
 
     }
 
     /*
     Programmatically builds the table of scores according to the number of players
      */
-    fun buildScores(players: Array<String>, allPoints: Array<Int>): Array<TableRow?> {
+    private fun buildScores(players: Array<String>, allPoints: Array<Int>) {
 
         val scores = findViewById<LinearLayout>(R.id.scoresTable)
         val viewsOfPoints = arrayOfNulls<TableRow>(players.size)
@@ -84,14 +82,12 @@ class GamescreenActivity: AppCompatActivity() {
 
             i = i + 1
         }
-
-        return viewsOfPoints
     }
 
     /*
     Programmatically builds the buzzers according to the number and names of players.
      */
-    fun buildBuzzers(players: Array<String>, popup: AlertDialog): Array<Button?> {
+    private fun buildBuzzers(players: Array<String>, popup: AlertDialog.Builder) {
 
         val buzzers = findViewById<LinearLayout>(R.id.buzzersLayout)
         val buttons = arrayOfNulls<Button>(players.size)
@@ -112,7 +108,5 @@ class GamescreenActivity: AppCompatActivity() {
 
             i = i + 1
         }
-
-        return buttons
     }
 }

@@ -7,6 +7,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.intent.Intents
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.espresso.intent.matcher.IntentMatchers.*
+import ch.sdp.vibester.profile.ProfileSetup
 import ch.sdp.vibester.scoreboard.ScoreBoardActivity
 import org.junit.After
 import org.junit.Before
@@ -36,7 +37,7 @@ class WelcomeScreenTest {
     @Test
     fun checkIntentOnProfile(){ //FILLER TESTING
         onView(withId(R.id.welcome_profile)).perform(click())
-        intended(hasComponent(GameSetupScreen::class.java.name))
+        intended(hasComponent(ProfileSetup::class.java.name))
     }
 
     @Test
@@ -48,7 +49,7 @@ class WelcomeScreenTest {
     @Test
     fun checkIntentOnListen(){ //FILLER TESTING
         onView(withId(R.id.welcome_listen)).perform(click())
-        intended(hasComponent(GameSetupScreen::class.java.name))
+        intended(hasComponent(MusicTemporary::class.java.name))
     }
 
     @Test

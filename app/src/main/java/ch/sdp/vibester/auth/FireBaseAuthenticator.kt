@@ -15,21 +15,21 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
-class FireBaseAuthenticator(override val googleClient: GoogleSignInClient) : Authenticator {
+class FireBaseAuthenticator(val googleClient: GoogleSignInClient) {
 
 
-    override val auth: FirebaseAuth = Firebase.auth
+    val auth: FirebaseAuth = Firebase.auth
 
 
-    override fun signIn(email: String, password: String): Task<AuthResult> {
+    fun signIn(email: String, password: String): Task<AuthResult> {
         return auth.signInWithEmailAndPassword(email, password)
     }
 
-    override fun createAccount(email: String, password: String): Task<AuthResult> {
+    fun createAccount(email: String, password: String): Task<AuthResult> {
         return auth.createUserWithEmailAndPassword(email, password)
     }
 
-    override fun googleActivityResult(requestCode: Int, resultCode: Int, data: Intent?, email: TextView) {
+    fun googleActivityResult(requestCode: Int, resultCode: Int, data: Intent?, email: TextView) {
         if(requestCode == 1000) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {

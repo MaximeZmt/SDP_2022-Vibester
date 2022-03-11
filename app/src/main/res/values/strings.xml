@@ -5,6 +5,10 @@
     <string name="button_txt">Enter</string>
     <string name="hint_input_txt">Enter</string>
     <string name="scoreboard">S C O R E B O A R D</string>
+    <string name="best_score">Best Score</string>
+    <string name="total_games">Total Games</string>
+    <string name="correct_songs">Correct Songs</string>
+    <string name="ranking">Ranking</string>
     <string name="ask_nb_players">Please choose the number of players in your game</string>
     <string name="proceed">PROCEED</string>
     <string name="welcome_screen">WELCOME SCREEN</string>

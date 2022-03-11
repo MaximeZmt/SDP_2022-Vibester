@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
         <activity
+            android:name=".MusicTemporary"
+            android:exported="false" />
+       <activity
             android:name=".GameSetupScreen"
             android:exported="false" />
         <activity android:name=".scoreboard.ScoreBoardActivity"

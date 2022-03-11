@@ -10,12 +10,14 @@
         android:id="@+id/createAcc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="520dp"
+        android:layout_marginTop="107dp"
+        android:layout_marginEnd="120dp"
+        android:layout_marginBottom="77dp"
         android:text="Create account"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/googleBtn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/email"
@@ -62,30 +64,28 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="153dp"
-        android:layout_marginTop="42dp"
+        android:layout_marginTop="51dp"
         android:layout_marginEnd="170dp"
-        android:layout_marginBottom="53dp"
+        android:layout_marginBottom="54dp"
         android:text="logIn"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/googleBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/createAcc"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/createAcc" />
 
     <Button
         android:id="@+id/googleBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="7dp"
-        android:layout_marginTop="3dp"
+        android:layout_marginTop="77dp"
         android:layout_marginEnd="110dp"
-        android:layout_marginBottom="9dp"
+        android:layout_marginBottom="48dp"
         android:text="Google Sign In"
-        app:layout_constraintBottom_toTopOf="@+id/logIn"
+        app:layout_constraintBottom_toTopOf="@+id/email"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/createAcc"
-        app:layout_constraintTop_toBottomOf="@+id/createAcc"
-        app:layout_constraintVertical_bias="0.157" />
+        app:layout_constraintTop_toBottomOf="@+id/createAcc" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,7 +14,7 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class MusicTemporaryTest{
 
-        //improve this test to recognize music
+        // Temporary test
         @Test
         fun musicTemporaryTest() {
             val inputName = "Imagine Dragons Believer"

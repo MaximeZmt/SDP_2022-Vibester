@@ -38,7 +38,7 @@ class FireBaseAuthenticator(val googleClient: GoogleSignInClient) {
                 email.text = account.email
             } catch (e: ApiException) {
                 // Google Sign In failed, update UI appropriately
-                Log.w(ContentValues.TAG, "Google sign in failed", e)
+                Log.w(ContentValues.TAG, "Google sign in failed.", e)
             }
         }
         else {

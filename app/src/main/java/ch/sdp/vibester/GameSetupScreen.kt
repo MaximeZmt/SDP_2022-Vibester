@@ -34,7 +34,7 @@ class GameSetupScreen : AppCompatActivity(), AdapterView.OnItemSelectedListener 
     override fun onNothingSelected(parent: AdapterView<*>) {text = "One"}
 
     fun proceedToGame(view: View) { //FILLER INTENT
-        val intent = Intent(this, WelcomeScreen::class.java)
+        val intent = Intent(this, GamescreenActivity::class.java)
         intent.putExtra("Number of players", text)
         startActivity(intent)
     }

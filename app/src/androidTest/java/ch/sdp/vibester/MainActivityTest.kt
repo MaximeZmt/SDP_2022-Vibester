@@ -54,4 +54,10 @@ class MainActivityTest {
         onView(withId(R.id.toLocalGameButton)).perform(click())
         intended(hasComponent(GamescreenActivity::class.qualifiedName))
     }
+
+    fun checkIntentOnWelcome(){ //FILLER TESTING
+        onView(withId(R.id.placeholder_welcome)).perform(click())
+        intended(hasComponent(WelcomeScreen::class.qualifiedName))
+    }
+
 }

@@ -2,6 +2,7 @@ package ch.sdp.vibester
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.PopupMenu
@@ -40,5 +41,10 @@ class MainActivity : AppCompatActivity() {
         btnLocalGame.setOnClickListener {
             startActivity(gamescreenIntent)
         }
+    }
+
+    fun switchToWelcome(view: View) {
+        val intent = Intent(this, WelcomeScreen::class.java)
+        startActivity(intent)
     }
 }

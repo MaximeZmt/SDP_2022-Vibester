@@ -23,8 +23,6 @@ import com.google.firebase.ktx.Firebase
 
 class Register : AppCompatActivity() {
 
-//    private lateinit var auth: FirebaseAuth
-
     private lateinit var googleSignInClient: GoogleSignInClient
 
     private lateinit var authenticator: FireBaseAuthenticator
@@ -41,7 +39,7 @@ class Register : AppCompatActivity() {
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
         // Initialize Firebase Auth
-        authenticator = FireBaseAuthenticator()
+        authenticator = FireBaseAuthenticator(googleSignInClient)
 
 
 
@@ -80,19 +78,8 @@ class Register : AppCompatActivity() {
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == 1000) {
-            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-            try {
-                // Google Sign In was successful, authenticate with Firebase
-                val account = task.getResult(ApiException::class.java)!!
-                val email = findViewById<TextView>(R.id.email)
-                email.text = account.email
-                Log.d(TAG, "firebaseAuthWithGoogle:" + account.id)
-            } catch (e: ApiException) {
-                // Google Sign In failed, update UI appropriately
-                Log.w(TAG, "Google sign in failed", e)
-            }
-        }
+        val email = findViewById<TextView>(R.id.email)
+        authenticator.googleActivityResult(requestCode, resultCode, data, email);
     }
 
     private fun signInGoogle() {

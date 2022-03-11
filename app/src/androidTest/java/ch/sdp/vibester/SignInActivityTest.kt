@@ -10,6 +10,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import ch.sdp.vibester.auth.FireBaseAuthenticator
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -82,5 +83,6 @@ class SignInActivityTest {
         Thread.sleep(3_000)
         onView(withId(R.id.email)).check(matches(withText(randomInt.toString().plus("@gg.com"))))
     }
+
 
 }

@@ -9,6 +9,7 @@ import androidx.test.espresso.intent.matcher.IntentMatchers.*
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import ch.sdp.vibester.profile.ProfileSetup
 import ch.sdp.vibester.scoreboard.ScoreBoardActivity
 import org.junit.After
 import org.junit.Before
@@ -49,5 +50,15 @@ class MainActivityTest {
         intended(hasComponent(ScoreBoardActivity::class.qualifiedName))
     }
 
+    @Test
+    fun profileTest() {
+        onView(withId(R.id.profileButton)).perform(click())
+        intended(hasComponent(ProfileSetup::class.qualifiedName))
+    }
 
+    @Test
+    fun checkIntentOnWelcome(){ //FILLER TESTING
+        onView(withId(R.id.placeholder_welcome)).perform(click())
+        intended(hasComponent(WelcomeScreen::class.qualifiedName))
+    }
 }

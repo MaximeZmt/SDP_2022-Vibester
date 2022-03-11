@@ -50,13 +50,6 @@ class MainActivity : AppCompatActivity() {
             startActivity(scoreboardIntent)
         }
 
-        // button to local (buzzer) game
-        val btnLocalGame = findViewById<Button>(R.id.toLocalGameButton)
-        val gamescreenIntent = Intent(this, GamescreenActivity::class.java)
-
-        btnLocalGame.setOnClickListener {
-            startActivity(gamescreenIntent)
-        }
     }
 
     fun switchToWelcome(view: View) {

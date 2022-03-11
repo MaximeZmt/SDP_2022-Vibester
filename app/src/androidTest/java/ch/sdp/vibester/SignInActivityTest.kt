@@ -83,9 +83,4 @@ class SignInActivityTest {
         onView(withId(R.id.email)).check(matches(withText(randomInt.toString().plus("@gg.com"))))
     }
 
-    @Test
-    fun gooleLogInTest() {
-
-    }
-
 }

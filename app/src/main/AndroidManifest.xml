@@ -15,6 +15,12 @@
             android:name="ch.sdp.vibester.GamescreenActivity"
             android:exported="false" />
         <activity
+            android:name=".profile.ProfileSetup"
+            android:exported="false" />
+        <activity
+            android:name=".MusicTemporary"
+            android:exported="false" />
+       <activity
             android:name=".GameSetupScreen"
             android:exported="false" />
         <activity android:name=".scoreboard.ScoreBoardActivity"

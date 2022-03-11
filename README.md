@@ -31,7 +31,7 @@ The game will also offer a customization where the user can create a game from i
 - [x] Create a Github repository
 - [x] Setup all Github feature (params, ...)
 - [x] Add continuous integration
-- [ ] 
+- [ ]
 
 
 
@@ -49,7 +49,7 @@ The game will also offer a customization where the user can create a game from i
 | Name | GitHub username |
 |:--------|---------:|
 | Derin Arda Alpay | [Tsathogguaa](https://github.com/Tsathogguaa) |
-| Kamila Babayeva | [kamilababayeva14](https://github.com/kamilababayeva14) |
+| Kamila Babayeva | [kamilababayeva](https://github.com/kamilababayeva) |
 | Laurynas Lopata | [laurislopata](https://github.com/laurislopata) |
 | Jiabao Wen | [jiabaow](https://github.com/jiabaow) |
 | Maxime Zammit | [MaximeZmt](https://github.com/MaximeZmt) |

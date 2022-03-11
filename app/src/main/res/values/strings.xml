@@ -8,6 +8,10 @@
     <string name="the_song_was">The song was...</string>
     <string name="wrong">Wrong</string>
     <string name="correct">Correct</string>
+    <string name="best_score">Best Score</string>
+    <string name="total_games">Total Games</string>
+    <string name="correct_songs">Correct Songs</string>
+    <string name="ranking">Ranking</string>
     <string name="ask_nb_players">Please choose the number of players in your game</string>
     <string name="proceed">PROCEED</string>
     <string name="welcome_screen">WELCOME SCREEN</string>

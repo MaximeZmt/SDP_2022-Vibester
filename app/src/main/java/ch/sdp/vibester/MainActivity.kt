@@ -7,7 +7,11 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.PopupMenu
 import androidx.appcompat.app.AppCompatActivity
+import ch.sdp.vibester.profile.ProfileDataProvider
 import ch.sdp.vibester.scoreboard.ScoreBoardActivity
+import ch.sdp.vibester.profile.ProfileSetup
+import ch.sdp.vibester.profile.UserProfile
+import java.io.Serializable
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,9 +24,21 @@ class MainActivity : AppCompatActivity() {
 
         val greetingIntent = Intent(this, GreetingActivity::class.java)
 
-        btnGreeting.setOnClickListener {
-            greetingIntent.putExtra("name", txtInput.text.toString())
-            startActivity(greetingIntent)
+            btnGreeting.setOnClickListener {
+                greetingIntent.putExtra("name", txtInput.text.toString())
+                startActivity(greetingIntent)
+        }
+
+
+        val btnProfile = findViewById<Button>(R.id.profileButton)
+        val profileIntent = Intent(this, ProfileSetup::class.java)
+
+        btnProfile.setOnClickListener{
+            val userID = (0..5).random().toString()
+            val dataProvider = userID.let { ProfileDataProvider(it) }
+            val user: UserProfile = dataProvider.getUserProfileData()
+            profileIntent.putExtra("userProfile",  user)
+            startActivity(profileIntent)
         }
 
         // button to scoreboard

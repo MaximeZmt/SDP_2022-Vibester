@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.PopupMenu
 import androidx.appcompat.app.AppCompatActivity
+import ch.sdp.vibester.games.TypingGame
 import ch.sdp.vibester.profile.ProfileDataProvider
 import ch.sdp.vibester.scoreboard.ScoreBoardActivity
 import ch.sdp.vibester.profile.ProfileSetup
@@ -44,7 +45,7 @@ class MainActivity : AppCompatActivity() {
         // button to scoreboard
         // FIXME: scoreboard enter button need to be move to the welcome screen
         val btnScoreboard = findViewById<Button>(R.id.scoreboardButton)
-        val scoreboardIntent = Intent(this, ScoreBoardActivity::class.java)
+        val scoreboardIntent = Intent(this, TypingGame::class.java)
 
         btnScoreboard.setOnClickListener {
             startActivity(scoreboardIntent)

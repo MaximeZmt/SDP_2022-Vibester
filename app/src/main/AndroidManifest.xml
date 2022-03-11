@@ -12,7 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
         <activity
-            android:name="ch.sdp.vibester.GamescreenActivity"
+            android:name=".games.TypingGame"
+            android:exported="false" />
+        <activity
+            android:name=".GamescreenActivity"
             android:exported="false" />
         <activity
             android:name=".profile.ProfileSetup"
@@ -20,10 +23,11 @@
         <activity
             android:name=".MusicTemporary"
             android:exported="false" />
-       <activity
+        <activity
             android:name=".GameSetupScreen"
             android:exported="false" />
-        <activity android:name=".scoreboard.ScoreBoardActivity"
+        <activity
+            android:name=".scoreboard.ScoreBoardActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".WelcomeScreen"

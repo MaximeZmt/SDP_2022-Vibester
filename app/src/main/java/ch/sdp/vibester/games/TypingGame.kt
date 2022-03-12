@@ -100,6 +100,7 @@ class TypingGame : AppCompatActivity() {
         return txtView
     }
 
+    
     private fun generateImage(song: Song): ImageView {
         val imgView = ImageView(this)
         imgView.minimumWidth = 200

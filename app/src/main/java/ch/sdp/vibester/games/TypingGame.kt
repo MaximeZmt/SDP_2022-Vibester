@@ -60,58 +60,62 @@ class TypingGame : AppCompatActivity() {
 
         val linLay = LinearLayout(this)
 
-        val space = Space(this)
-        space.minimumWidth =  100
-        space.minimumHeight = 100
-
         linLay.setHorizontalGravity(1)
         linLay.gravity = Gravity.LEFT
 
-        val imgView = ImageView(this)
-        imgView.minimumWidth = 200
-        imgView.minimumHeight = 200
-        //imgView.maxHeight = 400
-        //imgView.maxWidth = 400
-        CoroutineScope(Dispatchers.Main).launch {
-           val task = async(Dispatchers.IO){
-               val bit = BitmapGetterApi.download(song.getArtworkUrl())
-               bit.get()
-            }
-            val bm = task.await()
-            imgView.setImageBitmap(bm)
-        }
 
-        imgView.foregroundGravity = Gravity.LEFT
-
-        val txtView = TextView(this)
-        txtView.setText(song.getArtistName() + " - " + song.getTrackName())
-        txtView.gravity = Gravity.CENTER
-        txtView.minHeight=200
-        txtView.textSize = 20F
-        txtView.setTextColor(getColor(R.color.black))
-
-
-        linLay.addView(imgView)
-        linLay.addView(space)
-        linLay.addView(txtView)
+        linLay.addView(generateImage(song))
+        linLay.addView(generateSpace(100,100))
+        linLay.addView(generateText(song.getArtistName() + " - " + song.getTrackName()))
 
         frameLay.addView(linLay)
 
 
 
         guessLayout.addView(frameLay)
-        val space2 = Space(this)
-        space2.minimumWidth = 75
-        space2.minimumHeight = 75
+
         frameLay.setOnClickListener {
-            Log.e("Test","yooooh")
             frameLay.setBackgroundColor(getColor(R.color.teal_200))
             guessLayout.removeAllViews()
             guessLayout.addView(frameLay)
         }
 
-        guessLayout.addView(space2)
-
+        guessLayout.addView(generateSpace(75,75))
     }
+
+    private fun generateSpace(width: Int, height: Int): Space {
+        val space = Space(this)
+        space.minimumWidth = width
+        space.minimumHeight = height
+        return space
+    }
+
+    private fun generateText(txt: String): TextView {
+        val txtView = TextView(this)
+        txtView.setText(txt)
+        txtView.gravity = Gravity.CENTER
+        txtView.minHeight= 200
+        txtView.textSize = 20F
+        txtView.setTextColor(getColor(R.color.black))
+        return txtView
+    }
+
+    private fun generateImage(song: Song): ImageView {
+        val imgView = ImageView(this)
+        imgView.minimumWidth = 200
+        imgView.minimumHeight = 200
+
+        CoroutineScope(Dispatchers.Main).launch {
+            val task = async(Dispatchers.IO){
+                val bit = BitmapGetterApi.download(song.getArtworkUrl())
+                bit.get()
+            }
+            val bm = task.await()
+            imgView.setImageBitmap(bm)
+        }
+        imgView.foregroundGravity = Gravity.LEFT
+        return imgView
+    }
+
 
 }

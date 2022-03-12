@@ -1,13 +1,14 @@
 package ch.sdp.vibester.model
 
+import android.util.Log
 import org.json.JSONObject
 import java.lang.IllegalArgumentException
 
 /**
  * A class representing a song
- * @param jsonMeta a String that will be parsed
+ * @param jsonO a JSONObject that will be parsed
  */
-class Song(jsonMeta: String) {
+class Song(jsonO: JSONObject) {
 
     private var previewUrl = ""
     private var artworkUrl = ""
@@ -17,14 +18,10 @@ class Song(jsonMeta: String) {
     // Here is the parsing from string (JSON) to retrieve the values
     init {
         try {
-            val jsonObj = JSONObject(jsonMeta)
-            val jsonArray = jsonObj.getJSONArray("results")
-            val jsonRes = jsonArray.getJSONObject(0)
-
-            previewUrl = jsonRes.getString("previewUrl")
-            artworkUrl = jsonRes.getString("artworkUrl100")
-            trackName = jsonRes.getString("trackName")
-            artistName = jsonRes.getString("artistName")
+            previewUrl = jsonO.getString("previewUrl")
+            artworkUrl = jsonO.getString("artworkUrl100")
+            trackName = jsonO.getString("trackName")
+            artistName = jsonO.getString("artistName")
         } catch(e: Exception){
             throw IllegalArgumentException("Song constructor, bad argument")
         }
@@ -60,6 +57,42 @@ class Song(jsonMeta: String) {
      */
     fun getArtistName():String{
         return artistName
+    }
+
+    companion object{
+        fun singleSong(str: String): Song{
+            try {
+                val jsonObj = JSONObject(str)
+                val jsonArray = jsonObj.getJSONArray("results")
+                val jsonRes = jsonArray.getJSONObject(0)
+                return Song(jsonRes)
+            }catch(e: Exception){
+                throw IllegalArgumentException("Song constructor, bad argument")
+            }
+        }
+
+        fun listSong(str: String): ArrayList<Song>{
+            try{
+                Log.e("prout","-1")
+                val myList = ArrayList<Song>()
+                Log.e("prout","0")
+                val jsonObj = JSONObject(str)
+                Log.e("prout","1")
+                val countResult = jsonObj.getInt("resultCount")
+                Log.e("prout","2")
+                val jsonArray = jsonObj.getJSONArray("results")
+                Log.e("prout","cacs")
+                for (i in 0..(countResult-1)){
+                    Log.e("prout", i.toString())
+                    myList.add(Song(jsonArray.getJSONObject(i)))
+                    Log.e("prout", "done")
+                }
+                return myList
+            }catch(e: Exception){
+                throw IllegalArgumentException("Song constructor, bad argument")
+            }
+        }
+
     }
 
 }

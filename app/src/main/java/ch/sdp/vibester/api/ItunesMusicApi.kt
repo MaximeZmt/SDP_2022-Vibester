@@ -16,7 +16,7 @@ import java.util.concurrent.CompletableFuture
 class ItunesMusicApi private constructor(){
 
     companion object{
-        private val LOOKUP_URL_BASE = "https://itunes.apple.com/search?limit=1&term="
+        private val LOOKUP_URL_BASE = "https://itunes.apple.com/search?media=music&"
 
         /**
          * Given a String query it will provide the music url preview
@@ -25,8 +25,8 @@ class ItunesMusicApi private constructor(){
          * @param baseUrl (Optional) If you want to specify an other url to query
          * @return CompletableFuture<String> that contains the result of the query
          */
-        fun querySong(query: String, okHttp: OkHttpClient, baseUrl: String = LOOKUP_URL_BASE): CompletableFuture<String> {
-            val buildedUrl = baseUrl+query.replace(' ', '+')
+        fun querySong(query: String, okHttp: OkHttpClient, limit: Int, baseUrl: String = LOOKUP_URL_BASE): CompletableFuture<String> {
+            val buildedUrl = baseUrl+"limit="+limit+"&term="+query.replace(' ', '+')
             val req = okhttp3.Request.Builder().url(buildedUrl).build()
 
             var retFuture = CompletableFuture<String>()
@@ -34,33 +34,6 @@ class ItunesMusicApi private constructor(){
             okHttp.newCall(req).enqueue(SongCallback(retFuture))
 
             return retFuture
-        }
-
-        /**
-         * A function that given an audio stream url will play it
-         * @param audioUrl Url in String pointing towards the audio stream
-         * @return CompletableFuture<MediaPlayer> that contains the current playing mediaPlayer
-         */
-        fun playAudio(audioUrl: String): CompletableFuture<MediaPlayer>{
-            val mediaFut = CompletableFuture<MediaPlayer>()
-            var mediaPlayer: MediaPlayer = MediaPlayer()
-            mediaPlayer.setAudioAttributes(
-                AudioAttributes.Builder()
-                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                    .build()
-            )
-            try {
-                mediaPlayer.setDataSource(audioUrl)
-                mediaPlayer.prepare()
-                mediaPlayer.setOnPreparedListener {
-                    mediaPlayer.start()
-                    mediaFut.complete(mediaPlayer)
-                }
-            }catch (e: IOException){
-                Log.e("[PlayAudio]", "Error see stacktrace")
-                mediaFut.completeExceptionally(e)
-            }
-            return mediaFut
         }
 
 

@@ -6,8 +6,16 @@ import android.util.Log
 import android.view.Gravity
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.addTextChangedListener
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.BitmapGetterApi
+import ch.sdp.vibester.api.ItunesMusicApi
+import ch.sdp.vibester.model.Song
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+import okhttp3.OkHttpClient
 
 
 class TypingGame : AppCompatActivity() {
@@ -15,30 +23,36 @@ class TypingGame : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_typing_game)
 
-        val guessLayout = findViewById<LinearLayout>(R.id.displayGuess)
+
+        val inputTxt = findViewById<EditText>(R.id.yourGuessET)
+
+        inputTxt.addTextChangedListener{
+            val guessLayout = findViewById<LinearLayout>(R.id.displayGuess)
+            guessLayout.removeAllViews()
+            val txtInp = inputTxt.text.toString()
+            Log.e("yop", txtInp)
+            if (txtInp.length>4){
+
+                CoroutineScope(Dispatchers.Main).launch {
+                    val task = async(Dispatchers.IO){
+                        ItunesMusicApi.querySong(txtInp, OkHttpClient(), 3).get()
+                    }
+                    val list = Song.listSong(task.await())
+                    for(x: Song in list){
+                        guess(x)
+                    }
+                }
+            }
+        }
 
 
-/*
-        val imgV = findViewById<ImageView>(R.id.imageView) as ImageView
-        val bit = BitmapGetterApi.download("https://is3-ssl.mzstatic.com/image/thumb/Music115/v4/3e/04/c4/3e04c4e7-1863-34cb-e8f3-f168ae5b213e/source/100x100bb.jpg")
-        imgV.setImageBitmap(bit.get())
-
- */
-        guess()
-        guess()
-        guess()
-        guess()
-        guess()
-        guess()
-        guess()
-        guess()
     }
 
 
-    private fun guess(){
+    private fun guess(song: Song){
+        val guessLayout = findViewById<LinearLayout>(R.id.displayGuess)
         val frameLay = FrameLayout(this)
 
-        frameLay.setOnClickListener { Log.e("Test","yooooh") }
         val border = GradientDrawable()
         border.setColor(-0x1) //white background
         border.setStroke(1, -0x1000000)
@@ -58,12 +72,19 @@ class TypingGame : AppCompatActivity() {
         imgView.minimumHeight = 200
         //imgView.maxHeight = 400
         //imgView.maxWidth = 400
-        val bit = BitmapGetterApi.download("https://is3-ssl.mzstatic.com/image/thumb/Music115/v4/3e/04/c4/3e04c4e7-1863-34cb-e8f3-f168ae5b213e/source/100x100bb.jpg")
-        imgView.setImageBitmap(bit.get())
+        CoroutineScope(Dispatchers.Main).launch {
+           val task = async(Dispatchers.IO){
+               val bit = BitmapGetterApi.download(song.getArtworkUrl())
+               bit.get()
+            }
+            val bm = task.await()
+            imgView.setImageBitmap(bm)
+        }
+
         imgView.foregroundGravity = Gravity.LEFT
 
         val txtView = TextView(this)
-        txtView.setText("Imagine dragons - Mercury - My Life")
+        txtView.setText(song.getArtistName() + " - " + song.getTrackName())
         txtView.gravity = Gravity.CENTER
         txtView.minHeight=200
         txtView.textSize = 20F
@@ -77,11 +98,17 @@ class TypingGame : AppCompatActivity() {
         frameLay.addView(linLay)
 
 
-        val guessLayout = findViewById<LinearLayout>(R.id.displayGuess)
+
         guessLayout.addView(frameLay)
         val space2 = Space(this)
         space2.minimumWidth = 75
         space2.minimumHeight = 75
+        frameLay.setOnClickListener {
+            Log.e("Test","yooooh")
+            frameLay.setBackgroundColor(getColor(R.color.teal_200))
+            guessLayout.removeAllViews()
+            guessLayout.addView(frameLay)
+        }
 
         guessLayout.addView(space2)
 

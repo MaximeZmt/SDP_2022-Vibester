@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import ch.sdp.vibester.games.TypingGame
 import ch.sdp.vibester.profile.ProfileDataProvider
 import ch.sdp.vibester.profile.ProfileSetup
 import ch.sdp.vibester.profile.UserProfile
@@ -39,7 +40,7 @@ class WelcomeScreen : AppCompatActivity() {
     }
 
     fun switchToListen(view: View) { //FILLER INTENT
-        sendDirectIntent(MusicTemporary::class.java)
+        sendDirectIntent(TypingGame::class.java)
     }
 
     fun switchToSettings(view: View) { //FILLER INTENT

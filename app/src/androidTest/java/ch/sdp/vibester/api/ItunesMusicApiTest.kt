@@ -15,8 +15,8 @@ class ItunesMusicApiTest{
 
     @Test
     fun itunesAPIQueryWorks() {
-        var songFut = ItunesMusicApi.querySong("imagine dragons believer", OkHttpClient())
-        val song = Song(songFut.get())
+        var songFut = ItunesMusicApi.querySong("imagine dragons believer", OkHttpClient(), 1)
+        val song = Song.singleSong(songFut.get())
         assertEquals("Imagine Dragons", song.getArtistName())
     }
 
@@ -26,15 +26,15 @@ class ItunesMusicApiTest{
     @Test
     fun itunesAPIQueryError() {
         exception.expect(Exception::class.java)
-        var songFut = ItunesMusicApi.querySong("imagine dragons believer", OkHttpClient(), "https://ThisIsNotAnURL666.notADomain")
+        var songFut = ItunesMusicApi.querySong("imagine dragons believer", OkHttpClient(), 1,"https://ThisIsNotAnURL666.notADomain")
         songFut.get()
     }
 
     @Test
     fun itunesAPIQueryWorksComplete() {
-        var songFut = ItunesMusicApi.querySong("imagine dragons believer", OkHttpClient())
-        val song = Song(songFut.get())
-        val mediaFut = ItunesMusicApi.playAudio(song.getPreviewUrl())
+        var songFut = ItunesMusicApi.querySong("imagine dragons believer", OkHttpClient(), 1)
+        val song = Song.singleSong(songFut.get())
+        val mediaFut = AudioPlayer.playAudio(song.getPreviewUrl())
         val player = mediaFut.get()
         assertEquals(true, player.isPlaying)
     }
@@ -42,7 +42,7 @@ class ItunesMusicApiTest{
     @Test
     fun itunesAPIQueryCompleteError() {
         exception.expect(Exception::class.java)
-        val mediaFut = ItunesMusicApi.playAudio("https://ThisIsNotAnURL666.notADomain")
+        val mediaFut = AudioPlayer.playAudio("https://ThisIsNotAnURL666.notADomain")
         mediaFut.get()
     }
 

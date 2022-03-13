@@ -5,6 +5,13 @@
     <string name="button_txt">Enter</string>
     <string name="hint_input_txt">Enter</string>
     <string name="scoreboard">S C O R E B O A R D</string>
+    <string name="the_song_was">The song was...</string>
+    <string name="wrong">Wrong</string>
+    <string name="correct">Correct</string>
+    <string name="best_score">Best Score</string>
+    <string name="total_games">Total Games</string>
+    <string name="correct_songs">Correct Songs</string>
+    <string name="ranking">Ranking</string>
     <string name="ask_nb_players">Please choose the number of players in your game</string>
     <string name="proceed">PROCEED</string>
     <string name="welcome_screen">WELCOME SCREEN</string>
@@ -15,6 +22,9 @@
     <string name="welcome_scoreboard">SCOREBOARD</string>
     <string name="listen_to_music">LISTEN TO MUSIC</string>
     <string name="settings">SETTINGS</string>
+    <string name="createAcc">Create Account</string>
+    <string name="logIn">Log in</string>
+    <string name="logInGoogle">Log in with Google</string>
 
     <string-array name="nb_players">
         <item>One</item>

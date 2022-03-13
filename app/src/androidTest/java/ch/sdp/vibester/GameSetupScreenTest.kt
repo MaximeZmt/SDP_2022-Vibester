@@ -73,7 +73,7 @@ class GameSetupScreenTest {
     @Test
     fun checkIntentOnProceedDefault() { //FILLER TEST
         onView(withId(R.id.nb_players_selected)).perform(click())
-        intended(hasComponent(WelcomeScreen::class.java.name))
+        intended(hasComponent(GamescreenActivity::class.java.name))
         intended(hasExtra("Number of players", "One"))
     }
 
@@ -82,7 +82,7 @@ class GameSetupScreenTest {
         onView(withId(R.id.nb_player_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(0).perform(click())
         onView(withId(R.id.nb_players_selected)).perform(click())
-        intended(hasComponent(WelcomeScreen::class.java.name))
+        intended(hasComponent(GamescreenActivity::class.java.name))
         intended(hasExtra("Number of players", "One"))
     }
 
@@ -91,7 +91,7 @@ class GameSetupScreenTest {
         onView(withId(R.id.nb_player_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(1).perform(click())
         onView(withId(R.id.nb_players_selected)).perform(click())
-        intended(hasComponent(WelcomeScreen::class.java.name))
+        intended(hasComponent(GamescreenActivity::class.java.name))
         intended(hasExtra("Number of players", "Two"))
     }
 
@@ -100,7 +100,7 @@ class GameSetupScreenTest {
         onView(withId(R.id.nb_player_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(2).perform(click())
         onView(withId(R.id.nb_players_selected)).perform(click())
-        intended(hasComponent(WelcomeScreen::class.java.name))
+        intended(hasComponent(GamescreenActivity::class.java.name))
         intended(hasExtra("Number of players", "Three"))
     }
 
@@ -109,7 +109,7 @@ class GameSetupScreenTest {
         onView(withId(R.id.nb_player_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(3).perform(click())
         onView(withId(R.id.nb_players_selected)).perform(click())
-        intended(hasComponent(WelcomeScreen::class.java.name))
+        intended(hasComponent(GamescreenActivity::class.java.name))
         intended(hasExtra("Number of players", "Four"))
     }
 }

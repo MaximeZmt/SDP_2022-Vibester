@@ -4,6 +4,9 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import ch.sdp.vibester.profile.ProfileDataProvider
+import ch.sdp.vibester.profile.ProfileSetup
+import ch.sdp.vibester.profile.UserProfile
 import ch.sdp.vibester.scoreboard.ScoreBoardActivity
 
 class WelcomeScreen : AppCompatActivity() {
@@ -22,7 +25,13 @@ class WelcomeScreen : AppCompatActivity() {
     }
 
     fun switchToProfile(view: View) { //FILLER INTENT
-        sendDirectIntent(GameSetupScreen::class.java)
+//        sendDirectIntent(GameSetupScreen::class.java)
+        val profileIntent = Intent(this, ProfileSetup::class.java)
+        val userID = (0..5).random().toString()
+        val dataProvider = userID.let { ProfileDataProvider(it) }
+        val user: UserProfile = dataProvider.getUserProfileData()
+        profileIntent.putExtra("userProfile",  user)
+        startActivity(profileIntent)
     }
 
     fun switchToScoreboard(view: View) {
@@ -30,7 +39,7 @@ class WelcomeScreen : AppCompatActivity() {
     }
 
     fun switchToListen(view: View) { //FILLER INTENT
-        sendDirectIntent(GameSetupScreen::class.java)
+        sendDirectIntent(MusicTemporary::class.java)
     }
 
     fun switchToSettings(view: View) { //FILLER INTENT

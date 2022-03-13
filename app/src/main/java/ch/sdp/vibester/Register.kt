@@ -27,6 +27,9 @@ class Register : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_google_log_in)
 
+//    @FixMe
+//      Commenting this for now until we find a proper way to test it, then will merge it to main
+
 //        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
 //            .requestEmail()
 //            .build()
@@ -63,11 +66,13 @@ class Register : AppCompatActivity() {
     public override fun onStart() {
         super.onStart()
         val currentUser = authenticator.auth.currentUser
-        if(currentUser != null){
+        if (currentUser != null) {
             reload();
         }
     }
 
+//    @FixMe
+//      Commenting this for now until we find a proper way to test it, then will merge it to main
 //    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 //        super.onActivityResult(requestCode, resultCode, data)
 //        updateUI(authenticator.googleActivityResult(requestCode, resultCode, data));

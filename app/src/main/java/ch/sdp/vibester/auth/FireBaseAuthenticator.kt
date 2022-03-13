@@ -29,6 +29,8 @@ class FireBaseAuthenticator() {
         return auth.createUserWithEmailAndPassword(email, password)
     }
 
+//    @FixMe
+//      Commenting this for now until we find a proper way to test it, then will merge it to main
 //    fun googleActivityResult(requestCode: Int, resultCode: Int, data: Intent?): String? {
 //        return if(requestCode == 1000) {
 //            val task = GoogleSignIn.getSignedInAccountFromIntent(data)

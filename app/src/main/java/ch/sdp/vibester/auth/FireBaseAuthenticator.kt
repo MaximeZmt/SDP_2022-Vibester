@@ -15,7 +15,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
-class FireBaseAuthenticator {
+class FireBaseAuthenticator() {
 
 
     val auth: FirebaseAuth = Firebase.auth
@@ -29,18 +29,18 @@ class FireBaseAuthenticator {
         return auth.createUserWithEmailAndPassword(email, password)
     }
 
-    fun googleActivityResult(requestCode: Int, resultCode: Int, data: Intent?): String? {
-        return if(requestCode == 1000) {
-            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-            try {
-                val account = task.getResult(ApiException::class.java)!!
-                account.email
-            } catch (e: ApiException) {
-                "Authentication error"
-            }
-        } else {
-            "Authentication error"
-        }
-    }
+//    fun googleActivityResult(requestCode: Int, resultCode: Int, data: Intent?): String? {
+//        return if(requestCode == 1000) {
+//            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+//            try {
+//                val account = task.getResult(ApiException::class.java)!!
+//                account.email
+//            } catch (e: ApiException) {
+//                "Authentication error"
+//            }
+//        } else {
+//            "Authentication error"
+//        }
+//    }
 
 }

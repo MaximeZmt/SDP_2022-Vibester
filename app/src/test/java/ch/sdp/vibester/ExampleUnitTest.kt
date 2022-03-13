@@ -1,5 +1,6 @@
 package ch.sdp.vibester
 
+import ch.sdp.vibester.auth.FireBaseAuthenticator
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -14,4 +15,11 @@ class ExampleUnitTest {
     fun addition_isCorrect() {
         assertEquals(4, 2 + 2)
     }
+
+//    @Test
+//    fun badRequest() {
+//        val mockAuth = FireBaseAuthenticator()
+//        val returnText = mockAuth.googleActivityResult(-1, -1, null)
+//        assertEquals(returnText, "Authentication error")
+//    }
 }

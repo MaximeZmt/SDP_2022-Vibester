@@ -43,7 +43,7 @@ class WelcomeScreen : AppCompatActivity() {
     }
 
     fun switchToSettings(view: View) { //FILLER INTENT
-        sendDirectIntent(GameSetupScreen::class.java)
+        sendDirectIntent(Register::class.java)
     }
 
     /*

@@ -2,10 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ch.sdp.vibester">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application
         android:allowBackup="true"
@@ -15,7 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
         <activity
-            android:name="ch.sdp.vibester.GamescreenActivity"
+            android:name=".profile.editUser"
+            android:exported="false" />
+        <activity
+            android:name=".GamescreenActivity"
             android:exported="false" />
         <activity
             android:name=".profile.ProfileSetup"
@@ -23,10 +25,11 @@
         <activity
             android:name=".MusicTemporary"
             android:exported="false" />
-       <activity
+        <activity
             android:name=".GameSetupScreen"
             android:exported="false" />
-        <activity android:name=".scoreboard.ScoreBoardActivity"
+        <activity
+            android:name=".scoreboard.ScoreBoardActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".WelcomeScreen"

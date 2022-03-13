@@ -10,6 +10,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:usesCleartextTraffic="true"
         android:theme="@style/Theme.MyApplication">
         <activity
             android:name="ch.sdp.vibester.GamescreenActivity"
@@ -20,10 +21,14 @@
         <activity
             android:name=".MusicTemporary"
             android:exported="false" />
-       <activity
+        <activity
+            android:name=".LyricTemporary"
+            android:exported="false" />
+        <activity
             android:name=".GameSetupScreen"
             android:exported="false" />
-        <activity android:name=".scoreboard.ScoreBoardActivity"
+        <activity
+            android:name=".scoreboard.ScoreBoardActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".WelcomeScreen"

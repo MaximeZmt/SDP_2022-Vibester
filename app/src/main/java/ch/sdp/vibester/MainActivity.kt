@@ -50,6 +50,14 @@ class MainActivity : AppCompatActivity() {
             startActivity(scoreboardIntent)
         }
 
+        // button to lyric
+        val btnLyric = findViewById<Button>(R.id.lyricButton)
+        val lyricIntent = Intent(this, LyricTemporary::class.java)
+
+        btnLyric.setOnClickListener {
+            startActivity(lyricIntent)
+        }
+
     }
 
     fun switchToWelcome(view: View) {

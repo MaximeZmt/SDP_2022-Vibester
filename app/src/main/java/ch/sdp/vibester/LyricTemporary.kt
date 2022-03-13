@@ -6,12 +6,18 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import ch.sdp.vibester.api.MusixmatchApi
+import ch.sdp.vibester.api.LyricsOVHApiInterface
 import ch.sdp.vibester.model.Lyric
-import okhttp3.OkHttpClient
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 
 class LyricTemporary: AppCompatActivity() {
+    val baseUrl = "https://api.lyrics.ovh/"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lyric_temporary)
@@ -23,14 +29,26 @@ class LyricTemporary: AppCompatActivity() {
         val btnValidate = findViewById<Button>(R.id.validateForLyric)
 
         val textViewLyric = findViewById<TextView>(R.id.lyricBody)
+        textViewLyric.movementMethod = ScrollingMovementMethod()
 
         btnValidate.setOnClickListener {
-            val lyric = Lyric(MusixmatchApi.queryLyric(
-                artistName.text.toString(), trackName.text.toString(),
-                OkHttpClient()).get())
+            var retrofit = Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+            val service = retrofit.create(LyricsOVHApiInterface::class.java)
+            val call = service.getLyrics(artistName.text.toString(), trackName.text.toString())
+            call.enqueue(object: Callback<Lyric>{
+                override fun onFailure(call: Call<Lyric>?, t: Throwable?) {
+                    TODO("Not yet implemented")
+                }
 
-            textViewLyric.text = lyric.getLyricBody()
-            textViewLyric.movementMethod = ScrollingMovementMethod()
+                override fun onResponse(call: Call<Lyric>?, response: Response<Lyric>?) {
+                    if (response != null) {
+                        textViewLyric.text = response.body().lyrics
+                    }
+                }
+            })
         }
     }
 }

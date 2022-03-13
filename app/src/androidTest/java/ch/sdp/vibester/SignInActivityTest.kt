@@ -74,7 +74,7 @@ class SignInActivityTest {
 
     @Test
     fun createAccountCorrect() {
-        val randomInt = Random.nextInt(0, 1000)
+        val randomInt = Random.nextInt(0, 10000)
         val password = "password"
         val username = randomInt.toString().plus("@gg.com")
         onView(withId(R.id.username)).perform(ViewActions.typeText(username), closeSoftKeyboard())

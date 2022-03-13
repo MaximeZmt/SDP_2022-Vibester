@@ -25,7 +25,7 @@ class Song(jsonMeta: String) {
             artworkUrl = jsonRes.getString("artworkUrl100")
             trackName = jsonRes.getString("trackName")
             artistName = jsonRes.getString("artistName")
-        } catch(e: Exception){
+        } catch(e: Exception) {
             throw IllegalArgumentException("Song constructor, bad argument")
         }
     }

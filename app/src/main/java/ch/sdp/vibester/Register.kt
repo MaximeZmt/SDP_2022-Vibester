@@ -27,6 +27,8 @@ class Register : AppCompatActivity() {
 
     private lateinit var authenticator: FireBaseAuthenticator
 
+    private lateinit var email: TextView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,9 +41,7 @@ class Register : AppCompatActivity() {
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
         // Initialize Firebase Auth
-        authenticator = FireBaseAuthenticator(googleSignInClient)
-
-
+        authenticator = FireBaseAuthenticator()
 
         val btCreateAcc = findViewById<Button>(R.id.createAcc)
         val btLogIn = findViewById<Button>(R.id.logIn)
@@ -50,14 +50,14 @@ class Register : AppCompatActivity() {
 
         val username = findViewById<EditText>(R.id.username)
         val password = findViewById<EditText>(R.id.password)
-        val email = findViewById<TextView>(R.id.email)
+        email = findViewById<TextView>(R.id.email)
 
         btCreateAcc.setOnClickListener {
-            createAccount(username.text.toString(), password.text.toString(), email)
+            createAccount(username.text.toString(), password.text.toString())
         }
 
         btLogIn.setOnClickListener {
-            signIn(username.text.toString(), password.text.toString(), email)
+            signIn(username.text.toString(), password.text.toString())
         }
 
         googleSignIn.setOnClickListener {
@@ -69,7 +69,6 @@ class Register : AppCompatActivity() {
 
     public override fun onStart() {
         super.onStart()
-        // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = authenticator.auth.currentUser
         if(currentUser != null){
             reload();
@@ -78,8 +77,7 @@ class Register : AppCompatActivity() {
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        val email = findViewById<TextView>(R.id.email)
-        authenticator.googleActivityResult(requestCode, resultCode, data, email);
+        updateUI(authenticator.googleActivityResult(requestCode, resultCode, data));
     }
 
     private fun signInGoogle() {
@@ -87,37 +85,35 @@ class Register : AppCompatActivity() {
         startActivityForResult(intent, 1000)
     }
 
-    private fun createAccount(email: String, password: String, emailText: TextView) {
-        // [START create_user_with_email]
+    private fun createAccount(email: String, password: String) {
         authenticator.createAccount(email, password)
             .addOnCompleteListener(this) { task ->
-                onCompleteSignIn(task, emailText)
+                onCompleteSignIn(task)
             }
     }
 
-    private fun signIn(email: String, password: String, emailText: TextView) {
-        // [START sign_in_with_email]
+    private fun signIn(email: String, password: String) {
         authenticator.signIn(email, password)
             .addOnCompleteListener(this) { task ->
-                onCompleteSignIn(task, emailText)
+                onCompleteSignIn(task)
             }
-        // [END sign_in_with_email]
     }
 
-    private fun onCompleteSignIn(task: Task<AuthResult>, emailText: TextView) {
+    private fun onCompleteSignIn(task: Task<AuthResult>) {
         if (task.isSuccessful) {
             Toast.makeText(
                 baseContext, "You have logged in successfully",
                 Toast.LENGTH_SHORT
             ).show()
             val user = authenticator.auth.currentUser
-            updateUI(user, emailText)
+            if (user != null) {
+                updateUI(user.email)
+            }
         } else {
             // If sign in fails, display a message to the user.
-            Log.w(TAG, "signInWithEmail:failure", task.exception)
             Toast.makeText(baseContext, "Authentication failed.",
                 Toast.LENGTH_SHORT).show()
-            updateUI(null, emailText)
+            updateUI("Authentication error")
         }
     }
 
@@ -125,12 +121,7 @@ class Register : AppCompatActivity() {
 
     }
 
-    private fun updateUI(user: FirebaseUser?, emailText: TextView) {
-        if (user != null) {
-            emailText.text = user.email
-        }
-        else {
-            emailText.text = "Authentication error"
-        }
+    private fun updateUI(emailText: String?) {
+        email.text = emailText
     }
 }

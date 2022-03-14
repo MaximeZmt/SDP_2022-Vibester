@@ -14,9 +14,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
         <activity
-            android:name=".profile.editUser"
-            android:exported="false" />
-        <activity
             android:name=".GamescreenActivity"
             android:exported="false" />
         <activity

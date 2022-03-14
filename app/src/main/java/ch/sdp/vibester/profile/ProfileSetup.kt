@@ -23,15 +23,15 @@ class ProfileSetup: AppCompatActivity() {
         val editHandle = findViewById<Button>(R.id.editHandle)
 
         editUsername.setOnClickListener {
-            showdialog("Change username", "Enter new username", 0, R.id.username)
+            showDialog("Change username", "Enter new username", 0, R.id.username)
         }
 
         editHandle.setOnClickListener {
-            showdialog("Change handle", "Enter new handle", 0, R.id.handle)
+            showDialog("Change handle", "Enter new handle", 0, R.id.handle)
         }
     }
 
-    private fun showdialog(title: String, hint: String, id: Int, textId: Int) {
+    private fun showDialog(title: String, hint: String, id: Int, textId: Int) {
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
         builder.setTitle(title)
 

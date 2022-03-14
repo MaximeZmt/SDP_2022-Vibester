@@ -5,6 +5,10 @@ plugins {
     id 'kotlin-kapt'
 }
 
+jacoco {
+    toolVersion = "0.8.7"
+}
+
 android {
     compileSdk 31
 

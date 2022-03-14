@@ -23,13 +23,15 @@ class ProfileSetup: AppCompatActivity() {
         val editHandle = findViewById<Button>(R.id.editHandle)
 
         editUsername.setOnClickListener {
-            showDialog("Change username", "Enter new username", 0, R.id.username)
+            showGeneralDialog(R.id.username, "username")
         }
 
         editHandle.setOnClickListener {
-            showDialog("Change handle", "Enter new handle", 0, R.id.handle)
+            showGeneralDialog(R.id.handle, "handle")
         }
     }
+
+
 
     private fun showDialog(title: String, hint: String, id: Int, textId: Int) {
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
@@ -46,6 +48,13 @@ class ProfileSetup: AppCompatActivity() {
         })
         builder.setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }
         builder.show()
+    }
+
+    private fun showGeneralDialog(id: Int, name: String) {
+        val title = "Create $name"
+        val hint = "Enter new $name"
+
+        showDialog(title, hint, 0, id)
     }
 
 

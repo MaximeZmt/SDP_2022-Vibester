@@ -4,10 +4,8 @@ import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.InputType
-import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import ch.sdp.vibester.R
@@ -21,33 +19,35 @@ class ProfileSetup: AppCompatActivity() {
         val user: UserProfile = bundle?.getSerializable(EXTRA_ID) as UserProfile
         setupProfile(user)
 
-        val editUsername = findViewById<Button>(R.id.editProfile)
+        val editUsername = findViewById<Button>(R.id.editUser)
+        val editHandle = findViewById<Button>(R.id.editHandle)
 
         editUsername.setOnClickListener {
-            showdialog()
+            showdialog("Change username", "Enter new username", 0, R.id.username)
+        }
+
+        editHandle.setOnClickListener {
+            showdialog("Change handle", "Enter new handle", 0, R.id.handle)
         }
     }
 
-    private fun showdialog(){
+    private fun showdialog(title: String, hint: String, id: Int, textId: Int) {
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-        builder.setTitle("Title")
+        builder.setTitle(title)
 
-// Set up the input
         val input = EditText(this)
-// Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
-        input.setHint("Enter Text")
+        input.hint = hint
         input.inputType = InputType.TYPE_CLASS_TEXT
+        input.id = id
+
         builder.setView(input)
-
-// Set up the buttons
-        builder.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
-            // Here you get get input text from the Edittext
-            findViewById<TextView>(R.id.username).text = input.text.toString()
+        builder.setPositiveButton("OK", DialogInterface.OnClickListener { _, _ ->
+            findViewById<TextView>(textId).text = input.text.toString()
         })
-        builder.setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, which -> dialog.cancel() })
-
+        builder.setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }
         builder.show()
     }
+
 
     private fun setupProfile(user: UserProfile){
         findViewById<TextView>(R.id.handle).text =  user.handle

@@ -25,7 +25,8 @@
     <string name="createAcc">Create Account</string>
     <string name="logIn">Log in</string>
     <string name="logInGoogle">Log in with Google</string>
-    <string name="editProfile">Edit Profile</string>
+    <string name="editUsername">Edit Username</string>
+    <string name="editHandle">Edit Handle</string>
 
     <string-array name="nb_players">
         <item>One</item>

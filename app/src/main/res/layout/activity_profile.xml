@@ -165,15 +165,28 @@
     </TableLayout>
 
     <Button
-        android:id="@+id/editProfile"
+        android:id="@+id/editUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="14dp"
         android:layout_marginBottom="27dp"
-        android:text="@string/editProfile"
+        android:text="@string/editUsername"
         app:layout_constraintBottom_toTopOf="@+id/profileStatistics"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.937"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/username"
+        app:layout_constraintVertical_bias="0.3" />
+
+    <Button
+        android:id="@+id/editHandle"
+        android:layout_width="148dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="67dp"
+        android:layout_marginTop="22dp"
+        android:layout_marginBottom="35dp"
+        android:text="@string/editHandle"
+        app:layout_constraintBottom_toTopOf="@+id/profileStatistics"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/username" />
 

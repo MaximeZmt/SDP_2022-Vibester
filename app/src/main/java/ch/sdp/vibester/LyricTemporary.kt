@@ -14,7 +14,7 @@ import retrofit2.Response
 
 
 class LyricTemporary: AppCompatActivity() {
-    val baseUrl = "https://api.lyrics.ovh/"
+    private val baseUrl = "https://api.lyrics.ovh/"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,8 +34,7 @@ class LyricTemporary: AppCompatActivity() {
 
             val call = service.getLyrics(artistName.text.toString(), trackName.text.toString())
             call.enqueue(object: Callback<Lyric>{
-                override fun onFailure(call: Call<Lyric>?, t: Throwable?) {
-                }
+                override fun onFailure(call: Call<Lyric>?, t: Throwable?) {}
 
                 override fun onResponse(call: Call<Lyric>?, response: Response<Lyric>?) {
                     if (response != null) {

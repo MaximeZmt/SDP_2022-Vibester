@@ -42,7 +42,7 @@ class TypingGameTest{
     //Weird Test but it's working
     @Test
     fun globalTypingTest(){
-        val inputName = "muse psycho"
+        val inputName = "abba sos"
         val view =  Espresso.onView(withId(R.id.yourGuessET))
             .perform(ViewActions.typeText(inputName))
         val currenttime = System.currentTimeMillis()
@@ -59,7 +59,7 @@ class TypingGameTest{
         }
         Intents.intended(IntentMatchers.toPackage("ch.sdp.vibester"))
         val mysong = Intents.getIntents()[0].extras?.get("song") as Song
-        assertEquals("Muse", mysong.getArtistName())
-        assertEquals("Psycho", mysong.getTrackName())
+        assertEquals("ABBA", mysong.getArtistName())
+        assertEquals("SOS", mysong.getTrackName())
     }
 }

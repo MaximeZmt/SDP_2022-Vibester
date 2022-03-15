@@ -75,7 +75,7 @@ class TypingGame : AppCompatActivity() {
 
         frameLay.addView(linLay)
 
-        if(song.getArtistName() == "Muse" && song.getTrackName() == "Psycho"){
+        if(song.getArtistName() == "ABBA" && song.getTrackName() == "SOS"){
             frameLay.id = Int.MAX_VALUE
         }
         //frameLay.id = value

@@ -22,14 +22,7 @@ class MainActivity : AppCompatActivity() {
                 greetingIntent.putExtra("name", txtInput.text.toString())
                 startActivity(greetingIntent)
         }
-
-        val btnGenre = findViewById<Button>(R.id.genreButton)
-        val profileIntent = Intent(this, GenreTemporary::class.java)
-
-        btnGenre.setOnClickListener{
-            startActivity(profileIntent)
-        }
-
+        
         val btnLyric = findViewById<Button>(R.id.lyricButton)
         val lyricIntent = Intent(this, LyricTemporary::class.java)
         btnLyric.setOnClickListener {

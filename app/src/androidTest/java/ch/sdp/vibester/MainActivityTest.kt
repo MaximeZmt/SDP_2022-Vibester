@@ -45,20 +45,14 @@ class MainActivityTest {
     }
 
     @Test
-    fun scoreboardTest() {
-        onView(withId(R.id.scoreboardButton)).perform(click())
-        intended(hasComponent(ScoreBoardActivity::class.qualifiedName))
-    }
-
-    @Test
-    fun genreTest() {
-        onView(withId(R.id.genreButton)).perform(click())
-        intended(hasComponent(GenreTemporary::class.qualifiedName))
-    }
-
-    @Test
     fun checkIntentOnWelcome(){ //FILLER TESTING
         onView(withId(R.id.placeholder_welcome)).perform(click())
         intended(hasComponent(WelcomeScreen::class.qualifiedName))
+    }
+
+    @Test
+    fun checkIntentOnLyric() {
+        onView(withId(R.id.lyricButton)).perform(click())
+        intended(hasComponent(LyricTemporary::class.qualifiedName))
     }
 }

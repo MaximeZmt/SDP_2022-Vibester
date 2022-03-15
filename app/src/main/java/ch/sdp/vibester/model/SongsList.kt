@@ -30,7 +30,7 @@ class SongsList(jsonMeta: String) {
         }
     }
 
-    private fun filterSongs(nonFilteredSongs: JSONArray): MutableList<String> {
+     fun filterSongs(nonFilteredSongs: JSONArray): MutableList<String> {
         val songsLength = nonFilteredSongs.length()
         var songList = mutableListOf<String>()
         var  i = 0

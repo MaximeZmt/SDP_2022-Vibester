@@ -84,6 +84,36 @@ class SignInActivityTest {
         onView(withId(R.id.email)).check(matches(withText(randomInt.toString().plus("@gg.com"))))
     }
 
+    @Test
+    fun stringValidationEmptyUsername() {
+        onView(withId(R.id.createAcc)).perform(click())
+        onView(withId(R.id.email)).check(matches(withText("Empty email or password")))
+    }
 
+    @Test
+    fun stringValidationEmptyUPassword() {
+        onView(withId(R.id.createAcc)).perform(click())
+        onView(withId(R.id.email)).check(matches(withText("Empty email or password")))
+    }
+
+    @Test
+    fun stringValidationWrongEmail() {
+        val username = "john"
+        val password = "password"
+        onView(withId(R.id.username)).perform(ViewActions.typeText(username), closeSoftKeyboard())
+        onView(withId(R.id.password)).perform(ViewActions.typeText(password), closeSoftKeyboard())
+        onView(withId(R.id.createAcc)).perform(click())
+        onView(withId(R.id.email)).check(matches(withText("Not an email")))
+    }
+
+    @Test
+    fun stringValidationShorPassword() {
+        val username = "john"
+        val password = "12345"
+        onView(withId(R.id.username)).perform(ViewActions.typeText(username), closeSoftKeyboard())
+        onView(withId(R.id.password)).perform(ViewActions.typeText(password), closeSoftKeyboard())
+        onView(withId(R.id.createAcc)).perform(click())
+        onView(withId(R.id.email)).check(matches(withText("Password has to be at least 6 symbols")))
+    }
 
 }

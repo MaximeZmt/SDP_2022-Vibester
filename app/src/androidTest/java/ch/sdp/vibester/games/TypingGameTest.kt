@@ -1,9 +1,12 @@
 package ch.sdp.vibester.games
 
+import android.app.Activity
 import android.app.Application
+import android.widget.EditText
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
@@ -42,12 +45,21 @@ class TypingGameTest{
     //Weird Test but it's working
     @Test
     fun globalTypingTest(){
-        val inputName = "abba sos"
+        val inputName = "imagine dragons believer"
+        var myactivity: Activity? = null
+        activityRule.scenario.onActivity { activityRule -> {myactivity = activityRule} }
+        val tv = myactivity?.findViewById<EditText>(R.id.yourGuessET)
+
         val view =  Espresso.onView(withId(R.id.yourGuessET))
             .perform(ViewActions.typeText(inputName))
         val currenttime = System.currentTimeMillis()
         while(System.currentTimeMillis() < currenttime + 1000){
             //do nothing
+        }
+        myactivity?.runOnUiThread {
+            if (tv != null) {
+                tv.setSelection(tv.text.length)
+            }
         }
         view.perform(ViewActions.typeText(" "))
         while(System.currentTimeMillis() < currenttime + 3000){
@@ -59,7 +71,7 @@ class TypingGameTest{
         }
         Intents.intended(IntentMatchers.toPackage("ch.sdp.vibester"))
         val mysong = Intents.getIntents()[0].extras?.get("song") as Song
-        assertEquals("ABBA", mysong.getArtistName())
-        assertEquals("SOS", mysong.getTrackName())
+        assertEquals("Imagine Dragons", mysong.getArtistName())
+        assertEquals("Believer", mysong.getTrackName())
     }
 }

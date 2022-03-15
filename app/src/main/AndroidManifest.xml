@@ -2,7 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ch.sdp.vibester">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+
 
     <application
         android:allowBackup="true"
@@ -25,10 +28,6 @@
             android:name=".LyricTemporary"
             android:exported="false" />
         <activity
-            android:name=".GenreTemporary"
-            android:exported="false" />
-
-        <activity
             android:name=".GameSetupScreen"
             android:exported="false" />
         <activity
@@ -38,7 +37,14 @@
             android:name=".WelcomeScreen"
             android:exported="false" />
         <activity
+            android:name=".Register"
+            android:exported="true" />
+
+        <activity
             android:name=".GreetingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".GenreTemporary"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
@@ -50,5 +56,4 @@
             </intent-filter>
         </activity>
     </application>
-
 </manifest>

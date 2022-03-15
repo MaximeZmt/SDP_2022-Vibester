@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
                 greetingIntent.putExtra("name", txtInput.text.toString())
                 startActivity(greetingIntent)
         }
-        
+
         val btnLyric = findViewById<Button>(R.id.lyricButton)
         val lyricIntent = Intent(this, LyricTemporary::class.java)
         btnLyric.setOnClickListener {

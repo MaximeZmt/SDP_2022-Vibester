@@ -15,20 +15,19 @@ class LastfmApiTest {
     private val BY_TAG = "tag.gettoptracks"
     private val BY_CHART = "chart.gettoptracks"
 
-//    @Test
-//    fun lastfmApiQueryWorks() {
-//        var songsListFut = LastfmApi.querySongsList(OkHttpClient(), LastfmUri(method = BY_TAG, tag="rock"))
-//        val songsListObj = SongsList(songsListFut.get())
-//        val songsPerPage = songsListObj.getSongsPerPage().toInt()
-//        val songsList = songsListObj.getSongs()
-//        assertTrue(songsList.size > 0)
-//    }
+    @Test
+    fun lastfmApiQueryWorks() {
+        var songsListFut = LastfmApi.querySongsList(OkHttpClient(), LastfmUri(method = BY_TAG, tag="rock"))
+        val songsListObj = SongsList(songsListFut.get())
+        val songsList = songsListObj.getSongs()
+        assertTrue(songsList.size > 0)
+    }
 
     @get:Rule
     var exception = ExpectedException.none()
 
     @Test
-    fun songsByTagError() {
+    fun songsListError() {
         exception.expect(Exception::class.java)
         var songsFut = LastfmApi.querySongsList(OkHttpClient(), LastfmUri(method = BY_TAG, tag="rock"), baseUrl="ThisSiteDoesNotExist" )
         songsFut.get()

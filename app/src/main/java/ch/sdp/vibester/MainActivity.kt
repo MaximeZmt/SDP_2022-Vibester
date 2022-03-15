@@ -28,17 +28,6 @@ class MainActivity : AppCompatActivity() {
                 startActivity(greetingIntent)
         }
 
-        val btnProfile = findViewById<Button>(R.id.profileButton)
-        val profileIntent = Intent(this, ProfileSetup::class.java)
-
-        btnProfile.setOnClickListener{
-            val userID = (0..5).random().toString()
-            val dataProvider = userID.let { ProfileDataProvider(it) }
-            val user: UserProfile = dataProvider.getUserProfileData()
-            profileIntent.putExtra("userProfile",  user)
-            startActivity(profileIntent)
-        }
-
         val btnLyric = findViewById<Button>(R.id.lyricButton)
         val lyricIntent = Intent(this, LyricTemporary::class.java)
         btnLyric.setOnClickListener {

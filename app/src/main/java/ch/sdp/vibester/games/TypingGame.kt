@@ -1,5 +1,6 @@
 package ch.sdp.vibester.games
 
+import android.content.Intent
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.util.Log
@@ -19,6 +20,8 @@ import okhttp3.OkHttpClient
 
 
 class TypingGame : AppCompatActivity() {
+
+    var value = Int.MAX_VALUE
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_typing_game)
@@ -30,7 +33,6 @@ class TypingGame : AppCompatActivity() {
             val guessLayout = findViewById<LinearLayout>(R.id.displayGuess)
             guessLayout.removeAllViews()
             val txtInp = inputTxt.text.toString()
-            Log.e("yop", txtInp)
             if (txtInp.length>4){
 
                 CoroutineScope(Dispatchers.Main).launch {
@@ -38,8 +40,10 @@ class TypingGame : AppCompatActivity() {
                         ItunesMusicApi.querySong(txtInp, OkHttpClient(), 3).get()
                     }
                     val list = Song.listSong(task.await())
+                    value = Int.MAX_VALUE
                     for(x: Song in list){
                         guess(x)
+                        value -= 1
                     }
                 }
             }
@@ -47,6 +51,7 @@ class TypingGame : AppCompatActivity() {
 
 
     }
+
 
 
     private fun guess(song: Song){
@@ -70,17 +75,30 @@ class TypingGame : AppCompatActivity() {
 
         frameLay.addView(linLay)
 
+        if(song.getArtistName() == "Muse" && song.getTrackName() == "Psycho"){
+            frameLay.id = Int.MAX_VALUE
+        }
+        //frameLay.id = value
 
+        Log.e("testtttttttttlll", frameLay.id.toString())
 
         guessLayout.addView(frameLay)
+
+
 
         frameLay.setOnClickListener {
             frameLay.setBackgroundColor(getColor(R.color.teal_200))
             guessLayout.removeAllViews()
             guessLayout.addView(frameLay)
+
+            val newIntent = Intent(this, TypingGame::class.java)
+            newIntent.putExtra("song", song)
+            startActivity(newIntent)
+
         }
 
         guessLayout.addView(generateSpace(75,75))
+
     }
 
     private fun generateSpace(width: Int, height: Int): Space {

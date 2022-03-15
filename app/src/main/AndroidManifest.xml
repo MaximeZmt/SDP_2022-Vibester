@@ -23,6 +23,9 @@
        <activity
             android:name=".GameSetupScreen"
             android:exported="false" />
+        <activity
+            android:name=".GenreTemporary"
+            android:exported="false" />
         <activity android:name=".scoreboard.ScoreBoardActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

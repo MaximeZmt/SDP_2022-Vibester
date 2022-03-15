@@ -12,7 +12,9 @@ import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
+import org.hamcrest.Matchers
 import org.hamcrest.Matchers.allOf
+import org.hamcrest.Matchers.arrayWithSize
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -58,5 +60,8 @@ class GenreTemporaryTest {
     fun checkListLayoutRock() {
         onView(withId(R.id.rock)).perform(ViewActions.click())
         //something should happen here
+        Thread.sleep(1000)
+        onView(withId(R.id.listSongs)).check(matches(Matchers.notNullValue()));
+
     }
 }

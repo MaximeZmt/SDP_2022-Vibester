@@ -10,6 +10,9 @@ import ch.sdp.vibester.model.SongsList
 import okhttp3.OkHttpClient
 
 class GenreTemporary : AppCompatActivity() {
+    private val BY_TAG = "tag.gettoptracks"
+    private val BY_CHART = "chart.gettoptracks"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_genre_temporary)
@@ -20,8 +23,10 @@ class GenreTemporary : AppCompatActivity() {
         var listSongs = findViewById<ListView>(R.id.listSongs)
 
         btnRock.setOnClickListener {
-            val songs_rock = SongsList(LastfmApi.querySongsByTag(OkHttpClient(),"rock").get())
+            val songs_rock = SongsList(LastfmApi.querySongsList(OkHttpClient(),BY_TAG,"rock").get())
+//            val arr = ArrayAdapter(this, android.R.layout.simple_list_item_1 , songs_rock.getSongs())
             val arr = ArrayAdapter(this, android.R.layout.simple_list_item_1 , songs_rock.getSongs())
+
             listSongs.adapter = arr
         }
 

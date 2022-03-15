@@ -5,13 +5,8 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
-import android.widget.PopupMenu
 import androidx.appcompat.app.AppCompatActivity
-import ch.sdp.vibester.profile.ProfileDataProvider
 import ch.sdp.vibester.scoreboard.ScoreBoardActivity
-import ch.sdp.vibester.profile.ProfileSetup
-import ch.sdp.vibester.profile.UserProfile
-import java.io.Serializable
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,14 +25,10 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        val btnProfile = findViewById<Button>(R.id.profileButton)
+        val btnGenre = findViewById<Button>(R.id.genreButton)
         val profileIntent = Intent(this, GenreTemporary::class.java)
 
-        btnProfile.setOnClickListener{
-//            val userID = (0..5).random().toString()
-//            val dataProvider = userID.let { ProfileDataProvider(it) }
-//            val user: UserProfile = dataProvider.getUserProfileData()
-//            profileIntent.putExtra("userProfile",  user)
+        btnGenre.setOnClickListener{
             startActivity(profileIntent)
         }
 

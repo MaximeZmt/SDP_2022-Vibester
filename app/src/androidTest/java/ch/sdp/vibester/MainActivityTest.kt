@@ -51,9 +51,9 @@ class MainActivityTest {
     }
 
     @Test
-    fun profileTest() {
-        onView(withId(R.id.profileButton)).perform(click())
-        intended(hasComponent(ProfileSetup::class.qualifiedName))
+    fun genreTest() {
+        onView(withId(R.id.genreButton)).perform(click())
+        intended(hasComponent(GenreTemporary::class.qualifiedName))
     }
 
     @Test

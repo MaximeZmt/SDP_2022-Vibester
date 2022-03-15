@@ -23,7 +23,7 @@ import org.junit.Test
 //            listSongs.adapter = arr
 //        }
 class GenreTemporaryTest {
-    
+
     @get:Rule
     val testRule = ActivityScenarioRule(
         GenreTemporary::class.java
@@ -42,6 +42,9 @@ class GenreTemporaryTest {
     @Test
     fun buttonLayoutIsDisplayed() {
         onView(withId(R.id.rock)).check(matches(isDisplayed()))
+        onView(withId(R.id.kpop)).check(matches(isDisplayed()))
+        onView(withId(R.id.top)).check(matches(isDisplayed()))
+
     }
 
     @Test

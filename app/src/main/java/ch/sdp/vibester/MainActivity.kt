@@ -41,19 +41,15 @@ class MainActivity : AppCompatActivity() {
             startActivity(profileIntent)
         }
 
-        // button to scoreboard
         // FIXME: scoreboard enter button need to be move to the welcome screen
         val btnScoreboard = findViewById<Button>(R.id.scoreboardButton)
         val scoreboardIntent = Intent(this, ScoreBoardActivity::class.java)
-
         btnScoreboard.setOnClickListener {
             startActivity(scoreboardIntent)
         }
 
-        // button to lyric
         val btnLyric = findViewById<Button>(R.id.lyricButton)
         val lyricIntent = Intent(this, LyricTemporary::class.java)
-
         btnLyric.setOnClickListener {
             startActivity(lyricIntent)
         }

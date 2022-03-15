@@ -18,10 +18,10 @@ class GenreTemporary : AppCompatActivity() {
         val btnKpop = findViewById<Button>(R.id.kpop)
 
         var listSongs = findViewById<ListView>(R.id.listSongs)
-        val songs_query1 = SongsList(LastfmApi.querySongsByTag(OkHttpClient(),"rock").get())
-        val arr = ArrayAdapter(this, android.R.layout.simple_list_item_1 , songs_query1.getSongs())
 
         btnRock.setOnClickListener {
+            val songs_rock = SongsList(LastfmApi.querySongsByTag(OkHttpClient(),"rock").get())
+            val arr = ArrayAdapter(this, android.R.layout.simple_list_item_1 , songs_rock.getSongs())
             listSongs.adapter = arr
         }
 

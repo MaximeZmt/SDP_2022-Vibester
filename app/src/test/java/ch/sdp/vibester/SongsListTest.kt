@@ -40,7 +40,7 @@ class SongsListTest {
             assertEquals(page, mySongsList.getPage())
             assertEquals(songsPerPage, mySongsList.getSongsPerPage())
             assertEquals(totalPages, mySongsList.getTotalPages())
-            assertEquals(totalPages, mySongsList.getTotalSongs())
+            assertEquals(totalSongs, mySongsList.getTotalSongs())
     }
 
     @get:Rule

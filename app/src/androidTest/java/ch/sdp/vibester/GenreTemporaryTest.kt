@@ -60,7 +60,7 @@ class GenreTemporaryTest {
     fun checkListLayoutRock() {
         onView(withId(R.id.rock)).perform(ViewActions.click())
         //something should happen here
-        Thread.sleep(1000)
+//        Thread.sleep(1000)
 //        onView(withId(R.id.listSongs)).check(matches(Matchers.notNullValue()));
 
     }

@@ -24,11 +24,11 @@ class GenreTemporary : AppCompatActivity() {
         var listSongs = findViewById<ListView>(R.id.listSongs)
 
         btnRock.setOnClickListener {
-            val songs_rock = SongsList(LastfmApi.querySongsList(OkHttpClient(), LastfmUri(method = BY_TAG, tag = "rock")).get())
+//            val songs_rock = SongsList(LastfmApi.querySongsList(OkHttpClient(), LastfmUri(method = BY_TAG, tag = "rock")).get())
+////            val arr = ArrayAdapter(this, android.R.layout.simple_list_item_1 , songs_rock.getSongs())
 //            val arr = ArrayAdapter(this, android.R.layout.simple_list_item_1 , songs_rock.getSongs())
-            val arr = ArrayAdapter(this, android.R.layout.simple_list_item_1 , songs_rock.getSongs())
 
-            listSongs.adapter = arr
+//            listSongs.adapter = arr
         }
 
     }

@@ -18,14 +18,14 @@ class LastfmApi private constructor(){
             /**
              * Provide a list of songs by given tag (String query)
              */
-            fun querySongsList(okHttp: OkHttpClient, method:String, tag: String="", page:Int=1, baseUrl: String = LOOKUP_URL_BASE): CompletableFuture<String> {
+            fun querySongsList(okHttp: OkHttpClient, params:LastfmUri, baseUrl: String = LOOKUP_URL_BASE): CompletableFuture<String> {
                 var builtUri: Uri= Uri.parse(baseUrl)
                     .buildUpon()
-                    .appendQueryParameter("method", method)
+                    .appendQueryParameter("method", params.method)
                     .appendQueryParameter("api_key", API_KEY)
-                    .appendQueryParameter("format","json")
-                    .appendQueryParameter("page", page.toString())
-                    .appendQueryParameter("tag", tag)
+                    .appendQueryParameter("format",params.format)
+                    .appendQueryParameter("page", params.page)
+                    .appendQueryParameter("tag", params.tag)
                     .build()
 
                 val uri = builtUri.toString()

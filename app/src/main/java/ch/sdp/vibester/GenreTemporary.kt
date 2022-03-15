@@ -6,6 +6,7 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ListView
 import ch.sdp.vibester.api.LastfmApi
+import ch.sdp.vibester.api.LastfmUri
 import ch.sdp.vibester.model.SongsList
 import okhttp3.OkHttpClient
 
@@ -23,7 +24,7 @@ class GenreTemporary : AppCompatActivity() {
         var listSongs = findViewById<ListView>(R.id.listSongs)
 
         btnRock.setOnClickListener {
-            val songs_rock = SongsList(LastfmApi.querySongsList(OkHttpClient(),BY_TAG,"rock").get())
+            val songs_rock = SongsList(LastfmApi.querySongsList(OkHttpClient(), LastfmUri(method = BY_TAG, tag = "rock")).get())
 //            val arr = ArrayAdapter(this, android.R.layout.simple_list_item_1 , songs_rock.getSongs())
             val arr = ArrayAdapter(this, android.R.layout.simple_list_item_1 , songs_rock.getSongs())
 

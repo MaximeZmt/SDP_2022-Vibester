@@ -19,8 +19,7 @@ class LastfmApiTest {
     fun lastfmApiQueryWorks() {
         var songsListFut = LastfmApi.querySongsList(OkHttpClient(), LastfmUri(method = BY_TAG, tag="rock"))
         val songsListObj = SongsList(songsListFut.get())
-        val songsList = songsListObj.getSongs()
-        assertTrue(songsList.size > 0)
+        assertTrue(songsListObj.getSongs().size > 0)
     }
 
     @get:Rule

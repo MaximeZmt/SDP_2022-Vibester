@@ -31,13 +31,13 @@ class MainActivity : AppCompatActivity() {
 
 
         val btnProfile = findViewById<Button>(R.id.profileButton)
-        val profileIntent = Intent(this, ProfileSetup::class.java)
+        val profileIntent = Intent(this, GenreTemporary::class.java)
 
         btnProfile.setOnClickListener{
-            val userID = (0..5).random().toString()
-            val dataProvider = userID.let { ProfileDataProvider(it) }
-            val user: UserProfile = dataProvider.getUserProfileData()
-            profileIntent.putExtra("userProfile",  user)
+//            val userID = (0..5).random().toString()
+//            val dataProvider = userID.let { ProfileDataProvider(it) }
+//            val user: UserProfile = dataProvider.getUserProfileData()
+//            profileIntent.putExtra("userProfile",  user)
             startActivity(profileIntent)
         }
 

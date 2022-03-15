@@ -11,8 +11,6 @@ import ch.sdp.vibester.model.Lyric
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 
 class LyricTemporary: AppCompatActivity() {
@@ -32,15 +30,11 @@ class LyricTemporary: AppCompatActivity() {
         textViewLyric.movementMethod = ScrollingMovementMethod()
 
         btnValidate.setOnClickListener {
-            var retrofit = Retrofit.Builder()
-                .baseUrl(baseUrl)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-            val service = retrofit.create(LyricsOVHApiInterface::class.java)
+            val service = LyricsOVHApiInterface.create(baseUrl)
+
             val call = service.getLyrics(artistName.text.toString(), trackName.text.toString())
             call.enqueue(object: Callback<Lyric>{
                 override fun onFailure(call: Call<Lyric>?, t: Throwable?) {
-                    TODO("Not yet implemented")
                 }
 
                 override fun onResponse(call: Call<Lyric>?, response: Response<Lyric>?) {

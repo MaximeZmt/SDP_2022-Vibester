@@ -18,25 +18,16 @@ class MainActivity : AppCompatActivity() {
         val btnGreeting = findViewById<Button>(R.id.mainButton)
 
         val greetingIntent = Intent(this, GreetingActivity::class.java)
-
             btnGreeting.setOnClickListener {
                 greetingIntent.putExtra("name", txtInput.text.toString())
                 startActivity(greetingIntent)
         }
-
 
         val btnGenre = findViewById<Button>(R.id.genreButton)
         val profileIntent = Intent(this, GenreTemporary::class.java)
 
         btnGenre.setOnClickListener{
             startActivity(profileIntent)
-        }
-
-        // FIXME: scoreboard enter button need to be move to the welcome screen
-        val btnScoreboard = findViewById<Button>(R.id.scoreboardButton)
-        val scoreboardIntent = Intent(this, ScoreBoardActivity::class.java)
-        btnScoreboard.setOnClickListener {
-            startActivity(scoreboardIntent)
         }
 
         val btnLyric = findViewById<Button>(R.id.lyricButton)

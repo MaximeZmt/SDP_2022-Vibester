@@ -41,18 +41,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/scoreboardButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="37dp"
-        android:text="@string/scoreboard"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.485"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/placeholder_welcome" />
-
-    <Button
-        android:id="@+id/genreButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="P R O F I L E"
@@ -81,9 +69,12 @@
         android:id="@+id/lyricButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="22dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="93dp"
         android:text="Lyric"
+        app:layout_constraintBottom_toTopOf="@+id/profileButton"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scoreboardButton" />
+        app:layout_constraintTop_toBottomOf="@+id/placeholder_welcome" />
 </androidx.constraintlayout.widget.ConstraintLayout>

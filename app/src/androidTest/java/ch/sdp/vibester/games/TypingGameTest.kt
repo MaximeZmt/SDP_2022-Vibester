@@ -45,7 +45,7 @@ class TypingGameTest{
     //Weird Test but it's working
     @Test
     fun globalTypingTest(){
-        val inputName = "imagine dragons believer"
+        val inputName = "Abba sos"
         var myactivity: Activity? = null
         activityRule.scenario.onActivity { activityRule -> {myactivity = activityRule} }
         val tv = myactivity?.findViewById<EditText>(R.id.yourGuessET)
@@ -71,7 +71,7 @@ class TypingGameTest{
         }
         Intents.intended(IntentMatchers.toPackage("ch.sdp.vibester"))
         val mysong = Intents.getIntents()[0].extras?.get("song") as Song
-        assertEquals("Imagine Dragons", mysong.getArtistName())
-        assertEquals("Believer", mysong.getTrackName())
+        assertEquals("ABBA", mysong.getArtistName())
+        assertEquals("SOS", mysong.getTrackName())
     }
 }

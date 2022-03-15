@@ -13,7 +13,6 @@ import java.lang.Exception
 
 class LastfmApiTest {
     private val BY_TAG = "tag.gettoptracks"
-    private val BY_CHART = "chart.gettoptracks"
 
     @Test
     fun lastfmApiQueryWorks() {
@@ -26,7 +25,7 @@ class LastfmApiTest {
     var exception = ExpectedException.none()
 
     @Test
-    fun songsListError() {
+    fun lastfmApiQueryError() {
         exception.expect(Exception::class.java)
         var songsFut = LastfmApi.querySongsList(OkHttpClient(), LastfmUri(method = BY_TAG, tag="rock"), baseUrl="ThisSiteDoesNotExist" )
         songsFut.get()

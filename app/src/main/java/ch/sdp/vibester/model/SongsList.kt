@@ -26,7 +26,7 @@ class SongsList(jsonMeta: String) {
             totalSongs = attributes.getString("total")
 
         } catch(e: Exception){
-            throw IllegalArgumentException("SongsByTag constructor, bad argument")
+            throw IllegalArgumentException("SongsList constructor, bad argument")
         }
     }
 

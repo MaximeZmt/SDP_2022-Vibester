@@ -14,43 +14,20 @@ class LastfmApi private constructor(){
         companion object{
             private val API_KEY = "52bfdc690dd8373bba5351571a01ac14"
             private val LOOKUP_URL_BASE ="https://ws.audioscrobbler.com/2.0/"
-            private val BY_TAG = "tag.gettoptracks"
-            private val BY_CHART = "chart.gettoptracks"
 
             /**
              * Provide a list of songs by given tag (String query)
              */
-            fun querySongsByTag(okHttp: OkHttpClient, tag: String, page:Int = 1, baseUrl: String = LOOKUP_URL_BASE): CompletableFuture<String> {
+            fun querySongsList(okHttp: OkHttpClient, method:String, tag: String="", page:Int=1, baseUrl: String = LOOKUP_URL_BASE): CompletableFuture<String> {
                 var builtUri: Uri= Uri.parse(baseUrl)
                     .buildUpon()
-                    .appendQueryParameter("method", BY_TAG)
+                    .appendQueryParameter("method", method)
                     .appendQueryParameter("api_key", API_KEY)
                     .appendQueryParameter("format","json")
                     .appendQueryParameter("page", page.toString())
                     .appendQueryParameter("tag", tag)
                     .build()
 
-                val uri = builtUri.toString()
-                val req = Request.Builder().url(uri).build()
-
-                var retFuture = CompletableFuture<String>()
-
-                okHttp.newCall(req).enqueue(ApiCallback(retFuture))
-
-                return retFuture
-            }
-
-            /**
-             * Provide a list of songs by chart (String query)
-             */
-            fun querySongsByChart(okHttp: OkHttpClient, page:Int = 1, baseUrl: String = LOOKUP_URL_BASE): CompletableFuture<String> {
-                var builtUri: Uri= Uri.parse(baseUrl)
-                    .buildUpon()
-                    .appendQueryParameter("method", BY_CHART)
-                    .appendQueryParameter("api_key", API_KEY)
-                    .appendQueryParameter("format","json")
-                    .appendQueryParameter("page", page.toString())
-                    .build()
                 val uri = builtUri.toString()
                 val req = Request.Builder().url(uri).build()
 

@@ -5,9 +5,12 @@ import android.content.Context
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.graphics.drawable.GradientDrawable
+import android.media.MediaPlayer
+import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
+import android.view.View.GONE
 import android.view.ViewDebug
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -16,6 +19,7 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.core.view.ContentInfoCompat
 import androidx.core.widget.addTextChangedListener
 import ch.sdp.vibester.R
+import ch.sdp.vibester.api.AudioPlayer
 import ch.sdp.vibester.api.BitmapGetterApi
 import ch.sdp.vibester.api.ItunesMusicApi
 import ch.sdp.vibester.model.Song
@@ -24,13 +28,35 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
+import java.util.concurrent.CompletableFuture
 
 
 class TypingGame : AppCompatActivity() {
 
     companion object{
 
-        fun guess(song: Song, guessLayout: LinearLayout, ctx: Context): FrameLayout{
+        private fun hasWon(ctx: Context, hasWon: Boolean, itwas: Song){
+            if(hasWon){
+                Toast.makeText(ctx,"Well Done!",Toast.LENGTH_SHORT).show()
+            }else{
+                Toast.makeText(ctx,"Sadly you're wrong, it was: "+itwas.getTrackName()+" by "+itwas.getArtistName(),Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        fun intentGen(ctx: Context, choosenSong: Song, playedSong: Song):Intent{
+            val newIntent = Intent(ctx, TypingGame::class.java)
+            newIntent.putExtra("song", playedSong)
+            newIntent.putExtra("isPlaying", false)
+            if(choosenSong.getTrackName() == playedSong.getTrackName() && choosenSong.getArtistName() == playedSong.getArtistName()){
+                newIntent.putExtra("hasWon", true)
+            }else{
+                newIntent.putExtra("hasWon", false)
+            }
+            newIntent.setFlags(FLAG_ACTIVITY_NEW_TASK)
+            return newIntent
+        }
+
+        fun guess(song: Song, guessLayout: LinearLayout, ctx: Context, playedSong: Song, player: CompletableFuture<MediaPlayer>?): FrameLayout{
             val frameLay = FrameLayout(ctx)
             frameLay.background = borderGen()
 
@@ -49,11 +75,11 @@ class TypingGame : AppCompatActivity() {
                 frameLay.setBackgroundColor(getColor(ctx, R.color.teal_200))
                 guessLayout.removeAllViews()
                 guessLayout.addView(frameLay)
-
-                val newIntent = Intent(ctx, TypingGame::class.java)
-                newIntent.putExtra("song", song)
-                newIntent.setFlags(FLAG_ACTIVITY_NEW_TASK)
-                startActivity(ctx, newIntent, null)
+                val playerMedia = player?.get()
+                if (playerMedia != null) {
+                    playerMedia.stop()
+                }
+                startActivity(ctx, intentGen(ctx, song, playedSong), null)
             }
 
             guessLayout.addView(generateSpace(75,75, ctx))
@@ -109,8 +135,26 @@ class TypingGame : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_typing_game)
         val guessLayout = findViewById<LinearLayout>(R.id.displayGuess)
-
         val inputTxt = findViewById<EditText>(R.id.yourGuessET)
+
+        val getIntent = intent.extras
+
+        var mysong: Song? = null
+        var mediaPlayer: CompletableFuture<MediaPlayer>? = null
+
+        if(getIntent != null){
+            val playableSong: Song = getIntent.get("song") as Song
+            val isPlaying: Boolean = getIntent.get("isPlaying") as Boolean
+            val hasWon: Boolean = getIntent.get("hasWon") as Boolean
+
+            if(!isPlaying){
+                TypingGame.hasWon(this, hasWon, playableSong)
+                inputTxt.setKeyListener(null)
+            }else{
+                mediaPlayer = AudioPlayer.playAudio(playableSong.getPreviewUrl())
+            }
+            mysong = playableSong
+        }
 
         inputTxt.addTextChangedListener{
             guessLayout.removeAllViews()
@@ -123,7 +167,11 @@ class TypingGame : AppCompatActivity() {
                     }
                     val list = Song.listSong(task.await())
                     for(x: Song in list){
-                        guess(x, findViewById<LinearLayout>(R.id.displayGuess), this@TypingGame)
+                        if (mysong != null) {
+                            guess(x, findViewById<LinearLayout>(R.id.displayGuess), this@TypingGame, mysong, mediaPlayer)
+                        }else{
+                            guess(x, findViewById<LinearLayout>(R.id.displayGuess), this@TypingGame, x, mediaPlayer)
+                        }
                     }
                 }
             }

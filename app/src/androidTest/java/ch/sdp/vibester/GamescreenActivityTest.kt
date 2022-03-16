@@ -46,11 +46,29 @@ class GamescreenActivityTest {
     }
 
     // FIXME: Find a way to test the popup showing despite not being a component / make robolectric work
-/*
-    @Test
-    fun clickingButtonLaunchesPopup() {
-
-
+    fun answerIsPresentButInvisibleOnStartup() {
+        onView(withId(R.id.answer)).check(matches(withEffectiveVisibility(Visibility.INVISIBLE)))
     }
- */
+
+    @Test
+    fun clickingBuzzerMakesAnswerVisible() {
+        var i = 0
+        while (i < 4) {
+            onView(withId(R.id.answer)).check(matches(withEffectiveVisibility(Visibility.INVISIBLE)))
+            onView(withId(i)).perform(click())
+            onView(withId(R.id.answer)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+            i = i + 1
+            onView(withId(R.id.buttonCorrect)).perform(click())
+        }
+    }
+
+    @Test
+    fun clickingAnswerButtonsMakesAnswerInvisible() {
+        val buttonIdArray = arrayOf(R.id.buttonCorrect, R.id.buttonWrong)
+        for (butId in buttonIdArray) {
+            onView(withId(0)).perform(click()) // make answer visible first
+            onView(withId(butId)).perform(click())
+            onView(withId(R.id.answer)).check(matches(withEffectiveVisibility(Visibility.INVISIBLE)))
+        }
+    }
 }

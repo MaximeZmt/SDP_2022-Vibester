@@ -1,5 +1,6 @@
 package ch.sdp.vibester.games
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
@@ -21,7 +22,27 @@ import okhttp3.OkHttpClient
 
 class TypingGame : AppCompatActivity() {
 
-    var value = Int.MAX_VALUE
+    companion object{
+        @SuppressLint("StaticFieldLeak")
+        var myFrameLay: FrameLayout? = null
+        var correspondingSong: Song? = null
+
+        fun setMyFrame(fl: FrameLayout, song: Song)
+        {
+            myFrameLay = fl
+            correspondingSong = song
+        }
+
+        fun getMyFrame(): FrameLayout? {
+            return myFrameLay
+        }
+
+        fun getMySong(): Song? {
+            return correspondingSong
+        }
+
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_typing_game)
@@ -40,10 +61,8 @@ class TypingGame : AppCompatActivity() {
                         ItunesMusicApi.querySong(txtInp, OkHttpClient(), 3).get()
                     }
                     val list = Song.listSong(task.await())
-                    value = Int.MAX_VALUE
                     for(x: Song in list){
                         guess(x)
-                        value -= 1
                     }
                 }
             }
@@ -75,12 +94,7 @@ class TypingGame : AppCompatActivity() {
 
         frameLay.addView(linLay)
 
-        if(song.getArtistName() == "ABBA" && song.getTrackName() == "SOS"){
-            frameLay.id = Int.MAX_VALUE
-        }
-        //frameLay.id = value
-
-        Log.e("testtttttttttlll", frameLay.id.toString())
+        setMyFrame(frameLay, song)
 
         guessLayout.addView(frameLay)
 

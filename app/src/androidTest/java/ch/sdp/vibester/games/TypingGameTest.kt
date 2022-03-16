@@ -2,7 +2,9 @@ package ch.sdp.vibester.games
 
 import android.app.Activity
 import android.app.Application
+import android.util.Log
 import android.widget.EditText
+import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
@@ -14,8 +16,7 @@ import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.matcher.ViewMatchers
-import androidx.test.espresso.matcher.ViewMatchers.hasImeAction
-import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import ch.sdp.vibester.R
 import ch.sdp.vibester.model.Song
@@ -45,10 +46,9 @@ class TypingGameTest{
     //Weird Test but it's working
     @Test
     fun globalTypingTest(){
-        val inputName = "Abba sos"
-        var myactivity: Activity? = null
-        activityRule.scenario.onActivity { activityRule -> {myactivity = activityRule} }
-        val tv = myactivity?.findViewById<EditText>(R.id.yourGuessET)
+        val inputName = "Imagine Dragons origin Birds"
+        //var myactivity: Activity? = null
+        //activityRule.scenario.onActivity { activityRule -> {myactivity = activityRule} }
 
         val view =  Espresso.onView(withId(R.id.yourGuessET))
             .perform(ViewActions.typeText(inputName))
@@ -56,22 +56,26 @@ class TypingGameTest{
         while(System.currentTimeMillis() < currenttime + 1000){
             //do nothing
         }
-        myactivity?.runOnUiThread {
-            if (tv != null) {
-                tv.setSelection(tv.text.length)
-            }
-        }
+
         view.perform(ViewActions.typeText(" "))
-        while(System.currentTimeMillis() < currenttime + 3000){
+        while(System.currentTimeMillis() < currenttime + 6000){
             //do nothing
         }
-        Espresso.onView(withId(Int.MAX_VALUE)).perform(click())
+
+        val frame = TypingGame.getMyFrame() as FrameLayout
+        frame.id = Int.MAX_VALUE
+
+        val targetedSong = TypingGame.getMySong() as Song
+        Log.e("Song", targetedSong.getTrackName())
+
+        Espresso.onView(withText("Imagine Dragons - Birds")).perform(click())
         while(System.currentTimeMillis() < currenttime + 3000){
             //do nothing
         }
         Intents.intended(IntentMatchers.toPackage("ch.sdp.vibester"))
         val mysong = Intents.getIntents()[0].extras?.get("song") as Song
-        assertEquals("ABBA", mysong.getArtistName())
-        assertEquals("SOS", mysong.getTrackName())
+        assertEquals(targetedSong.getArtistName(), mysong.getArtistName())
+        assertEquals(targetedSong.getTrackName(), mysong.getTrackName())
     }
+
 }

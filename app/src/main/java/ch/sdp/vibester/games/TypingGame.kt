@@ -3,14 +3,17 @@ package ch.sdp.vibester.games
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
+import android.view.ViewDebug
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.getColor
 import androidx.core.content.ContextCompat.startActivity
+import androidx.core.view.ContentInfoCompat
 import androidx.core.widget.addTextChangedListener
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.BitmapGetterApi
@@ -49,6 +52,7 @@ class TypingGame : AppCompatActivity() {
 
                 val newIntent = Intent(ctx, TypingGame::class.java)
                 newIntent.putExtra("song", song)
+                newIntent.setFlags(FLAG_ACTIVITY_NEW_TASK)
                 startActivity(ctx, newIntent, null)
             }
 

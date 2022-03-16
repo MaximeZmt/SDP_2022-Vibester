@@ -1,9 +1,6 @@
 package ch.sdp.vibester.api
 
-import ch.sdp.vibester.model.SongList
 import junit.framework.Assert.assertTrue
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers
 import org.junit.Test
 
 class LastfmHelperTest {

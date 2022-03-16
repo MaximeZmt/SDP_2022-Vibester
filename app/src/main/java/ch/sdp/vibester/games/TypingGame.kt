@@ -21,16 +21,14 @@ import okhttp3.OkHttpClient
 
 
 class TypingGame : AppCompatActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_typing_game)
-
+        val guessLayout = findViewById<LinearLayout>(R.id.displayGuess)
 
         val inputTxt = findViewById<EditText>(R.id.yourGuessET)
 
         inputTxt.addTextChangedListener{
-            val guessLayout = findViewById<LinearLayout>(R.id.displayGuess)
             guessLayout.removeAllViews()
             val txtInp = inputTxt.text.toString()
             if (txtInp.length>4){
@@ -50,16 +48,18 @@ class TypingGame : AppCompatActivity() {
 
     }
 
-
-
-    private fun guess(song: Song){
-        val guessLayout = findViewById<LinearLayout>(R.id.displayGuess)
-        val frameLay = FrameLayout(this)
-
+    private fun borderGen(): GradientDrawable{
         val border = GradientDrawable()
         border.setColor(-0x1) //white background
         border.setStroke(1, -0x1000000)
-        frameLay.background = border
+        return border
+    }
+
+    private fun guess(song: Song){
+        val frameLay = FrameLayout(this)
+        val guessLayout = findViewById<LinearLayout>(R.id.displayGuess)
+
+        frameLay.background = borderGen()
 
         val linLay = LinearLayout(this)
 

@@ -6,7 +6,7 @@ import java.lang.IllegalArgumentException
 
 class SongList(jsonMeta: String) {
 
-    private var songList = mutableListOf<String>()
+    private var songs = mutableListOf<String>()
     private var page = ""
     private var songsPerPage = ""
     private var totalPages = ""
@@ -38,7 +38,7 @@ class SongList(jsonMeta: String) {
             val songName = songObj.getString("name")
             val artistDetails = songObj.getJSONObject("artist")
             val artistName = artistDetails.getString("name")
-            songList.add("$songName $artistName")
+            songs.add("$songName $artistName")
             ++i
         }
     }
@@ -48,7 +48,7 @@ class SongList(jsonMeta: String) {
      * @return MutableList<String> of type "$artistName $songName"
      */
     fun getSongList():MutableList<String>{
-        return songList
+        return songs
     }
 
     /**

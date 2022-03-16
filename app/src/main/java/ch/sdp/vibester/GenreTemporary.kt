@@ -5,11 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.ListView
-import ch.sdp.vibester.api.LastfmApi
 import ch.sdp.vibester.api.LastfmHelper
-import ch.sdp.vibester.api.LastfmUri
-import ch.sdp.vibester.model.SongList
-import okhttp3.OkHttpClient
 
 class GenreTemporary : AppCompatActivity() {
     private val BY_TAG = "tag.gettoptracks"
@@ -22,7 +18,7 @@ class GenreTemporary : AppCompatActivity() {
 
     fun performQuery(method: String, tag: String=""){
         val listSongs = findViewById<ListView>(R.id.listSongs)
-        val songList = LastfmHelper.getBothtSongList(method, tag)
+        val songList = LastfmHelper.getRandomSongList(method, tag)
         val arr = ArrayAdapter(this, android.R.layout.simple_list_item_1 , songList)
         listSongs.adapter = arr
     }

@@ -17,7 +17,7 @@ class LastfmHelperTest {
     }
 
     @Test
-    fun getBothtSongListWorks(){
-        assertTrue(LastfmHelper.getBothtSongList(method = BY_TAG, tag = "kpop").size == 10)
+    fun getRandomSongListWorks(){
+        assertTrue(LastfmHelper.getRandomSongList(method = BY_TAG, tag = "kpop").size == 10)
     }
 }

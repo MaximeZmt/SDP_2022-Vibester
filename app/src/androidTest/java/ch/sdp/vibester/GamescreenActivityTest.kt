@@ -66,7 +66,7 @@ class GamescreenActivityTest {
     fun clickingAnswerButtonsMakesAnswerInvisible() {
         val buttonIdArray = arrayOf(R.id.buttonCorrect, R.id.buttonWrong)
         for (butId in buttonIdArray) {
-            onView(withId(0)).perform(click()) // make answer visible at first
+            onView(withId(0)).perform(click()) // make answer visible first
             onView(withId(butId)).perform(click())
             onView(withId(R.id.answer)).check(matches(withEffectiveVisibility(Visibility.INVISIBLE)))
         }

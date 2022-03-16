@@ -46,6 +46,7 @@
             android:name=".GenreTemporary"
             android:exported="false" />
         <activity
+
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
@@ -55,4 +56,5 @@
             </intent-filter>
         </activity>
     </application>
+
 </manifest>

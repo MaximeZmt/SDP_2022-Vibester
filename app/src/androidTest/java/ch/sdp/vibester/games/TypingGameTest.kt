@@ -53,7 +53,7 @@ class TypingGameTest{
         while(System.currentTimeMillis() < currenttime + 5000){
             //do nothing
         }
-        Espresso.onView(withId(Int.MAX_VALUE)).perform(scrollTo(), click())
+        Espresso.onView(withText("Imagine Dragons - Monday")).perform(scrollTo(), click())
         while(System.currentTimeMillis() < currenttime + 1000){
             //do nothing
         }

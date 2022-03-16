@@ -22,27 +22,6 @@ import okhttp3.OkHttpClient
 
 class TypingGame : AppCompatActivity() {
 
-    companion object{
-        @SuppressLint("StaticFieldLeak")
-        var myFrameLay: FrameLayout? = null
-        var correspondingSong: Song? = null
-
-        fun setMyFrame(fl: FrameLayout, song: Song)
-        {
-            myFrameLay = fl
-            correspondingSong = song
-        }
-
-        fun getMyFrame(): FrameLayout? {
-            return myFrameLay
-        }
-
-        fun getMySong(): Song? {
-            return correspondingSong
-        }
-
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_typing_game)
@@ -87,15 +66,11 @@ class TypingGame : AppCompatActivity() {
         linLay.setHorizontalGravity(1)
         linLay.gravity = Gravity.LEFT
 
-
         linLay.addView(generateImage(song))
         linLay.addView(generateSpace(100,100))
         linLay.addView(generateText(song.getArtistName() + " - " + song.getTrackName()))
 
         frameLay.addView(linLay)
-
-        setMyFrame(frameLay, song)
-
         guessLayout.addView(frameLay)
 
 
@@ -112,7 +87,6 @@ class TypingGame : AppCompatActivity() {
         }
 
         guessLayout.addView(generateSpace(75,75))
-
     }
 
     private fun generateSpace(width: Int, height: Int): Space {

@@ -47,35 +47,25 @@ class TypingGameTest{
     @Test
     fun globalTypingTest(){
         val inputName = "Imagine Dragons origin Birds"
-        //var myactivity: Activity? = null
-        //activityRule.scenario.onActivity { activityRule -> {myactivity = activityRule} }
-
         val view =  Espresso.onView(withId(R.id.yourGuessET))
             .perform(ViewActions.typeText(inputName))
         val currenttime = System.currentTimeMillis()
         while(System.currentTimeMillis() < currenttime + 1000){
             //do nothing
         }
-
         view.perform(ViewActions.typeText(" "))
-        while(System.currentTimeMillis() < currenttime + 6000){
+        while(System.currentTimeMillis() < currenttime + 10000){
             //do nothing
         }
 
-        val frame = TypingGame.getMyFrame() as FrameLayout
-        frame.id = Int.MAX_VALUE
-
-        val targetedSong = TypingGame.getMySong() as Song
-        Log.e("Song", targetedSong.getTrackName())
-
         Espresso.onView(withText("Imagine Dragons - Birds")).perform(click())
-        while(System.currentTimeMillis() < currenttime + 3000){
+        while(System.currentTimeMillis() < currenttime + 1000){
             //do nothing
         }
         Intents.intended(IntentMatchers.toPackage("ch.sdp.vibester"))
         val mysong = Intents.getIntents()[0].extras?.get("song") as Song
-        assertEquals(targetedSong.getArtistName(), mysong.getArtistName())
-        assertEquals(targetedSong.getTrackName(), mysong.getTrackName())
+        assertEquals("Imagine Dragons", mysong.getArtistName())
+        assertEquals("Birds", mysong.getTrackName())
     }
 
 }

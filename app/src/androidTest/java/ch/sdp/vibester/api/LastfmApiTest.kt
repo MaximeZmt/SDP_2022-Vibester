@@ -1,7 +1,5 @@
-package ch.sdp.vibester
+package ch.sdp.vibester.api
 
-import ch.sdp.vibester.api.LastfmApi
-import ch.sdp.vibester.api.LastfmUri
 import ch.sdp.vibester.model.SongList
 import junit.framework.Assert.assertTrue
 import okhttp3.OkHttpClient

@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import ch.sdp.vibester.api.LastfmApi
+import ch.sdp.vibester.api.LastfmHelper
 import ch.sdp.vibester.api.LastfmUri
 import ch.sdp.vibester.model.SongList
 import okhttp3.OkHttpClient
@@ -20,11 +21,12 @@ class GenreTemporary : AppCompatActivity() {
     }
 
     fun performQuery(method: String, tag: String=""){
-        var listSongs = findViewById<ListView>(R.id.listSongs)
-        val songList = SongList(LastfmApi.querySongList(OkHttpClient(), LastfmUri(method = method, tag = tag)).get())
-        val arr = ArrayAdapter(this, android.R.layout.simple_list_item_1 , songList.getSongList())
+        val listSongs = findViewById<ListView>(R.id.listSongs)
+        val songList = LastfmHelper.getBothtSongList(method, tag)
+        val arr = ArrayAdapter(this, android.R.layout.simple_list_item_1 , songList)
         listSongs.adapter = arr
     }
+
     fun getKpopSongList(view: View) {
         performQuery(BY_TAG,"kpop")
     }

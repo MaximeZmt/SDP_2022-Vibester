@@ -49,13 +49,8 @@ class TypingGameTest{
     fun globalTypingTest(){
         val inputName = "1574210894"
         Espresso.onView(withId(R.id.yourGuessET))
-            .perform(ViewActions.typeText(inputName))
+            .perform(ViewActions.typeText(inputName)).perform(closeSoftKeyboard())
         val currenttime = System.currentTimeMillis()
-        while(System.currentTimeMillis() < currenttime + 1000){
-            //do nothing
-        }
-        Espresso.onView(withId(R.id.yourGuessET))
-            .perform(ViewActions.typeText(" ")).perform(closeSoftKeyboard())
         while(System.currentTimeMillis() < currenttime + 5000){
             //do nothing
         }

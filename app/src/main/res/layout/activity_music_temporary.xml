@@ -33,13 +33,13 @@
         android:ems="10"
         android:hint="Music Name"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/validate"
+        app:layout_constraintBottom_toTopOf="@+id/validateForMusic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textWelcome" />
 
     <Button
-        android:id="@+id/validate"
+        android:id="@+id/validateForMusic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="158dp"
@@ -64,5 +64,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/validate" />
+        app:layout_constraintTop_toBottomOf="@+id/validateForMusic" />
 </androidx.constraintlayout.widget.ConstraintLayout>

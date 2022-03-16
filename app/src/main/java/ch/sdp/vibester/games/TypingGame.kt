@@ -72,7 +72,6 @@ class TypingGame : AppCompatActivity() {
 
         frameLay.addView(linLay)
         guessLayout.addView(frameLay)
-
         frameLay.id = Int.MAX_VALUE
 
 

@@ -57,8 +57,11 @@ class Register : AppCompatActivity() {
 
     public override fun onStart() {
         super.onStart()
+        val currentUser = authenticator.auth.currentUser
+        if (currentUser != null) {
+            reload()
+        }
     }
-
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         updateUI(authenticator.googleActivityResult(requestCode, resultCode, data));
@@ -127,6 +130,10 @@ class Register : AppCompatActivity() {
                 Toast.LENGTH_SHORT).show()
             updateUI("Authentication error")
         }
+    }
+
+    private fun reload() {
+
     }
 
     private fun updateUI(emailText: String?) {

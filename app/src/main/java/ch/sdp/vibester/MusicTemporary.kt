@@ -16,14 +16,14 @@ class MusicTemporary : AppCompatActivity() {
 
         val txtInput = findViewById<EditText>(R.id.musicName)
 
-        val btnValidate = findViewById<Button>(R.id.validate)
+        val btnValidate = findViewById<Button>(R.id.validateForMusic)
 
         val textViewPlaying = findViewById<TextView>(R.id.textViewPlaying)
 
         btnValidate.setOnClickListener {
             val song = Song(ItunesMusicApi.querySong(txtInput.text.toString(), OkHttpClient()).get())
             ItunesMusicApi.playAudio(song.getPreviewUrl())
-            textViewPlaying.setText(song.getArtistName() + " - " + song.getTrackName())
+            textViewPlaying.text = song.getArtistName() + " - " + song.getTrackName()
         }
 
 

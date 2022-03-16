@@ -64,7 +64,7 @@ class TypingGame : AppCompatActivity() {
 
         val linLay = LinearLayout(this)
 
-        linLay.setHorizontalGravity(1)  
+        linLay.setHorizontalGravity(1)
         linLay.gravity = Gravity.LEFT
         linLay.addView(generateImage(song))
         linLay.addView(generateSpace(100,100))

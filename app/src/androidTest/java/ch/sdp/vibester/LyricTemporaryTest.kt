@@ -64,7 +64,7 @@ class LyricTemporaryTest {
         onView(withId(R.id.artistForLyric)).perform(typeText(inputArtistName), closeSoftKeyboard())
         onView(withId(R.id.trackForLyric)).perform(typeText(inputTrackName), closeSoftKeyboard())
         onView(withId(R.id.validateForLyric)).perform(click())
-        Thread.sleep(1000) // wait for API response
+        Thread.sleep(1500) // wait for API response
         onView(withId(R.id.lyricBody)).check(matches(withText(containsString("First things first"))))
     }
 }

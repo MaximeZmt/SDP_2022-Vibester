@@ -123,6 +123,13 @@ class SignInActivityTest {
         onView(withId(R.id.email)).check(matches(withText("TextView")))
     }
 
+    @Test
+    fun ardaTest() {
+        val a = FireBaseAuthenticator()
+        a.googleActivityResult(1000,-1,null)
+        onView(withId(R.id.email)).check(matches(withText("TextView")))
+    }
+
 
 
 }

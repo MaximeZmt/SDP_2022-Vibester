@@ -1,22 +1,17 @@
 package ch.sdp.vibester.games
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.graphics.drawable.GradientDrawable
 import android.media.MediaPlayer
-import android.opengl.Visibility
 import android.os.Bundle
-import android.util.Log
+import android.os.Handler
 import android.view.Gravity
-import android.view.View.GONE
-import android.view.ViewDebug
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.getColor
 import androidx.core.content.ContextCompat.startActivity
-import androidx.core.view.ContentInfoCompat
 import androidx.core.widget.addTextChangedListener
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.AudioPlayer
@@ -43,11 +38,11 @@ class TypingGame : AppCompatActivity() {
             }
         }
 
-        fun intentGen(ctx: Context, choosenSong: Song, playedSong: Song):Intent{
+        fun intentGen(ctx: Context, choosenSong: Song?, playedSong: Song):Intent{
             val newIntent = Intent(ctx, TypingGame::class.java)
             newIntent.putExtra("song", playedSong)
             newIntent.putExtra("isPlaying", false)
-            if(choosenSong.getTrackName() == playedSong.getTrackName() && choosenSong.getArtistName() == playedSong.getArtistName()){
+            if(choosenSong != null && choosenSong.getTrackName() == playedSong.getTrackName() && choosenSong.getArtistName() == playedSong.getArtistName()){
                 newIntent.putExtra("hasWon", true)
             }else{
                 newIntent.putExtra("hasWon", false)
@@ -137,10 +132,17 @@ class TypingGame : AppCompatActivity() {
         val guessLayout = findViewById<LinearLayout>(R.id.displayGuess)
         val inputTxt = findViewById<EditText>(R.id.yourGuessET)
 
+        val myBar = findViewById<ProgressBar>(R.id.progressBar)
+
         val getIntent = intent.extras
 
         var mysong: Song? = null
         var mediaPlayer: CompletableFuture<MediaPlayer>? = null
+
+        val ctx: Context = this as Context
+
+        myBar.progress = 30
+
 
         if(getIntent != null){
             val playableSong: Song = getIntent.get("song") as Song
@@ -155,6 +157,20 @@ class TypingGame : AppCompatActivity() {
             }
             mysong = playableSong
         }
+
+        val h = Handler()
+        h.post(object : Runnable {
+            override fun run() {
+                if(myBar.progress>0){
+                    myBar.progress -= 1
+                    h.postDelayed(this, 1000)
+                }else if (myBar.progress==0){
+                    if(mysong != null){
+                        startActivity(TypingGame.intentGen(ctx, null, mysong))
+                    }
+                }
+            }
+        })
 
         inputTxt.addTextChangedListener{
             guessLayout.removeAllViews()

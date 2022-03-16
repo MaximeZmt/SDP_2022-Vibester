@@ -1,5 +1,7 @@
 package ch.sdp.vibester.games
 
+import android.app.Activity
+import android.app.PendingIntent.getActivity
 import android.content.Context
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
@@ -10,6 +12,7 @@ import android.os.Handler
 import android.view.Gravity
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat.getColor
 import androidx.core.content.ContextCompat.startActivity
 import androidx.core.widget.addTextChangedListener
@@ -51,7 +54,7 @@ class TypingGame : AppCompatActivity() {
             return newIntent
         }
 
-        fun guess(song: Song, guessLayout: LinearLayout, ctx: Context, playedSong: Song, player: CompletableFuture<MediaPlayer>?): FrameLayout{
+        fun guess(song: Song, guessLayout: LinearLayout, ctx: Context, playedSong: Song, player: CompletableFuture<MediaPlayer>?, acti: Activity): FrameLayout{
             val frameLay = FrameLayout(ctx)
             frameLay.background = borderGen()
 
@@ -75,6 +78,7 @@ class TypingGame : AppCompatActivity() {
                     playerMedia.stop()
                 }
                 startActivity(ctx, intentGen(ctx, song, playedSong), null)
+                ActivityCompat.finishAffinity(acti)
             }
 
             guessLayout.addView(generateSpace(75,75, ctx))
@@ -142,6 +146,7 @@ class TypingGame : AppCompatActivity() {
         val ctx: Context = this as Context
 
         myBar.progress = 30
+        val myActi = this as Activity
 
 
         if(getIntent != null){
@@ -154,23 +159,25 @@ class TypingGame : AppCompatActivity() {
                 inputTxt.setKeyListener(null)
             }else{
                 mediaPlayer = AudioPlayer.playAudio(playableSong.getPreviewUrl())
+                val h = Handler()
+                h.post(object : Runnable {
+                    override fun run() {
+                        if(myBar.progress>0){
+                            myBar.progress -= 1
+                            h.postDelayed(this, 1000)
+                        }else if (myBar.progress==0){
+                            if(mysong != null){
+                                startActivity(TypingGame.intentGen(ctx, null, playableSong))
+                                finish()
+                            }
+                        }
+                    }
+                })
             }
             mysong = playableSong
         }
 
-        val h = Handler()
-        h.post(object : Runnable {
-            override fun run() {
-                if(myBar.progress>0){
-                    myBar.progress -= 1
-                    h.postDelayed(this, 1000)
-                }else if (myBar.progress==0){
-                    if(mysong != null){
-                        startActivity(TypingGame.intentGen(ctx, null, mysong))
-                    }
-                }
-            }
-        })
+
 
         inputTxt.addTextChangedListener{
             guessLayout.removeAllViews()
@@ -184,9 +191,9 @@ class TypingGame : AppCompatActivity() {
                     val list = Song.listSong(task.await())
                     for(x: Song in list){
                         if (mysong != null) {
-                            guess(x, findViewById<LinearLayout>(R.id.displayGuess), this@TypingGame, mysong, mediaPlayer)
+                            guess(x, findViewById<LinearLayout>(R.id.displayGuess), this@TypingGame, mysong, mediaPlayer, myActi)
                         }else{
-                            guess(x, findViewById<LinearLayout>(R.id.displayGuess), this@TypingGame, x, mediaPlayer)
+                            guess(x, findViewById<LinearLayout>(R.id.displayGuess), this@TypingGame, x, mediaPlayer, myActi)
                         }
                     }
                 }

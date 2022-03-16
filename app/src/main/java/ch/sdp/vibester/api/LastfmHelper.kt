@@ -5,14 +5,19 @@ import okhttp3.OkHttpClient
 
 class LastfmHelper {
     companion object{
-        private val LASTFM_PAGE_LIMIT = 200;
+        private var pageLimitQueryTwo = 200;
 
         fun getBothtSongList(method: String, tag:String = ""): List<String> {
             val firstQuery = SongList(LastfmApi.querySongList(OkHttpClient(),
                 LastfmUri(method = method, tag = tag)).get())
             val firstSongList = firstQuery.getSongList()
+            val pagesQueryOne = firstQuery.getTotalPages().toInt()
 
-            val pageQueryTwo =(2..LASTFM_PAGE_LIMIT).random()
+            if(pagesQueryOne < pageLimitQueryTwo){
+                pageLimitQueryTwo = pagesQueryOne
+            }
+
+            val pageQueryTwo =(2..pageLimitQueryTwo).random()
             val secondQuery = SongList(LastfmApi.querySongList(OkHttpClient(),
                 LastfmUri(method = method, tag = tag, page = pageQueryTwo.toString())).get())
             val secondSongList = secondQuery.getSongList()

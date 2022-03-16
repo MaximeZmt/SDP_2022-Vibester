@@ -1,6 +1,7 @@
 package ch.sdp.vibester
 
 import android.content.Intent
+import android.opengl.Visibility
 import android.os.Bundle
 import android.view.Gravity
 import android.widget.*
@@ -21,30 +22,21 @@ class GamescreenActivity: AppCompatActivity() {
          */
         val players = arrayOf("Kamila", "Jiabao", "Arda", "Laurynas")
 
+        val answer = findViewById<LinearLayout>(R.id.answer)
+        val answerText = findViewById<TextView>(R.id.answerText)
+
         val gamescreenIntent = Intent(this, GamescreenActivity::class.java)
 
         // hardcoded test values
         val song = "Demo"
         val artist = "The Placeholders"
 
-        val buildPopup = AlertDialog.Builder(this)
-        buildPopup.setTitle("Solution")
-        buildPopup.setMessage("The song was " + song + " by " + artist)
-
-        buildPopup.setPositiveButton("Correct") { dialog, which ->
-            Toast.makeText(applicationContext,
-                "Congrats!", Toast.LENGTH_SHORT).show()
-        }
-
-        buildPopup.setNegativeButton("Wrong") { dialog, which ->
-            Toast.makeText(applicationContext,
-                "Too bad!", Toast.LENGTH_SHORT).show()
-        }
+        answerText.text= "The song was $song by $artist"
 
         val allPoints = arrayOf(1, 2, 3, 4)
 
         buildScores(players, allPoints)
-        buildBuzzers(players, buildPopup)
+        buildBuzzers(players, answer)
 
     }
 
@@ -87,7 +79,7 @@ class GamescreenActivity: AppCompatActivity() {
     /*
     Programmatically builds the buzzers according to the number and names of players.
      */
-    private fun buildBuzzers(players: Array<String>, popup: AlertDialog.Builder) {
+    private fun buildBuzzers(players: Array<String>, answer: LinearLayout) {
 
         val buzzers = findViewById<LinearLayout>(R.id.buzzersLayout)
         val buttons = arrayOfNulls<Button>(players.size)
@@ -102,7 +94,7 @@ class GamescreenActivity: AppCompatActivity() {
             button.height = 150
             buttons.set(i, button)
             button.setOnClickListener {
-                popup.show()
+                answer.visibility = android.view.View.VISIBLE
             }
             buzzers.addView(button)
 
@@ -110,3 +102,20 @@ class GamescreenActivity: AppCompatActivity() {
         }
     }
 }
+
+
+/*
+        val buildPopup = AlertDialog.Builder(this)
+        buildPopup.setTitle("Solution")
+        buildPopup.setMessage("The song was " + song + " by " + artist)
+
+        buildPopup.setPositiveButton("Correct") { dialog, which ->
+            Toast.makeText(applicationContext,
+                "Congrats!", Toast.LENGTH_SHORT).show()
+        }
+
+        buildPopup.setNegativeButton("Wrong") { dialog, which ->
+            Toast.makeText(applicationContext,
+                "Too bad!", Toast.LENGTH_SHORT).show()
+        }
+*/

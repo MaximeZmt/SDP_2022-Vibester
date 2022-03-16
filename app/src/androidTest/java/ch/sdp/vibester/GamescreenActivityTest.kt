@@ -45,10 +45,15 @@ class GamescreenActivityTest {
         onView(withId(R.id.scoresTable)).check(matches(isDisplayed()))
     }
 
-    // FIXME: Find a way to test the popup showing despite not being a component / make robolectric work
+    @Test
+    fun answerIsPresentButInvisibleOnStartup() {
+        onView(withId(R.id.answer)).check(matches(withEffectiveVisibility(Visibility.INVISIBLE)))
+    }
+
+    // FIXME: Find a way to make buttons fetchable (give them an ID)?
 /*
     @Test
-    fun clickingButtonLaunchesPopup() {
+    fun clickingButtonMakesAnswerVisible() {
 
 
     }

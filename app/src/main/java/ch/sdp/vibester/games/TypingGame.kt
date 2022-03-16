@@ -10,6 +10,7 @@ import android.view.Gravity
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.getColor
+import androidx.core.content.ContextCompat.startActivity
 import androidx.core.widget.addTextChangedListener
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.BitmapGetterApi
@@ -25,6 +26,37 @@ import okhttp3.OkHttpClient
 class TypingGame : AppCompatActivity() {
 
     companion object{
+
+        fun guess(song: Song, guessLayout: LinearLayout, ctx: Context): FrameLayout{
+            val frameLay = FrameLayout(ctx)
+            frameLay.background = borderGen()
+
+            val linLay = LinearLayout(ctx)
+
+            linLay.setHorizontalGravity(1)
+            linLay.gravity = Gravity.LEFT
+            linLay.addView(generateImage(song, ctx))
+            linLay.addView(generateSpace(100,100, ctx))
+            linLay.addView(generateText(song.getArtistName() + " - " + song.getTrackName(), ctx))
+
+            frameLay.addView(linLay)
+            guessLayout.addView(frameLay)
+
+            frameLay.setOnClickListener {
+                frameLay.setBackgroundColor(getColor(ctx, R.color.teal_200))
+                guessLayout.removeAllViews()
+                guessLayout.addView(frameLay)
+
+                val newIntent = Intent(ctx, TypingGame::class.java)
+                newIntent.putExtra("song", song)
+                startActivity(ctx, newIntent, null)
+            }
+
+            guessLayout.addView(generateSpace(75,75, ctx))
+            return frameLay
+        }
+
+
         fun borderGen(): GradientDrawable{
             val border = GradientDrawable()
             border.setColor(-0x1) //white background
@@ -87,7 +119,7 @@ class TypingGame : AppCompatActivity() {
                     }
                     val list = Song.listSong(task.await())
                     for(x: Song in list){
-                        guess(x)
+                        guess(x, findViewById<LinearLayout>(R.id.displayGuess), this@TypingGame)
                     }
                 }
             }
@@ -95,40 +127,5 @@ class TypingGame : AppCompatActivity() {
 
 
     }
-
-
-    private fun guess(song: Song){
-        val frameLay = FrameLayout(this)
-        val guessLayout = findViewById<LinearLayout>(R.id.displayGuess)
-
-        frameLay.background = borderGen()
-
-        val linLay = LinearLayout(this)
-
-        linLay.setHorizontalGravity(1)
-        linLay.gravity = Gravity.LEFT
-        linLay.addView(generateImage(song, this))
-        linLay.addView(generateSpace(100,100, this))
-        linLay.addView(generateText(song.getArtistName() + " - " + song.getTrackName(), this))
-
-        frameLay.addView(linLay)
-        guessLayout.addView(frameLay)
-        frameLay.id = Int.MAX_VALUE
-
-
-        frameLay.setOnClickListener {
-            frameLay.setBackgroundColor(getColor(R.color.teal_200))
-            guessLayout.removeAllViews()
-            guessLayout.addView(frameLay)
-
-            val newIntent = Intent(this, TypingGame::class.java)
-            newIntent.putExtra("song", song)
-            startActivity(newIntent)
-
-        }
-
-        guessLayout.addView(generateSpace(75,75, this))
-    }
-
 
 }

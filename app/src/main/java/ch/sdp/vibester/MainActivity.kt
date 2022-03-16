@@ -29,6 +29,12 @@ class MainActivity : AppCompatActivity() {
             startActivity(lyricIntent)
         }
 
+        val btnGenre = findViewById<Button>(R.id.genreButton)
+        val genreIntent = Intent(this, GenreTemporary::class.java)
+        btnGenre.setOnClickListener {
+            startActivity(genreIntent)
+        }
+
     }
 
     fun switchToWelcome(view: View) {

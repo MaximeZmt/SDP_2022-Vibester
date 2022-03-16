@@ -50,7 +50,7 @@ class TypingGameTest{
         Espresso.onView(withId(R.id.yourGuessET))
             .perform(ViewActions.typeText(inputName)).perform(closeSoftKeyboard())
         val currenttime = System.currentTimeMillis()
-        while(System.currentTimeMillis() < currenttime + 5000){
+        while(System.currentTimeMillis() < currenttime + 10000){
             //do nothing
         }
         Espresso.onView(withText("Imagine Dragons - Monday")).perform(scrollTo(), click())

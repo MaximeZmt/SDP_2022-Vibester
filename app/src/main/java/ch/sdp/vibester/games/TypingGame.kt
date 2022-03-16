@@ -55,6 +55,7 @@ class TypingGame : AppCompatActivity() {
         return border
     }
 
+
     private fun guess(song: Song){
         val frameLay = FrameLayout(this)
         val guessLayout = findViewById<LinearLayout>(R.id.displayGuess)
@@ -74,6 +75,7 @@ class TypingGame : AppCompatActivity() {
         guessLayout.addView(frameLay)
 
         frameLay.id = Int.MAX_VALUE
+
 
         frameLay.setOnClickListener {
             frameLay.setBackgroundColor(getColor(R.color.teal_200))

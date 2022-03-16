@@ -55,7 +55,7 @@ class TypingGameTest{
             //do nothing
         }
         Espresso.onView(withId(R.id.yourGuessET))
-            .perform(ViewActions.typeText(inputName)).perform(closeSoftKeyboard())
+            .perform(ViewActions.typeText(" ")).perform(closeSoftKeyboard())
         while(System.currentTimeMillis() < currenttime + 5000){
             //do nothing
         }

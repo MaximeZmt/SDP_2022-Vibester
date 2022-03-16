@@ -33,9 +33,6 @@ import org.junit.Test
 import java.util.concurrent.TimeUnit
 
 class TypingGameTest{
-    @get: Rule
-    val activityRule = ActivityScenarioRule(TypingGame::class.java)
-
 
     @Before
     fun setUp() {

@@ -125,7 +125,7 @@ class TypingGameTest{
 
         val songTest = Song.singleSong(inputTxt)
         val ctx = ApplicationProvider.getApplicationContext() as Context
-        val frameLay= TypingGame.guess(songTest, LinearLayout(ctx), ctx)
+        val frameLay= TypingGame.guess(songTest, LinearLayout(ctx), ctx, songTest, null)
         frameLay.performClick()
         Intents.intended(IntentMatchers.toPackage("ch.sdp.vibester"))
         val mysong = Intents.getIntents()[0].extras?.get("song") as Song

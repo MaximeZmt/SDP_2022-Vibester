@@ -54,7 +54,7 @@ class TypingGame : AppCompatActivity() {
             return newIntent
         }
 
-        fun guess(song: Song, guessLayout: LinearLayout, ctx: Context, playedSong: Song, player: CompletableFuture<MediaPlayer>?, acti: Activity): FrameLayout{
+        fun guess(song: Song, guessLayout: LinearLayout, ctx: Context, playedSong: Song, player: CompletableFuture<MediaPlayer>?): FrameLayout{
             val frameLay = FrameLayout(ctx)
             frameLay.background = borderGen()
 
@@ -78,7 +78,6 @@ class TypingGame : AppCompatActivity() {
                     playerMedia.stop()
                 }
                 startActivity(ctx, intentGen(ctx, song, playedSong), null)
-                ActivityCompat.finishAffinity(acti)
             }
 
             guessLayout.addView(generateSpace(75,75, ctx))
@@ -146,7 +145,6 @@ class TypingGame : AppCompatActivity() {
         val ctx: Context = this as Context
 
         myBar.progress = 30
-        val myActi = this as Activity
 
 
         if(getIntent != null){
@@ -193,9 +191,9 @@ class TypingGame : AppCompatActivity() {
                     val list = Song.listSong(task.await())
                     for(x: Song in list){
                         if (mysong != null) {
-                            guess(x, findViewById<LinearLayout>(R.id.displayGuess), this@TypingGame, mysong, mediaPlayer, myActi)
+                            guess(x, findViewById<LinearLayout>(R.id.displayGuess), this@TypingGame, mysong, mediaPlayer)
                         }else{
-                            guess(x, findViewById<LinearLayout>(R.id.displayGuess), this@TypingGame, x, mediaPlayer, myActi)
+                            guess(x, findViewById<LinearLayout>(R.id.displayGuess), this@TypingGame, x, mediaPlayer)
                         }
                     }
                 }

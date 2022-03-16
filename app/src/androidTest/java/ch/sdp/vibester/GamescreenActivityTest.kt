@@ -54,6 +54,7 @@ class GamescreenActivityTest {
     fun clickingBuzzerMakesAnswerVisible() {
         var i = 0
         while (i < 4) {
+            onView(withId(R.id.answer)).check(matches(withEffectiveVisibility(Visibility.INVISIBLE)))
             onView(withId(i)).perform(click())
             onView(withId(R.id.answer)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
             i = i + 1

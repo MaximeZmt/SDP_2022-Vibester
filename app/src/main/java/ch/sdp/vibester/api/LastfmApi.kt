@@ -7,7 +7,7 @@ import java.util.concurrent.CompletableFuture
 
 
 /**
- * Class to retrieve list of songs by tag from LastFm
+ * Class to retrieve list of songs by tag or chart from LastFm API
  */
 class LastfmApi private constructor(){
 
@@ -16,7 +16,10 @@ class LastfmApi private constructor(){
             private val LOOKUP_URL_BASE ="https://ws.audioscrobbler.com/2.0/"
 
             /**
-             * Provide a list of songs by given tag (String query)
+             * Provide a list of songs by given tag or chart
+             * @param okHttp
+             * @param params: a LastfmUri data class with query parameters
+             * @param baseUrl: baseUrl if changed
              */
             fun querySongList(okHttp: OkHttpClient, params:LastfmUri, baseUrl: String = LOOKUP_URL_BASE): CompletableFuture<String> {
                 var builtUri: Uri= Uri.parse(baseUrl)
@@ -37,9 +40,6 @@ class LastfmApi private constructor(){
 
                 return retFuture
             }
-
         }
-
-
 
 }

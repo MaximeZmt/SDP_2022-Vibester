@@ -38,18 +38,6 @@ class SignInActivityTest {
         Register::class.java
     )
 
-
-    @Test
-    fun logInCorrect() {
-        val username = "john@test.com"
-        val password = "password"
-        onView(withId(R.id.username)).perform(ViewActions.typeText(username), closeSoftKeyboard())
-        onView(withId(R.id.password)).perform(ViewActions.typeText(password), closeSoftKeyboard())
-        onView(withId(R.id.logIn)).perform(click())
-        Thread.sleep(3_000)
-        onView(withId(R.id.email)).check(matches(withText("john@test.com")))
-    }
-
     @Test
     fun logInIncorrect() {
         val username = "johnyyy@test.com"
@@ -70,18 +58,6 @@ class SignInActivityTest {
         onView(withId(R.id.createAcc)).perform(click())
         Thread.sleep(3_000)
         onView(withId(R.id.email)).check(matches(withText("Authentication error")))
-    }
-
-    @Test
-    fun createAccountCorrect() {
-        val randomInt = Random.nextInt(0, 10000)
-        val password = "password"
-        val username = randomInt.toString().plus("@gg.com")
-        onView(withId(R.id.username)).perform(ViewActions.typeText(username), closeSoftKeyboard())
-        onView(withId(R.id.password)).perform(ViewActions.typeText(password), closeSoftKeyboard())
-        onView(withId(R.id.createAcc)).perform(click())
-        Thread.sleep(3_000)
-        onView(withId(R.id.email)).check(matches(withText(randomInt.toString().plus("@gg.com"))))
     }
 
     @Test
@@ -130,6 +106,28 @@ class SignInActivityTest {
         onView(withId(R.id.email)).check(matches(withText("TextView")))
     }
 
+    @Test
+    fun logInCorrect() {
+        val username = "john@test.com"
+        val password = "password"
+        onView(withId(R.id.username)).perform(ViewActions.typeText(username), closeSoftKeyboard())
+        onView(withId(R.id.password)).perform(ViewActions.typeText(password), closeSoftKeyboard())
+        onView(withId(R.id.logIn)).perform(click())
+        Thread.sleep(3_000)
+        onView(withId(R.id.email)).check(matches(withText("john@test.com")))
+    }
+
+    @Test
+    fun createAccountCorrect() {
+        val randomInt = Random.nextInt(0, 10000)
+        val password = "password"
+        val username = randomInt.toString().plus("@gg.com")
+        onView(withId(R.id.username)).perform(ViewActions.typeText(username), closeSoftKeyboard())
+        onView(withId(R.id.password)).perform(ViewActions.typeText(password), closeSoftKeyboard())
+        onView(withId(R.id.createAcc)).perform(click())
+        Thread.sleep(3_000)
+        onView(withId(R.id.email)).check(matches(withText(randomInt.toString().plus("@gg.com"))))
+    }
 
 
 }

@@ -11,8 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.action.ViewActions
-import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.action.ViewActions.closeSoftKeyboard
+import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.matcher.IntentMatchers
@@ -54,7 +53,7 @@ class TypingGameTest{
         while(System.currentTimeMillis() < currenttime + 5000){
             //do nothing
         }
-        Espresso.onView(withId(Int.MAX_VALUE)).perform(click())
+        Espresso.onView(withId(Int.MAX_VALUE)).perform(scrollTo(), click())
         while(System.currentTimeMillis() < currenttime + 1000){
             //do nothing
         }

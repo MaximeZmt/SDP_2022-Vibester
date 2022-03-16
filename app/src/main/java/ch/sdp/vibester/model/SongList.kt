@@ -4,9 +4,9 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.lang.IllegalArgumentException
 
-class SongsList(jsonMeta: String) {
+class SongList(jsonMeta: String) {
 
-    private var songs = mutableListOf<String>()
+    private var songList = mutableListOf<String>()
     private var page = ""
     private var songsPerPage = ""
     private var totalPages = ""
@@ -38,7 +38,7 @@ class SongsList(jsonMeta: String) {
             val songName = songObj.getString("name")
             val artistDetails = songObj.getJSONObject("artist")
             val artistName = artistDetails.getString("name")
-            songs.add("$songName $artistName")
+            songList.add("$songName $artistName")
             ++i
         }
     }
@@ -47,8 +47,8 @@ class SongsList(jsonMeta: String) {
      * Getter that return songs for the given tag
      * @return MutableList<String> of type "$artistName $songName"
      */
-    fun getSongs():MutableList<String>{
-        return songs
+    fun getSongList():MutableList<String>{
+        return songList
     }
 
     /**

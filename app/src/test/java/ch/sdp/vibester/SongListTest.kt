@@ -1,14 +1,12 @@
 package ch.sdp.vibester
 
-import ch.sdp.vibester.model.Song
-import ch.sdp.vibester.model.SongsList
-import org.junit.Assert
+import ch.sdp.vibester.model.SongList
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.ExpectedException
 
-class SongsListTest {
+class SongListTest {
 
     @Test
     fun jsonPreviewParseCorrectText(){
@@ -25,7 +23,7 @@ class SongsListTest {
             "@attr":{"rank":"1"}}],"@attr":{"tag":"british","page":"1","perPage":"1","totalPages":"66649","total":"66649"}}}
             """
 
-            val mySongsList = SongsList(inputTxt)
+            val mySongsList = SongList(inputTxt)
 
             val songName = "Wonderwall"
             val artistName = "Oasis"
@@ -36,7 +34,7 @@ class SongsListTest {
             val totalSongs = "66649"
 
 
-            assertEquals(inputSongsList, mySongsList.getSongs())
+            assertEquals(inputSongsList, mySongsList.getSongList())
             assertEquals(page, mySongsList.getPage())
             assertEquals(songsPerPage, mySongsList.getSongsPerPage())
             assertEquals(totalPages, mySongsList.getTotalPages())
@@ -50,7 +48,7 @@ class SongsListTest {
     fun jsonPreviewParseErrorText() {
         exception.expect(IllegalArgumentException::class.java)
         exception.expectMessage("SongsList constructor, bad argument")
-        SongsList("")
+        SongList("")
     }
 
 }

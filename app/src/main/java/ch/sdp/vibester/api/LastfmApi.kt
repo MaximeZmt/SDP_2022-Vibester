@@ -18,7 +18,7 @@ class LastfmApi private constructor(){
             /**
              * Provide a list of songs by given tag (String query)
              */
-            fun querySongsList(okHttp: OkHttpClient, params:LastfmUri, baseUrl: String = LOOKUP_URL_BASE): CompletableFuture<String> {
+            fun querySongList(okHttp: OkHttpClient, params:LastfmUri, baseUrl: String = LOOKUP_URL_BASE): CompletableFuture<String> {
                 var builtUri: Uri= Uri.parse(baseUrl)
                     .buildUpon()
                     .appendQueryParameter("method", params.method)

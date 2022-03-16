@@ -48,7 +48,6 @@ class GenreTemporaryTest {
         onView(withId(R.id.rock)).check(matches(isDisplayed()))
         onView(withId(R.id.kpop)).check(matches(isDisplayed()))
         onView(withId(R.id.top)).check(matches(isDisplayed()))
-
     }
 
     @Test

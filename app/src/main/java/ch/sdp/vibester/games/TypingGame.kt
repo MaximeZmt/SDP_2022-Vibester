@@ -73,7 +73,7 @@ class TypingGame : AppCompatActivity() {
         frameLay.addView(linLay)
         guessLayout.addView(frameLay)
 
-
+        frameLay.id = Int.MAX_VALUE
 
         frameLay.setOnClickListener {
             frameLay.setBackgroundColor(getColor(R.color.teal_200))

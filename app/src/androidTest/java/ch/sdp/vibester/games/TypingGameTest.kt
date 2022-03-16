@@ -46,26 +46,21 @@ class TypingGameTest{
     //Weird Test but it's working
     @Test
     fun globalTypingTest(){
-        val inputName = "Imagine Dragons origin Birds"
+        val inputName = "1574210894"
         val view =  Espresso.onView(withId(R.id.yourGuessET))
             .perform(ViewActions.typeText(inputName))
         val currenttime = System.currentTimeMillis()
-        while(System.currentTimeMillis() < currenttime + 1000){
+        while(System.currentTimeMillis() < currenttime + 5000){
             //do nothing
         }
-        view.perform(ViewActions.typeText(" "))
-        while(System.currentTimeMillis() < currenttime + 10000){
-            //do nothing
-        }
-
-        Espresso.onView(withText("Imagine Dragons - Birds")).perform(click())
+        Espresso.onView(withId(Int.MAX_VALUE)).perform(click())
         while(System.currentTimeMillis() < currenttime + 1000){
             //do nothing
         }
         Intents.intended(IntentMatchers.toPackage("ch.sdp.vibester"))
         val mysong = Intents.getIntents()[0].extras?.get("song") as Song
         assertEquals("Imagine Dragons", mysong.getArtistName())
-        assertEquals("Birds", mysong.getTrackName())
+        assertEquals("Monday", mysong.getTrackName())
     }
 
 }

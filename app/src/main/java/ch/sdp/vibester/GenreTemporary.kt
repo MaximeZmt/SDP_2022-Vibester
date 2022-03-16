@@ -2,12 +2,12 @@ package ch.sdp.vibester
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.ArrayAdapter
-import android.widget.Button
 import android.widget.ListView
 import ch.sdp.vibester.api.LastfmApi
 import ch.sdp.vibester.api.LastfmUri
-import ch.sdp.vibester.model.SongsList
+import ch.sdp.vibester.model.SongList
 import okhttp3.OkHttpClient
 
 class GenreTemporary : AppCompatActivity() {
@@ -17,20 +17,24 @@ class GenreTemporary : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_genre_temporary)
-        val btnRock = findViewById<Button>(R.id.rock)
-        val btnTop = findViewById<Button>(R.id.top)
-        val btnKpop = findViewById<Button>(R.id.kpop)
+    }
 
+    fun performQuery(method: String, tag: String=""){
         var listSongs = findViewById<ListView>(R.id.listSongs)
+        val songList = SongList(LastfmApi.querySongList(OkHttpClient(), LastfmUri(method = method, tag = tag)).get())
+        val arr = ArrayAdapter(this, android.R.layout.simple_list_item_1 , songList.getSongList())
+        listSongs.adapter = arr
+    }
+    fun getKpopSongList(view: View) {
+        performQuery(BY_TAG,"kpop")
+    }
 
-        btnRock.setOnClickListener {
-//            val songs_rock = SongsList(LastfmApi.querySongsList(OkHttpClient(), LastfmUri(method = BY_TAG, tag = "rock")).get())
-////            val arr = ArrayAdapter(this, android.R.layout.simple_list_item_1 , songs_rock.getSongs())
-//            val arr = ArrayAdapter(this, android.R.layout.simple_list_item_1 , songs_rock.getSongs())
+    fun getRockSongList(view: View) {
+        performQuery(BY_TAG, "rock")
+    }
 
-//            listSongs.adapter = arr
-        }
-
+    fun getTopSongList(view: View) {
+        performQuery(BY_CHART)
     }
 
 }

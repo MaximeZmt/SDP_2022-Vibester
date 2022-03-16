@@ -27,55 +27,38 @@ class Register : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_google_log_in)
 
-//    @FixMe
-//      Commenting this for now until we find a proper way to test it, then will merge it to main
-
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestEmail()
             .build()
 
         googleSignInClient = GoogleSignIn.getClient(this, gso)
-
-//         Initialize Firebase Auth
         authenticator = FireBaseAuthenticator()
 
         val btCreateAcc = findViewById<Button>(R.id.createAcc)
         val btLogIn = findViewById<Button>(R.id.logIn)
         val googleSignIn = findViewById<Button>(R.id.googleBtn)
 
-
         val username = findViewById<EditText>(R.id.username)
         val password = findViewById<EditText>(R.id.password)
-        email = findViewById<TextView>(R.id.email)
+        email = findViewById(R.id.email)
 
         btCreateAcc.setOnClickListener {
-            if(stringValidation(username.text.toString(), password.text.toString())) {
-                createAccount(username.text.toString(), password.text.toString())
-            }
+            authenticate(username.text.toString(), password.text.toString(), true)
         }
 
         btLogIn.setOnClickListener {
-            if(stringValidation(username.text.toString(), password.text.toString())) {
-                signIn(username.text.toString(), password.text.toString())
-            }
+            authenticate(username.text.toString(), password.text.toString(), false)
         }
 
         googleSignIn.setOnClickListener {
             signInGoogle()
         }
-
     }
 
     public override fun onStart() {
         super.onStart()
-        val currentUser = authenticator.auth.currentUser
-        if (currentUser != null) {
-            reload();
-        }
     }
 
-    //    @FixMe
-//      Commenting this for now until we find a proper way to test it, then will merge it to main
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         updateUI(authenticator.googleActivityResult(requestCode, resultCode, data));
@@ -97,6 +80,17 @@ class Register : AppCompatActivity() {
             return false
         }
         return true
+    }
+
+    private fun authenticate(email: String, password: String, creatAcc: Boolean) {
+        if(stringValidation(email, password)) {
+            if(creatAcc) {
+                createAccount(email, password)
+            }
+            else {
+                signIn(email, password)
+            }
+        }
     }
 
     private fun signInGoogle() {
@@ -133,10 +127,6 @@ class Register : AppCompatActivity() {
                 Toast.LENGTH_SHORT).show()
             updateUI("Authentication error")
         }
-    }
-
-    private fun reload() {
-
     }
 
     private fun updateUI(emailText: String?) {

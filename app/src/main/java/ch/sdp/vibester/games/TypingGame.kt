@@ -66,7 +66,6 @@ class TypingGame : AppCompatActivity() {
 
         linLay.setHorizontalGravity(1)
         linLay.gravity = Gravity.LEFT
- 
         linLay.addView(generateImage(song))
         linLay.addView(generateSpace(100,100))
         linLay.addView(generateText(song.getArtistName() + " - " + song.getTrackName()))

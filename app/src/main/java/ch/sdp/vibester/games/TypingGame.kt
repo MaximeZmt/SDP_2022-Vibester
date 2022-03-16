@@ -164,11 +164,13 @@ class TypingGame : AppCompatActivity() {
                     override fun run() {
                         if(myBar.progress>0){
                             myBar.progress -= 1
-                            h.postDelayed(this, 1000)
+                            h.postDelayed(this, 999) //just a bit shorter than a second for safety
                         }else if (myBar.progress==0){
                             if(mysong != null){
-                                startActivity(TypingGame.intentGen(ctx, null, playableSong))
-                                finish()
+                                if(mediaPlayer.get().isPlaying){
+                                    startActivity(TypingGame.intentGen(ctx, null, playableSong))
+                                    finish()
+                                }
                             }
                         }
                     }

@@ -8,6 +8,7 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AlertDialogLayout
+import androidx.core.view.get
 
 
 class GamescreenActivity: AppCompatActivity() {
@@ -25,8 +26,6 @@ class GamescreenActivity: AppCompatActivity() {
         val answer = findViewById<LinearLayout>(R.id.answer)
         val answerText = findViewById<TextView>(R.id.answerText)
 
-        val gamescreenIntent = Intent(this, GamescreenActivity::class.java)
-
         // hardcoded test values
         val song = "Demo"
         val artist = "The Placeholders"
@@ -37,7 +36,8 @@ class GamescreenActivity: AppCompatActivity() {
 
         buildScores(players, allPoints)
         buildBuzzers(players, answer)
-
+        setAnswerButton(answer, findViewById(R.id.buttonCorrect))
+        setAnswerButton(answer, findViewById(R.id.buttonWrong))
     }
 
     /*
@@ -89,6 +89,7 @@ class GamescreenActivity: AppCompatActivity() {
         for (pName in players) {
 
             val button = Button(this)
+            button.id = i
             button.text = pName
             button.width = 100
             button.height = 150
@@ -101,21 +102,10 @@ class GamescreenActivity: AppCompatActivity() {
             i = i + 1
         }
     }
+
+    private fun setAnswerButton(answer: LinearLayout, button: Button) {
+        button.setOnClickListener {
+            answer.visibility = android.view.View.INVISIBLE
+        }
+    }
 }
-
-
-/*
-        val buildPopup = AlertDialog.Builder(this)
-        buildPopup.setTitle("Solution")
-        buildPopup.setMessage("The song was " + song + " by " + artist)
-
-        buildPopup.setPositiveButton("Correct") { dialog, which ->
-            Toast.makeText(applicationContext,
-                "Congrats!", Toast.LENGTH_SHORT).show()
-        }
-
-        buildPopup.setNegativeButton("Wrong") { dialog, which ->
-            Toast.makeText(applicationContext,
-                "Too bad!", Toast.LENGTH_SHORT).show()
-        }
-*/

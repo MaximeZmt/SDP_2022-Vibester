@@ -33,6 +33,7 @@
         android:orientation="vertical"
         android:visibility="invisible"
         android:gravity="center"
+        android:background="#AAAAAA"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

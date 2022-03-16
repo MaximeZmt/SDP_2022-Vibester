@@ -17,7 +17,7 @@ class SongsList(jsonMeta: String) {
             val jsonObj = JSONObject(jsonMeta)
             var jsonRes = jsonObj.getJSONObject("tracks")
             var nonFilteredSongs = jsonRes.getJSONArray("track")
-            songs = filterSongs(nonFilteredSongs)
+            filterSongs(nonFilteredSongs)
 
             var attributes = jsonRes.getJSONObject("@attr")
             page = attributes.getString("page")
@@ -30,19 +30,17 @@ class SongsList(jsonMeta: String) {
         }
     }
 
-     fun filterSongs(nonFilteredSongs: JSONArray): MutableList<String> {
+    private fun filterSongs(nonFilteredSongs: JSONArray) {
         val songsLength = nonFilteredSongs.length()
-        var songList = mutableListOf<String>()
         var  i = 0
         while(i < songsLength) {
             var songObj = nonFilteredSongs.getJSONObject(i)
             val songName = songObj.getString("name")
             val artistDetails = songObj.getJSONObject("artist")
             val artistName = artistDetails.getString("name")
-            songList.add("$songName $artistName")
+            songs.add("$songName $artistName")
             ++i
         }
-        return songList
     }
 
     /**

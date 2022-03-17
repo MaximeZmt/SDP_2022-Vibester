@@ -16,6 +16,9 @@
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.MyApplication">
         <activity
+            android:name=".games.TypingGame"
+            android:exported="false" />
+        <activity
             android:name="ch.sdp.vibester.GamescreenActivity"
             android:exported="false" />
         <activity
@@ -46,7 +49,6 @@
             android:name=".GenreTemporary"
             android:exported="false" />
         <activity
-
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
@@ -56,5 +58,4 @@
             </intent-filter>
         </activity>
     </application>
-
 </manifest>

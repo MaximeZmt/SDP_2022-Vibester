@@ -16,7 +16,7 @@ import com.google.firebase.auth.AuthResult
 
 class Register : AppCompatActivity() {
 
-//    private lateinit var googleSignInClient: GoogleSignInClient
+    private lateinit var googleSignInClient: GoogleSignInClient
 
     private lateinit var authenticator: FireBaseAuthenticator
 
@@ -27,61 +27,79 @@ class Register : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_google_log_in)
 
-//    @FixMe
-//      Commenting this for now until we find a proper way to test it, then will merge it to main
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestEmail()
+            .build()
 
-//        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-//            .requestEmail()
-//            .build()
-
-//        googleSignInClient = GoogleSignIn.getClient(this, gso)
-
-        // Initialize Firebase Auth
+        googleSignInClient = GoogleSignIn.getClient(this, gso)
         authenticator = FireBaseAuthenticator()
 
         val btCreateAcc = findViewById<Button>(R.id.createAcc)
         val btLogIn = findViewById<Button>(R.id.logIn)
-//        val googleSignIn = findViewById<Button>(R.id.googleBtn)
-
+        val googleSignIn = findViewById<Button>(R.id.googleBtn)
 
         val username = findViewById<EditText>(R.id.username)
         val password = findViewById<EditText>(R.id.password)
-        email = findViewById<TextView>(R.id.email)
+        email = findViewById(R.id.email)
 
         btCreateAcc.setOnClickListener {
-            createAccount(username.text.toString(), password.text.toString())
+            authenticate(username.text.toString(), password.text.toString(), true)
         }
 
         btLogIn.setOnClickListener {
-            signIn(username.text.toString(), password.text.toString())
+            authenticate(username.text.toString(), password.text.toString(), false)
         }
 
-//        googleSignIn.setOnClickListener {
-//            signInGoogle()
-//        }
-
-
+        googleSignIn.setOnClickListener {
+            signInGoogle()
+        }
     }
 
     public override fun onStart() {
         super.onStart()
         val currentUser = authenticator.auth.currentUser
         if (currentUser != null) {
-            reload();
+            reload()
+        }
+    }
+    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        updateUI(authenticator.googleActivityResult(requestCode, resultCode, data));
+    }
+
+    private fun stringValidation(username: String, password: String): Boolean{
+        if(username.isEmpty() || password.isEmpty()) {
+            email.text = "Empty email or password"
+            return false
+        }
+
+        if(!username.contains('@')) {
+            email.text = "Not an email"
+            return false
+        }
+
+        if(password.length < 6) {
+            email.text = "Password has to be at least 6 symbols"
+            return false
+        }
+        return true
+    }
+
+    private fun authenticate(email: String, password: String, creatAcc: Boolean) {
+        if(stringValidation(email, password)) {
+            if(creatAcc) {
+                createAccount(email, password)
+            }
+            else {
+                signIn(email, password)
+            }
         }
     }
 
-//    @FixMe
-//      Commenting this for now until we find a proper way to test it, then will merge it to main
-//    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//        updateUI(authenticator.googleActivityResult(requestCode, resultCode, data));
-//    }
-
-//    private fun signInGoogle() {
-//        val intent = googleSignInClient.signInIntent
-//        startActivityForResult(intent, 1000)
-//    }
+    private fun signInGoogle() {
+        val intent = googleSignInClient.signInIntent
+        startActivityForResult(intent, 1000)
+    }
 
     private fun createAccount(email: String, password: String) {
         authenticator.createAccount(email, password)

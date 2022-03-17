@@ -3,6 +3,7 @@ package ch.sdp.vibester
 import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
+import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -108,5 +109,38 @@ class GamescreenActivity: AppCompatActivity() {
 
             i = i + 1
         }
+    }
+
+    fun switchToEnding(view: View) {
+        val intent = Intent(this, GameEndingScreen::class.java)
+        //MOCK VALUES FOR INCORRECT SONGS, ADAPT FROM GAME DATA IN THE FUTURE
+        val incArray: Array<String> = arrayOf("One", "Two", "Three")
+        val statNames: Array<String> = arrayOf("Hello there",
+            "Second Stat",
+            "Third Stat",
+            "Fourth Stat",
+            "Fifth Stat")
+        val statRes: Array<String> = arrayOf("General Kenobi",
+            "----- *2 -----",
+            "----- *3 -----",
+            "----- *4 -----",
+            "----- *5 -----")
+
+        intent.putExtra("playerName", "Arda")
+        intent.putExtra("nbIncorrectSong", 3)
+        /*
+        intent.putExtra("incorrect_songs", incArray)
+        intent.putExtra("names", statNames)
+        intent.putExtra("values", statRes)
+        */
+
+        //Brute-force singular intents, unable to solve the issue with array intents.
+        intent.putExtra("incorrect_song_1", "One")
+        intent.putExtra("incorrect_song_2", "Two")
+        intent.putExtra("incorrect_song_3", "Three")
+
+        intent.putExtra("stat_1", "Hello there")
+        intent.putExtra("stat_res_1", "General Kenobi")
+        startActivity(intent)
     }
 }

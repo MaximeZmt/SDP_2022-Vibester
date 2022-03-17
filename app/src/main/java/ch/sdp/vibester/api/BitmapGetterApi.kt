@@ -21,6 +21,9 @@ import java.util.concurrent.Executors
 class BitmapGetterApi private constructor(){
     companion object{
 
+        /**
+         * A function to download images from internet and to convert them asynchronously to bitmap
+         */
         fun download(url: String): CompletableFuture<Bitmap> {
             val futureBitmap = CompletableFuture<Bitmap>()
             if (!url.startsWith("https://") && !url.startsWith("http://")){

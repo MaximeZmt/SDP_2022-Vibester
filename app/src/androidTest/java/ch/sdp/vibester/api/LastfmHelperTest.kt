@@ -21,9 +21,4 @@ class LastfmHelperTest {
     fun getRandomSongListWorks(){
         assertTrue(LastfmHelper.getRandomSongList(method = BY_TAG, tag = "kpop").size == GAME_SIZE)
     }
-
-//    @Test
-//    fun getRandomSongListError(){
-//        assertTrue(LastfmHelper.getRandomSongList(method = BY_TAG, tag = "iwrjsfpijsfps").size == 0)
-//    }
 }

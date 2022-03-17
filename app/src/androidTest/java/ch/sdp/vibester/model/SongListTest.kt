@@ -1,6 +1,5 @@
-package ch.sdp.vibester
+package ch.sdp.vibester.model
 
-import ch.sdp.vibester.model.SongList
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test

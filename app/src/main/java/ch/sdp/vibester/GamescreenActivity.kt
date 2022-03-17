@@ -1,6 +1,7 @@
 package ch.sdp.vibester
 
 import android.content.Intent
+import android.opengl.Visibility
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
@@ -8,6 +9,7 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AlertDialogLayout
+import androidx.core.view.get
 
 
 class GamescreenActivity: AppCompatActivity() {
@@ -22,31 +24,21 @@ class GamescreenActivity: AppCompatActivity() {
          */
         val players = arrayOf("Kamila", "Jiabao", "Arda", "Laurynas")
 
-        val gamescreenIntent = Intent(this, GamescreenActivity::class.java)
+        val answer = findViewById<LinearLayout>(R.id.answer)
+        val answerText = findViewById<TextView>(R.id.answerText)
 
         // hardcoded test values
         val song = "Demo"
         val artist = "The Placeholders"
 
-        val buildPopup = AlertDialog.Builder(this)
-        buildPopup.setTitle("Solution")
-        buildPopup.setMessage("The song was " + song + " by " + artist)
-
-        buildPopup.setPositiveButton("Correct") { dialog, which ->
-            Toast.makeText(applicationContext,
-                "Congrats!", Toast.LENGTH_SHORT).show()
-        }
-
-        buildPopup.setNegativeButton("Wrong") { dialog, which ->
-            Toast.makeText(applicationContext,
-                "Too bad!", Toast.LENGTH_SHORT).show()
-        }
+        answerText.text= "The song was $song by $artist"
 
         val allPoints = arrayOf(1, 2, 3, 4)
 
         buildScores(players, allPoints)
-        buildBuzzers(players, buildPopup)
-
+        buildBuzzers(players, answer)
+        setAnswerButton(answer, findViewById(R.id.buttonCorrect))
+        setAnswerButton(answer, findViewById(R.id.buttonWrong))
     }
 
     /*
@@ -88,7 +80,7 @@ class GamescreenActivity: AppCompatActivity() {
     /*
     Programmatically builds the buzzers according to the number and names of players.
      */
-    private fun buildBuzzers(players: Array<String>, popup: AlertDialog.Builder) {
+    private fun buildBuzzers(players: Array<String>, answer: LinearLayout) {
 
         val buzzers = findViewById<LinearLayout>(R.id.buzzersLayout)
         val buttons = arrayOfNulls<Button>(players.size)
@@ -98,16 +90,23 @@ class GamescreenActivity: AppCompatActivity() {
         for (pName in players) {
 
             val button = Button(this)
+            button.id = i
             button.text = pName
             button.width = 100
-            button.height = 150
+            button.height = 0
             buttons.set(i, button)
             button.setOnClickListener {
-                popup.show()
+                answer.visibility = android.view.View.VISIBLE
             }
             buzzers.addView(button)
 
             i = i + 1
+        }
+    }
+
+    private fun setAnswerButton(answer: LinearLayout, button: Button) {
+        button.setOnClickListener {
+            answer.visibility = android.view.View.INVISIBLE
         }
     }
 
@@ -143,4 +142,5 @@ class GamescreenActivity: AppCompatActivity() {
         intent.putExtra("stat_res_1", "General Kenobi")
         startActivity(intent)
     }
+    
 }

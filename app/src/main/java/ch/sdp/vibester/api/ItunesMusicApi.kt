@@ -31,25 +31,10 @@ class ItunesMusicApi private constructor(){
 
             var retFuture = CompletableFuture<String>()
 
-            okHttp.newCall(req).enqueue(SongCallback(retFuture))
+            okHttp.newCall(req).enqueue(ApiCallback(retFuture))
 
             return retFuture
         }
-
-
-        /**
-         * The Callback class when calling the querySong(...) method
-         */
-        private class SongCallback(val retFuture: CompletableFuture<String>): Callback{
-            override fun onResponse(call: Call, response: Response) {
-                retFuture.complete(response.body?.string())
-            }
-
-            override fun onFailure(call: Call, e: IOException) {
-                retFuture.completeExceptionally(e)
-            }
-        }
-
 
     }
 

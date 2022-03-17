@@ -5,14 +5,10 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
-import android.widget.PopupMenu
 import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.games.TypingGame
 import ch.sdp.vibester.profile.ProfileDataProvider
 import ch.sdp.vibester.scoreboard.ScoreBoardActivity
-import ch.sdp.vibester.profile.ProfileSetup
-import ch.sdp.vibester.profile.UserProfile
-import java.io.Serializable
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,6 +29,13 @@ class MainActivity : AppCompatActivity() {
         val lyricIntent = Intent(this, LyricTemporary::class.java)
         btnLyric.setOnClickListener {
             startActivity(lyricIntent)
+        }
+
+        val btnGenre = findViewById<Button>(R.id.genreButton)
+        val genreIntent = Intent(this, GenreTemporary::class.java)
+        btnGenre.setOnClickListener {
+            startActivity(genreIntent)
+
         }
 
     }

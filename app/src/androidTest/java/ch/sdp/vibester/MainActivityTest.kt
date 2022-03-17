@@ -51,6 +51,13 @@ class MainActivityTest {
     }
 
     @Test
+    fun checkIntentOnGenre(){
+        onView(withId(R.id.genreButton)).perform(click())
+        intended(hasComponent(GenreTemporary::class.qualifiedName))
+    }
+
+
+    @Test
     fun checkIntentOnLyric() {
         onView(withId(R.id.lyricButton)).perform(click())
         intended(hasComponent(LyricTemporary::class.qualifiedName))

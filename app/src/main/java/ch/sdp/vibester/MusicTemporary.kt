@@ -17,7 +17,7 @@ class MusicTemporary : AppCompatActivity() {
 
         val txtInput = findViewById<EditText>(R.id.musicName)
 
-        val btnValidate = findViewById<Button>(R.id.validate)
+        val btnValidate = findViewById<Button>(R.id.validateForMusic)
 
         val textViewPlaying = findViewById<TextView>(R.id.textViewPlaying)
 

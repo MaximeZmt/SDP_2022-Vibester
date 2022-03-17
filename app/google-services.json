@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "7687769601-4jlovmab1k6hbdq12ik9mlp7m0789ibs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ch.sdp.vibester",
+            "certificate_hash": "2d58d515333158e4e3bdd8157eb8d4d4df103cb0"
+          }
+        },
+        {
           "client_id": "7687769601-qiqrp6kt48v89ub76k9lkpefh9ls36ha.apps.googleusercontent.com",
           "client_type": 3
         }

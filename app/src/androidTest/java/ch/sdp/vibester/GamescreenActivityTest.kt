@@ -84,7 +84,7 @@ class GamescreenActivityTest {
         intended(hasExtra("incorrect_song_2", "Two"))
         intended(hasExtra("incorrect_song_3", "Three"))
 
-        intended(hasExtra("stat_1", "Hello There"))
+        intended(hasExtra("stat_1", "Hello there"))
         intended(hasExtra("stat_res_1", "General Kenobi"))
     }
 }

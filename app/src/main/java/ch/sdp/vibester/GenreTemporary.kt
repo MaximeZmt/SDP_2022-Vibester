@@ -7,6 +7,9 @@ import android.widget.ArrayAdapter
 import android.widget.ListView
 import ch.sdp.vibester.api.LastfmHelper
 
+/**
+ * Activity to show the list of songs for a chosen tag
+ */
 class GenreTemporary : AppCompatActivity() {
     private val BY_TAG = "tag.gettoptracks"
     private val BY_CHART = "chart.gettoptracks"
@@ -16,6 +19,11 @@ class GenreTemporary : AppCompatActivity() {
         setContentView(R.layout.activity_genre_temporary)
     }
 
+    /**
+     * Fetch data from Lastfm and show song list in a ListView
+     * @param method: BY_TAG or BY_CHART (top tracks without tag)
+     * @param tag: tag name if method BY_TAG is chosen
+     */
     fun performQuery(method: String, tag: String=""){
         val listSongs = findViewById<ListView>(R.id.listSongs)
         val songList = LastfmHelper.getRandomSongList(method, tag)

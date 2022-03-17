@@ -4,9 +4,14 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.lang.IllegalArgumentException
 
+/**
+ * Process the fetched data from Lastfm query.
+ * Mainly, it creates a list of songs in the form ["$songName $artistName"]
+ * @param jsonMeta: Lastfm fetched data
+ */
 class SongList(jsonMeta: String) {
 
-    private var songs = mutableListOf<String>()
+    private var songList = mutableListOf<String>()
     private var page = ""
     private var songsPerPage = ""
     private var totalPages = ""
@@ -30,6 +35,11 @@ class SongList(jsonMeta: String) {
         }
     }
 
+    /**
+     * Converts JSONArray to the list of songs ["$songName $artistName]
+     * @param nonFilteredSongs: JSONArray of songs from the Lastfm query
+     * Saves the list of songs in songList
+     */
     private fun filterSongs(nonFilteredSongs: JSONArray) {
         val songsLength = nonFilteredSongs.length()
         var  i = 0
@@ -38,7 +48,7 @@ class SongList(jsonMeta: String) {
             val songName = songObj.getString("name")
             val artistDetails = songObj.getJSONObject("artist")
             val artistName = artistDetails.getString("name")
-            songs.add("$songName $artistName")
+            songList.add("$songName $artistName")
             ++i
         }
     }
@@ -48,7 +58,7 @@ class SongList(jsonMeta: String) {
      * @return MutableList<String> of type "$artistName $songName"
      */
     fun getSongList():MutableList<String>{
-        return songs
+        return songList
     }
 
     /**

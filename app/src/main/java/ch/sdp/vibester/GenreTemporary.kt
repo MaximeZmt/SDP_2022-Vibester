@@ -25,7 +25,7 @@ class GenreTemporary : AppCompatActivity() {
      * @param tag: tag name if method BY_TAG is chosen
      */
     fun performQuery(method: String, tag: String=""){
-        val listSongs = findViewById<ListView>(R.id.listSongs)
+        val listSongs = findViewById<ListView>(R.id.songsListView)
         val songList = LastfmHelper.getRandomSongList(method, tag)
         val arr = ArrayAdapter(this, android.R.layout.simple_list_item_1 , songList)
         listSongs.adapter = arr

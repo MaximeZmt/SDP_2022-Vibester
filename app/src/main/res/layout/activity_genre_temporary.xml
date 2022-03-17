@@ -7,7 +7,7 @@
     tools:context=".GenreTemporary">
 
     <Button
-        android:id="@+id/rock"
+        android:id="@+id/rockButton"
         android:layout_width="121dp"
         android:layout_height="100dp"
         android:text="R O C K"
@@ -19,37 +19,37 @@
         app:layout_constraintVertical_bias="0.025" />
 
     <Button
-        android:id="@+id/kpop"
+        android:id="@+id/kpopButton"
         android:layout_width="121dp"
         android:layout_height="100dp"
         android:text="K P O P"
         android:onClick="getKpopSongList"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/rock"
+        app:layout_constraintStart_toEndOf="@+id/rockButton"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.025" />
 
     <Button
-        android:id="@+id/top"
+        android:id="@+id/topTracksButton"
         android:layout_width="121dp"
         android:layout_height="100dp"
         android:text="T O P         T R A C K S"
         android:onClick="getTopSongList"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/rock"
+        app:layout_constraintEnd_toStartOf="@+id/rockButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.025" />
 
     <ListView
-        android:id="@+id/listSongs"
+        android:id="@+id/songsListView"
         android:layout_width="415dp"
         android:layout_height="525dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rock" />
+        app:layout_constraintTop_toBottomOf="@+id/rockButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

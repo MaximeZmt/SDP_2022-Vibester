@@ -25,7 +25,6 @@ class LastfmHelper {
          * @return list of songs in a format ("$songName $artistName")
          */
         fun getRandomSongList(method: String, tag:String = ""): List<String> {
-
             val firstQuery = SongList(LastfmApi.querySongList(OkHttpClient(),
                 LastfmUri(method = method, tag = tag)).get())
             val firstSongList = firstQuery.getSongList()

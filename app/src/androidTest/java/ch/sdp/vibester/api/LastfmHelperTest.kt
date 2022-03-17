@@ -6,6 +6,7 @@ import org.junit.Test
 class LastfmHelperTest {
     private val BY_TAG = "tag.gettoptracks"
     private val BY_CHART = "chart.gettoptracks"
+    private val GAME_SIZE = 10
 
     @Test
     fun mergeWorks(){
@@ -18,6 +19,11 @@ class LastfmHelperTest {
 
     @Test
     fun getRandomSongListWorks(){
-        assertTrue(LastfmHelper.getRandomSongList(method = BY_TAG, tag = "kpop").size == 10)
+        assertTrue(LastfmHelper.getRandomSongList(method = BY_TAG, tag = "kpop").size == GAME_SIZE)
     }
+
+//    @Test
+//    fun getRandomSongListError(){
+//        assertTrue(LastfmHelper.getRandomSongList(method = BY_TAG, tag = "iwrjsfpijsfps").size == 0)
+//    }
 }

@@ -22,12 +22,13 @@
     <string name="welcome_scoreboard">SCOREBOARD</string>
     <string name="listen_to_music">LISTEN TO MUSIC</string>
     <string name="settings">SETTINGS</string>
+    <string name="what_music">What is the music ?</string>
+    <string name="your_guess">Enter your guess</string>
     <string name="createAcc">Create Account</string>
     <string name="logIn">Log in</string>
     <string name="logInGoogle">Log in with Google</string>
     <string name="editUsername">Edit Username</string>
     <string name="editHandle">Edit Handle</string>
-
     <string-array name="nb_players">
         <item>One</item>
         <item>Two</item>

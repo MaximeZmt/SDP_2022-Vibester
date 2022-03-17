@@ -36,33 +36,6 @@ class ItunesMusicApi private constructor(){
             return retFuture
         }
 
-        /**
-         * A function that given an audio stream url will play it
-         * @param audioUrl Url in String pointing towards the audio stream
-         * @return CompletableFuture<MediaPlayer> that contains the current playing mediaPlayer
-         */
-        fun playAudio(audioUrl: String): CompletableFuture<MediaPlayer>{
-            val mediaFut = CompletableFuture<MediaPlayer>()
-            var mediaPlayer: MediaPlayer = MediaPlayer()
-            mediaPlayer.setAudioAttributes(
-                AudioAttributes.Builder()
-                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                    .build()
-            )
-            try {
-                mediaPlayer.setDataSource(audioUrl)
-                mediaPlayer.prepare()
-                mediaPlayer.setOnPreparedListener {
-                    mediaPlayer.start()
-                    mediaFut.complete(mediaPlayer)
-                }
-            }catch (e: IOException){
-                Log.e("[PlayAudio]", "Error see stacktrace")
-                mediaFut.completeExceptionally(e)
-            }
-            return mediaFut
-        }
-
     }
 
 

@@ -83,7 +83,7 @@ class GamescreenActivityTest {
      */
     @Test
     fun checkIntentOnEnding() {
-        onView(withId(R.id.go_to_end)).perform(click())
+        onView(withId(R.id.scoresTable)).perform(click())
         intended(hasComponent(GameEndingScreen::class.java.name))
         intended(hasExtra("playerName", "Arda"))
         intended(hasExtra("nbIncorrectSong", 3))

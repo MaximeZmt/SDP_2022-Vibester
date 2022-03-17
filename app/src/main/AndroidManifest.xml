@@ -24,7 +24,7 @@
             android:name=".games.TypingGame"
             android:exported="false" />
         <activity
-            android:name="GamescreenActivity"
+            android:name="ch.sdp.vibester.GamescreenActivity"
             android:exported="false" />
         <activity
             android:name=".profile.ProfileSetup"

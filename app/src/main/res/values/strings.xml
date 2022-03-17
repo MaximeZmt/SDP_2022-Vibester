@@ -49,8 +49,8 @@
     <string name="inc_thats_all">THAT\'S ALL!</string>
     <string name="inc_go_back">GO BACK TO WELCOME SCREEN</string>
     <string name="inc_all_correct">You got every song correctly. Congrats!</string>
-
-
+    <string name="editUsername">Edit Username</string>
+    <string name="editHandle">Edit Handle</string>
     <string name="editUsername">Edit Username</string>
     <string name="editHandle">Edit Handle</string>
 

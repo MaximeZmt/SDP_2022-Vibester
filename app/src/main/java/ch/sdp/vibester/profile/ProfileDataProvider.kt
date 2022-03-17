@@ -2,7 +2,7 @@ package ch.sdp.vibester.profile
 
 class ProfileDataProvider(userID: String, users: List<UserProfile> = emptyList(), scoreboard: List<Int> = emptyList()) {
     private lateinit var user: UserProfile
-    private val userID:Int = userID.toInt()
+    private val userID: Int = userID.toInt()
     private lateinit var users: List<UserProfile>
     private lateinit var scoreboard: List<Int>
 
@@ -53,7 +53,7 @@ class ProfileDataProvider(userID: String, users: List<UserProfile> = emptyList()
     /**
      * Retrieve profile data of user.
      */
-    private fun getUserData():UserProfile {
+    private fun getUserData(): UserProfile {
         return users[userID]
     }
 

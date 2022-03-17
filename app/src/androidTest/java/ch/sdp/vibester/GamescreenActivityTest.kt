@@ -5,7 +5,10 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
+import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers
+import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
+import androidx.test.espresso.intent.matcher.IntentMatchers.hasExtra
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -53,4 +56,35 @@ class GamescreenActivityTest {
 
     }
  */
+
+    /*
+     * Currently testing with the *static* values. Change to *dynamic* once the game is correctly
+     * implemented and all the data are being sent between activities.
+     */
+    @Test
+    fun checkIntentOnEnding() {
+        onView(withId(R.id.go_to_end)).perform(click())
+        intended(hasComponent(GameEndingScreen::class.java.name))
+        intended(hasExtra("playerName", "Arda"))
+        intended(hasExtra("nbIncorrectSong", 3))
+        /*intended(hasExtra("incorrect_songs", arrayOf("One", "Two", "Three")))
+        intended(hasExtra("names", arrayOf("Hello there",
+                                                "Second Stat",
+                                                "Third Stat",
+                                                "Fourth Stat",
+                                                "Fifth Stat")))
+        intended(hasExtra("values", arrayOf("General Kenobi",
+                                                 "----- *2 -----",
+                                                 "----- *3 -----",
+                                                 "----- *4 -----",
+                                                 "----- *5 -----"))) */
+
+        //Brute-force singular intents. Unable to solve the issue with array intents.
+        intended(hasExtra("incorrect_song_1", "One"))
+        intended(hasExtra("incorrect_song_2", "Two"))
+        intended(hasExtra("incorrect_song_3", "Three"))
+
+        intended(hasExtra("stat_1", "Hello There"))
+        intended(hasExtra("stat_res_1", "General Kenobi"))
+    }
 }

@@ -7,9 +7,10 @@
 
     <LinearLayout
         android:id="@+id/buzzersLayout"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_width="385dp"
+        android:layout_height="433dp"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="1dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="16dp"
         android:gravity="center"
@@ -17,21 +18,29 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scoresTable" />
+        app:layout_constraintTop_toBottomOf="@+id/go_to_end"
+        app:layout_constraintVertical_bias="0.0">
+
+    </LinearLayout>
 
     <TableLayout
         android:id="@+id/scoresTable"
         android:layout_width="0dp"
         android:layout_height="200dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginBottom="14dp"
         android:gravity="center"
-        app:layout_constraintBottom_toTopOf="@+id/buzzersLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-    </TableLayout>
+        app:layout_constraintTop_toTopOf="parent"></TableLayout>
 
+    <Button
+        android:id="@+id/go_to_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="switchToEnding"
+        android:text="@string/go_to_end"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scoresTable" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

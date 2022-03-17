@@ -31,18 +31,17 @@ class FireBaseAuthenticator() {
 
 //    @FixMe
 //      Commenting this for now until we find a proper way to test it, then will merge it to main
-//    fun googleActivityResult(requestCode: Int, resultCode: Int, data: Intent?): String? {
-//        return if(requestCode == 1000) {
-//            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-//            try {
-//                val account = task.getResult(ApiException::class.java)!!
-//                account.email
-//            } catch (e: ApiException) {
-//                "Authentication error"
-//            }
-//        } else {
-//            "Authentication error"
-//        }
-//    }
-
+    fun googleActivityResult(requestCode: Int, resultCode: Int, data: Intent?): String? {
+        return if(requestCode == 1000) {
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            try {
+                val account = task.getResult(ApiException::class.java)!!
+                account.email
+            } catch (e: ApiException) {
+                "Authentication error"
+            }
+        } else {
+            "Authentication error"
+        }
+    }
 }

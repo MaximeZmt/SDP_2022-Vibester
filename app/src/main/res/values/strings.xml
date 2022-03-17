@@ -22,9 +22,12 @@
     <string name="welcome_scoreboard">SCOREBOARD</string>
     <string name="listen_to_music">LISTEN TO MUSIC</string>
     <string name="settings">SETTINGS</string>
+    <string name="what_music">What is the music ?</string>
+    <string name="your_guess">Enter your guess</string>
     <string name="createAcc">Create Account</string>
     <string name="logIn">Log in</string>
     <string name="logInGoogle">Log in with Google</string>
+
     <string name="game_end__player_name">Player Name Here</string>
     <string name="game_end__show_stats">Here are your stats!</string>
     <string name="game_end__stat_1">Stat 1</string>
@@ -46,6 +49,10 @@
     <string name="inc_thats_all">THAT\'S ALL!</string>
     <string name="inc_go_back">GO BACK TO WELCOME SCREEN</string>
     <string name="inc_all_correct">You got every song correctly. Congrats!</string>
+
+
+    <string name="editUsername">Edit Username</string>
+    <string name="editHandle">Edit Handle</string>
 
     <string-array name="nb_players">
         <item>One</item>

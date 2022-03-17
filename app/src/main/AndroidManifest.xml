@@ -12,6 +12,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:usesCleartextTraffic="true"
         android:theme="@style/Theme.MyApplication">
         <activity
             android:name=".IncorrectSongsScreen"
@@ -20,13 +21,19 @@
             android:name=".GameEndingScreen"
             android:exported="false" />
         <activity
-            android:name=".GamescreenActivity"
+            android:name=".games.TypingGame"
+            android:exported="false" />
+        <activity
+            android:name="GamescreenActivity"
             android:exported="false" />
         <activity
             android:name=".profile.ProfileSetup"
             android:exported="false" />
         <activity
             android:name=".MusicTemporary"
+            android:exported="false" />
+        <activity
+            android:name=".LyricTemporary"
             android:exported="false" />
         <activity
             android:name=".GameSetupScreen"
@@ -53,5 +60,4 @@
             </intent-filter>
         </activity>
     </application>
-
 </manifest>

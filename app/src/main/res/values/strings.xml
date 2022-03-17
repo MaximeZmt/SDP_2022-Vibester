@@ -51,8 +51,6 @@
     <string name="inc_all_correct">You got every song correctly. Congrats!</string>
     <string name="editUsername">Edit Username</string>
     <string name="editHandle">Edit Handle</string>
-    <string name="editUsername">Edit Username</string>
-    <string name="editHandle">Edit Handle</string>
 
 
     <string-array name="nb_players">

@@ -92,7 +92,7 @@ class GamescreenActivity: AppCompatActivity() {
             button.id = i
             button.text = pName
             button.width = 100
-            button.height = 150
+            button.height = 0
             buttons.set(i, button)
             button.setOnClickListener {
                 answer.visibility = android.view.View.VISIBLE

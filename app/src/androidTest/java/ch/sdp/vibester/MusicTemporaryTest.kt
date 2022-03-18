@@ -21,7 +21,7 @@ class MusicTemporaryTest{
             val inputName = "Imagine Dragons Believer"
             val intent =
                 Intent(ApplicationProvider.getApplicationContext(), MusicTemporary::class.java)
-            val scn: ActivityScenario<GreetingActivity> = ActivityScenario.launch(intent)
+            val scn: ActivityScenario<MusicTemporary> = ActivityScenario.launch(intent)
             onView(withId(R.id.musicName))
                 .perform(typeText(inputName), closeSoftKeyboard())
             onView(withId(R.id.validateForMusic)).perform(click())

@@ -15,15 +15,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val txtInput = findViewById<EditText>(R.id.mainNameInput)
-
-        val btnGreeting = findViewById<Button>(R.id.mainButton)
-
-        val greetingIntent = Intent(this, GreetingActivity::class.java)
-            btnGreeting.setOnClickListener {
-                greetingIntent.putExtra("name", txtInput.text.toString())
-                startActivity(greetingIntent)
-        }
 
         val btnLyric = findViewById<Button>(R.id.lyricButton)
         val lyricIntent = Intent(this, LyricTemporary::class.java)

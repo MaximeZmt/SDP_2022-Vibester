@@ -60,7 +60,7 @@ class LyricTemporaryTest {
         val intent = Intent(
             ApplicationProvider.getApplicationContext(), LyricTemporary::class.java
         )
-        val scn: ActivityScenario<GreetingActivity> = ActivityScenario.launch(intent)
+        val scn: ActivityScenario<LyricTemporary> = ActivityScenario.launch(intent)
         onView(withId(R.id.artistForLyric)).perform(typeText(inputArtistName), closeSoftKeyboard())
         onView(withId(R.id.trackForLyric)).perform(typeText(inputTrackName), closeSoftKeyboard())
         onView(withId(R.id.validateForLyric)).perform(click())

@@ -48,9 +48,6 @@
             android:name=".Register"
             android:exported="true" />
         <activity
-            android:name=".GreetingActivity"
-            android:exported="false" />
-        <activity
             android:name=".GenreTemporary"
             android:exported="false" />
         <activity

@@ -43,7 +43,7 @@ class IncorrectSongsScreenTest {
         intent.putExtra("nbIncorrectSong", nbInc)
         intent.putExtra("incorrect_songs", inc)
 
-        val scn: ActivityScenario<GreetingActivity> = ActivityScenario.launch(intent)
+        val scn: ActivityScenario<IncorrectSongsScreen> = ActivityScenario.launch(intent)
 
         if(nbInc != 0) {
             for(x in 0 until nbInc) {

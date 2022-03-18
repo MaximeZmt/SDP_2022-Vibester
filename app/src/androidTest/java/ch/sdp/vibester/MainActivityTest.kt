@@ -35,14 +35,6 @@ class MainActivityTest {
         Intents.release()
     }
 
-    @Test
-    fun mainTest(){
-        val inputName = "SDPUser"
-        onView(withId(R.id.mainNameInput)).perform(typeText(inputName))
-        onView(withId(R.id.mainButton)).perform(click())
-        intended(toPackage("ch.sdp.vibester"))
-        intended(hasExtra("name", inputName))
-    }
 
     @Test
     fun checkIntentOnWelcome(){ //FILLER TESTING

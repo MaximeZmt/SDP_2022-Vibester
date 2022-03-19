@@ -17,4 +17,10 @@
     <color name="light_blue_A200">#FF40C4FF</color>
     <color name="light_blue_A400">#FF00B0FF</color>
     <color name="black_overlay">#66000000</color>
+    <!-- Our Color Palette -->
+    <color name="cg_blue">#FF227C9D</color>
+    <color name="tiffany_blue">#FF17c3b2</color>
+    <color name="maximum_yellow_red">#FFFFCB77</color>
+    <color name="floral_white">#FFFEF9EF</color>
+    <color name="light_coral">#FFFE6D73</color>
 </resources>

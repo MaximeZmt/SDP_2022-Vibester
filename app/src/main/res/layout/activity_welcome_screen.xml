@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FEF9EF"
+    android:background="@color/floral_white"
     tools:context=".WelcomeScreen">
 
     <ImageView
@@ -39,12 +39,12 @@
                 android:layout_width="200dp"
                 android:layout_height="48dp"
                 android:layout_marginTop="10dp"
-                android:backgroundTint="#227C9D"
+                android:backgroundTint="@color/cg_blue"
                 android:elevation="10dp"
-                android:translationZ="10dp"
-                android:stateListAnimator="@null"
                 android:onClick="switchToPlay"
+                android:stateListAnimator="@null"
                 android:text="@string/play_a_game"
+                android:translationZ="10dp"
                 app:icon="@android:drawable/ic_media_play" />
 
             <Button
@@ -52,12 +52,12 @@
                 android:layout_width="200dp"
                 android:layout_height="48dp"
                 android:layout_marginTop="10dp"
-                android:backgroundTint="#227C9D"
+                android:backgroundTint="@color/cg_blue"
                 android:elevation="10dp"
-                android:translationZ="10dp"
-                android:stateListAnimator="@null"
                 android:onClick="switchToScoreboard"
+                android:stateListAnimator="@null"
                 android:text="@string/welcome_scoreboard"
+                android:translationZ="10dp"
                 app:icon="@android:drawable/ic_menu_share" />
 
             <Button
@@ -65,12 +65,12 @@
                 android:layout_width="200dp"
                 android:layout_height="48dp"
                 android:layout_marginTop="10dp"
-                android:backgroundTint="#227C9D"
+                android:backgroundTint="@color/cg_blue"
                 android:elevation="10dp"
-                android:translationZ="10dp"
-                android:stateListAnimator="@null"
                 android:onClick="switchToProfile"
+                android:stateListAnimator="@null"
                 android:text="@string/profile"
+                android:translationZ="10dp"
                 app:icon="@android:drawable/ic_menu_edit" />
 
             <Button
@@ -78,12 +78,12 @@
                 android:layout_width="200dp"
                 android:layout_height="48dp"
                 android:layout_marginTop="10dp"
-                android:backgroundTint="#227C9D"
+                android:backgroundTint="@color/cg_blue"
                 android:elevation="10dp"
-                android:translationZ="10dp"
-                android:stateListAnimator="@null"
                 android:onClick="switchToListen"
+                android:stateListAnimator="@null"
                 android:text="@string/listen_to_music"
+                android:translationZ="10dp"
                 app:icon="@android:drawable/stat_sys_headset" />
 
             <Button
@@ -91,12 +91,12 @@
                 android:layout_width="200dp"
                 android:layout_height="48dp"
                 android:layout_marginTop="10dp"
-                android:backgroundTint="#227C9D"
+                android:backgroundTint="@color/cg_blue"
                 android:elevation="10dp"
-                android:translationZ="10dp"
-                android:stateListAnimator="@null"
                 android:onClick="switchToSettings"
+                android:stateListAnimator="@null"
                 android:text="@string/settings"
+                android:translationZ="10dp"
                 app:icon="@android:drawable/ic_menu_manage" />
 
             <Space

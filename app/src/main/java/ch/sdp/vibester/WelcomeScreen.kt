@@ -18,7 +18,6 @@ class WelcomeScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(FEATURE_NO_TITLE)
-        this.window.setFlags(FLAG_FULLSCREEN, FLAG_FULLSCREEN)
         supportActionBar?.hide()
 
         setContentView(R.layout.activity_welcome_screen)

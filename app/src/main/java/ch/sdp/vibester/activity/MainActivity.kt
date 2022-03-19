@@ -1,10 +1,13 @@
-package ch.sdp.vibester
+package ch.sdp.vibester.activity
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import ch.sdp.vibester.GenreTemporary
+import ch.sdp.vibester.LyricTemporary
+import ch.sdp.vibester.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,7 +31,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun switchToWelcome(view: View) {
-        val intent = Intent(this, WelcomeScreen::class.java)
+        val intent = Intent(this, WelcomeActivity::class.java)
         startActivity(intent)
     }
 }

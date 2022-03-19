@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FF00E0"
-    tools:context=".GameEndingScreen">
+    tools:context=".activity.GameEndingActivity">
 
     <TextView
         android:id="@+id/end_player_name"

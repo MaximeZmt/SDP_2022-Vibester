@@ -1,4 +1,4 @@
-package ch.sdp.vibester.profile
+package ch.sdp.vibester.activity
 
 import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
@@ -9,9 +9,11 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import ch.sdp.vibester.R
+import ch.sdp.vibester.profile.UserProfile
+
 const val EXTRA_ID = "userProfile"
 
-class ProfileSetup: AppCompatActivity() {
+class ProfileActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
@@ -65,7 +67,7 @@ class ProfileSetup: AppCompatActivity() {
         findViewById<TextView>(R.id.correctSongs).text = user.correctSongs.toString()
         findViewById<TextView>(R.id.bestScore).text = user.bestScore.toString()
         findViewById<TextView>(R.id.ranking).text = user.ranking.toString()
-        /* TODO: add functionality to display the image
+        /* TODO: add functionality to display the image (may be using )
         findViewById<ImageView>(R.id.avatar).loadImg(user.image)*/
     }
 }

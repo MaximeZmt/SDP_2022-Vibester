@@ -1,4 +1,4 @@
-package ch.sdp.vibester.games
+package ch.sdp.vibester.activity
 
 import android.content.Context
 import android.content.Intent

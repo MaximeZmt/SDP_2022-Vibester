@@ -1,18 +1,16 @@
-package ch.sdp.vibester
+package ch.sdp.vibester.activity
 
-import android.app.AlertDialog
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intended
-import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasExtra
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import org.hamcrest.CoreMatchers.allOf
+import ch.sdp.vibester.R
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -84,7 +82,7 @@ class GamescreenActivityTest {
     @Test
     fun checkIntentOnEnding() {
         onView(withId(R.id.go_to_end)).perform(click())
-        intended(hasComponent(GameEndingScreen::class.java.name))
+        intended(hasComponent(GameEndingActivity::class.java.name))
         intended(hasExtra("playerName", "Arda"))
         intended(hasExtra("nbIncorrectSong", 3))
         /*intended(hasExtra("incorrect_songs", arrayOf("One", "Two", "Three")))

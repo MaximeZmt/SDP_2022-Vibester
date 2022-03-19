@@ -1,4 +1,4 @@
-package ch.sdp.vibester
+package ch.sdp.vibester.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -8,8 +8,9 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.LinearLayout.*
 import android.widget.TextView
+import ch.sdp.vibester.R
 
-class IncorrectSongsScreen : AppCompatActivity() {
+class IncorrectSongsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_incorrect_songs_screen)
@@ -47,7 +48,7 @@ class IncorrectSongsScreen : AppCompatActivity() {
     }
 
     fun switchBackToWelcome(view: View) {
-        val intent = Intent(this, WelcomeScreen::class.java)
+        val intent = Intent(this, WelcomeActivity::class.java)
         startActivity(intent)
     }
 }

@@ -1,4 +1,4 @@
-package ch.sdp.vibester.games
+package ch.sdp.vibester.activity
 
 import android.content.Context
 import android.widget.LinearLayout
@@ -7,6 +7,7 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.matcher.IntentMatchers
 import ch.sdp.vibester.R
+import ch.sdp.vibester.activity.TypingGameActivity
 import ch.sdp.vibester.model.Song
 import org.junit.After
 import org.junit.Assert.assertEquals

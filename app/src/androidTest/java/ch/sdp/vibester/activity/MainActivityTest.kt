@@ -1,16 +1,16 @@
-package ch.sdp.vibester
+package ch.sdp.vibester.activity
 
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.*
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import ch.sdp.vibester.profile.ProfileSetup
-import ch.sdp.vibester.scoreboard.ScoreBoardActivity
+import ch.sdp.vibester.GenreTemporary
+import ch.sdp.vibester.LyricTemporary
+import ch.sdp.vibester.R
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -39,7 +39,7 @@ class MainActivityTest {
     @Test
     fun checkIntentOnWelcome(){ //FILLER TESTING
         onView(withId(R.id.placeholder_welcome)).perform(click())
-        intended(hasComponent(WelcomeScreen::class.qualifiedName))
+        intended(hasComponent(WelcomeActivity::class.qualifiedName))
     }
 
     @Test

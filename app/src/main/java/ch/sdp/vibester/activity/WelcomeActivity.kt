@@ -1,18 +1,17 @@
-package ch.sdp.vibester
+package ch.sdp.vibester.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.Window.FEATURE_NO_TITLE
-import ch.sdp.vibester.games.TypingGameActivity
+import ch.sdp.vibester.R
+import ch.sdp.vibester.Register
 import ch.sdp.vibester.model.Song
 import ch.sdp.vibester.profile.ProfileDataProvider
-import ch.sdp.vibester.profile.ProfileSetup
 import ch.sdp.vibester.profile.UserProfile
-import ch.sdp.vibester.scoreboard.ScoreBoardActivity
 
-class WelcomeScreen : AppCompatActivity() {
+class WelcomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(FEATURE_NO_TITLE)
@@ -27,12 +26,12 @@ class WelcomeScreen : AppCompatActivity() {
     }
 
     fun switchToPlay(view: View) {
-        sendDirectIntent(GameSetupScreen::class.java)
+        sendDirectIntent(GameSetupActivity::class.java)
     }
 
     fun switchToProfile(view: View) { //FILLER INTENT
 //        sendDirectIntent(GameSetupScreen::class.java)
-        val profileIntent = Intent(this, ProfileSetup::class.java)
+        val profileIntent = Intent(this, ProfileActivity::class.java)
         val userID = (0..5).random().toString()
         val dataProvider = userID.let { ProfileDataProvider(it) }
         val user: UserProfile = dataProvider.getUserProfileData()

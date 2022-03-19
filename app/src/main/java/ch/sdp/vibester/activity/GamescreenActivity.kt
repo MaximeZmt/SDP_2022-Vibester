@@ -1,15 +1,12 @@
-package ch.sdp.vibester
+package ch.sdp.vibester.activity
 
 import android.content.Intent
-import android.opengl.Visibility
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
 import android.widget.*
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.AlertDialogLayout
-import androidx.core.view.get
+import ch.sdp.vibester.R
 
 
 class GamescreenActivity: AppCompatActivity() {
@@ -111,8 +108,9 @@ class GamescreenActivity: AppCompatActivity() {
     }
 
     fun switchToEnding(view: View) {
-        val intent = Intent(this, GameEndingScreen::class.java)
+        val intent = Intent(this, GameEndingActivity::class.java)
         //MOCK VALUES FOR INCORRECT SONGS, ADAPT FROM GAME DATA IN THE FUTURE
+        /*
         val incArray: Array<String> = arrayOf("One", "Two", "Three")
         val statNames: Array<String> = arrayOf("Hello there",
             "Second Stat",
@@ -124,7 +122,7 @@ class GamescreenActivity: AppCompatActivity() {
             "----- *3 -----",
             "----- *4 -----",
             "----- *5 -----")
-
+*/
         intent.putExtra("playerName", "Arda")
         intent.putExtra("nbIncorrectSong", 3)
         /*

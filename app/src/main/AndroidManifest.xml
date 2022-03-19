@@ -21,7 +21,7 @@
             android:name=".GameEndingScreen"
             android:exported="false" />
         <activity
-            android:name=".games.TypingGame"
+            android:name=".games.TypingGameActivity"
             android:exported="false" />
         <activity
             android:name=".GamescreenActivity"

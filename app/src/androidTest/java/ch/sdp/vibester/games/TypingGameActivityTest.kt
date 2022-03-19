@@ -1,38 +1,19 @@
 package ch.sdp.vibester.games
 
-import android.app.Activity
-import android.app.Application
 import android.content.Context
-import android.util.Log
-import android.widget.EditText
-import android.widget.FrameLayout
 import android.widget.LinearLayout
-import android.widget.Space
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.RecyclerView
-import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
-import androidx.test.espresso.Espresso
-import androidx.test.espresso.action.ViewActions
-import androidx.test.espresso.action.ViewActions.*
-import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.matcher.IntentMatchers
-import androidx.test.espresso.matcher.ViewMatchers
-import androidx.test.espresso.matcher.ViewMatchers.*
-import androidx.test.ext.junit.rules.ActivityScenarioRule
 import ch.sdp.vibester.R
 import ch.sdp.vibester.model.Song
-import okhttp3.internal.wait
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
-import java.util.concurrent.TimeUnit
 
-class TypingGameTest{
+class TypingGameActivityTest{
 
     @Before
     fun setUp() {
@@ -69,7 +50,7 @@ class TypingGameTest{
 
     @Test
     fun borderGenTest(){
-        val border = TypingGame.borderGen()
+        val border = TypingGameActivity.borderGen()
         assertEquals(-0x1, border.color?.defaultColor)
     }
 
@@ -77,7 +58,7 @@ class TypingGameTest{
     fun spaceGenTest(){
         val height = 10
         val width = 10
-        val spaceeeeee = TypingGame.generateSpace(width, height, ApplicationProvider.getApplicationContext())
+        val spaceeeeee = TypingGameActivity.generateSpace(width, height, ApplicationProvider.getApplicationContext())
         assertEquals(width, spaceeeeee.minimumWidth)
         assertEquals(height, spaceeeeee.minimumHeight)
     }
@@ -86,7 +67,7 @@ class TypingGameTest{
     fun textGenTest(){
         val txtInput = "hello"
         val ctx = ApplicationProvider.getApplicationContext() as Context
-        val mytest = TypingGame.generateText(txtInput, ctx)
+        val mytest = TypingGameActivity.generateText(txtInput, ctx)
         assertEquals(txtInput, mytest.text.toString())
         assertEquals(200, mytest.minHeight)
         assertEquals(ContextCompat.getColor(ctx, R.color.black), mytest.textColors.defaultColor)
@@ -107,7 +88,7 @@ class TypingGameTest{
 
         val txtInput = "hello"
         val ctx = ApplicationProvider.getApplicationContext() as Context
-        val mytest = TypingGame.generateImage(mySong, ctx)
+        val mytest = TypingGameActivity.generateImage(mySong, ctx)
         assertEquals(200, mytest.minimumHeight)
         assertEquals(200, mytest.minimumWidth)
     }
@@ -125,7 +106,7 @@ class TypingGameTest{
 
         val songTest = Song.singleSong(inputTxt)
         val ctx = ApplicationProvider.getApplicationContext() as Context
-        val frameLay= TypingGame.guess(songTest, LinearLayout(ctx), ctx, songTest, null)
+        val frameLay= TypingGameActivity.guess(songTest, LinearLayout(ctx), ctx, songTest, null)
         frameLay.performClick()
         Intents.intended(IntentMatchers.toPackage("ch.sdp.vibester"))
         val mysong = Intents.getIntents()[0].extras?.get("song") as Song

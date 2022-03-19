@@ -1,7 +1,5 @@
 package ch.sdp.vibester.games
 
-import android.app.Activity
-import android.app.PendingIntent.getActivity
 import android.content.Context
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
@@ -12,7 +10,6 @@ import android.os.Handler
 import android.view.Gravity
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat.getColor
 import androidx.core.content.ContextCompat.startActivity
 import androidx.core.widget.addTextChangedListener
@@ -31,7 +28,7 @@ import java.util.concurrent.CompletableFuture
 /**
  * Class that represent a game
  */
-class TypingGame : AppCompatActivity() {
+class TypingGameActivity : AppCompatActivity() {
 
     companion object{
 
@@ -50,7 +47,7 @@ class TypingGame : AppCompatActivity() {
          * Generate a change of intent at the end of the game
          */
         fun intentGen(ctx: Context, choosenSong: Song?, playedSong: Song):Intent{
-            val newIntent = Intent(ctx, TypingGame::class.java)
+            val newIntent = Intent(ctx, TypingGameActivity::class.java)
             newIntent.putExtra("song", playedSong)
             newIntent.putExtra("isPlaying", false)
             if(choosenSong != null && choosenSong.getTrackName() == playedSong.getTrackName() && choosenSong.getArtistName() == playedSong.getArtistName()){
@@ -213,9 +210,9 @@ class TypingGame : AppCompatActivity() {
                     val list = Song.listSong(task.await())
                     for(x: Song in list){
                         if (mysong != null) {
-                            guess(x, findViewById(R.id.displayGuess), this@TypingGame, mysong, mediaPlayer)
+                            guess(x, findViewById(R.id.displayGuess), this@TypingGameActivity, mysong, mediaPlayer)
                         }else{
-                            guess(x, findViewById(R.id.displayGuess), this@TypingGame, x, mediaPlayer)
+                            guess(x, findViewById(R.id.displayGuess), this@TypingGameActivity, x, mediaPlayer)
                         }
                     }
                 }

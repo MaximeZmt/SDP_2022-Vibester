@@ -1,13 +1,11 @@
 package ch.sdp.vibester
 
 import android.content.Intent
-import android.graphics.Outline
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.Window.FEATURE_NO_TITLE
-import android.view.WindowManager.LayoutParams.FLAG_FULLSCREEN
-import ch.sdp.vibester.games.TypingGame
+import ch.sdp.vibester.games.TypingGameActivity
 import ch.sdp.vibester.model.Song
 import ch.sdp.vibester.profile.ProfileDataProvider
 import ch.sdp.vibester.profile.ProfileSetup
@@ -59,7 +57,7 @@ class WelcomeScreen : AppCompatActivity() {
 
         val mySong = Song.singleSong(inputTxt)
 
-        val newIntent = Intent(this, TypingGame::class.java)
+        val newIntent = Intent(this, TypingGameActivity::class.java)
         newIntent.putExtra("song", mySong)
         newIntent.putExtra("isPlaying", true)
         newIntent.putExtra("hasWon", true)

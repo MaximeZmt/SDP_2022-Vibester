@@ -19,7 +19,9 @@ class LyricTemporaryTest {
     fun canGetLyricsFromAPI() {
         val service = LyricsOVHApiInterface.create("https://api.lyrics.ovh/")
         val lyric = service.getLyrics("Imagine Dragons", "Believer").execute()
-        assertThat(lyric.body().lyrics, equalTo("First things first\r\n" +
+        //Adding a replace because sometimes the api put some additional text
+        assertThat(
+            lyric.body().lyrics?.replace("Paroles de la chanson Believer par Imagine Dragons\r\n",""), equalTo("First things first\r\n" +
                 "I'm say all the words inside my head\r\n" +
                 "I'm fired up and tired of the way that things have been, oh-ooh\r\n" +
                 "The way that things have been, oh-ooh\r\nSecond thing second\r\n" +

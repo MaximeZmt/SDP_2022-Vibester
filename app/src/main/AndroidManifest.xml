@@ -12,8 +12,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:theme="@style/Theme.MyApplication">
+        android:theme="@style/Theme.MyApplication"
+        android:usesCleartextTraffic="true">
         <activity
             android:name=".IncorrectSongsScreen"
             android:exported="false" />
@@ -24,7 +24,7 @@
             android:name=".games.TypingGame"
             android:exported="false" />
         <activity
-            android:name="ch.sdp.vibester.GamescreenActivity"
+            android:name=".GamescreenActivity"
             android:exported="false" />
         <activity
             android:name=".profile.ProfileSetup"
@@ -60,4 +60,5 @@
             </intent-filter>
         </activity>
     </application>
+
 </manifest>

@@ -1,9 +1,12 @@
 package ch.sdp.vibester
 
 import android.content.Intent
+import android.graphics.Outline
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.view.Window.FEATURE_NO_TITLE
+import android.view.WindowManager.LayoutParams.FLAG_FULLSCREEN
 import ch.sdp.vibester.games.TypingGame
 import ch.sdp.vibester.model.Song
 import ch.sdp.vibester.profile.ProfileDataProvider
@@ -14,6 +17,10 @@ import ch.sdp.vibester.scoreboard.ScoreBoardActivity
 class WelcomeScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        requestWindowFeature(FEATURE_NO_TITLE)
+        this.window.setFlags(FLAG_FULLSCREEN, FLAG_FULLSCREEN)
+        supportActionBar?.hide()
+
         setContentView(R.layout.activity_welcome_screen)
     }
 

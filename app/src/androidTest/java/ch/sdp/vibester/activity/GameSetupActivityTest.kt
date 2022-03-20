@@ -1,5 +1,7 @@
 package ch.sdp.vibester.activity
 
+import android.widget.AdapterView
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onData
 import androidx.test.espresso.intent.Intents
 import androidx.test.ext.junit.rules.ActivityScenarioRule
@@ -16,6 +18,7 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+
 
 class GameSetupActivityTest {
 
@@ -34,6 +37,11 @@ class GameSetupActivityTest {
 
     @Test
     fun checkDefaultSelect() {
+        onView(withId(R.id.nb_player_spinner)).check(matches(withSpinnerText("One")))
+    }
+
+    @Test
+    fun checkNothingSelect() {
         onView(withId(R.id.nb_player_spinner)).check(matches(withSpinnerText("One")))
     }
 

@@ -88,12 +88,17 @@ class AuthenticationActivity : AppCompatActivity() {
 
     private fun authenticate(email: String, password: String, creatAcc: Boolean) {
         if(stringValidation(email, password)) {
+            var auth: Task<AuthResult>
             if(creatAcc) {
-                createAccount(email, password)
+                auth = authenticator.createAccount(email, password)
+                //createAccount(email, password)
+            }else {
+                auth = authenticator.signIn(email, password)
+                //signIn(email, password)
             }
-            else {
-                signIn(email, password)
-            }
+                auth.addOnCompleteListener(this) { task ->
+                    onCompleteAuthentication(task)
+                }
         }
     }
 
@@ -101,7 +106,7 @@ class AuthenticationActivity : AppCompatActivity() {
         val intent = googleSignInClient.signInIntent
         startActivityForResult(intent, 1000)
     }
-
+/*
     private fun createAccount(email: String, password: String) {
         authenticator.createAccount(email, password)
             .addOnCompleteListener(this) { task ->
@@ -115,6 +120,10 @@ class AuthenticationActivity : AppCompatActivity() {
                 onCompleteAuthentication(task)
             }
     }
+
+ */
+
+
 
     private fun onCompleteAuthentication(task: Task<AuthResult>) {
         if (task.isSuccessful) {

@@ -8,7 +8,6 @@ import androidx.test.espresso.intent.Intents
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.espresso.intent.matcher.IntentMatchers.*
 import ch.sdp.vibester.R
-import ch.sdp.vibester.Register
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -55,7 +54,7 @@ class WelcomeActivityTest {
     @Test
     fun checkIntentOnSettings(){ //FILLER TESTING
         onView(withId(R.id.welcome_settings)).perform(click())
-        intended(hasComponent(Register::class.java.name))
+        intended(hasComponent(AuthenticationActivity::class.java.name))
     }
 
     /*

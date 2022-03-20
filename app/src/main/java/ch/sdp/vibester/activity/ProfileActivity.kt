@@ -13,7 +13,7 @@ import ch.sdp.vibester.profile.UserProfile
 
 const val EXTRA_ID = "userProfile"
 
-class ProfileActivity: AppCompatActivity() {
+class ProfileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)

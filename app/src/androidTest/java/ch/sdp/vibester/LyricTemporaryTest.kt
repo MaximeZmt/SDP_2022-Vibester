@@ -21,7 +21,8 @@ class LyricTemporaryTest {
         val lyric = service.getLyrics("Imagine Dragons", "Believer").execute()
         //Adding a replace because sometimes the api put some additional text
         assertThat(
-            lyric.body().lyrics?.replace("Paroles de la chanson Believer par Imagine Dragons\r\n",""), equalTo("First things first\r\n" +
+            lyric.body().lyrics?.replace("\n", "")?.replace("\r","")
+                ?.replace("Paroles de la chanson Believer par Imagine Dragons",""), equalTo(("First things first\r\n" +
                 "I'm say all the words inside my head\r\n" +
                 "I'm fired up and tired of the way that things have been, oh-ooh\r\n" +
                 "The way that things have been, oh-ooh\r\nSecond thing second\r\n" +
@@ -52,7 +53,7 @@ class LyricTemporaryTest {
                 "\n\nYou made me a, you made me a believer, believer\n\nPain!\n\n" +
                 "You break me down, you build me up, believer, believer\n\nPain!\n\n" +
                 "I let the bullets fly, oh let them rain\n\nMy life, my love, my drive, they came from...\n\n" +
-                "Pain!\n\nYou made me a, you made me a believer, believer"))
+                "Pain!\n\nYou made me a, you made me a believer, believer").replace("\r", "").replace("\n","")))
     }
 
     @Test

@@ -42,7 +42,7 @@
             android:name=".activity.WelcomeActivity"
             android:exported="false" />
         <activity
-            android:name=".Register"
+            android:name=".activity.AuthenticationActivity"
             android:exported="true" />
         <activity
             android:name=".GenreTemporary"

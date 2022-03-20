@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.View
 import android.view.Window.FEATURE_NO_TITLE
 import ch.sdp.vibester.R
-import ch.sdp.vibester.Register
 import ch.sdp.vibester.model.Song
 import ch.sdp.vibester.profile.ProfileDataProvider
 import ch.sdp.vibester.profile.UserProfile
@@ -64,7 +63,7 @@ class WelcomeActivity : AppCompatActivity() {
     }
 
     fun switchToSettings(view: View) { //FILLER INTENT
-        sendDirectIntent(Register::class.java)
+        sendDirectIntent(AuthenticationActivity::class.java)
     }
 
     /*

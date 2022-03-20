@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/floral_white"
     tools:context=".activity.TypingGameActivity">
 
     <LinearLayout
@@ -35,11 +36,11 @@
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@string/what_music"
             android:textAlignment="center"
-            android:textSize="25sp"
             android:textColor="@color/black"
-            android:textStyle="bold"
-            android:text="@string/what_music" />
+            android:textSize="25sp"
+            android:textStyle="bold" />
 
         <Space
             android:layout_width="match_parent"
@@ -50,11 +51,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName"
             android:hint="@string/your_guess"
+            android:inputType="textPersonName"
             android:paddingLeft="10sp"
-            android:paddingRight="10sp"
-            />
+            android:paddingRight="10sp" />
 
         <ScrollView
             android:layout_width="match_parent"

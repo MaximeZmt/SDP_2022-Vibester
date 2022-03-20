@@ -7,7 +7,9 @@ import android.graphics.drawable.GradientDrawable
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.Gravity
+import android.view.Window
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.getColor
@@ -23,6 +25,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
+import java.lang.Exception
 import java.util.concurrent.CompletableFuture
 
 /**
@@ -64,7 +67,7 @@ class TypingGameActivity : AppCompatActivity() {
          */
         fun guess(song: Song, guessLayout: LinearLayout, ctx: Context, playedSong: Song, player: CompletableFuture<MediaPlayer>?): FrameLayout{
             val frameLay = FrameLayout(ctx)
-            frameLay.background = borderGen()
+            frameLay.background = borderGen(ctx)
 
             // Horizontal Linear Layout to put Images and Text next one another
             val linLay = LinearLayout(ctx)
@@ -99,9 +102,9 @@ class TypingGameActivity : AppCompatActivity() {
         /**
          * Generate the border for a box
          */
-        fun borderGen(): GradientDrawable{
+        fun borderGen(ctx: Context): GradientDrawable{
             val border = GradientDrawable()
-            border.setColor(-0x1) //white background
+            border.setColor(getColor(ctx, R.color.maximum_yellow_red)) //white background
             border.setStroke(1, -0x1000000)
             return border
         }
@@ -153,6 +156,8 @@ class TypingGameActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        requestWindowFeature(Window.FEATURE_NO_TITLE)
+        supportActionBar?.hide()
         setContentView(R.layout.activity_typing_game)
 
         val guessLayout = findViewById<LinearLayout>(R.id.displayGuess)
@@ -207,13 +212,29 @@ class TypingGameActivity : AppCompatActivity() {
                     val task = async(Dispatchers.IO){
                         ItunesMusicApi.querySong(txtInp, OkHttpClient(), 3).get()
                     }
-                    val list = Song.listSong(task.await())
-                    for(x: Song in list){
-                        if (mysong != null) {
-                            guess(x, findViewById(R.id.displayGuess), this@TypingGameActivity, mysong, mediaPlayer)
-                        }else{
-                            guess(x, findViewById(R.id.displayGuess), this@TypingGameActivity, x, mediaPlayer)
+                    try {
+                        val list = Song.listSong(task.await())
+                        for (x: Song in list) {
+                            if (mysong != null) {
+                                guess(
+                                    x,
+                                    findViewById(R.id.displayGuess),
+                                    this@TypingGameActivity,
+                                    mysong,
+                                    mediaPlayer
+                                )
+                            } else {
+                                guess(
+                                    x,
+                                    findViewById(R.id.displayGuess),
+                                    this@TypingGameActivity,
+                                    x,
+                                    mediaPlayer
+                                )
+                            }
                         }
+                    } catch (e: Exception){
+                        Log.e("Exception: ", e.toString())
                     }
                 }
             }

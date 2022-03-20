@@ -26,32 +26,9 @@ class TypingGameActivityTest{
         Intents.release()
     }
 
-    /*
-    //Weird Test but it's working
-    @Test
-    fun globalTypingTest(){
-        val inputName = "1574210894"
-        Espresso.onView(withId(R.id.yourGuessET))
-            .perform(ViewActions.typeText(inputName)).perform(closeSoftKeyboard())
-        val currenttime = System.currentTimeMillis()
-        while(System.currentTimeMillis() < currenttime + 10000){
-            //do nothing
-        }
-        Espresso.onView(withText("Imagine Dragons - Monday")).perform(scrollTo(), click())
-        while(System.currentTimeMillis() < currenttime + 1000){
-            //do nothing
-        }
-        Intents.intended(IntentMatchers.toPackage("ch.sdp.vibester"))
-        val mysong = Intents.getIntents()[0].extras?.get("song") as Song
-        assertEquals("Imagine Dragons", mysong.getArtistName())
-        assertEquals("Monday", mysong.getTrackName())
-    }
-
-     */
-
     @Test
     fun borderGenTest(){
-        val border = TypingGameActivity.borderGen()
+        val border = TypingGameActivity.borderGen(ApplicationProvider.getApplicationContext())
         assertEquals(-0x1, border.color?.defaultColor)
     }
 

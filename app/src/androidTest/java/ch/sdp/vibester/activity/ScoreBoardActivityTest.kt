@@ -1,4 +1,4 @@
-package ch.sdp.vibester.scoreboard
+package ch.sdp.vibester.activity
 
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ApplicationProvider

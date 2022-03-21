@@ -1,28 +1,25 @@
-package ch.sdp.vibester
+package ch.sdp.vibester.activity
 
 import android.content.Intent
-import android.content.res.Resources
-import android.widget.TextView
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
-import org.hamcrest.Matchers.allOf
+import ch.sdp.vibester.R
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-class IncorrectSongsScreenTest {
+class IncorrectSongsActivityTest {
     @Rule
     @JvmField
-    val activityRule = ActivityScenarioRule(IncorrectSongsScreen::class.java)
+    val activityRule = ActivityScenarioRule(IncorrectSongsActivity::class.java)
 
     private var nbInc = 3
     private var inc: Array<String> = arrayOf("One", "Two", "Three")
@@ -39,11 +36,11 @@ class IncorrectSongsScreenTest {
 
     @Test
     fun checkIntentOnCalled() {
-        val intent = Intent(ApplicationProvider.getApplicationContext(), IncorrectSongsScreen::class.java)
+        val intent = Intent(ApplicationProvider.getApplicationContext(), IncorrectSongsActivity::class.java)
         intent.putExtra("nbIncorrectSong", nbInc)
         intent.putExtra("incorrect_songs", inc)
 
-        val scn: ActivityScenario<GreetingActivity> = ActivityScenario.launch(intent)
+        val scn: ActivityScenario<IncorrectSongsActivity> = ActivityScenario.launch(intent)
 
         if(nbInc != 0) {
             for(x in 0 until nbInc) {
@@ -65,6 +62,6 @@ class IncorrectSongsScreenTest {
     @Test
     fun checkIntentOnGoBack(){
         onView(withId(R.id.incorrect_songs_back_to_welcome)).perform(click())
-        intended(hasComponent(WelcomeScreen::class.java.name))
+        intended(hasComponent(WelcomeActivity::class.java.name))
     }
 }

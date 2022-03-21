@@ -7,7 +7,7 @@ import java.io.IOException
 import java.util.concurrent.CompletableFuture
 
 /**
- * The Callback class when calling the querySong(...) method
+ * The Callback class when calling different API method
  */
 class ApiCallback(val retFuture: CompletableFuture<String>): Callback {
     override fun onResponse(call: Call, response: Response) {

@@ -1,4 +1,4 @@
-package ch.sdp.vibester.profile
+package ch.sdp.vibester.activity
 
 import android.content.Intent
 import androidx.test.core.app.ActivityScenario
@@ -9,19 +9,20 @@ import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import ch.sdp.vibester.R
+import ch.sdp.vibester.profile.UserProfile
 import org.junit.Test
 import org.junit.runner.RunWith
 
 
 @RunWith(AndroidJUnit4::class)
-class ProfileSetupTest {
+class ProfileActivityTest {
 
     @Test
     fun checkProfileData() {
         val inputProfile = UserProfile("user0", "username0","bit.ly/3IUnyAF",  5, 8, 34, 2)
-        val intent = Intent(ApplicationProvider.getApplicationContext(), ProfileSetup::class.java)
+        val intent = Intent(ApplicationProvider.getApplicationContext(), ProfileActivity::class.java)
         intent.putExtra("userProfile", inputProfile)
-        val scn: ActivityScenario<ProfileSetup> = ActivityScenario.launch(intent)
+        val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
         onView(withId(R.id.handle)).check(matches(withText(inputProfile.handle)))
         onView(withId(R.id.username)).check(matches(withText(inputProfile.username)))
         onView(withId(R.id.correctSongs)).check(matches(withText(inputProfile.correctSongs.toString())))
@@ -32,9 +33,9 @@ class ProfileSetupTest {
     @Test
     fun checkProfileLayout() {
         val inputProfile = UserProfile("user0", "username0","bit.ly/3IUnyAF",  5, 8, 34, 2)
-        val intent = Intent(ApplicationProvider.getApplicationContext(), ProfileSetup::class.java)
+        val intent = Intent(ApplicationProvider.getApplicationContext(), ProfileActivity::class.java)
         intent.putExtra("userProfile", inputProfile)
-        val scn: ActivityScenario<ProfileSetup> = ActivityScenario.launch(intent)
+        val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
         onView(withId(R.id.profileStatistics)).check(matches(isDisplayed()))
         onView(withId(R.id.handle)).check(matches(isDisplayed()))
         onView(withId(R.id.username)).check(matches(isDisplayed()))
@@ -44,9 +45,9 @@ class ProfileSetupTest {
     @Test
     fun checkEditProfile() {
         val inputProfile = UserProfile("user0", "username0","bit.ly/3IUnyAF",  5, 8, 34, 2)
-        val intent = Intent(ApplicationProvider.getApplicationContext(), ProfileSetup::class.java)
+        val intent = Intent(ApplicationProvider.getApplicationContext(), ProfileActivity::class.java)
         intent.putExtra("userProfile", inputProfile)
-        val scn: ActivityScenario<ProfileSetup> = ActivityScenario.launch(intent)
+        val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
 
         val newUsername = "newUser"
         onView(withId(R.id.editUser)).perform(ViewActions.click())
@@ -59,9 +60,9 @@ class ProfileSetupTest {
     @Test
     fun checkEditProfileClickCancel() {
         val inputProfile = UserProfile("user0", "username0","bit.ly/3IUnyAF",  5, 8, 34, 2)
-        val intent = Intent(ApplicationProvider.getApplicationContext(), ProfileSetup::class.java)
+        val intent = Intent(ApplicationProvider.getApplicationContext(), ProfileActivity::class.java)
         intent.putExtra("userProfile", inputProfile)
-        val scn: ActivityScenario<ProfileSetup> = ActivityScenario.launch(intent)
+        val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
 
         onView(withId(R.id.editUser)).perform(ViewActions.click())
         onView(withText("Cancel")).perform(ViewActions.click())
@@ -71,9 +72,9 @@ class ProfileSetupTest {
     @Test
     fun checkEditHandle() {
         val inputProfile = UserProfile("user0", "username0","bit.ly/3IUnyAF",  5, 8, 34, 2)
-        val intent = Intent(ApplicationProvider.getApplicationContext(), ProfileSetup::class.java)
+        val intent = Intent(ApplicationProvider.getApplicationContext(), ProfileActivity::class.java)
         intent.putExtra("userProfile", inputProfile)
-        val scn: ActivityScenario<ProfileSetup> = ActivityScenario.launch(intent)
+        val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
 
         val newUserHandle = "newHandle"
         onView(withId(R.id.editHandle)).perform(ViewActions.click())
@@ -86,9 +87,9 @@ class ProfileSetupTest {
     @Test
     fun checkEditHandleClickCancel() {
         val inputProfile = UserProfile("user0", "username0","bit.ly/3IUnyAF",  5, 8, 34, 2)
-        val intent = Intent(ApplicationProvider.getApplicationContext(), ProfileSetup::class.java)
+        val intent = Intent(ApplicationProvider.getApplicationContext(), ProfileActivity::class.java)
         intent.putExtra("userProfile", inputProfile)
-        val scn: ActivityScenario<ProfileSetup> = ActivityScenario.launch(intent)
+        val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
 
         onView(withId(R.id.editHandle)).perform(ViewActions.click())
         onView(withText("Cancel")).perform(ViewActions.click())

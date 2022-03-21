@@ -5,7 +5,7 @@
     android:id="@+id/profileSetup"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".activity.MainActivity">
 
     <Button
         android:id="@+id/mainButton"
@@ -46,7 +46,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="41dp"
         android:layout_marginBottom="44dp"
-        android:onClick="switchToWelcome"
         android:text="@string/welcome_screen"
         app:layout_constraintBottom_toTopOf="@+id/lyricButton"
         app:layout_constraintEnd_toEndOf="parent"

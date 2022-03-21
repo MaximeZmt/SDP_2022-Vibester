@@ -11,9 +11,9 @@ import androidx.appcompat.app.AlertDialog
 import ch.sdp.vibester.R
 import ch.sdp.vibester.profile.UserProfile
 
-const val EXTRA_ID = "userProfile"
-
 class ProfileActivity : AppCompatActivity() {
+    private val EXTRA_ID = "userProfile"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)

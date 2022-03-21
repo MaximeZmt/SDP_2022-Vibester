@@ -1,4 +1,4 @@
-package ch.sdp.vibester
+package ch.sdp.vibester.profile
 
 import ch.sdp.vibester.profile.ProfileDataProvider
 import ch.sdp.vibester.profile.UserProfile

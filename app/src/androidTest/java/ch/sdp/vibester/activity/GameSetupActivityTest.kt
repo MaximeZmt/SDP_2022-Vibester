@@ -1,31 +1,29 @@
-package ch.sdp.vibester
+package ch.sdp.vibester.activity
 
 import android.widget.AdapterView
-import androidx.test.espresso.Espresso
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onData
-import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.intent.Intents
-import androidx.test.espresso.intent.matcher.IntentMatchers
-import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.ViewAssertion
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.intent.matcher.IntentMatchers.*
 import androidx.test.espresso.matcher.ViewMatchers.withSpinnerText
+import ch.sdp.vibester.R
 import org.hamcrest.Matchers
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-class GameSetupScreenTest {
+
+class GameSetupActivityTest {
 
     @get: Rule
-    val activityRule = ActivityScenarioRule(GameSetupScreen::class.java)
+    val activityRule = ActivityScenarioRule(GameSetupActivity::class.java)
 
     @Before
     fun setUp() {
@@ -39,6 +37,11 @@ class GameSetupScreenTest {
 
     @Test
     fun checkDefaultSelect() {
+        onView(withId(R.id.nb_player_spinner)).check(matches(withSpinnerText("One")))
+    }
+
+    @Test
+    fun checkNothingSelect() {
         onView(withId(R.id.nb_player_spinner)).check(matches(withSpinnerText("One")))
     }
 

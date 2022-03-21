@@ -1,29 +1,15 @@
 package ch.sdp.vibester.api
 
-import android.app.PendingIntent.getActivity
 import android.content.Context
-import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
-import android.util.Log
-import androidx.appcompat.content.res.AppCompatResources.getDrawable
-import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
-import androidx.core.graphics.drawable.toBitmap
-import androidx.core.graphics.get
 import androidx.test.core.app.ApplicationProvider
-import ch.sdp.vibester.MainActivity
 import ch.sdp.vibester.R
-import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.ExpectedException
-import java.io.IOException
 import java.lang.Exception
-import java.security.AccessController.getContext
 
 
 class BitmapGetterApiTest {

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ff00e0"
-    tools:context=".IncorrectSongsScreen">
+    tools:context=".activity.IncorrectSongsActivity">
 
     <ScrollView
         android:id="@+id/incorrect_songs_scroll"
@@ -42,7 +42,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:onClick="switchBackToWelcome"
         android:text="@string/game_end__go_back"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

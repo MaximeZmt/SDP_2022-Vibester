@@ -1,4 +1,4 @@
-package ch.sdp.vibester
+package ch.sdp.vibester.activity
 
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.Espresso.onView
@@ -7,17 +7,15 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.intent.Intents
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.espresso.intent.matcher.IntentMatchers.*
-import ch.sdp.vibester.games.TypingGame
-import ch.sdp.vibester.profile.ProfileSetup
-import ch.sdp.vibester.scoreboard.ScoreBoardActivity
+import ch.sdp.vibester.R
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-class WelcomeScreenTest {
+class WelcomeActivityTest {
     @get: Rule
-    val activityRule = ActivityScenarioRule(WelcomeScreen::class.java)
+    val activityRule = ActivityScenarioRule(WelcomeActivity::class.java)
 
     @Before
     fun setUp() {
@@ -32,13 +30,13 @@ class WelcomeScreenTest {
     @Test
     fun checkIntentOnPlay(){
         onView(withId(R.id.welcome_play)).perform(click())
-        intended(hasComponent(GameSetupScreen::class.java.name))
+        intended(hasComponent(GameSetupActivity::class.java.name))
     }
 
     @Test
     fun checkIntentOnProfile(){ //FILLER TESTING
         onView(withId(R.id.welcome_profile)).perform(click())
-        intended(hasComponent(ProfileSetup::class.java.name))
+        intended(hasComponent(ProfileActivity::class.java.name))
     }
 
     @Test
@@ -50,13 +48,13 @@ class WelcomeScreenTest {
     @Test
     fun checkIntentOnListen(){ //FILLER TESTING
         onView(withId(R.id.welcome_listen)).perform(click())
-        intended(hasComponent(TypingGame::class.java.name))
+        intended(hasComponent(TypingGameActivity::class.java.name))
     }
 
     @Test
     fun checkIntentOnSettings(){ //FILLER TESTING
         onView(withId(R.id.welcome_settings)).perform(click())
-        intended(hasComponent(Register::class.java.name))
+        intended(hasComponent(AuthenticationActivity::class.java.name))
     }
 
     /*

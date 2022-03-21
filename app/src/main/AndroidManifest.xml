@@ -5,7 +5,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
         android:allowBackup="true"
@@ -13,52 +12,43 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:theme="@style/Theme.MyApplication">
+        android:theme="@style/Theme.MyApplication"
+        android:usesCleartextTraffic="true">
         <activity
-            android:name=".IncorrectSongsScreen"
+            android:name=".activity.IncorrectSongsActivity"
             android:exported="false" />
         <activity
-            android:name=".games.LyricsBelongGame"
+            android:name=".activity.GameEndingActivity"
             android:exported="false" />
         <activity
-            android:name=".GameEndingScreen"
+            android:name=".activity.TypingGameActivity"
             android:exported="false" />
         <activity
-            android:name=".games.TypingGame"
+            android:name=".activity.GamescreenActivity"
             android:exported="false" />
         <activity
-            android:name="ch.sdp.vibester.GamescreenActivity"
-            android:exported="false" />
-        <activity
-            android:name=".profile.ProfileSetup"
-            android:exported="false" />
-        <activity
-            android:name=".MusicTemporary"
+            android:name=".activity.ProfileActivity"
             android:exported="false" />
         <activity
             android:name=".LyricTemporary"
             android:exported="false" />
         <activity
-            android:name=".GameSetupScreen"
+            android:name=".activity.GameSetupActivity"
             android:exported="false" />
         <activity
-            android:name=".scoreboard.ScoreBoardActivity"
+            android:name=".activity.ScoreBoardActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".WelcomeScreen"
+            android:name=".activity.WelcomeActivity"
             android:exported="false" />
         <activity
-            android:name=".Register"
+            android:name=".activity.AuthenticationActivity"
             android:exported="true" />
-        <activity
-            android:name=".GreetingActivity"
-            android:exported="false" />
         <activity
             android:name=".GenreTemporary"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -67,4 +57,5 @@
             </intent-filter>
         </activity>
     </application>
+
 </manifest>

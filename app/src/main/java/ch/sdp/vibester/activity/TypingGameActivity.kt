@@ -163,13 +163,12 @@ class TypingGameActivity : AppCompatActivity() {
 
         val guessLayout = findViewById<LinearLayout>(R.id.displayGuess)
         val inputTxt = findViewById<EditText>(R.id.yourGuessET)
-        val myBar = findViewById<ProgressBar>(R.id.progressBar)
 
         var mysong: Song? = null
         var mediaPlayer: CompletableFuture<MediaPlayer>? = null
         val ctx: Context = this
 
-        myBar.progress = 30
+
 
         val getIntent = intent.extras
         if(getIntent != null){
@@ -184,7 +183,7 @@ class TypingGameActivity : AppCompatActivity() {
             }else{
                 //Is the activity playing music
                 mediaPlayer = AudioPlayer.playAudio(playableSong.getPreviewUrl())
-                barTimer(myBar, mediaPlayer, mysong, ctx)
+                barTimer(findViewById<ProgressBar>(R.id.progressBar), mediaPlayer, mysong, ctx)
             }
             mysong = playableSong
         }
@@ -215,6 +214,7 @@ class TypingGameActivity : AppCompatActivity() {
 
 
     fun barTimer(myBar: ProgressBar, mediaPlayer: CompletableFuture<MediaPlayer>, mySong: Song?, ctx:Context){
+        myBar.progress = 30
         val h = Handler()
         h.post(object : Runnable {
             override fun run() {

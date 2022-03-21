@@ -1,4 +1,4 @@
-package ch.sdp.vibester
+package ch.sdp.vibester.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import ch.sdp.vibester.R
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -14,7 +15,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 
-class Register : AppCompatActivity() {
+class AuthenticationActivity : AppCompatActivity() {
 
     private lateinit var googleSignInClient: GoogleSignInClient
 
@@ -87,12 +88,17 @@ class Register : AppCompatActivity() {
 
     private fun authenticate(email: String, password: String, creatAcc: Boolean) {
         if(stringValidation(email, password)) {
+            var auth: Task<AuthResult>
             if(creatAcc) {
-                createAccount(email, password)
+                auth = authenticator.createAccount(email, password)
+                //createAccount(email, password)
+            }else {
+                auth = authenticator.signIn(email, password)
+                //signIn(email, password)
             }
-            else {
-                signIn(email, password)
-            }
+                auth.addOnCompleteListener(this) { task ->
+                    onCompleteAuthentication(task)
+                }
         }
     }
 
@@ -100,7 +106,7 @@ class Register : AppCompatActivity() {
         val intent = googleSignInClient.signInIntent
         startActivityForResult(intent, 1000)
     }
-
+/*
     private fun createAccount(email: String, password: String) {
         authenticator.createAccount(email, password)
             .addOnCompleteListener(this) { task ->
@@ -114,6 +120,10 @@ class Register : AppCompatActivity() {
                 onCompleteAuthentication(task)
             }
     }
+
+ */
+
+
 
     private fun onCompleteAuthentication(task: Task<AuthResult>) {
         if (task.isSuccessful) {

@@ -29,6 +29,7 @@ class FireBaseAuthenticator() {
         return auth.createUserWithEmailAndPassword(email, password)
     }
 
+    //TODO look for that ???
 //    @FixMe
 //      Commenting this for now until we find a proper way to test it, then will merge it to main
     fun googleActivityResult(requestCode: Int, resultCode: Int, data: Intent?): String? {

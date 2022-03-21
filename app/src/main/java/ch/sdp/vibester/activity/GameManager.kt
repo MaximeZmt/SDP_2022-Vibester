@@ -29,18 +29,18 @@ class GameManager constructor(method: String, tag: String): Serializable{
         return gameSongList
     }
 
-    fun nextSong(): Song{
-        if(currentSong < gameSongList.size){
+    fun nextSong():Song {
+//        if(currentSong < gameSongList.size){
             val songName = gameSongList.get(currentSong)
             val songDetails = Song.singleSong(ItunesMusicApi.querySong(songName, OkHttpClient(), 1).get())
             currentSong++;
-            return songDetails
+//            return songDetails
 
-        }
+//        }
 
-        else{
-            finish()
-        }
+//        else{
+//            finish()
+//        }
         return songDetails
     }
 

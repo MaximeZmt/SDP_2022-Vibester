@@ -1,12 +1,13 @@
-package ch.sdp.vibester
+package ch.sdp.vibester.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.*
+import ch.sdp.vibester.R
 
-class GameEndingScreen : AppCompatActivity() {
+class GameEndingActivity : AppCompatActivity() {
     /*
     private var statNames: Array<String> = arrayOf("")
     private var statValues: Array<String> = arrayOf("")
@@ -62,7 +63,7 @@ class GameEndingScreen : AppCompatActivity() {
 
 
     fun goToIncorrectlyGuessedSongs(view: View) {
-        val intent = Intent(this, IncorrectSongsScreen::class.java)
+        val intent = Intent(this, IncorrectSongsActivity::class.java)
         intent.putExtra("nb_false", nbIncorrectSongs)
         //intent.putExtra("incorrect_songs", incorrectSongs)
         intent.putExtra("incorrect_song_1", incorrect1)

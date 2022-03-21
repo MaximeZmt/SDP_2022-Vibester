@@ -1,20 +1,27 @@
-package ch.sdp.vibester
+package ch.sdp.vibester.activity
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
+import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.LinearLayout.*
 import android.widget.TextView
+import ch.sdp.vibester.R
+import ch.sdp.vibester.helper.IntentSwitcher
 
-class IncorrectSongsScreen : AppCompatActivity() {
+class IncorrectSongsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_incorrect_songs_screen)
 
         val layout: LinearLayout = findViewById(R.id.incorrect_songs_linear)
+
+        val bWelcome: Button = findViewById(R.id.incorrect_songs_back_to_welcome)
+        bWelcome.setOnClickListener { IntentSwitcher.switchBackToWelcome(this) }
 
         //val incorrectSongs: Array<String> = intent.getStringArrayExtra("incorrect_songs") as Array<String>
         val incorrect1 = intent.getStringExtra("incorrect_song_1").toString()
@@ -23,8 +30,11 @@ class IncorrectSongsScreen : AppCompatActivity() {
         val incorrectSongs: Array<String> = arrayOf(incorrect1, incorrect2, incorrect3)
         val nbIncorrect: Int = intent.getIntExtra("nb_false", 0)
 
-        if(nbIncorrect != 0) {
+        generateTextView(nbIncorrect, incorrectSongs, layout)
+    }
 
+    private fun generateTextView(nbIncorrect: Int, incorrectSongs: Array<String>, layout: LinearLayout) {
+        if(nbIncorrect != 0) {
             for(x in 0 until nbIncorrect) {
                 val textView = TextView(this)
                 val resNb: Int = (x+1)
@@ -43,11 +53,7 @@ class IncorrectSongsScreen : AppCompatActivity() {
             textView.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
             layout.addView(textView)
         }
-
     }
 
-    fun switchBackToWelcome(view: View) {
-        val intent = Intent(this, WelcomeScreen::class.java)
-        startActivity(intent)
-    }
+
 }

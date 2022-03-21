@@ -1,28 +1,23 @@
-package ch.sdp.vibester
+package ch.sdp.vibester.activity
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
-import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
-import ch.sdp.vibester.games.TypingGame
-import ch.sdp.vibester.profile.ProfileDataProvider
-import ch.sdp.vibester.scoreboard.ScoreBoardActivity
+import ch.sdp.vibester.GenreTemporary
+import ch.sdp.vibester.LyricTemporary
+import ch.sdp.vibester.R
+import ch.sdp.vibester.helper.IntentSwitcher
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val txtInput = findViewById<EditText>(R.id.mainNameInput)
-
-        val btnGreeting = findViewById<Button>(R.id.mainButton)
-
-        val greetingIntent = Intent(this, GreetingActivity::class.java)
-            btnGreeting.setOnClickListener {
-                greetingIntent.putExtra("name", txtInput.text.toString())
-                startActivity(greetingIntent)
+        val btnWelcome = findViewById<Button>(R.id.placeholder_welcome)
+        btnWelcome.setOnClickListener {
+            IntentSwitcher.switchBackToWelcome(this)
         }
 
         val btnLyric = findViewById<Button>(R.id.lyricButton)
@@ -40,8 +35,4 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun switchToWelcome(view: View) {
-        val intent = Intent(this, WelcomeScreen::class.java)
-        startActivity(intent)
-    }
 }

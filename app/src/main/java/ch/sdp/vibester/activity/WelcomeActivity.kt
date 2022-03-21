@@ -1,19 +1,21 @@
-package ch.sdp.vibester
+package ch.sdp.vibester.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import ch.sdp.vibester.games.TypingGame
+import android.view.Window.FEATURE_NO_TITLE
+import ch.sdp.vibester.R
 import ch.sdp.vibester.model.Song
 import ch.sdp.vibester.profile.ProfileDataProvider
-import ch.sdp.vibester.profile.ProfileSetup
 import ch.sdp.vibester.profile.UserProfile
-import ch.sdp.vibester.scoreboard.ScoreBoardActivity
 
-class WelcomeScreen : AppCompatActivity() {
+class WelcomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        requestWindowFeature(FEATURE_NO_TITLE)
+        supportActionBar?.hide()
+
         setContentView(R.layout.activity_welcome_screen)
     }
 
@@ -23,12 +25,12 @@ class WelcomeScreen : AppCompatActivity() {
     }
 
     fun switchToPlay(view: View) {
-        sendDirectIntent(GameSetupScreen::class.java)
+        sendDirectIntent(GameSetupActivity::class.java)
     }
 
     fun switchToProfile(view: View) { //FILLER INTENT
 //        sendDirectIntent(GameSetupScreen::class.java)
-        val profileIntent = Intent(this, ProfileSetup::class.java)
+        val profileIntent = Intent(this, ProfileActivity::class.java)
         val userID = (0..5).random().toString()
         val dataProvider = userID.let { ProfileDataProvider(it) }
         val user: UserProfile = dataProvider.getUserProfileData()
@@ -53,7 +55,7 @@ class WelcomeScreen : AppCompatActivity() {
 
         val mySong = Song.singleSong(inputTxt)
 
-        val newIntent = Intent(this, TypingGame::class.java)
+        val newIntent = Intent(this, TypingGameActivity::class.java)
         newIntent.putExtra("song", mySong)
         newIntent.putExtra("isPlaying", true)
         newIntent.putExtra("hasWon", true)
@@ -61,7 +63,7 @@ class WelcomeScreen : AppCompatActivity() {
     }
 
     fun switchToSettings(view: View) { //FILLER INTENT
-        sendDirectIntent(Register::class.java)
+        sendDirectIntent(AuthenticationActivity::class.java)
     }
 
     /*

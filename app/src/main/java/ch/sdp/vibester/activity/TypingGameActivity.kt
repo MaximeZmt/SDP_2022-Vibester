@@ -1,18 +1,18 @@
-package ch.sdp.vibester.games
+package ch.sdp.vibester.activity
 
-import android.app.Activity
-import android.app.PendingIntent.getActivity
 import android.content.Context
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
+import android.content.res.ColorStateList
 import android.graphics.drawable.GradientDrawable
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.Gravity
+import android.view.Window
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat.getColor
 import androidx.core.content.ContextCompat.startActivity
 import androidx.core.widget.addTextChangedListener
@@ -20,6 +20,7 @@ import ch.sdp.vibester.R
 import ch.sdp.vibester.api.AudioPlayer
 import ch.sdp.vibester.api.BitmapGetterApi
 import ch.sdp.vibester.api.ItunesMusicApi
+import ch.sdp.vibester.games.GameManager
 import ch.sdp.vibester.model.Song
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -27,13 +28,16 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
 import java.io.Serializable
+import java.lang.Exception
 import java.util.concurrent.CompletableFuture
 
 /**
  * Class that represent a game
  */
-class TypingGame : AppCompatActivity() {
-    private lateinit var gameManager:GameManager
+
+class TypingGameActivity : AppCompatActivity() {
+    private lateinit var gameManager: GameManager
+
     companion object{
 
         /**
@@ -59,7 +63,7 @@ class TypingGame : AppCompatActivity() {
                 hasWon(ctx, gameManager.getScore(),false, playedSong)
             }
 
-            val newIntent = Intent(ctx, TypingGame::class.java)
+            val newIntent = Intent(ctx, TypingGameActivity::class.java)
             newIntent.putExtra("song", gameManager.nextSong())
             newIntent.putExtra("isPlaying", false)
             newIntent.putExtra("gameManager", gameManager)
@@ -72,7 +76,7 @@ class TypingGame : AppCompatActivity() {
          */
         fun guess(song: Song, guessLayout: LinearLayout, ctx: Context, playedSong: Song, player: CompletableFuture<MediaPlayer>?, gameManager: GameManager): FrameLayout{
             val frameLay = FrameLayout(ctx)
-            frameLay.background = borderGen()
+            frameLay.background = borderGen(ctx)
 
             // Horizontal Linear Layout to put Images and Text next one another
             val linLay = LinearLayout(ctx)
@@ -89,7 +93,7 @@ class TypingGame : AppCompatActivity() {
 
             //Create the Listener that is executed if we click on the framelayer
             frameLay.setOnClickListener {
-                frameLay.setBackgroundColor(getColor(ctx, R.color.teal_200))
+                frameLay.setBackgroundColor(getColor(ctx, R.color.tiffany_blue))
                 guessLayout.removeAllViews()
                 guessLayout.addView(frameLay)
                 val playerMedia = player?.get()
@@ -107,9 +111,9 @@ class TypingGame : AppCompatActivity() {
         /**
          * Generate the border for a box
          */
-        fun borderGen(): GradientDrawable{
+        fun borderGen(ctx: Context): GradientDrawable{
             val border = GradientDrawable()
-            border.setColor(-0x1) //white background
+            border.setColor(getColor(ctx, R.color.maximum_yellow_red)) //white background
             border.setStroke(1, -0x1000000)
             return border
         }
@@ -161,17 +165,18 @@ class TypingGame : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        requestWindowFeature(Window.FEATURE_NO_TITLE)
+        supportActionBar?.hide()
         setContentView(R.layout.activity_typing_game)
 
         val guessLayout = findViewById<LinearLayout>(R.id.displayGuess)
         val inputTxt = findViewById<EditText>(R.id.yourGuessET)
-        val myBar = findViewById<ProgressBar>(R.id.progressBar)
 
         var mysong: Song? = null
         var mediaPlayer: CompletableFuture<MediaPlayer>? = null
         val ctx: Context = this
 
-        myBar.progress = 30
+
 
         val getIntent = intent.extras
         if(getIntent != null){
@@ -185,25 +190,10 @@ class TypingGame : AppCompatActivity() {
 //                hasWon(this, hasWon, playableSong)
 //                inputTxt.setKeyListener(null)
 //            }else{
-                //Is the activity playing music
+//                Is the activity playing music
                 mediaPlayer = AudioPlayer.playAudio(playableSong.getPreviewUrl())
-                val h = Handler()
-                h.post(object : Runnable {
-                    override fun run() {
-                        if(myBar.progress>0){
-                            myBar.progress -= 1
-                            h.postDelayed(this, 999) //just a bit shorter than a second for safety
-                        }else if (myBar.progress==0){
-                            if(mysong != null){
-                                if(mediaPlayer.get().isPlaying){
-                                    startActivity(intentGen(ctx, null, playableSong, gameManager))
-                                    finish()
-                                }
-                            }
-                        }
-                    }
-                })
-
+                barTimer(findViewById<ProgressBar>(R.id.progressBar), mediaPlayer, mysong, ctx)
+//            }
             mysong = playableSong
         }
 
@@ -211,25 +201,51 @@ class TypingGame : AppCompatActivity() {
         inputTxt.addTextChangedListener{
             guessLayout.removeAllViews()
             val txtInp = inputTxt.text.toString()
-            if (txtInp.length>4){
+            if (txtInp.length>3){
                 CoroutineScope(Dispatchers.Main).launch {
                     val task = async(Dispatchers.IO){
                         ItunesMusicApi.querySong(txtInp, OkHttpClient(), 3).get()
                     }
-                    val list = Song.listSong(task.await())
-                    for(x: Song in list){
-                        if (mysong != null) {
-                            guess(x, findViewById(R.id.displayGuess), this@TypingGame, mysong, mediaPlayer, gameManager)
-                        }else{
-                            guess(x, findViewById(R.id.displayGuess), this@TypingGame, x, mediaPlayer, gameManager)
+                    try {
+                        val list = Song.listSong(task.await())
+                        for (x: Song in list) {
+                            if (mysong != null) {
+                                guess(x, findViewById(R.id.displayGuess),this@TypingGameActivity, mysong, mediaPlayer, gameManager)
+                            }
                         }
+                    } catch (e: Exception){
+                        Log.e("Exception: ", e.toString())
                     }
                 }
             }
         }
-
-
-
     }
+
+
+    fun barTimer(myBar: ProgressBar, mediaPlayer: CompletableFuture<MediaPlayer>, mySong: Song?, ctx:Context){
+        myBar.progress = 30
+        val h = Handler()
+        h.post(object : Runnable {
+            override fun run() {
+                if(myBar.progress>0){
+                    if(myBar.progress == 15){
+                        myBar.progressTintList = ColorStateList.valueOf(getColor(R.color.maximum_yellow_red))
+                    }else if(myBar.progress == 5){
+                        myBar.progressTintList = ColorStateList.valueOf(getColor(R.color.light_coral))
+                    }
+                    myBar.progress -= 1
+                    h.postDelayed(this, 999) //just a bit shorter than a second for safety
+                }else if (myBar.progress==0){
+                    if(mySong != null){
+                        if(mediaPlayer.get().isPlaying){
+                            //TODO Intent Switch for end
+                            finish()
+                        }
+                    }
+                }
+            }
+        })
+    }
+
 
 }

@@ -1,10 +1,12 @@
-package ch.sdp.vibester.scoreboard
+package ch.sdp.vibester.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
+import ch.sdp.vibester.scoreboard.Player
+import ch.sdp.vibester.scoreboard.PlayerAdapter
 
 class ScoreBoardActivity : AppCompatActivity() {
 

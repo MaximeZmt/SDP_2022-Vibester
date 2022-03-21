@@ -202,21 +202,7 @@ class TypingGameActivity : AppCompatActivity() {
                         val list = Song.listSong(task.await())
                         for (x: Song in list) {
                             if (mysong != null) {
-                                guess(
-                                    x,
-                                    findViewById(R.id.displayGuess),
-                                    this@TypingGameActivity,
-                                    mysong,
-                                    mediaPlayer
-                                )
-                            } else {
-                                guess(
-                                    x,
-                                    findViewById(R.id.displayGuess),
-                                    this@TypingGameActivity,
-                                    x,
-                                    mediaPlayer
-                                )
+                                guess(x, findViewById(R.id.displayGuess),this@TypingGameActivity, mysong, mediaPlayer)
                             }
                         }
                     } catch (e: Exception){

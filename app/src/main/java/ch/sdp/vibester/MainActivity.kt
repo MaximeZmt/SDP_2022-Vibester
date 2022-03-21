@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
+import ch.sdp.vibester.games.LyricsBelongGame
 import ch.sdp.vibester.games.TypingGame
 import ch.sdp.vibester.profile.ProfileDataProvider
 import ch.sdp.vibester.scoreboard.ScoreBoardActivity
@@ -26,16 +27,17 @@ class MainActivity : AppCompatActivity() {
         }
 
         val btnLyric = findViewById<Button>(R.id.lyricButton)
-        val lyricIntent = Intent(this, LyricTemporary::class.java)
+        //val lyricIntent = Intent(this, LyricTemporary::class.java)
+        val lyricGameIntent = Intent(this, LyricsBelongGame::class.java)
         btnLyric.setOnClickListener {
-            startActivity(lyricIntent)
+            //startActivity(lyricIntent)
+            startActivity(lyricGameIntent)
         }
 
         val btnGenre = findViewById<Button>(R.id.genreButton)
         val genreIntent = Intent(this, GenreTemporary::class.java)
         btnGenre.setOnClickListener {
             startActivity(genreIntent)
-
         }
 
     }

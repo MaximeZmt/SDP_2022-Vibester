@@ -3,6 +3,7 @@ package ch.sdp.vibester.activity
 import android.content.Context
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getColor
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.matcher.IntentMatchers
@@ -28,8 +29,9 @@ class TypingGameActivityTest{
 
     @Test
     fun borderGenTest(){
-        val border = TypingGameActivity.borderGen(ApplicationProvider.getApplicationContext())
-        assertEquals(-0x1, border.color?.defaultColor)
+        val ctx = ApplicationProvider.getApplicationContext() as Context
+        val border = TypingGameActivity.borderGen(ctx)
+        assertEquals(getColor(ctx, R.color.maximum_yellow_red), border.color?.defaultColor)
     }
 
     @Test

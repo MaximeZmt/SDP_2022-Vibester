@@ -3,6 +3,7 @@ package ch.sdp.vibester.activity
 import android.content.Context
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
+import android.content.res.ColorStateList
 import android.graphics.drawable.GradientDrawable
 import android.media.MediaPlayer
 import android.os.Bundle
@@ -84,7 +85,7 @@ class TypingGameActivity : AppCompatActivity() {
 
             //Create the Listener that is executed if we click on the framelayer
             frameLay.setOnClickListener {
-                frameLay.setBackgroundColor(getColor(ctx, R.color.teal_200))
+                frameLay.setBackgroundColor(getColor(ctx, R.color.tiffany_blue))
                 guessLayout.removeAllViews()
                 guessLayout.addView(frameLay)
                 val playerMedia = player?.get()
@@ -183,22 +184,7 @@ class TypingGameActivity : AppCompatActivity() {
             }else{
                 //Is the activity playing music
                 mediaPlayer = AudioPlayer.playAudio(playableSong.getPreviewUrl())
-                val h = Handler()
-                h.post(object : Runnable {
-                    override fun run() {
-                        if(myBar.progress>0){
-                            myBar.progress -= 1
-                            h.postDelayed(this, 999) //just a bit shorter than a second for safety
-                        }else if (myBar.progress==0){
-                            if(mysong != null){
-                                if(mediaPlayer.get().isPlaying){
-                                    startActivity(intentGen(ctx, null, playableSong))
-                                    finish()
-                                }
-                            }
-                        }
-                    }
-                })
+                barTimer(myBar, mediaPlayer, mysong, ctx)
             }
             mysong = playableSong
         }
@@ -207,7 +193,7 @@ class TypingGameActivity : AppCompatActivity() {
         inputTxt.addTextChangedListener{
             guessLayout.removeAllViews()
             val txtInp = inputTxt.text.toString()
-            if (txtInp.length>4){
+            if (txtInp.length>3){
                 CoroutineScope(Dispatchers.Main).launch {
                     val task = async(Dispatchers.IO){
                         ItunesMusicApi.querySong(txtInp, OkHttpClient(), 3).get()
@@ -239,9 +225,32 @@ class TypingGameActivity : AppCompatActivity() {
                 }
             }
         }
-
-
-
     }
+
+
+    fun barTimer(myBar: ProgressBar, mediaPlayer: CompletableFuture<MediaPlayer>, mySong: Song?, ctx:Context){
+        val h = Handler()
+        h.post(object : Runnable {
+            override fun run() {
+                if(myBar.progress>0){
+                    if(myBar.progress == 15){
+                        myBar.progressTintList = ColorStateList.valueOf(getColor(R.color.maximum_yellow_red))
+                    }else if(myBar.progress == 5){
+                        myBar.progressTintList = ColorStateList.valueOf(getColor(R.color.light_coral))
+                    }
+                    myBar.progress -= 1
+                    h.postDelayed(this, 999) //just a bit shorter than a second for safety
+                }else if (myBar.progress==0){
+                    if(mySong != null){
+                        if(mediaPlayer.get().isPlaying){
+                            //TODO Intent Switch for end
+                            finish()
+                        }
+                    }
+                }
+            }
+        })
+    }
+
 
 }

@@ -26,6 +26,7 @@
             android:paddingLeft="25sp"
             android:paddingRight="25sp"
             android:progress="15"
+            android:progressTint="@color/tiffany_blue"
             android:scaleY="3" />
 
         <Space

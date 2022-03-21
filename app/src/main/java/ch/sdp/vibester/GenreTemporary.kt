@@ -1,11 +1,15 @@
 package ch.sdp.vibester
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import ch.sdp.vibester.api.LastfmHelper
+import ch.sdp.vibester.games.GameManager
+import ch.sdp.vibester.games.TypingGame
+import ch.sdp.vibester.model.Song
 
 /**
  * Activity to show the list of songs for a chosen tag
@@ -25,10 +29,14 @@ class GenreTemporary : AppCompatActivity() {
      * @param tag: tag name if method BY_TAG is chosen
      */
     fun performQuery(method: String, tag: String=""){
-        val listSongs = findViewById<ListView>(R.id.songsListView)
-        val songList = LastfmHelper.getRandomSongList(method, tag)
-        val arr = ArrayAdapter(this, android.R.layout.simple_list_item_1 , songList)
-        listSongs.adapter = arr
+        val gameManager = GameManager(method, tag)
+
+        val newIntent = Intent(this, TypingGame::class.java)
+        newIntent.putExtra("song", gameManager.nextSong())
+        newIntent.putExtra("isPlaying", true)
+        newIntent.putExtra("hasWon", true)
+        newIntent.putExtra("gameManager", gameManager)
+        startActivity(newIntent)
     }
 
     fun getKpopSongList(view: View) {

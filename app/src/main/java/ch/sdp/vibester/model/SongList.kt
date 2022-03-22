@@ -28,11 +28,11 @@ class SongList(jsonMeta: String, method: String) {
             if(method==BY_ARTIST){
                 tracksField="toptracks"
             }
-            var jsonRes = jsonObj.getJSONObject(tracksField)
-            var nonFilteredSongs = jsonRes.getJSONArray("track")
+            val jsonRes = jsonObj.getJSONObject(tracksField)
+            val nonFilteredSongs = jsonRes.getJSONArray("track")
             filterSongs(nonFilteredSongs)
 
-            var attributes = jsonRes.getJSONObject("@attr")
+            val attributes = jsonRes.getJSONObject("@attr")
             page = attributes.getString("page")
             songsPerPage = attributes.getString("perPage")
             totalPages = attributes.getString("totalPages")
@@ -52,10 +52,11 @@ class SongList(jsonMeta: String, method: String) {
         val songsLength = nonFilteredSongs.length()
         var  i = 0
         while(i < songsLength) {
-            var songObj = nonFilteredSongs.getJSONObject(i)
+            val songObj = nonFilteredSongs.getJSONObject(i)
             val songName = songObj.getString("name").lowercase()
             val artistDetails = songObj.getJSONObject("artist")
-            val artistName = artistDetails.getString("name")
+            val artistName = artistDetails.getString("name").lowercase()
+            // TODO: filter the songs that are remixes or were sang by others.
             songList.add("$songName $artistName")
             ++i
         }

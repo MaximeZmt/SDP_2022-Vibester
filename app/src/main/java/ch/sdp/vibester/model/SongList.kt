@@ -62,6 +62,14 @@ class SongList(jsonMeta: String) {
     }
 
     /**
+     * Getter that return shuffled songs list
+     * @return MutableList<String> of type "$artistName $songName"
+     */
+    fun getShuffledSongList(): MutableList<String> {
+        return songList.asSequence().shuffled().toMutableList()
+    }
+
+    /**
      * Getter that return page number from the query
      * @return String page
      */

@@ -20,9 +20,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         val btnLyric = findViewById<Button>(R.id.lyricButton)
-        val lyricIntent = Intent(this, LyricTemporary::class.java)
+        //val lyricIntent = Intent(this, LyricTemporary::class.java)
+        val lyricGameIntent = Intent(this, LyricsBelongGameActivity::class.java)
         btnLyric.setOnClickListener {
-            startActivity(lyricIntent)
+            //startActivity(lyricIntent)
+            startActivity(lyricGameIntent)
         }
 
         val btnGenre = findViewById<Button>(R.id.genreButton)

@@ -48,4 +48,17 @@ class GameManager constructor(method: String, tag: String): Serializable{
     fun finish(){
     }
 
+    fun getMediaPlayer(): CompletableFuture<MediaPlayer> {
+        return mediaPlayer
+    }
+
+    fun playingMediaPlayer(): Boolean {
+        return mediaPlayer.get().isPlaying
+    }
+
+    fun stopMediaPlayer(){
+        mediaPlayer.get().stop()
+    }
+
+
 }

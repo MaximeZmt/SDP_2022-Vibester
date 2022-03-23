@@ -2,7 +2,6 @@ package ch.sdp.vibester.activity
 
 import android.content.Context
 import android.content.Intent
-import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.content.res.ColorStateList
 import android.graphics.drawable.GradientDrawable
 import android.media.MediaPlayer
@@ -14,12 +13,12 @@ import android.view.Window
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.getColor
-import androidx.core.content.ContextCompat.startActivity
 import androidx.core.widget.addTextChangedListener
+import ch.sdp.vibester.EndBasicGameActivity
 import ch.sdp.vibester.R
-import ch.sdp.vibester.api.AudioPlayer
 import ch.sdp.vibester.api.BitmapGetterApi
 import ch.sdp.vibester.api.ItunesMusicApi
+import ch.sdp.vibester.api.LastfmApi
 import ch.sdp.vibester.games.GameManager
 import ch.sdp.vibester.model.Song
 import kotlinx.coroutines.CoroutineScope
@@ -156,7 +155,6 @@ class TypingGameActivity : AppCompatActivity() {
             return imgView
         }
 
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -170,8 +168,6 @@ class TypingGameActivity : AppCompatActivity() {
         var mysong: Song? = null
         var mediaPlayer: CompletableFuture<MediaPlayer>? = null
         val ctx: Context = this
-
-
 
         val getIntent = intent.extras
         if(getIntent != null){

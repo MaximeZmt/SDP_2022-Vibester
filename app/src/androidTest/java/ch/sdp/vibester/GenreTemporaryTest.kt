@@ -38,39 +38,27 @@ class GenreTemporaryTest {
         onView(withId(R.id.rockButton)).check(matches(isDisplayed()))
         onView(withId(R.id.kpopButton)).check(matches(isDisplayed()))
         onView(withId(R.id.topTracksButton)).check(matches(isDisplayed()))
-        onView(withId(R.id.songsListView)).check(matches(isDisplayed()))
+        onView(withId(R.id.btsButton)).check(matches(isDisplayed()))
+        onView(withId(R.id.imagDragonsButton)).check(matches(isDisplayed()))
+        onView(withId(R.id.billieEilishButton)).check(matches(isDisplayed()))
     }
 
     @get:Rule
     var exception = ExpectedException.none()
 
     @Test
-    fun songListIsEmpty(){
-        exception.expect(PerformException::class.java)
-        onView(withId(R.id.songsListView)).check(matches(isDisplayed()))
-        onData(allOf(`is`(instanceOf(String::class.java)))).atPosition(2).perform(click())
-    }
-
-    @Test
     fun rockButtonClick() {
         onView(withId(R.id.rockButton)).perform(click())
-        onView(withId(R.id.songsListView)).check(matches(isDisplayed()))
-        Thread.sleep(1000)   // wait for data to fetch
-        onData(allOf(`is`(instanceOf(String::class.java)))).atPosition(2).perform(click())
+
     }
     @Test
     fun topButtonClick() {
         onView(withId(R.id.topTracksButton)).perform(click())
-        onView(withId(R.id.songsListView)).check(matches(isDisplayed()))
-        Thread.sleep(1000)   // wait for data to fetch
-        onData(allOf(`is`(instanceOf(String::class.java)))).atPosition(2).perform(click())
+
     }
 
     @Test
     fun kpopButtonClick() {
         onView(withId(R.id.kpopButton)).perform(click())
-        onView(withId(R.id.songsListView)).check(matches(isDisplayed()))
-        Thread.sleep(1000)   // wait for data to fetch
-        onData(allOf(`is`(instanceOf(String::class.java)))).atPosition(2).perform(click())
     }
 }

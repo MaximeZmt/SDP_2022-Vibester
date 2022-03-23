@@ -54,27 +54,23 @@ class TypingGameActivity : AppCompatActivity() {
         /**
          * Generate a change of intent at the end of the game
          */
-        fun intentGen(ctx: Context, choosenSong: Song?, playedSong: Song, gameManager: GameManager):Intent{
+        fun checkAnswer(ctx: Context, choosenSong: Song?, gameManager: GameManager){
+            val playedSong = gameManager.getCurrentSong()
 
             if(choosenSong != null && choosenSong.getTrackName() == playedSong.getTrackName() && choosenSong.getArtistName() == playedSong.getArtistName()){
                 gameManager.increaseScore()
+                gameManager.addCorrectSong()
                 hasWon(ctx, gameManager.getScore(),true,playedSong)
             }else{
                 hasWon(ctx, gameManager.getScore(),false, playedSong)
             }
-
-            val newIntent = Intent(ctx, TypingGameActivity::class.java)
-            newIntent.putExtra("song", gameManager.nextSong())
-            newIntent.putExtra("isPlaying", false)
-            newIntent.putExtra("gameManager", gameManager)
-            newIntent.setFlags(FLAG_ACTIVITY_NEW_TASK)
-            return newIntent
+            playRound(ctx, gameManager)
         }
 
         /**
          * Create the frame layout and its logic of the suggestion when user is typing
          */
-        fun guess(song: Song, guessLayout: LinearLayout, ctx: Context, playedSong: Song, player: CompletableFuture<MediaPlayer>?, gameManager: GameManager): FrameLayout{
+        fun guess(song: Song, guessLayout: LinearLayout, ctx: Context, gameManager: GameManager): FrameLayout{
             val frameLay = FrameLayout(ctx)
             frameLay.background = borderGen(ctx)
 
@@ -96,11 +92,10 @@ class TypingGameActivity : AppCompatActivity() {
                 frameLay.setBackgroundColor(getColor(ctx, R.color.tiffany_blue))
                 guessLayout.removeAllViews()
                 guessLayout.addView(frameLay)
-                val playerMedia = player?.get()
-                if (playerMedia != null) {
-                    playerMedia.stop()
+                if (gameManager.playingMediaPlayer()) {
+                    gameManager.stopMediaPlayer()
                 }
-                startActivity(ctx, intentGen(ctx, song, playedSong, gameManager), null)
+                checkAnswer(ctx, song, gameManager)
             }
 
             guessLayout.addView(generateSpace(75,75, ctx))
@@ -180,21 +175,8 @@ class TypingGameActivity : AppCompatActivity() {
 
         val getIntent = intent.extras
         if(getIntent != null){
-            val playableSong: Song = getIntent.get("song") as Song
-//            val isPlaying: Boolean = getIntent.get("isPlaying") as Boolean
-//            val hasWon: Boolean = getIntent.get("hasWon") as Boolean
             gameManager = getIntent.getSerializable("gameManager") as GameManager
-
-//            if(!isPlaying){
-//                //Is the activity showing the result
-//                hasWon(this, hasWon, playableSong)
-//                inputTxt.setKeyListener(null)
-//            }else{
-//                Is the activity playing music
-                mediaPlayer = AudioPlayer.playAudio(playableSong.getPreviewUrl())
-                barTimer(findViewById<ProgressBar>(R.id.progressBar), mediaPlayer, mysong, ctx)
-//            }
-            mysong = playableSong
+            playRound(ctx, gameManager)
         }
 
         //Listener when we modify the input
@@ -209,9 +191,7 @@ class TypingGameActivity : AppCompatActivity() {
                     try {
                         val list = Song.listSong(task.await())
                         for (x: Song in list) {
-                            if (mysong != null) {
-                                guess(x, findViewById(R.id.displayGuess),this@TypingGameActivity, mysong, mediaPlayer, gameManager)
-                            }
+                            guess(x, findViewById(R.id.displayGuess),this@TypingGameActivity, gameManager!!)
                         }
                     } catch (e: Exception){
                         Log.e("Exception: ", e.toString())

@@ -1,11 +1,12 @@
 package ch.sdp.vibester.games
 
-import ch.sdp.vibester.api.ItunesMusicApi
-import ch.sdp.vibester.api.LastfmHelper
+import android.media.MediaPlayer
+import ch.sdp.vibester.api.*
 import ch.sdp.vibester.model.Song
 import ch.sdp.vibester.model.SongList
 import okhttp3.OkHttpClient
 import java.io.Serializable
+import java.util.concurrent.CompletableFuture
 
 class GameManager constructor(method: String, tag: String): Serializable{
     private var score = 0;

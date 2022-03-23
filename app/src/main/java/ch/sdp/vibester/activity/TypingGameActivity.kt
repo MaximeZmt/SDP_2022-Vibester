@@ -26,7 +26,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
-import java.io.Serializable
 import java.lang.Exception
 import java.util.concurrent.CompletableFuture
 

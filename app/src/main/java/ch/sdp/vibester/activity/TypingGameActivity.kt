@@ -222,10 +222,10 @@ class TypingGameActivity : AppCompatActivity() {
     }
 
 
-    fun barTimer(myBar: ProgressBar, mediaPlayer: CompletableFuture<MediaPlayer>, mySong: Song?, ctx:Context){
+    fun barTimer(myBar: ProgressBar, ctx:Context, gameManager: GameManager){
         myBar.progress = 30
-        val h = Handler()
-        h.post(object : Runnable {
+        myBar.progressTintList = ColorStateList.valueOf(getColor(R.color.cg_blue))
+        runnable = object : Runnable {
             override fun run() {
                 if(myBar.progress>0){
                     if(myBar.progress == 15){
@@ -235,18 +235,17 @@ class TypingGameActivity : AppCompatActivity() {
                     }
                     myBar.progress -= 1
                     h.postDelayed(this, 999) //just a bit shorter than a second for safety
-                }else if (myBar.progress==0){
-                    if(mySong != null){
-                        if(mediaPlayer.get().isPlaying){
-                            //TODO Intent Switch for end
-                            finish()
-                        }
+                }else if(myBar.progress==0){
+                    if(gameManager.playingMediaPlayer()){
+                        gameManager.stopMediaPlayer()
                     }
+                    checkAnswer(ctx, null, gameManager)
                 }
             }
-        })
-    }
+        }
+        h.post(runnable!!)
 
+    }
 
     fun playRound(ctx: Context, gameManager: GameManager){
         if(gameManager.checkNextSong()){

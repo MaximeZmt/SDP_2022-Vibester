@@ -63,7 +63,7 @@ class SongList(jsonMeta: String, method: String) {
     }
 
     /**
-     * Getter that return songs for the given tag
+     * Getter that return song list
      * @return MutableList<String> of type "$artistName $songName"
      */
     fun getSongList():MutableList<String>{
@@ -71,7 +71,7 @@ class SongList(jsonMeta: String, method: String) {
     }
 
     /**
-     * Getter that return shuffled songs list
+     * Getter that return shuffled song list
      * @return MutableList<String> of type "$artistName $songName"
      */
     fun getShuffledSongList(): MutableList<String> {

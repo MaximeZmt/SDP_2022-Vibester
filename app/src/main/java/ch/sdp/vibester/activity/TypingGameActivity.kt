@@ -248,4 +248,21 @@ class TypingGameActivity : AppCompatActivity() {
     }
 
 
+    fun playRound(ctx: Context, gameManager: GameManager){
+        if(gameManager.checkNextSong()){
+            findViewById<LinearLayout>(R.id.displayGuess).removeAllViews()
+            findViewById<EditText>(R.id.yourGuessET).text.clear()
+            gameManager.setNextSong()
+            gameManager.playSong()
+            if(runnable !=null ){
+                h.removeCallbacks(runnable!!);}
+            barTimer(findViewById<ProgressBar>(R.id.progressBar), ctx, gameManager)}
+        else{
+            if(runnable !=null ){
+                h.removeCallbacks(runnable!!);}
+            val i = Intent(this, EndBasicGameActivity::class.java)
+            i.putExtra("score", gameManager.getScore().toString())
+            startActivity(i)
+        }
+    }
 }

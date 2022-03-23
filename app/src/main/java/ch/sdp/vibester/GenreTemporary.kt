@@ -1,15 +1,24 @@
 package ch.sdp.vibester
 
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_NO_HISTORY
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.ListView
-import ch.sdp.vibester.api.LastfmHelper
+import ch.sdp.vibester.activity.TypingGameActivity
+import ch.sdp.vibester.api.BitmapGetterApi
+import ch.sdp.vibester.api.LastfmApi
+//import ch.sdp.vibester.api.LastfmHelper
+import ch.sdp.vibester.api.LastfmUri
 import ch.sdp.vibester.games.GameManager
-import ch.sdp.vibester.games.TypingGame
 import ch.sdp.vibester.model.Song
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+import okhttp3.OkHttpClient
 
 /**
  * Activity to show the list of songs for a chosen tag
@@ -17,6 +26,7 @@ import ch.sdp.vibester.model.Song
 class GenreTemporary : AppCompatActivity() {
     private val BY_TAG = "tag.gettoptracks"
     private val BY_CHART = "chart.gettoptracks"
+    private val BY_ARTIST = "artist.gettoptracks"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,27 +38,37 @@ class GenreTemporary : AppCompatActivity() {
      * @param method: BY_TAG or BY_CHART (top tracks without tag)
      * @param tag: tag name if method BY_TAG is chosen
      */
-    fun performQuery(method: String, tag: String=""){
-        val gameManager = GameManager(method, tag)
-
-        val newIntent = Intent(this, TypingGame::class.java)
-        newIntent.putExtra("song", gameManager.nextSong())
-        newIntent.putExtra("isPlaying", true)
-        newIntent.putExtra("hasWon", true)
+    fun performQuery(uri:LastfmUri){
+        val gameManager = GameManager()
+        val songs = LastfmApi.querySongList(OkHttpClient(),uri).get()
+        gameManager.setGameSongList(songs,uri.method)
+        val newIntent = Intent(this, TypingGameActivity::class.java)
         newIntent.putExtra("gameManager", gameManager)
         startActivity(newIntent)
     }
 
-    fun getKpopSongList(view: View) {
-        performQuery(BY_TAG,"kpop")
+    fun playRock(view: View) {
+        performQuery(LastfmUri(method = BY_TAG, tag = "rock"))
     }
 
-    fun getRockSongList(view: View) {
-        performQuery(BY_TAG, "rock")
+    fun playImagineDragons(view: View) {
+        performQuery(LastfmUri(method = BY_ARTIST, artist = "Imagine Dragons"))
     }
 
-    fun getTopSongList(view: View) {
-        performQuery(BY_CHART)
+    fun playTopTracks(view: View) {
+        performQuery(LastfmUri(method = BY_CHART))
+    }
+
+    fun playBTS(view: View) {
+        performQuery(LastfmUri(method = BY_ARTIST, artist = "BTS"))
+    }
+
+    fun playKpop(view: View) {
+        performQuery(LastfmUri(method = BY_TAG, tag = "kpop"))
+    }
+
+    fun playBillieEilish(view: View){
+        performQuery(LastfmUri(method = BY_ARTIST, artist = "Billie Eilish"))
     }
 
 }

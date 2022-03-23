@@ -35,9 +35,8 @@ import java.util.concurrent.CompletableFuture
  */
 
 class TypingGameActivity : AppCompatActivity() {
-    private lateinit var gameManager: GameManager
-
-    companion object{
+    private val h = Handler()
+    private  var runnable: Runnable? = null
 
         /**
          * Print Toast message to announce the user if he wons or not
@@ -168,6 +167,8 @@ class TypingGameActivity : AppCompatActivity() {
         var mysong: Song? = null
         var mediaPlayer: CompletableFuture<MediaPlayer>? = null
         val ctx: Context = this
+        var gameManager: GameManager? = null
+        val h = Handler()
 
         val getIntent = intent.extras
         if(getIntent != null){

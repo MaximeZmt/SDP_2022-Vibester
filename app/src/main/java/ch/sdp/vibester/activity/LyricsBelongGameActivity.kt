@@ -40,7 +40,7 @@ class LyricsBelongGameActivity : AppCompatActivity() {
         btnCheck = findViewById(R.id.lyricMatchButton)
         btnCheck.setOnClickListener {
             if (btnSpeakIsClicked) {
-                getLyrics()
+                checkLyrics(txtFromSpeech.text.toString())
             }
         }
 
@@ -58,11 +58,11 @@ class LyricsBelongGameActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_AUDIO || data != null) {
             val res = data!!.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
-            txtFromSpeech.text = res?.get(0) ?: " Didn't catch"
+            txtFromSpeech.text = res?.get(0) ?: "Didn't catch"
         }
     }
 
-    private fun getLyrics() {
+    private fun checkLyrics(lyricToBeCheck: String) {
         val service = LyricsOVHApiInterface.create()
         val call = service.getLyrics("Imagine Dragons", "Thunder")
         call.enqueue(object: Callback<Lyric> {
@@ -71,17 +71,17 @@ class LyricsBelongGameActivity : AppCompatActivity() {
             override fun onResponse(call: Call<Lyric>?, response: Response<Lyric>?) {
                 if (response != null) {
                     originLyric = response.body().lyrics.toString()
-                    checkCorrectness()
+                    txtResult.text = checkCorrectness(originLyric, lyricToBeCheck)
                 }
             }
         })
     }
 
-    private fun checkCorrectness() {
-        if (originLyric.contains(txtFromSpeech.text, ignoreCase = true)) {
-            txtResult.text = "correct!"
+    private fun checkCorrectness(originLyric: String, txtFromSpeech: String): String {
+        return if (originLyric.contains(txtFromSpeech, ignoreCase = true)) {
+            "correct!"
         } else {
-            txtResult.text = "too bad"
+            "too bad"
         }
     }
 }

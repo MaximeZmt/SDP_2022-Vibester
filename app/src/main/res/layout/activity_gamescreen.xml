@@ -61,44 +61,6 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/answer"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="116dp"
-        android:orientation="vertical"
-        android:visibility="invisible"
-        android:gravity="center"
-        android:background="#AAAAAA"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scoresTable">
-
-        <TextView
-            android:id="@+id/answerText"
-            android:layout_width="275dp"
-            android:layout_height="wrap_content"
-            android:gravity="center" />
-
-        <Button
-            android:id="@+id/buttonCorrect"
-            android:layout_width="125dp"
-            android:layout_height="40dp"
-            android:gravity="center"
-            android:text="@string/correct" />
-
-        <Button
-            android:id="@+id/buttonWrong"
-            android:layout_width="125dp"
-            android:layout_height="40dp"
-            android:gravity="center"
-            android:text="@string/wrong" />
-
-    </LinearLayout>
-
     <TableLayout
         android:id="@+id/scoresTable"
         android:layout_width="0dp"

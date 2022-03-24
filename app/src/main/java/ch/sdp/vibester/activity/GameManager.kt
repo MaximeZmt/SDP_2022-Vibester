@@ -59,25 +59,32 @@ class GameManager: Serializable{
         wrongSongs.add(currentSong)
     }
 
-    fun checkNextSong():Boolean{
+    fun checkGameStatus():Boolean{
         if(playedSongs < GAME_SIZE){
             return true
         }
         return false
     }
 
-    fun setNextSong(): Song {
-        val songName = gameSongList[nextSongInd]
-        try{
-            currentSong = Song.singleSong(ItunesMusicApi.querySong(songName, OkHttpClient(), 1).get())
-            nextSongInd++
-            playedSongs++
+    fun setNextSong():Boolean {
+        if(nextSongInd < gameSongList.size){
+            val songName = gameSongList[nextSongInd]
+            try{
+                currentSong = Song.singleSong(ItunesMusicApi.querySong(songName, OkHttpClient(), 1).get())
+                nextSongInd++
+                playedSongs++
+            }
+            catch (e:Exception) {
+                nextSongInd++
+                setNextSong()
+            }
+            return true
         }
-        catch (e:Exception) {
-            nextSongInd++;
-            setNextSong()
-        }
-        return currentSong
+        return false
+    }
+
+    fun setMediaPlayer(mediaPlayer: CompletableFuture<MediaPlayer>){
+        this.mediaPlayer = mediaPlayer
     }
 
     fun playSong(){

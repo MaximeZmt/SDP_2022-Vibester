@@ -68,7 +68,7 @@ class ProfileActivityTest {
         Thread.sleep(3_000)
         onView(withId(R.id.editUser)).perform(ViewActions.click())
         onView(withText("Cancel")).perform(ViewActions.click())
-        onView(withId(R.id.username)).check(matches(withText("@lisa")))
+        onView(withId(R.id.username)).check(matches(withText("Lalisa Bon")))
     }
 
     @Test

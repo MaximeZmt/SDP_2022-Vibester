@@ -2,7 +2,6 @@ package ch.sdp.vibester.activity
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.drawable.GradientDrawable
 import android.media.MediaPlayer
 import android.widget.FrameLayout
 import android.widget.LinearLayout
@@ -11,11 +10,9 @@ import androidx.core.content.ContextCompat.getColor
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.intent.Intents
-import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import ch.sdp.vibester.R
-import ch.sdp.vibester.activity.TypingGameActivity
-import ch.sdp.vibester.games.GameManager
+import ch.sdp.vibester.helper.GameManager
 import ch.sdp.vibester.model.Song
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -26,7 +23,7 @@ import java.util.concurrent.CompletableFuture
 
 class TypingGameActivityTest{
     private val BY_TAG = "tag.gettoptracks"
-    private fun setGameManager():GameManager{
+    private fun setGameManager(): GameManager {
         val managerTxt = """
             {"tracks":
             {"track":[{"name":"Monday","duration":"259","mbid":"31623cce-9717-4513-9d83-1b5d04e44f9b",

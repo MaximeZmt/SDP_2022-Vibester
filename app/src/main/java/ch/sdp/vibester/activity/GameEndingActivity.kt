@@ -6,7 +6,10 @@ import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.R
-
+/*
+ * A class representing the activity which appears upon
+ * completion of a game. Shows various stats.
+ */
 class GameEndingActivity : AppCompatActivity() {
 
     private var incorrectSongs: ArrayList<String>? = arrayListOf("Default song")

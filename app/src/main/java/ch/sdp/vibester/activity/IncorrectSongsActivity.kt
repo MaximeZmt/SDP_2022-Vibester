@@ -9,7 +9,10 @@ import android.widget.LinearLayout.LayoutParams
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.R
-
+/*
+ * A class representing the activity which shows the list of songs the user
+ * guessed incorrectly during the game.
+ */
 class IncorrectSongsActivity : AppCompatActivity() {
     private var incorrectSongs: ArrayList<String>? = ArrayList(15) //15 being max incorrect shown
     private var nbIncorrect: Int = 0
@@ -28,6 +31,10 @@ class IncorrectSongsActivity : AppCompatActivity() {
         generateTextView(nbIncorrect, incorrectSongs, layout)
     }
 
+    /*
+     * A function user to generate and initialize a TextView for a nbIncorrect number of times.
+     * Adds each TextView to the LinearLayout provided in the arguments.
+     */
     private fun generateTextView(
         nbIncorrect: Int,
         incorrectSongs: ArrayList<String>?,

@@ -1,10 +1,10 @@
 package ch.sdp.vibester.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.*
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.R
 
 class GameEndingActivity : AppCompatActivity() {

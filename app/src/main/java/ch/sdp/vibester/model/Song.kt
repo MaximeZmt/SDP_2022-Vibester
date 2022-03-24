@@ -1,9 +1,7 @@
 package ch.sdp.vibester.model
 
-import android.util.Log
 import org.json.JSONObject
 import java.io.Serializable
-import java.lang.IllegalArgumentException
 
 /**
  * A class representing a song

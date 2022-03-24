@@ -1,13 +1,6 @@
 package ch.sdp.vibester.api
 
-import android.media.AudioAttributes
-import android.media.MediaPlayer
-import android.util.Log
-import okhttp3.Call
-import okhttp3.Callback
 import okhttp3.OkHttpClient
-import okhttp3.Response
-import java.io.IOException
 import java.util.concurrent.CompletableFuture
 
 /**

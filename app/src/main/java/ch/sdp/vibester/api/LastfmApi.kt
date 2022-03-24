@@ -1,8 +1,8 @@
 package ch.sdp.vibester.api
 
 import android.net.Uri
-import okhttp3.*
-import java.io.IOException
+import okhttp3.OkHttpClient
+import okhttp3.Request
 import java.util.concurrent.CompletableFuture
 
 

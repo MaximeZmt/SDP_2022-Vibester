@@ -3,7 +3,6 @@ package ch.sdp.vibester.model
 //import ch.sdp.vibester.api.LastfmHelper
 import org.json.JSONArray
 import org.json.JSONObject
-import java.lang.IllegalArgumentException
 
 /**
  * Process the fetched data from Lastfm query.

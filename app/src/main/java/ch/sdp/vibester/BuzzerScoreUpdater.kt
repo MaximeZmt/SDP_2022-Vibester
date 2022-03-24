@@ -20,6 +20,10 @@ public class BuzzerScoreUpdater(scores: Array<Int>, ids: Array<Int>) {
         buzzerToScoreMap = theMap
     }
 
+    fun getMap(): LinkedHashMap<Int, Int> {
+        return buzzerToScoreMap
+    }
+
     /**
      * updates the score corresponding to the pressed buzzer
      * checks first if the given id

@@ -24,13 +24,15 @@ class GamescreenActivity: AppCompatActivity() {
 
         // get the four names
 
-        val nPlayers = when(getIntent?.getString("Number of players")) {
+        val nPlayers = getIntent?.getInt("Number of players")
+            /*
+            when(getIntent?.getString("Number of players")) {
             "One" -> 1
             "Two" -> 2
             "Three" -> 3
             "Four" -> 4
             else -> 1 // default value
-        }
+        }*/
 
         val answer = findViewById<LinearLayout>(R.id.answer)
         val answerText = findViewById<TextView>(R.id.answerText)
@@ -41,17 +43,29 @@ class GamescreenActivity: AppCompatActivity() {
 
         answerText.text= "The song was $song by $artist"
 
-        val allPoints = Array<Int>(nPlayers, { i -> 0 })
+        val allPoints = nPlayers?.let { Array<Int>(it, { i -> 0 }) }
 
-        val playersFull = arrayOf("Kamila", "Jiabao", "Arda", "Laurynas")
-        val players = playersFull.copyOfRange(0, nPlayers)
+        val playersFull = getIntent?.getStringArray("Player Names")
+        val players = nPlayers?.let { playersFull?.copyOfRange(0, it) }
 
-        val buzIds = fetchBuzIdArray(players.size)
+        println(nPlayers)
+        print(players) // test
 
-        val updater = BuzzerScoreUpdater(allPoints, buzIds)
+        val buzIds = players?.let { fetchBuzIdArray(it.size) }
 
-        buildScores(players, allPoints)
-        buildBuzzers(players, buzIds, answer, updater)
+        // commented for now as the updater class has an infinite loop problem
+        //val updater = BuzzerScoreUpdater(allPoints, buzIds)
+
+        if (players != null) {
+            if (allPoints != null) {
+                buildScores(players, allPoints)
+            }
+        }
+        if (players != null) {
+            if (buzIds != null) {
+                buildBuzzers(players, buzIds, answer)
+            }
+        }
         setAnswerButton(answer, findViewById(R.id.buttonCorrect))
         setAnswerButton(answer, findViewById(R.id.buttonWrong))
     }
@@ -101,7 +115,8 @@ class GamescreenActivity: AppCompatActivity() {
     /*
     Programmatically builds the buzzers according to the number and names of players.
      */
-    private fun buildBuzzers(players: Array<String>, buzIds: Array<Int>, answer: LinearLayout, updater: BuzzerScoreUpdater) {
+    // the correct number of buzzers are built but the names don't show up...
+    private fun buildBuzzers(players: Array<String>, buzIds: Array<Int>, answer: LinearLayout) {
 
         val buzzers = findViewById<LinearLayout>(R.id.buzzersLayout)
         val buttons = arrayOfNulls<Button>(players.size)

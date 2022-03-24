@@ -3,10 +3,9 @@ package ch.sdp.vibester.activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Spinner
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.children
 import ch.sdp.vibester.R
 
 class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
@@ -29,16 +28,59 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
 
     override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
         text = parent.getItemAtPosition(position).toString()
+        updatePlayerNameVisibility(text)
 
         // update linear layout's visibility, add linear layout with certain visible number of rows
         // or just make 4 rows at first and update that later
+    }
+
+    // this function WILL need refactoring
+    /**
+    Updates visibility of player name entry fields according to number of players selected in the spinner
+    @Param
+    text: number of players selected in the spinner
+     */
+    fun updatePlayerNameVisibility(text: String) {
+        when(text) {
+            "One" -> {
+                findViewById<EditText>(R.id.namePlayer2).visibility = android.view.View.INVISIBLE
+                findViewById<EditText>(R.id.namePlayer3).visibility = android.view.View.INVISIBLE
+                findViewById<EditText>(R.id.namePlayer4).visibility = android.view.View.INVISIBLE
+            }
+            "Two" -> {
+                findViewById<EditText>(R.id.namePlayer2).visibility = android.view.View.VISIBLE
+                findViewById<EditText>(R.id.namePlayer3).visibility = android.view.View.INVISIBLE
+                findViewById<EditText>(R.id.namePlayer4).visibility = android.view.View.INVISIBLE
+            }
+
+            "Three" -> {
+                findViewById<EditText>(R.id.namePlayer2).visibility = android.view.View.VISIBLE
+                findViewById<EditText>(R.id.namePlayer3).visibility = android.view.View.VISIBLE
+                findViewById<EditText>(R.id.namePlayer4).visibility = android.view.View.INVISIBLE
+            }
+            "Four" -> {
+                findViewById<EditText>(R.id.namePlayer2).visibility = android.view.View.VISIBLE
+                findViewById<EditText>(R.id.namePlayer3).visibility = android.view.View.VISIBLE
+                findViewById<EditText>(R.id.namePlayer4).visibility = android.view.View.VISIBLE
+            }
+        }
     }
 
     override fun onNothingSelected(parent: AdapterView<*>) {text = "One"}
 
     fun proceedToGame(view: View) { //FILLER INTENT
         val intent = Intent(this, GamescreenActivity::class.java)
-        intent.putExtra("Number of players", text)
+        //intent.putExtra("Number of players", text)
+        val players = findViewById<LinearLayout>(R.id.playerNames).children.filter { child: View -> child.visibility==android.view.View.VISIBLE }
+        val pNameArray = arrayOfNulls<String>(players.count())
+        intent.putExtra("Number of players", players.count())
+        val editTextIdArray = arrayOf(R.id.namePlayer1, R.id.namePlayer2, R.id.namePlayer3, R.id.namePlayer4)
+        var i = 0
+        for (playerView in players) {
+            pNameArray[i] = findViewById<EditText>(editTextIdArray[i]).text.toString()
+            i = i + 1
+        }
+        intent.putExtra("Player Names", pNameArray)
         startActivity(intent)
     }
 }

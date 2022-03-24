@@ -19,11 +19,11 @@ class SongList(jsonMeta: String) {
     init {
         try {
             val jsonObj = JSONObject(jsonMeta)
-            var jsonRes = jsonObj.getJSONObject("tracks")
-            var nonFilteredSongs = jsonRes.getJSONArray("track")
+            val jsonRes = jsonObj.getJSONObject("tracks")
+            val nonFilteredSongs = jsonRes.getJSONArray("track")
             filterSongs(nonFilteredSongs)
 
-            var attributes = jsonRes.getJSONObject("@attr")
+            val attributes = jsonRes.getJSONObject("@attr")
             page = attributes.getString("page")
             songsPerPage = attributes.getString("perPage")
             totalPages = attributes.getString("totalPages")
@@ -43,7 +43,7 @@ class SongList(jsonMeta: String) {
         val songsLength = nonFilteredSongs.length()
         var  i = 0
         while(i < songsLength) {
-            var songObj = nonFilteredSongs.getJSONObject(i)
+            val songObj = nonFilteredSongs.getJSONObject(i)
             val songName = songObj.getString("name")
             val artistDetails = songObj.getJSONObject("artist")
             val artistName = artistDetails.getString("name")

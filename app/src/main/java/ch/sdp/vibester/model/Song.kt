@@ -76,7 +76,7 @@ class Song(jsonO: JSONObject): Serializable{
                 val jsonObj = JSONObject(str)
                 val countResult = jsonObj.getInt("resultCount")
                 val jsonArray = jsonObj.getJSONArray("results")
-                for (i in 0..(countResult-1)){
+                for (i in 0 until countResult){
                     myList.add(Song(jsonArray.getJSONObject(i)))
                 }
                 return myList

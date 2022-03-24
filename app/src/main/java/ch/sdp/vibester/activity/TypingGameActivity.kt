@@ -38,27 +38,27 @@ class TypingGameActivity : AppCompatActivity() {
         /**
          * Print Toast message to announce the user if he wons or not
          */
-        private fun hasWon(ctx: Context, hasWon: Boolean, itwas: Song){
+        private fun hasWon(ctx: Context, hasWon: Boolean, itWas: Song){
             if(hasWon){
                 Toast.makeText(ctx,"Well Done!",Toast.LENGTH_SHORT).show()
             }else{
-                Toast.makeText(ctx,"Sadly you're wrong, it was: "+itwas.getTrackName()+" by "+itwas.getArtistName(),Toast.LENGTH_SHORT).show()
+                Toast.makeText(ctx,"Sadly you're wrong, it was: "+itWas.getTrackName()+" by "+itWas.getArtistName(),Toast.LENGTH_SHORT).show()
             }
         }
 
         /**
          * Generate a change of intent at the end of the game
          */
-        fun intentGen(ctx: Context, choosenSong: Song?, playedSong: Song):Intent{
+        fun intentGen(ctx: Context, chosenSong: Song?, playedSong: Song):Intent{
             val newIntent = Intent(ctx, TypingGameActivity::class.java)
             newIntent.putExtra("song", playedSong)
             newIntent.putExtra("isPlaying", false)
-            if(choosenSong != null && choosenSong.getTrackName() == playedSong.getTrackName() && choosenSong.getArtistName() == playedSong.getArtistName()){
+            if(chosenSong != null && chosenSong.getTrackName() == playedSong.getTrackName() && chosenSong.getArtistName() == playedSong.getArtistName()){
                 newIntent.putExtra("hasWon", true)
             }else{
                 newIntent.putExtra("hasWon", false)
             }
-            newIntent.setFlags(FLAG_ACTIVITY_NEW_TASK)
+            newIntent.flags = FLAG_ACTIVITY_NEW_TASK
             return newIntent
         }
 
@@ -82,7 +82,7 @@ class TypingGameActivity : AppCompatActivity() {
             frameLay.addView(linLay)
             guessLayout.addView(frameLay)
 
-            //Create the Listener that is executed if we click on the framelayer
+            //Create the Listener that is executed if we click on the frameLayer
             frameLay.setOnClickListener {
                 frameLay.setBackgroundColor(getColor(ctx, R.color.tiffany_blue))
                 guessLayout.removeAllViews()
@@ -124,7 +124,7 @@ class TypingGameActivity : AppCompatActivity() {
          */
         fun generateText(txt: String, ctx: Context): TextView {
             val txtView = TextView(ctx)
-            txtView.setText(txt)
+            txtView.text = txt
             txtView.gravity = Gravity.CENTER
             txtView.minHeight= 200
             txtView.textSize = 20F
@@ -178,7 +178,7 @@ class TypingGameActivity : AppCompatActivity() {
             if(!isPlaying){
                 //Is the activity showing the result
                 hasWon(this, hasWon, playableSong)
-                inputTxt.setKeyListener(null)
+                inputTxt.keyListener = null
             }else{
                 //Is the activity playing music
                 mediaPlayer = AudioPlayer.playAudio(playableSong.getPreviewUrl())

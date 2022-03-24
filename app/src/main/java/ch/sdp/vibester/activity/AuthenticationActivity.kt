@@ -63,11 +63,24 @@ class AuthenticationActivity : AppCompatActivity() {
             reload()
         }
     }
+
+    /**
+     * A function to updates the UI based on google sign in result
+     * @param requestCode a request code
+     * @param resultCode a result code
+     * @param data intent returned from google sign in
+     */
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         updateUI(authenticator.googleActivityResult(requestCode, resultCode, data));
     }
 
+    /**
+     * A function validates email and password
+     * @param email email
+     * @param password passwprd
+     * @return validity of email and password
+     */
     private fun stringValidation(username: String, password: String): Boolean{
         if(username.isEmpty() || password.isEmpty()) {
             email.text = "Empty email or password"
@@ -102,29 +115,18 @@ class AuthenticationActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * A function that launches google sing in activity
+     */
     private fun signInGoogle() {
         val intent = googleSignInClient.signInIntent
         startActivityForResult(intent, 1000)
     }
-/*
-    private fun createAccount(email: String, password: String) {
-        authenticator.createAccount(email, password)
-            .addOnCompleteListener(this) { task ->
-                onCompleteAuthentication(task)
-            }
-    }
 
-    private fun signIn(email: String, password: String) {
-        authenticator.signIn(email, password)
-            .addOnCompleteListener(this) { task ->
-                onCompleteAuthentication(task)
-            }
-    }
-
- */
-
-
-
+    /**
+     * A function changes the UI based on the authentication result
+     * @param Authentication result
+     */
     private fun onCompleteAuthentication(task: Task<AuthResult>) {
         if (task.isSuccessful) {
             Toast.makeText(

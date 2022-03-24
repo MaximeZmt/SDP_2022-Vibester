@@ -43,7 +43,13 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
-
+    /**
+     * A function that displays the dialog
+     * @param title title of the dialog
+     * @param hint hint of the text in the dialog
+     * @param id id of the dialog
+     * @param textId id of the text in the dialog
+     */
 
     private fun showDialog(title: String, hint: String, id: Int, textId: Int) {
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
@@ -62,12 +68,25 @@ class ProfileActivity : AppCompatActivity() {
         builder.show()
     }
 
+    /**
+     * A function that displays the dialog
+     * @param title title of the dialog
+     * @param hint hint of the text in the dialog
+     * @param id id of the dialog
+     * @param textId id of the text in the dialog
+     */
+
     private fun showGeneralDialog(id: Int, name: String) {
         val title = "Create $name"
         val hint = "Enter new $name"
 
         showDialog(title, hint, 0, id)
     }
+
+    /**
+     * A function that queries the database and fetched the correct user
+     * Hard coded for now
+     */
 
     private fun queryDatabase() {
         var user: UserProfile

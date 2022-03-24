@@ -11,7 +11,6 @@ import com.google.firebase.ktx.Firebase
 
 class FireBaseAuthenticator() {
 
-
     val auth: FirebaseAuth = Firebase.auth
 
 

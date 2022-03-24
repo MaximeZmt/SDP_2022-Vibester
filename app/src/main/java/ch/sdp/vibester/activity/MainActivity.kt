@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.GenreTemporary
-import ch.sdp.vibester.LyricTemporary
 import ch.sdp.vibester.R
 import ch.sdp.vibester.helper.IntentSwitcher
 
@@ -20,16 +19,15 @@ class MainActivity : AppCompatActivity() {
         }
 
         val btnLyric = findViewById<Button>(R.id.lyricButton)
-        val lyricIntent = Intent(this, LyricTemporary::class.java)
+        val lyricGameIntent = Intent(this, LyricsBelongGameActivity::class.java)
         btnLyric.setOnClickListener {
-            startActivity(lyricIntent)
+            startActivity(lyricGameIntent)
         }
 
         val btnGenre = findViewById<Button>(R.id.genreButton)
         val genreIntent = Intent(this, GenreTemporary::class.java)
         btnGenre.setOnClickListener {
             startActivity(genreIntent)
-
         }
 
     }

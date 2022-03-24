@@ -18,33 +18,25 @@ import java.util.*
 private const val REQUEST_AUDIO = 100
 
 class LyricsBelongGameActivity : AppCompatActivity() {
-    private lateinit var btnSpeak : ImageView
-    private lateinit var txtFromSpeech: TextView
-    private lateinit var btnCheck : Button
-    private lateinit var txtResult : TextView
-    private lateinit var originLyric : String
+    private lateinit var speechInput : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lyrics_belong_game)
 
-        btnSpeak = findViewById(R.id.btnSpeak)
+        val btnSpeak = findViewById<ImageView>(R.id.btnSpeak)
         var btnSpeakIsClicked = false
         btnSpeak.setOnClickListener {
             btnSpeakIsClicked = true
             getSpeechInput()
         }
 
-        txtFromSpeech = findViewById(R.id.lyricResult)
-
-        btnCheck = findViewById(R.id.lyricMatchButton)
+        val btnCheck = findViewById<Button>(R.id.lyricMatchButton)
         btnCheck.setOnClickListener {
             if (btnSpeakIsClicked) {
-                checkLyrics(txtFromSpeech.text.toString())
+                checkLyrics(speechInput)
             }
         }
-
-        txtResult = findViewById(R.id.lyricMatchResult)
     }
 
     private fun getSpeechInput() {
@@ -58,7 +50,8 @@ class LyricsBelongGameActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_AUDIO || data != null) {
             val res = data!!.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
-            txtFromSpeech.text = res?.get(0) ?: "Didn't catch"
+            speechInput = res?.get(0) ?: "Didn't catch"
+            findViewById<TextView>(R.id.lyricResult).text = speechInput
         }
     }
 
@@ -70,18 +63,10 @@ class LyricsBelongGameActivity : AppCompatActivity() {
 
             override fun onResponse(call: Call<Lyric>?, response: Response<Lyric>?) {
                 if (response != null) {
-                    originLyric = response.body().lyrics.toString()
-                    txtResult.text = checkCorrectness(originLyric, lyricToBeCheck)
+                    val originLyric = response.body().lyrics.toString()
+                    findViewById<TextView>(R.id.lyricResult).text = if (originLyric.contains(lyricToBeCheck, ignoreCase = true)) "correct!" else "too bad"
                 }
             }
         })
-    }
-
-    private fun checkCorrectness(originLyric: String, txtFromSpeech: String): String {
-        return if (originLyric.contains(txtFromSpeech, ignoreCase = true)) {
-            "correct!"
-        } else {
-            "too bad"
-        }
     }
 }

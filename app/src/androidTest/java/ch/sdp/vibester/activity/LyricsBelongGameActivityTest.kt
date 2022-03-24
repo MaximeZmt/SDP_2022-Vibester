@@ -9,14 +9,15 @@ import android.speech.SpeechRecognizer
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
+import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.Intents.intending
-import androidx.test.espresso.intent.matcher.IntentMatchers.hasAction
-import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
+import androidx.test.espresso.intent.matcher.IntentMatchers.*
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
@@ -179,7 +180,15 @@ class LyricsBelongGameActivityTest {
         method.invoke(lyricsBelongGameActivityClass, *parameters)*/
 
         //ApplicationProvider.getApplicationContext<Context>()
-
+        val intent = Intent(ApplicationProvider.getApplicationContext(), LyricsBelongGameActivity::class.java)
+        val originLyrics = "Just a young gun with a quick fuse\n" +
+                "I was uptight, wanna let loose\n" +
+                "I was dreaming of bigger things in\n" +
+                "And wanna leave my own life behind\n" +
+                "Not a yes sir, not a follower\n" +
+                "Fit the box, fit the mold\n"
+        intent.putExtra("originLyric", originLyrics)
+        val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
 
     }
 }

@@ -46,7 +46,7 @@ class AuthenticationActivityTest {
         onView(withId(R.id.username)).perform(ViewActions.typeText(username), closeSoftKeyboard())
         onView(withId(R.id.password)).perform(ViewActions.typeText(password), closeSoftKeyboard())
         onView(withId(R.id.logIn)).perform(click())
-        Thread.sleep(3_000)
+        Thread.sleep(5_000)
         onView(withId(R.id.email)).check(matches(withText("Authentication error")))
     }
 
@@ -57,7 +57,7 @@ class AuthenticationActivityTest {
         onView(withId(R.id.username)).perform(ViewActions.typeText(username), closeSoftKeyboard())
         onView(withId(R.id.password)).perform(ViewActions.typeText(password), closeSoftKeyboard())
         onView(withId(R.id.createAcc)).perform(click())
-        Thread.sleep(3_000)
+        Thread.sleep(5_000)
         onView(withId(R.id.email)).check(matches(withText("Authentication error")))
     }
 
@@ -114,7 +114,7 @@ class AuthenticationActivityTest {
         onView(withId(R.id.username)).perform(ViewActions.typeText(username), closeSoftKeyboard())
         onView(withId(R.id.password)).perform(ViewActions.typeText(password), closeSoftKeyboard())
         onView(withId(R.id.logIn)).perform(click())
-        Thread.sleep(3_000)
+        Thread.sleep(5_000)
         onView(withId(R.id.email)).check(matches(withText("john@test.com")))
     }
 
@@ -126,7 +126,7 @@ class AuthenticationActivityTest {
         onView(withId(R.id.username)).perform(ViewActions.typeText(username), closeSoftKeyboard())
         onView(withId(R.id.password)).perform(ViewActions.typeText(password), closeSoftKeyboard())
         onView(withId(R.id.createAcc)).perform(click())
-        Thread.sleep(3_000)
+        Thread.sleep(5_000)
         onView(withId(R.id.email)).check(matches(withText(randomInt.toString().plus("@gg.com"))))
     }
 

@@ -19,10 +19,11 @@ class ProfileActivityTest {
 
     @Test
     fun checkProfileData() {
-        val inputProfile = UserProfile("user0", "username0","bit.ly/3IUnyAF",  5, 8, 34, 2)
+        val inputProfile = UserProfile("@lisa", "Lalisa Bon","bit.ly/3IUnyAF",  12, 8, 29, 0)
         val intent = Intent(ApplicationProvider.getApplicationContext(), ProfileActivity::class.java)
         intent.putExtra("userProfile", inputProfile)
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
+        Thread.sleep(3_000)
         onView(withId(R.id.handle)).check(matches(withText(inputProfile.handle)))
         onView(withId(R.id.username)).check(matches(withText(inputProfile.username)))
         onView(withId(R.id.correctSongs)).check(matches(withText(inputProfile.correctSongs.toString())))
@@ -32,10 +33,11 @@ class ProfileActivityTest {
 
     @Test
     fun checkProfileLayout() {
-        val inputProfile = UserProfile("user0", "username0","bit.ly/3IUnyAF",  5, 8, 34, 2)
+        val inputProfile = UserProfile("@lisa", "Lalisa Bon","bit.ly/3IUnyAF",  12, 8, 29, 0)
         val intent = Intent(ApplicationProvider.getApplicationContext(), ProfileActivity::class.java)
         intent.putExtra("userProfile", inputProfile)
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
+        Thread.sleep(3_000)
         onView(withId(R.id.profileStatistics)).check(matches(isDisplayed()))
         onView(withId(R.id.handle)).check(matches(isDisplayed()))
         onView(withId(R.id.username)).check(matches(isDisplayed()))
@@ -44,7 +46,7 @@ class ProfileActivityTest {
 
     @Test
     fun checkEditProfile() {
-        val inputProfile = UserProfile("user0", "username0","bit.ly/3IUnyAF",  5, 8, 34, 2)
+        val inputProfile = UserProfile("@lisa", "Lalisa Bon","bit.ly/3IUnyAF",  12, 8, 29, 0)
         val intent = Intent(ApplicationProvider.getApplicationContext(), ProfileActivity::class.java)
         intent.putExtra("userProfile", inputProfile)
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
@@ -59,23 +61,23 @@ class ProfileActivityTest {
 
     @Test
     fun checkEditProfileClickCancel() {
-        val inputProfile = UserProfile("user0", "username0","bit.ly/3IUnyAF",  5, 8, 34, 2)
+        val inputProfile = UserProfile("@lisa", "Lalisa Bon","bit.ly/3IUnyAF",  12, 8, 29, 0)
         val intent = Intent(ApplicationProvider.getApplicationContext(), ProfileActivity::class.java)
         intent.putExtra("userProfile", inputProfile)
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
-
+        Thread.sleep(3_000)
         onView(withId(R.id.editUser)).perform(ViewActions.click())
         onView(withText("Cancel")).perform(ViewActions.click())
-        onView(withId(R.id.username)).check(matches(withText("username0")))
+        onView(withId(R.id.username)).check(matches(withText("@lisa")))
     }
 
     @Test
     fun checkEditHandle() {
-        val inputProfile = UserProfile("user0", "username0","bit.ly/3IUnyAF",  5, 8, 34, 2)
+        val inputProfile = UserProfile("@lisa", "Lalisa Bon","bit.ly/3IUnyAF",  12, 8, 29, 0)
         val intent = Intent(ApplicationProvider.getApplicationContext(), ProfileActivity::class.java)
         intent.putExtra("userProfile", inputProfile)
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
-
+        Thread.sleep(3_000)
         val newUserHandle = "newHandle"
         onView(withId(R.id.editHandle)).perform(ViewActions.click())
         onView(withId(0)).perform(ViewActions.typeText(newUserHandle), ViewActions.closeSoftKeyboard())
@@ -86,14 +88,14 @@ class ProfileActivityTest {
 
     @Test
     fun checkEditHandleClickCancel() {
-        val inputProfile = UserProfile("user0", "username0","bit.ly/3IUnyAF",  5, 8, 34, 2)
+        val inputProfile = UserProfile("@lisa", "Lalisa Bon","bit.ly/3IUnyAF",  12, 8, 29, 0)
         val intent = Intent(ApplicationProvider.getApplicationContext(), ProfileActivity::class.java)
         intent.putExtra("userProfile", inputProfile)
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
-
+        Thread.sleep(3_000)
         onView(withId(R.id.editHandle)).perform(ViewActions.click())
         onView(withText("Cancel")).perform(ViewActions.click())
-        onView(withId(R.id.handle)).check(matches(withText("user0")))
+        onView(withId(R.id.handle)).check(matches(withText("@lisa")))
     }
     
 }

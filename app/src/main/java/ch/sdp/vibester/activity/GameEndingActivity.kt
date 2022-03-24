@@ -6,55 +6,67 @@ import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.R
-
+/*
+ * A class representing the activity which appears upon
+ * completion of a game. Shows various stats.
+ */
 class GameEndingActivity : AppCompatActivity() {
-    /*
-    private var statNames: Array<String> = arrayOf("")
-    private var statValues: Array<String> = arrayOf("")
-    private var incorrectSongs: Array<String> = arrayOf("")
-    */
 
+    private var incorrectSongs: ArrayList<String>? = arrayListOf("Default song")
+    private var statNames: ArrayList<String>? = arrayListOf("Default name 1", "Default name 2", "Default name 3", "Default name 4", "Default name 5")
+    private var statValues: ArrayList<String>? = arrayListOf("Default value 1", "Default value 2", "Default value 3", "Default value 4", "Default value 5")
     private var nbIncorrectSongs: Int = 0
-    private var playerName: String? = ""
-
-    //Brute-force singular variables. Unable to solve the issue with array intents.
-    private var incorrect1 = ""
-    private var incorrect2 = ""
-    private var incorrect3 = ""
-    private var stat1name = ""
-    private var stat1resName = ""
+    private var playerName: String? = "Default"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_ending_screen)
 
-        playerName = intent.getStringExtra("playerName")
-        nbIncorrectSongs = intent.getIntExtra("nbIncorrectSong", 0)
+        if(intent.hasExtra("playerName")) {
+            playerName = intent.getStringExtra("playerName")
+        }
 
-        /*
-        statNames = intent.getStringArrayExtra("Stat_names") as Array<String>
-        statValues = intent.getStringArrayExtra("Stat_values") as Array<String>
-        incorrectSongs = intent.getStringArrayExtra("incorrect_songs") as Array<String>
-         */
+        if(intent.hasExtra("nbIncorrectSong")) {
+            nbIncorrectSongs = intent.getIntExtra("nbIncorrectSong", 0)
+        }
 
-        incorrect1 = intent.getStringExtra("incorrect_song_1").toString()
-        incorrect2 = intent.getStringExtra("incorrect_song_2").toString()
-        incorrect3 = intent.getStringExtra("incorrect_song_3").toString()
-        stat1name = intent.getStringExtra("stat_1").toString()
-        stat1resName = intent.getStringExtra("stat_res_1").toString()
+        if(intent.hasExtra("str_arr_inc")) {
+            incorrectSongs = intent.getStringArrayListExtra("str_arr_inc")
+        }
 
+        if(intent.hasExtra("str_arr_name")) {
+            statNames = intent.getStringArrayListExtra("str_arr_name")
+        }
 
+        if(intent.hasExtra("str_arr_val")) {
+            statValues = intent.getStringArrayListExtra("str_arr_val")
+        }
 
-        //--------------- Example setup ---------------
-        // Could be done by assigning stat names in the XML file and
-        // filling the values here.
         val stat1: TextView = findViewById(R.id.end_stat1)
-        stat1.text = stat1name //stat1.text = statNames[0]
+        stat1.text = statNames?.get(0)
         val stat1res: TextView = findViewById(R.id.end_stat1_res)
-        stat1res.text = stat1resName //stat1res.text = statValues[0]
-        //--------------- Example setup ---------------
+        stat1res.text = statValues?.get(0)
 
+        val stat2: TextView = findViewById(R.id.end_stat2)
+        stat2.text = statNames?.get(1)
+        val stat2res: TextView = findViewById(R.id.end_stat2_res)
+        stat2res.text = statValues?.get(1)
+
+        val stat3: TextView = findViewById(R.id.end_stat3)
+        stat3.text = statNames?.get(2)
+        val stat3res: TextView = findViewById(R.id.end_stat3_res)
+        stat3res.text = statValues?.get(2)
+
+        val stat4: TextView = findViewById(R.id.end_stat4)
+        stat4.text = statNames?.get(3)
+        val stat4res: TextView = findViewById(R.id.end_stat4_res)
+        stat4res.text = statValues?.get(3)
+
+        val stat5: TextView = findViewById(R.id.end_stat5)
+        stat5.text = statNames?.get(4)
+        val stat5res: TextView = findViewById(R.id.end_stat5_res)
+        stat5res.text = statValues?.get(4)
 
         val playerNameView: TextView = findViewById(R.id.end_player_name)
         val statPlayerText = "Here are the stats for the player $playerName"
@@ -65,10 +77,7 @@ class GameEndingActivity : AppCompatActivity() {
     fun goToIncorrectlyGuessedSongs(view: View) {
         val intent = Intent(this, IncorrectSongsActivity::class.java)
         intent.putExtra("nb_false", nbIncorrectSongs)
-        //intent.putExtra("incorrect_songs", incorrectSongs)
-        intent.putExtra("incorrect_song_1", incorrect1)
-        intent.putExtra("incorrect_song_2", incorrect2)
-        intent.putExtra("incorrect_song_3", incorrect3)
+        intent.putStringArrayListExtra("str_arr_inc", incorrectSongs)
         startActivity(intent)
     }
 

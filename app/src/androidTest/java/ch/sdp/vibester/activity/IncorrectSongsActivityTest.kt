@@ -1,10 +1,12 @@
 package ch.sdp.vibester.activity
 
 import android.content.Intent
+import android.widget.LinearLayout
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
@@ -22,7 +24,7 @@ class IncorrectSongsActivityTest {
     val activityRule = ActivityScenarioRule(IncorrectSongsActivity::class.java)
 
     private var nbInc = 3
-    private var inc: Array<String> = arrayOf("One", "Two", "Three")
+    private var incArray: ArrayList<String> = arrayListOf()
 
     @Before
     fun setUp() {
@@ -36,26 +38,25 @@ class IncorrectSongsActivityTest {
 
     @Test
     fun checkIntentOnCalled() {
+        incArray.addAll(arrayOf("One", "Two", "Three", "Four"))
+        nbInc = 4
+
         val intent = Intent(ApplicationProvider.getApplicationContext(), IncorrectSongsActivity::class.java)
-        intent.putExtra("nbIncorrectSong", nbInc)
-        intent.putExtra("incorrect_songs", inc)
+        intent.putExtra("nb_false", nbInc)
+        intent.putStringArrayListExtra("str_arr_inc", incArray)
 
         val scn: ActivityScenario<IncorrectSongsActivity> = ActivityScenario.launch(intent)
 
         if(nbInc != 0) {
+            lateinit var layout: LinearLayout
+            scn.onActivity {
+                    activity -> layout = activity.findViewById(R.id.incorrect_songs_linear)
+            }
             for(x in 0 until nbInc) {
-                val resNb: Int = (x+1)
-                val resName = "incorrect_song_$resNb"
-                //onView(withId(incSongsClass.resources.getIdentifier(resName, "id", incSongsClass.packageName)))
-                //    .check(matches(withText(inc[x])))
-                //onView(withId(incSongsClass.resources.getIdentifier(resName, "id", incSongsClass.packageName)))
-                //    .check(matches(isDisplayed()))
+                onView(withId(layout.getChildAt(x).id)).check(matches(withText(incArray[x])))
             }
         } else {
-            //onView(withId(incSongsClass.resources.getIdentifier("incorrect_song_1", "id", incSongsClass.packageName)))
-            //    .check(matches(withText(incSongsClass.resources.getString(R.string.inc_all_correct))))
-            //onView(withId(incSongsClass.resources.getIdentifier("incorrect_song_1", "id", incSongsClass.packageName)))
-            //    .check(matches(isDisplayed()))
+            onView(withId(R.id.incorrect_song_1)).check(matches(withText(R.string.inc_all_correct)))
         }
     }
 

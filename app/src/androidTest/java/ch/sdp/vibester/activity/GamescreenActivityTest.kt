@@ -81,28 +81,31 @@ class GamescreenActivityTest {
      */
     @Test
     fun checkIntentOnEnding() {
+        val incArray: ArrayList<String> = arrayListOf()
+        incArray.addAll(arrayOf("One", "Two", "Three"))
+
+        val statNames: ArrayList<String> = arrayListOf()
+        statNames.addAll(arrayOf("Hello there",
+            "Second Stat",
+            "Third Stat",
+            "Fourth Stat",
+            "Fifth Stat"))
+
+        val statVal: ArrayList<String> = arrayListOf()
+        statVal.addAll(arrayOf("General Kenobi",
+            "----- *2 -----",
+            "----- *3 -----",
+            "----- *4 -----",
+            "----- *5 -----"))
+
         onView(withId(R.id.go_to_end)).perform(click())
         intended(hasComponent(GameEndingActivity::class.java.name))
+
         intended(hasExtra("playerName", "Arda"))
         intended(hasExtra("nbIncorrectSong", 3))
-        /*intended(hasExtra("incorrect_songs", arrayOf("One", "Two", "Three")))
-        intended(hasExtra("names", arrayOf("Hello there",
-                                                "Second Stat",
-                                                "Third Stat",
-                                                "Fourth Stat",
-                                                "Fifth Stat")))
-        intended(hasExtra("values", arrayOf("General Kenobi",
-                                                 "----- *2 -----",
-                                                 "----- *3 -----",
-                                                 "----- *4 -----",
-                                                 "----- *5 -----"))) */
 
-        //Brute-force singular intents. Unable to solve the issue with array intents.
-        intended(hasExtra("incorrect_song_1", "One"))
-        intended(hasExtra("incorrect_song_2", "Two"))
-        intended(hasExtra("incorrect_song_3", "Three"))
-
-        intended(hasExtra("stat_1", "Hello there"))
-        intended(hasExtra("stat_res_1", "General Kenobi"))
+        intended(hasExtra("str_arr_inc", incArray))
+        intended(hasExtra("str_arr_name", statNames))
+        intended(hasExtra("str_arr_val", statVal))
     }
 }

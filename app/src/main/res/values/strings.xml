@@ -27,12 +27,39 @@
     <string name="createAcc">Create Account</string>
     <string name="logIn">Log in</string>
     <string name="logInGoogle">Log in with Google</string>
+
+    <string name="game_end__player_name">Player Name Here</string>
+    <string name="game_end__show_stats">Here are your stats!</string>
+    <string name="game_end__stat_1">Stat 1</string>
+    <string name="game_end__stat_1_result">Stat 1 Result</string>
+    <string name="game_end__stat_2">Stat 2</string>
+    <string name="game_end__stat_2_result">Stat 2 Result</string>
+    <string name="game_end__stat_3">Stat 3</string>
+    <string name="game_end__stat_3_result">Stat 3 Result</string>
+    <string name="game_end__stat_4">Stat 4</string>
+    <string name="game_end__stat_4_result">Stat 4 Result</string>
+    <string name="game_end__stat_5">Stat 5</string>
+    <string name="game_end__stat_5_result">Stat 5 Result</string>
+    <string name="game_end__stat_6">Stat 6</string>
+    <string name="game_end__stat_6_result">Stat 6 Result</string>
+    <string name="game_end__go_back">GO BACK TO MAIN MENU</string>
+    <string name="game_end__view_incorrect_songs">VIEW INCORRECT GUESSES</string>
+    <string name="go_to_end">GO TO END</string>
+    <string name="show_incorrect_songs">YOUR INCORRECT SONGS THIS GAME ARE:</string>
+    <string name="inc_thats_all">THAT\'S ALL!</string>
+    <string name="inc_go_back">GO BACK TO WELCOME SCREEN</string>
+    <string name="inc_all_correct">You got every song correctly. Congrats!</string>
     <string name="editUsername">Edit Username</string>
     <string name="editHandle">Edit Handle</string>
+
+
     <string-array name="nb_players">
         <item>One</item>
         <item>Two</item>
         <item>Three</item>
         <item>Four</item>
     </string-array>
+    <string name="title_activity_fullscreen">FullscreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>

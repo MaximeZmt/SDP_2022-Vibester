@@ -1,6 +1,6 @@
 package ch.sdp.vibester
 
-class BuzzerScoreUpdater(scores: Array<Int>, ids: Array<Int>) {
+public class BuzzerScoreUpdater(scores: Array<Int>, ids: Array<Int>) {
 
     private lateinit var buzzerToScoreMap: LinkedHashMap<Int, Int>
 

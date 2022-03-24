@@ -28,7 +28,6 @@ class MainActivity : AppCompatActivity() {
         val genreIntent = Intent(this, GenreTemporary::class.java)
         btnGenre.setOnClickListener {
             startActivity(genreIntent)
-
         }
 
     }

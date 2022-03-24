@@ -12,8 +12,8 @@ import java.util.concurrent.CompletableFuture
 class LastfmApi private constructor(){
 
         companion object{
-            private val API_KEY = "52bfdc690dd8373bba5351571a01ac14"
-            private val LOOKUP_URL_BASE ="https://ws.audioscrobbler.com/2.0/"
+            private const val API_KEY = "52bfdc690dd8373bba5351571a01ac14"
+            private const val LOOKUP_URL_BASE ="https://ws.audioscrobbler.com/2.0/"
 
             /**
              * Provide a list of songs by given tag or chart
@@ -22,7 +22,7 @@ class LastfmApi private constructor(){
              * @param baseUrl: baseUrl if changed
              */
             fun querySongList(okHttp: OkHttpClient, params:LastfmUri, baseUrl: String = LOOKUP_URL_BASE): CompletableFuture<String> {
-                var builtUri: Uri= Uri.parse(baseUrl)
+                val builtUri: Uri= Uri.parse(baseUrl)
                     .buildUpon()
                     .appendQueryParameter("method", params.method)
                     .appendQueryParameter("api_key", API_KEY)
@@ -34,7 +34,7 @@ class LastfmApi private constructor(){
                 val uri = builtUri.toString()
                 val req = Request.Builder().url(uri).build()
 
-                var retFuture = CompletableFuture<String>()
+                val retFuture = CompletableFuture<String>()
 
                 okHttp.newCall(req).enqueue(ApiCallback(retFuture))
 

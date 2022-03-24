@@ -16,7 +16,7 @@ class LastfmHelper {
 
     companion object{
         private var pageLimitQueryTwo = 200;
-        private val GAME_SIZE = 10;
+        private const val GAME_SIZE = 10;
 
         /**
          * Function that performs queries to two pages within given tag
@@ -24,24 +24,31 @@ class LastfmHelper {
          * @param tag: tag to retrieve songs. If method BY_CHART is used, tag is empty.
          * @return list of songs in a format ("$songName $artistName")
          */
-        fun getRandomSongList(method: String, tag:String = ""): List<String> {
-            val firstQuery = SongList(LastfmApi.querySongList(OkHttpClient(),
-                LastfmUri(method = method, tag = tag)).get())
+        fun getRandomSongList(method: String, tag: String = ""): List<String> {
+            val firstQuery = SongList(
+                LastfmApi.querySongList(
+                    OkHttpClient(),
+                    LastfmUri(method = method, tag = tag)
+                ).get()
+            )
             val firstSongList = firstQuery.getSongList()
             val pagesQueryOne = firstQuery.getTotalPages().toInt()
 
-            if(pagesQueryOne < pageLimitQueryTwo){
+            if (pagesQueryOne < pageLimitQueryTwo) {
                 pageLimitQueryTwo = pagesQueryOne
             }
 
-            val pageQueryTwo =(2..pageLimitQueryTwo).random()
-            val secondQuery = SongList(LastfmApi.querySongList(OkHttpClient(),
-                LastfmUri(method = method, tag = tag, page = pageQueryTwo.toString())).get())
+            val pageQueryTwo = (2..pageLimitQueryTwo).random()
+            val secondQuery = SongList(
+                LastfmApi.querySongList(
+                    OkHttpClient(),
+                    LastfmUri(method = method, tag = tag, page = pageQueryTwo.toString())
+                ).get()
+            )
             val secondSongList = secondQuery.getSongList()
 
             val mergedLists = merge(firstSongList, secondSongList)
-            var finalList = mergedLists.asSequence().shuffled().take(GAME_SIZE).toList()
-            return finalList
+            return mergedLists.asSequence().shuffled().take(GAME_SIZE).toList()
         }
 
         fun <T> merge(first: List<T>, second: List<T>): List<T> {

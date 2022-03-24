@@ -53,11 +53,17 @@ class LyricsBelongGameActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * display the given String in lyricResult
+     */
     private fun updateSpeechResult(speechInput: String) {
         findViewById<TextView>(R.id.lyricResult).text = speechInput
         findViewById<Button>(R.id.lyricMatchButton).visibility = View.VISIBLE
     }
 
+    /**
+     * check if the given string belongs to the lyrics of the song
+     */
     private fun checkLyrics(lyricToBeCheck: String) {
         val service = LyricsOVHApiInterface.create()
         val call = service.getLyrics("Imagine Dragons", "Thunder")

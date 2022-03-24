@@ -42,7 +42,7 @@ class LyricsBelongGameActivityTest {
     @get: Rule
     val activityRule = ActivityScenarioRule(LyricsBelongGameActivity::class.java)
 
-    private val lyricsBelongGameActivityClass = Mockito.spy(LyricsBelongGameActivity::class.java)
+    // private val lyricsBelongGameActivityClass = Mockito.spy(LyricsBelongGameActivity::class.java)
 
     @get:Rule
     var permissionRule: GrantPermissionRule =
@@ -178,7 +178,7 @@ class LyricsBelongGameActivityTest {
         parameters[1] = "Just a young gun with a quick fuse"
         method.invoke(lyricsBelongGameActivityClass, *parameters)*/
 
-        ApplicationProvider.getApplicationContext<Context>()
+        //ApplicationProvider.getApplicationContext<Context>()
 
 
     }

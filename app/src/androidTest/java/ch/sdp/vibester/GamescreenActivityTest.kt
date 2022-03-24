@@ -41,11 +41,13 @@ class GamescreenActivityTest {
 
     @Test
     fun intentReceiveTest(){
-        val inputText = "One"
+        val nPlayers = 3
         val intent = Intent(ApplicationProvider.getApplicationContext(), GamescreenActivity::class.java)
-        intent.putExtra("text", inputText)
+        intent.putExtra("Number of players", nPlayers)
         val scn: ActivityScenario<GamescreenActivity> = ActivityScenario.launch(intent)
-        //onView(withId(R.id.greetName)).check(matches(withText("Hello $inputName!")))
+        //FIXME: how to correctly check number of children? the obtained child number is always zero
+        //onView(withId(R.id.scoresTable)).check(matches(hasChildCount(nPlayers)))
+        //onView(withId(R.id.buzzersLayout)).check(matches(hasChildCount(nPlayers)))
     }
 
     @Test

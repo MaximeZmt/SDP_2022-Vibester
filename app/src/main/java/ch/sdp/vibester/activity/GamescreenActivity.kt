@@ -22,17 +22,7 @@ class GamescreenActivity: AppCompatActivity() {
         // receive intent and create array of certain size
         val getIntent = intent.extras
 
-        // get the four names
-
         val nPlayers = getIntent?.getInt("Number of players")
-            /*
-            when(getIntent?.getString("Number of players")) {
-            "One" -> 1
-            "Two" -> 2
-            "Three" -> 3
-            "Four" -> 4
-            else -> 1 // default value
-        }*/
 
         val answer = findViewById<LinearLayout>(R.id.answer)
         val answerText = findViewById<TextView>(R.id.answerText)

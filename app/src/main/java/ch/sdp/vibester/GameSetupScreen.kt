@@ -29,6 +29,9 @@ class GameSetupScreen : AppCompatActivity(), AdapterView.OnItemSelectedListener 
 
     override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
         text = parent.getItemAtPosition(position).toString()
+
+        // update linear layout's visibility, add linear layout with certain visible number of rows
+        // or just make 4 rows at first and update that later
     }
 
     override fun onNothingSelected(parent: AdapterView<*>) {text = "One"}

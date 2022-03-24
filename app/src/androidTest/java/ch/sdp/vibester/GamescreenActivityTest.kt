@@ -1,6 +1,9 @@
 package ch.sdp.vibester
 
 import android.app.AlertDialog
+import android.content.Intent
+import androidx.test.core.app.ActivityScenario
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -36,6 +39,15 @@ class GamescreenActivityTest {
     }
 
     @Test
+    fun intentReceiveTest(){
+        val inputText = "One"
+        val intent = Intent(ApplicationProvider.getApplicationContext(), GamescreenActivity::class.java)
+        intent.putExtra("text", inputText)
+        val scn: ActivityScenario<GamescreenActivity> = ActivityScenario.launch(intent)
+        //onView(withId(R.id.greetName)).check(matches(withText("Hello $inputName!")))
+    }
+
+    @Test
     fun buzzerLayoutIsDisplayed() {
         onView(withId(R.id.buzzersLayout)).check(matches(isDisplayed()))
     }
@@ -45,12 +57,30 @@ class GamescreenActivityTest {
         onView(withId(R.id.scoresTable)).check(matches(isDisplayed()))
     }
 
-    // FIXME: Find a way to test the popup showing despite not being a component / make robolectric work
-/*
     @Test
-    fun clickingButtonLaunchesPopup() {
-
-
+    fun answerIsPresentButInvisibleOnStartup() {
+        onView(withId(R.id.answer)).check(matches(withEffectiveVisibility(Visibility.INVISIBLE)))
     }
- */
+
+    @Test
+    fun clickingBuzzerMakesAnswerVisible() {
+        var i = 0
+        while (i < 4) {
+            onView(withId(R.id.answer)).check(matches(withEffectiveVisibility(Visibility.INVISIBLE)))
+            onView(withId(i)).perform(click())
+            onView(withId(R.id.answer)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+            i = i + 1
+            onView(withId(R.id.buttonCorrect)).perform(click())
+        }
+    }
+
+    @Test
+    fun clickingAnswerButtonsMakesAnswerInvisible() {
+        val buttonIdArray = arrayOf(R.id.buttonCorrect, R.id.buttonWrong)
+        for (butId in buttonIdArray) {
+            onView(withId(0)).perform(click()) // make answer visible first
+            onView(withId(butId)).perform(click())
+            onView(withId(R.id.answer)).check(matches(withEffectiveVisibility(Visibility.INVISIBLE)))
+        }
+    }
 }

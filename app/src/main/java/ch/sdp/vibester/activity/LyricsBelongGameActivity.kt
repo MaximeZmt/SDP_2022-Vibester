@@ -64,9 +64,14 @@ class LyricsBelongGameActivity : AppCompatActivity() {
             override fun onResponse(call: Call<Lyric>?, response: Response<Lyric>?) {
                 if (response != null) {
                     val originLyric = response.body().lyrics.toString()
-                    findViewById<TextView>(R.id.lyricResult).text = if (originLyric.contains(lyricToBeCheck, ignoreCase = true)) "correct!" else "too bad"
+                    findViewById<TextView>(R.id.lyricMatchResult).text = if (originLyric.contains(lyricToBeCheck, ignoreCase = true)) "correct" else "too bad"
                 }
             }
         })
+    }
+
+    // used to test the private checkLyrics function
+    fun testCheckLyrics(lyricToBeCheck: String) {
+        checkLyrics(lyricToBeCheck)
     }
 }

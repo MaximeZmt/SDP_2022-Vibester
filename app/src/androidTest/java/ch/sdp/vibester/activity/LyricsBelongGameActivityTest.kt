@@ -137,6 +137,28 @@ class LyricsBelongGameActivityTest {
         onView(withId(R.id.lyricMatchResult)).check(matches(withText("TextView")))
     }
 
+    @Test
+    fun checkLyricsShouldReturnCorrect() {
+        val intent = Intent(ApplicationProvider.getApplicationContext(), LyricsBelongGameActivity::class.java)
+        val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
+        scn.onActivity { activity ->
+            activity.testCheckLyrics("Just a young gun with a quick fuse")
+        }
+        Thread.sleep(5000)
+        onView(withId(R.id.lyricMatchResult)).check(matches(withText("correct")))
+    }
+
+    @Test
+    fun checkLyricsShouldReturnTooBad() {
+        val intent = Intent(ApplicationProvider.getApplicationContext(), LyricsBelongGameActivity::class.java)
+        val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
+        scn.onActivity { activity ->
+            activity.testCheckLyrics("I don't remember the lyrics")
+        }
+        Thread.sleep(5000)
+        onView(withId(R.id.lyricMatchResult)).check(matches(withText("too bad")))
+    }
+
     //intending(hasComponent(DummyActivity.class.getName())).respondWith(new ActivityResult(resultCode, dataIntent));
     //rule.getActivity().startActivityForResult(new Intent(context,DummyActivity.class));
 
@@ -161,12 +183,12 @@ class LyricsBelongGameActivityTest {
     }*/
 
     //private val LyricsBelongGameActivityClass = Mockito.spy(LyricsBelongGameActivity())
-    @Test
+    /*@Test
     fun checkCorrectnessShowCorrect() {
-        /*val txtFromSpeech = Mockito.mock(TextView::class.java)
-        Mockito.`when`(txtFromSpeech.toString()).thenReturn("Just a young gun with a quick fuse")*/
+        *//*val txtFromSpeech = Mockito.mock(TextView::class.java)
+        Mockito.`when`(txtFromSpeech.toString()).thenReturn("Just a young gun with a quick fuse")*//*
 
-        /*val method = lyricsBelongGameActivityClass.javaClass
+        *//*val method = lyricsBelongGameActivityClass.javaClass
             .getDeclaredMethod("checkCorrectness", String::class.java, String::class.java)
         method.isAccessible = true
         val parameters = arrayOfNulls<Any>(2)
@@ -177,7 +199,7 @@ class LyricsBelongGameActivityTest {
                 "Not a yes sir, not a follower\n" +
                 "Fit the box, fit the mold\n"
         parameters[1] = "Just a young gun with a quick fuse"
-        method.invoke(lyricsBelongGameActivityClass, *parameters)*/
+        method.invoke(lyricsBelongGameActivityClass, *parameters)*//*
 
         //ApplicationProvider.getApplicationContext<Context>()
         val intent = Intent(ApplicationProvider.getApplicationContext(), LyricsBelongGameActivity::class.java)
@@ -190,5 +212,7 @@ class LyricsBelongGameActivityTest {
         intent.putExtra("originLyric", originLyrics)
         val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
 
-    }
+    }*/
+
+
 }

@@ -1,4 +1,4 @@
-package ch.sdp.vibester.games
+package ch.sdp.vibester.helper
 
 import android.media.MediaPlayer
 import ch.sdp.vibester.api.*

@@ -18,7 +18,7 @@ import ch.sdp.vibester.EndBasicGameActivity
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.BitmapGetterApi
 import ch.sdp.vibester.api.ItunesMusicApi
-import ch.sdp.vibester.games.GameManager
+import ch.sdp.vibester.helper.GameManager
 import ch.sdp.vibester.model.Song
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

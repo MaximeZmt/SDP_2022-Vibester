@@ -1,23 +1,14 @@
 package ch.sdp.vibester
 
 import android.content.Intent
-import android.content.Intent.FLAG_ACTIVITY_NO_HISTORY
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.ArrayAdapter
-import android.widget.ListView
 import ch.sdp.vibester.activity.TypingGameActivity
-import ch.sdp.vibester.api.BitmapGetterApi
 import ch.sdp.vibester.api.LastfmApi
 //import ch.sdp.vibester.api.LastfmHelper
 import ch.sdp.vibester.api.LastfmUri
-import ch.sdp.vibester.games.GameManager
-import ch.sdp.vibester.model.Song
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
+import ch.sdp.vibester.helper.GameManager
 import okhttp3.OkHttpClient
 
 /**

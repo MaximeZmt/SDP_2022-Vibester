@@ -18,7 +18,6 @@ import ch.sdp.vibester.EndBasicGameActivity
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.BitmapGetterApi
 import ch.sdp.vibester.api.ItunesMusicApi
-import ch.sdp.vibester.api.LastfmApi
 import ch.sdp.vibester.games.GameManager
 import ch.sdp.vibester.model.Song
 import kotlinx.coroutines.CoroutineScope
@@ -36,123 +35,60 @@ import java.util.concurrent.CompletableFuture
 class TypingGameActivity : AppCompatActivity() {
     private val h = Handler()
     private  var runnable: Runnable? = null
-
-        /**
-         * Print Toast message to announce the user if he wons or not
-         */
-        private fun hasWon(ctx: Context, score:Int, hasWon: Boolean, itwas: Song){
-            if(hasWon){
-                Toast.makeText(ctx,score.toString()+" Well Done!",Toast.LENGTH_SHORT).show()
-            }else{
-                Toast.makeText(ctx,"Sadly you're wrong, it was: "+itwas.getTrackName()+" by "+itwas.getArtistName(),Toast.LENGTH_SHORT).show()
+        companion object {
+            /**
+             * Generate the border for a box
+             */
+            fun borderGen(ctx: Context): GradientDrawable {
+                val border = GradientDrawable()
+                border.setColor(getColor(ctx, R.color.maximum_yellow_red)) //white background
+                border.setStroke(1, -0x1000000)
+                return border
             }
-        }
 
-        /**
-         * Generate a change of intent at the end of the game
-         */
-        fun checkAnswer(ctx: Context, choosenSong: Song?, gameManager: GameManager){
-            val playedSong = gameManager.getCurrentSong()
-
-            if(choosenSong != null && choosenSong.getTrackName() == playedSong.getTrackName() && choosenSong.getArtistName() == playedSong.getArtistName()){
-                gameManager.increaseScore()
-                gameManager.addCorrectSong()
-                hasWon(ctx, gameManager.getScore(),true,playedSong)
-            }else{
-                hasWon(ctx, gameManager.getScore(),false, playedSong)
+            /**
+             * Generate spaces widget programmatically
+             */
+            fun generateSpace(width: Int, height: Int, ctx: Context): Space {
+                val space = Space(ctx)
+                space.minimumWidth = width
+                space.minimumHeight = height
+                return space
             }
-            playRound(ctx, gameManager)
-        }
 
-        /**
-         * Create the frame layout and its logic of the suggestion when user is typing
-         */
-        fun guess(song: Song, guessLayout: LinearLayout, ctx: Context, gameManager: GameManager): FrameLayout{
-            val frameLay = FrameLayout(ctx)
-            frameLay.background = borderGen(ctx)
+            /**
+             * Generate Text widget programmatically
+             */
+            fun generateText(txt: String, ctx: Context): TextView {
+                val txtView = TextView(ctx)
+                txtView.setText(txt)
+                txtView.gravity = Gravity.CENTER
+                txtView.minHeight = 200
+                txtView.textSize = 20F
+                txtView.setTextColor(getColor(ctx, R.color.black))
+                return txtView
+            }
 
-            // Horizontal Linear Layout to put Images and Text next one another
-            val linLay = LinearLayout(ctx)
-            linLay.setHorizontalGravity(1)
-            linLay.gravity = Gravity.LEFT
+            /**
+             * Generate an images widget programmatically given a song (retrieve song artwork asychronously)
+             */
+            fun generateImage(song: Song, ctx: Context): ImageView {
+                val imgView = ImageView(ctx)
+                imgView.minimumWidth = 200
+                imgView.minimumHeight = 200
 
-            //Generate and add its component
-            linLay.addView(generateImage(song, ctx))
-            linLay.addView(generateSpace(100,100, ctx))
-            linLay.addView(generateText(song.getArtistName() + " - " + song.getTrackName(), ctx))
-
-            frameLay.addView(linLay)
-            guessLayout.addView(frameLay)
-
-            //Create the Listener that is executed if we click on the framelayer
-            frameLay.setOnClickListener {
-                frameLay.setBackgroundColor(getColor(ctx, R.color.tiffany_blue))
-                guessLayout.removeAllViews()
-                guessLayout.addView(frameLay)
-                if (gameManager.playingMediaPlayer()) {
-                    gameManager.stopMediaPlayer()
+                CoroutineScope(Dispatchers.Main).launch {
+                    val task = async(Dispatchers.IO) {
+                        val bit = BitmapGetterApi.download(song.getArtworkUrl())
+                        bit.get()
+                    }
+                    val bm = task.await()
+                    imgView.setImageBitmap(bm)
                 }
-                checkAnswer(ctx, song, gameManager)
+                imgView.foregroundGravity = Gravity.LEFT
+                return imgView
             }
-
-            guessLayout.addView(generateSpace(75,75, ctx))
-            return frameLay
         }
-
-
-        /**
-         * Generate the border for a box
-         */
-        fun borderGen(ctx: Context): GradientDrawable{
-            val border = GradientDrawable()
-            border.setColor(getColor(ctx, R.color.maximum_yellow_red)) //white background
-            border.setStroke(1, -0x1000000)
-            return border
-        }
-
-        /**
-         * Generate spaces widget programmatically
-         */
-        fun generateSpace(width: Int, height: Int, ctx: Context): Space {
-            val space = Space(ctx)
-            space.minimumWidth = width
-            space.minimumHeight = height
-            return space
-        }
-
-        /**
-         * Generate Text widget programmatically
-         */
-        fun generateText(txt: String, ctx: Context): TextView {
-            val txtView = TextView(ctx)
-            txtView.setText(txt)
-            txtView.gravity = Gravity.CENTER
-            txtView.minHeight= 200
-            txtView.textSize = 20F
-            txtView.setTextColor(getColor(ctx, R.color.black))
-            return txtView
-        }
-
-        /**
-         * Generate an images widget programmatically given a song (retrieve song artwork asychronously)
-         */
-        fun generateImage(song: Song, ctx: Context): ImageView {
-            val imgView = ImageView(ctx)
-            imgView.minimumWidth = 200
-            imgView.minimumHeight = 200
-
-            CoroutineScope(Dispatchers.Main).launch {
-                val task = async(Dispatchers.IO){
-                    val bit = BitmapGetterApi.download(song.getArtworkUrl())
-                    bit.get()
-                }
-                val bm = task.await()
-                imgView.setImageBitmap(bm)
-            }
-            imgView.foregroundGravity = Gravity.LEFT
-            return imgView
-        }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -197,6 +133,68 @@ class TypingGameActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Print Toast message to announce the user if he wons or not
+     */
+    private fun hasWon(ctx: Context, score:Int, hasWon: Boolean, itwas: Song){
+        if(hasWon){
+            Toast.makeText(ctx,score.toString()+" Well Done!",Toast.LENGTH_SHORT).show()
+        }else{
+            Toast.makeText(ctx,"Sadly you're wrong, it was: "+itwas.getTrackName()+" by "+itwas.getArtistName(),Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    /**
+     * Generate a change of intent at the end of the game
+     */
+    fun checkAnswer(ctx: Context, choosenSong: Song?, gameManager: GameManager){
+        val playedSong = gameManager.getCurrentSong()
+
+        if(choosenSong != null && choosenSong.getTrackName() == playedSong.getTrackName() && choosenSong.getArtistName() == playedSong.getArtistName()){
+            gameManager.increaseScore()
+            gameManager.addCorrectSong()
+            hasWon(ctx, gameManager.getScore(),true,playedSong)
+        }else{
+            hasWon(ctx, gameManager.getScore(),false, playedSong)
+        }
+        playRound(ctx, gameManager)
+    }
+
+    /**
+     * Create the frame layout and its logic of the suggestion when user is typing
+     */
+    fun guess(song: Song, guessLayout: LinearLayout, ctx: Context, gameManager: GameManager): FrameLayout{
+        val frameLay = FrameLayout(ctx)
+        frameLay.background = borderGen(ctx)
+
+        // Horizontal Linear Layout to put Images and Text next one another
+        val linLay = LinearLayout(ctx)
+        linLay.setHorizontalGravity(1)
+        linLay.gravity = Gravity.LEFT
+
+        //Generate and add its component
+        linLay.addView(generateImage(song, ctx))
+        linLay.addView(generateSpace(100,100, ctx))
+        linLay.addView(generateText(song.getArtistName() + " - " + song.getTrackName(), ctx))
+
+        frameLay.addView(linLay)
+        guessLayout.addView(frameLay)
+
+        //Create the Listener that is executed if we click on the framelayer
+        frameLay.setOnClickListener {
+            frameLay.setBackgroundColor(getColor(ctx, R.color.tiffany_blue))
+            guessLayout.removeAllViews()
+            guessLayout.addView(frameLay)
+            if (gameManager.playingMediaPlayer()) {
+                gameManager.stopMediaPlayer()
+            }
+            checkAnswer(ctx, song, gameManager)
+        }
+
+        guessLayout.addView(generateSpace(75,75, ctx))
+        return frameLay
+    }
+
 
     fun barTimer(myBar: ProgressBar, ctx:Context, gameManager: GameManager){
         myBar.progress = 30
@@ -224,10 +222,9 @@ class TypingGameActivity : AppCompatActivity() {
     }
 
     fun playRound(ctx: Context, gameManager: GameManager){
-        if(gameManager.checkNextSong()){
+        if(gameManager.checkGameStatus() && gameManager.setNextSong()){
             findViewById<LinearLayout>(R.id.displayGuess).removeAllViews()
             findViewById<EditText>(R.id.yourGuessET).text.clear()
-            gameManager.setNextSong()
             gameManager.playSong()
             if(runnable !=null ){
                 h.removeCallbacks(runnable!!);}

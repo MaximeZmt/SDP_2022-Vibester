@@ -3,6 +3,7 @@ package ch.sdp.vibester.activity
 import android.content.Intent
 import android.os.Bundle
 import android.speech.RecognizerIntent
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -25,17 +26,14 @@ class LyricsBelongGameActivity : AppCompatActivity() {
         setContentView(R.layout.activity_lyrics_belong_game)
 
         val btnSpeak = findViewById<ImageView>(R.id.btnSpeak)
-        var btnSpeakIsClicked = false
         btnSpeak.setOnClickListener {
-            btnSpeakIsClicked = true
             getSpeechInput()
         }
 
         val btnCheck = findViewById<Button>(R.id.lyricMatchButton)
+        btnCheck.visibility = View.INVISIBLE
         btnCheck.setOnClickListener {
-            if (btnSpeakIsClicked) {
-                checkLyrics(speechInput)
-            }
+            checkLyrics(speechInput)
         }
     }
 
@@ -51,8 +49,13 @@ class LyricsBelongGameActivity : AppCompatActivity() {
         if (requestCode == REQUEST_AUDIO || data != null) {
             val res = data!!.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
             speechInput = res?.get(0) ?: "Didn't catch"
-            findViewById<TextView>(R.id.lyricResult).text = speechInput
+            updateSpeechResult(speechInput)
         }
+    }
+
+    private fun updateSpeechResult(speechInput: String) {
+        findViewById<TextView>(R.id.lyricResult).text = speechInput
+        findViewById<Button>(R.id.lyricMatchButton).visibility = View.VISIBLE
     }
 
     private fun checkLyrics(lyricToBeCheck: String) {
@@ -64,14 +67,19 @@ class LyricsBelongGameActivity : AppCompatActivity() {
             override fun onResponse(call: Call<Lyric>?, response: Response<Lyric>?) {
                 if (response != null) {
                     val originLyric = response.body().lyrics.toString()
-                    findViewById<TextView>(R.id.lyricMatchResult).text = if (originLyric.contains(lyricToBeCheck, ignoreCase = true)) "correct" else "too bad"
+                    findViewById<TextView>(R.id.lyricMatchResult).text = if (originLyric.contains(lyricToBeCheck, ignoreCase = true)) "res: correct" else "res: too bad"
                 }
             }
         })
     }
 
-    // used to test the private checkLyrics function
+    // helper functions to test private functions
+
     fun testCheckLyrics(lyricToBeCheck: String) {
         checkLyrics(lyricToBeCheck)
+    }
+
+    fun testUpdateSpeechResult(speechInput: String) {
+        updateSpeechResult(speechInput)
     }
 }

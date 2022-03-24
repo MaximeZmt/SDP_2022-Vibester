@@ -25,7 +25,7 @@ class SongList(jsonMeta: String, method: String) {
         try {
             val jsonObj = JSONObject(jsonMeta)
             var tracksField = "tracks"
-            if(method==BY_ARTIST){
+            if(method == BY_ARTIST){
                 tracksField="toptracks"
             }
             val jsonRes = jsonObj.getJSONObject(tracksField)

@@ -6,6 +6,8 @@ import org.junit.Test
 import org.junit.rules.ExpectedException
 
 class SongListTest {
+    private val BY_TAG = "tag.gettoptracks"
+
 
     @Test
     fun jsonPreviewParseCorrectText(){
@@ -22,10 +24,10 @@ class SongListTest {
             "@attr":{"rank":"1"}}],"@attr":{"tag":"british","page":"1","perPage":"1","totalPages":"66649","total":"66649"}}}
             """
 
-            val mySongsList = SongList(inputTxt)
+            val mySongsList = SongList(inputTxt, BY_TAG)
 
-            val songName = "Wonderwall"
-            val artistName = "Oasis"
+            val songName = "wonderwall"
+            val artistName = "oasis"
             val inputSongsList = mutableListOf<String>("$songName $artistName")
             val page = "1"
             val songsPerPage = "1"
@@ -47,7 +49,7 @@ class SongListTest {
     fun jsonPreviewParseErrorText() {
         exception.expect(IllegalArgumentException::class.java)
         exception.expectMessage("SongsList constructor, bad argument")
-        SongList("")
+        SongList("", "")
     }
 
 }

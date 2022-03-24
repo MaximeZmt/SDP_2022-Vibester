@@ -17,6 +17,7 @@
 //    companion object{
 //        private var pageLimitQueryTwo = 200;
 //        private val GAME_SIZE = 30;
+//        private val BY_TAG = "tag.gettoptracks"
 //
 //        /**
 //         * Function that performs queries to two pages within given tag
@@ -27,7 +28,7 @@
 //        fun getRandomSongList(jsonMeta: String): List<String> {
 ////            uri.limit = "100"
 ////            val res = LastfmApi.querySongList(OkHttpClient(),uri).get();
-//            val firstQuery = SongList(jsonMeta)
+////            val firstQuery = SongList(jsonMeta,BY_TAG)
 //            val firstSongList = firstQuery.getSongList()
 //            val pagesQueryOne = firstQuery.getTotalPages().toInt()
 //

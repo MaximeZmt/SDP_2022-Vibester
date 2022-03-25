@@ -9,7 +9,7 @@ import java.io.Serializable
 import java.util.concurrent.CompletableFuture
 
 /**
- * Game Manager tto set up a solo game for a chosen mode.
+ * Game Manager to set up a solo game for a chosen mode.
  */
 class GameManager: Serializable{
     private var score = 0;

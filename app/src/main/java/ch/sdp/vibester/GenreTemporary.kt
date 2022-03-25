@@ -8,6 +8,9 @@ import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.api.LastfmHelper
 
 /**
+ * Testing main branch
+ */
+/**
  * Activity to show the list of songs for a chosen tag
  */
 class GenreTemporary : AppCompatActivity() {

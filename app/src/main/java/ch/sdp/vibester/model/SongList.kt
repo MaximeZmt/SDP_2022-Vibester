@@ -1,5 +1,6 @@
 package ch.sdp.vibester.model
 
+//import ch.sdp.vibester.api.LastfmHelper
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -8,8 +9,11 @@ import org.json.JSONObject
  * Mainly, it creates a list of songs in the form ["$songName $artistName"]
  * @param jsonMeta: Lastfm fetched data
  */
-class SongList(jsonMeta: String) {
-
+class SongList(jsonMeta: String, method: String) {
+    private val BY_TAG = "tag.gettoptracks"
+    private val BY_CHART = "chart.gettoptracks"
+    private val BY_ARTIST = "artist.gettoptracks"
+    private var GAME_SIZE = 100
     private var songList = mutableListOf<String>()
     private var page = ""
     private var songsPerPage = ""
@@ -19,7 +23,12 @@ class SongList(jsonMeta: String) {
     init {
         try {
             val jsonObj = JSONObject(jsonMeta)
-            val jsonRes = jsonObj.getJSONObject("tracks")
+            var tracksField = "tracks"
+            if(method == BY_ARTIST){
+                tracksField="toptracks"
+            }
+            val jsonRes = jsonObj.getJSONObject(tracksField)
+
             val nonFilteredSongs = jsonRes.getJSONArray("track")
             filterSongs(nonFilteredSongs)
 
@@ -44,20 +53,30 @@ class SongList(jsonMeta: String) {
         var  i = 0
         while(i < songsLength) {
             val songObj = nonFilteredSongs.getJSONObject(i)
-            val songName = songObj.getString("name")
+            val songName = songObj.getString("name").lowercase()
+
             val artistDetails = songObj.getJSONObject("artist")
-            val artistName = artistDetails.getString("name")
+            val artistName = artistDetails.getString("name").lowercase()
+            // TODO: filter the songs that are remixes or were sang by others.
             songList.add("$songName $artistName")
             ++i
         }
     }
 
     /**
-     * Getter that return songs for the given tag
+     * Getter that return song list
      * @return MutableList<String> of type "$artistName $songName"
      */
     fun getSongList():MutableList<String>{
         return songList
+    }
+
+    /**
+     * Getter that return shuffled song list
+     * @return MutableList<String> of type "$artistName $songName"
+     */
+    fun getShuffledSongList(): MutableList<String> {
+        return songList.asSequence().shuffled().toMutableList()
     }
 
     /**

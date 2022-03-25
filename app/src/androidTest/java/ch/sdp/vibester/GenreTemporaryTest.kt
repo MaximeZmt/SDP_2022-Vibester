@@ -37,7 +37,7 @@ class GenreTemporaryTest {
     }
 
     @Test
-    fun GenreLayoutIsDisplayed() {
+    fun genreLayoutIsDisplayed() {
         onView(withId(R.id.rockButton)).check(matches(isDisplayed()))
         onView(withId(R.id.kpopButton)).check(matches(isDisplayed()))
         onView(withId(R.id.topTracksButton)).check(matches(isDisplayed()))

@@ -28,6 +28,7 @@ class SongList(jsonMeta: String, method: String) {
                 tracksField="toptracks"
             }
             val jsonRes = jsonObj.getJSONObject(tracksField)
+
             val nonFilteredSongs = jsonRes.getJSONArray("track")
             filterSongs(nonFilteredSongs)
 
@@ -53,6 +54,7 @@ class SongList(jsonMeta: String, method: String) {
         while(i < songsLength) {
             val songObj = nonFilteredSongs.getJSONObject(i)
             val songName = songObj.getString("name").lowercase()
+
             val artistDetails = songObj.getJSONObject("artist")
             val artistName = artistDetails.getString("name").lowercase()
             // TODO: filter the songs that are remixes or were sang by others.

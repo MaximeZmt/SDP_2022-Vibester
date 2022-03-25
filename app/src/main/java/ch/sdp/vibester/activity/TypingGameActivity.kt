@@ -43,6 +43,7 @@ class TypingGameActivity : AppCompatActivity() {
                 border.setColor(getColor(ctx, R.color.maximum_yellow_red)) //white background
                 border.setStroke(1, -0x1000000)
                 return border
+
             }
 
             /**

@@ -20,7 +20,7 @@ interface LyricsOVHApiInterface {
          * @param baseUrl base url of the api
          * return an instance of the api interface
          */
-        fun create(baseUrl:String): LyricsOVHApiInterface {
+        fun create(baseUrl:String = "https://api.lyrics.ovh/"): LyricsOVHApiInterface {
             val retrofit = Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())

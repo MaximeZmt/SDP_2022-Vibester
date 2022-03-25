@@ -1,7 +1,6 @@
 package ch.sdp.vibester.activity
 
 import android.content.Intent
-import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
@@ -41,68 +40,76 @@ class GameEndingActivityTest {
 
     private var name = "Arda"
     private var nbInc = 3
-    private var inc: Array<String> = arrayOf("One", "Two", "Three")
-    private var stats: Array<String> = arrayOf("Hello there",
-        "Second Stat",
-        "Third Stat",
-        "Fourth Stat",
-        "Fifth Stat")
-    private var statsRes: Array<String> = arrayOf("General Kenobi",
-        "----- *2 -----",
-        "----- *3 -----",
-        "----- *4 -----",
-        "----- *5 -----")
+    private var incArray: ArrayList<String> = arrayListOf()
+    private var statNames: ArrayList<String> = arrayListOf()
+    private var statRes: ArrayList<String> = arrayListOf()
 
 
     @Test
     fun checkIntentOnCalled() {
+        incArray.addAll(arrayOf("One", "Two", "Three"))
+        statNames.addAll(arrayOf("Hello there",
+            "Second Stat",
+            "Third Stat",
+            "Fourth Stat",
+            "Fifth Stat"))
+        statRes.addAll(arrayOf("General Kenobi",
+            "----- *2 -----",
+            "----- *3 -----",
+            "----- *4 -----",
+            "----- *5 -----"))
+
         val intent = Intent(ApplicationProvider.getApplicationContext(), GameEndingActivity::class.java)
-
-        //Start an activity from outside an activity
-        intent.setFlags(FLAG_ACTIVITY_NEW_TASK)
-
         intent.putExtra("playerName", name)
         intent.putExtra("nbIncorrectSong", nbInc)
-        //intent.putExtra("incorrect_songs", inc)
-        //intent.putExtra("Stat_names", stats)
-        //intent.putExtra("Stat_values", statsRes)
-        intent.putExtra("incorrect_song_1", "One")
-        intent.putExtra("incorrect_song_2", "Two")
-        intent.putExtra("incorrect_song_3", "Three")
 
-        intent.putExtra("stat_1", "Hello there")
-        intent.putExtra("stat_res_1", "General Kenobi")
+        intent.putStringArrayListExtra("str_arr_inc", incArray)
+        intent.putStringArrayListExtra("str_arr_name", statNames)
+        intent.putStringArrayListExtra("str_arr_val", statRes)
 
-        //keep this val to help kotlin inferring value type
-        val uselessVal: ActivityScenario<GameEndingActivity> = ActivityScenario.launch(intent)
+        val scn: ActivityScenario<IncorrectSongsActivity> = ActivityScenario.launch(intent)
 
-        onView(withId(R.id.end_stat1)).check(matches(withText(stats[0])))
-        onView(withId(R.id.end_stat1_res)).check(matches(withText(statsRes[0])))
+        onView(withId(R.id.end_stat1)).check(matches(withText(statNames[0])))
+        onView(withId(R.id.end_stat1_res)).check(matches(withText(statRes[0])))
+        onView(withId(R.id.end_stat2)).check(matches(withText(statNames[1])))
+        onView(withId(R.id.end_stat2_res)).check(matches(withText(statRes[1])))
+        onView(withId(R.id.end_stat3)).check(matches(withText(statNames[2])))
+        onView(withId(R.id.end_stat3_res)).check(matches(withText(statRes[2])))
+        onView(withId(R.id.end_stat4)).check(matches(withText(statNames[3])))
+        onView(withId(R.id.end_stat4_res)).check(matches(withText(statRes[3])))
+        onView(withId(R.id.end_stat5)).check(matches(withText(statNames[4])))
+        onView(withId(R.id.end_stat5_res)).check(matches(withText(statRes[4])))
         onView(withId(R.id.end_player_name)).check(matches(withText("Here are the stats for the player $name")))
     }
 
     @Test
     fun checkIntentOnIncorrectSongs() {
-        val intent = Intent(ApplicationProvider.getApplicationContext(), GameEndingActivity::class.java)
+        incArray.addAll(arrayOf("One", "Two", "Three"))
+        statNames.addAll(arrayOf("Hello there",
+            "Second Stat",
+            "Third Stat",
+            "Fourth Stat",
+            "Fifth Stat"))
+        statRes.addAll(arrayOf("General Kenobi",
+            "----- *2 -----",
+            "----- *3 -----",
+            "----- *4 -----",
+            "----- *5 -----"))
 
+        val intent = Intent(ApplicationProvider.getApplicationContext(), GameEndingActivity::class.java)
         intent.putExtra("playerName", name)
         intent.putExtra("nbIncorrectSong", nbInc)
-        intent.putExtra("incorrect_song_1", "One")
-        intent.putExtra("incorrect_song_2", "Two")
-        intent.putExtra("incorrect_song_3", "Three")
 
-        intent.putExtra("stat_1", "Hello There")
-        intent.putExtra("stat_res_1", "General Kenobi")
+        intent.putStringArrayListExtra("str_arr_inc", incArray)
+        intent.putStringArrayListExtra("str_arr_name", statNames)
+        intent.putStringArrayListExtra("str_arr_val", statRes)
 
-        //keep this val to help kotlin inferring value type
-        val uselessVal: ActivityScenario<GameEndingActivity> = ActivityScenario.launch(intent)
+        val scn: ActivityScenario<GameEndingActivity> = ActivityScenario.launch(intent)
 
         onView(withId(R.id.end_go_to_inc)).perform(click())
+        intended(hasExtra("nb_false", nbInc))
+        intended(hasExtra("str_arr_inc", incArray))
 
         intended(hasComponent(IncorrectSongsActivity::class.java.name))
-        intended(hasExtra("nb_false", nbInc))
-        intended(hasExtra("incorrect_song_1", inc[0]))
-        intended(hasExtra("incorrect_song_2", inc[1]))
-        intended(hasExtra("incorrect_song_3", inc[2]))
     }
 }

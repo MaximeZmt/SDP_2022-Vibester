@@ -52,6 +52,6 @@ class MainActivityTest {
     @Test
     fun checkIntentOnLyric() {
         onView(withId(R.id.lyricButton)).perform(click())
-        intended(hasComponent(LyricTemporary::class.qualifiedName))
+        intended(hasComponent(LyricsBelongGameActivity::class.qualifiedName))
     }
 }

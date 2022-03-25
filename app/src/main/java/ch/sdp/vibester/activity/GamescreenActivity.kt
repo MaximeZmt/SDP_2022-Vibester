@@ -139,34 +139,30 @@ class GamescreenActivity: AppCompatActivity() {
     fun switchToEnding(view: View) {
         val intent = Intent(this, GameEndingActivity::class.java)
         //MOCK VALUES FOR INCORRECT SONGS, ADAPT FROM GAME DATA IN THE FUTURE
-        /*
-        val incArray: Array<String> = arrayOf("One", "Two", "Three")
-        val statNames: Array<String> = arrayOf("Hello there",
+        val incArray: ArrayList<String> = arrayListOf()
+        incArray.addAll(arrayOf("One", "Two", "Three"))
+
+        val statNames: ArrayList<String> = arrayListOf()
+        statNames.addAll(arrayOf("Hello there",
             "Second Stat",
             "Third Stat",
             "Fourth Stat",
-            "Fifth Stat")
-        val statRes: Array<String> = arrayOf("General Kenobi",
+            "Fifth Stat"))
+
+        val statVal: ArrayList<String> = arrayListOf()
+        statVal.addAll(arrayOf("General Kenobi",
             "----- *2 -----",
             "----- *3 -----",
             "----- *4 -----",
-            "----- *5 -----")
-*/
+            "----- *5 -----"))
+
         intent.putExtra("playerName", "Arda")
         intent.putExtra("nbIncorrectSong", 3)
-        /*
-        intent.putExtra("incorrect_songs", incArray)
-        intent.putExtra("names", statNames)
-        intent.putExtra("values", statRes)
-        */
 
-        //Brute-force singular intents, unable to solve the issue with array intents.
-        intent.putExtra("incorrect_song_1", "One")
-        intent.putExtra("incorrect_song_2", "Two")
-        intent.putExtra("incorrect_song_3", "Three")
+        intent.putStringArrayListExtra("str_arr_inc", incArray)
+        intent.putStringArrayListExtra("str_arr_name", statNames)
+        intent.putStringArrayListExtra("str_arr_val", statVal)
 
-        intent.putExtra("stat_1", "Hello there")
-        intent.putExtra("stat_res_1", "General Kenobi")
         startActivity(intent)
     }
 }

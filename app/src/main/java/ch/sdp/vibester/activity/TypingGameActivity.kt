@@ -43,7 +43,6 @@ class TypingGameActivity : AppCompatActivity() {
                 border.setColor(getColor(ctx, R.color.maximum_yellow_red)) //white background
                 border.setStroke(1, -0x1000000)
                 return border
-
             }
 
             /**
@@ -195,7 +194,9 @@ class TypingGameActivity : AppCompatActivity() {
         return frameLay
     }
 
-
+    /**
+     * Custom handle of the bar progress.
+     */
     fun barTimer(myBar: ProgressBar, ctx:Context, gameManager: GameManager){
         myBar.progress = 30
         myBar.progressTintList = ColorStateList.valueOf(getColor(R.color.cg_blue))
@@ -221,6 +222,10 @@ class TypingGameActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * Function to set a new round. It includes reinitializing activity elements,
+     * and setting new song for the round.
+     */
     fun playRound(ctx: Context, gameManager: GameManager){
         if(gameManager.checkGameStatus() && gameManager.setNextSong()){
             findViewById<LinearLayout>(R.id.displayGuess).removeAllViews()

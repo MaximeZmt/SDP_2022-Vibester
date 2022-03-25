@@ -145,13 +145,6 @@ class GameManager: Serializable{
     }
 
     /**
-     * Get media player
-     */
-    fun getMediaPlayer(): CompletableFuture<MediaPlayer> {
-        return mediaPlayer
-    }
-
-    /**
      * Check if media player is playing
      * @return: true if media player is playing
      *          false otherwise

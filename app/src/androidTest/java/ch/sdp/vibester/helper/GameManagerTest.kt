@@ -1,11 +1,6 @@
 package ch.sdp.vibester.helper
 
-import ch.sdp.vibester.api.LastfmApi
-import ch.sdp.vibester.api.LastfmUri
-import ch.sdp.vibester.model.SongList
-import junit.framework.Assert
-import junit.framework.Assert.assertEquals
-import okhttp3.OkHttpClient
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class GameManagerTest {
@@ -55,4 +50,30 @@ class GameManagerTest {
         assertEquals(gameManager.getPlayedSongs(),0)
     }
 
+    @Test
+    fun addWrongSongCorrect(){
+        val gameManager = setGameManager()
+        gameManager.setNextSong()
+        gameManager.addWrongSong()
+        assertEquals(gameManager.getWrongSongs()[0].getArtistName().lowercase(), "imagine dragons")
+        assertEquals(gameManager.getWrongSongs()[0].getTrackName().lowercase(), "monday")
+    }
+
+    @Test
+    fun addCorrectSongCorrect(){
+        val gameManager = setGameManager()
+        gameManager.setNextSong()
+        gameManager.addCorrectSong()
+        assertEquals(gameManager.getCorrectSongs()[0].getArtistName().lowercase(), "imagine dragons")
+        assertEquals(gameManager.getCorrectSongs()[0].getTrackName().lowercase(), "monday")
+    }
+
+    @Test
+    fun setNextSongCorrect(){
+        val gameManager = setGameManager()
+        val ret = gameManager.setNextSong()
+        assertEquals(ret, true)
+        assertEquals(gameManager.getCurrentSong().getArtistName().lowercase(), "imagine dragons")
+        assertEquals(gameManager.getCurrentSong().getTrackName().lowercase(), "monday")
+    }
 }

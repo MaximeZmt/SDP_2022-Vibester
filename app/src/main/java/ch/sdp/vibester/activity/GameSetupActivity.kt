@@ -73,7 +73,9 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         //intent.putExtra("Number of players", text)
         val players = findViewById<LinearLayout>(R.id.playerNames).children.filter { child: View -> child.visibility==android.view.View.VISIBLE }
         val pNameArray = arrayOfNulls<String>(players.count())
-        intent.putExtra("Number of players", players.count())
+        if (players.count()>0) {
+            intent.putExtra("Number of players", players.count())
+        } else {intent.putExtra("Number of players", 1)}
         val editTextIdArray = arrayOf(R.id.namePlayer1, R.id.namePlayer2, R.id.namePlayer3, R.id.namePlayer4)
         var i = 0
         for (playerView in players) {

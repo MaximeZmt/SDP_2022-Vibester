@@ -26,9 +26,9 @@ class GameManager: Serializable{
      * @param jsonMeta: JSON song list from lastfm API
      * @param method: method for a game
      */
-//    fun setGameSongList(jsonMeta:String, method:String){
-//        gameSongList = SongList(jsonMeta, method).getShuffledSongList();
-//    }
+    fun setGameSongList(jsonMeta:String, method:String){
+        gameSongList = SongList(jsonMeta, method).getShuffledSongList();
+    }
 
     /**
      * Increase a score if the game was correct

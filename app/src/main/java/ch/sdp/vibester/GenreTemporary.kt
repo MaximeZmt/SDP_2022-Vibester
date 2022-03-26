@@ -31,9 +31,9 @@ class GenreTemporary : AppCompatActivity() {
      */
     fun performQuery(uri:LastfmUri){
         val gameManager = GameManager()
-        val songs = LastfmApi.querySongList(OkHttpClient(),uri).get()
-        gameManager.setGameSongList(songs,uri.method)
-        val newIntent = Intent(applicationContext, TypingGameActivity::class.java)
+//        val songs = LastfmApi.querySongList(OkHttpClient(),uri).get()
+        gameManager.setGameSongList(LastfmApi.querySongList(OkHttpClient(),uri).get(),uri.method)
+        val newIntent = Intent(this, TypingGameActivity::class.java)
         newIntent.putExtra("gameManager", gameManager)
         startActivity(newIntent)
     }

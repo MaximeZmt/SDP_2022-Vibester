@@ -29,8 +29,6 @@ class LastfmApi private constructor(){
                     .appendQueryParameter("format",params.format)
                     .appendQueryParameter("page", params.page)
                     .appendQueryParameter("tag", params.tag)
-                    .appendQueryParameter("limit", params.limit)
-                    .appendQueryParameter("artist", params.artist)
                     .build()
 
                 val uri = builtUri.toString()

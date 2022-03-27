@@ -14,7 +14,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.getColor
 import androidx.core.widget.addTextChangedListener
-import ch.sdp.vibester.EndBasicGameActivity
+import ch.sdp.vibester.EndBasicGameTemporary
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.BitmapGetterApi
 import ch.sdp.vibester.api.ItunesMusicApi
@@ -237,7 +237,7 @@ class TypingGameActivity : AppCompatActivity() {
         else{
             if(runnable !=null ){
                 h.removeCallbacks(runnable!!);}
-            val i = Intent(this, EndBasicGameActivity::class.java)
+            val i = Intent(this, EndBasicGameTemporary::class.java)
             i.putExtra("score", gameManager.getScore().toString())
             startActivity(i)
         }

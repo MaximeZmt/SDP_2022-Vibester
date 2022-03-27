@@ -189,7 +189,7 @@ class TypingGameActivityTest{
         scn.onActivity {
                 activity -> temp  = activity.checkAnswer(ctx, songTest, gameManager)
         }
-        assertEquals(false, gameManager.getScore()==0)
+        assertEquals(true, gameManager.getScore()==0)
     }
 
     @Test

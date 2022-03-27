@@ -114,25 +114,23 @@ class TypingGameActivityTest{
             """
         val songTest = Song.singleSong(inputTxt)
         val gameManager = setGameManager();
+        gameManager.setNextSong()
+        gameManager.playSong()
         lateinit var frameLay: FrameLayout
 
         val intent = Intent(ApplicationProvider.getApplicationContext(), TypingGameActivity::class.java)
-        intent.putExtra("gameManager", gameManager)
+        // Do not put gameManager as an extra
         val scn: ActivityScenario<TypingGameActivity> = ActivityScenario.launch(intent)
         val ctx = ApplicationProvider.getApplicationContext() as Context
 
 
-        val cfmp = CompletableFuture<MediaPlayer>()
-        cfmp.complete(MediaPlayer())
-        gameManager.setMediaPlayer(cfmp);
-        gameManager.setNextSong()
         scn.onActivity {
                 activity -> frameLay = activity.guess(songTest, LinearLayout(ctx), ctx, gameManager)
-            frameLay.performClick()
-
+                frameLay.performClick()
         }
         assertEquals(songTest.getArtistName(), gameManager.getCurrentSong().getArtistName())
         assertEquals(songTest.getTrackName(), gameManager.getCurrentSong().getTrackName())
+        assertEquals(gameManager.getScore(), 1)
     }
 
     @Test
@@ -154,7 +152,7 @@ class TypingGameActivityTest{
 
 
         val intent = Intent(ApplicationProvider.getApplicationContext(), TypingGameActivity::class.java)
-        intent.putExtra("gameManager", gameManager)
+        // Do not put gameManager as an extra
         val scn: ActivityScenario<TypingGameActivity> = ActivityScenario.launch(intent)
         val ctx = ApplicationProvider.getApplicationContext() as Context
         scn.onActivity {

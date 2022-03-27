@@ -76,36 +76,4 @@ class GameManagerTest {
         assertEquals(gameManager.getCurrentSong().getArtistName().lowercase(), "imagine dragons")
         assertEquals(gameManager.getCurrentSong().getTrackName().lowercase(), "monday")
     }
-
-    @Test
-    fun getSongListTest(){
-        val gameManager = setGameManager()
-        assertEquals(gameManager.getSongList()[0], "monday imagine dragons")
-    }
-    @Test
-    fun checkGameStatus(){
-        val gameManager = GameManager()
-        assertEquals(gameManager.checkGameStatus(), true)
-    }
-
-    @Test
-    fun checkPlaySongTest() {
-        val gameManager = setGameManager()
-        gameManager.setNextSong()
-        gameManager.playSong()
-        assertEquals(gameManager.playingMediaPlayer(), true)
-    }
-
-    @Test
-    fun stopPlaySongTest() {
-        val gameManager = setGameManager()
-        gameManager.setNextSong()
-        gameManager.playSong()
-        gameManager.stopMediaPlayer()
-        assertEquals(gameManager.playingMediaPlayer(), false)
-    }
-
-
-
-
 }

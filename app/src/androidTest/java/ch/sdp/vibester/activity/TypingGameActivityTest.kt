@@ -10,10 +10,7 @@ import androidx.core.content.ContextCompat.getColor
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.intent.Intents
-import androidx.test.espresso.intent.Intents.intended
-import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.ext.junit.rules.ActivityScenarioRule
-import ch.sdp.vibester.EndBasicGameTemporary
 import ch.sdp.vibester.R
 import ch.sdp.vibester.helper.GameManager
 import ch.sdp.vibester.model.Song
@@ -193,13 +190,13 @@ class TypingGameActivityTest{
         assertEquals(true, gameManager.getScore()==0)
     }
 
-    @Test
-    fun checkPlayRoundEnd(){
-        val gameManager = GameManager();
-        lateinit var temp: Unit
-        val intent = Intent(ApplicationProvider.getApplicationContext(), TypingGameActivity::class.java)
-        intent.putExtra("gameManager", gameManager)
-        val scn: ActivityScenario<TypingGameActivity> = ActivityScenario.launch(intent)
-        intended(hasComponent(EndBasicGameTemporary::class.java.getName()))
-    }
+//    @Test
+//    fun checkPlayRoundEnd(){
+//        val gameManager = GameManager();
+//        lateinit var temp: Unit
+//        val intent = Intent(ApplicationProvider.getApplicationContext(), TypingGameActivity::class.java)
+//        intent.putExtra("gameManager", gameManager)
+//        val scn: ActivityScenario<TypingGameActivity> = ActivityScenario.launch(intent)
+//        intended(hasComponent(EndBasicGameTemporary::class.java.getName()))
+//    }
 }

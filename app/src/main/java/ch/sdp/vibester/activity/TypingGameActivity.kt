@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.Gravity
+import android.view.View
 import android.view.Window
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -241,5 +242,26 @@ class TypingGameActivity : AppCompatActivity() {
             i.putExtra("score", gameManager.getScore().toString())
             startActivity(i)
         }
+    }
+
+    private fun switchToEnding(view: View,gameManager:GameManager) {
+        val intent = Intent(this, GameEndingActivity::class.java)
+        //MOCK VALUES FOR INCORRECT SONGS, ADAPT FROM GAME DATA IN THE FUTURE
+        val incArray: ArrayList<String> = arrayListOf()
+        incArray.addAll(arrayOf("One", "Two", "Three"))
+
+        val statNames: ArrayList<String> = arrayListOf()
+        statNames.addAll(arrayOf("Total Score"))
+
+        val statVal: ArrayList<String> = arrayListOf()
+        statVal.addAll(arrayOf(gameManager.getScore().toString()))
+
+        intent.putExtra("nbIncorrectSong", gameManager.GAME_SIZE - gameManager.getScore())
+
+        intent.putStringArrayListExtra("str_arr_inc", incArray)
+        intent.putStringArrayListExtra("str_arr_name", statNames)
+        intent.putStringArrayListExtra("str_arr_val", statVal)
+
+        startActivity(intent)
     }
 }

@@ -14,7 +14,6 @@ import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import ch.sdp.vibester.EndBasicGameTemporary
-import ch.sdp.vibester.EndBasicGameTemporaryTest
 import ch.sdp.vibester.R
 import ch.sdp.vibester.helper.GameManager
 import ch.sdp.vibester.model.Song
@@ -140,7 +139,7 @@ class TypingGameActivityTest{
     }
 
     @Test
-    fun checkAnswerCorrectTest(){
+    fun intentGenWrongTest(){
         val inputTxt = """
             {
                 "resultCount":1,
@@ -150,10 +149,12 @@ class TypingGameActivityTest{
             }
             """
 
+
         val songTest = Song.singleSong(inputTxt)
         val gameManager = setGameManager()
         gameManager.setNextSong()
         lateinit var temp: Unit
+
 
         val intent = Intent(ApplicationProvider.getApplicationContext(), TypingGameActivity::class.java)
         intent.putExtra("gameManager", gameManager)

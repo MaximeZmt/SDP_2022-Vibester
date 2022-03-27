@@ -31,10 +31,10 @@ class GenreTemporary : AppCompatActivity() {
      */
     fun performQuery(uri:LastfmUri){
         val gameManager = GameManager()
-//        gameManager.setGameSongList(LastfmApi.querySongList(OkHttpClient(),uri).get(),uri.method)
-//        val newIntent = Intent(this, TypingGameActivity::class.java)
-//        newIntent.putExtra("gameManager", gameManager)
-//        startActivity(newIntent)
+        gameManager.setGameSongList(LastfmApi.querySongList(OkHttpClient(),uri).get(),uri.method)
+        val newIntent = Intent(this, TypingGameActivity::class.java)
+        newIntent.putExtra("gameManager", gameManager)
+        startActivity(newIntent)
     }
 
     fun playRock(view: View) {

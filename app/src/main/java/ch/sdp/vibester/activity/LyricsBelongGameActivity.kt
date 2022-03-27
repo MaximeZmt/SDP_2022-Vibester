@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.R
+import ch.sdp.vibester.api.LastfmHelper
 import ch.sdp.vibester.api.LyricsOVHApiInterface
 import ch.sdp.vibester.model.Lyric
 import retrofit2.Call
@@ -17,9 +18,12 @@ import retrofit2.Response
 import java.util.*
 
 private const val REQUEST_AUDIO = 100
+private const val LASTFM_METHOD = "tag.gettoptracks"
 
 class LyricsBelongGameActivity : AppCompatActivity() {
     private lateinit var speechInput : String
+    private var songName = "Thunder"
+    private var artistName = "Imagine Dragons"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +38,11 @@ class LyricsBelongGameActivity : AppCompatActivity() {
         btnCheck.visibility = View.INVISIBLE
         btnCheck.setOnClickListener {
             checkLyrics(speechInput)
+        }
+
+        val btnNext = findViewById<Button>(R.id.nextSongButton)
+        btnNext.setOnClickListener {
+            fetchSong()
         }
     }
 
@@ -53,6 +62,16 @@ class LyricsBelongGameActivity : AppCompatActivity() {
         }
     }
 
+    private fun fetchSong() {
+        val track = LastfmHelper.getRandomSongList(LASTFM_METHOD, "english")[0]
+        // TODO: find a way to separate the song name and the artist name
+        /*val songArtist = track.split("$")
+        print(songArtist)
+        songName = songArtist[1]
+        artistName = songArtist[3]
+        findViewById<TextView>(R.id.lyricResult).text = "Say something from %s - %s".format(songName, artistName)*/
+    }
+
     /**
      * display the given String in lyricResult
      */
@@ -66,7 +85,7 @@ class LyricsBelongGameActivity : AppCompatActivity() {
      */
     private fun checkLyrics(lyricToBeCheck: String) {
         val service = LyricsOVHApiInterface.create()
-        val call = service.getLyrics("Imagine Dragons", "Thunder")
+        val call = service.getLyrics(artistName, songName)
         call.enqueue(object: Callback<Lyric> {
             override fun onFailure(call: Call<Lyric>?, t: Throwable?) {}
 

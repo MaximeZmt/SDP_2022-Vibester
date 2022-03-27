@@ -7,6 +7,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
 
+private const val BASE_URL = "https://api.lyrics.ovh/"
+
 interface LyricsOVHApiInterface {
     /**
      * Given the name of the artist and the title of the track
@@ -20,7 +22,7 @@ interface LyricsOVHApiInterface {
          * @param baseUrl base url of the api
          * return an instance of the api interface
          */
-        fun create(baseUrl:String = "https://api.lyrics.ovh/"): LyricsOVHApiInterface {
+        fun create(baseUrl:String = BASE_URL): LyricsOVHApiInterface {
             val retrofit = Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())

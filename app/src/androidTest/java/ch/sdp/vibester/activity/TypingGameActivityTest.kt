@@ -9,9 +9,12 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getColor
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
+import androidx.test.espresso.Espresso
+import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
+import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import ch.sdp.vibester.EndBasicGameTemporary
 import ch.sdp.vibester.R
@@ -189,5 +192,15 @@ class TypingGameActivityTest{
         assertEquals(true, gameManager.getScore()==0)
     }
 
+    @Test
+    fun checkEndScreenTest(){
+        val gameManager = GameManager()
+        val intent = Intent(ApplicationProvider.getApplicationContext(), TypingGameActivity::class.java)
+        intent.putExtra("gameManager", gameManager)
+        val scn: ActivityScenario<TypingGameActivity> = ActivityScenario.launch(intent)
+        intended(hasComponent(EndBasicGameTemporary::class.java.getName()))
+        Espresso.onView(ViewMatchers.withId(R.id.score))
+            .check(ViewAssertions.matches(ViewMatchers.withText("Your score is " + gameManager.getScore().toString())))
+    }
 
 }

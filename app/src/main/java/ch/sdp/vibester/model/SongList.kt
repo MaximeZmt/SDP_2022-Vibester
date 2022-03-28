@@ -5,7 +5,7 @@ import org.json.JSONObject
 
 /**
  * Process the fetched data from Lastfm query.
- * Mainly, it creates a list of songs in the form ["$songName $artistName"]
+ * Mainly, it creates a list of songs in the form Pair("$songName", "$artistName")
  * @param jsonMeta: Lastfm fetched data
  */
 class SongList(jsonMeta: String) {
@@ -54,7 +54,7 @@ class SongList(jsonMeta: String) {
 
     /**
      * Getter that return songs for the given tag
-     * @return MutableList<String> of type "$artistName $songName"
+     * @return MutableList<Pair<String,String>> of type Pair("$songName", "$artistName")
      */
     fun getSongList():MutableList<Pair<String,String>>{
         return songList

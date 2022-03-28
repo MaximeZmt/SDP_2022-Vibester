@@ -1,3 +1,7 @@
+/**
+ * This class is commented now since it might be not usable. Might be deleted in a while.
+ */
+
 //package ch.sdp.vibester.api
 //
 //import ch.sdp.vibester.model.SongList

@@ -14,7 +14,7 @@ import java.util.concurrent.CompletableFuture
 class GameManager: Serializable{
     private var score = 0;
     private var nextSongInd = 0
-    private val GAME_SIZE = 10
+    private val gameSize = 10
     private var numPlayedSongs = 0
     private lateinit var currentSong: Song
     private var gameSongList: List<String> = mutableListOf()

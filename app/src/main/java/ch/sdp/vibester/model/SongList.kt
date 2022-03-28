@@ -6,15 +6,16 @@ import org.json.JSONObject
 
 /**
  * Process the fetched data from Lastfm query.
- * Mainly, it creates a list of songs in the form ["$songName $artistName"]
+ * Mainly, it creates a list of songs in the form Pair("$songName", "$artistName")
  * @param jsonMeta: Lastfm fetched data
  */
+
 class SongList(jsonMeta: String, method: String) {
     private val BY_TAG = "tag.gettoptracks"
     private val BY_CHART = "chart.gettoptracks"
     private val BY_ARTIST = "artist.gettoptracks"
     private var GAME_SIZE = 100
-    private var songList = mutableListOf<String>()
+    private var songList = mutableListOf<Pair<String, String>>()
     private var page = ""
     private var songsPerPage = ""
     private var totalPages = ""
@@ -56,18 +57,17 @@ class SongList(jsonMeta: String, method: String) {
             val songName = songObj.getString("name").lowercase()
 
             val artistDetails = songObj.getJSONObject("artist")
-            val artistName = artistDetails.getString("name").lowercase()
-            // TODO: filter the songs that are remixes or were sang by others.
-            songList.add("$songName $artistName")
+            val artistName = artistDetails.getString("name")
+            songList.add(Pair("$songName", "$artistName"))
             ++i
         }
     }
 
     /**
-     * Getter that return song list
-     * @return MutableList<String> of type "$artistName $songName"
+     * Getter that return songs for the given tag
+     * @return MutableList<Pair<String,String>> of type Pair("$songName", "$artistName")
      */
-    fun getSongList():MutableList<String>{
+    fun getSongList():MutableList<Pair<String,String>>{
         return songList
     }
 
@@ -75,7 +75,7 @@ class SongList(jsonMeta: String, method: String) {
      * Getter that return shuffled song list
      * @return MutableList<String> of type "$artistName $songName"
      */
-    fun getShuffledSongList(): MutableList<String> {
+    fun getShuffledSongList(): MutableList<Pair<String, String>> {
         return songList.asSequence().shuffled().toMutableList()
     }
 

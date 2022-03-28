@@ -34,6 +34,7 @@ import java.util.concurrent.CompletableFuture
 class TypingGameActivity : AppCompatActivity() {
     private val h = Handler()
     private  var runnable: Runnable? = null
+    private lateinit var gameManager: GameManager
         companion object {
             /**
              * Generate the border for a box
@@ -130,6 +131,15 @@ class TypingGameActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    override fun onDestroy() {
+        if(runnable !=null ){
+            h.removeCallbacks(runnable!!);}
+        if(this::gameManager.isInitialized){
+            gameManager.stopMediaPlayer()
+        }
+        super.onDestroy()
     }
 
     /**

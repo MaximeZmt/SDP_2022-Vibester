@@ -17,7 +17,7 @@ class GameManager: Serializable{
     private val gameSize = 10
     private var numPlayedSongs = 0
     private lateinit var currentSong: Song
-    private var gameSongList: List<String> = mutableListOf()
+    private var gameSongList: MutableList<Pair<String, String>> = mutableListOf()
     private lateinit var mediaPlayer: CompletableFuture<MediaPlayer>
     private val correctSongs = mutableListOf<Song>()
     private var wrongSongs = mutableListOf<Song>()
@@ -76,7 +76,7 @@ class GameManager: Serializable{
     /**
      * Get a songs list set up for the game
      */
-    fun getSongList():List<String>{
+    fun getSongList():MutableList<Pair<String, String>>{
         return gameSongList
     }
 
@@ -115,7 +115,8 @@ class GameManager: Serializable{
      */
     fun setNextSong():Boolean {
         if(nextSongInd < gameSongList.size){
-            val songName = gameSongList[nextSongInd]
+            val songPair = gameSongList[nextSongInd]
+            val songName = songPair.first + " " + songPair.second
             try{
                 currentSong = Song.singleSong(ItunesMusicApi.querySong(songName, OkHttpClient(), 1).get())
                 nextSongInd++

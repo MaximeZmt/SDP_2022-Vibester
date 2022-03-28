@@ -10,7 +10,7 @@ import org.json.JSONObject
  */
 class SongList(jsonMeta: String) {
 
-    private var songList = mutableListOf<String>()
+    private var songList = mutableListOf<Pair<String, String>>()
     private var page = ""
     private var songsPerPage = ""
     private var totalPages = ""
@@ -47,7 +47,7 @@ class SongList(jsonMeta: String) {
             val songName = songObj.getString("name")
             val artistDetails = songObj.getJSONObject("artist")
             val artistName = artistDetails.getString("name")
-            songList.add("$songName $artistName")
+            songList.add(Pair("$songName", "$artistName"))
             ++i
         }
     }
@@ -56,7 +56,7 @@ class SongList(jsonMeta: String) {
      * Getter that return songs for the given tag
      * @return MutableList<String> of type "$artistName $songName"
      */
-    fun getSongList():MutableList<String>{
+    fun getSongList():MutableList<Pair<String,String>>{
         return songList
     }
 

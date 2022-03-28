@@ -17,17 +17,4 @@ interface LastfmApiInterface {
      */
     @GET("https://ws.audioscrobbler.com/2.0/")
     fun getSongList(@QueryMap paramsMap: MutableMap<String, String>): Call<Object>;
-
-    companion object {
-        /**
-         * Create a retrofit instance with lastfm API base
-         */
-        fun create(baseUrl:String = "https://ws.audioscrobbler.com/2.0/"): LastfmApiInterface {
-            val retrofit = Retrofit.Builder()
-                .baseUrl(baseUrl)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-            return retrofit.create(LastfmApiInterface::class.java)
-        }
-    }
 }

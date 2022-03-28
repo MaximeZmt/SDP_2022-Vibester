@@ -12,21 +12,16 @@ import retrofit2.http.QueryMap
 
 interface LastfmApiInterface {
     /**
-     * Given the name of the artist and the title of the track
-     * return a Call<Lyric> contains the lyric of the track
+     * LastfmAPI call with apporpiate parameters (based on genre/artist)
+     * @return Object: Strin song list
      */
     @GET("https://ws.audioscrobbler.com/2.0/")
     fun getSongList(@QueryMap paramsMap: MutableMap<String, String>): Call<Object>;
 
-//    @Query("format") format: String,
-//    @Query("method") method: String,
-//    @Query("api_key") api_key: String,
-//    @Query("tag") tag: String,
-//    @Query("artist") artist: String
     companion object {
         /**
          * @param baseUrl base url of the api
-         * return an instance of the api interface
+         * @return an instance of the API interface
          */
         fun create(baseUrl:String = "https://ws.audioscrobbler.com/2.0/"): LastfmApiInterface {
             val retrofit = Retrofit.Builder()

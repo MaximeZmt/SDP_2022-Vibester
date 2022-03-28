@@ -52,40 +52,40 @@ class GenreTemporaryTest {
     @Test
     fun rockButtonClick() {
         onView(withId(R.id.rockButton)).perform(click())
-//        Thread.sleep(5000)
-//        intended(hasComponent(TypingGameActivity::class.java.getName()))
+        Thread.sleep(1500)
+        intended(hasComponent(TypingGameActivity::class.java.getName()))
     }
     @Test
     fun topButtonClick() {
         onView(withId(R.id.topTracksButton)).perform(click())
-//        Thread.sleep(5000)
-//        intended(hasComponent(TypingGameActivity::class.java.getName()))
+        Thread.sleep(1500)
+        intended(hasComponent(TypingGameActivity::class.java.getName()))
     }
 
     @Test
     fun kpopButtonClick() {
         onView(withId(R.id.kpopButton)).perform(click())
-//        Thread.sleep(5000)
-//        intended(hasComponent(TypingGameActivity::class.java.getName()))
+        Thread.sleep(1500)
+        intended(hasComponent(TypingGameActivity::class.java.getName()))
     }
 
     @Test
     fun billieEilishButtonClick() {
         onView(withId(R.id.billieEilishButton)).perform(click())
-//        Thread.sleep(5000)
-//        intended(hasComponent(TypingGameActivity::class.java.getName()))
+        Thread.sleep(1500)
+        intended(hasComponent(TypingGameActivity::class.java.getName()))
     }
     @Test
     fun imagineDragonsButtonClick() {
         onView(withId(R.id.imagDragonsButton)).perform(click())
-//        Thread.sleep(5000)
-//        intended(hasComponent(TypingGameActivity::class.java.getName()))
+        Thread.sleep(1500)
+        intended(hasComponent(TypingGameActivity::class.java.getName()))
     }
 
     @Test
     fun btsButtonClick() {
         onView(withId(R.id.btsButton)).perform(click())
-//        Thread.sleep(5000)
-//        intended(hasComponent(TypingGameActivity::class.java.getName()))
+        Thread.sleep(1500)
+        intended(hasComponent(TypingGameActivity::class.java.getName()))
     }
 }

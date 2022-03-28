@@ -36,22 +36,9 @@ class GenreTemporary : AppCompatActivity() {
      * @param tag: tag name if method BY_TAG is chosen
      */
     fun performQuery(uri:LastfmUri){
-//        gameManager.setGameSongList(LastfmApi.querySongList(OkHttpClient(),uri).get(),uri.method)
-//        val newIntent = Intent(this, TypingGameActivity::class.java)
-//        newIntent.putExtra("gameManager", gameManager)
-//        startActivity(newIntent)
-        val service = LastfmApiInterface.create()
-        val paramsMap: MutableMap<String, String> = HashMap()
-        paramsMap["method"] = uri.method
-        paramsMap["api_key"] = "52bfdc690dd8373bba5351571a01ac14"
-        paramsMap["format"] = uri.format
-        paramsMap["page"] = uri.page
-        paramsMap["tag"] = uri.tag
-        paramsMap["limit"] = uri.limit
-        paramsMap["artist"] = uri.artist
 
-//        val call = service.getSongList(uri.format, uri.method,"52bfdc690dd8373bba5351571a01ac14",uri.tag,uri.artist  )
-        val call = service.getSongList(paramsMap)
+        val service = LastfmApiInterface.create()
+        val call = service.getSongList(uri.convertToHashmap())
         call.enqueue(object: Callback<Object> {
             override fun onFailure(call: Call<Object>, t: Throwable?) {}
 
@@ -61,7 +48,6 @@ class GenreTemporary : AppCompatActivity() {
                 }
             }
         })
-//        Thread.sleep(5000)
     }
     fun switchToGame(response: String, method:String){
         val gameManager = GameManager()

@@ -5,6 +5,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
 
+/**
+ * This activity displays score after the game.
+ * It is temporary. It will be changed on common game end activity.
+ */
 class EndBasicGameTemporary : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {

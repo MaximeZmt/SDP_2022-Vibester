@@ -102,7 +102,6 @@ class TypingGameActivity : AppCompatActivity() {
         var mysong: Song? = null
         var mediaPlayer: CompletableFuture<MediaPlayer>? = null
         val ctx: Context = this
-        var gameManager: GameManager? = null
         val h = Handler()
 
         val getIntent = intent.extras

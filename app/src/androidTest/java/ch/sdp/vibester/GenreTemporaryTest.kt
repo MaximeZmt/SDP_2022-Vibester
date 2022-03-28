@@ -20,6 +20,7 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class GenreTemporaryTest {
+    private val SLEEP_TIME:Long = 2500
 
     @get:Rule
     val testRule = ActivityScenarioRule(
@@ -52,40 +53,40 @@ class GenreTemporaryTest {
     @Test
     fun rockButtonClick() {
         onView(withId(R.id.rockButton)).perform(click())
-        Thread.sleep(1500)
+        Thread.sleep(SLEEP_TIME)
         intended(hasComponent(TypingGameActivity::class.java.getName()))
     }
     @Test
     fun topButtonClick() {
         onView(withId(R.id.topTracksButton)).perform(click())
-        Thread.sleep(1500)
+        Thread.sleep(SLEEP_TIME)
         intended(hasComponent(TypingGameActivity::class.java.getName()))
     }
 
     @Test
     fun kpopButtonClick() {
         onView(withId(R.id.kpopButton)).perform(click())
-        Thread.sleep(1500)
+        Thread.sleep(SLEEP_TIME)
         intended(hasComponent(TypingGameActivity::class.java.getName()))
     }
 
     @Test
     fun billieEilishButtonClick() {
         onView(withId(R.id.billieEilishButton)).perform(click())
-        Thread.sleep(1500)
+        Thread.sleep(SLEEP_TIME)
         intended(hasComponent(TypingGameActivity::class.java.getName()))
     }
     @Test
     fun imagineDragonsButtonClick() {
         onView(withId(R.id.imagDragonsButton)).perform(click())
-        Thread.sleep(1500)
+        Thread.sleep(SLEEP_TIME)
         intended(hasComponent(TypingGameActivity::class.java.getName()))
     }
 
     @Test
     fun btsButtonClick() {
         onView(withId(R.id.btsButton)).perform(click())
-        Thread.sleep(1500)
+        Thread.sleep(SLEEP_TIME)
         intended(hasComponent(TypingGameActivity::class.java.getName()))
     }
 }

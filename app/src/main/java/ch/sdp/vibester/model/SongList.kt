@@ -5,12 +5,12 @@ import org.json.JSONObject
 
 /**
  * Process the fetched data from Lastfm query.
- * Mainly, it creates a list of songs in the form ["$songName $artistName"]
+ * Mainly, it creates a list of songs in the form Pair("$songName", "$artistName")
  * @param jsonMeta: Lastfm fetched data
  */
 class SongList(jsonMeta: String) {
 
-    private var songList = mutableListOf<String>()
+    private var songList = mutableListOf<Pair<String, String>>()
     private var page = ""
     private var songsPerPage = ""
     private var totalPages = ""
@@ -47,16 +47,16 @@ class SongList(jsonMeta: String) {
             val songName = songObj.getString("name")
             val artistDetails = songObj.getJSONObject("artist")
             val artistName = artistDetails.getString("name")
-            songList.add("$songName $artistName")
+            songList.add(Pair("$songName", "$artistName"))
             ++i
         }
     }
 
     /**
      * Getter that return songs for the given tag
-     * @return MutableList<String> of type "$artistName $songName"
+     * @return MutableList<Pair<String,String>> of type Pair("$songName", "$artistName")
      */
-    fun getSongList():MutableList<String>{
+    fun getSongList():MutableList<Pair<String,String>>{
         return songList
     }
 

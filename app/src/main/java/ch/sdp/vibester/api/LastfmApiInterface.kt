@@ -20,8 +20,7 @@ interface LastfmApiInterface {
 
     companion object {
         /**
-         * @param baseUrl base url of the api
-         * @return an instance of the API interface
+         * Create a retrofit instance with lastfm API base
          */
         fun create(baseUrl:String = "https://ws.audioscrobbler.com/2.0/"): LastfmApiInterface {
             val retrofit = Retrofit.Builder()

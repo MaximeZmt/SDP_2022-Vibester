@@ -48,7 +48,7 @@ class GenreTemporaryTest {
     fun songListIsEmpty(){
         exception.expect(PerformException::class.java)
         onView(withId(R.id.songsListView)).check(matches(isDisplayed()))
-        onData(allOf(`is`(instanceOf(String::class.java)))).atPosition(2).perform(click())
+        onData(allOf(`is`(instanceOf(Pair::class.java)))).atPosition(2).perform(click())
     }
 
     @Test
@@ -56,14 +56,14 @@ class GenreTemporaryTest {
         onView(withId(R.id.rockButton)).perform(click())
         onView(withId(R.id.songsListView)).check(matches(isDisplayed()))
         Thread.sleep(1000)   // wait for data to fetch
-        onData(allOf(`is`(instanceOf(String::class.java)))).atPosition(2).perform(click())
+        onData(allOf(`is`(instanceOf(Pair::class.java)))).atPosition(2).perform(click())
     }
     @Test
     fun topButtonClick() {
         onView(withId(R.id.topTracksButton)).perform(click())
         onView(withId(R.id.songsListView)).check(matches(isDisplayed()))
         Thread.sleep(1000)   // wait for data to fetch
-        onData(allOf(`is`(instanceOf(String::class.java)))).atPosition(2).perform(click())
+        onData(allOf(`is`(instanceOf(Pair::class.java)))).atPosition(2).perform(click())
     }
 
     @Test
@@ -71,6 +71,6 @@ class GenreTemporaryTest {
         onView(withId(R.id.kpopButton)).perform(click())
         onView(withId(R.id.songsListView)).check(matches(isDisplayed()))
         Thread.sleep(1000)   // wait for data to fetch
-        onData(allOf(`is`(instanceOf(String::class.java)))).atPosition(2).perform(click())
+        onData(allOf(`is`(instanceOf(Pair::class.java)))).atPosition(2).perform(click())
     }
 }

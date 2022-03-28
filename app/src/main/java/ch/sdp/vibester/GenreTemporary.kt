@@ -49,7 +49,8 @@ class GenreTemporary : AppCompatActivity() {
             }
         })
     }
-    fun switchToGame(response: String, method:String){
+
+    fun switchToGame(response: String, method: String) {
         val gameManager = GameManager()
         gameManager.setGameSongList(response, method)
         val newIntent = Intent(this, TypingGameActivity::class.java)

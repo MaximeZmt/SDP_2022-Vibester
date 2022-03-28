@@ -28,7 +28,7 @@ class SongListTest {
 
             val songName = "wonderwall"
             val artistName = "oasis"
-            val inputSongsList = mutableListOf<String>("$songName $artistName")
+            val inputSongsList = mutableListOf<Pair<String,String>>(Pair("$songName","$artistName"))
             val page = "1"
             val songsPerPage = "1"
             val totalPages = "66649"

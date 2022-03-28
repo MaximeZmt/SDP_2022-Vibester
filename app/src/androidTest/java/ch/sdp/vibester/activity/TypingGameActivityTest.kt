@@ -192,18 +192,4 @@ class TypingGameActivityTest{
         assertEquals(true, gameManager.getScore()==0)
     }
 
-    @Test
-    fun checkEndScreenTest(){
-        val gameManager = GameManager()
-        val intent = Intent(ApplicationProvider.getApplicationContext(), TypingGameActivity::class.java)
-        val scn: ActivityScenario<TypingGameActivity> = ActivityScenario.launch(intent)
-        val ctx = ApplicationProvider.getApplicationContext() as Context
-        scn.onActivity {
-                activity -> var temp  = activity.playRound(ctx, gameManager)
-        }
-        intended(hasComponent(EndBasicGameTemporary::class.java.getName()))
-        Espresso.onView(ViewMatchers.withId(R.id.score))
-            .check(ViewAssertions.matches(ViewMatchers.withText("Your score is " + gameManager.getScore().toString())))
-    }
-
 }

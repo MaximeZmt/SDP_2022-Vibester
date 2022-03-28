@@ -47,9 +47,6 @@ class GenreTemporaryTest {
         onView(withId(R.id.billieEilishButton)).check(matches(isDisplayed()))
     }
 
-//    @get:Rule
-//    var exception = ExpectedException.none()
-
     @Test
     fun rockButtonClick() {
         onView(withId(R.id.rockButton)).perform(click())

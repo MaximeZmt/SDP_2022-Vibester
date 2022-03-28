@@ -100,7 +100,7 @@ class GameManager: Serializable{
      *          false otherwise
      */
     fun checkGameStatus():Boolean{
-        if(numPlayedSongs < GAME_SIZE){
+        if(numPlayedSongs < gameSize){
             return true
         }
         return false

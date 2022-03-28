@@ -35,6 +35,7 @@ import java.util.concurrent.CompletableFuture
 class TypingGameActivity : AppCompatActivity() {
     private val h = Handler()
     private  var runnable: Runnable? = null
+    private lateinit var gameManager: GameManager
         companion object {
             /**
              * Generate the border for a box
@@ -102,7 +103,6 @@ class TypingGameActivity : AppCompatActivity() {
         var mysong: Song? = null
         var mediaPlayer: CompletableFuture<MediaPlayer>? = null
         val ctx: Context = this
-        var gameManager: GameManager? = null
         val h = Handler()
 
         val getIntent = intent.extras
@@ -131,6 +131,15 @@ class TypingGameActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    override fun onDestroy() {
+        if(runnable !=null ){
+            h.removeCallbacks(runnable!!);}
+        if(this::gameManager.isInitialized){
+            gameManager.stopMediaPlayer()
+        }
+        super.onDestroy()
     }
 
     /**
@@ -198,7 +207,7 @@ class TypingGameActivity : AppCompatActivity() {
     /**
      * Custom handle of the bar progress.
      */
-    fun barTimer(myBar: ProgressBar, ctx:Context, gameManager: GameManager){
+    private fun barTimer(myBar: ProgressBar, ctx:Context, gameManager: GameManager){
         myBar.progress = 30
         myBar.progressTintList = ColorStateList.valueOf(getColor(R.color.cg_blue))
         runnable = object : Runnable {
@@ -227,7 +236,8 @@ class TypingGameActivity : AppCompatActivity() {
      * Function to set a new round. It includes reinitializing activity elements,
      * and setting new song for the round.
      */
-    private fun playRound(ctx: Context, gameManager: GameManager){
+
+     fun playRound(ctx: Context, gameManager: GameManager){
         if(gameManager.checkGameStatus() && gameManager.setNextSong()){
             findViewById<LinearLayout>(R.id.displayGuess).removeAllViews()
             findViewById<EditText>(R.id.yourGuessET).text.clear()

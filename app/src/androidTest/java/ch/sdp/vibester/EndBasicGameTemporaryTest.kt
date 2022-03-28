@@ -1,5 +1,6 @@
 package ch.sdp.vibester
 
+import android.content.Context
 import android.content.Intent
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
@@ -37,11 +38,12 @@ class EndBasicGameTemporaryTest {
     @Test
     fun checkTextView(){
         val gameManager = GameManager()
-        lateinit var temp: Unit
         val intent = Intent(ApplicationProvider.getApplicationContext(), TypingGameActivity::class.java)
-        intent.putExtra("gameManager", gameManager)
         val scn: ActivityScenario<TypingGameActivity> = ActivityScenario.launch(intent)
-        Intents.intended(IntentMatchers.hasComponent(EndBasicGameTemporary::class.java.getName()))
+        val ctx = ApplicationProvider.getApplicationContext() as Context
+        scn.onActivity {
+                activity -> var temp  = activity.playRound(ctx, gameManager)
+        }
         Espresso.onView(ViewMatchers.withId(R.id.score))
             .check(ViewAssertions.matches(ViewMatchers.withText("Your score is " + gameManager.getScore().toString())))
     }

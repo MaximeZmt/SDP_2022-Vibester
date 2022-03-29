@@ -45,11 +45,11 @@ class WelcomeActivityTest {
         intended(hasComponent(ScoreBoardActivity::class.java.name))
     }
 
-    @Test
-    fun checkIntentOnListen(){ //FILLER TESTING
-        onView(withId(R.id.welcome_listen)).perform(click())
-        intended(hasComponent(TypingGameActivity::class.java.name))
-    }
+//    @Test
+//    fun checkIntentOnListen(){ //FILLER TESTING
+//        onView(withId(R.id.welcome_listen)).perform(click())
+//        intended(hasComponent(TypingGameActivity::class.java.name))
+//    }
 
     @Test
     fun checkIntentOnSettings(){ //FILLER TESTING

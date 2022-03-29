@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.LyricsOVHApiInterface
+import ch.sdp.vibester.api.ServiceBuilder
 import ch.sdp.vibester.model.Lyric
 import retrofit2.Call
 import retrofit2.Callback
@@ -20,6 +21,7 @@ private const val REQUEST_AUDIO = 100
 
 class LyricsBelongGameActivity : AppCompatActivity() {
     private lateinit var speechInput : String
+    private val baseUrl = "https://api.lyrics.ovh/"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,7 +67,7 @@ class LyricsBelongGameActivity : AppCompatActivity() {
      * check if the given string belongs to the lyrics of the song
      */
     private fun checkLyrics(lyricToBeCheck: String) {
-        val service = LyricsOVHApiInterface.create()
+        val service = ServiceBuilder.buildService(baseUrl,LyricsOVHApiInterface::class.java)
         val call = service.getLyrics("Imagine Dragons", "Thunder")
         call.enqueue(object: Callback<Lyric> {
             override fun onFailure(call: Call<Lyric>?, t: Throwable?) {}

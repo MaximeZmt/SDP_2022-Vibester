@@ -9,9 +9,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.R
-import ch.sdp.vibester.api.LastfmHelper
+import ch.sdp.vibester.api.LastfmApiInterface
+import ch.sdp.vibester.api.LastfmUri
 import ch.sdp.vibester.api.LyricsOVHApiInterface
+import ch.sdp.vibester.api.ServiceBuilder
 import ch.sdp.vibester.model.Lyric
+import ch.sdp.vibester.model.SongList
+import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -25,6 +29,8 @@ private const val LASTFM_METHOD = "tag.gettoptracks"
  */
 class LyricsBelongGameActivity : AppCompatActivity() {
     private lateinit var speechInput : String
+    private val baseUrlLyrics = "https://api.lyrics.ovh/"
+    private val baseUrlLastFM = "https://ws.audioscrobbler.com/2.0/"
     private lateinit var lyrics : String
     private var songName = "Thunder"
     private var artistName = "Imagine Dragons"
@@ -70,10 +76,21 @@ class LyricsBelongGameActivity : AppCompatActivity() {
      * fetch a song randomly for the game
      */
     private fun fetchSong() {
-        val track = LastfmHelper.getRandomSongList(LASTFM_METHOD, "english")[0]
-        songName = track.first
-        artistName = track.second
-        findViewById<TextView>(R.id.lyricResult).text = "Say something from %s - %s".format(songName, artistName)
+        val service = ServiceBuilder.buildService(baseUrlLastFM, LastfmApiInterface::class.java)
+        val uri = LastfmUri(method = LASTFM_METHOD, tag = "english")
+        val call = service.getSongList(uri.convertToHashmap())
+        call.enqueue(object: Callback<Any> {
+            override fun onFailure(call: Call<Any>?, t: Throwable?) {}
+            override fun onResponse(call: Call<Any>?, response: Response<Any>?) {
+                if (response != null) {
+                    val track = SongList(Gson().toJson(response.body()), uri.method).getShuffledSongList()[0]
+                    songName = track.first
+                    artistName = track.second
+                    findViewById<TextView>(R.id.lyricResult).text = "Say something from %s - %s".format(songName, artistName)
+                }
+            }
+        })
+
     }
 
     /**
@@ -88,7 +105,7 @@ class LyricsBelongGameActivity : AppCompatActivity() {
      * get the lyrics of a given song
      */
     private fun getAndCheckLyrics(songName: String, artistName: String, speechInput: String) {
-        val service = LyricsOVHApiInterface.create()
+        val service = ServiceBuilder.buildService(baseUrlLyrics,LyricsOVHApiInterface::class.java)
         val call = service.getLyrics(artistName, songName)
         call.enqueue(object: Callback<Lyric> {
             override fun onFailure(call: Call<Lyric>?, t: Throwable?) {}

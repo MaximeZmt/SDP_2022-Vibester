@@ -1,11 +1,19 @@
 package ch.sdp.vibester
 
+//import ch.sdp.vibester.api.LastfmHelper
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.ArrayAdapter
-import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
-import ch.sdp.vibester.api.LastfmHelper
+import ch.sdp.vibester.activity.TypingGameActivity
+import ch.sdp.vibester.api.ServiceBuilder
+import ch.sdp.vibester.api.LastfmApiInterface
+import ch.sdp.vibester.api.LastfmUri
+import ch.sdp.vibester.helper.GameManager
+import com.google.gson.Gson
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 /**
  * Activity to show the list of songs for a chosen tag
@@ -13,6 +21,8 @@ import ch.sdp.vibester.api.LastfmHelper
 class GenreTemporary : AppCompatActivity() {
     private val BY_TAG = "tag.gettoptracks"
     private val BY_CHART = "chart.gettoptracks"
+    private val BY_ARTIST = "artist.gettoptracks"
+    private val baseurl = "https://ws.audioscrobbler.com/2.0/"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,26 +31,50 @@ class GenreTemporary : AppCompatActivity() {
 
     /**
      * Fetch data from Lastfm and show song list in a ListView
-     * @param method: BY_TAG or BY_CHART (top tracks without tag)
-     * @param tag: tag name if method BY_TAG is chosen
      */
-    fun performQuery(method: String, tag: String=""){
-        val listSongs = findViewById<ListView>(R.id.songsListView)
-        val songList = LastfmHelper.getRandomSongList(method, tag)
-        val arr = ArrayAdapter(this, android.R.layout.simple_list_item_1 , songList)
-        listSongs.adapter = arr
+    fun performQuery(uri:LastfmUri){
+
+        val service = ServiceBuilder.buildService(baseurl, LastfmApiInterface::class.java)
+        val call = service.getSongList(uri.convertToHashmap())
+        call.enqueue(object: Callback<Any> {
+            override fun onFailure(call: Call<Any>, t: Throwable?) {}
+
+            override fun onResponse(call: Call<Any>, response: Response<Any>) {
+                switchToGame(Gson().toJson(response.body()), uri.method)
+            }
+        })
     }
 
-    fun getKpopSongList(view: View) {
-        performQuery(BY_TAG,"kpop")
+    fun switchToGame(response: String, method: String) {
+        val gameManager = GameManager()
+        gameManager.setGameSongList(response, method)
+        val newIntent = Intent(this, TypingGameActivity::class.java)
+        newIntent.putExtra("gameManager", gameManager)
+        startActivity(newIntent)
     }
 
-    fun getRockSongList(view: View) {
-        performQuery(BY_TAG, "rock")
+    fun playRock(view: View) {
+        performQuery(LastfmUri(method = BY_TAG, tag = "rock"))
     }
 
-    fun getTopSongList(view: View) {
-        performQuery(BY_CHART)
+    fun playImagineDragons(view: View) {
+        performQuery(LastfmUri(method = BY_ARTIST, artist = "Imagine Dragons"))
+    }
+
+    fun playTopTracks(view: View) {
+        performQuery(LastfmUri(method = BY_CHART))
+    }
+
+    fun playBTS(view: View) {
+        performQuery(LastfmUri(method = BY_ARTIST, artist = "BTS"))
+    }
+
+    fun playKpop(view: View) {
+        performQuery(LastfmUri(method = BY_TAG, tag = "kpop"))
+    }
+
+    fun playBillieEilish(view: View){
+        performQuery(LastfmUri(method = BY_ARTIST, artist = "Billie Eilish"))
     }
 
 }

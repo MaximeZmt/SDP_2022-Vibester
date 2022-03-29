@@ -16,6 +16,9 @@
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".EndBasicGameTemporary"
+            android:exported="false" />
+        <activity
             android:name=".activity.IncorrectSongsActivity"
             android:exported="false" />
         <activity

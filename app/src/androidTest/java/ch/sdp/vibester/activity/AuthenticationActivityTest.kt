@@ -26,6 +26,7 @@ import kotlin.random.Random
  */
 @RunWith(AndroidJUnit4::class)
 class AuthenticationActivityTest {
+    private val SLEEP_TIME: Long = 5000
 
     @Test
     fun useAppContext() {
@@ -46,7 +47,7 @@ class AuthenticationActivityTest {
         onView(withId(R.id.username)).perform(ViewActions.typeText(username), closeSoftKeyboard())
         onView(withId(R.id.password)).perform(ViewActions.typeText(password), closeSoftKeyboard())
         onView(withId(R.id.logIn)).perform(click())
-        Thread.sleep(3_000)
+        Thread.sleep(SLEEP_TIME)
         onView(withId(R.id.email)).check(matches(withText("Authentication error")))
     }
 
@@ -57,7 +58,7 @@ class AuthenticationActivityTest {
         onView(withId(R.id.username)).perform(ViewActions.typeText(username), closeSoftKeyboard())
         onView(withId(R.id.password)).perform(ViewActions.typeText(password), closeSoftKeyboard())
         onView(withId(R.id.createAcc)).perform(click())
-        Thread.sleep(3_000)
+        Thread.sleep(SLEEP_TIME)
         onView(withId(R.id.email)).check(matches(withText("Authentication error")))
     }
 
@@ -114,7 +115,7 @@ class AuthenticationActivityTest {
         onView(withId(R.id.username)).perform(ViewActions.typeText(username), closeSoftKeyboard())
         onView(withId(R.id.password)).perform(ViewActions.typeText(password), closeSoftKeyboard())
         onView(withId(R.id.logIn)).perform(click())
-        Thread.sleep(3_000)
+        Thread.sleep(SLEEP_TIME)
         onView(withId(R.id.email)).check(matches(withText("john@test.com")))
     }
 
@@ -126,7 +127,7 @@ class AuthenticationActivityTest {
         onView(withId(R.id.username)).perform(ViewActions.typeText(username), closeSoftKeyboard())
         onView(withId(R.id.password)).perform(ViewActions.typeText(password), closeSoftKeyboard())
         onView(withId(R.id.createAcc)).perform(click())
-        Thread.sleep(3_000)
+        Thread.sleep(SLEEP_TIME)
         onView(withId(R.id.email)).check(matches(withText(randomInt.toString().plus("@gg.com"))))
     }
 

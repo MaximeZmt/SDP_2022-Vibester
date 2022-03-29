@@ -24,7 +24,7 @@ class LastfmHelper {
          * @param tag: tag to retrieve songs. If method BY_CHART is used, tag is empty.
          * @return list of songs in a format ("$songName $artistName")
          */
-        fun getRandomSongList(method: String, tag: String = ""): List<String> {
+        fun getRandomSongList(method: String, tag: String = ""): List<Pair<String, String>> {
             val firstQuery = SongList(
                 LastfmApi.querySongList(
                     OkHttpClient(),

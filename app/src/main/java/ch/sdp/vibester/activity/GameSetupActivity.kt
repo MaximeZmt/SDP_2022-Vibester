@@ -3,10 +3,10 @@ package ch.sdp.vibester.activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.Window
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Spinner
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.R
 import ch.sdp.vibester.helper.DisplayContents
@@ -18,6 +18,8 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         supportActionBar?.hide()
         setContentView(R.layout.activity_game_setup_screen)
+
+        choosingGameSetupListener()
 
         val spinner: Spinner = findViewById(R.id.nb_player_spinner)
         spinner.background = DisplayContents.borderGen(this, R.color.floral_white)
@@ -43,4 +45,15 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         intent.putExtra("Number of players", text)
         startActivity(intent)
     }
+
+    private fun choosingGameSetupListener(){
+        val butBuzz = findViewById<Button>(R.id.local_buzzer_game_button)
+        butBuzz.setOnClickListener({
+            val chooseLinLay = findViewById<LinearLayout>(R.id.chooseGame)
+            val buzzereLinLay = findViewById<LinearLayout>(R.id.buzzerSetup)
+            chooseLinLay.visibility = GONE
+            buzzereLinLay.visibility = VISIBLE
+        })
+    }
+
 }

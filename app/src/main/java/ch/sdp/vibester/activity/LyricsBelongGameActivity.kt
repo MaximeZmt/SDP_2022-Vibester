@@ -17,9 +17,10 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
 
-private const val REQUEST_AUDIO = 100
+
 
 class LyricsBelongGameActivity : AppCompatActivity() {
+    private val REQUEST_AUDIO = 100
     private lateinit var speechInput : String
     private val baseUrl = "https://api.lyrics.ovh/"
 

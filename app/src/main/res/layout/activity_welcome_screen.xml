@@ -41,10 +41,10 @@
                 android:layout_marginTop="10dp"
                 android:backgroundTint="@color/cg_blue"
                 android:elevation="10dp"
-                android:onClick="switchToPlay"
                 android:stateListAnimator="@null"
-                android:text="@string/play_a_game"
                 android:translationZ="10dp"
+                android:onClick="switchToPlay"
+                android:text="@string/play_a_game"
                 app:icon="@android:drawable/ic_media_play" />
 
             <Button

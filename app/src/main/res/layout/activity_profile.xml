@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".profile.ProfileSetup"
-    android:layout_marginTop="@dimen/mtrl_toolbar_default_height"
+    tools:context=".profile.ProfileActivity"
+    android:background="@color/floral_white"
     >
 
     <ImageView
@@ -171,6 +171,10 @@
         android:layout_marginTop="14dp"
         android:layout_marginBottom="27dp"
         android:text="@string/editUsername"
+        android:backgroundTint="@color/cg_blue"
+        android:elevation="10dp"
+        android:stateListAnimator="@null"
+        android:translationZ="10dp"
         app:layout_constraintBottom_toTopOf="@+id/profileStatistics"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.937"
@@ -186,6 +190,10 @@
         android:layout_marginTop="22dp"
         android:layout_marginBottom="35dp"
         android:text="@string/editHandle"
+        android:backgroundTint="@color/cg_blue"
+        android:elevation="10dp"
+        android:stateListAnimator="@null"
+        android:translationZ="10dp"
         app:layout_constraintBottom_toTopOf="@+id/profileStatistics"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/username" />

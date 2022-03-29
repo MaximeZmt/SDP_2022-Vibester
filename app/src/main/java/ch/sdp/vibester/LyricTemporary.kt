@@ -6,6 +6,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import ch.sdp.vibester.api.ServiceBuilder
 import ch.sdp.vibester.api.LyricsOVHApiInterface
 import ch.sdp.vibester.model.Lyric
 import retrofit2.Call
@@ -30,7 +31,7 @@ class LyricTemporary: AppCompatActivity() {
         textViewLyric.movementMethod = ScrollingMovementMethod()
 
         btnValidate.setOnClickListener {
-            val service = LyricsOVHApiInterface.create(baseUrl)
+            val service =  ServiceBuilder.buildService(baseUrl,LyricsOVHApiInterface::class.java)
 
             val call = service.getLyrics(artistName.text.toString(), trackName.text.toString())
             call.enqueue(object: Callback<Lyric>{

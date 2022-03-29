@@ -9,7 +9,6 @@ import org.json.JSONObject
  * Mainly, it creates a list of songs in the form Pair("$songName", "$artistName")
  * @param jsonMeta: Lastfm fetched data
  */
-
 class SongList(jsonMeta: String, method: String) {
     private val BY_TAG = "tag.gettoptracks"
     private val BY_CHART = "chart.gettoptracks"
@@ -55,9 +54,8 @@ class SongList(jsonMeta: String, method: String) {
         while(i < songsLength) {
             val songObj = nonFilteredSongs.getJSONObject(i)
             val songName = songObj.getString("name").lowercase()
-
             val artistDetails = songObj.getJSONObject("artist")
-            val artistName = artistDetails.getString("name")
+            val artistName = artistDetails.getString("name").lowercase()
             songList.add(Pair("$songName", "$artistName"))
             ++i
         }
@@ -73,7 +71,7 @@ class SongList(jsonMeta: String, method: String) {
 
     /**
      * Getter that return shuffled song list
-     * @return MutableList<String> of type "$artistName $songName"
+     * @return MutableList<Pair<String,String>> of type Pair("$songName", "$artistName")
      */
     fun getShuffledSongList(): MutableList<Pair<String, String>> {
         return songList.asSequence().shuffled().toMutableList()

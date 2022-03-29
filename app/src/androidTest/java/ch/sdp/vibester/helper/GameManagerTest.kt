@@ -26,7 +26,7 @@ class GameManagerTest {
     @Test
     fun getGameSongListCorrect(){
         val gameManager = setGameManager()
-        assertEquals(gameManager.getSongList()[0],"monday imagine dragons")
+        assertEquals(gameManager.getSongList()[0],Pair("monday","imagine dragons"))
     }
 
     @Test

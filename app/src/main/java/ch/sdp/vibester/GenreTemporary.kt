@@ -6,13 +6,11 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.activity.TypingGameActivity
+import ch.sdp.vibester.api.ServiceBuilder
 import ch.sdp.vibester.api.LastfmApiInterface
 import ch.sdp.vibester.api.LastfmUri
 import ch.sdp.vibester.helper.GameManager
-import ch.sdp.vibester.model.Lyric
 import com.google.gson.Gson
-import okhttp3.ResponseBody
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -24,6 +22,7 @@ class GenreTemporary : AppCompatActivity() {
     private val BY_TAG = "tag.gettoptracks"
     private val BY_CHART = "chart.gettoptracks"
     private val BY_ARTIST = "artist.gettoptracks"
+    private val baseurl = "https://ws.audioscrobbler.com/2.0/"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +36,7 @@ class GenreTemporary : AppCompatActivity() {
      */
     fun performQuery(uri:LastfmUri){
 
-        val service = LastfmApiInterface.create()
+        val service = ServiceBuilder.buildService(baseurl, LastfmApiInterface::class.java)
         val call = service.getSongList(uri.convertToHashmap())
         call.enqueue(object: Callback<Object> {
             override fun onFailure(call: Call<Object>, t: Throwable?) {}
@@ -49,7 +48,8 @@ class GenreTemporary : AppCompatActivity() {
             }
         })
     }
-    fun switchToGame(response: String, method:String){
+
+    fun switchToGame(response: String, method: String) {
         val gameManager = GameManager()
         gameManager.setGameSongList(response, method)
         val newIntent = Intent(this, TypingGameActivity::class.java)

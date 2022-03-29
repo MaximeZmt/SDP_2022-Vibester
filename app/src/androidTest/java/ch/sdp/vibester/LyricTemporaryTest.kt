@@ -9,6 +9,7 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import ch.sdp.vibester.api.LyricsOVHApiInterface
+import ch.sdp.vibester.api.ServiceBuilder
 import org.hamcrest.CoreMatchers.containsString
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
@@ -17,7 +18,7 @@ import org.junit.Test
 class LyricTemporaryTest {
     @Test
     fun canGetLyricsFromAPI() {
-        val service = LyricsOVHApiInterface.create("https://api.lyrics.ovh/")
+        val service = ServiceBuilder.buildService("https://api.lyrics.ovh/", LyricsOVHApiInterface::class.java)
         val lyric = service.getLyrics("Imagine Dragons", "Believer").execute()
         //Adding a replace because sometimes the api put some additional text
         assertThat(

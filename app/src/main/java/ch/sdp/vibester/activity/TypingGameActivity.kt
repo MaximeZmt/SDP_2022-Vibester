@@ -143,7 +143,7 @@ class TypingGameActivity : AppCompatActivity() {
     }
 
     /**
-     * Print Toast message to announce the user if he wons or not
+     * announce if the player won or not
      */
     private fun hasWon(ctx: Context, score:Int, hasWon: Boolean, itwas: Song){
         if(hasWon){

@@ -18,6 +18,7 @@ import ch.sdp.vibester.EndBasicGameTemporary
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.BitmapGetterApi
 import ch.sdp.vibester.api.ItunesMusicApi
+import ch.sdp.vibester.helper.DisplayContents
 import ch.sdp.vibester.helper.GameManager
 import ch.sdp.vibester.model.Song
 import kotlinx.coroutines.CoroutineScope
@@ -36,16 +37,6 @@ class TypingGameActivity : AppCompatActivity() {
     private  var runnable: Runnable? = null
     private lateinit var gameManager: GameManager
         companion object {
-            /**
-             * Generate the border for a box
-             */
-            fun borderGen(ctx: Context): GradientDrawable {
-                val border = GradientDrawable()
-                border.setColor(getColor(ctx, R.color.maximum_yellow_red)) //white background
-                border.setStroke(1, -0x1000000)
-                return border
-            }
-
             /**
              * Generate spaces widget programmatically
              */
@@ -173,7 +164,7 @@ class TypingGameActivity : AppCompatActivity() {
      */
     fun guess(song: Song, guessLayout: LinearLayout, ctx: Context, gameManager: GameManager): FrameLayout{
         val frameLay = FrameLayout(ctx)
-        frameLay.background = borderGen(ctx)
+        frameLay.background = DisplayContents.borderGen(ctx, R.color.maximum_yellow_red)
 
         // Horizontal Linear Layout to put Images and Text next one another
         val linLay = LinearLayout(ctx)

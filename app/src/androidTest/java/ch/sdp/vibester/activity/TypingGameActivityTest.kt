@@ -61,14 +61,6 @@ class TypingGameActivityTest{
         Intents.release()
     }
 
-
-    @Test
-    fun borderGenTest(){
-        val ctx = ApplicationProvider.getApplicationContext() as Context
-        val border = TypingGameActivity.borderGen(ctx)
-        assertEquals(getColor(ctx, R.color.maximum_yellow_red), border.color?.defaultColor)
-    }
-
     @Test
     fun spaceGenTest(){
         val height = 10

@@ -11,10 +11,8 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.GrantPermissionRule
 import ch.sdp.vibester.R
-import ch.sdp.vibester.api.LyricsOVHApiInterface
+import org.hamcrest.CoreMatchers.containsString
 
-import org.hamcrest.CoreMatchers.equalTo
-import org.hamcrest.MatcherAssert.assertThat
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -23,6 +21,70 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class LyricsBelongGameActivityTest {
+    private val sleepTime: Long = 5000
+    private val songName = "Thunder"
+    private val artistName = "Imagine Dragons"
+    private val speechInput = "Just a young gun with a quick fuse"
+    private val lyrics = "Just a young gun with a quick fuse\n" +
+            "I was uptight, wanna let loose\n" +
+            "I was dreaming of bigger things in\n" +
+            "And wanna leave my own life behind\n" +
+            "Not a yes sir, not a follower\n" +
+            "Fit the box, fit the mold\n" +
+            "Have a seat in the foyer, take a number\n" +
+            "I was lightning before the thunder\n" +
+            "Thunder, thunder\n" +
+            "Thunder, thun-, thunder\n" +
+            "Thun-thun-thunder, thunder, thunder\n" +
+            "Thunder, thun-, thunder\n" +
+            "Thun-thun-thunder, thunder\n" +
+            "Thunder, feel the thunder\n" +
+            "Lightning and the thunder\n" +
+            "Thunder, feel the thunder\n" +
+            "Lightning and the thunder\n" +
+            "Thunder, thunder\n" +
+            "Thunder\n" +
+
+            "Kids were laughing in my classes\n" +
+            "While I was scheming for the masses\n" +
+            "Who do you think you are?\n" +
+            "Dreaming 'bout being a big star\n" +
+            "You say you're basic, you say you're easy\n" +
+            "You're always riding in the back seat\n" +
+            "Now I'm smiling from the stage while\n" +
+            "You were clapping in the nose bleeds\n" +
+
+            "Thunder, thunder\n" +
+            "Thunder, thun-, thunder\n" +
+            "Thun-thun-thunder, thunder, thunder\n" +
+            "Thunder, thun-, thunder\n" +
+            "Thun-thun-thunder, thunder\n" +
+
+            "Thunder, feel the thunder\n" +
+            "Lightning and the thunder\n" +
+            "Thunder, feel the thunder\n" +
+            "Lightning and the thunder\n" +
+            "Thunder\n" +
+            "Thunder, feel the thunder\n" +
+            "Lightning and the thunder, thunder\n" +
+
+            "Thunder, feel the thunder\n" +
+            "Lightning and the thunder, thunder\n" +
+            "Thunder, feel the thunder\n" +
+            "Lightning and the thunder, thunder\n" +
+            "Thunder, feel the thunder\n" +
+            "Lightning and the thunder, thunder\n" +
+            "Thunder, feel the thunder (feel the)\n" +
+            "Lightning and the thunder, thunder\n" +
+
+            "Thunder, thun-, thunder\n" +
+            "Thun-thun-thunder, thunder\n" +
+            "Thunder, thun-, thunder\n" +
+            "Thun-thun-thunder, thunder\n" +
+            "Thunder, thun-, thunder\n" +
+            "Thun-thun-thunder, thunder\n" +
+            "Thunder, thun-, thunder\n" +
+            "Thun-thun-thunder, thunder"
 
     @get: Rule
     val activityRule = ActivityScenarioRule(LyricsBelongGameActivity::class.java)
@@ -42,73 +104,14 @@ class LyricsBelongGameActivityTest {
     }
 
     @Test
-    fun getLyricsFromAPICorrectly() {
-        val service = LyricsOVHApiInterface.create()
-        val lyric = service.getLyrics("Imagine Dragons", "Thunder").execute()
-
-        assertThat(
-            lyric.body().lyrics?.replace("\n", "")?.replace("\r", ""),
-            equalTo(("Just a young gun with a quick fuse\n" +
-                    "I was uptight, wanna let loose\n" +
-                    "I was dreaming of bigger things in\n" +
-                    "And wanna leave my own life behind\n" +
-                    "Not a yes sir, not a follower\n" +
-                    "Fit the box, fit the mold\n" +
-                    "Have a seat in the foyer, take a number\n" +
-                    "I was lightning before the thunder\n" +
-                    "Thunder, thunder\n" +
-                    "Thunder, thun-, thunder\n" +
-                    "Thun-thun-thunder, thunder, thunder\n" +
-                    "Thunder, thun-, thunder\n" +
-                    "Thun-thun-thunder, thunder\n" +
-                    "Thunder, feel the thunder\n" +
-                    "Lightning and the thunder\n" +
-                    "Thunder, feel the thunder\n" +
-                    "Lightning and the thunder\n" +
-                    "Thunder, thunder\n" +
-                    "Thunder\n" +
-
-                    "Kids were laughing in my classes\n" +
-                    "While I was scheming for the masses\n" +
-                    "Who do you think you are?\n" +
-                    "Dreaming 'bout being a big star\n" +
-                    "You say you're basic, you say you're easy\n" +
-                    "You're always riding in the back seat\n" +
-                    "Now I'm smiling from the stage while\n" +
-                    "You were clapping in the nose bleeds\n" +
-
-                    "Thunder, thunder\n" +
-                    "Thunder, thun-, thunder\n" +
-                    "Thun-thun-thunder, thunder, thunder\n" +
-                    "Thunder, thun-, thunder\n" +
-                    "Thun-thun-thunder, thunder\n" +
-
-                    "Thunder, feel the thunder\n" +
-                    "Lightning and the thunder\n" +
-                    "Thunder, feel the thunder\n" +
-                    "Lightning and the thunder\n" +
-                    "Thunder\n" +
-                    "Thunder, feel the thunder\n" +
-                    "Lightning and the thunder, thunder\n" +
-
-                    "Thunder, feel the thunder\n" +
-                    "Lightning and the thunder, thunder\n" +
-                    "Thunder, feel the thunder\n" +
-                    "Lightning and the thunder, thunder\n" +
-                    "Thunder, feel the thunder\n" +
-                    "Lightning and the thunder, thunder\n" +
-                    "Thunder, feel the thunder (feel the)\n" +
-                    "Lightning and the thunder, thunder\n" +
-
-                    "Thunder, thun-, thunder\n" +
-                    "Thun-thun-thunder, thunder\n" +
-                    "Thunder, thun-, thunder\n" +
-                    "Thun-thun-thunder, thunder\n" +
-                    "Thunder, thun-, thunder\n" +
-                    "Thun-thun-thunder, thunder\n" +
-                    "Thunder, thun-, thunder\n" +
-                    "Thun-thun-thunder, thunder").replace("\r", "").replace("\n", ""))
-        )
+    fun handleLyricsNoFoundCorrectly() {
+        val intent = Intent(ApplicationProvider.getApplicationContext(), LyricsBelongGameActivity::class.java)
+        val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
+        scn.onActivity { activity ->
+            activity.testGetAndCheckLyrics("the best song in the world", "Mr.Mystery", "")
+        }
+        Thread.sleep(sleepTime)
+        onView(withId(R.id.lyricMatchResult)).check(matches(withText("No lyrics found, try another song")))
     }
 
     @Test
@@ -126,9 +129,9 @@ class LyricsBelongGameActivityTest {
         val intent = Intent(ApplicationProvider.getApplicationContext(), LyricsBelongGameActivity::class.java)
         val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
         scn.onActivity { activity ->
-            activity.testCheckLyrics("Just a young gun with a quick fuse")
+            activity.testCheckLyrics(speechInput, lyrics)
         }
-        Thread.sleep(5000)
+        Thread.sleep(sleepTime)
         onView(withId(R.id.lyricMatchResult)).check(matches(withText("res: correct")))
     }
 
@@ -137,9 +140,9 @@ class LyricsBelongGameActivityTest {
         val intent = Intent(ApplicationProvider.getApplicationContext(), LyricsBelongGameActivity::class.java)
         val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
         scn.onActivity { activity ->
-            activity.testCheckLyrics("I don't remember the lyrics")
+            activity.testCheckLyrics("I don't remember the lyrics", lyrics)
         }
-        Thread.sleep(5000)
+        Thread.sleep(sleepTime)
         onView(withId(R.id.lyricMatchResult)).check(matches(withText("res: too bad")))
     }
 
@@ -153,5 +156,26 @@ class LyricsBelongGameActivityTest {
         onView(withId(R.id.lyricResult)).check(matches(withText("hey")))
     }
 
+    @Test
+    fun getAndCheckLyricsGivesCorrectAnswerWhenMatch() {
+        val intent = Intent(ApplicationProvider.getApplicationContext(), LyricsBelongGameActivity::class.java)
+        val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
+        scn.onActivity { activity ->
+            activity.testGetAndCheckLyrics(songName, artistName, speechInput)
+        }
+        Thread.sleep(sleepTime)
+        onView(withId(R.id.lyricMatchResult)).check(matches(withText("res: correct")))
+    }
+
+    @Test
+    fun fetchSongReturnsANewSong() {
+        val intent = Intent(ApplicationProvider.getApplicationContext(), LyricsBelongGameActivity::class.java)
+        val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
+        scn.onActivity { activity ->
+            activity.testFetchSong()
+        }
+        Thread.sleep(sleepTime)
+        onView(withId(R.id.lyricResult)).check(matches(withText(containsString("Say something from"))))
+    }
 
 }

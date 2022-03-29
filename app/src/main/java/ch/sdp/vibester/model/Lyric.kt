@@ -7,7 +7,7 @@ class Lyric {
     @SerializedName("lyrics")
     var lyrics: String? = null
 
-    //not used
+    //not used yet
     //@SerializedName("error")
     //var error: String? = null
 }

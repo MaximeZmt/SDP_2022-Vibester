@@ -256,7 +256,8 @@ class TypingGameActivity : AppCompatActivity() {
         val incArray: ArrayList<String> = ArrayList(gameManager.getWrongSongs().map{it.getTrackName() +" - "+ it.getArtistName()})
 
         val statNames: ArrayList<String> = arrayListOf()
-        statNames.addAll(arrayOf("Total Score", "Total Score", "Total Score", "Total Score", "Total Score"))
+        val statName = "Total Score"
+        statNames.addAll(arrayOf(statName,statName,statName,statName,statName))
 
         val statVal: ArrayList<String> = arrayListOf()
         val score = gameManager.getScore().toString()

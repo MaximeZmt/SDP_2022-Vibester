@@ -9,13 +9,11 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.Gravity
-import android.view.View
 import android.view.Window
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.getColor
 import androidx.core.widget.addTextChangedListener
-import ch.sdp.vibester.EndBasicGameTemporary
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.BitmapGetterApi
 import ch.sdp.vibester.api.ItunesMusicApi
@@ -165,6 +163,7 @@ class TypingGameActivity : AppCompatActivity() {
             hasWon(ctx, gameManager.getScore(),true,playedSong)
         }else{
             hasWon(ctx, gameManager.getScore(),false, playedSong)
+            gameManager.addWrongSong()
         }
         playRound(ctx, gameManager)
     }
@@ -248,25 +247,22 @@ class TypingGameActivity : AppCompatActivity() {
         else{
             if(runnable !=null ){
                 h.removeCallbacks(runnable!!);}
-            val i = Intent(this, EndBasicGameTemporary::class.java)
-            i.putExtra("score", gameManager.getScore().toString())
-            startActivity(i)
+            switchToEnding(gameManager)
         }
     }
 
-    private fun switchToEnding(view: View,gameManager:GameManager) {
+    private fun switchToEnding(gameManager:GameManager) {
         val intent = Intent(this, GameEndingActivity::class.java)
-        //MOCK VALUES FOR INCORRECT SONGS, ADAPT FROM GAME DATA IN THE FUTURE
-        val incArray: ArrayList<String> = arrayListOf()
-        incArray.addAll(arrayOf("One", "Two", "Three"))
+        val incArray: ArrayList<String> = ArrayList(gameManager.getWrongSongs().map{it.getTrackName() +" - "+ it.getArtistName()})
 
         val statNames: ArrayList<String> = arrayListOf()
-        statNames.addAll(arrayOf("Total Score"))
+        statNames.addAll(arrayOf("Total Score", "Total Score", "Total Score", "Total Score", "Total Score"))
 
         val statVal: ArrayList<String> = arrayListOf()
-        statVal.addAll(arrayOf(gameManager.getScore().toString()))
+        val score = gameManager.getScore().toString()
+        statVal.addAll(arrayOf(score, score, score, score, score))
 
-        intent.putExtra("nbIncorrectSong", gameManager.GAME_SIZE - gameManager.getScore())
+        intent.putExtra("nbIncorrectSong", gameManager.gameSize - gameManager.getScore())
 
         intent.putStringArrayListExtra("str_arr_inc", incArray)
         intent.putStringArrayListExtra("str_arr_name", statNames)

@@ -35,7 +35,7 @@ class SongList(jsonMeta: String) {
     }
 
     /**
-     * Converts JSONArray to the list of songs ["$songName $artistName]
+     * Converts JSONArray to the list of songs ("$songName", "$artistName")
      * @param nonFilteredSongs: JSONArray of songs from the Lastfm query
      * Saves the list of songs in songList
      */

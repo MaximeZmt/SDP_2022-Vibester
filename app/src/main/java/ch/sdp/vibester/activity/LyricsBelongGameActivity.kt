@@ -64,12 +64,9 @@ class LyricsBelongGameActivity : AppCompatActivity() {
 
     private fun fetchSong() {
         val track = LastfmHelper.getRandomSongList(LASTFM_METHOD, "english")[0]
-        // TODO: find a way to separate the song name and the artist name
-        /*val songArtist = track.split("$")
-        print(songArtist)
-        songName = songArtist[1]
-        artistName = songArtist[3]
-        findViewById<TextView>(R.id.lyricResult).text = "Say something from %s - %s".format(songName, artistName)*/
+        songName = track.first
+        artistName = track.second
+        findViewById<TextView>(R.id.lyricResult).text = "Say something from %s - %s".format(songName, artistName)
     }
 
     /**

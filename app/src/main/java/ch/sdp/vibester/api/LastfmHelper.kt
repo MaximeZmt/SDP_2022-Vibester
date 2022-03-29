@@ -22,7 +22,7 @@ class LastfmHelper {
          * Function that performs queries to two pages within given tag
          * @param method: method to retrieve songs BY_TAG or BY_CHART
          * @param tag: tag to retrieve songs. If method BY_CHART is used, tag is empty.
-         * @return list of songs in a format ("$songName $artistName")
+         * @return list of songs in a format ("$songName", "$artistName")
          */
         fun getRandomSongList(method: String, tag: String = ""): List<Pair<String, String>> {
             val firstQuery = SongList(

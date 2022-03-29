@@ -2,21 +2,14 @@ package ch.sdp.vibester.activity
 
 import android.content.Context
 import android.content.Intent
-import android.media.MediaPlayer
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getColor
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
-import androidx.test.espresso.Espresso
-import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.intent.Intents
-import androidx.test.espresso.intent.Intents.intended
-import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
-import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.ext.junit.rules.ActivityScenarioRule
-import ch.sdp.vibester.EndBasicGameTemporary
 import ch.sdp.vibester.R
 import ch.sdp.vibester.helper.GameManager
 import ch.sdp.vibester.model.Song
@@ -25,7 +18,6 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import java.util.concurrent.CompletableFuture
 
 class TypingGameActivityTest{
     private val BY_TAG = "tag.gettoptracks"

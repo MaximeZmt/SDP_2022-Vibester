@@ -44,7 +44,7 @@ class SongList(jsonMeta: String, method: String) {
     }
 
     /**
-     * Converts JSONArray to the list of songs ["$songName $artistName]
+     * Converts JSONArray to the list of songs ("$songName", "$artistName")
      * @param nonFilteredSongs: JSONArray of songs from the Lastfm query
      * Saves the list of songs in songList
      */
@@ -57,7 +57,6 @@ class SongList(jsonMeta: String, method: String) {
             val artistDetails = songObj.getJSONObject("artist")
             val artistName = artistDetails.getString("name").lowercase()
             songList.add(Pair("$songName", "$artistName"))
-
             ++i
         }
     }

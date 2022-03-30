@@ -3,4 +3,4 @@
         <solid android:color="@color/maximum_yellow_red"/>
         <corners android:radius="70px"/>
         <padding android:left="0dp" android:top="0dp" android:right="0dp" android:bottom="0dp" />
-    </shape>
+</shape>

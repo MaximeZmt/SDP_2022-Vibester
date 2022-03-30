@@ -26,7 +26,7 @@ import kotlin.random.Random
  */
 @RunWith(AndroidJUnit4::class)
 class AuthenticationActivityTest {
-    private val SLEEP_TIME:Long = 5000
+    private val SLEEP_TIME: Long = 5000
 
     @Test
     fun useAppContext() {

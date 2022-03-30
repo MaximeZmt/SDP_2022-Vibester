@@ -21,25 +21,22 @@ class GamescreenActivity: AppCompatActivity() {
         supportActionBar?.hide()
         setContentView(R.layout.activity_gamescreen)
 
-        /* number of players for the game
-            currently hardcoded as a placeholder
-            will be retrieved from intent launched from the game setup screen
-         */
-        val players = arrayOf("Kamila", "Jiabao", "Arda", "Laurynas")
+        val getIntent = intent.extras
+        val nPlayers = getIntent?.getInt("Number of players")
 
         val answer = findViewById<LinearLayout>(R.id.answer)
         val answerText = findViewById<TextView>(R.id.answerText)
+        answerText.text= "The song was Demo by The Placeholders"
 
-        // hardcoded test values
-        val song = "Demo"
-        val artist = "The Placeholders"
+        val allPoints = nPlayers?.let { Array<Int>(it, { i -> 0 }) }
 
-        answerText.text= "The song was $song by $artist"
+        val playersFull = getIntent?.getStringArray("Player Names")
+        val players = nPlayers?.let { playersFull?.copyOfRange(0, it) }
 
-        val allPoints = arrayOf(1, 2, 3, 4)
+        val buzIds = players?.let { fetchBuzIdArray(it.size) }
 
-        buildScores(players, allPoints)
-        buildBuzzers(players, answer)
+        if (players != null && allPoints != null) { buildScores(players, allPoints) }
+        if (players != null && buzIds != null) { buildBuzzers(players, buzIds, answer) }
         setAnswerButton(answer, findViewById(R.id.buttonCorrect))
         setAnswerButton(answer, findViewById(R.id.buttonWrong))
     }
@@ -78,12 +75,18 @@ class GamescreenActivity: AppCompatActivity() {
 
             i = i + 1
         }
+
+    }
+
+    private fun fetchBuzIdArray(size: Int): Array<Int> {
+        var array = arrayOf(R.id.buzzer_0, R.id.buzzer_1, R.id.buzzer_2, R.id.buzzer_3, R.id.buzzer_4, R.id.buzzer_5) // replace magic number here!
+        return array.copyOfRange(0, size) // is "size" index included or not
     }
 
     /*
     Programmatically builds the buzzers according to the number and names of players.
      */
-    private fun buildBuzzers(players: Array<String>, answer: LinearLayout) {
+    private fun buildBuzzers(players: Array<String>, buzIds: Array<Int>, answer: LinearLayout) {
 
         val buzzers = findViewById<LinearLayout>(R.id.buzzersLayout)
         val buttons = arrayOfNulls<Button>(players.size)
@@ -93,7 +96,7 @@ class GamescreenActivity: AppCompatActivity() {
         for (pName in players) {
 
             val button = Button(this)
-            button.id = i
+            button.id = buzIds[i]
             button.text = pName
             button.width = 100
             button.height = 0
@@ -142,5 +145,4 @@ class GamescreenActivity: AppCompatActivity() {
 
         startActivity(intent)
     }
-    
 }

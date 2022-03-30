@@ -28,42 +28,36 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
 
     override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
         text = parent.getItemAtPosition(position).toString()
-        updatePlayerNameVisibility(text)
+        updatePlayerNameVisibility(textToNumber(text))
 
         // update linear layout's visibility, add linear layout with certain visible number of rows
         // or just make 4 rows at first and update that later
     }
 
-    // this function WILL need refactoring
     /**
-    Updates visibility of player name entry fields according to number of players selected in the spinner
-    @Param
-    text: number of players selected in the spinner
+     * Converts the spinner text for the number of players into an Int
+     * @param
+     * text: the string to be converted
      */
-    fun updatePlayerNameVisibility(text: String) {
+    fun textToNumber(text: String): Int {
         when(text) {
-            "One" -> {
-                findViewById<EditText>(R.id.namePlayer2).visibility = android.view.View.INVISIBLE
-                findViewById<EditText>(R.id.namePlayer3).visibility = android.view.View.INVISIBLE
-                findViewById<EditText>(R.id.namePlayer4).visibility = android.view.View.INVISIBLE
-            }
-            "Two" -> {
-                findViewById<EditText>(R.id.namePlayer2).visibility = android.view.View.VISIBLE
-                findViewById<EditText>(R.id.namePlayer3).visibility = android.view.View.INVISIBLE
-                findViewById<EditText>(R.id.namePlayer4).visibility = android.view.View.INVISIBLE
-            }
-
-            "Three" -> {
-                findViewById<EditText>(R.id.namePlayer2).visibility = android.view.View.VISIBLE
-                findViewById<EditText>(R.id.namePlayer3).visibility = android.view.View.VISIBLE
-                findViewById<EditText>(R.id.namePlayer4).visibility = android.view.View.INVISIBLE
-            }
-            "Four" -> {
-                findViewById<EditText>(R.id.namePlayer2).visibility = android.view.View.VISIBLE
-                findViewById<EditText>(R.id.namePlayer3).visibility = android.view.View.VISIBLE
-                findViewById<EditText>(R.id.namePlayer4).visibility = android.view.View.VISIBLE
-            }
+            "One" -> return 1
+            "Two" -> return 2
+            "Three" -> return 3
+            "Four" -> return 4
         }
+        return 1
+    }
+
+    /**
+    * Updates visibility of player name entry fields according to number of players selected in the spinner
+    * @param
+    * n: number of players selected in the spinner
+     */
+    fun updatePlayerNameVisibility(n: Int) {
+        findViewById<EditText>(R.id.namePlayer2).visibility = if (n>=2) android.view.View.VISIBLE else android.view.View.INVISIBLE
+        findViewById<EditText>(R.id.namePlayer3).visibility = if (n>=3) android.view.View.VISIBLE else android.view.View.INVISIBLE
+        findViewById<EditText>(R.id.namePlayer4).visibility = if (n>=4) android.view.View.VISIBLE else android.view.View.INVISIBLE
     }
 
     override fun onNothingSelected(parent: AdapterView<*>) {text = "One"}

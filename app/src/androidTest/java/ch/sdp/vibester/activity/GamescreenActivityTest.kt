@@ -53,17 +53,13 @@ class GamescreenActivityTest {
 /*
     @Test
     fun clickingBuzzerMakesAnswerVisible() {
-        var i = 0
-            onView(withId(R.id.answer)).check(matches(withEffectiveVisibility(Visibility.INVISIBLE)))
-            onView(withId(R.id.buzzer_0)).perform(click())
-            onView(withId(R.id.answer)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
-            i = i + 1
-            onView(withId(R.id.buttonCorrect)).perform(click())
-
+        onView(withId(R.id.answer)).check(matches(withEffectiveVisibility(Visibility.INVISIBLE)))
+        onView(withId(R.id.buzzer_0)).perform(click()) // why does it not find the buzzer???
+        onView(withId(R.id.answer)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+        onView(withId(R.id.buttonWrong)).perform(click())
     }
-    */
 
-/*
+
     @Test
     fun clickingAnswerButtonsMakesAnswerInvisible() {
         val buttonIdArray = arrayOf(R.id.buttonCorrect, R.id.buttonWrong)
@@ -73,8 +69,7 @@ class GamescreenActivityTest {
             onView(withId(R.id.answer)).check(matches(withEffectiveVisibility(Visibility.INVISIBLE)))
         }
     }
-*/
- 
+ */
 
     /*
      * Currently testing with the *static* values. Change to *dynamic* once the game is correctly

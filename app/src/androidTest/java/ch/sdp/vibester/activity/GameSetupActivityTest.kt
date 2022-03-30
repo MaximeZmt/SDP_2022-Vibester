@@ -115,4 +115,5 @@ class GameSetupActivityTest {
         intended(hasComponent(GamescreenActivity::class.java.name))
         intended(hasExtra("Number of players", 4))
     }
+
 }

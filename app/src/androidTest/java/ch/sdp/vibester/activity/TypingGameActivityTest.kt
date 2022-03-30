@@ -57,7 +57,6 @@ class TypingGameActivityTest{
         Intents.release()
     }
 
-
     @Test
     fun borderGenTest(){
         val ctx = ApplicationProvider.getApplicationContext() as Context

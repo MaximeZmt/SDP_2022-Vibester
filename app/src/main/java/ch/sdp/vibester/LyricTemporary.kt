@@ -13,7 +13,9 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-
+/**
+ * Temporary class, will display the lyrics of the song in query
+ */
 class LyricTemporary: AppCompatActivity() {
     private val baseUrl = "https://api.lyrics.ovh/"
 
@@ -31,7 +33,7 @@ class LyricTemporary: AppCompatActivity() {
         textViewLyric.movementMethod = ScrollingMovementMethod()
 
         btnValidate.setOnClickListener {
-            val service =  ServiceBuilder.buildService(baseUrl,LyricsOVHApiInterface::class.java)
+            val service =  ServiceBuilder.buildService(baseUrl, LyricsOVHApiInterface::class.java)
 
             val call = service.getLyrics(artistName.text.toString(), trackName.text.toString())
             call.enqueue(object: Callback<Lyric>{

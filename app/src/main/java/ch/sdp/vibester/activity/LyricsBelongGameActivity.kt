@@ -22,7 +22,7 @@ import retrofit2.Response
 import java.util.*
 
 private const val REQUEST_AUDIO = 100
-private const val LASTFM_METHOD = "tag.gettoptracks"
+private const val LASTFM_METHOD = "artist.gettoptracks"
 
 /**
  * Game checks if the player say the lyrics of the given song correct
@@ -78,7 +78,7 @@ class LyricsBelongGameActivity : AppCompatActivity() {
      */
     private fun fetchSong() {
         val service = ServiceBuilder.buildService(baseUrlLastFM, LastfmApiInterface::class.java)
-        val uri = LastfmUri(method = LASTFM_METHOD, tag = "english")
+        val uri = LastfmUri(method = LASTFM_METHOD, artist = "Imagine Dragons")
         val call = service.getSongList(uri.convertToHashmap())
         call.enqueue(object: Callback<Any> {
             override fun onFailure(call: Call<Any>?, t: Throwable?) {}

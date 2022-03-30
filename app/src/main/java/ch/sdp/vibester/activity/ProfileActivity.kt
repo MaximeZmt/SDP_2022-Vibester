@@ -95,15 +95,22 @@ class ProfileActivity : AppCompatActivity() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for (dataSnapShot in dataSnapshot.children) {
                     val dbContents: Map<String, Objects> = dataSnapShot.value as Map<String, Objects>
-                    user = UserProfile(
-                        dbContents["handle"].toString(),
-                        dbContents["username"].toString(),
-                        dbContents["image"].toString(),
-                        dbContents["totalGames"].toString().toInt(),
-                        dbContents["bestScore"].toString().toInt(),
-                        dbContents["correctSongs"].toString().toInt())
-                    setupProfile(user)
-                    break
+                    if(dbContents["email"].toString().equals("jojhn@test.com")) {
+                        user = UserProfile(
+                            dbContents["handle"].toString(),
+                            dbContents["username"].toString(),
+                            dbContents["image"].toString(),
+                            dbContents["email"].toString(),
+                            dbContents["totalGames"].toString().toInt(),
+                            dbContents["bestScore"].toString().toInt(),
+                            dbContents["correctSongs"].toString().toInt()
+                        )
+                        setupProfile(user)
+                        break
+                    }
+                    else {
+                        setupProfile(UserProfile())
+                    }
                 }
             }
 

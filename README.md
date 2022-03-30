@@ -9,7 +9,7 @@
 
 ### Status
 
-![Website](https://img.shields.io/website?down_color=FE6D73&down_message=offline&label=Lyrics%20API&style=flat-square&up_color=17c3b2&up_message=online&url=https%3A%2F%2Fapi.lyrics.ovh%2Fv1%2Fimagine%2Bdragons%2Fradioactive)![Website](https://img.shields.io/website?down_color=FE6D73&down_message=offline&label=Itunes%20API&style=flat-square&up_color=17c3b2&up_message=online&url=https%3A%2F%2Fitunes.apple.com%2Fus%2Flookup%3Fid%3D1023678453)![Website](https://img.shields.io/website?down_color=FE6D73&down_message=offline&label=LastFM%20API&style=flat-square&up_color=17c3b2&up_message=online&url=https%3A%2F%2Fws.audioscrobbler.com%2F)
+![Website](https://img.shields.io/website?down_color=FE6D73&down_message=offline&label=Lyrics%20API&style=flat-square&up_color=17c3b2&up_message=online&url=https%3A%2F%2Fapi.lyrics.ovh%2Fv1%2Fimagine%2Bdragons%2Fradioactive) ![Website](https://img.shields.io/website?down_color=FE6D73&down_message=offline&label=Itunes%20API&style=flat-square&up_color=17c3b2&up_message=online&url=https%3A%2F%2Fitunes.apple.com%2Fus%2Flookup%3Fid%3D1023678453)![Website](https://img.shields.io/website?down_color=FE6D73&down_message=offline&label=LastFM%20API&style=flat-square&up_color=17c3b2&up_message=online&url=https%3A%2F%2Fws.audioscrobbler.com%2F) 
 
 
 This is the GitHub repository of our Android App Vibester!

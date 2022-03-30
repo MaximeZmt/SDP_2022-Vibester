@@ -77,7 +77,7 @@ class GameSetupActivityTest {
     fun checkIntentOnProceedDefault() { //FILLER TEST
         onView(withId(R.id.nb_players_selected)).perform(click())
         intended(hasComponent(GamescreenActivity::class.java.name))
-        intended(hasExtra("Number of players", "One"))
+        intended(hasExtra("Number of players", 1))
     }
 
     @Test
@@ -86,7 +86,7 @@ class GameSetupActivityTest {
         onData(Matchers.anything()).atPosition(0).perform(click())
         onView(withId(R.id.nb_players_selected)).perform(click())
         intended(hasComponent(GamescreenActivity::class.java.name))
-        intended(hasExtra("Number of players", "One"))
+        intended(hasExtra("Number of players", 1))
     }
 
     @Test
@@ -95,7 +95,7 @@ class GameSetupActivityTest {
         onData(Matchers.anything()).atPosition(1).perform(click())
         onView(withId(R.id.nb_players_selected)).perform(click())
         intended(hasComponent(GamescreenActivity::class.java.name))
-        intended(hasExtra("Number of players", "Two"))
+        intended(hasExtra("Number of players", 2))
     }
 
     @Test
@@ -104,7 +104,7 @@ class GameSetupActivityTest {
         onData(Matchers.anything()).atPosition(2).perform(click())
         onView(withId(R.id.nb_players_selected)).perform(click())
         intended(hasComponent(GamescreenActivity::class.java.name))
-        intended(hasExtra("Number of players", "Three"))
+        intended(hasExtra("Number of players", 3))
     }
 
     @Test
@@ -113,6 +113,7 @@ class GameSetupActivityTest {
         onData(Matchers.anything()).atPosition(3).perform(click())
         onView(withId(R.id.nb_players_selected)).perform(click())
         intended(hasComponent(GamescreenActivity::class.java.name))
-        intended(hasExtra("Number of players", "Four"))
+        intended(hasExtra("Number of players", 4))
     }
+
 }

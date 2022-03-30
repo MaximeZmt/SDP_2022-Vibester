@@ -50,4 +50,53 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nb_player_spinner"
         app:layout_constraintVertical_bias="1.0" />
+
+    <LinearLayout
+        android:id="@+id/playerNames"
+        android:layout_width="0dp"
+        android:layout_height="231dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginEnd="1dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nb_player_spinner">
+
+        <EditText
+            android:id="@+id/namePlayer1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="Name of Player 1" />
+
+        <EditText
+            android:id="@+id/namePlayer2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="Name of Player 2"
+            android:visibility="invisible"/>
+
+        <EditText
+            android:id="@+id/namePlayer3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="Name of Player 3"
+            android:visibility="invisible"/>
+
+        <EditText
+            android:id="@+id/namePlayer4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="Name of Player 4"
+            android:visibility="invisible"/>
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

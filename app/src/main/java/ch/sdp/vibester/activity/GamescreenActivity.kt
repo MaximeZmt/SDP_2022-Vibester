@@ -30,9 +30,6 @@ class GamescreenActivity: AppCompatActivity() {
         val playersFull = getIntent?.getStringArray("Player Names")
         val players = nPlayers?.let { playersFull?.copyOfRange(0, it) }
 
-        println(nPlayers)
-        print(players) // test
-
         val buzIds = players?.let { fetchBuzIdArray(it.size) }
 
         if (players != null && allPoints != null) { buildScores(players, allPoints) }
@@ -86,7 +83,6 @@ class GamescreenActivity: AppCompatActivity() {
     /*
     Programmatically builds the buzzers according to the number and names of players.
      */
-    // the correct number of buzzers are built but the names don't show up...
     private fun buildBuzzers(players: Array<String>, buzIds: Array<Int>, answer: LinearLayout) {
 
         val buzzers = findViewById<LinearLayout>(R.id.buzzersLayout)

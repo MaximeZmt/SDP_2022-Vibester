@@ -1,4 +1,6 @@
-# SDP_2022-Vibester
+![](app/src/main/res/drawable/attempt_logo3.png)
+
+# Vibester - SDP 2022
 
 ### Repository
 
@@ -26,18 +28,29 @@ The game will also offer a customization where the user can create a game from i
 
 ## Table Of Contents
 
-1. [TODO](#todo)
-2. [Guide & Useful Link](#guideAndLink)
-2. [Team](#team)
+1. [Team](#team)
+2. [Scrumboard & Weekly Meetings Logs](#devLogs)
+3. [Guide & Useful Link](#guideAndLink)
 
 
 
-## TODO <a name="todo"></a>
+## Team <a name="team"></a>
 
-- [x] Create a Github repository
-- [x] Setup all Github feature (params, ...)
-- [x] Add continuous integration
-- [ ]
+| Name             |                                     GitHub username |
+| :--------------- | --------------------------------------------------: |
+| Derin Arda Alpay |       [Tsathogguaa](https://github.com/Tsathogguaa) |
+| Kamila Babayeva  | [kamilababayeva](https://github.com/kamilababayeva) |
+| Laurynas Lopata  |     [laurislopata](https://github.com/laurislopata) |
+| Jiabao Wen       |               [jiabaow](https://github.com/jiabaow) |
+| Maxime Zammit    |           [MaximeZmt](https://github.com/MaximeZmt) |
+| Margaux Zwierski |             [zwierski](https://github.com/zwierski) |
+
+
+
+## Scrumboard & Weekly Meetings Logs <a name="devLogs"></a>
+
+- [Our Scrumboard](https://github.com/MaximeZmt/SDP_2022-Vibester/projects/1)
+- [Our Weekly Meeting](https://github.com/MaximeZmt/SDP_2022-Vibester/wiki)
 
 
 
@@ -50,13 +63,3 @@ The game will also offer a customization where the user can create a game from i
 
 
 
-## Team <a name="tean"></a>
-
-| Name | GitHub username |
-|:--------|---------:|
-| Derin Arda Alpay | [Tsathogguaa](https://github.com/Tsathogguaa) |
-| Kamila Babayeva | [kamilababayeva](https://github.com/kamilababayeva) |
-| Laurynas Lopata | [laurislopata](https://github.com/laurislopata) |
-| Jiabao Wen | [jiabaow](https://github.com/jiabaow) |
-| Maxime Zammit | [MaximeZmt](https://github.com/MaximeZmt) |
-| Margaux Zwierski | [zwierski](https://github.com/zwierski) |

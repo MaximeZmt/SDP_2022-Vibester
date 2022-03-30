@@ -19,19 +19,12 @@ class GamescreenActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_gamescreen)
 
-        // receive intent and create array of certain size
         val getIntent = intent.extras
-
         val nPlayers = getIntent?.getInt("Number of players")
 
         val answer = findViewById<LinearLayout>(R.id.answer)
         val answerText = findViewById<TextView>(R.id.answerText)
-
-        // hardcoded test values
-        val song = "Demo"
-        val artist = "The Placeholders"
-
-        answerText.text= "The song was $song by $artist"
+        answerText.text= "The song was Demo by The Placeholders"
 
         val allPoints = nPlayers?.let { Array<Int>(it, { i -> 0 }) }
 
@@ -43,19 +36,8 @@ class GamescreenActivity: AppCompatActivity() {
 
         val buzIds = players?.let { fetchBuzIdArray(it.size) }
 
-        // commented for now as the updater class has an infinite loop problem
-        //val updater = BuzzerScoreUpdater(allPoints, buzIds)
-
-        if (players != null) {
-            if (allPoints != null) {
-                buildScores(players, allPoints)
-            }
-        }
-        if (players != null) {
-            if (buzIds != null) {
-                buildBuzzers(players, buzIds, answer)
-            }
-        }
+        if (players != null && allPoints != null) { buildScores(players, allPoints) }
+        if (players != null && buzIds != null) { buildBuzzers(players, buzIds, answer) }
         setAnswerButton(answer, findViewById(R.id.buttonCorrect))
         setAnswerButton(answer, findViewById(R.id.buttonWrong))
     }

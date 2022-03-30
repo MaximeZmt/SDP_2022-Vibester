@@ -28,8 +28,9 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
 
     override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
         text = parent.getItemAtPosition(position).toString()
-        updatePlayerNameVisibility(textToNumber(text))
-
+        updatePlayerNameVisibility(textToNumber(text), R.id.namePlayer2)
+        updatePlayerNameVisibility(textToNumber(text), R.id.namePlayer3)
+        updatePlayerNameVisibility(textToNumber(text), R.id.namePlayer4)
         // update linear layout's visibility, add linear layout with certain visible number of rows
         // or just make 4 rows at first and update that later
     }
@@ -49,18 +50,23 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         return 1
     }
 
-    /**
-    * Updates visibility of player name entry fields according to number of players selected in the spinner
-    * @param
-    * n: number of players selected in the spinner
-     */
-    fun updatePlayerNameVisibility(n: Int) {
-        findViewById<EditText>(R.id.namePlayer2).visibility = if (n>=2) android.view.View.VISIBLE else android.view.View.INVISIBLE
-        findViewById<EditText>(R.id.namePlayer3).visibility = if (n>=3) android.view.View.VISIBLE else android.view.View.INVISIBLE
-        findViewById<EditText>(R.id.namePlayer4).visibility = if (n>=4) android.view.View.VISIBLE else android.view.View.INVISIBLE
-    }
-
     override fun onNothingSelected(parent: AdapterView<*>) {text = "One"}
+
+    /**
+     * Updates visibility of player name entry fields according to number of players selected in the spinner
+     * @param
+     * n: number of players selected in the spinner
+     * id: the id of the field to update
+     */
+    fun updatePlayerNameVisibility(n: Int, id: Int) {
+        var i = when(id) {
+            R.id.namePlayer2 -> 2
+            R.id.namePlayer3 -> 3
+            R.id.namePlayer4 -> 4
+            else -> 0
+        }
+        findViewById<EditText>(id).visibility = if (n>=i) android.view.View.VISIBLE else android.view.View.INVISIBLE
+    }
 
     fun proceedToGame(view: View) { //FILLER INTENT
         val intent = Intent(this, GamescreenActivity::class.java)

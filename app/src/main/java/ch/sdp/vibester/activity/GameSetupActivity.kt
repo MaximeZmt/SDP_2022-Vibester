@@ -8,6 +8,7 @@ import android.view.View.VISIBLE
 import android.view.Window
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import ch.sdp.vibester.R
 import ch.sdp.vibester.helper.DisplayContents
 
@@ -50,9 +51,9 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         val butBuzz = findViewById<Button>(R.id.local_buzzer_game_button)
         butBuzz.setOnClickListener({
             val chooseLinLay = findViewById<LinearLayout>(R.id.chooseGame)
-            val buzzereLinLay = findViewById<LinearLayout>(R.id.buzzerSetup)
+            val buzzereConsLay = findViewById<ConstraintLayout>(R.id.buzzerSetup)
             chooseLinLay.visibility = GONE
-            buzzereLinLay.visibility = VISIBLE
+            buzzereConsLay.visibility = VISIBLE
         })
     }
 

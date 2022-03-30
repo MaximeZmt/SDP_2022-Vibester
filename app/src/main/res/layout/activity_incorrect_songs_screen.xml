@@ -46,7 +46,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:onClick="switchBackToWelcome"
-        android:backgroundTint="@color/cg_blue"
         android:text="@string/game_end__go_back"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

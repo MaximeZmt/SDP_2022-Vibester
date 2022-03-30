@@ -179,7 +179,6 @@
         android:layout_marginTop="44dp"
         android:onClick="goToIncorrectlyGuessedSongs"
         android:text="@string/game_end__view_incorrect_songs"
-        android:backgroundTint="@color/cg_blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"

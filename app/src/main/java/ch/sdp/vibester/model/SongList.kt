@@ -57,7 +57,6 @@ class SongList(jsonMeta: String, method: String) {
             val artistDetails = songObj.getJSONObject("artist")
             val artistName = artistDetails.getString("name").lowercase()
             songList.add(Pair("$songName", "$artistName"))
-
             ++i
         }
     }

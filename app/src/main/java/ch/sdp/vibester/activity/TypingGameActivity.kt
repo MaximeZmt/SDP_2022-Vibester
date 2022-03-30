@@ -14,7 +14,6 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.getColor
 import androidx.core.widget.addTextChangedListener
-import ch.sdp.vibester.EndBasicGameTemporary
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.BitmapGetterApi
 import ch.sdp.vibester.api.ItunesMusicApi
@@ -164,6 +163,7 @@ class TypingGameActivity : AppCompatActivity() {
             hasWon(ctx, gameManager.getScore(),true,playedSong)
         }else{
             hasWon(ctx, gameManager.getScore(),false, playedSong)
+            gameManager.addWrongSong()
         }
         playRound(ctx, gameManager)
     }
@@ -235,6 +235,7 @@ class TypingGameActivity : AppCompatActivity() {
      * Function to set a new round. It includes reinitializing activity elements,
      * and setting new song for the round.
      */
+
      fun playRound(ctx: Context, gameManager: GameManager){
         if(gameManager.checkGameStatus() && gameManager.setNextSong()){
             findViewById<LinearLayout>(R.id.displayGuess).removeAllViews()
@@ -246,9 +247,28 @@ class TypingGameActivity : AppCompatActivity() {
         else{
             if(runnable !=null ){
                 h.removeCallbacks(runnable!!);}
-            val i = Intent(this, EndBasicGameTemporary::class.java)
-            i.putExtra("score", gameManager.getScore().toString())
-            startActivity(i)
+            switchToEnding(gameManager)
         }
+    }
+
+    private fun switchToEnding(gameManager:GameManager) {
+        val intent = Intent(this, GameEndingActivity::class.java)
+        val incArray: ArrayList<String> = ArrayList(gameManager.getWrongSongs().map{it.getTrackName() +" - "+ it.getArtistName()})
+
+        val statNames: ArrayList<String> = arrayListOf()
+        val statName = "Total Score"
+        statNames.addAll(arrayOf(statName,statName,statName,statName,statName))
+
+        val statVal: ArrayList<String> = arrayListOf()
+        val score = gameManager.getScore().toString()
+        statVal.addAll(arrayOf(score, score, score, score, score))
+
+        intent.putExtra("nbIncorrectSong", gameManager.gameSize - gameManager.getScore())
+
+        intent.putStringArrayListExtra("str_arr_inc", incArray)
+        intent.putStringArrayListExtra("str_arr_name", statNames)
+        intent.putStringArrayListExtra("str_arr_val", statVal)
+
+        startActivity(intent)
     }
 }

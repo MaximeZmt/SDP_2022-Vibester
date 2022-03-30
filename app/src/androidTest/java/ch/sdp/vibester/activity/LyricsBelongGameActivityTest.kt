@@ -1,6 +1,7 @@
 package ch.sdp.vibester.activity
 
 import android.content.Intent
+import androidx.test.espresso.action.ViewActions.click
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
@@ -168,13 +169,10 @@ class LyricsBelongGameActivityTest {
     }
 
     @Test
-    fun fetchSongReturnsANewSong() {
-        val intent = Intent(ApplicationProvider.getApplicationContext(), LyricsBelongGameActivity::class.java)
-        val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
-        scn.onActivity { activity ->
-            activity.testFetchSong()
-        }
+    fun nextBtnShouldClearResultAndFetchNewSong() {
+        onView(withId(R.id.nextSongButton)).perform(click())
         Thread.sleep(sleepTime)
+        onView(withId(R.id.lyricMatchResult)).check(matches(withText("result will show here")))
         onView(withId(R.id.lyricResult)).check(matches(withText(containsString("Say something from"))))
     }
 

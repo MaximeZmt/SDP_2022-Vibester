@@ -52,6 +52,7 @@ class LyricsBelongGameActivity : AppCompatActivity() {
 
         val btnNext = findViewById<Button>(R.id.nextSongButton)
         btnNext.setOnClickListener {
+            clearResult()
             fetchSong()
         }
     }
@@ -132,6 +133,10 @@ class LyricsBelongGameActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.lyricMatchResult).text = if (lyrics.contains(lyricToBeCheck, ignoreCase = true)) "res: correct" else "res: too bad"
     }
 
+    private fun clearResult() {
+        findViewById<TextView>(R.id.lyricMatchResult).text = "result will show here"
+    }
+
     // helper functions to test private functions
     fun testCheckLyrics(lyricToBeCheck: String, lyrics: String) {
         checkLyrics(lyricToBeCheck, lyrics)
@@ -143,9 +148,5 @@ class LyricsBelongGameActivity : AppCompatActivity() {
 
     fun testGetAndCheckLyrics(songName: String, artistName: String, speechInput: String) {
         getAndCheckLyrics(songName, artistName, speechInput)
-    }
-
-    fun testFetchSong() {
-        fetchSong()
     }
 }

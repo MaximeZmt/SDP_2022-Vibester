@@ -9,7 +9,6 @@ import android.widget.LinearLayout
 import android.widget.TableRow
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import ch.sdp.vibester.BuzzerScoreUpdater
 import ch.sdp.vibester.R
 
 

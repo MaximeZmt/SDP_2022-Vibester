@@ -27,10 +27,10 @@
         android:id="@+id/end_stat_table"
         android:layout_width="350dp"
         android:layout_height="353dp"
-        android:layout_marginStart="28dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/table_shape"
         android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/end_player_name">
 

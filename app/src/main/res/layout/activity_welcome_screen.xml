@@ -16,7 +16,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/attempt_logo3" />
+        app:srcCompat="@drawable/logo" />
 
     <ScrollView
         android:layout_width="468dp"

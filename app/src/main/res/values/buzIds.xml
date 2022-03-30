@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="buzzer_0" type="id"/>
+    <item name="buzzer_1" type="id"/>
+    <item name="buzzer_2" type="id"/>
+    <item name="buzzer_3" type="id"/>
+    <item name="buzzer_4" type="id"/>
+    <item name="buzzer_5" type="id"/>
+</resources>

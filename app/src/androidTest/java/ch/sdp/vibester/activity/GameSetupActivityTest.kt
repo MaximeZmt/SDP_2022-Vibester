@@ -1,7 +1,6 @@
 package ch.sdp.vibester.activity
 
-import android.widget.AdapterView
-import androidx.test.core.app.ApplicationProvider
+
 import androidx.test.espresso.Espresso.onData
 import androidx.test.espresso.intent.Intents
 import androidx.test.ext.junit.rules.ActivityScenarioRule

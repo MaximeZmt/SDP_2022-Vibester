@@ -1,9 +1,15 @@
 # SDP_2022-Vibester
 
-[![Maintainability](https://img.shields.io/codeclimate/maintainability/MaximeZmt/SDP_2022-Vibester?style=flat-square&logo=codeclimate&logoColor=white&color=52b2bf)](https://codeclimate.com/github/MaximeZmt/SDP_2022-Vibester/maintainability)
-[![Test Coverage](https://img.shields.io/codeclimate/coverage/MaximeZmt/SDP_2022-Vibester?style=flat-square&logo=codeclimate&logoColor=white&color=52b2bf)](https://codeclimate.com/github/MaximeZmt/SDP_2022-Vibester/test_coverage)
-[![Contributors](https://img.shields.io/github/contributors/MaximeZmt/SDP_2022-Vibester?style=flat-square&logo=github&logoColor=white&color=52b2bf)](https://github.com/MaximeZmt/SDP_2022-Vibester/graphs/contributors)
-[![CI](https://img.shields.io/cirrus/github/MaximeZmt/SDP_2022-Vibester?style=flat-square&logo=github&logoColor=white&color=52b2bf)](https://cirrus-ci.com/github/MaximeZmt/SDP_2022-Vibester)
+### Repository
+
+[![Maintainability](https://img.shields.io/codeclimate/maintainability/MaximeZmt/SDP_2022-Vibester?style=flat-square&logo=codeclimate&logoColor=white&color=227C9D)](https://codeclimate.com/github/MaximeZmt/SDP_2022-Vibester/maintainability)
+[![Test Coverage](https://img.shields.io/codeclimate/coverage/MaximeZmt/SDP_2022-Vibester?style=flat-square&logo=codeclimate&logoColor=white&color=227C9D)](https://codeclimate.com/github/MaximeZmt/SDP_2022-Vibester/test_coverage)
+[![Contributors](https://img.shields.io/github/contributors/MaximeZmt/SDP_2022-Vibester?style=flat-square&logo=github&logoColor=white&color=227C9D)](https://github.com/MaximeZmt/SDP_2022-Vibester/graphs/contributors)
+[![CI](https://img.shields.io/cirrus/github/MaximeZmt/SDP_2022-Vibester?style=flat-square&logo=github&logoColor=white&color=227C9D)](https://cirrus-ci.com/github/MaximeZmt/SDP_2022-Vibester)
+
+### Status
+
+![Website](https://img.shields.io/website?down_color=FE6D73&down_message=offline&label=Lyrics%20API&style=flat-square&up_color=17c3b2&up_message=online&url=https%3A%2F%2Fapi.lyrics.ovh%2Fv1%2Fimagine%2Bdragons%2Fradioactive)![Website](https://img.shields.io/website?down_color=FE6D73&down_message=offline&label=Itunes%20API&style=flat-square&up_color=17c3b2&up_message=online&url=https%3A%2F%2Fitunes.apple.com%2Fus%2Flookup%3Fid%3D1023678453)![Website](https://img.shields.io/website?down_color=FE6D73&down_message=offline&label=LastFM%20API&style=flat-square&up_color=17c3b2&up_message=online&url=https%3A%2F%2Fws.audioscrobbler.com%2F)
 
 
 This is the GitHub repository of our Android App Vibester!

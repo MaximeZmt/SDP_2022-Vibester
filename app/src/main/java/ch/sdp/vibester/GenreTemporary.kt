@@ -22,7 +22,7 @@ class GenreTemporary : AppCompatActivity() {
     private val BY_TAG = "tag.gettoptracks"
     private val BY_CHART = "chart.gettoptracks"
     private val BY_ARTIST = "artist.gettoptracks"
-    private val baseurl = "https://ws.audioscrobbler.com/2.0/"
+    private val baseUrl = "https://ws.audioscrobbler.com/2.0/"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +34,7 @@ class GenreTemporary : AppCompatActivity() {
      */
     fun performQuery(uri:LastfmUri){
 
-        val service = ServiceBuilder.buildService(baseurl, LastfmApiInterface::class.java)
+        val service = ServiceBuilder.buildService(baseUrl, LastfmApiInterface::class.java)
         val call = service.getSongList(uri.convertToHashmap())
         call.enqueue(object: Callback<Any> {
             override fun onFailure(call: Call<Any>, t: Throwable?) {}

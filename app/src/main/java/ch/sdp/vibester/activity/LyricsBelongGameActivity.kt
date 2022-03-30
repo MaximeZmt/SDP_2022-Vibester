@@ -105,7 +105,7 @@ class LyricsBelongGameActivity : AppCompatActivity() {
      * get the lyrics of a given song
      */
     private fun getAndCheckLyrics(songName: String, artistName: String, speechInput: String) {
-        val service = ServiceBuilder.buildService(baseUrlLyrics,LyricsOVHApiInterface::class.java)
+        val service = ServiceBuilder.buildService(baseUrlLyrics, LyricsOVHApiInterface::class.java)
         val call = service.getLyrics(artistName, songName)
         call.enqueue(object: Callback<Lyric> {
             override fun onFailure(call: Call<Lyric>?, t: Throwable?) {}

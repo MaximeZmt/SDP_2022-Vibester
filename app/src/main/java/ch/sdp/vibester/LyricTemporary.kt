@@ -13,7 +13,9 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-
+/**
+ * Temporary class, will display the lyrics of the song in query
+ */
 class LyricTemporary: AppCompatActivity() {
     private val baseUrl = "https://api.lyrics.ovh/"
 

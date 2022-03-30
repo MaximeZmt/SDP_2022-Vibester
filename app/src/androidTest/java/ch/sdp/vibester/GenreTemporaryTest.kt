@@ -46,7 +46,7 @@ class GenreTemporaryTest {
         onView(withId(R.id.imagDragonsButton)).check(matches(isDisplayed()))
         onView(withId(R.id.billieEilishButton)).check(matches(isDisplayed()))
     }
-
+    
     @Test
     fun rockButtonClick() {
         onView(withId(R.id.rockButton)).perform(click())
@@ -57,6 +57,7 @@ class GenreTemporaryTest {
     fun topButtonClick() {
         onView(withId(R.id.topTracksButton)).perform(click())
         Thread.sleep(SLEEP_TIME)
+
         intended(hasComponent(TypingGameActivity::class.java.getName()))
     }
 

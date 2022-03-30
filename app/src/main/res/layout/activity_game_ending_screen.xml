@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FF00E0"
+    android:background="@color/floral_white"
     tools:context=".activity.GameEndingActivity">
 
     <TextView
@@ -153,9 +153,10 @@
         android:id="@+id/end_go_to_inc"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="44dp"
         android:onClick="goToIncorrectlyGuessedSongs"
         android:text="@string/game_end__view_incorrect_songs"
+        android:backgroundTint="@color/cg_blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"

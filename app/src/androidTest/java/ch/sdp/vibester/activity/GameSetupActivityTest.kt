@@ -8,6 +8,7 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.action.ViewActions.scrollTo
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.intent.matcher.IntentMatchers.*
@@ -47,7 +48,7 @@ class GameSetupActivityTest {
 
     @Test
     fun checkCustomSelectOne() {
-        onView(withId(R.id.local_buzzer_game_button)).perform(click())
+        onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
         onView(withId(R.id.nb_player_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(0).perform(click())
         onView(withId(R.id.nb_player_spinner)).check(matches(withSpinnerText("One")))
@@ -55,7 +56,7 @@ class GameSetupActivityTest {
 
     @Test
     fun checkCustomSelectTwo() {
-        onView(withId(R.id.local_buzzer_game_button)).perform(click())
+        onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
         onView(withId(R.id.nb_player_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(1).perform(click())
         onView(withId(R.id.nb_player_spinner)).check(matches(withSpinnerText("Two")))
@@ -63,7 +64,7 @@ class GameSetupActivityTest {
 
     @Test
     fun checkCustomSelectThree() {
-        onView(withId(R.id.local_buzzer_game_button)).perform(click())
+        onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
         onView(withId(R.id.nb_player_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(2).perform(click())
         onView(withId(R.id.nb_player_spinner)).check(matches(withSpinnerText("Three")))
@@ -71,7 +72,7 @@ class GameSetupActivityTest {
 
     @Test
     fun checkCustomSelectFour() {
-        onView(withId(R.id.local_buzzer_game_button)).perform(click())
+        onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
         onView(withId(R.id.nb_player_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(3).perform(click())
         onView(withId(R.id.nb_player_spinner)).check(matches(withSpinnerText("Four")))
@@ -79,7 +80,7 @@ class GameSetupActivityTest {
 
     @Test
     fun checkIntentOnProceedDefault() { //FILLER TEST
-        onView(withId(R.id.local_buzzer_game_button)).perform(click())
+        onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
         onView(withId(R.id.nb_players_selected)).perform(click())
         intended(hasComponent(GamescreenActivity::class.java.name))
         intended(hasExtra("Number of players", "One"))
@@ -87,7 +88,7 @@ class GameSetupActivityTest {
 
     @Test
     fun checkIntentOnProceedOne() { //FILLER TEST
-        onView(withId(R.id.local_buzzer_game_button)).perform(click())
+        onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
         onView(withId(R.id.nb_player_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(0).perform(click())
         onView(withId(R.id.nb_players_selected)).perform(click())
@@ -97,7 +98,7 @@ class GameSetupActivityTest {
 
     @Test
     fun checkIntentOnProceedTwo() { //FILLER TEST
-        onView(withId(R.id.local_buzzer_game_button)).perform(click())
+        onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
         onView(withId(R.id.nb_player_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(1).perform(click())
         onView(withId(R.id.nb_players_selected)).perform(click())
@@ -107,7 +108,7 @@ class GameSetupActivityTest {
 
     @Test
     fun checkIntentOnProceedThree() { //FILLER TEST
-        onView(withId(R.id.local_buzzer_game_button)).perform(click())
+        onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
         onView(withId(R.id.nb_player_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(2).perform(click())
         onView(withId(R.id.nb_players_selected)).perform(click())
@@ -117,7 +118,7 @@ class GameSetupActivityTest {
 
     @Test
     fun checkIntentOnProceedFour() { //FILLER TEST
-        onView(withId(R.id.local_buzzer_game_button)).perform(click())
+        onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
         onView(withId(R.id.nb_player_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(3).perform(click())
         onView(withId(R.id.nb_players_selected)).perform(click())

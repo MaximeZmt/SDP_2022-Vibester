@@ -22,13 +22,13 @@ import retrofit2.Response
 import java.util.*
 
 
-private const val REQUEST_AUDIO = 100
-private const val LASTFM_METHOD = "artist.gettoptracks"
+
 
 /**
  * Game checks if the player say the lyrics of the given song correct
  */
 class LyricsBelongGameActivity : AppCompatActivity() {
+    private val LASTFM_METHOD = "artist.gettoptracks"
     private val REQUEST_AUDIO = 100
     private lateinit var speechInput : String
     private val baseUrlLyrics = "https://api.lyrics.ovh/"

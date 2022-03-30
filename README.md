@@ -1,4 +1,4 @@
-![](app/src/main/res/drawable/attempt_logo3.png)
+<div align="center"> <img src="app/src/main/res/drawable/logo.png" align=center></img> </div>
 
 # Vibester - SDP 2022
 

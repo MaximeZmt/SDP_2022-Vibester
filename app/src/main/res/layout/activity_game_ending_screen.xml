@@ -9,12 +9,15 @@
 
     <TextView
         android:id="@+id/end_player_name"
-        android:layout_width="185dp"
-        android:layout_height="36dp"
+        android:layout_width="251dp"
+        android:layout_height="52dp"
         android:layout_marginTop="16dp"
-        android:fontFamily="casual"
+        android:fontFamily="monospace"
         android:text="@string/game_end__player_name"
         android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,7 +28,7 @@
         android:layout_width="350dp"
         android:layout_height="353dp"
         android:layout_marginStart="28dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/table_shape"
         android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
@@ -39,19 +42,23 @@
                 android:id="@+id/end_stat1"
                 android:layout_width="175dp"
                 android:layout_height="70dp"
-                android:fontFamily="casual"
+                android:fontFamily="monospace"
                 android:gravity="center_horizontal|center_vertical"
                 android:text="@string/game_end__stat_1"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/end_stat1_res"
                 android:layout_width="175dp"
                 android:layout_height="70dp"
-                android:fontFamily="casual"
+                android:fontFamily="monospace"
                 android:gravity="center_horizontal|center_vertical"
                 android:text="@string/game_end__stat_1_result"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
         </TableRow>
 
         <TableRow
@@ -62,19 +69,23 @@
                 android:id="@+id/end_stat2"
                 android:layout_width="175dp"
                 android:layout_height="70dp"
-                android:fontFamily="casual"
+                android:fontFamily="monospace"
                 android:gravity="center_horizontal|center_vertical"
                 android:text="@string/game_end__stat_2"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/end_stat2_res"
                 android:layout_width="175dp"
                 android:layout_height="70dp"
-                android:fontFamily="casual"
+                android:fontFamily="monospace"
                 android:gravity="center_horizontal|center_vertical"
                 android:text="@string/game_end__stat_2_result"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
         </TableRow>
 
         <TableRow
@@ -85,19 +96,23 @@
                 android:id="@+id/end_stat3"
                 android:layout_width="175dp"
                 android:layout_height="70dp"
-                android:fontFamily="casual"
+                android:fontFamily="monospace"
                 android:gravity="center_horizontal|center_vertical"
                 android:text="@string/game_end__stat_3"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/end_stat3_res"
                 android:layout_width="175dp"
                 android:layout_height="70dp"
-                android:fontFamily="casual"
+                android:fontFamily="monospace"
                 android:gravity="center_horizontal|center_vertical"
                 android:text="@string/game_end__stat_3_result"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
         </TableRow>
 
         <TableRow
@@ -108,19 +123,23 @@
                 android:id="@+id/end_stat4"
                 android:layout_width="175dp"
                 android:layout_height="70dp"
-                android:fontFamily="casual"
+                android:fontFamily="monospace"
                 android:gravity="center"
                 android:text="@string/game_end__stat_4"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/end_stat4_res"
                 android:layout_width="175dp"
                 android:layout_height="70dp"
-                android:fontFamily="casual"
+                android:fontFamily="monospace"
                 android:gravity="center"
                 android:text="@string/game_end__stat_4_result"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
 
         </TableRow>
 
@@ -132,19 +151,23 @@
                 android:id="@+id/end_stat5"
                 android:layout_width="175dp"
                 android:layout_height="70dp"
-                android:fontFamily="casual"
+                android:fontFamily="monospace"
                 android:gravity="center"
                 android:text="@string/game_end__stat_5"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/end_stat5_res"
                 android:layout_width="175dp"
                 android:layout_height="70dp"
-                android:fontFamily="casual"
+                android:fontFamily="monospace"
                 android:gravity="center"
                 android:text="@string/game_end__stat_5_result"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
         </TableRow>
 
     </TableLayout>

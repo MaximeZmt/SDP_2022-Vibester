@@ -81,7 +81,7 @@ class GameSetupActivityTest {
     @Test
     fun checkIntentOnProceedDefault() { //FILLER TEST
         onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
-        onView(withId(R.id.nb_players_selected)).perform(click())
+        onView(withId(R.id.nb_players_selected)).perform(scrollTo(), click())
         intended(hasComponent(GamescreenActivity::class.java.name))
         intended(hasExtra("Number of players", "One"))
     }
@@ -91,7 +91,7 @@ class GameSetupActivityTest {
         onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
         onView(withId(R.id.nb_player_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(0).perform(click())
-        onView(withId(R.id.nb_players_selected)).perform(click())
+        onView(withId(R.id.nb_players_selected)).perform(scrollTo(), click())
         intended(hasComponent(GamescreenActivity::class.java.name))
         intended(hasExtra("Number of players", "One"))
     }
@@ -101,7 +101,7 @@ class GameSetupActivityTest {
         onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
         onView(withId(R.id.nb_player_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(1).perform(click())
-        onView(withId(R.id.nb_players_selected)).perform(click())
+        onView(withId(R.id.nb_players_selected)).perform(scrollTo(), click())
         intended(hasComponent(GamescreenActivity::class.java.name))
         intended(hasExtra("Number of players", "Two"))
     }
@@ -111,7 +111,7 @@ class GameSetupActivityTest {
         onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
         onView(withId(R.id.nb_player_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(2).perform(click())
-        onView(withId(R.id.nb_players_selected)).perform(click())
+        onView(withId(R.id.nb_players_selected)).perform(scrollTo(), click())
         intended(hasComponent(GamescreenActivity::class.java.name))
         intended(hasExtra("Number of players", "Three"))
     }
@@ -121,7 +121,7 @@ class GameSetupActivityTest {
         onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
         onView(withId(R.id.nb_player_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(3).perform(click())
-        onView(withId(R.id.nb_players_selected)).perform(click())
+        onView(withId(R.id.nb_players_selected)).perform(scrollTo(), click())
         intended(hasComponent(GamescreenActivity::class.java.name))
         intended(hasExtra("Number of players", "Four"))
     }

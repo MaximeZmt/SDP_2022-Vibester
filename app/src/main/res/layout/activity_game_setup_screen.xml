@@ -282,7 +282,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
                 android:fontFeatureSettings="smcp"
-                android:text="@string/game_setup__ask_difficulty"
+                android:text="@string/game_setup_ask_difficulty"
                 android:textAlignment="center"
                 android:textSize="30sp"
                 android:textStyle="bold"

@@ -21,9 +21,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
 
-
-
-
 /**
  * Game checks if the player say the lyrics of the given song correct
  */
@@ -31,8 +28,6 @@ class LyricsBelongGameActivity : AppCompatActivity() {
     private val LASTFM_METHOD = "artist.gettoptracks"
     private val REQUEST_AUDIO = 100
     private lateinit var speechInput : String
-    private val baseUrlLyrics = "https://api.lyrics.ovh/"
-    private val baseUrlLastFM = "https://ws.audioscrobbler.com/2.0/"
     private lateinit var lyrics : String
     private var songName = "Thunder"
     private var artistName = "Imagine Dragons"
@@ -79,7 +74,7 @@ class LyricsBelongGameActivity : AppCompatActivity() {
      * fetch a song randomly for the game
      */
     private fun fetchSong() {
-        val service = ServiceBuilder.buildService(baseUrlLastFM, LastfmApiInterface::class.java)
+        val service = LastfmApiInterface.createLastfmService()
         val uri = LastfmUri(method = LASTFM_METHOD, artist = "Imagine Dragons")
         val call = service.getSongList(uri.convertToHashmap())
         call.enqueue(object: Callback<Any> {
@@ -108,7 +103,7 @@ class LyricsBelongGameActivity : AppCompatActivity() {
      * get the lyrics of a given song
      */
     private fun getAndCheckLyrics(songName: String, artistName: String, speechInput: String) {
-        val service = ServiceBuilder.buildService(baseUrlLyrics, LyricsOVHApiInterface::class.java)
+        val service = LyricsOVHApiInterface.createLyricService()
         val call = service.getLyrics(artistName, songName)
         call.enqueue(object: Callback<Lyric> {
             override fun onFailure(call: Call<Lyric>?, t: Throwable?) {}

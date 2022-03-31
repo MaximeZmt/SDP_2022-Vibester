@@ -17,4 +17,10 @@ interface LastfmApiInterface {
      */
     @GET("https://ws.audioscrobbler.com/2.0/")
     fun getSongList(@QueryMap paramsMap: MutableMap<String, String>): Call<Any>;
+
+    companion object {
+        fun createLastfmService(): LastfmApiInterface {
+            return ServiceBuilder.buildService("https://ws.audioscrobbler.com/2.0/", LastfmApiInterface::class.java)
+        }
+    }
 }

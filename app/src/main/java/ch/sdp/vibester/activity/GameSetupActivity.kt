@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.children
 import ch.sdp.vibester.R
-import ch.sdp.vibester.helper.DisplayContents
 
 class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     var text = "One"
@@ -98,12 +97,12 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
 
     private fun chooseGameSetupListener(){
         val butBuzz = findViewById<Button>(R.id.local_buzzer_game_button)
-        butBuzz.setOnClickListener({
+        butBuzz.setOnClickListener {
             val chooseLinLay = findViewById<LinearLayout>(R.id.chooseGame)
-            val buzzereConsLay = findViewById<ConstraintLayout>(R.id.buzzerSetup)
+            val buzzerConsLay = findViewById<ConstraintLayout>(R.id.buzzerSetup)
             chooseLinLay.visibility = GONE
-            buzzereConsLay.visibility = VISIBLE
-        })
+            buzzerConsLay.visibility = VISIBLE
+        }
     }
 
 }

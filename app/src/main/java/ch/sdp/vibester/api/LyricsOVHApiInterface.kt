@@ -15,7 +15,10 @@ interface LyricsOVHApiInterface {
 
     companion object {
         fun createLyricService(): LyricsOVHApiInterface {
-            return ServiceBuilder.buildService("https://api.lyrics.ovh/", LyricsOVHApiInterface::class.java)
+            return ServiceBuilder.buildService(
+                "https://api.lyrics.ovh/",
+                LyricsOVHApiInterface::class.java
+            )
         }
     }
 }

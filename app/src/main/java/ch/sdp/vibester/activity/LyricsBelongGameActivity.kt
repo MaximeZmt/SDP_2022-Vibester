@@ -9,7 +9,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.R
-import ch.sdp.vibester.api.*
+import ch.sdp.vibester.api.LastfmApiInterface
+import ch.sdp.vibester.api.LastfmMethod
+import ch.sdp.vibester.api.LastfmUri
+import ch.sdp.vibester.api.LyricsOVHApiInterface
 import ch.sdp.vibester.model.Lyric
 import ch.sdp.vibester.model.SongList
 import com.google.gson.Gson
@@ -23,8 +26,8 @@ import java.util.*
  */
 class LyricsBelongGameActivity : AppCompatActivity() {
     private val REQUEST_AUDIO = 100
-    private lateinit var speechInput : String
-    private lateinit var lyrics : String
+    private lateinit var speechInput: String
+    private lateinit var lyrics: String
     private var songName = "Thunder"
     private var artistName = "Imagine Dragons"
 
@@ -52,7 +55,10 @@ class LyricsBelongGameActivity : AppCompatActivity() {
 
     private fun getSpeechInput() {
         val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+        intent.putExtra(
+            RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+            RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
+        )
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
         startActivityForResult(intent, REQUEST_AUDIO)
     }
@@ -73,14 +79,18 @@ class LyricsBelongGameActivity : AppCompatActivity() {
         val service = LastfmApiInterface.createLastfmService()
         val uri = LastfmUri(method = LastfmMethod.BY_ARTIST.method, artist = "Imagine Dragons")
         val call = service.getSongList(uri.convertToHashmap())
-        call.enqueue(object: Callback<Any> {
+        call.enqueue(object : Callback<Any> {
             override fun onFailure(call: Call<Any>?, t: Throwable?) {}
             override fun onResponse(call: Call<Any>?, response: Response<Any>?) {
                 if (response != null) {
-                    val track = SongList(Gson().toJson(response.body()), uri.method).getShuffledSongList()[0]
+                    val track = SongList(
+                        Gson().toJson(response.body()),
+                        uri.method
+                    ).getShuffledSongList()[0]
                     songName = track.first
                     artistName = track.second
-                    findViewById<TextView>(R.id.lyricResult).text = "Say something from %s - %s".format(songName, artistName)
+                    findViewById<TextView>(R.id.lyricResult).text =
+                        "Say something from %s - %s".format(songName, artistName)
                 }
             }
         })
@@ -101,7 +111,7 @@ class LyricsBelongGameActivity : AppCompatActivity() {
     private fun getAndCheckLyrics(songName: String, artistName: String, speechInput: String) {
         val service = LyricsOVHApiInterface.createLyricService()
         val call = service.getLyrics(artistName, songName)
-        call.enqueue(object: Callback<Lyric> {
+        call.enqueue(object : Callback<Lyric> {
             override fun onFailure(call: Call<Lyric>?, t: Throwable?) {}
 
             override fun onResponse(call: Call<Lyric>?, response: Response<Lyric>?) {
@@ -110,9 +120,13 @@ class LyricsBelongGameActivity : AppCompatActivity() {
                     val result = response.body()
                     if (response.isSuccessful && result != null) {
                         lyrics = result.lyrics.toString().replace(",", "")
-                        checkLyrics(speechInput, lyrics) // be sure the lyrics is ready when checking
+                        checkLyrics(
+                            speechInput,
+                            lyrics
+                        ) // be sure the lyrics is ready when checking
                     } else {
-                        findViewById<TextView>(R.id.lyricMatchResult).text = "No lyrics found, try another song"
+                        findViewById<TextView>(R.id.lyricMatchResult).text =
+                            "No lyrics found, try another song"
                     }
                 }
             }
@@ -123,7 +137,11 @@ class LyricsBelongGameActivity : AppCompatActivity() {
      * show the result of lyrics matching
      */
     private fun checkLyrics(lyricToBeCheck: String, lyrics: String) {
-        findViewById<TextView>(R.id.lyricMatchResult).text = if (lyrics.contains(lyricToBeCheck, ignoreCase = true)) "res: correct" else "res: too bad"
+        findViewById<TextView>(R.id.lyricMatchResult).text = if (lyrics.contains(
+                lyricToBeCheck,
+                ignoreCase = true
+            )
+        ) "res: correct" else "res: too bad"
     }
 
     private fun clearResult() {

@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.activity.TypingGameActivity
-import ch.sdp.vibester.api.ServiceBuilder
 import ch.sdp.vibester.api.LastfmApiInterface
 import ch.sdp.vibester.api.LastfmMethod
 import ch.sdp.vibester.api.LastfmUri
@@ -29,11 +28,11 @@ class GenreTemporary : AppCompatActivity() {
     /**
      * Fetch data from Lastfm and show song list in a ListView
      */
-    fun performQuery(uri:LastfmUri){
+    private fun performQuery(uri: LastfmUri) {
 
         val service = LastfmApiInterface.createLastfmService()
         val call = service.getSongList(uri.convertToHashmap())
-        call.enqueue(object: Callback<Any> {
+        call.enqueue(object : Callback<Any> {
             override fun onFailure(call: Call<Any>, t: Throwable?) {}
 
             override fun onResponse(call: Call<Any>, response: Response<Any>) {
@@ -71,7 +70,7 @@ class GenreTemporary : AppCompatActivity() {
         performQuery(LastfmUri(method = LastfmMethod.BY_TAG.method, tag = "kpop"))
     }
 
-    fun playBillieEilish(view: View){
+    fun playBillieEilish(view: View) {
         performQuery(LastfmUri(method = LastfmMethod.BY_ARTIST.method, artist = "Billie Eilish"))
     }
 

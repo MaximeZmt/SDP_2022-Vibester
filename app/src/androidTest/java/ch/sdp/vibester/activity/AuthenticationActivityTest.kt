@@ -26,7 +26,7 @@ import kotlin.random.Random
  */
 @RunWith(AndroidJUnit4::class)
 class AuthenticationActivityTest {
-    private val SLEEP_TIME: Long = 5000
+    private val sleepTime: Long = 5000
 
     @Test
     fun useAppContext() {
@@ -47,7 +47,7 @@ class AuthenticationActivityTest {
         onView(withId(R.id.username)).perform(ViewActions.typeText(username), closeSoftKeyboard())
         onView(withId(R.id.password)).perform(ViewActions.typeText(password), closeSoftKeyboard())
         onView(withId(R.id.logIn)).perform(click())
-        Thread.sleep(SLEEP_TIME)
+        Thread.sleep(sleepTime)
         onView(withId(R.id.email)).check(matches(withText("Authentication error")))
     }
 
@@ -58,7 +58,7 @@ class AuthenticationActivityTest {
         onView(withId(R.id.username)).perform(ViewActions.typeText(username), closeSoftKeyboard())
         onView(withId(R.id.password)).perform(ViewActions.typeText(password), closeSoftKeyboard())
         onView(withId(R.id.createAcc)).perform(click())
-        Thread.sleep(SLEEP_TIME)
+        Thread.sleep(sleepTime)
         onView(withId(R.id.email)).check(matches(withText("Authentication error")))
     }
 
@@ -97,14 +97,14 @@ class AuthenticationActivityTest {
     @Test
     fun derinTest() {
         val a = FireBaseAuthenticator()
-        a.googleActivityResult(-1,-1,null)
+        a.googleActivityResult(-1, -1, null)
         onView(withId(R.id.email)).check(matches(withText("TextView")))
     }
 
     @Test
     fun ardaTest() {
         val a = FireBaseAuthenticator()
-        a.googleActivityResult(1000,-1,null)
+        a.googleActivityResult(1000, -1, null)
         onView(withId(R.id.email)).check(matches(withText("TextView")))
     }
 
@@ -115,7 +115,7 @@ class AuthenticationActivityTest {
         onView(withId(R.id.username)).perform(ViewActions.typeText(username), closeSoftKeyboard())
         onView(withId(R.id.password)).perform(ViewActions.typeText(password), closeSoftKeyboard())
         onView(withId(R.id.logIn)).perform(click())
-        Thread.sleep(SLEEP_TIME)
+        Thread.sleep(sleepTime)
         onView(withId(R.id.email)).check(matches(withText("john@test.com")))
     }
 
@@ -127,7 +127,7 @@ class AuthenticationActivityTest {
         onView(withId(R.id.username)).perform(ViewActions.typeText(username), closeSoftKeyboard())
         onView(withId(R.id.password)).perform(ViewActions.typeText(password), closeSoftKeyboard())
         onView(withId(R.id.createAcc)).perform(click())
-        Thread.sleep(SLEEP_TIME)
+        Thread.sleep(sleepTime)
         onView(withId(R.id.email)).check(matches(withText(randomInt.toString().plus("@gg.com"))))
     }
 

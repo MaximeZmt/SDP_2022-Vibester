@@ -18,7 +18,7 @@ import org.junit.Test
 class LyricTemporaryTest {
     @Test
     fun canGetLyricsFromAPI() {
-        val service = ServiceBuilder.buildService("https://api.lyrics.ovh/", LyricsOVHApiInterface::class.java)
+        val service = LyricsOVHApiInterface.createLyricService()
         val lyric = service.getLyrics("Imagine Dragons", "Believer").execute()
         //Adding a replace because sometimes the api put some additional text
         assertThat(

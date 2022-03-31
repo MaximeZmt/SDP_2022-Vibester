@@ -9,10 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.R
-import ch.sdp.vibester.api.LastfmApiInterface
-import ch.sdp.vibester.api.LastfmUri
-import ch.sdp.vibester.api.LyricsOVHApiInterface
-import ch.sdp.vibester.api.ServiceBuilder
+import ch.sdp.vibester.api.*
 import ch.sdp.vibester.model.Lyric
 import ch.sdp.vibester.model.SongList
 import com.google.gson.Gson
@@ -25,7 +22,6 @@ import java.util.*
  * Game checks if the player say the lyrics of the given song correct
  */
 class LyricsBelongGameActivity : AppCompatActivity() {
-    private val LASTFM_METHOD = "artist.gettoptracks"
     private val REQUEST_AUDIO = 100
     private lateinit var speechInput : String
     private lateinit var lyrics : String
@@ -75,7 +71,7 @@ class LyricsBelongGameActivity : AppCompatActivity() {
      */
     private fun fetchSong() {
         val service = LastfmApiInterface.createLastfmService()
-        val uri = LastfmUri(method = LASTFM_METHOD, artist = "Imagine Dragons")
+        val uri = LastfmUri(method = LastfmMethod.BY_ARTIST.method, artist = "Imagine Dragons")
         val call = service.getSongList(uri.convertToHashmap())
         call.enqueue(object: Callback<Any> {
             override fun onFailure(call: Call<Any>?, t: Throwable?) {}

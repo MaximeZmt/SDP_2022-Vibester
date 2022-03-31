@@ -20,7 +20,7 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class GenreTemporaryTest {
-    private val SLEEP_TIME:Long = 2500
+    private val SLEEP_TIME: Long = 2500
 
     @get:Rule
     val testRule = ActivityScenarioRule(

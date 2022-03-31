@@ -1,8 +1,8 @@
 package ch.sdp.vibester.api
 
 data class LastfmUri (
-    val method:String="",
-    val format:String="json",
+    val method: String="",
+    val format: String="json",
     val tag: String = "",
     val page: String = "1",
     var limit: String = "100",
@@ -23,4 +23,10 @@ data class LastfmUri (
         paramsMap["artist"] = artist
         return paramsMap
     }
+}
+
+enum class LastfmMethod(val method: String) {
+    BY_TAG("tag.gettoptracks"),
+    BY_CHART("chart.gettoptracks"),
+    BY_ARTIST("artist.gettoptracks")
 }

@@ -69,7 +69,7 @@ class GamescreenActivityTest {
             onView(withId(R.id.answer)).check(matches(withEffectiveVisibility(Visibility.INVISIBLE)))
         }
     }
- */
+*/
 
     /*
      * Currently testing with the *static* values. Change to *dynamic* once the game is correctly

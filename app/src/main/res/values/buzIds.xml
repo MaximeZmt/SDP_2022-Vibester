@@ -4,6 +4,9 @@
     <item name="buzzer_1" type="id"/>
     <item name="buzzer_2" type="id"/>
     <item name="buzzer_3" type="id"/>
-    <item name="buzzer_4" type="id"/>
-    <item name="buzzer_5" type="id"/>
+
+    <item name="row_0" type="id"/>
+    <item name="row_1" type="id"/>
+    <item name="row_2" type="id"/>
+    <item name="row_3" type="id"/>
 </resources>

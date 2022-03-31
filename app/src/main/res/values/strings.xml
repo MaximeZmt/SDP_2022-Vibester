@@ -27,6 +27,10 @@
     <string name="createAcc">Create Account</string>
     <string name="logIn">Log in</string>
     <string name="logInGoogle">Log in with Google</string>
+    <string name="emptyField">Empty email or password</string>
+    <string name="notAnEmail">Not an email</string>
+    <string name="shortPassword">Password has to be at least 6 symbols</string>
+    Password has to be at least 6 symbols
 
     <string name="game_end__player_name">Player Name Here</string>
     <string name="game_end__show_stats">Here are your stats!</string>

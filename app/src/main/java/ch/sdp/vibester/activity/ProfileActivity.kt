@@ -15,12 +15,9 @@ import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.BitmapGetterApi
 import ch.sdp.vibester.profile.UserProfile
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.database
+import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.database.ktx.database
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -28,9 +25,8 @@ import kotlinx.coroutines.launch
 import java.util.*
 
 class ProfileActivity : AppCompatActivity() {
-    private val EXTRA_ID = "userProfile"
-
     private var database: FirebaseDatabase = Firebase.database("https://vibester-sdp-default-rtdb.europe-west1.firebasedatabase.app")
+    private lateinit var databaseRef: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +35,9 @@ class ProfileActivity : AppCompatActivity() {
         supportActionBar?.hide()
 
         setContentView(R.layout.activity_profile)
-        queryDatabase()
+        var email = intent.getStringExtra("email").toString()
+
+        queryDatabase(email)
 
         val editUsername = findViewById<Button>(R.id.editUser)
         val editHandle = findViewById<Button>(R.id.editHandle)
@@ -51,6 +49,8 @@ class ProfileActivity : AppCompatActivity() {
         editHandle.setOnClickListener {
             showGeneralDialog(R.id.handle, "handle")
         }
+
+        databaseRef = database.reference
     }
 
     /**
@@ -59,9 +59,10 @@ class ProfileActivity : AppCompatActivity() {
      * @param hint hint of the text in the dialog
      * @param id id of the dialog
      * @param textId id of the text in the dialog
+     * @param name of the dialog
      */
 
-    private fun showDialog(title: String, hint: String, id: Int, textId: Int) {
+    private fun showDialog(title: String, hint: String, id: Int, textId: Int, name: String) {
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
         builder.setTitle(title)
 
@@ -73,6 +74,10 @@ class ProfileActivity : AppCompatActivity() {
         builder.setView(input)
         builder.setPositiveButton("OK", DialogInterface.OnClickListener { _, _ ->
             findViewById<TextView>(textId).text = input.text.toString()
+            databaseRef.child("users")
+                .child("-Myfy9TlCUTWYRxVLBsQ") //For now ID is hardcoded, will generate it creating new users next week
+                .child(name)
+                .setValue(input.text.toString())
         })
         builder.setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }
         builder.show()
@@ -85,29 +90,37 @@ class ProfileActivity : AppCompatActivity() {
         val title = "Create $name"
         val hint = "Enter new $name"
 
-        showDialog(title, hint, 0, id)
+        showDialog(title, hint, 0, id, name)
     }
 
     /**
      * A function that queries the database and fetched the correct user
      * Hard coded for now
      */
-    private fun queryDatabase() {
+
+    private fun queryDatabase(email: String) {
         var user: UserProfile
         val userRef = database.getReference("users")
         userRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for (dataSnapShot in dataSnapshot.children) {
                     val dbContents: Map<String, Objects> = dataSnapShot.value as Map<String, Objects>
-                    user = UserProfile(
-                        dbContents["handle"].toString(),
-                        dbContents["username"].toString(),
-                        dbContents["image"].toString(),
-                        dbContents["totalGames"].toString().toInt(),
-                        dbContents["bestScore"].toString().toInt(),
-                        dbContents["correctSongs"].toString().toInt())
-                    setupProfile(user)
-                    break
+                    if(dbContents["email"].toString() == email) {
+                        user = UserProfile(
+                            dbContents["handle"].toString(),
+                            dbContents["username"].toString(),
+                            dbContents["image"].toString(),
+                            dbContents["email"].toString(),
+                            dbContents["totalGames"].toString().toInt(),
+                            dbContents["bestScore"].toString().toInt(),
+                            dbContents["correctSongs"].toString().toInt()
+                        )
+                        setupProfile(user)
+                        break
+                    }
+                    else {
+                        setupProfile(UserProfile())
+                    }
                 }
             }
 
@@ -125,14 +138,14 @@ class ProfileActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.correctSongs).text = user.correctSongs.toString()
         findViewById<TextView>(R.id.bestScore).text = user.bestScore.toString()
         findViewById<TextView>(R.id.ranking).text = user.ranking.toString()
-        CoroutineScope(Dispatchers.Main).launch {
-            val task = async(Dispatchers.IO) {
-                val bit = BitmapGetterApi.download("https://"+user.image)
-                bit.get()
-            }
-            val bm = task.await()
-            findViewById<ImageView>(R.id.avatar).setImageBitmap(bm)
-        }
+//        CoroutineScope(Dispatchers.Main).launch {
+//            val task = async(Dispatchers.IO) {
+//                val bit = BitmapGetterApi.download("https://"+user.image)
+//                bit.get()
+//            }
+//            val bm = task.await()
+//            findViewById<ImageView>(R.id.avatar).setImageBitmap(bm)
+//        }
     }
 }
 

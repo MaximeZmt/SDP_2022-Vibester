@@ -57,7 +57,7 @@
     <string name="Multiplayer">Multiplayer</string>
     <string name="game_buzzer_title">Local Buzzer</string>
     <string name="game_typing">Local Typing</string>
-    <string name="game_setup__ask_difficulty">Please choose the difficulty of your game</string>
+    <string name="game_setup_ask_difficulty">Please choose the difficulty of your game</string>
 
     <string-array name="nb_players">
         <item>One</item>

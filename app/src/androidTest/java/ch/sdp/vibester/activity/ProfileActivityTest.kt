@@ -32,16 +32,10 @@ class ProfileActivityTest {
 
     @Test
     fun checkProfileData() {
-<<<<<<< HEAD
         val inputProfile = UserProfile("@lisa", "Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8, 29, 0)
         val intent = Intent(ApplicationProvider.getApplicationContext(), ProfileActivity::class.java)
         intent.putExtra("email", inputProfile.email)
-=======
-        val inputProfile = UserProfile("@lisa", "Lalisa Bon", "bit.ly/3IUnyAF", 12, 8, 29, 0)
-        val intent =
-            Intent(ApplicationProvider.getApplicationContext(), ProfileActivity::class.java)
         intent.putExtra("userProfile", inputProfile)
->>>>>>> origin
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
         Thread.sleep(3_000)
         onView(withId(R.id.handle)).check(matches(withText(inputProfile.handle)))
@@ -53,16 +47,9 @@ class ProfileActivityTest {
 
     @Test
     fun checkProfileLayout() {
-<<<<<<< HEAD
         val inputProfile = UserProfile("@lisa", "Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8, 29, 0)
         val intent = Intent(ApplicationProvider.getApplicationContext(), ProfileActivity::class.java)
         intent.putExtra("email", inputProfile.email)
-=======
-        val inputProfile = UserProfile("@lisa", "Lalisa Bon", "bit.ly/3IUnyAF", 12, 8, 29, 0)
-        val intent =
-            Intent(ApplicationProvider.getApplicationContext(), ProfileActivity::class.java)
-        intent.putExtra("userProfile", inputProfile)
->>>>>>> origin
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
         Thread.sleep(3_000)
         onView(withId(R.id.profileStatistics)).check(matches(isDisplayed()))

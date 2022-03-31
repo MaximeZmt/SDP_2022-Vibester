@@ -107,12 +107,7 @@ class AuthenticationActivity : AppCompatActivity() {
             var auth: Task<AuthResult>
             if (creatAcc) {
                 auth = authenticator.createAccount(email, password)
-<<<<<<< HEAD
             }else {
-=======
-                //createAccount(email, password)
-            } else {
->>>>>>> origin
                 auth = authenticator.signIn(email, password)
             }
             auth.addOnCompleteListener(this) { task ->

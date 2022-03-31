@@ -104,10 +104,8 @@ class AuthenticationActivity : AppCompatActivity() {
             var auth: Task<AuthResult>
             if(creatAcc) {
                 auth = authenticator.createAccount(email, password)
-                //createAccount(email, password)
             }else {
                 auth = authenticator.signIn(email, password)
-                //signIn(email, password)
             }
                 auth.addOnCompleteListener(this) { task ->
                     onCompleteAuthentication(task)
@@ -149,6 +147,15 @@ class AuthenticationActivity : AppCompatActivity() {
     }
 
     private fun updateUI(emailText: String?) {
-        email.text = emailText
+        if (emailText != null) {
+            if('@' in emailText) {
+                val newIntent = Intent(this, ProfileActivity::class.java)
+                newIntent.putExtra("email", emailText)
+                startActivity(newIntent)
+            }
+            else {
+                email.text = emailText
+            }
+        }
     }
 }

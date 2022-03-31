@@ -5,6 +5,8 @@ import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.closeSoftKeyboard
 import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.intent.Intents
+import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
@@ -12,7 +14,9 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import ch.sdp.vibester.R
 import ch.sdp.vibester.auth.FireBaseAuthenticator
+import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -28,6 +32,15 @@ import kotlin.random.Random
 class AuthenticationActivityTest {
     private val SLEEP_TIME:Long = 5000
 
+    @Before
+    fun setUp() {
+        Intents.init()
+    }
+
+    @After
+    fun clean() {
+        Intents.release()
+    }
     @Test
     fun useAppContext() {
         // Context of the app under test.
@@ -110,13 +123,14 @@ class AuthenticationActivityTest {
 
     @Test
     fun logInCorrect() {
-        val username = "john@test.com"
+        val username = "lisa@test.com"
         val password = "password"
         onView(withId(R.id.username)).perform(ViewActions.typeText(username), closeSoftKeyboard())
         onView(withId(R.id.password)).perform(ViewActions.typeText(password), closeSoftKeyboard())
         onView(withId(R.id.logIn)).perform(click())
-        Thread.sleep(SLEEP_TIME)
-        onView(withId(R.id.email)).check(matches(withText("john@test.com")))
+        Thread.sleep(1000)
+        Intents.intended(IntentMatchers.hasComponent(ProfileActivity::class.java.name))
+        Intents.intended(IntentMatchers.hasExtra("email", username))
     }
 
     @Test
@@ -127,8 +141,9 @@ class AuthenticationActivityTest {
         onView(withId(R.id.username)).perform(ViewActions.typeText(username), closeSoftKeyboard())
         onView(withId(R.id.password)).perform(ViewActions.typeText(password), closeSoftKeyboard())
         onView(withId(R.id.createAcc)).perform(click())
-        Thread.sleep(SLEEP_TIME)
-        onView(withId(R.id.email)).check(matches(withText(randomInt.toString().plus("@gg.com"))))
+        Thread.sleep(1000)
+        Intents.intended(IntentMatchers.hasComponent(ProfileActivity::class.java.name))
+        Intents.intended(IntentMatchers.hasExtra("email", username))
     }
 
 

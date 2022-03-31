@@ -1,4 +1,5 @@
 package ch.sdp.vibester
+
 import android.content.Context
 import com.bumptech.glide.GlideBuilder
 import com.bumptech.glide.annotation.GlideModule

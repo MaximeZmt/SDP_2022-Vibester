@@ -7,7 +7,7 @@ import org.junit.Test
 import org.junit.rules.ExpectedException
 
 
-class SongTest{
+class SongTest {
 
     @Test
     fun jsonPreviewParseBasic() {
@@ -22,8 +22,10 @@ class SongTest{
 
         val mySong = Song.singleSong(inputTxt)
 
-        val previewUrl = "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/bc/71/fc/bc71fca4-e0bb-609b-5b6e-92296df7b4b6/mzaf_8907306752631175088.plus.aac.p.m4a"
-        val artworkUrl = "https://is3-ssl.mzstatic.com/image/thumb/Music115/v4/3e/04/c4/3e04c4e7-1863-34cb-e8f3-f168ae5b213e/source/100x100bb.jpg"
+        val previewUrl =
+            "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/bc/71/fc/bc71fca4-e0bb-609b-5b6e-92296df7b4b6/mzaf_8907306752631175088.plus.aac.p.m4a"
+        val artworkUrl =
+            "https://is3-ssl.mzstatic.com/image/thumb/Music115/v4/3e/04/c4/3e04c4e7-1863-34cb-e8f3-f168ae5b213e/source/100x100bb.jpg"
         val artistName = "Imagine Dragons"
         val trackName = "Monday"
 
@@ -46,8 +48,9 @@ class SongTest{
     }
 
     @Test
-    fun test(){
-        val test = Song.listSong("""
+    fun test() {
+        val test = Song.listSong(
+            """
     {
  "resultCount":13,
  "results": [
@@ -78,7 +81,8 @@ class SongTest{
 {"wrapperType":"track", "kind":"song", "artistId":358714030, "collectionId":1442220504, "trackId":1442220631, "artistName":"Imagine Dragons", "collectionName":"Man Crush Monday", "trackName":"Thunder", "collectionCensoredName":"Man Crush Monday", "trackCensoredName":"Thunder", "collectionArtistId":4035426, "collectionArtistName":"Various Artists", "artistViewUrl":"https://music.apple.com/us/artist/imagine-dragons/358714030?uo=4", "collectionViewUrl":"https://music.apple.com/us/album/thunder/1442220504?i=1442220631&uo=4", "trackViewUrl":"https://music.apple.com/us/album/thunder/1442220504?i=1442220631&uo=4", 
 "previewUrl":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview126/v4/d8/77/70/d8777065-cffe-9e87-5060-9e9f99cba15b/mzaf_16624547533184608282.plus.aac.p.m4a", "artworkUrl30":"https://is4-ssl.mzstatic.com/image/thumb/Music114/v4/56/d3/71/56d37114-9b1d-3ddd-af77-7dae4389d2d2/source/30x30bb.jpg", "artworkUrl60":"https://is4-ssl.mzstatic.com/image/thumb/Music114/v4/56/d3/71/56d37114-9b1d-3ddd-af77-7dae4389d2d2/source/60x60bb.jpg", "artworkUrl100":"https://is4-ssl.mzstatic.com/image/thumb/Music114/v4/56/d3/71/56d37114-9b1d-3ddd-af77-7dae4389d2d2/source/100x100bb.jpg", "releaseDate":"2017-04-27T12:00:00Z", "collectionExplicitness":"explicit", "trackExplicitness":"notExplicit", "discCount":1, "discNumber":1, "trackCount":23, "trackNumber":2, "trackTimeMillis":188198, "country":"USA", "currency":"USD", "primaryGenreName":"Alternative", "isStreamable":true}]
 }
-    """)
+    """
+        )
         println(test.get(0).getTrackName())
     }
 

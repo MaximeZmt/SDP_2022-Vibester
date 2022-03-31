@@ -1,6 +1,7 @@
 package ch.sdp.vibester.model
 
 //import ch.sdp.vibester.api.LastfmHelper
+import ch.sdp.vibester.api.LastfmMethod
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -10,9 +11,6 @@ import org.json.JSONObject
  * @param jsonMeta: Lastfm fetched data
  */
 class SongList(jsonMeta: String, method: String) {
-    private val BY_TAG = "tag.gettoptracks"
-    private val BY_CHART = "chart.gettoptracks"
-    private val BY_ARTIST = "artist.gettoptracks"
     private var GAME_SIZE = 100
     private var songList = mutableListOf<Pair<String, String>>()
     private var page = ""
@@ -24,8 +22,8 @@ class SongList(jsonMeta: String, method: String) {
         try {
             val jsonObj = JSONObject(jsonMeta)
             var tracksField = "tracks"
-            if(method == BY_ARTIST){
-                tracksField="toptracks"
+            if (method == LastfmMethod.BY_ARTIST.method) {
+                tracksField = "toptracks"
             }
             val jsonRes = jsonObj.getJSONObject(tracksField)
 
@@ -38,25 +36,25 @@ class SongList(jsonMeta: String, method: String) {
             totalPages = attributes.getString("totalPages")
             totalSongs = attributes.getString("total")
 
-        } catch(e: Exception){
+        } catch (e: Exception) {
             throw IllegalArgumentException("SongsList constructor, bad argument")
         }
     }
 
     /**
-     * Converts JSONArray to the list of songs ["$songName $artistName]
+     * Converts JSONArray to the list of songs ("$songName", "$artistName")
      * @param nonFilteredSongs: JSONArray of songs from the Lastfm query
      * Saves the list of songs in songList
      */
     private fun filterSongs(nonFilteredSongs: JSONArray) {
         val songsLength = nonFilteredSongs.length()
-        var  i = 0
-        while(i < songsLength) {
+        var i = 0
+        while (i < songsLength) {
             val songObj = nonFilteredSongs.getJSONObject(i)
             val songName = songObj.getString("name").lowercase()
             val artistDetails = songObj.getJSONObject("artist")
             val artistName = artistDetails.getString("name").lowercase()
-            songList.add(Pair("$songName", "$artistName"))
+            songList.add(Pair(songName, artistName))
             ++i
         }
     }
@@ -65,7 +63,7 @@ class SongList(jsonMeta: String, method: String) {
      * Getter that return songs for the given tag
      * @return MutableList<Pair<String,String>> of type Pair("$songName", "$artistName")
      */
-    fun getSongList():MutableList<Pair<String,String>>{
+    fun getSongList(): MutableList<Pair<String, String>> {
         return songList
     }
 
@@ -81,7 +79,7 @@ class SongList(jsonMeta: String, method: String) {
      * Getter that return page number from the query
      * @return String page
      */
-    fun getPage():String{
+    fun getPage(): String {
         return page
     }
 
@@ -89,7 +87,7 @@ class SongList(jsonMeta: String, method: String) {
      * Getter that return total number of songs in the tag
      * @return String totalSongs
      */
-    fun getTotalSongs():String{
+    fun getTotalSongs(): String {
         return totalSongs
     }
 
@@ -97,7 +95,7 @@ class SongList(jsonMeta: String, method: String) {
      * Getter that return the total number of pages with songs by tag
      * @return String totalPages
      */
-    fun getTotalPages():String{
+    fun getTotalPages(): String {
         return totalPages
     }
 
@@ -105,7 +103,7 @@ class SongList(jsonMeta: String, method: String) {
      * Getter that return the total number of songs in the page
      * @return String perPage
      */
-    fun getSongsPerPage():String{
+    fun getSongsPerPage(): String {
         return songsPerPage
     }
 

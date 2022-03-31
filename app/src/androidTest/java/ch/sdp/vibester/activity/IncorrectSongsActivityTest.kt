@@ -10,7 +10,8 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
-import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import ch.sdp.vibester.R
 import org.junit.After
@@ -41,18 +42,19 @@ class IncorrectSongsActivityTest {
         incArray.addAll(arrayOf("One", "Two", "Three", "Four"))
         nbInc = 4
 
-        val intent = Intent(ApplicationProvider.getApplicationContext(), IncorrectSongsActivity::class.java)
+        val intent =
+            Intent(ApplicationProvider.getApplicationContext(), IncorrectSongsActivity::class.java)
         intent.putExtra("nb_false", nbInc)
         intent.putStringArrayListExtra("str_arr_inc", incArray)
 
         val scn: ActivityScenario<IncorrectSongsActivity> = ActivityScenario.launch(intent)
 
-        if(nbInc != 0) {
+        if (nbInc != 0) {
             lateinit var layout: LinearLayout
-            scn.onActivity {
-                    activity -> layout = activity.findViewById(R.id.incorrect_songs_linear)
+            scn.onActivity { activity ->
+                layout = activity.findViewById(R.id.incorrect_songs_linear)
             }
-            for(x in 0 until nbInc) {
+            for (x in 0 until nbInc) {
                 onView(withId(layout.getChildAt(x).id)).check(matches(withText(incArray[x])))
             }
         } else {
@@ -61,7 +63,7 @@ class IncorrectSongsActivityTest {
     }
 
     @Test
-    fun checkIntentOnGoBack(){
+    fun checkIntentOnGoBack() {
         onView(withId(R.id.incorrect_songs_back_to_welcome)).perform(click())
         intended(hasComponent(WelcomeActivity::class.java.name))
     }

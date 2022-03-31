@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
+import android.view.Window
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TableRow
@@ -12,10 +13,12 @@ import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.R
 
 
-class GamescreenActivity: AppCompatActivity() {
+class GamescreenActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        requestWindowFeature(Window.FEATURE_NO_TITLE)
+        supportActionBar?.hide()
         setContentView(R.layout.activity_gamescreen)
 
         val getIntent = intent.extras
@@ -23,7 +26,7 @@ class GamescreenActivity: AppCompatActivity() {
 
         val answer = findViewById<LinearLayout>(R.id.answer)
         val answerText = findViewById<TextView>(R.id.answerText)
-        answerText.text= "The song was Demo by The Placeholders"
+        answerText.text = "The song was Demo by The Placeholders"
 
         val allPoints = nPlayers?.let { Array<Int>(it, { i -> 0 }) }
 
@@ -32,8 +35,12 @@ class GamescreenActivity: AppCompatActivity() {
 
         val buzIds = players?.let { fetchBuzIdArray(it.size) }
 
-        if (players != null && allPoints != null) { buildScores(players, allPoints) }
-        if (players != null && buzIds != null) { buildBuzzers(players, buzIds, answer) }
+        if (players != null && allPoints != null) {
+            buildScores(players, allPoints)
+        }
+        if (players != null && buzIds != null) {
+            buildBuzzers(players, buzIds, answer)
+        }
         setAnswerButton(answer, findViewById(R.id.buttonCorrect))
         setAnswerButton(answer, findViewById(R.id.buttonWrong))
     }
@@ -76,7 +83,14 @@ class GamescreenActivity: AppCompatActivity() {
     }
 
     private fun fetchBuzIdArray(size: Int): Array<Int> {
-        var array = arrayOf(R.id.buzzer_0, R.id.buzzer_1, R.id.buzzer_2, R.id.buzzer_3, R.id.buzzer_4, R.id.buzzer_5) // replace magic number here!
+        val array = arrayOf(
+            R.id.buzzer_0,
+            R.id.buzzer_1,
+            R.id.buzzer_2,
+            R.id.buzzer_3,
+            R.id.buzzer_4,
+            R.id.buzzer_5
+        ) // replace magic number here!
         return array.copyOfRange(0, size) // is "size" index included or not
     }
 
@@ -99,7 +113,7 @@ class GamescreenActivity: AppCompatActivity() {
             button.height = 0
             buttons.set(i, button)
             button.setOnClickListener {
-                answer.visibility = android.view.View.VISIBLE
+                answer.visibility = View.VISIBLE
             }
             buzzers.addView(button)
 
@@ -109,7 +123,7 @@ class GamescreenActivity: AppCompatActivity() {
 
     private fun setAnswerButton(answer: LinearLayout, button: Button) {
         button.setOnClickListener {
-            answer.visibility = android.view.View.INVISIBLE
+            answer.visibility = View.INVISIBLE
         }
     }
 
@@ -120,18 +134,26 @@ class GamescreenActivity: AppCompatActivity() {
         incArray.addAll(arrayOf("One", "Two", "Three"))
 
         val statNames: ArrayList<String> = arrayListOf()
-        statNames.addAll(arrayOf("Hello there",
-            "Second Stat",
-            "Third Stat",
-            "Fourth Stat",
-            "Fifth Stat"))
+        statNames.addAll(
+            arrayOf(
+                "Hello there",
+                "Second Stat",
+                "Third Stat",
+                "Fourth Stat",
+                "Fifth Stat"
+            )
+        )
 
         val statVal: ArrayList<String> = arrayListOf()
-        statVal.addAll(arrayOf("General Kenobi",
-            "----- *2 -----",
-            "----- *3 -----",
-            "----- *4 -----",
-            "----- *5 -----"))
+        statVal.addAll(
+            arrayOf(
+                "General Kenobi",
+                "----- *2 -----",
+                "----- *3 -----",
+                "----- *4 -----",
+                "----- *5 -----"
+            )
+        )
 
         intent.putExtra("playerName", "Arda")
         intent.putExtra("nbIncorrectSong", 3)

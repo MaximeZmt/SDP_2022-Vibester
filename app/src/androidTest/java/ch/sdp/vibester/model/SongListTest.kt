@@ -1,17 +1,17 @@
 package ch.sdp.vibester.model
 
+import ch.sdp.vibester.api.LastfmMethod
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.ExpectedException
 
 class SongListTest {
-    private val BY_TAG = "tag.gettoptracks"
 
 
     @Test
-    fun jsonPreviewParseCorrectText(){
-            val inputTxt = """
+    fun jsonPreviewParseCorrectText() {
+        val inputTxt = """
             {"tracks":
             {"track":[{"name":"Wonderwall","duration":"259","mbid":"31623cce-9717-4513-9d83-1b5d04e44f9b",
             "url":"https://www.last.fm/music/Oasis/_/Wonderwall",
@@ -24,22 +24,22 @@ class SongListTest {
             "@attr":{"rank":"1"}}],"@attr":{"tag":"british","page":"1","perPage":"1","totalPages":"66649","total":"66649"}}}
             """
 
-            val mySongsList = SongList(inputTxt, BY_TAG)
+        val mySongsList = SongList(inputTxt, LastfmMethod.BY_TAG.method)
 
-            val songName = "wonderwall"
-            val artistName = "oasis"
-            val inputSongsList = mutableListOf<Pair<String,String>>(Pair("$songName","$artistName"))
-            val page = "1"
-            val songsPerPage = "1"
-            val totalPages = "66649"
-            val totalSongs = "66649"
+        val songName = "wonderwall"
+        val artistName = "oasis"
+        val inputSongsList = mutableListOf(Pair(songName, artistName))
+        val page = "1"
+        val songsPerPage = "1"
+        val totalPages = "66649"
+        val totalSongs = "66649"
 
 
-            assertEquals(inputSongsList, mySongsList.getSongList())
-            assertEquals(page, mySongsList.getPage())
-            assertEquals(songsPerPage, mySongsList.getSongsPerPage())
-            assertEquals(totalPages, mySongsList.getTotalPages())
-            assertEquals(totalSongs, mySongsList.getTotalSongs())
+        assertEquals(inputSongsList, mySongsList.getSongList())
+        assertEquals(page, mySongsList.getPage())
+        assertEquals(songsPerPage, mySongsList.getSongsPerPage())
+        assertEquals(totalPages, mySongsList.getTotalPages())
+        assertEquals(totalSongs, mySongsList.getTotalSongs())
     }
 
     @get:Rule

@@ -59,6 +59,7 @@ class ProfileActivity : AppCompatActivity() {
      * @param hint hint of the text in the dialog
      * @param id id of the dialog
      * @param textId id of the text in the dialog
+     * @param name of the dialog
      */
 
     private fun showDialog(title: String, hint: String, id: Int, textId: Int, name: String) {
@@ -137,14 +138,14 @@ class ProfileActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.correctSongs).text = user.correctSongs.toString()
         findViewById<TextView>(R.id.bestScore).text = user.bestScore.toString()
         findViewById<TextView>(R.id.ranking).text = user.ranking.toString()
-        CoroutineScope(Dispatchers.Main).launch {
-            val task = async(Dispatchers.IO) {
-                val bit = BitmapGetterApi.download("https://"+user.image)
-                bit.get()
-            }
-            val bm = task.await()
-            findViewById<ImageView>(R.id.avatar).setImageBitmap(bm)
-        }
+//        CoroutineScope(Dispatchers.Main).launch {
+//            val task = async(Dispatchers.IO) {
+//                val bit = BitmapGetterApi.download("https://"+user.image)
+//                bit.get()
+//            }
+//            val bm = task.await()
+//            findViewById<ImageView>(R.id.avatar).setImageBitmap(bm)
+//        }
     }
 }
 

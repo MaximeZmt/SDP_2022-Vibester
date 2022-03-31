@@ -4,99 +4,272 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FF00E0"
+    android:background="@color/floral_white"
     tools:context=".activity.GameSetupActivity">
 
-    <TextView
-        android:id="@+id/getPlayerNumberText"
-        android:layout_width="325dp"
-        android:layout_height="79dp"
-        android:layout_marginTop="192dp"
-        android:layout_marginBottom="87dp"
-        android:fontFamily="casual"
-        android:text="@string/ask_nb_players"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/nb_player_spinner"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Spinner
-        android:id="@+id/nb_player_spinner"
-        android:layout_width="204dp"
-        android:layout_height="48dp"
-        android:layout_marginBottom="388dp"
-        android:entries="@array/nb_players"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/nb_players_selected"
-        android:layout_width="200dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="81dp"
-        android:layout_marginBottom="100dp"
-        android:backgroundTint="#90953D"
-        android:onClick="proceedToGame"
-        android:text="@string/proceed"
-        app:icon="@android:drawable/btn_star_big_on"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.507"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nb_player_spinner"
-        app:layout_constraintVertical_bias="1.0" />
-
     <LinearLayout
-        android:id="@+id/playerNames"
-        android:layout_width="0dp"
-        android:layout_height="231dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginEnd="1dp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nb_player_spinner">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/namePlayer1"
+        <LinearLayout
+            android:id="@+id/chooseGame"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="Name of Player 1" />
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="visible">
 
-        <EditText
-            android:id="@+id/namePlayer2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="Name of Player 2"
-            android:visibility="invisible"/>
+            <TextView
+                android:id="@+id/selectGameType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="41dp"
+                android:layout_marginTop="122dp"
+                android:layout_marginEnd="45dp"
+                android:layout_marginBottom="54dp"
+                android:fontFeatureSettings="smcp"
+                android:text="@string/holder_setup_game_type"
+                android:textAlignment="center"
+                android:textSize="30dp"
+                android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/namePlayer3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="Name of Player 3"
-            android:visibility="invisible"/>
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-        <EditText
-            android:id="@+id/namePlayer4"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/singleplayer_game_txt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/Singleplayer"
+                        android:textSize="20dp" />
+
+                    <LinearLayout
+                        android:id="@+id/horilayer_single"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <Space
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/local_typing_game_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/squared_button"
+                            android:backgroundTint="@color/cg_blue"
+                            android:elevation="10dp"
+                            android:stateListAnimator="@null"
+                            android:text="@string/game_typing"
+                            android:textColor="@color/white"
+                            android:translationZ="10dp" />
+
+                        <Space
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:visibility="gone" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/button6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/squared_button"
+                            android:backgroundTint="@color/cg_blue"
+                            android:elevation="10dp"
+                            android:stateListAnimator="@null"
+                            android:text="Button"
+                            android:textColor="@color/white"
+                            android:translationZ="10dp"
+                            android:visibility="gone" />
+
+                        <Space
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp" />
+
+                    <TextView
+                        android:id="@+id/multiplayer_game_txt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/Multiplayer"
+                        android:textSize="20dp" />
+
+                    <LinearLayout
+                        android:id="@+id/horilayer_multi"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <Space
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/local_buzzer_game_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/squared_button"
+                            android:backgroundTint="@color/cg_blue"
+                            android:elevation="10dp"
+                            android:stateListAnimator="@null"
+                            android:text="@string/game_buzzer_title"
+                            android:textColor="@color/white"
+                            android:translationZ="10dp" />
+
+                        <Space
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:visibility="gone" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/button8"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/squared_button"
+                            android:backgroundTint="@color/cg_blue"
+                            android:elevation="10dp"
+                            android:stateListAnimator="@null"
+                            android:text="Button"
+                            android:textColor="@color/white"
+                            android:translationZ="10dp"
+                            android:visibility="gone" />
+
+                        <Space
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+                    </LinearLayout>
+                </LinearLayout>
+            </ScrollView>
+
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/buzzerSetup"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="Name of Player 4"
-            android:visibility="invisible"/>
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/getPlayerNumberText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:fontFeatureSettings="smcp"
+                android:text="@string/ask_nb_players"
+                android:textAlignment="center"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Spinner
+                android:id="@+id/nb_player_spinner"
+                android:layout_width="248dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="20dp"
+                android:entries="@array/nb_players"
+                app:layout_constraintBottom_toTopOf="@+id/playerNames"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/getPlayerNumberText" />
+
+
+            <Button
+                android:id="@+id/nb_players_selected"
+                android:layout_width="256dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/cg_blue"
+                android:elevation="10dp"
+                android:onClick="proceedToGame"
+                android:stateListAnimator="@null"
+                android:text="@string/proceed"
+                android:textSize="20dp"
+                android:translationZ="10dp"
+                app:icon="@android:drawable/ic_media_play"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/playerNames" />
+
+            <LinearLayout
+                android:id="@+id/playerNames"
+                android:layout_width="0dp"
+                android:layout_height="183dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toTopOf="@+id/nb_players_selected"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/nb_player_spinner">
+
+                <EditText
+                    android:id="@+id/namePlayer1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Name of Player 1"
+                    android:inputType="textPersonName" />
+
+                <EditText
+                    android:id="@+id/namePlayer2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Name of Player 2"
+                    android:inputType="textPersonName"
+                    android:visibility="invisible" />
+
+                <EditText
+                    android:id="@+id/namePlayer3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Name of Player 3"
+                    android:inputType="textPersonName"
+                    android:visibility="invisible" />
+
+                <EditText
+                    android:id="@+id/namePlayer4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Name of Player 4"
+                    android:inputType="textPersonName"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

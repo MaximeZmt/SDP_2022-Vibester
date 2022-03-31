@@ -12,9 +12,9 @@ import retrofit2.http.QueryMap
 
 interface LastfmApiInterface {
     /**
-     * LastfmAPI call with apporpiate parameters (based on genre/artist)
-     * @return Object: Strin song list
+     * LastfmAPI call with appropriate parameters (based on genre/artist)
+     * @return Object: String song list
      */
     @GET("https://ws.audioscrobbler.com/2.0/")
-    fun getSongList(@QueryMap paramsMap: MutableMap<String, String>): Call<Object>;
+    fun getSongList(@QueryMap paramsMap: MutableMap<String, String>): Call<Any>;
 }

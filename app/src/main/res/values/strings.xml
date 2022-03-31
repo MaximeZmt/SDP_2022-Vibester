@@ -51,7 +51,12 @@
     <string name="inc_all_correct">You got every song correctly. Congrats!</string>
     <string name="editUsername">Edit Username</string>
     <string name="editHandle">Edit Handle</string>
+    <string name="holder_setup_game_type">Choose the game you want to play:</string>
 
+    <string name="Singleplayer">Singleplayer</string>
+    <string name="Multiplayer">Multiplayer</string>
+    <string name="game_buzzer_title">Local Buzzer</string>
+    <string name="game_typing">Local Typing</string>
 
     <string-array name="nb_players">
         <item>One</item>
@@ -62,4 +67,7 @@
     <string name="title_activity_fullscreen">FullscreenActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="next">Next</string>
+    <string name="check_for_correctness">Check for correctness</string>
+    <string name="result_will_show_here">result will show here</string>
 </resources>

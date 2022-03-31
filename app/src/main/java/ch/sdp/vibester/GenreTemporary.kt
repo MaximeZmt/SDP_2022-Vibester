@@ -22,7 +22,7 @@ class GenreTemporary : AppCompatActivity() {
     private val BY_TAG = "tag.gettoptracks"
     private val BY_CHART = "chart.gettoptracks"
     private val BY_ARTIST = "artist.gettoptracks"
-    private val baseurl = "https://ws.audioscrobbler.com/2.0/"
+    private val baseUrl = "https://ws.audioscrobbler.com/2.0/"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,20 +31,16 @@ class GenreTemporary : AppCompatActivity() {
 
     /**
      * Fetch data from Lastfm and show song list in a ListView
-     * @param method: BY_TAG or BY_CHART (top tracks without tag)
-     * @param tag: tag name if method BY_TAG is chosen
      */
     fun performQuery(uri:LastfmUri){
 
-        val service = ServiceBuilder.buildService(baseurl, LastfmApiInterface::class.java)
+        val service = ServiceBuilder.buildService(baseUrl, LastfmApiInterface::class.java)
         val call = service.getSongList(uri.convertToHashmap())
-        call.enqueue(object: Callback<Object> {
-            override fun onFailure(call: Call<Object>, t: Throwable?) {}
+        call.enqueue(object: Callback<Any> {
+            override fun onFailure(call: Call<Any>, t: Throwable?) {}
 
-            override fun onResponse(call: Call<Object>, response: Response<Object>) {
-                if (response != null) {
-                    switchToGame(Gson().toJson(response.body()), uri.method)
-                }
+            override fun onResponse(call: Call<Any>, response: Response<Any>) {
+                switchToGame(Gson().toJson(response.body()), uri.method)
             }
         })
     }

@@ -20,7 +20,7 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class ProfileActivityTest {
 
-    private val sleepTime: Long = 5000
+    private val sleepTime: Long = 4000
 
     @Before
     fun setUp() {

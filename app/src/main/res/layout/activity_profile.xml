@@ -167,9 +167,11 @@
 
     <Button
         android:id="@+id/editUser"
-        android:layout_width="160dp"
-        android:layout_height="43dp"
+        android:layout_width="157dp"
+        android:layout_height="58dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="14dp"
+        android:layout_marginEnd="40dp"
         android:layout_marginBottom="27dp"
         android:backgroundTint="@color/cg_blue"
         android:elevation="10dp"
@@ -178,16 +180,16 @@
         android:translationZ="10dp"
         app:layout_constraintBottom_toTopOf="@+id/profileStatistics"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.84"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/editHandle"
         app:layout_constraintTop_toBottomOf="@+id/username" />
 
     <Button
         android:id="@+id/editHandle"
-        android:layout_width="160dp"
-        android:layout_height="43dp"
+        android:layout_width="158dp"
+        android:layout_height="57dp"
         android:layout_marginStart="40dp"
         android:layout_marginTop="22dp"
+        android:layout_marginEnd="10dp"
         android:layout_marginBottom="35dp"
         android:backgroundTint="@color/cg_blue"
         android:elevation="10dp"
@@ -195,6 +197,7 @@
         android:text="@string/editHandle"
         android:translationZ="10dp"
         app:layout_constraintBottom_toTopOf="@+id/profileStatistics"
+        app:layout_constraintEnd_toStartOf="@+id/editUser"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/username" />
 

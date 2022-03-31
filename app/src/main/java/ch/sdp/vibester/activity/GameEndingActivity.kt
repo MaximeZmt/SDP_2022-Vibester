@@ -7,6 +7,7 @@ import android.view.Window
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.R
+
 /*
  * A class representing the activity which appears upon
  * completion of a game. Shows various stats.
@@ -14,8 +15,20 @@ import ch.sdp.vibester.R
 class GameEndingActivity : AppCompatActivity() {
 
     private var incorrectSongs: ArrayList<String>? = arrayListOf("Default song")
-    private var statNames: ArrayList<String>? = arrayListOf("Default name 1", "Default name 2", "Default name 3", "Default name 4", "Default name 5")
-    private var statValues: ArrayList<String>? = arrayListOf("Default value 1", "Default value 2", "Default value 3", "Default value 4", "Default value 5")
+    private var statNames: ArrayList<String>? = arrayListOf(
+        "Default name 1",
+        "Default name 2",
+        "Default name 3",
+        "Default name 4",
+        "Default name 5"
+    )
+    private var statValues: ArrayList<String>? = arrayListOf(
+        "Default value 1",
+        "Default value 2",
+        "Default value 3",
+        "Default value 4",
+        "Default value 5"
+    )
     private var nbIncorrectSongs: Int = 0
     private var playerName: String? = "Default"
 
@@ -27,23 +40,23 @@ class GameEndingActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_game_ending_screen)
 
-        if(intent.hasExtra("playerName")) {
+        if (intent.hasExtra("playerName")) {
             playerName = intent.getStringExtra("playerName")
         }
 
-        if(intent.hasExtra("nbIncorrectSong")) {
+        if (intent.hasExtra("nbIncorrectSong")) {
             nbIncorrectSongs = intent.getIntExtra("nbIncorrectSong", 0)
         }
 
-        if(intent.hasExtra("str_arr_inc")) {
+        if (intent.hasExtra("str_arr_inc")) {
             incorrectSongs = intent.getStringArrayListExtra("str_arr_inc")
         }
 
-        if(intent.hasExtra("str_arr_name")) {
+        if (intent.hasExtra("str_arr_name")) {
             statNames = intent.getStringArrayListExtra("str_arr_name")
         }
 
-        if(intent.hasExtra("str_arr_val")) {
+        if (intent.hasExtra("str_arr_val")) {
             statValues = intent.getStringArrayListExtra("str_arr_val")
         }
 

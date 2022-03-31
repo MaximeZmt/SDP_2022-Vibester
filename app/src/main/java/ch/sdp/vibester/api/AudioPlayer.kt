@@ -7,7 +7,7 @@ import java.io.IOException
 import java.util.concurrent.CompletableFuture
 
 class AudioPlayer private constructor() {
-    companion object{
+    companion object {
         /**
          * A function that given an audio stream url will play it
          * @param audioUrl Url in String pointing towards the audio stream
@@ -15,7 +15,7 @@ class AudioPlayer private constructor() {
          */
         fun playAudio(audioUrl: String): CompletableFuture<MediaPlayer> {
             val mediaFut = CompletableFuture<MediaPlayer>()
-            var mediaPlayer: MediaPlayer = MediaPlayer()
+            var mediaPlayer: MediaPlayer = MediaPlayer() // don't remove the Type
             mediaPlayer.setAudioAttributes(
                 AudioAttributes.Builder()
                     .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
@@ -28,7 +28,7 @@ class AudioPlayer private constructor() {
                     mediaPlayer.start()
                     mediaFut.complete(mediaPlayer)
                 }
-            }catch (e: IOException){
+            } catch (e: IOException) {
                 Log.e("[PlayAudio]", "Error see stacktrace")
                 mediaFut.completeExceptionally(e)
             }

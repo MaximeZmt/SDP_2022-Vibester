@@ -1,9 +1,5 @@
 package ch.sdp.vibester
 
-import org.hamcrest.CoreMatchers.equalTo
-import org.hamcrest.MatcherAssert.assertThat
-import org.junit.Test
-
 public class BuzzerScoreUpdaterTest {
 
     // FIXME: Uncomment this when the infinite loop issue in the class is fixed

@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.children
 import ch.sdp.vibester.R
-import ch.sdp.vibester.helper.DisplayContents
 
 class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     var text = "One"
@@ -29,8 +28,8 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
             this,
             R.array.nb_players,
             android.R.layout.simple_spinner_item
-        ).also {
-            adapter -> adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             spinner.adapter = adapter
             spinner.onItemSelectedListener = this
         }
@@ -51,7 +50,7 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
      * text: the string to be converted
      */
     fun textToNumber(text: String): Int {
-        when(text) {
+        when (text) {
             "One" -> return 1
             "Two" -> return 2
             "Three" -> return 3
@@ -60,7 +59,9 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         return 1
     }
 
-    override fun onNothingSelected(parent: AdapterView<*>) {text = "One"}
+    override fun onNothingSelected(parent: AdapterView<*>) {
+        text = "One"
+    }
 
     /**
      * Updates visibility of player name entry fields according to number of players selected in the spinner
@@ -69,24 +70,29 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
      * id: the id of the field to update
      */
     fun updatePlayerNameVisibility(n: Int, id: Int) {
-        var i = when(id) {
+        var i = when (id) {
             R.id.namePlayer2 -> 2
             R.id.namePlayer3 -> 3
             R.id.namePlayer4 -> 4
             else -> 0
         }
-        findViewById<EditText>(id).visibility = if (n>=i) android.view.View.VISIBLE else android.view.View.INVISIBLE
+        findViewById<EditText>(id).visibility =
+            if (n >= i) android.view.View.VISIBLE else android.view.View.INVISIBLE
     }
 
     fun proceedToGame(view: View) { //FILLER INTENT
         val intent = Intent(this, GamescreenActivity::class.java)
         //intent.putExtra("Number of players", text)
-        val players = findViewById<LinearLayout>(R.id.playerNames).children.filter { child: View -> child.visibility==android.view.View.VISIBLE }
+        val players =
+            findViewById<LinearLayout>(R.id.playerNames).children.filter { child: View -> child.visibility == android.view.View.VISIBLE }
         val pNameArray = arrayOfNulls<String>(players.count())
-        if (players.count()>0) {
+        if (players.count() > 0) {
             intent.putExtra("Number of players", players.count())
-        } else {intent.putExtra("Number of players", 1)}
-        val editTextIdArray = arrayOf(R.id.namePlayer1, R.id.namePlayer2, R.id.namePlayer3, R.id.namePlayer4)
+        } else {
+            intent.putExtra("Number of players", 1)
+        }
+        val editTextIdArray =
+            arrayOf(R.id.namePlayer1, R.id.namePlayer2, R.id.namePlayer3, R.id.namePlayer4)
         var i = 0
         for (playerView in players) {
             pNameArray[i] = findViewById<EditText>(editTextIdArray[i]).text.toString()
@@ -96,14 +102,14 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         startActivity(intent)
     }
 
-    private fun chooseGameSetupListener(){
+    private fun chooseGameSetupListener() {
         val butBuzz = findViewById<Button>(R.id.local_buzzer_game_button)
-        butBuzz.setOnClickListener({
+        butBuzz.setOnClickListener {
             val chooseLinLay = findViewById<LinearLayout>(R.id.chooseGame)
-            val buzzereConsLay = findViewById<ConstraintLayout>(R.id.buzzerSetup)
+            val buzzerConsLay = findViewById<ConstraintLayout>(R.id.buzzerSetup)
             chooseLinLay.visibility = GONE
-            buzzereConsLay.visibility = VISIBLE
-        })
+            buzzerConsLay.visibility = VISIBLE
+        }
     }
 
 }

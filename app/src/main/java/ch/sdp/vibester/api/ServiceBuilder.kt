@@ -18,7 +18,7 @@ object ServiceBuilder {
      * @return retrofit service with a connected API interface
      */
     fun <T> buildService(baseUrl: String, service: Class<T>): T {
-            return buildRetrofit(baseUrl).create(service)
-        }
+        return buildRetrofit(baseUrl).create(service)
+    }
 
 }

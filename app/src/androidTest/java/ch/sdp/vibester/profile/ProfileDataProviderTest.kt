@@ -1,9 +1,6 @@
 package ch.sdp.vibester.profile
 
 //import ch.sdp.vibester.profile.ProfileDataProvider
-import ch.sdp.vibester.profile.UserProfile
-import org.junit.Assert
-import org.junit.Test
 
 
 class ProfileDataProviderTest {
@@ -28,7 +25,6 @@ class ProfileDataProviderTest {
 //        Assert.assertEquals(finalUser.correctSongs, users[userID].correctSongs)
 //        Assert.assertEquals(finalUser.ranking, scoreboard[userID])
 //    }
-
 
 
 }

@@ -5,16 +5,13 @@ import android.content.Intent
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getColor
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
-import androidx.test.espresso.Espresso
-import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.matcher.IntentMatchers
-import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import ch.sdp.vibester.R
+import ch.sdp.vibester.api.LastfmMethod
 import ch.sdp.vibester.helper.GameManager
 import ch.sdp.vibester.model.Song
 import org.junit.After
@@ -23,8 +20,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-class TypingGameActivityTest{
-    private val BY_TAG = "tag.gettoptracks"
+class TypingGameActivityTest {
     private fun setGameManager(): GameManager {
         val managerTxt = """
             {"tracks":
@@ -38,8 +34,8 @@ class TypingGameActivityTest{
             {"#text":"https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png","size":"extralarge"}],
             "@attr":{"rank":"1"}}],"@attr":{"tag":"british","page":"1","perPage":"1","totalPages":"66649","total":"66649"}}}
             """
-        val gameManager = GameManager();
-        gameManager.setGameSongList(managerTxt, BY_TAG)
+        val gameManager = GameManager()
+        gameManager.setGameSongList(managerTxt, LastfmMethod.BY_TAG.method)
         return gameManager
     }
 
@@ -59,26 +55,30 @@ class TypingGameActivityTest{
 
 
     @Test
-    fun spaceGenTest(){
+    fun spaceGenTest() {
         val height = 10
         val width = 10
-        val spaceeeeee = TypingGameActivity.generateSpace(width, height, ApplicationProvider.getApplicationContext())
+        val spaceeeeee = TypingGameActivity.generateSpace(
+            width,
+            height,
+            ApplicationProvider.getApplicationContext()
+        )
         assertEquals(width, spaceeeeee.minimumWidth)
         assertEquals(height, spaceeeeee.minimumHeight)
     }
 
     @Test
-    fun textGenTest(){
+    fun textGenTest() {
         val txtInput = "hello"
         val ctx = ApplicationProvider.getApplicationContext() as Context
-        val mytest = TypingGameActivity.generateText(txtInput, ctx)
-        assertEquals(txtInput, mytest.text.toString())
-        assertEquals(200, mytest.minHeight)
-        assertEquals(ContextCompat.getColor(ctx, R.color.black), mytest.textColors.defaultColor)
+        val myText = TypingGameActivity.generateText(txtInput, ctx)
+        assertEquals(txtInput, myText.text.toString())
+        assertEquals(200, myText.minHeight)
+        assertEquals(ContextCompat.getColor(ctx, R.color.black), myText.textColors.defaultColor)
     }
 
     @Test
-    fun imageGenTest(){
+    fun imageGenTest() {
         val inputTxt = """
             {
                 "resultCount":1,
@@ -98,7 +98,7 @@ class TypingGameActivityTest{
     }
 
     @Test
-    fun guessLayoutTest(){
+    fun guessLayoutTest() {
         val inputTxt = """
             {
                 "resultCount":1,
@@ -108,20 +108,21 @@ class TypingGameActivityTest{
             }
             """
         val songTest = Song.singleSong(inputTxt)
-        val gameManager = setGameManager();
+        val gameManager = setGameManager()
 
         gameManager.setNextSong()
         gameManager.playSong()
         lateinit var frameLay: FrameLayout
 
-        val intent = Intent(ApplicationProvider.getApplicationContext(), TypingGameActivity::class.java)
+        val intent =
+            Intent(ApplicationProvider.getApplicationContext(), TypingGameActivity::class.java)
         // Do not put gameManager as an extra
         val scn: ActivityScenario<TypingGameActivity> = ActivityScenario.launch(intent)
         val ctx = ApplicationProvider.getApplicationContext() as Context
 
-        scn.onActivity {
-                activity -> frameLay = activity.guess(songTest, LinearLayout(ctx), ctx, gameManager)
-                frameLay.performClick()
+        scn.onActivity { activity ->
+            frameLay = activity.guess(songTest, LinearLayout(ctx), ctx, gameManager)
+            frameLay.performClick()
         }
         assertEquals(songTest.getArtistName(), gameManager.getCurrentSong().getArtistName())
         assertEquals(songTest.getTrackName(), gameManager.getCurrentSong().getTrackName())
@@ -129,7 +130,7 @@ class TypingGameActivityTest{
     }
 
     @Test
-    fun checkAnswerCorrectTest(){
+    fun checkAnswerCorrectTest() {
         val inputTxt = """
             {
                 "resultCount":1,
@@ -145,19 +146,20 @@ class TypingGameActivityTest{
         gameManager.setNextSong()
         lateinit var temp: Unit
 
-        val intent = Intent(ApplicationProvider.getApplicationContext(), TypingGameActivity::class.java)
+        val intent =
+            Intent(ApplicationProvider.getApplicationContext(), TypingGameActivity::class.java)
 
         // Do not put gameManager as an extra
         val scn: ActivityScenario<TypingGameActivity> = ActivityScenario.launch(intent)
         val ctx = ApplicationProvider.getApplicationContext() as Context
-        scn.onActivity {
-                activity -> temp  = activity.checkAnswer(ctx, songTest, gameManager)
+        scn.onActivity { activity ->
+            temp = activity.checkAnswer(ctx, songTest, gameManager)
         }
-        assertEquals(true, gameManager.getScore()==1)
+        assertEquals(true, gameManager.getScore() == 1)
     }
 
     @Test
-    fun checkAnswerWrongTest(){
+    fun checkAnswerWrongTest() {
         val inputTxt = """
             {
                 "resultCount":1,
@@ -172,14 +174,16 @@ class TypingGameActivityTest{
         gameManager.setNextSong()
         lateinit var temp: Unit
 
-        val intent = Intent(ApplicationProvider.getApplicationContext(), TypingGameActivity::class.java)
+        val intent =
+            Intent(ApplicationProvider.getApplicationContext(), TypingGameActivity::class.java)
         val scn: ActivityScenario<TypingGameActivity> = ActivityScenario.launch(intent)
         val ctx = ApplicationProvider.getApplicationContext() as Context
-        scn.onActivity {
-                activity -> temp  = activity.checkAnswer(ctx, songTest, gameManager)
+        scn.onActivity { activity ->
+            temp = activity.checkAnswer(ctx, songTest, gameManager)
         }
-        assertEquals(true, gameManager.getScore()==0)
+        assertEquals(true, gameManager.getScore() == 0)
     }
+
     /*
  * Currently testing with the *static* values. Change to *dynamic* once the game is correctly
  * implemented and all the data are being sent between activities.
@@ -202,17 +206,19 @@ class TypingGameActivityTest{
         gameManager.gameSize = 1
         lateinit var temp: Unit
 
-        val intent = Intent(ApplicationProvider.getApplicationContext(), TypingGameActivity::class.java)
+        val intent =
+            Intent(ApplicationProvider.getApplicationContext(), TypingGameActivity::class.java)
         val scn: ActivityScenario<TypingGameActivity> = ActivityScenario.launch(intent)
         val ctx = ApplicationProvider.getApplicationContext() as Context
-        scn.onActivity {
-                activity -> temp  = activity.checkAnswer(ctx, songTest, gameManager)
+        scn.onActivity { activity ->
+            temp = activity.checkAnswer(ctx, songTest, gameManager)
         }
-        val incArray: ArrayList<String> =ArrayList(gameManager.getWrongSongs().map{it.getTrackName() +" - "+ it.getArtistName()})
+        val incArray: ArrayList<String> = ArrayList(
+            gameManager.getWrongSongs().map { it.getTrackName() + " - " + it.getArtistName() })
 
         val statNames: ArrayList<String> = arrayListOf()
         val statName = "Total Score"
-        statNames.addAll(arrayOf(statName,statName,statName,statName,statName))
+        statNames.addAll(arrayOf(statName, statName, statName, statName, statName))
 
         val statVal: ArrayList<String> = arrayListOf()
         val score = gameManager.getScore().toString()

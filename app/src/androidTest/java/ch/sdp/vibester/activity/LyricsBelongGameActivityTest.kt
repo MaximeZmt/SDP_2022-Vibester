@@ -1,10 +1,10 @@
 package ch.sdp.vibester.activity
 
 import android.content.Intent
-import androidx.test.espresso.action.ViewActions.click
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.matcher.ViewMatchers.*
@@ -13,7 +13,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.GrantPermissionRule
 import ch.sdp.vibester.R
 import org.hamcrest.CoreMatchers.containsString
-
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -106,7 +105,10 @@ class LyricsBelongGameActivityTest {
 
     @Test
     fun handleLyricsNoFoundCorrectly() {
-        val intent = Intent(ApplicationProvider.getApplicationContext(), LyricsBelongGameActivity::class.java)
+        val intent = Intent(
+            ApplicationProvider.getApplicationContext(),
+            LyricsBelongGameActivity::class.java
+        )
         val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
         scn.onActivity { activity ->
             activity.testGetAndCheckLyrics("the best song in the world", "Mr.Mystery", "")
@@ -117,7 +119,10 @@ class LyricsBelongGameActivityTest {
 
     @Test
     fun btnCheckVisibleAfterSpeak() {
-        val intent = Intent(ApplicationProvider.getApplicationContext(), LyricsBelongGameActivity::class.java)
+        val intent = Intent(
+            ApplicationProvider.getApplicationContext(),
+            LyricsBelongGameActivity::class.java
+        )
         val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
         scn.onActivity { activity ->
             activity.testUpdateSpeechResult("hey")
@@ -127,7 +132,10 @@ class LyricsBelongGameActivityTest {
 
     @Test
     fun checkLyricsShouldReturnCorrect() {
-        val intent = Intent(ApplicationProvider.getApplicationContext(), LyricsBelongGameActivity::class.java)
+        val intent = Intent(
+            ApplicationProvider.getApplicationContext(),
+            LyricsBelongGameActivity::class.java
+        )
         val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
         scn.onActivity { activity ->
             activity.testCheckLyrics(speechInput, lyrics)
@@ -138,7 +146,10 @@ class LyricsBelongGameActivityTest {
 
     @Test
     fun checkLyricsShouldReturnTooBad() {
-        val intent = Intent(ApplicationProvider.getApplicationContext(), LyricsBelongGameActivity::class.java)
+        val intent = Intent(
+            ApplicationProvider.getApplicationContext(),
+            LyricsBelongGameActivity::class.java
+        )
         val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
         scn.onActivity { activity ->
             activity.testCheckLyrics("I don't remember the lyrics", lyrics)
@@ -149,7 +160,10 @@ class LyricsBelongGameActivityTest {
 
     @Test
     fun shouldUpdateSpeechFromInput() {
-        val intent = Intent(ApplicationProvider.getApplicationContext(), LyricsBelongGameActivity::class.java)
+        val intent = Intent(
+            ApplicationProvider.getApplicationContext(),
+            LyricsBelongGameActivity::class.java
+        )
         val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
         scn.onActivity { activity ->
             activity.testUpdateSpeechResult("hey")
@@ -159,7 +173,10 @@ class LyricsBelongGameActivityTest {
 
     @Test
     fun getAndCheckLyricsGivesCorrectAnswerWhenMatch() {
-        val intent = Intent(ApplicationProvider.getApplicationContext(), LyricsBelongGameActivity::class.java)
+        val intent = Intent(
+            ApplicationProvider.getApplicationContext(),
+            LyricsBelongGameActivity::class.java
+        )
         val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
         scn.onActivity { activity ->
             activity.testGetAndCheckLyrics(songName, artistName, speechInput)

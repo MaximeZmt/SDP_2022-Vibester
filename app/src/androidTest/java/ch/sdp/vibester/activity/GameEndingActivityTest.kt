@@ -48,18 +48,27 @@ class GameEndingActivityTest {
     @Test
     fun checkIntentOnCalled() {
         incArray.addAll(arrayOf("One", "Two", "Three"))
-        statNames.addAll(arrayOf("Hello there",
-            "Second Stat",
-            "Third Stat",
-            "Fourth Stat",
-            "Fifth Stat"))
-        statRes.addAll(arrayOf("General Kenobi",
-            "----- *2 -----",
-            "----- *3 -----",
-            "----- *4 -----",
-            "----- *5 -----"))
+        statNames.addAll(
+            arrayOf(
+                "Hello there",
+                "Second Stat",
+                "Third Stat",
+                "Fourth Stat",
+                "Fifth Stat"
+            )
+        )
+        statRes.addAll(
+            arrayOf(
+                "General Kenobi",
+                "----- *2 -----",
+                "----- *3 -----",
+                "----- *4 -----",
+                "----- *5 -----"
+            )
+        )
 
-        val intent = Intent(ApplicationProvider.getApplicationContext(), GameEndingActivity::class.java)
+        val intent =
+            Intent(ApplicationProvider.getApplicationContext(), GameEndingActivity::class.java)
         intent.putExtra("playerName", name)
         intent.putExtra("nbIncorrectSong", nbInc)
 
@@ -85,18 +94,27 @@ class GameEndingActivityTest {
     @Test
     fun checkIntentOnIncorrectSongs() {
         incArray.addAll(arrayOf("One", "Two", "Three"))
-        statNames.addAll(arrayOf("Hello there",
-            "Second Stat",
-            "Third Stat",
-            "Fourth Stat",
-            "Fifth Stat"))
-        statRes.addAll(arrayOf("General Kenobi",
-            "----- *2 -----",
-            "----- *3 -----",
-            "----- *4 -----",
-            "----- *5 -----"))
+        statNames.addAll(
+            arrayOf(
+                "Hello there",
+                "Second Stat",
+                "Third Stat",
+                "Fourth Stat",
+                "Fifth Stat"
+            )
+        )
+        statRes.addAll(
+            arrayOf(
+                "General Kenobi",
+                "----- *2 -----",
+                "----- *3 -----",
+                "----- *4 -----",
+                "----- *5 -----"
+            )
+        )
 
-        val intent = Intent(ApplicationProvider.getApplicationContext(), GameEndingActivity::class.java)
+        val intent =
+            Intent(ApplicationProvider.getApplicationContext(), GameEndingActivity::class.java)
         intent.putExtra("playerName", name)
         intent.putExtra("nbIncorrectSong", nbInc)
 

@@ -75,7 +75,7 @@ class AuthenticationActivity : AppCompatActivity() {
      */
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        updateUI(authenticator.googleActivityResult(requestCode, resultCode, data));
+        updateUI(authenticator.googleActivityResult(requestCode, resultCode, data))
     }
 
     /**
@@ -84,18 +84,18 @@ class AuthenticationActivity : AppCompatActivity() {
      * @param password passwprd
      * @return validity of email and password
      */
-    private fun stringValidation(username: String, password: String): Boolean{
-        if(username.isEmpty() || password.isEmpty()) {
+    private fun stringValidation(username: String, password: String): Boolean {
+        if (username.isEmpty() || password.isEmpty()) {
             email.text = "Empty email or password"
             return false
         }
 
-        if(!username.contains('@')) {
+        if (!username.contains('@')) {
             email.text = "Not an email"
             return false
         }
 
-        if(password.length < 6) {
+        if (password.length < 6) {
             email.text = "Password has to be at least 6 symbols"
             return false
         }
@@ -103,18 +103,18 @@ class AuthenticationActivity : AppCompatActivity() {
     }
 
     private fun authenticate(email: String, password: String, creatAcc: Boolean) {
-        if(stringValidation(email, password)) {
+        if (stringValidation(email, password)) {
             var auth: Task<AuthResult>
-            if(creatAcc) {
+            if (creatAcc) {
                 auth = authenticator.createAccount(email, password)
                 //createAccount(email, password)
-            }else {
+            } else {
                 auth = authenticator.signIn(email, password)
                 //signIn(email, password)
             }
-                auth.addOnCompleteListener(this) { task ->
-                    onCompleteAuthentication(task)
-                }
+            auth.addOnCompleteListener(this) { task ->
+                onCompleteAuthentication(task)
+            }
         }
     }
 
@@ -128,7 +128,7 @@ class AuthenticationActivity : AppCompatActivity() {
 
     /**
      * A function changes the UI based on the authentication result
-     * @param Authentication result
+     * @param task result
      */
     private fun onCompleteAuthentication(task: Task<AuthResult>) {
         if (task.isSuccessful) {
@@ -141,8 +141,10 @@ class AuthenticationActivity : AppCompatActivity() {
                 updateUI(user.email)
             }
         } else {
-            Toast.makeText(baseContext, "Authentication failed.",
-                Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                baseContext, "Authentication failed.",
+                Toast.LENGTH_SHORT
+            ).show()
             updateUI("Authentication error")
         }
     }

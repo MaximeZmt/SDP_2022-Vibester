@@ -5,7 +5,6 @@ import android.content.DialogInterface
 import android.os.Bundle
 import android.text.InputType
 import android.util.Log
-import android.view.Gravity
 import android.view.Window
 import android.widget.Button
 import android.widget.EditText
@@ -16,13 +15,12 @@ import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.BitmapGetterApi
 import ch.sdp.vibester.profile.UserProfile
-import com.google.firebase.ktx.Firebase
-
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -82,12 +80,7 @@ class ProfileActivity : AppCompatActivity() {
 
     /**
      * A function that displays the dialog
-     * @param title title of the dialog
-     * @param hint hint of the text in the dialog
-     * @param id id of the dialog
-     * @param textId id of the text in the dialog
      */
-
     private fun showGeneralDialog(id: Int, name: String) {
         val title = "Create $name"
         val hint = "Enter new $name"
@@ -99,7 +92,6 @@ class ProfileActivity : AppCompatActivity() {
      * A function that queries the database and fetched the correct user
      * Hard coded for now
      */
-
     private fun queryDatabase() {
         var user: UserProfile
         val userRef = database.getReference("users")

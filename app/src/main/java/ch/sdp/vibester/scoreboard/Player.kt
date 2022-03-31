@@ -8,8 +8,8 @@ package ch.sdp.vibester.scoreboard
  * @param photo profile photo of the player
  * @param score score of the player
  */
-data class Player (
+data class Player(
     val nik: Int = 0,
     val name: String = "",
     val photo: String = "",
-    val score: Int = 0)
+    val score: Int = 0 )

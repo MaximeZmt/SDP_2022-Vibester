@@ -1,7 +1,8 @@
 package ch.sdp.vibester.helper
 
 import android.media.MediaPlayer
-import ch.sdp.vibester.api.*
+import ch.sdp.vibester.api.AudioPlayer
+import ch.sdp.vibester.api.ItunesMusicApi
 import ch.sdp.vibester.model.Song
 import ch.sdp.vibester.model.SongList
 import okhttp3.OkHttpClient
@@ -11,8 +12,8 @@ import java.util.concurrent.CompletableFuture
 /**
  * Game Manager to set up a solo game for a chosen mode.
  */
-class GameManager: Serializable{
-    private var score = 0;
+class GameManager : Serializable {
+    private var score = 0
     private var nextSongInd = 0
     var gameSize = 5
     private var numPlayedSongs = 0
@@ -27,70 +28,70 @@ class GameManager: Serializable{
      * @param jsonMeta: JSON song list from lastfm API
      * @param method: method for a game
      */
-    fun setGameSongList(jsonMeta:String, method:String){
-        gameSongList = SongList(jsonMeta, method).getShuffledSongList();
+    fun setGameSongList(jsonMeta: String, method: String) {
+        gameSongList = SongList(jsonMeta, method).getShuffledSongList()
     }
 
     /**
      * Increase a score if the game was correct
      */
-    fun increaseScore(){
-        score++;
+    fun increaseScore() {
+        score++
     }
 
     /**
      * Get current number of played songs in a game
      */
-    fun getPlayedSongs():Int{
+    fun getPlayedSongs(): Int {
         return numPlayedSongs
     }
 
     /**
      * Get a list of songs that were guessed correct in the game
      */
-    fun getCorrectSongs(): MutableList<Song>{
+    fun getCorrectSongs(): MutableList<Song> {
         return correctSongs
     }
 
     /**
      * Get a list of songs that were guessed wrong in the game
      */
-    fun getWrongSongs(): MutableList<Song>{
+    fun getWrongSongs(): MutableList<Song> {
         return wrongSongs
     }
 
     /**
      * Get a score for a game (current and total)
      */
-    fun getScore():Int {
+    fun getScore(): Int {
         return score
     }
 
     /**
      * Get a current playing song
      */
-    fun getCurrentSong(): Song{
+    fun getCurrentSong(): Song {
         return currentSong
     }
 
     /**
      * Get a songs list set up for the game
      */
-    fun getSongList():MutableList<Pair<String, String>>{
+    fun getSongList(): MutableList<Pair<String, String>> {
         return gameSongList
     }
 
     /**
      * Add a correct song to a correct guessed song list
      */
-    fun addCorrectSong(){
+    fun addCorrectSong() {
         correctSongs.add(currentSong)
     }
 
     /**
      * Add a wrong song to a wrong guessed song list
      */
-    fun addWrongSong(){
+    fun addWrongSong() {
         wrongSongs.add(currentSong)
     }
 
@@ -99,8 +100,8 @@ class GameManager: Serializable{
      * @return: Boolean. true if the number of played songs is less than game size
      *          false otherwise
      */
-    fun checkGameStatus():Boolean{
-        if(numPlayedSongs < gameSize){
+    fun checkGameStatus(): Boolean {
+        if (numPlayedSongs < gameSize) {
             return true
         }
         return false
@@ -113,16 +114,16 @@ class GameManager: Serializable{
      * @return: true if the next song to play is set
      *          false otherwise
      */
-    fun setNextSong():Boolean {
-        if(nextSongInd < gameSongList.size){
+    fun setNextSong(): Boolean {
+        if (nextSongInd < gameSongList.size) {
             val songPair = gameSongList[nextSongInd]
             val songName = songPair.first + " " + songPair.second
-            try{
-                currentSong = Song.singleSong(ItunesMusicApi.querySong(songName, OkHttpClient(), 1).get())
+            try {
+                currentSong =
+                    Song.singleSong(ItunesMusicApi.querySong(songName, OkHttpClient(), 1).get())
                 nextSongInd++
                 numPlayedSongs++
-            }
-            catch (e:Exception) {
+            } catch (e: Exception) {
                 nextSongInd++
                 setNextSong()
             }
@@ -134,14 +135,14 @@ class GameManager: Serializable{
     /**
      * Set a media player. Used for testing.
      */
-    fun setMediaPlayer(mediaPlayer: CompletableFuture<MediaPlayer>){
+    fun setMediaPlayer(mediaPlayer: CompletableFuture<MediaPlayer>) {
         this.mediaPlayer = mediaPlayer
     }
 
     /**
      * Play current song with media player.
      */
-    fun playSong(){
+    fun playSong() {
         mediaPlayer = AudioPlayer.playAudio(currentSong.getPreviewUrl())
     }
 
@@ -157,7 +158,7 @@ class GameManager: Serializable{
     /**
      * Stop media player
      */
-    fun stopMediaPlayer(){
+    fun stopMediaPlayer() {
         mediaPlayer.get().stop()
     }
 

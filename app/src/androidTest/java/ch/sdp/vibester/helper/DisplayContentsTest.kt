@@ -9,10 +9,13 @@ import org.junit.Test
 
 class DisplayContentsTest {
     @Test
-    fun borderGenTest(){
+    fun borderGenTest() {
         val ctx = ApplicationProvider.getApplicationContext() as Context
         val border = DisplayContents.borderGen(ctx, R.color.maximum_yellow_red)
-        assertEquals(ContextCompat.getColor(ctx, R.color.maximum_yellow_red), border.color?.defaultColor)
+        assertEquals(
+            ContextCompat.getColor(ctx, R.color.maximum_yellow_red),
+            border.color?.defaultColor
+        )
     }
 
 }

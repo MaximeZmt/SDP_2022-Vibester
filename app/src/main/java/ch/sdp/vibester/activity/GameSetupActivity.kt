@@ -14,7 +14,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.view.children
 import ch.sdp.vibester.R
-import ch.sdp.vibester.helper.DisplayContents
 
 class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     var text = "One"
@@ -46,8 +45,8 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
             this,
             spinner_array,
             android.R.layout.simple_spinner_item
-        ).also {
-            adapter -> adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             spinner.adapter = adapter
             spinner.onItemSelectedListener = this
         }
@@ -76,7 +75,7 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
      * text: the string to be converted
      */
     fun textToNumber(text: String): Int {
-        when(text) {
+        when (text) {
             "One" -> return 1
             "Two" -> return 2
             "Three" -> return 3
@@ -84,6 +83,7 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         }
         return 1
     }
+
 
     override fun onNothingSelected(parent: AdapterView<*>) {text = "One"; difficulty = "Easy"}
 
@@ -94,23 +94,28 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
      * id: the id of the field to update
      */
     fun updatePlayerNameVisibility(n: Int, id: Int) {
-        var i = when(id) {
+        var i = when (id) {
             R.id.namePlayer2 -> 2
             R.id.namePlayer3 -> 3
             R.id.namePlayer4 -> 4
             else -> 0
         }
-        findViewById<EditText>(id).visibility = if (n>=i) android.view.View.VISIBLE else android.view.View.INVISIBLE
+        findViewById<EditText>(id).visibility =
+            if (n >= i) android.view.View.VISIBLE else android.view.View.INVISIBLE
     }
 
     fun proceedToGame(view: View) { //FILLER INTENT
         val intent = Intent(this, GamescreenActivity::class.java)
-        val players = findViewById<LinearLayout>(R.id.playerNames).children.filter { child: View -> child.visibility==android.view.View.VISIBLE }
+        val players =
+            findViewById<LinearLayout>(R.id.playerNames).children.filter { child: View -> child.visibility == android.view.View.VISIBLE }
         val pNameArray = arrayOfNulls<String>(players.count())
-        if (players.count()>0) {
+        if (players.count() > 0) {
             intent.putExtra("Number of players", players.count())
-        } else {intent.putExtra("Number of players", 1)}
-        val editTextIdArray = arrayOf(R.id.namePlayer1, R.id.namePlayer2, R.id.namePlayer3, R.id.namePlayer4)
+        } else {
+            intent.putExtra("Number of players", 1)
+        }
+        val editTextIdArray =
+            arrayOf(R.id.namePlayer1, R.id.namePlayer2, R.id.namePlayer3, R.id.namePlayer4)
         var i = 0
         for (playerView in players) {
             pNameArray[i] = findViewById<EditText>(editTextIdArray[i]).text.toString()

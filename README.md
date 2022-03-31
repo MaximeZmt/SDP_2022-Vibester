@@ -1,9 +1,17 @@
-# SDP_2022-Vibester
+<div align="center"> <img src="app/src/main/res/drawable/logo.png" align=center></img> </div>
 
-[![Maintainability](https://img.shields.io/codeclimate/maintainability/MaximeZmt/SDP_2022-Vibester?style=flat-square&logo=codeclimate&logoColor=white&color=52b2bf)](https://codeclimate.com/github/MaximeZmt/SDP_2022-Vibester/maintainability)
-[![Test Coverage](https://img.shields.io/codeclimate/coverage/MaximeZmt/SDP_2022-Vibester?style=flat-square&logo=codeclimate&logoColor=white&color=52b2bf)](https://codeclimate.com/github/MaximeZmt/SDP_2022-Vibester/test_coverage)
-[![Contributors](https://img.shields.io/github/contributors/MaximeZmt/SDP_2022-Vibester?style=flat-square&logo=github&logoColor=white&color=52b2bf)](https://github.com/MaximeZmt/SDP_2022-Vibester/graphs/contributors)
-[![CI](https://img.shields.io/cirrus/github/MaximeZmt/SDP_2022-Vibester?style=flat-square&logo=github&logoColor=white&color=52b2bf)](https://cirrus-ci.com/github/MaximeZmt/SDP_2022-Vibester)
+# Vibester - SDP 2022
+
+### Repository
+
+[![Maintainability](https://img.shields.io/codeclimate/maintainability/MaximeZmt/SDP_2022-Vibester?style=flat-square&logo=codeclimate&logoColor=white&color=227C9D)](https://codeclimate.com/github/MaximeZmt/SDP_2022-Vibester/maintainability)
+[![Test Coverage](https://img.shields.io/codeclimate/coverage/MaximeZmt/SDP_2022-Vibester?style=flat-square&logo=codeclimate&logoColor=white&color=227C9D)](https://codeclimate.com/github/MaximeZmt/SDP_2022-Vibester/test_coverage)
+[![Contributors](https://img.shields.io/github/contributors/MaximeZmt/SDP_2022-Vibester?style=flat-square&logo=github&logoColor=white&color=227C9D)](https://github.com/MaximeZmt/SDP_2022-Vibester/graphs/contributors)
+[![CI](https://img.shields.io/cirrus/github/MaximeZmt/SDP_2022-Vibester?style=flat-square&logo=github&logoColor=white&color=227C9D)](https://cirrus-ci.com/github/MaximeZmt/SDP_2022-Vibester)
+
+### Status
+
+![Website](https://img.shields.io/website?down_color=FE6D73&down_message=offline&label=Lyrics%20API&style=flat-square&up_color=17c3b2&up_message=online&url=https%3A%2F%2Fapi.lyrics.ovh%2Fv1%2Fimagine%2Bdragons%2Fradioactive) ![Website](https://img.shields.io/website?down_color=FE6D73&down_message=offline&label=Itunes%20API&style=flat-square&up_color=17c3b2&up_message=online&url=https%3A%2F%2Fitunes.apple.com%2Fus%2Flookup%3Fid%3D1023678453) ![Website](https://img.shields.io/website?down_color=FE6D73&down_message=offline&label=LastFM%20API&style=flat-square&up_color=17c3b2&up_message=online&url=https%3A%2F%2Fws.audioscrobbler.com%2F)    
 
 
 This is the GitHub repository of our Android App Vibester!
@@ -14,24 +22,33 @@ There will be different modes in the game: (i) guess the song by name, and (ii) 
 
 The game will also offer a customization where the user can create a game from its own list of songs.
 
-[To Complete: Abstract]
-
 
 
 ## Table Of Contents
 
-1. [TODO](#todo)
-2. [Guide & Useful Link](#guideAndLink)
-2. [Team](#team)
+1. [Team](#team)
+2. [Scrumboard & Weekly Meetings Logs](#devLogs)
+3. [Guide & Useful Link](#guideAndLink)
 
 
 
-## TODO <a name="todo"></a>
+## Team <a name="team"></a>
 
-- [x] Create a Github repository
-- [x] Setup all Github feature (params, ...)
-- [x] Add continuous integration
-- [ ]
+| Name             |                                     GitHub username |
+| :--------------- | --------------------------------------------------: |
+| Derin Arda Alpay |       [Tsathogguaa](https://github.com/Tsathogguaa) |
+| Kamila Babayeva  | [kamilababayeva](https://github.com/kamilababayeva) |
+| Laurynas Lopata  |     [laurislopata](https://github.com/laurislopata) |
+| Jiabao Wen       |               [jiabaow](https://github.com/jiabaow) |
+| Maxime Zammit    |           [MaximeZmt](https://github.com/MaximeZmt) |
+| Margaux Zwierski |             [zwierski](https://github.com/zwierski) |
+
+
+
+## Scrumboard & Weekly Meetings Logs <a name="devLogs"></a>
+
+- [Our Scrumboard](https://github.com/MaximeZmt/SDP_2022-Vibester/projects/1)
+- [Our Weekly Meeting](https://github.com/MaximeZmt/SDP_2022-Vibester/wiki)
 
 
 
@@ -44,13 +61,3 @@ The game will also offer a customization where the user can create a game from i
 
 
 
-## Team <a name="tean"></a>
-
-| Name | GitHub username |
-|:--------|---------:|
-| Derin Arda Alpay | [Tsathogguaa](https://github.com/Tsathogguaa) |
-| Kamila Babayeva | [kamilababayeva](https://github.com/kamilababayeva) |
-| Laurynas Lopata | [laurislopata](https://github.com/laurislopata) |
-| Jiabao Wen | [jiabaow](https://github.com/jiabaow) |
-| Maxime Zammit | [MaximeZmt](https://github.com/MaximeZmt) |
-| Margaux Zwierski | [zwierski](https://github.com/zwierski) |

@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".profile.ProfileSetup"
-    android:layout_marginTop="@dimen/mtrl_toolbar_default_height"
+    tools:context=".profile.ProfileActivity"
+    android:background="@color/floral_white"
     >
 
     <ImageView
@@ -13,6 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
+        android:foregroundGravity="left"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_max="150dp"
@@ -166,27 +167,37 @@
 
     <Button
         android:id="@+id/editUser"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="157dp"
+        android:layout_height="58dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="14dp"
+        android:layout_marginEnd="40dp"
         android:layout_marginBottom="27dp"
+        android:backgroundTint="@color/cg_blue"
+        android:elevation="10dp"
+        android:stateListAnimator="@null"
         android:text="@string/editUsername"
+        android:translationZ="10dp"
         app:layout_constraintBottom_toTopOf="@+id/profileStatistics"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.937"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/username"
-        app:layout_constraintVertical_bias="0.3" />
+        app:layout_constraintStart_toEndOf="@+id/editHandle"
+        app:layout_constraintTop_toBottomOf="@+id/username" />
 
     <Button
         android:id="@+id/editHandle"
-        android:layout_width="148dp"
-        android:layout_height="43dp"
-        android:layout_marginStart="67dp"
+        android:layout_width="158dp"
+        android:layout_height="57dp"
+        android:layout_marginStart="40dp"
         android:layout_marginTop="22dp"
+        android:layout_marginEnd="10dp"
         android:layout_marginBottom="35dp"
+        android:backgroundTint="@color/cg_blue"
+        android:elevation="10dp"
+        android:stateListAnimator="@null"
         android:text="@string/editHandle"
+        android:translationZ="10dp"
         app:layout_constraintBottom_toTopOf="@+id/profileStatistics"
+        app:layout_constraintEnd_toStartOf="@+id/editUser"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/username" />
 

@@ -26,7 +26,7 @@ public class BuzzerScoreUpdater(ids: Array<Int>, scores: Array<Int>) {
 
     /**
      * updates the score corresponding to the pressed buzzer
-     * checks first if the given id
+     * checks first if the given id is a buzzer id (and not NO_BUZZER_PRESSED)
      */
     fun updateScoresArray(id: Int) {
         if (!buzzerToScoreMap.keys.contains(id)) {

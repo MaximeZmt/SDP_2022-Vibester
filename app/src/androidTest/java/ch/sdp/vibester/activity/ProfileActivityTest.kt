@@ -20,6 +20,8 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class ProfileActivityTest {
 
+    private val sleepTime: Long = 5000
+
     @Before
     fun setUp() {
         Intents.init()
@@ -37,7 +39,7 @@ class ProfileActivityTest {
         intent.putExtra("email", inputProfile.email)
         intent.putExtra("userProfile", inputProfile)
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
-        Thread.sleep(3_000)
+        Thread.sleep(sleepTime)
         onView(withId(R.id.handle)).check(matches(withText(inputProfile.handle)))
         onView(withId(R.id.username)).check(matches(withText(inputProfile.username)))
         onView(withId(R.id.correctSongs)).check(matches(withText(inputProfile.correctSongs.toString())))
@@ -51,7 +53,7 @@ class ProfileActivityTest {
         val intent = Intent(ApplicationProvider.getApplicationContext(), ProfileActivity::class.java)
         intent.putExtra("email", inputProfile.email)
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
-        Thread.sleep(3_000)
+        Thread.sleep(sleepTime)
         onView(withId(R.id.profileStatistics)).check(matches(isDisplayed()))
         onView(withId(R.id.handle)).check(matches(isDisplayed()))
         onView(withId(R.id.username)).check(matches(isDisplayed()))
@@ -82,7 +84,7 @@ class ProfileActivityTest {
         val intent = Intent(ApplicationProvider.getApplicationContext(), ProfileActivity::class.java)
         intent.putExtra("email", inputProfile.email)
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
-        Thread.sleep(3_000)
+        Thread.sleep(sleepTime)
         onView(withId(R.id.editUser)).perform(ViewActions.click())
         onView(withText("Cancel")).perform(ViewActions.click())
         onView(withId(R.id.username)).check(matches(withText("Lalisa Bon")))
@@ -94,7 +96,7 @@ class ProfileActivityTest {
         val intent = Intent(ApplicationProvider.getApplicationContext(), ProfileActivity::class.java)
         intent.putExtra("email", inputProfile.email)
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
-        Thread.sleep(3_000)
+        Thread.sleep(sleepTime)
         val newUserHandle = "@lisa"
         onView(withId(R.id.editHandle)).perform(ViewActions.click())
         onView(withId(0)).perform(
@@ -112,7 +114,7 @@ class ProfileActivityTest {
         val intent = Intent(ApplicationProvider.getApplicationContext(), ProfileActivity::class.java)
         intent.putExtra("email", inputProfile.email)
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
-        Thread.sleep(3_000)
+        Thread.sleep(sleepTime)
         onView(withId(R.id.editHandle)).perform(ViewActions.click())
         onView(withText("Cancel")).perform(ViewActions.click())
         onView(withId(R.id.handle)).check(matches(withText("@lisa")))

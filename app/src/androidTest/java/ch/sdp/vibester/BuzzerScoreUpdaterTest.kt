@@ -35,4 +35,14 @@ public class BuzzerScoreUpdaterTest {
         }
     }
 
+    @Test
+    fun arrayUpdateWithWrongIdReturns() {
+        val idArray = arrayOf(R.id.buzzer_0, R.id.buzzer_1, R.id.buzzer_2, R.id.buzzer_3)
+        val scoreArray = arrayOf(0, 0, 0, 0)
+        val testUpdater = BuzzerScoreUpdater(idArray, scoreArray)
+        testUpdater.updateScoresArray(-1)
+        for (id in idArray) {
+            assert(testUpdater.getMap()[id]==0)
+        }
+    }
 }

@@ -57,6 +57,7 @@
     <string name="Multiplayer">Multiplayer</string>
     <string name="game_buzzer_title">Local Buzzer</string>
     <string name="game_typing">Local Typing</string>
+    <string name="game_setup__ask_difficulty">Please choose the difficulty of your game</string>
 
     <string-array name="nb_players">
         <item>One</item>
@@ -64,6 +65,22 @@
         <item>Three</item>
         <item>Four</item>
     </string-array>
+
+    <string-array name="difficulties_name">
+        <item>Easy</item>
+        <item>Medium</item>
+        <item>Hard</item>
+    </string-array>
+
+    <string name="difficulty_easy">The difficulty setting recommended for when you want to have a chill time.
+            You have 30 seconds to guess each song!</string>
+    <string name="difficulty_medium">The difficulty setting recommended for when you want to both savor the song, and see
+            if your song knowledge is as good as you think.
+            You have 15 seconds to guess each song!</string>
+    <string name="difficulty_hard">The difficulty setting recommended for when you want a challenge.
+            You have 5 seconds to guess each song!</string>
+
+
     <string name="title_activity_fullscreen">FullscreenActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>

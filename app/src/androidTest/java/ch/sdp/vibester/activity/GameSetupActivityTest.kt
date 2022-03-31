@@ -41,13 +41,14 @@ class GameSetupActivityTest {
     }
 
     @Test
-    fun checkNothingSelect() {
-        onView(withId(R.id.nb_player_spinner)).check(matches(withSpinnerText("One")))
+    fun checkDefaultSelectDifficulty() {
+        onView(withId(R.id.difficulty_spinner)).check(matches(withSpinnerText("Easy")))
     }
 
     @Test
     fun checkCustomSelectOne() {
         onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
+        onView(withId(R.id.difficulty_proceed)).perform(click())
         onView(withId(R.id.nb_player_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(0).perform(click())
         onView(withId(R.id.nb_player_spinner)).check(matches(withSpinnerText("One")))
@@ -56,6 +57,7 @@ class GameSetupActivityTest {
     @Test
     fun checkCustomSelectTwo() {
         onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
+        onView(withId(R.id.difficulty_proceed)).perform(click())
         onView(withId(R.id.nb_player_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(1).perform(click())
         onView(withId(R.id.nb_player_spinner)).check(matches(withSpinnerText("Two")))
@@ -64,6 +66,7 @@ class GameSetupActivityTest {
     @Test
     fun checkCustomSelectThree() {
         onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
+        onView(withId(R.id.difficulty_proceed)).perform(click())
         onView(withId(R.id.nb_player_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(2).perform(click())
         onView(withId(R.id.nb_player_spinner)).check(matches(withSpinnerText("Three")))
@@ -72,6 +75,7 @@ class GameSetupActivityTest {
     @Test
     fun checkCustomSelectFour() {
         onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
+        onView(withId(R.id.difficulty_proceed)).perform(click())
         onView(withId(R.id.nb_player_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(3).perform(click())
         onView(withId(R.id.nb_player_spinner)).check(matches(withSpinnerText("Four")))
@@ -80,6 +84,7 @@ class GameSetupActivityTest {
     @Test
     fun checkIntentOnProceedDefault() { //FILLER TEST
         onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
+        onView(withId(R.id.difficulty_proceed)).perform(click())
         onView(withId(R.id.nb_players_selected)).perform(click())
         intended(hasComponent(GamescreenActivity::class.java.name))
         intended(hasExtra("Number of players", 1))
@@ -88,6 +93,7 @@ class GameSetupActivityTest {
     @Test
     fun checkIntentOnProceedOne() { //FILLER TEST
         onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
+        onView(withId(R.id.difficulty_proceed)).perform(click())
         onView(withId(R.id.nb_player_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(0).perform(click())
         onView(withId(R.id.nb_players_selected)).perform(click())
@@ -98,6 +104,7 @@ class GameSetupActivityTest {
     @Test
     fun checkIntentOnProceedTwo() { //FILLER TEST
         onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
+        onView(withId(R.id.difficulty_proceed)).perform(click())
         onView(withId(R.id.nb_player_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(1).perform(click())
         onView(withId(R.id.nb_players_selected)).perform(click())
@@ -108,6 +115,7 @@ class GameSetupActivityTest {
     @Test
     fun checkIntentOnProceedThree() { //FILLER TEST
         onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
+        onView(withId(R.id.difficulty_proceed)).perform(click())
         onView(withId(R.id.nb_player_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(2).perform(click())
         onView(withId(R.id.nb_players_selected)).perform(click())
@@ -118,11 +126,69 @@ class GameSetupActivityTest {
     @Test
     fun checkIntentOnProceedFour() { //FILLER TEST
         onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
+        onView(withId(R.id.difficulty_proceed)).perform(click())
         onView(withId(R.id.nb_player_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(3).perform(click())
         onView(withId(R.id.nb_players_selected)).perform(click())
         intended(hasComponent(GamescreenActivity::class.java.name))
         intended(hasExtra("Number of players", 4))
+    }
+
+    @Test
+    fun checkCustomSelectEasy() {
+        onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
+        onView(withId(R.id.difficulty_spinner)).perform(click())
+        onData(Matchers.anything()).atPosition(0).perform(click())
+        onView(withId(R.id.difficulty_spinner)).check(matches(withSpinnerText("Easy")))
+    }
+
+    @Test
+    fun checkCustomSelectMedium() {
+        onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
+        onView(withId(R.id.difficulty_spinner)).perform(click())
+        onData(Matchers.anything()).atPosition(1).perform(click())
+        onView(withId(R.id.difficulty_spinner)).check(matches(withSpinnerText("Medium")))
+    }
+
+    @Test
+    fun checkCustomSelectHard() {
+        onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
+        onView(withId(R.id.difficulty_spinner)).perform(click())
+        onData(Matchers.anything()).atPosition(2).perform(click())
+        onView(withId(R.id.difficulty_spinner)).check(matches(withSpinnerText("Hard")))
+    }
+
+    @Test
+    fun checkIntentOnProceedEasy() { //FILLER TEST
+        onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
+        onView(withId(R.id.difficulty_spinner)).perform(click())
+        onData(Matchers.anything()).atPosition(0).perform(click())
+        onView(withId(R.id.difficulty_proceed)).perform(click())
+        onView(withId(R.id.nb_players_selected)).perform(click())
+        intended(hasComponent(GamescreenActivity::class.java.name))
+        intended(hasExtra("Difficulty", "Easy"))
+    }
+
+    @Test
+    fun checkIntentOnProceedMedium() { //FILLER TEST
+        onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
+        onView(withId(R.id.difficulty_spinner)).perform(click())
+        onData(Matchers.anything()).atPosition(1).perform(click())
+        onView(withId(R.id.difficulty_proceed)).perform(click())
+        onView(withId(R.id.nb_players_selected)).perform(click())
+        intended(hasComponent(GamescreenActivity::class.java.name))
+        intended(hasExtra("Difficulty", "Medium"))
+    }
+
+    @Test
+    fun checkIntentOnProceedHard() { //FILLER TEST
+        onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
+        onView(withId(R.id.difficulty_spinner)).perform(click())
+        onData(Matchers.anything()).atPosition(2).perform(click())
+        onView(withId(R.id.difficulty_proceed)).perform(click())
+        onView(withId(R.id.nb_players_selected)).perform(click())
+        intended(hasComponent(GamescreenActivity::class.java.name))
+        intended(hasExtra("Difficulty", "Hard"))
     }
 
 }

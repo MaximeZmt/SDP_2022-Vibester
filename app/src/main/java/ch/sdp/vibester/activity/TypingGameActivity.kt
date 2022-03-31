@@ -34,6 +34,7 @@ import java.util.concurrent.CompletableFuture
 class TypingGameActivity : AppCompatActivity() {
     private val h = Handler()
     private  var runnable: Runnable? = null
+    private var maxTime: Int = 30
     private lateinit var gameManager: GameManager
         companion object {
             /**
@@ -98,6 +99,13 @@ class TypingGameActivity : AppCompatActivity() {
         if(getIntent != null){
             gameManager = getIntent.getSerializable("gameManager") as GameManager
             playRound(ctx, gameManager)
+            if(intent.hasExtra("Difficulty")) {
+                when(getIntent.getString("Difficulty", "Easy")) {
+                    "Easy" -> maxTime = 30
+                    "Medium" -> maxTime = 15
+                    "Hard" -> maxTime = 5
+                }
+            }
         }
 
         //Listener when we modify the input
@@ -198,7 +206,8 @@ class TypingGameActivity : AppCompatActivity() {
      * Custom handle of the bar progress.
      */
     private fun barTimer(myBar: ProgressBar, ctx:Context, gameManager: GameManager){
-        myBar.progress = 30
+        myBar.max = maxTime
+        myBar.progress = maxTime
         myBar.progressTintList = ColorStateList.valueOf(getColor(R.color.cg_blue))
         runnable = object : Runnable {
             override fun run() {

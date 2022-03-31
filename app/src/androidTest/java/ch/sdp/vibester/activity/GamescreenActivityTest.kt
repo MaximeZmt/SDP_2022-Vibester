@@ -81,18 +81,26 @@ class GamescreenActivityTest {
         incArray.addAll(arrayOf("One", "Two", "Three"))
 
         val statNames: ArrayList<String> = arrayListOf()
-        statNames.addAll(arrayOf("Hello there",
-            "Second Stat",
-            "Third Stat",
-            "Fourth Stat",
-            "Fifth Stat"))
+        statNames.addAll(
+            arrayOf(
+                "Hello there",
+                "Second Stat",
+                "Third Stat",
+                "Fourth Stat",
+                "Fifth Stat"
+            )
+        )
 
         val statVal: ArrayList<String> = arrayListOf()
-        statVal.addAll(arrayOf("General Kenobi",
-            "----- *2 -----",
-            "----- *3 -----",
-            "----- *4 -----",
-            "----- *5 -----"))
+        statVal.addAll(
+            arrayOf(
+                "General Kenobi",
+                "----- *2 -----",
+                "----- *3 -----",
+                "----- *4 -----",
+                "----- *5 -----"
+            )
+        )
 
         onView(withId(R.id.go_to_end)).perform(click())
         intended(hasComponent(GameEndingActivity::class.java.name))

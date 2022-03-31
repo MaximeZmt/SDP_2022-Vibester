@@ -6,8 +6,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.activity.TypingGameActivity
-import ch.sdp.vibester.api.ServiceBuilder
 import ch.sdp.vibester.api.LastfmApiInterface
+import ch.sdp.vibester.api.LastfmMethod
 import ch.sdp.vibester.api.LastfmUri
 import ch.sdp.vibester.helper.GameManager
 import com.google.gson.Gson
@@ -19,10 +19,6 @@ import retrofit2.Response
  * Activity to show the list of songs for a chosen tag
  */
 class GenreTemporary : AppCompatActivity() {
-    private val BY_TAG = "tag.gettoptracks"
-    private val BY_CHART = "chart.gettoptracks"
-    private val BY_ARTIST = "artist.gettoptracks"
-    private val baseUrl = "https://ws.audioscrobbler.com/2.0/"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,11 +28,11 @@ class GenreTemporary : AppCompatActivity() {
     /**
      * Fetch data from Lastfm and show song list in a ListView
      */
-    fun performQuery(uri:LastfmUri){
+    private fun performQuery(uri: LastfmUri) {
 
-        val service = ServiceBuilder.buildService(baseUrl, LastfmApiInterface::class.java)
+        val service = LastfmApiInterface.createLastfmService()
         val call = service.getSongList(uri.convertToHashmap())
-        call.enqueue(object: Callback<Any> {
+        call.enqueue(object : Callback<Any> {
             override fun onFailure(call: Call<Any>, t: Throwable?) {}
 
             override fun onResponse(call: Call<Any>, response: Response<Any>) {
@@ -53,28 +49,29 @@ class GenreTemporary : AppCompatActivity() {
         startActivity(newIntent)
     }
 
+    // view is needed, remove it will result failure in tests
     fun playRock(view: View) {
-        performQuery(LastfmUri(method = BY_TAG, tag = "rock"))
+        performQuery(LastfmUri(method = LastfmMethod.BY_TAG.method, tag = "rock"))
     }
 
     fun playImagineDragons(view: View) {
-        performQuery(LastfmUri(method = BY_ARTIST, artist = "Imagine Dragons"))
+        performQuery(LastfmUri(method = LastfmMethod.BY_ARTIST.method, artist = "Imagine Dragons"))
     }
 
     fun playTopTracks(view: View) {
-        performQuery(LastfmUri(method = BY_CHART))
+        performQuery(LastfmUri(method = LastfmMethod.BY_CHART.method))
     }
 
     fun playBTS(view: View) {
-        performQuery(LastfmUri(method = BY_ARTIST, artist = "BTS"))
+        performQuery(LastfmUri(method = LastfmMethod.BY_ARTIST.method, artist = "BTS"))
     }
 
     fun playKpop(view: View) {
-        performQuery(LastfmUri(method = BY_TAG, tag = "kpop"))
+        performQuery(LastfmUri(method = LastfmMethod.BY_TAG.method, tag = "kpop"))
     }
 
-    fun playBillieEilish(view: View){
-        performQuery(LastfmUri(method = BY_ARTIST, artist = "Billie Eilish"))
+    fun playBillieEilish(view: View) {
+        performQuery(LastfmUri(method = LastfmMethod.BY_ARTIST.method, artist = "Billie Eilish"))
     }
 
 }

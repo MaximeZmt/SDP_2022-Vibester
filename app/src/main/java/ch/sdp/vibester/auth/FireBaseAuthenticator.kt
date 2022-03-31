@@ -41,7 +41,7 @@ class FireBaseAuthenticator() {
      * @param data intent returned from google sign in
      */
     fun googleActivityResult(requestCode: Int, resultCode: Int, data: Intent?): String? {
-        return if(requestCode == 1000) {
+        return if (requestCode == 1000) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
                 val account = task.getResult(ApiException::class.java)!!

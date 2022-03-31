@@ -7,7 +7,7 @@ import java.io.Serializable
  * A class representing a song
  * @param jsonO a JSONObject that will be parsed
  */
-class Song(jsonO: JSONObject): Serializable{
+class Song(jsonO: JSONObject) : Serializable {
 
     private var previewUrl = ""
     private var artworkUrl = ""
@@ -21,7 +21,7 @@ class Song(jsonO: JSONObject): Serializable{
             artworkUrl = jsonO.getString("artworkUrl100")
             trackName = jsonO.getString("trackName")
             artistName = jsonO.getString("artistName")
-        } catch(e: Exception){
+        } catch (e: Exception) {
             throw IllegalArgumentException("Song constructor, bad argument")
         }
     }
@@ -30,7 +30,7 @@ class Song(jsonO: JSONObject): Serializable{
      * Getter that return the previewUrl
      * @return String that points towards an audio stream
      */
-    fun getPreviewUrl():String{
+    fun getPreviewUrl(): String {
         return previewUrl
     }
 
@@ -38,7 +38,7 @@ class Song(jsonO: JSONObject): Serializable{
      * Getter that return the artworkUrl
      * @return String that points towards the artwork
      */
-    fun getArtworkUrl():String{
+    fun getArtworkUrl(): String {
         return artworkUrl
     }
 
@@ -46,7 +46,7 @@ class Song(jsonO: JSONObject): Serializable{
      * Getter that return the track name
      * @return String containing the track name
      */
-    fun getTrackName():String{
+    fun getTrackName(): String {
         return trackName
     }
 
@@ -54,33 +54,33 @@ class Song(jsonO: JSONObject): Serializable{
      * Getter that return the artist name
      * @return String containing the artist name
      */
-    fun getArtistName():String{
+    fun getArtistName(): String {
         return artistName
     }
 
-    companion object{
-        fun singleSong(str: String): Song{
+    companion object {
+        fun singleSong(str: String): Song {
             try {
                 val jsonObj = JSONObject(str)
                 val jsonArray = jsonObj.getJSONArray("results")
                 val jsonRes = jsonArray.getJSONObject(0)
                 return Song(jsonRes)
-            }catch(e: Exception){
+            } catch (e: Exception) {
                 throw IllegalArgumentException("Song constructor, bad argument")
             }
         }
 
-        fun listSong(str: String): ArrayList<Song>{
-            try{
+        fun listSong(str: String): ArrayList<Song> {
+            try {
                 val myList = ArrayList<Song>()
                 val jsonObj = JSONObject(str)
                 val countResult = jsonObj.getInt("resultCount")
                 val jsonArray = jsonObj.getJSONArray("results")
-                for (i in 0 until countResult){
+                for (i in 0 until countResult) {
                     myList.add(Song(jsonArray.getJSONObject(i)))
                 }
                 return myList
-            }catch(e: Exception){
+            } catch (e: Exception) {
                 throw IllegalArgumentException("Song constructor, bad argument")
             }
         }

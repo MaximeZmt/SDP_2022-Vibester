@@ -15,7 +15,7 @@ import ch.sdp.vibester.BuzzerScoreUpdater
 import ch.sdp.vibester.R
 
 
-class GamescreenActivity: AppCompatActivity() {
+class GamescreenActivity : AppCompatActivity() {
 
     private val MAX_N_PLAYERS = 4
     private val NO_BUZZER_PRESSED = -1
@@ -50,13 +50,12 @@ class GamescreenActivity: AppCompatActivity() {
 
         val answer = findViewById<LinearLayout>(R.id.answer)
         val answerText = findViewById<TextView>(R.id.answerText)
-        answerText.text= "The song was Demo by The Placeholders"
+        answerText.text = "The song was Demo by The Placeholders"
 
         val allPoints = if (nPlayers!=null) {Array<Int>(nPlayers, { i -> 0 }) } else Array<Int>(MAX_N_PLAYERS, {i ->0})
 
         val playersFull = getIntent?.getStringArray("Player Names")
         val players = nPlayers?.let { playersFull?.copyOfRange(0, it) }
-
 
         val updater = BuzzerScoreUpdater(buzIds, allPoints)
 
@@ -110,8 +109,6 @@ class GamescreenActivity: AppCompatActivity() {
             i = i + 1
         }
     }
-
-
 
     /**
      * Programmatically builds the buzzers according to the number and names of players.
@@ -173,18 +170,26 @@ class GamescreenActivity: AppCompatActivity() {
         incArray.addAll(arrayOf("One", "Two", "Three"))
 
         val statNames: ArrayList<String> = arrayListOf()
-        statNames.addAll(arrayOf("Hello there",
-            "Second Stat",
-            "Third Stat",
-            "Fourth Stat",
-            "Fifth Stat"))
+        statNames.addAll(
+            arrayOf(
+                "Hello there",
+                "Second Stat",
+                "Third Stat",
+                "Fourth Stat",
+                "Fifth Stat"
+            )
+        )
 
         val statVal: ArrayList<String> = arrayListOf()
-        statVal.addAll(arrayOf("General Kenobi",
-            "----- *2 -----",
-            "----- *3 -----",
-            "----- *4 -----",
-            "----- *5 -----"))
+        statVal.addAll(
+            arrayOf(
+                "General Kenobi",
+                "----- *2 -----",
+                "----- *3 -----",
+                "----- *4 -----",
+                "----- *5 -----"
+            )
+        )
 
         intent.putExtra("playerName", "Arda")
         intent.putExtra("nbIncorrectSong", 3)

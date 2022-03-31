@@ -8,14 +8,16 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
 
-class PlayerAdapter(playersInit: List<Player>) : RecyclerView.Adapter<PlayerAdapter.PlayerViewHolder>() {
+class PlayerAdapter(playersInit: List<Player>) :
+    RecyclerView.Adapter<PlayerAdapter.PlayerViewHolder>() {
 
     var players: MutableList<Player> = playersInit.toMutableList()
 
     override fun getItemCount(): Int = players.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlayerViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.scoreboard_item_player, parent, false)
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.scoreboard_item_player, parent, false)
         return PlayerViewHolder(view)
     }
 

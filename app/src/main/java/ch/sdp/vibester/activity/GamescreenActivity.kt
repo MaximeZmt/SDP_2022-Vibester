@@ -9,6 +9,8 @@ import android.widget.LinearLayout
 import android.widget.TableRow
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.children
+import ch.sdp.vibester.BuzzerScoreUpdater
 import ch.sdp.vibester.R
 
 
@@ -25,17 +27,36 @@ class GamescreenActivity: AppCompatActivity() {
         val answerText = findViewById<TextView>(R.id.answerText)
         answerText.text= "The song was Demo by The Placeholders"
 
-        val allPoints = nPlayers?.let { Array<Int>(it, { i -> 0 }) }
+        val allPoints = if (nPlayers!=null) {Array<Int>(nPlayers, { i -> 0 }) } else Array<Int>(4, {i ->0})
 
         val playersFull = getIntent?.getStringArray("Player Names")
         val players = nPlayers?.let { playersFull?.copyOfRange(0, it) }
 
-        val buzIds = players?.let { fetchBuzIdArray(it.size) }
 
-        if (players != null && allPoints != null) { buildScores(players, allPoints) }
-        if (players != null && buzIds != null) { buildBuzzers(players, buzIds, answer) }
-        setAnswerButton(answer, findViewById(R.id.buttonCorrect))
-        setAnswerButton(answer, findViewById(R.id.buttonWrong))
+        val updater = BuzzerScoreUpdater(buzIds, allPoints)
+
+        val buzToScoreMap = fetchBuzToScoreRowMap()
+
+        if (players != null) {
+            buildScores(players, allPoints)
+            buildBuzzers(players, buzIds, answer)
+        }
+        setAnswerButton(answer, findViewById(R.id.buttonCorrect), updater, buzToScoreMap)
+        setAnswerButton(answer, findViewById(R.id.buttonWrong), updater, buzToScoreMap)
+    }
+
+    private val rowsIdArray = arrayOf(R.id.row_0, R.id.row_1, R.id.row_2, R.id.row_3)
+    private val buzIds = arrayOf(R.id.buzzer_0, R.id.buzzer_1, R.id.buzzer_2, R.id.buzzer_3)
+
+    private fun fetchBuzToScoreRowMap(): Map<Int, Int> {
+
+        var theMap = LinkedHashMap<Int, Int>()
+        var i = 0
+        while (i < buzIds.size) {
+            theMap.put(buzIds[i], rowsIdArray[i])
+            i = i + 1
+        }
+        return theMap
     }
 
     /*
@@ -64,6 +85,7 @@ class GamescreenActivity: AppCompatActivity() {
             points.height = 75
             points.width = 150
             points.gravity = Gravity.RIGHT
+            points.id=rowsIdArray[i]
 
             score.addView(nameView)
             score.addView(points)
@@ -72,13 +94,15 @@ class GamescreenActivity: AppCompatActivity() {
 
             i = i + 1
         }
-
     }
 
-    private fun fetchBuzIdArray(size: Int): Array<Int> {
-        var array = arrayOf(R.id.buzzer_0, R.id.buzzer_1, R.id.buzzer_2, R.id.buzzer_3, R.id.buzzer_4, R.id.buzzer_5) // replace magic number here!
-        return array.copyOfRange(0, size) // is "size" index included or not
+    var pressedBuzzer = -1
+
+    fun setPressed(id: Int) {
+        pressedBuzzer = id
     }
+
+
 
     /*
     Programmatically builds the buzzers according to the number and names of players.
@@ -100,6 +124,7 @@ class GamescreenActivity: AppCompatActivity() {
             buttons.set(i, button)
             button.setOnClickListener {
                 answer.visibility = android.view.View.VISIBLE
+                setPressed(button.id)
             }
             buzzers.addView(button)
 
@@ -107,11 +132,23 @@ class GamescreenActivity: AppCompatActivity() {
         }
     }
 
-    private fun setAnswerButton(answer: LinearLayout, button: Button) {
+    /*
+     * Connects the answer buttons to the answer layout's visibility
+     */
+    private fun setAnswerButton(answer: LinearLayout, button: Button, updater: BuzzerScoreUpdater, map: Map<Int, Int>) {
         button.setOnClickListener {
             answer.visibility = android.view.View.INVISIBLE
+            if (button.id==R.id.buttonCorrect) {
+                if (pressedBuzzer >= 0) {
+                    updater.updateScoresArray(pressedBuzzer)
+                    val view = map[pressedBuzzer]?.let { it1 -> findViewById<TextView>(it1) }
+                    if (view != null && updater.getMap().keys.contains(pressedBuzzer)) {view.text=updater.getMap()[pressedBuzzer].toString()}
+                }
+            }
         }
-    }
+        setPressed(-1) // reset the buzzer
+        }
+
 
     fun switchToEnding(view: View) {
         val intent = Intent(this, GameEndingActivity::class.java)

@@ -70,7 +70,6 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
 
     fun proceedToGame(view: View) { //FILLER INTENT
         val intent = Intent(this, GamescreenActivity::class.java)
-        //intent.putExtra("Number of players", text)
         val players = findViewById<LinearLayout>(R.id.playerNames).children.filter { child: View -> child.visibility==android.view.View.VISIBLE }
         val pNameArray = arrayOfNulls<String>(players.count())
         if (players.count()>0) {

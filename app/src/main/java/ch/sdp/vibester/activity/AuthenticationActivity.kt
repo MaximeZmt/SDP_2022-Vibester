@@ -86,17 +86,17 @@ class AuthenticationActivity : AppCompatActivity() {
      */
     private fun stringValidation(username: String, password: String): Boolean {
         if (username.isEmpty() || password.isEmpty()) {
-            email.text = "Empty email or password"
+            email.setText(R.string.emptyField)
             return false
         }
 
         if (!username.contains('@')) {
-            email.text = "Not an email"
+            email.setText(R.string.notAnEmail)
             return false
         }
 
         if (password.length < 6) {
-            email.text = "Password has to be at least 6 symbols"
+            email.setText(R.string.shortPassword)
             return false
         }
         return true
@@ -104,11 +104,10 @@ class AuthenticationActivity : AppCompatActivity() {
 
     private fun authenticate(email: String, password: String, creatAcc: Boolean) {
         if (stringValidation(email, password)) {
-            var auth: Task<AuthResult>
-            if (creatAcc) {
-                auth = authenticator.createAccount(email, password)
+            var auth: Task<AuthResult> = if (creatAcc) {
+                authenticator.createAccount(email, password)
             }else {
-                auth = authenticator.signIn(email, password)
+                authenticator.signIn(email, password)
             }
             auth.addOnCompleteListener(this) { task ->
                 onCompleteAuthentication(task)

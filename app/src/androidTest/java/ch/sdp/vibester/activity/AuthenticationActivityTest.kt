@@ -128,7 +128,7 @@ class AuthenticationActivityTest {
         onView(withId(R.id.username)).perform(ViewActions.typeText(username), closeSoftKeyboard())
         onView(withId(R.id.password)).perform(ViewActions.typeText(password), closeSoftKeyboard())
         onView(withId(R.id.logIn)).perform(click())
-        Thread.sleep(1000)
+        Thread.sleep(sleepTime)
         Intents.intended(IntentMatchers.hasComponent(ProfileActivity::class.java.name))
         Intents.intended(IntentMatchers.hasExtra("email", username))
     }
@@ -141,7 +141,7 @@ class AuthenticationActivityTest {
         onView(withId(R.id.username)).perform(ViewActions.typeText(username), closeSoftKeyboard())
         onView(withId(R.id.password)).perform(ViewActions.typeText(password), closeSoftKeyboard())
         onView(withId(R.id.createAcc)).perform(click())
-        Thread.sleep(1000)
+        Thread.sleep(sleepTime)
         Intents.intended(IntentMatchers.hasComponent(ProfileActivity::class.java.name))
         Intents.intended(IntentMatchers.hasExtra("email", username))
     }

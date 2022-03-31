@@ -99,13 +99,7 @@ class TypingGameActivity : AppCompatActivity() {
         if(getIntent != null){
             gameManager = getIntent.getSerializable("gameManager") as GameManager
             playRound(ctx, gameManager)
-            if(intent.hasExtra("Difficulty")) {
-                when(getIntent.getString("Difficulty", "Easy")) {
-                    "Easy" -> maxTime = 30
-                    "Medium" -> maxTime = 15
-                    "Hard" -> maxTime = 5
-                }
-            }
+            setMax(intent)
         }
 
         //Listener when we modify the input
@@ -126,6 +120,16 @@ class TypingGameActivity : AppCompatActivity() {
                         Log.e("Exception: ", e.toString())
                     }
                 }
+            }
+        }
+    }
+
+    private fun setMax(intent: Intent) {
+        if(intent.hasExtra("Difficulty")) {
+            when(intent.extras?.getString("Difficulty", "Easy")) {
+                "Easy" -> maxTime = 30
+                "Medium" -> maxTime = 15
+                "Hard" -> maxTime = 5
             }
         }
     }

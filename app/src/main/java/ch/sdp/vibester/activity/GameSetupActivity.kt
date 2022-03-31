@@ -2,13 +2,16 @@ package ch.sdp.vibester.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Layout
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.view.ViewGroup
 import android.view.Window
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.view.children
 import ch.sdp.vibester.R
 import ch.sdp.vibester.helper.DisplayContents
@@ -22,8 +25,13 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         supportActionBar?.hide()
         setContentView(R.layout.activity_game_setup_screen)
 
-        chooseGameSetupListener()
-        chooseDifficultyListener()
+        chooseListener(R.id.local_buzzer_game_button,
+            findViewById<LinearLayout>(R.id.chooseGame),
+            findViewById<ConstraintLayout>(R.id.chooseDifficulty))
+
+        chooseListener(R.id.difficulty_proceed,
+            findViewById<ConstraintLayout>(R.id.chooseDifficulty),
+            findViewById<ConstraintLayout>(R.id.buzzerSetup))
 
         val spinner: Spinner = findViewById(R.id.nb_player_spinner)
         //spinner.background = DisplayContents.borderGen(this, R.color.floral_white)
@@ -55,12 +63,9 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         } else {
             difficulty = parent.getItemAtPosition(position).toString()
             when(difficulty) {
-                "Easy"      -> findViewById<TextView>(R.id.difficulty_explanation)
-                    .setText(R.string.difficulty_easy)
-                "Medium"    -> findViewById<TextView>(R.id.difficulty_explanation)
-                    .setText(R.string.difficulty_medium)
-                "Hard"      -> findViewById<TextView>(R.id.difficulty_explanation)
-                    .setText(R.string.difficulty_hard)
+                "Easy"      -> setDifficultyText(R.string.difficulty_easy)
+                "Medium"    -> setDifficultyText(R.string.difficulty_medium)
+                "Hard"      -> setDifficultyText(R.string.difficulty_hard)
             }
         }
     }
@@ -116,24 +121,16 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         startActivity(intent)
     }
 
-    private fun chooseGameSetupListener() {
-        val butBuzz = findViewById<Button>(R.id.local_buzzer_game_button)
-        butBuzz.setOnClickListener {
-            val chooseLinLay = findViewById<LinearLayout>(R.id.chooseGame)
-            val difficultyLayout = findViewById<ConstraintLayout>(R.id.chooseDifficulty)
-            chooseLinLay.visibility = GONE
-            difficultyLayout.visibility = VISIBLE
+    private fun chooseListener(buttonId: Int, currentLayout: ViewGroup, nextLayout: ViewGroup) {
+        val btn = findViewById<Button>(buttonId)
+        btn.setOnClickListener {
+            currentLayout.visibility = GONE
+            nextLayout.visibility = VISIBLE
         }
     }
 
-    private fun chooseDifficultyListener() {
-        val butDiff = findViewById<Button>(R.id.difficulty_proceed)
-        butDiff.setOnClickListener {
-            val difficultyLayout = findViewById<ConstraintLayout>(R.id.chooseDifficulty)
-            val buzzerLayout = findViewById<ConstraintLayout>(R.id.buzzerSetup)
-            difficultyLayout.visibility = GONE
-            buzzerLayout.visibility = VISIBLE
-        }
+    private fun setDifficultyText(mode: Int) {
+        findViewById<TextView>(R.id.difficulty_explanation).setText(mode)
     }
 
 }

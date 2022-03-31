@@ -21,10 +21,10 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         supportActionBar?.hide()
         setContentView(R.layout.activity_game_setup_screen)
 
-        choosingGameSetupListener()
+        chooseGameSetupListener()
 
         val spinner: Spinner = findViewById(R.id.nb_player_spinner)
-        spinner.background = DisplayContents.borderGen(this, R.color.floral_white)
+        //spinner.background = DisplayContents.borderGen(this, R.color.floral_white)
         ArrayAdapter.createFromResource(
             this,
             R.array.nb_players,
@@ -96,7 +96,7 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         startActivity(intent)
     }
 
-    private fun choosingGameSetupListener(){
+    private fun chooseGameSetupListener(){
         val butBuzz = findViewById<Button>(R.id.local_buzzer_game_button)
         butBuzz.setOnClickListener({
             val chooseLinLay = findViewById<LinearLayout>(R.id.chooseGame)

@@ -218,11 +218,11 @@
 
             <LinearLayout
                 android:id="@+id/playerNames"
-                android:layout_width="495dp"
-                android:layout_height="184dp"
-                android:layout_marginStart="1dp"
+                android:layout_width="0dp"
+                android:layout_height="183dp"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginEnd="1dp"
+                android:layout_marginEnd="20dp"
                 android:layout_marginBottom="20dp"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toTopOf="@+id/nb_players_selected"

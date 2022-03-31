@@ -84,6 +84,7 @@
                 android:stateListAnimator="@null"
                 android:text="@string/listen_to_music"
                 android:translationZ="10dp"
+                android:visibility="gone"
                 app:icon="@android:drawable/stat_sys_headset" />
 
             <Button

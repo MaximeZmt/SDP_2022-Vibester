@@ -22,8 +22,6 @@ There will be different modes in the game: (i) guess the song by name, and (ii) 
 
 The game will also offer a customization where the user can create a game from its own list of songs.
 
-[To Complete: Abstract]
-
 
 
 ## Table Of Contents

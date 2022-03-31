@@ -133,8 +133,6 @@ class ProfileActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.correctSongs).text = user.correctSongs.toString()
         findViewById<TextView>(R.id.bestScore).text = user.bestScore.toString()
         findViewById<TextView>(R.id.ranking).text = user.ranking.toString()
-        /* TODO: add functionality to display the image (may be using )
-        findViewById<ImageView>(R.id.avatar).loadImg(user.image)*/
         CoroutineScope(Dispatchers.Main).launch {
             val task = async(Dispatchers.IO) {
                 val bit = BitmapGetterApi.download("https://"+user.image)
@@ -143,7 +141,6 @@ class ProfileActivity : AppCompatActivity() {
             val bm = task.await()
             findViewById<ImageView>(R.id.avatar).setImageBitmap(bm)
         }
-        findViewById<ImageView>(R.id.avatar).foregroundGravity= Gravity.LEFT
     }
 }
 

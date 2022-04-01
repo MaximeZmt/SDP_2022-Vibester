@@ -43,16 +43,13 @@
             android:name=".activity.ScoreBoardActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.WelcomeActivity"
-            android:exported="false" />
-        <activity
             android:name=".activity.AuthenticationActivity"
             android:exported="true" />
         <activity
             android:name=".GenreTemporary"
             android:exported="false" />
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".activity.WelcomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

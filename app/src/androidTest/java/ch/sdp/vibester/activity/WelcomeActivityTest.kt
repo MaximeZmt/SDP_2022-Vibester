@@ -34,7 +34,7 @@ class WelcomeActivityTest {
     }
 
     @Test
-    fun checkIntentOnProfile() { //FILLER TESTING
+    fun checkIntentOnProfile() { 
         onView(withId(R.id.welcome_profile)).perform(click())
         intended(hasComponent(ProfileActivity::class.java.name))
     }
@@ -45,26 +45,9 @@ class WelcomeActivityTest {
         intended(hasComponent(ScoreBoardActivity::class.java.name))
     }
 
-//    @Test
-//    fun checkIntentOnListen(){ //FILLER TESTING
-//        onView(withId(R.id.welcome_listen)).perform(click())
-//        intended(hasComponent(TypingGameActivity::class.java.name))
-//    }
-
     @Test
     fun checkIntentOnSettings() { //FILLER TESTING
         onView(withId(R.id.welcome_settings)).perform(click())
         intended(hasComponent(AuthenticationActivity::class.java.name))
     }
-
-    /*
-     * Belongs to a previously implemented button, taken out for UI purposes.
-     * Might bring it back, thus leaving the code for now.
-     */
-
-    /*@Test
-    fun checkIntentOnLogin(){ //FILLER TESTING
-        onView(withId(R.id.welcome_login)).perform(click())
-        intended(hasComponent(GameSetupScreen::class.java.name))
-    }*/
 }

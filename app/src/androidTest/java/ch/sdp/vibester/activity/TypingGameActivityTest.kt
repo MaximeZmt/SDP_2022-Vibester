@@ -13,6 +13,7 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.LastfmMethod
 import ch.sdp.vibester.helper.GameManager
+import ch.sdp.vibester.helper.TypingGameManager
 import ch.sdp.vibester.model.Song
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -21,7 +22,7 @@ import org.junit.Rule
 import org.junit.Test
 
 class TypingGameActivityTest {
-    private fun setGameManager(): GameManager {
+    private fun setGameManager(): TypingGameManager {
         val managerTxt = """
             {"tracks":
             {"track":[{"name":"Monday","duration":"259","mbid":"31623cce-9717-4513-9d83-1b5d04e44f9b",
@@ -34,7 +35,7 @@ class TypingGameActivityTest {
             {"#text":"https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png","size":"extralarge"}],
             "@attr":{"rank":"1"}}],"@attr":{"tag":"british","page":"1","perPage":"1","totalPages":"66649","total":"66649"}}}
             """
-        val gameManager = GameManager()
+        val gameManager = TypingGameManager()
         gameManager.setGameSongList(managerTxt, LastfmMethod.BY_TAG.method)
         return gameManager
     }

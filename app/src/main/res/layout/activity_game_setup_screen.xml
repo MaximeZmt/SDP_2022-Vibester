@@ -229,36 +229,43 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone">
-            <Button
+
+        <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/billieEilishButton"
                 android:layout_width="170dp"
                 android:layout_height="130dp"
                 android:onClick="play"
-                android:text="BillieEilish"
+                android:background="@drawable/rounded_button"
+                android:text="Billie Eilish"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.933"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.687" />
+                app:layout_constraintVertical_bias="0.687" >
+            </androidx.appcompat.widget.AppCompatButton>
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/imagDragonsButton"
                 android:layout_width="170dp"
                 android:layout_height="130dp"
                 android:onClick="play"
-                android:text="Imagine    Dragons"
+                android:background="@drawable/rounded_button"
+                android:text="Imagine Dragons"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.066"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.687" />
+                app:layout_constraintVertical_bias="0.687" >
+        </androidx.appcompat.widget.AppCompatButton>
 
-            <Button
+
+    <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btsButton"
                 android:layout_width="170dp"
                 android:layout_height="130dp"
+                android:background="@drawable/rounded_button"
                 android:onClick="play"
                 android:text="BTS"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -266,46 +273,54 @@
                 app:layout_constraintHorizontal_bias="0.933"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.402" />
+                app:layout_constraintVertical_bias="0.402" >
+            </androidx.appcompat.widget.AppCompatButton>
 
-            <Button
+
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/rockButton"
                 android:layout_width="170dp"
                 android:layout_height="130dp"
                 android:onClick="play"
+                android:background="@drawable/rounded_button"
                 android:text="R O C K"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.065"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.403" />
+                app:layout_constraintVertical_bias="0.403">
+            </androidx.appcompat.widget.AppCompatButton>
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/kpopButton"
                 android:layout_width="170dp"
                 android:layout_height="130dp"
                 android:onClick="play"
+                android:background="@drawable/rounded_button"
                 android:text="K P O P"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.937"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.136" />
+                app:layout_constraintVertical_bias="0.136">
+            </androidx.appcompat.widget.AppCompatButton>
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/topTracksButton"
                 android:layout_width="170dp"
                 android:layout_height="130dp"
+                android:background="@drawable/rounded_button"
                 android:onClick="play"
-                android:text="T O P                   T R A C K S"
+                android:text="T O P  T R A C K S"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.074"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.136" />
+                app:layout_constraintVertical_bias="0.136">
+            </androidx.appcompat.widget.AppCompatButton>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 

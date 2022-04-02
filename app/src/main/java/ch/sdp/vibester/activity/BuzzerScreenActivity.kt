@@ -163,32 +163,12 @@ class BuzzerScreenActivity : AppCompatActivity() {
      * Fires an intent from the Gamescreen to the Ending Screen
      */
     fun switchToEnding(view: View) {
+        val mockArray = arrayListOf<String>("One", "Two", "Three", "Four", "Five")
         val intent = Intent(this, GameEndingActivity::class.java)
-        //MOCK VALUES FOR INCORRECT SONGS, ADAPT FROM GAME DATA IN THE FUTURE
-        val incArray: ArrayList<String> = arrayListOf()
-        incArray.addAll(arrayOf("One", "Two", "Three"))
-
-        val statNames: ArrayList<String> = arrayListOf()
-        statNames.addAll(
-            arrayOf(
-                "Hello there",
-                "Second Stat",
-                "Third Stat",
-                "Fourth Stat",
-                "Fifth Stat"
-            )
-        )
-
-        val statVal: ArrayList<String> = arrayListOf()
-        statVal.addAll(
-            arrayOf(
-                "General Kenobi",
-                "----- *2 -----",
-                "----- *3 -----",
-                "----- *4 -----",
-                "----- *5 -----"
-            )
-        )
+        
+        val incArray: ArrayList<String> = mockArray
+        val statNames: ArrayList<String> = mockArray
+        val statVal: ArrayList<String> = mockArray
 
         intent.putExtra("playerName", "Arda")
         intent.putExtra("nbIncorrectSong", 3)

@@ -103,6 +103,11 @@ class TypingGameActivity : AppCompatActivity() {
             setMax(intent)
         }
 
+        val nextSongBtn = findViewById<Button>(R.id.nextSong)
+        nextSongBtn.setOnClickListener {
+            startRound(ctx, gameManager)
+        }
+
         //Listener when we modify the input
         inputTxt.addTextChangedListener {
             guessLayout.removeAllViews()

@@ -253,6 +253,12 @@ class TypingGameActivity : AppCompatActivity() {
         h.post(runnable!!)
 
     }
+    private fun endRound(ctx: Context, gameManager: GameManager){
+        findViewById<Button>(R.id.nextSong).visibility = android.view.View.VISIBLE
+        if (runnable != null) {
+            h.removeCallbacks(runnable!!)
+        }
+    }
 
     /**
      * Function to set a new round. It includes reinitializing activity elements,

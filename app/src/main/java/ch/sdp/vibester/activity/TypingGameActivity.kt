@@ -18,6 +18,7 @@ import ch.sdp.vibester.api.BitmapGetterApi
 import ch.sdp.vibester.api.ItunesMusicApi
 import ch.sdp.vibester.helper.DisplayContents
 import ch.sdp.vibester.helper.GameManager
+import ch.sdp.vibester.helper.TypingGameManager
 import ch.sdp.vibester.model.Song
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -30,12 +31,12 @@ import java.util.concurrent.CompletableFuture
  * Class that represent a game
  */
 
-class TypingGameActivity : AppCompatActivity() {
-    private val h = Handler()
+class TypingGameActivity : GameActivity() {
+    //private val h = Handler()
     private var runnable: Runnable? = null
-    private var maxTime: Int = 30
+    //private var maxTime: Int = 30
 
-    private lateinit var gameManager: GameManager
+    private lateinit var gameManager: TypingGameManager
 
     companion object {
         /**
@@ -98,9 +99,9 @@ class TypingGameActivity : AppCompatActivity() {
 
         val getIntent = intent.extras
         if (getIntent != null) {
-            gameManager = getIntent.getSerializable("gameManager") as GameManager
+            gameManager = getIntent.getSerializable("gameManager") as TypingGameManager
             playRound(ctx, gameManager)
-            setMax(intent)
+            super.setMax(intent)
         }
 
         //Listener when we modify the input
@@ -125,7 +126,7 @@ class TypingGameActivity : AppCompatActivity() {
         }
     }
 
-    private fun setMax(intent: Intent) {
+    /*private fun setMax(intent: Intent) {
         if(intent.hasExtra("Difficulty")) {
             when(intent.extras?.getString("Difficulty", "Easy")) {
                 "Easy" -> maxTime = 30
@@ -133,7 +134,7 @@ class TypingGameActivity : AppCompatActivity() {
                 "Hard" -> maxTime = 5
             }
         }
-    }
+    }*/
 
     override fun onDestroy() {
         if (runnable != null) {
@@ -163,7 +164,7 @@ class TypingGameActivity : AppCompatActivity() {
     /**
      * Generate a change of intent at the end of a game
      */
-    fun checkAnswer(ctx: Context, chosenSong: Song?, gameManager: GameManager) {
+    fun checkAnswer(ctx: Context, chosenSong: Song?, gameManager: TypingGameManager) {
         val playedSong = gameManager.getCurrentSong()
 
         if (chosenSong != null && chosenSong.getTrackName() == playedSong.getTrackName() && chosenSong.getArtistName() == playedSong.getArtistName()) {
@@ -180,7 +181,7 @@ class TypingGameActivity : AppCompatActivity() {
     /**
      * Create the frame layout and its logic of the suggestion when user is typing
      */
-    fun guess(song: Song, guessLayout: LinearLayout, ctx: Context, gameManager: GameManager): FrameLayout {
+    fun guess(song: Song, guessLayout: LinearLayout, ctx: Context, gameManager: TypingGameManager): FrameLayout {
         val frameLay = FrameLayout(ctx)
         frameLay.background = DisplayContents.borderGen(ctx, R.color.maximum_yellow_red)
 
@@ -215,7 +216,7 @@ class TypingGameActivity : AppCompatActivity() {
     /**
      * Custom handle of the bar progress.
      */
-    private fun barTimer(myBar: ProgressBar, ctx:Context, gameManager: GameManager){
+    private fun barTimer(myBar: ProgressBar, ctx:Context, gameManager: TypingGameManager){
         myBar.max = maxTime
         myBar.progress = maxTime
         myBar.progressTintList = ColorStateList.valueOf(getColor(R.color.cg_blue))
@@ -248,7 +249,7 @@ class TypingGameActivity : AppCompatActivity() {
      * and setting new song for the round.
      */
 
-    private fun playRound(ctx: Context, gameManager: GameManager) {
+    private fun playRound(ctx: Context, gameManager: TypingGameManager) {
         if (gameManager.checkGameStatus() && gameManager.setNextSong()) {
             findViewById<LinearLayout>(R.id.displayGuess).removeAllViews()
             findViewById<EditText>(R.id.yourGuessET).text.clear()

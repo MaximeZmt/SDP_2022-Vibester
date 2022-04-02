@@ -12,19 +12,17 @@ import java.util.concurrent.CompletableFuture
 /**
  * Game Manager to set up a solo game for a chosen mode.
  */
-class GameManager : Serializable {
+open class GameManager : Serializable {
     private var score = 0
-    private var nextSongInd = 0
-    var gameSize = 5
-    private var numPlayedSongs = 0
-    private lateinit var currentSong: Song
-    private var gameSongList: MutableList<Pair<String, String>> = mutableListOf()
-    private lateinit var mediaPlayer: CompletableFuture<MediaPlayer>
+    open var gameSize = 5
+    var numPlayedSongs = 0
+    open lateinit var currentSong: Song
+    var gameSongList: MutableList<Pair<String, String>> = mutableListOf()
     private val correctSongs = mutableListOf<Song>()
     private var wrongSongs = mutableListOf<Song>()
 
     /**
-     * Set a shuffled songlist for a game
+     * Set a shuffled songList for a game
      * @param jsonMeta: JSON song list from lastfm API
      * @param method: method for a game
      */
@@ -70,6 +68,7 @@ class GameManager : Serializable {
     /**
      * Get a current playing song
      */
+    @JvmName("getCurrentSong1")
     fun getCurrentSong(): Song {
         return currentSong
     }
@@ -101,65 +100,9 @@ class GameManager : Serializable {
      *          false otherwise
      */
     fun checkGameStatus(): Boolean {
-        if (numPlayedSongs < gameSize) {
-            return true
-        }
-        return false
+        return numPlayedSongs < gameSize
     }
 
-    /**
-     * Set the next song to play. It can happened that the song from a list is not present in
-     * Itunes API. In such case, the exception is called and the function is rerun with the
-     * next song in the list.
-     * @return: true if the next song to play is set
-     *          false otherwise
-     */
-    fun setNextSong(): Boolean {
-        if (nextSongInd < gameSongList.size) {
-            val songPair = gameSongList[nextSongInd]
-            val songName = songPair.first + " " + songPair.second
-            try {
-                currentSong =
-                    Song.singleSong(ItunesMusicApi.querySong(songName, OkHttpClient(), 1).get())
-                nextSongInd++
-                numPlayedSongs++
-            } catch (e: Exception) {
-                nextSongInd++
-                setNextSong()
-            }
-            return true
-        }
-        return false
-    }
 
-    /**
-     * Set a media player. Used for testing.
-     */
-    fun setMediaPlayer(mediaPlayer: CompletableFuture<MediaPlayer>) {
-        this.mediaPlayer = mediaPlayer
-    }
-
-    /**
-     * Play current song with media player.
-     */
-    fun playSong() {
-        mediaPlayer = AudioPlayer.playAudio(currentSong.getPreviewUrl())
-    }
-
-    /**
-     * Check if media player is playing
-     * @return: true if media player is playing
-     *          false otherwise
-     */
-    fun playingMediaPlayer(): Boolean {
-        return mediaPlayer.get().isPlaying
-    }
-
-    /**
-     * Stop media player
-     */
-    fun stopMediaPlayer() {
-        mediaPlayer.get().stop()
-    }
 
 }

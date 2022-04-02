@@ -84,7 +84,7 @@ class LyricsBelongGameActivity : GameActivity() {
      * Function to set a new round. It includes reinitializing activity elements,
      * and setting new song for the round.
      */
-    private fun playRound(gameManager: GameManager) {
+    fun playRound(gameManager: GameManager) {
         if (gameManager.checkGameStatus() && gameManager.setNextSong()) {
             clearResult()
             findViewById<Button>(R.id.lyricMatchButton).visibility = View.INVISIBLE

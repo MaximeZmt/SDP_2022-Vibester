@@ -184,10 +184,10 @@ class TypingGameActivityTest {
         assertEquals(true, gameManager.getScore() == 0)
     }
 
-    /*
- * Currently testing with the *static* values. Change to *dynamic* once the game is correctly
- * implemented and all the data are being sent between activities.
- */
+    /**
+    * Currently testing with the *static* values. Change to *dynamic* once the game is correctly
+    * implemented and all the data are being sent between activities.
+    */
     @Test
     fun checkIntentOnEnding() {
 
@@ -204,14 +204,13 @@ class TypingGameActivityTest {
         val gameManager = setGameManager()
         gameManager.setNextSong()
         gameManager.gameSize = 1
-        lateinit var temp: Unit
 
         val intent =
             Intent(ApplicationProvider.getApplicationContext(), TypingGameActivity::class.java)
         val scn: ActivityScenario<TypingGameActivity> = ActivityScenario.launch(intent)
         val ctx = ApplicationProvider.getApplicationContext() as Context
         scn.onActivity { activity ->
-            temp = activity.checkAnswer(ctx, songTest, gameManager)
+            activity.checkAnswer(ctx, songTest, gameManager)
         }
         val incArray: ArrayList<String> = ArrayList(
             gameManager.getWrongSongs().map { it.getTrackName() + " - " + it.getArtistName() })

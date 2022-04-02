@@ -1,11 +1,13 @@
 package ch.sdp.vibester.activity
 
+import android.content.Context
 import android.content.Intent
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
+import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -27,7 +29,8 @@ class LyricsBelongGameActivityTest {
     private val sleepTime: Long = 5000
     private val songName = "Thunder"
     private val artistName = "Imagine Dragons"
-    private val speechInput = "Just a young gun with a quick fuse"
+    private val speechInputCorrect = "Just a young gun with a quick fuse"
+    private val speechInputWrong = "I don't remember the lyrics"
     private val lyrics = "Just a young gun with a quick fuse\n" +
             "I was uptight, wanna let loose\n" +
             "I was dreaming of bigger things in\n" +
@@ -165,7 +168,7 @@ class LyricsBelongGameActivityTest {
         )
         val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
         scn.onActivity { activity ->
-            activity.testCheckLyrics(speechInput, lyrics, gameManager)
+            activity.testCheckLyrics(speechInputCorrect, lyrics, gameManager)
         }
         Thread.sleep(sleepTime)
         onView(withId(R.id.lyricMatchResult)).check(matches(withText("res: correct")))
@@ -180,7 +183,7 @@ class LyricsBelongGameActivityTest {
         )
         val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
         scn.onActivity { activity ->
-            activity.testCheckLyrics("I don't remember the lyrics", lyrics, gameManager)
+            activity.testCheckLyrics(speechInputWrong, lyrics, gameManager)
         }
         Thread.sleep(sleepTime)
         onView(withId(R.id.lyricMatchResult)).check(matches(withText("res: too bad")))
@@ -208,10 +211,44 @@ class LyricsBelongGameActivityTest {
         )
         val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
         scn.onActivity { activity ->
-            activity.testGetAndCheckLyrics(songName, artistName, speechInput, gameManager)
+            activity.testGetAndCheckLyrics(songName, artistName, speechInputCorrect, gameManager)
         }
         Thread.sleep(sleepTime)
         onView(withId(R.id.lyricMatchResult)).check(matches(withText("res: correct")))
+    }
+
+    @Test
+    fun checkIntentOnEnding() {
+        val gameManager = setGameManager()
+        gameManager.setNextSong()
+        gameManager.gameSize = 1
+
+        val intent =
+            Intent(ApplicationProvider.getApplicationContext(), LyricsBelongGameActivity::class.java)
+        val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
+        val ctx = ApplicationProvider.getApplicationContext() as Context
+        scn.onActivity { activity ->
+            activity.testCheckLyrics(speechInputWrong, lyrics, gameManager)
+            activity.playRound(gameManager)
+        }
+        val incArray: ArrayList<String> = ArrayList(
+            gameManager.getWrongSongs().map { it.getTrackName() + " - " + it.getArtistName() })
+
+        val statNames: ArrayList<String> = arrayListOf()
+        val statName = "Total Score"
+        statNames.addAll(arrayOf(statName, statName, statName, statName, statName))
+
+        val statVal: ArrayList<String> = arrayListOf()
+        val score = gameManager.getScore().toString()
+        statVal.addAll(arrayOf(score, score, score, score, score))
+
+        Intents.intended(IntentMatchers.hasComponent(GameEndingActivity::class.java.name))
+
+        Intents.intended(IntentMatchers.hasExtra("nbIncorrectSong", 1))
+
+        Intents.intended(IntentMatchers.hasExtra("str_arr_inc", incArray))
+        Intents.intended(IntentMatchers.hasExtra("str_arr_name", statNames))
+        Intents.intended(IntentMatchers.hasExtra("str_arr_val", statVal))
     }
 
 }

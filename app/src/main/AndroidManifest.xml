@@ -16,6 +16,9 @@
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".activity.BuzzerSetupActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.IncorrectSongsActivity"
             android:exported="false" />
         <activity
@@ -28,7 +31,7 @@
             android:name=".activity.TypingGameActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.GamescreenActivity"
+            android:name=".activity.BuzzerScreenActivity"
             android:exported="false" />
         <activity
             android:name=".activity.ProfileActivity"

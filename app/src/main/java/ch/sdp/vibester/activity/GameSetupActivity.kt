@@ -16,7 +16,6 @@ import ch.sdp.vibester.api.LastfmApiInterface
 import ch.sdp.vibester.api.LastfmMethod
 import ch.sdp.vibester.api.LastfmUri
 import ch.sdp.vibester.helper.GameManager
-import ch.sdp.vibester.helper.SpinnerOperation
 import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback

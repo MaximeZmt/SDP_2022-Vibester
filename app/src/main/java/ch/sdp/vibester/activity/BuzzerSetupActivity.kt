@@ -8,7 +8,6 @@ import android.view.View
 import android.widget.*
 import androidx.core.view.children
 import ch.sdp.vibester.R
-import ch.sdp.vibester.helper.SpinnerOperation
 
 class BuzzerSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     var text = "One"

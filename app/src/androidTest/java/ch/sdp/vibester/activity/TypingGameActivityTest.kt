@@ -266,9 +266,9 @@ class TypingGameActivityTest {
         val ctx = ApplicationProvider.getApplicationContext() as Context
         scn.onActivity { activity ->
             temp = activity.checkAnswer(ctx, songTest, gameManager)
-            activity.gameManager = gameManager
+            gameManager.gameSize = 1
+            activity.setbtnlistener(ctx, gameManager)
         }
-        gameManager.gameSize = 1
 
         onView(withId(R.id.nextSong)).check(matches(allOf(isEnabled(), isClickable()))).perform(
             object : ViewAction {

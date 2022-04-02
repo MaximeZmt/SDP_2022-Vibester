@@ -83,8 +83,6 @@ class BuzzerSetupActivityTest {
 
     @Test
     fun checkIntentOnProceedTwo() {
-        onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
-        onView(withId(R.id.difficulty_proceed)).perform(click())
         onView(withId(R.id.nb_player_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(1).perform(click())
         onView(withId(R.id.nb_players_selected)).perform(click())

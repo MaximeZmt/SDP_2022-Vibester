@@ -49,9 +49,6 @@
             android:name=".activity.AuthenticationActivity"
             android:exported="true" />
         <activity
-            android:name=".GenreTemporary"
-            android:exported="false" />
-        <activity
             android:name=".activity.WelcomeActivity"
             android:exported="true">
             <intent-filter>

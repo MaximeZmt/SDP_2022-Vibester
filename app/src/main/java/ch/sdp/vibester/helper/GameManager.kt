@@ -1,13 +1,10 @@
 package ch.sdp.vibester.helper
 
-import android.media.MediaPlayer
-import ch.sdp.vibester.api.AudioPlayer
 import ch.sdp.vibester.api.ItunesMusicApi
 import ch.sdp.vibester.model.Song
 import ch.sdp.vibester.model.SongList
 import okhttp3.OkHttpClient
 import java.io.Serializable
-import java.util.concurrent.CompletableFuture
 
 /**
  * Game Manager to set up a solo game for a chosen mode.
@@ -20,6 +17,7 @@ open class GameManager : Serializable {
     var gameSongList: MutableList<Pair<String, String>> = mutableListOf()
     private val correctSongs = mutableListOf<Song>()
     private var wrongSongs = mutableListOf<Song>()
+    var nextSongInd = 0
 
     /**
      * Set a shuffled songList for a game
@@ -104,5 +102,28 @@ open class GameManager : Serializable {
     }
 
 
-
+    /**
+     * Set the next song to play. It can happened that the song from a list is not present in
+     * Itunes API. In such case, the exception is called and the function is rerun with the
+     * next song in the list.
+     * @return: true if the next song to play is set
+     *          false otherwise
+     */
+    fun setNextSong(): Boolean {
+        if (nextSongInd < gameSongList.size) {
+            val songPair = gameSongList[nextSongInd]
+            val songName = songPair.first + " " + songPair.second
+            try {
+                currentSong =
+                    Song.singleSong(ItunesMusicApi.querySong(songName, OkHttpClient(), 1).get())
+                nextSongInd++
+                numPlayedSongs++
+            } catch (e: Exception) {
+                nextSongInd++
+                setNextSong()
+            }
+            return true
+        }
+        return false
+    }
 }

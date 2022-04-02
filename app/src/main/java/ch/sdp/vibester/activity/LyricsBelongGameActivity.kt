@@ -6,16 +6,14 @@ import android.speech.RecognizerIntent
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.R
-import ch.sdp.vibester.api.LastfmApiInterface
-import ch.sdp.vibester.api.LastfmMethod
-import ch.sdp.vibester.api.LastfmUri
-import ch.sdp.vibester.api.LyricsOVHApiInterface
+import ch.sdp.vibester.api.*
+import ch.sdp.vibester.helper.GameManager
 import ch.sdp.vibester.model.Lyric
-import ch.sdp.vibester.model.SongList
-import com.google.gson.Gson
+import ch.sdp.vibester.model.Song
+import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -24,7 +22,9 @@ import java.util.*
 /**
  * Game checks if the player say the lyrics of the given song correct
  */
-class LyricsBelongGameActivity : AppCompatActivity() {
+class LyricsBelongGameActivity : GameActivity() {
+    private lateinit var gameManager: GameManager
+
     private val requestAudio = 100
     private lateinit var speechInput: String
     private lateinit var lyrics: String
@@ -34,6 +34,12 @@ class LyricsBelongGameActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lyrics_belong_game)
+
+        val getIntent = intent.extras
+        if (getIntent != null) {
+            gameManager = getIntent.getSerializable("gameManager") as GameManager
+            super.setMax(intent)
+        }
 
         val btnSpeak = findViewById<ImageView>(R.id.btnSpeak)
         btnSpeak.setOnClickListener {
@@ -48,9 +54,12 @@ class LyricsBelongGameActivity : AppCompatActivity() {
 
         val btnNext = findViewById<Button>(R.id.nextSongButton)
         btnNext.setOnClickListener {
-            clearResult()
-            fetchSong()
+            playRound(gameManager)
         }
+
+        barTimer(findViewById(R.id.progressBarLyrics))
+
+        setFirstSong(gameManager)
     }
 
     private fun getSpeechInput() {
@@ -73,27 +82,21 @@ class LyricsBelongGameActivity : AppCompatActivity() {
     }
 
     /**
-     * fetch a song randomly for the game
+     * Function to set a new round. It includes reinitializing activity elements,
+     * and setting new song for the round.
      */
-    private fun fetchSong() {
-        val service = LastfmApiInterface.createLastfmService()
-        val uri = LastfmUri(method = LastfmMethod.BY_ARTIST.method, artist = "Imagine Dragons")
-        val call = service.getSongList(uri.convertToHashmap())
-        call.enqueue(object : Callback<Any> {
-            override fun onFailure(call: Call<Any>?, t: Throwable?) {}
-            override fun onResponse(call: Call<Any>?, response: Response<Any>?) {
-                if (response != null) {
-                    val track = SongList(
-                        Gson().toJson(response.body()),
-                        uri.method
-                    ).getShuffledSongList()[0]
-                    songName = track.first
-                    artistName = track.second
-                    findViewById<TextView>(R.id.lyricResult).text = "Say something from $songName - $artistName"
-                }
-            }
-        })
-
+    private fun playRound(gameManager: GameManager) {
+        if (gameManager.checkGameStatus() && gameManager.setNextSong()) {
+            clearResult()
+            findViewById<Button>(R.id.lyricMatchButton).visibility = View.INVISIBLE
+            songName = gameManager.currentSong.getTrackName()
+            artistName = gameManager.currentSong.getArtistName()
+            findViewById<TextView>(R.id.lyricResult).text = "Say something from $songName - $artistName"
+            checkRunnable()
+            barTimer(findViewById(R.id.progressBarLyrics))
+        } else {
+            switchToEnding(gameManager)
+        }
     }
 
     /**
@@ -119,7 +122,7 @@ class LyricsBelongGameActivity : AppCompatActivity() {
                     val result = response.body()
                     if (response.isSuccessful && result != null) {
                         lyrics = result.lyrics.toString().replace(",", "")
-                        checkLyrics( speechInput, lyrics) // be sure the lyrics is ready when checking
+                        checkLyrics( speechInput, lyrics, gameManager) // be sure the lyrics is ready when checking
                     } else {
                         findViewById<TextView>(R.id.lyricMatchResult).text =
                             "No lyrics found, try another song"
@@ -132,18 +135,45 @@ class LyricsBelongGameActivity : AppCompatActivity() {
     /**
      * show the result of lyrics matching
      */
-    private fun checkLyrics(lyricToBeCheck: String, lyrics: String) {
-        findViewById<TextView>(R.id.lyricMatchResult).text =
-            if (lyrics.contains(lyricToBeCheck, ignoreCase = true)) "res: correct" else "res: too bad"
+    private fun checkLyrics(lyricToBeCheck: String, lyrics: String, gameManager: GameManager) {
+         if (lyrics.contains(lyricToBeCheck, ignoreCase = true)) {
+             gameManager.increaseScore()
+             gameManager.addCorrectSong()
+             findViewById<TextView>(R.id.lyricMatchResult).text = "res: correct"
+         } else {
+             gameManager.addWrongSong()
+             findViewById<TextView>(R.id.lyricMatchResult).text = "res: too bad"
+         }
+    }
+
+    // FIXME: progress bar doesn't decrease
+    private fun barTimer(myBar: ProgressBar) {
+        initializeBarTimer(myBar)
+        runnable = object : Runnable {
+            override fun run() {
+                if (myBar.progress > 0) {
+                    decreaseBarTimer(myBar)
+                    h.postDelayed(this, 999)
+                } else if (myBar.progress == 0) {
+                    getAndCheckLyrics(songName, artistName, speechInput)
+                }
+            }
+        }
     }
 
     private fun clearResult() {
         findViewById<TextView>(R.id.lyricMatchResult).text = "result will show here"
     }
 
+    private fun setFirstSong(gameManager: GameManager) {
+        gameManager.currentSong = Song.singleSong(
+            ItunesMusicApi.querySong(songName + " " + artistName, OkHttpClient(), 1).get()
+        )
+    }
+
     // helper functions to test private functions
-    fun testCheckLyrics(lyricToBeCheck: String, lyrics: String) {
-        checkLyrics(lyricToBeCheck, lyrics)
+    fun testCheckLyrics(lyricToBeCheck: String, lyrics: String, gameManager: GameManager) {
+        checkLyrics(lyricToBeCheck, lyrics, gameManager)
     }
 
     fun testUpdateSpeechResult(speechInput: String) {

@@ -263,6 +263,9 @@ class TypingGameActivity : AppCompatActivity() {
         if (runnable != null) {
             h.removeCallbacks(runnable!!)
         }
+        if (!gameManager.checkGameStatus() || !gameManager.setNextSong()) {
+            switchToEnding(gameManager)
+        }
     }
 
     /**

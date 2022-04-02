@@ -57,6 +57,7 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
     }
 
     override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+        difficulty = parent.getItemAtPosition(position).toString()
         when(difficulty) {
             "Easy"      -> setDifficultyText(R.string.difficulty_easy)
             "Medium"    -> setDifficultyText(R.string.difficulty_medium)
@@ -70,13 +71,13 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
          if(this.game == "local_buzzer"){
              val newIntent = Intent(this, BuzzerSetupActivity::class.java)
              newIntent.putExtra("gameManager", gameManager)
-             newIntent.putExtra("difficulty", difficulty)
+             newIntent.putExtra("Difficulty", difficulty)
              startActivity(newIntent)
          }
          else if(this.game == "local_typing"){
              val newIntent = Intent(this, TypingGameActivity::class.java)
              newIntent.putExtra("gameManager", gameManager)
-             newIntent.putExtra("difficulty", difficulty)
+             newIntent.putExtra("Difficulty", difficulty)
              startActivity(newIntent)
          }
     }

@@ -35,7 +35,7 @@ class TypingGameActivity : AppCompatActivity() {
     private  var runnable: Runnable? = null
     private var maxTime: Int = 30
 
-    private lateinit var gameManager: GameManager
+    lateinit var gameManager: GameManager
 
     companion object {
         /**

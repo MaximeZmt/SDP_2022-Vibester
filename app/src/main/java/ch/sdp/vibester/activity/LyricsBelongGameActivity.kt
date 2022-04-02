@@ -39,6 +39,7 @@ class LyricsBelongGameActivity : GameActivity() {
         if (getIntent != null) {
             gameManager = getIntent.getSerializable("gameManager") as GameManager
             super.setMax(intent)
+            setFirstSong(gameManager)
         }
 
         val btnSpeak = findViewById<ImageView>(R.id.btnSpeak)
@@ -49,7 +50,7 @@ class LyricsBelongGameActivity : GameActivity() {
         val btnCheck = findViewById<Button>(R.id.lyricMatchButton)
         btnCheck.visibility = View.INVISIBLE
         btnCheck.setOnClickListener {
-            getAndCheckLyrics(songName, artistName, speechInput)
+            getAndCheckLyrics(songName, artistName, speechInput, gameManager)
         }
 
         val btnNext = findViewById<Button>(R.id.nextSongButton)
@@ -58,8 +59,6 @@ class LyricsBelongGameActivity : GameActivity() {
         }
 
         barTimer(findViewById(R.id.progressBarLyrics))
-
-        setFirstSong(gameManager)
     }
 
     private fun getSpeechInput() {
@@ -110,7 +109,7 @@ class LyricsBelongGameActivity : GameActivity() {
     /**
      * get the lyrics of a given song
      */
-    private fun getAndCheckLyrics(songName: String, artistName: String, speechInput: String) {
+    private fun getAndCheckLyrics(songName: String, artistName: String, speechInput: String, gameManager: GameManager) {
         val service = LyricsOVHApiInterface.createLyricService()
         val call = service.getLyrics(artistName, songName)
         call.enqueue(object : Callback<Lyric> {
@@ -155,7 +154,7 @@ class LyricsBelongGameActivity : GameActivity() {
                     decreaseBarTimer(myBar)
                     h.postDelayed(this, 999)
                 } else if (myBar.progress == 0) {
-                    getAndCheckLyrics(songName, artistName, speechInput)
+                    getAndCheckLyrics(songName, artistName, speechInput, gameManager)
                 }
             }
         }
@@ -180,7 +179,7 @@ class LyricsBelongGameActivity : GameActivity() {
         updateSpeechResult(speechInput)
     }
 
-    fun testGetAndCheckLyrics(songName: String, artistName: String, speechInput: String) {
-        getAndCheckLyrics(songName, artistName, speechInput)
+    fun testGetAndCheckLyrics(songName: String, artistName: String, speechInput: String, gameManager: GameManager) {
+        getAndCheckLyrics(songName, artistName, speechInput, gameManager)
     }
 }

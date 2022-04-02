@@ -12,7 +12,6 @@ import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.LastfmMethod
-import ch.sdp.vibester.helper.GameManager
 import ch.sdp.vibester.helper.TypingGameManager
 import ch.sdp.vibester.model.Song
 import org.junit.After
@@ -93,9 +92,9 @@ class TypingGameActivityTest {
 
         val txtInput = "hello"
         val ctx = ApplicationProvider.getApplicationContext() as Context
-        val mytest = TypingGameActivity.generateImage(mySong, ctx)
-        assertEquals(200, mytest.minimumHeight)
-        assertEquals(200, mytest.minimumWidth)
+        val myTest = TypingGameActivity.generateImage(mySong, ctx)
+        assertEquals(200, myTest.minimumHeight)
+        assertEquals(200, myTest.minimumWidth)
     }
 
     @Test

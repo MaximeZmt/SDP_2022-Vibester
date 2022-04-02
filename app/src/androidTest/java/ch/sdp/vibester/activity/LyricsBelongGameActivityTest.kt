@@ -4,7 +4,6 @@ import android.content.Intent
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.matcher.ViewMatchers.*
@@ -12,7 +11,11 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.GrantPermissionRule
 import ch.sdp.vibester.R
-import org.hamcrest.CoreMatchers.containsString
+import ch.sdp.vibester.api.ItunesMusicApi
+import ch.sdp.vibester.api.LastfmMethod
+import ch.sdp.vibester.helper.GameManager
+import ch.sdp.vibester.model.Song
+import okhttp3.OkHttpClient
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -86,6 +89,28 @@ class LyricsBelongGameActivityTest {
             "Thunder, thun-, thunder\n" +
             "Thun-thun-thunder, thunder"
 
+    private fun setGameManager() : GameManager {
+        val managerTxt = """
+            {"tracks":
+            {"track":[{"name":"Monday","duration":"259","mbid":"31623cce-9717-4513-9d83-1b5d04e44f9b",
+            "url":"https://www.last.fm/music/Oasis/_/Wonderwall",
+            "streamable":{"#text":"0","fulltrack":"0"},
+            "artist":{"name":"Imagine Dragons","mbid":"ecf9f3a3-35e9-4c58-acaa-e707fba45060","url":"https://www.last.fm/music/Oasis"},
+            "image":[{"#text":"https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png","size":"small"},
+            {"#text":"https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png","size":"medium"},
+            {"#text":"https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png","size":"large"},
+            {"#text":"https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png","size":"extralarge"}],
+            "@attr":{"rank":"1"}}],"@attr":{"tag":"british","page":"1","perPage":"1","totalPages":"66649","total":"66649"}}}
+            """
+        val gameManager = GameManager()
+        gameManager.setGameSongList(managerTxt, LastfmMethod.BY_TAG.method)
+
+        gameManager.currentSong = Song.singleSong(
+            ItunesMusicApi.querySong(songName + " " + artistName, OkHttpClient(), 1).get()
+        )
+        return gameManager
+    }
+
     @get: Rule
     val activityRule = ActivityScenarioRule(LyricsBelongGameActivity::class.java)
 
@@ -105,13 +130,14 @@ class LyricsBelongGameActivityTest {
 
     @Test
     fun handleLyricsNoFoundCorrectly() {
+        val gameManager = setGameManager()
         val intent = Intent(
             ApplicationProvider.getApplicationContext(),
             LyricsBelongGameActivity::class.java
         )
         val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
         scn.onActivity { activity ->
-            activity.testGetAndCheckLyrics("the best song in the world", "Mr.Mystery", "")
+            activity.testGetAndCheckLyrics("the best song in the world", "Mr.Mystery", "", gameManager)
         }
         Thread.sleep(sleepTime)
         onView(withId(R.id.lyricMatchResult)).check(matches(withText("No lyrics found, try another song")))
@@ -130,33 +156,35 @@ class LyricsBelongGameActivityTest {
         onView(withId(R.id.lyricMatchResult)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
     }
 
-    /*@Test
+    @Test
     fun checkLyricsShouldReturnCorrect() {
+        val gameManager = setGameManager()
         val intent = Intent(
             ApplicationProvider.getApplicationContext(),
             LyricsBelongGameActivity::class.java
         )
         val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
         scn.onActivity { activity ->
-            activity.testCheckLyrics(speechInput, lyrics)
+            activity.testCheckLyrics(speechInput, lyrics, gameManager)
         }
         Thread.sleep(sleepTime)
         onView(withId(R.id.lyricMatchResult)).check(matches(withText("res: correct")))
-    }*/
+    }
 
-    /*@Test
+    @Test
     fun checkLyricsShouldReturnTooBad() {
+        val gameManager = setGameManager()
         val intent = Intent(
             ApplicationProvider.getApplicationContext(),
             LyricsBelongGameActivity::class.java
         )
         val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
         scn.onActivity { activity ->
-            activity.testCheckLyrics("I don't remember the lyrics", lyrics)
+            activity.testCheckLyrics("I don't remember the lyrics", lyrics, gameManager)
         }
         Thread.sleep(sleepTime)
         onView(withId(R.id.lyricMatchResult)).check(matches(withText("res: too bad")))
-    }*/
+    }
 
     @Test
     fun shouldUpdateSpeechFromInput() {
@@ -173,24 +201,17 @@ class LyricsBelongGameActivityTest {
 
     @Test
     fun getAndCheckLyricsGivesCorrectAnswerWhenMatch() {
+        val gameManager = setGameManager()
         val intent = Intent(
             ApplicationProvider.getApplicationContext(),
             LyricsBelongGameActivity::class.java
         )
         val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
         scn.onActivity { activity ->
-            activity.testGetAndCheckLyrics(songName, artistName, speechInput)
+            activity.testGetAndCheckLyrics(songName, artistName, speechInput, gameManager)
         }
         Thread.sleep(sleepTime)
         onView(withId(R.id.lyricMatchResult)).check(matches(withText("res: correct")))
-    }
-
-    @Test
-    fun nextBtnShouldClearResultAndFetchNewSong() {
-        onView(withId(R.id.nextSongButton)).perform(click())
-        Thread.sleep(sleepTime)
-        onView(withId(R.id.lyricMatchResult)).check(matches(withText("result will show here")))
-        onView(withId(R.id.lyricResult)).check(matches(withText(containsString("Say something from"))))
     }
 
 }

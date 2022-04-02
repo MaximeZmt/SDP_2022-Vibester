@@ -32,9 +32,6 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
             findViewById<ConstraintLayout>(R.id.chooseDifficulty),
             findViewById<ConstraintLayout>(R.id.buzzerSetup))
 
-        val spinner: Spinner = findViewById(R.id.nb_player_spinner)
-        //spinner.background = DisplayContents.borderGen(this, R.color.floral_white)
-        initSpinner(spinner, R.array.nb_players)
 
         val spinnerDifficulty: Spinner = findViewById(R.id.difficulty_spinner)
         initSpinner(spinnerDifficulty, R.array.difficulties_name)
@@ -51,58 +48,17 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
             spinner.onItemSelectedListener = this
         }
     }
+
     override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-        if(parent.id == R.id.nb_player_spinner) {
-            text = parent.getItemAtPosition(position).toString()
-            updatePlayerNameVisibility(textToNumber(text), R.id.namePlayer2)
-            updatePlayerNameVisibility(textToNumber(text), R.id.namePlayer3)
-            updatePlayerNameVisibility(textToNumber(text), R.id.namePlayer4)
-            // update linear layout's visibility, add linear layout with certain visible number of rows
-            // or just make 4 rows at first and update that later
-        } else {
-            difficulty = parent.getItemAtPosition(position).toString()
-            when(difficulty) {
-                "Easy"      -> setDifficultyText(R.string.difficulty_easy)
-                "Medium"    -> setDifficultyText(R.string.difficulty_medium)
-                "Hard"      -> setDifficultyText(R.string.difficulty_hard)
-            }
+        when(difficulty) {
+            "Easy"      -> setDifficultyText(R.string.difficulty_easy)
+            "Medium"    -> setDifficultyText(R.string.difficulty_medium)
+            "Hard"      -> setDifficultyText(R.string.difficulty_hard)
         }
     }
 
-    /**
-     * Converts the spinner text for the number of players into an Int
-     * @param
-     * text: the string to be converted
-     */
-    fun textToNumber(text: String): Int {
-        when (text) {
-            "One" -> return 1
-            "Two" -> return 2
-            "Three" -> return 3
-            "Four" -> return 4
-        }
-        return 1
-    }
+    override fun onNothingSelected(parent: AdapterView<*>) {difficulty = "Easy"}
 
-
-    override fun onNothingSelected(parent: AdapterView<*>) {text = "One"; difficulty = "Easy"}
-
-    /**
-     * Updates visibility of player name entry fields according to number of players selected in the spinner
-     * @param
-     * n: number of players selected in the spinner
-     * id: the id of the field to update
-     */
-    fun updatePlayerNameVisibility(n: Int, id: Int) {
-        var i = when (id) {
-            R.id.namePlayer2 -> 2
-            R.id.namePlayer3 -> 3
-            R.id.namePlayer4 -> 4
-            else -> 0
-        }
-        findViewById<EditText>(id).visibility =
-            if (n >= i) android.view.View.VISIBLE else android.view.View.INVISIBLE
-    }
 
     fun proceedToGame(view: View) { //FILLER INTENT
         val intent = Intent(this, GamescreenActivity::class.java)

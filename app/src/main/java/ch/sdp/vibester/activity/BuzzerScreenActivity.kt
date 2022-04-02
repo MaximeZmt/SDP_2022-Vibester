@@ -10,12 +10,11 @@ import android.widget.LinearLayout
 import android.widget.TableRow
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.children
 import ch.sdp.vibester.BuzzerScoreUpdater
 import ch.sdp.vibester.R
 
 
-class GamescreenActivity : AppCompatActivity() {
+class BuzzerScreenActivity : AppCompatActivity() {
 
     private val MAX_N_PLAYERS = 4
     private val NO_BUZZER_PRESSED = -1
@@ -43,7 +42,7 @@ class GamescreenActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         supportActionBar?.hide()
-        setContentView(R.layout.activity_gamescreen)
+        setContentView(R.layout.activity_buzzer_screen)
 
         val getIntent = intent.extras
         val nPlayers = getIntent?.getInt("Number of players")

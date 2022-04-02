@@ -1,5 +1,6 @@
 package ch.sdp.vibester.activity
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -7,28 +8,25 @@ import android.view.View
 import android.widget.*
 import androidx.core.view.children
 import ch.sdp.vibester.R
+import ch.sdp.vibester.helper.SpinnerOperation
 
 class BuzzerSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     var text = "One"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_buzzer_setup)
+        val ctx: Context = this
 
         val spinner: Spinner = findViewById(R.id.nb_player_spinner)
-        initSpinner(spinner, R.array.nb_players)
+        val adapter = ArrayAdapter.createFromResource(
+            ctx,
+            R.array.nb_players,
+            android.R.layout.simple_spinner_item
+        )
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner.onItemSelectedListener = this
     }
 
-    private fun initSpinner(spinner: Spinner, spinner_array: Int) {
-        ArrayAdapter.createFromResource(
-            this,
-            spinner_array,
-            android.R.layout.simple_spinner_item
-        ).also { adapter ->
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            spinner.adapter = adapter
-            spinner.onItemSelectedListener = this
-        }
-    }
     override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
         text = parent.getItemAtPosition(position).toString()
         updatePlayerNameVisibility(textToNumber(text), R.id.namePlayer2)

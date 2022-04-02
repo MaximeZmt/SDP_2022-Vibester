@@ -1,5 +1,6 @@
 package ch.sdp.vibester.activity
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -15,6 +16,7 @@ import ch.sdp.vibester.api.LastfmApiInterface
 import ch.sdp.vibester.api.LastfmMethod
 import ch.sdp.vibester.api.LastfmUri
 import ch.sdp.vibester.helper.GameManager
+import ch.sdp.vibester.helper.SpinnerOperation
 import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
@@ -24,6 +26,7 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
     var difficulty = "Easy"
     var game = "local_buzzer"
     val gameManager = GameManager()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -32,20 +35,14 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         val ctx: Context = this
 
         val spinnerDifficulty: Spinner = findViewById(R.id.difficulty_spinner)
-        initSpinner(spinnerDifficulty, R.array.difficulties_name)
-    }
-
-
-    private fun initSpinner(spinner: Spinner, spinner_array: Int) {
-        ArrayAdapter.createFromResource(
-            this,
-            spinner_array,
+        val adapter = ArrayAdapter.createFromResource(
+            ctx,
+            R.array.difficulties_name,
             android.R.layout.simple_spinner_item
-        ).also { adapter ->
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            spinner.adapter = adapter
-            spinner.onItemSelectedListener = this
-        }
+        )
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerDifficulty.adapter = adapter
+        spinnerDifficulty.onItemSelectedListener = this
     }
 
     override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
@@ -109,6 +106,7 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
             findViewById<ConstraintLayout>(R.id.chooseGenre))
     }
 
+    fun chooseGenre(view: View) {
         var method =  ""
         var artist = ""
         var tag = ""

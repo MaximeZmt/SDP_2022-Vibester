@@ -32,7 +32,7 @@ import java.util.concurrent.CompletableFuture
 
 class TypingGameActivity : AppCompatActivity() {
     private val h = Handler()
-    private  var runnable: Runnable? = null
+    private var runnable: Runnable? = null
     private var maxTime: Int = 30
 
     private lateinit var gameManager: GameManager
@@ -53,7 +53,7 @@ class TypingGameActivity : AppCompatActivity() {
          */
         fun generateText(txt: String, ctx: Context): TextView {
             val txtView = TextView(ctx)
-            txtView.setText(txt)
+            txtView.text = txt
             txtView.gravity = Gravity.CENTER
             txtView.minHeight = 200
             txtView.textSize = 20F
@@ -62,7 +62,7 @@ class TypingGameActivity : AppCompatActivity() {
         }
 
         /**
-         * Generate an images widget programmatically given a song (retrieve song artwork asychronously)
+         * Generate an images widget programmatically given a song (retrieve song artwork asynchronously)
          */
         fun generateImage(song: Song, ctx: Context): ImageView {
             val imgView = ImageView(ctx)
@@ -115,12 +115,7 @@ class TypingGameActivity : AppCompatActivity() {
                     try {
                         val list = Song.listSong(task.await())
                         for (x: Song in list) {
-                            guess(
-                                x,
-                                findViewById(R.id.displayGuess),
-                                this@TypingGameActivity,
-                                gameManager
-                            )
+                            guess(x, findViewById(R.id.displayGuess), this@TypingGameActivity, gameManager )
                         }
                     } catch (e: Exception) {
                         Log.e("Exception: ", e.toString())
@@ -153,25 +148,25 @@ class TypingGameActivity : AppCompatActivity() {
     /**
      * announce if the player won or not
      */
-    private fun hasWon(ctx: Context, score: Int, hasWon: Boolean, itwas: Song) {
+    private fun hasWon(ctx: Context, score: Int, hasWon: Boolean, itWas: Song) {
         if (hasWon) {
-            Toast.makeText(ctx, score.toString() + " Well Done!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(ctx, "$score Well Done!", Toast.LENGTH_SHORT).show()
         } else {
             Toast.makeText(
                 ctx,
-                "Sadly you're wrong, it was: " + itwas.getTrackName() + " by " + itwas.getArtistName(),
+                "Sadly you're wrong, it was: " + itWas.getTrackName() + " by " + itWas.getArtistName(),
                 Toast.LENGTH_SHORT
             ).show()
         }
     }
 
     /**
-     * Generate a change of intent at the end of the game
+     * Generate a change of intent at the end of a game
      */
-    fun checkAnswer(ctx: Context, choosenSong: Song?, gameManager: GameManager) {
+    fun checkAnswer(ctx: Context, chosenSong: Song?, gameManager: GameManager) {
         val playedSong = gameManager.getCurrentSong()
 
-        if (choosenSong != null && choosenSong.getTrackName() == playedSong.getTrackName() && choosenSong.getArtistName() == playedSong.getArtistName()) {
+        if (chosenSong != null && chosenSong.getTrackName() == playedSong.getTrackName() && chosenSong.getArtistName() == playedSong.getArtistName()) {
             gameManager.increaseScore()
             gameManager.addCorrectSong()
             hasWon(ctx, gameManager.getScore(), true, playedSong)
@@ -179,18 +174,13 @@ class TypingGameActivity : AppCompatActivity() {
             hasWon(ctx, gameManager.getScore(), false, playedSong)
             gameManager.addWrongSong()
         }
-        playRound(ctx, gameManager)
+        playRound(ctx, gameManager) //play the next round
     }
 
     /**
      * Create the frame layout and its logic of the suggestion when user is typing
      */
-    fun guess(
-        song: Song,
-        guessLayout: LinearLayout,
-        ctx: Context,
-        gameManager: GameManager
-    ): FrameLayout {
+    fun guess(song: Song, guessLayout: LinearLayout, ctx: Context, gameManager: GameManager): FrameLayout {
         val frameLay = FrameLayout(ctx)
         frameLay.background = DisplayContents.borderGen(ctx, R.color.maximum_yellow_red)
 
@@ -207,7 +197,7 @@ class TypingGameActivity : AppCompatActivity() {
         frameLay.addView(linLay)
         guessLayout.addView(frameLay)
 
-        //Create the Listener that is executed if we click on the framelayer
+        //Create the Listener that is executed if we click on the frame layer
         frameLay.setOnClickListener {
             frameLay.setBackgroundColor(getColor(ctx, R.color.tiffany_blue))
             guessLayout.removeAllViews()
@@ -225,7 +215,6 @@ class TypingGameActivity : AppCompatActivity() {
     /**
      * Custom handle of the bar progress.
      */
-
     private fun barTimer(myBar: ProgressBar, ctx:Context, gameManager: GameManager){
         myBar.max = maxTime
         myBar.progress = maxTime
@@ -259,7 +248,7 @@ class TypingGameActivity : AppCompatActivity() {
      * and setting new song for the round.
      */
 
-    fun playRound(ctx: Context, gameManager: GameManager) {
+    private fun playRound(ctx: Context, gameManager: GameManager) {
         if (gameManager.checkGameStatus() && gameManager.setNextSong()) {
             findViewById<LinearLayout>(R.id.displayGuess).removeAllViews()
             findViewById<EditText>(R.id.yourGuessET).text.clear()

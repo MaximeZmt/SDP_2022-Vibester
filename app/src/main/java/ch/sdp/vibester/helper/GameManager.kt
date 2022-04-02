@@ -42,7 +42,7 @@ class GameManager : Serializable {
     /**
      * Get current number of played songs in a game
      */
-    fun getPlayedSongs(): Int {
+    fun getPlayedSongsCount(): Int {
         return numPlayedSongs
     }
 
@@ -108,7 +108,7 @@ class GameManager : Serializable {
     }
 
     /**
-     * Set the next song to play. It can happend that the song from a list is not present in
+     * Set the next song to play. It can happened that the song from a list is not present in
      * Itunes API. In such case, the exception is called and the function is rerun with the
      * next song in the list.
      * @return: true if the next song to play is set

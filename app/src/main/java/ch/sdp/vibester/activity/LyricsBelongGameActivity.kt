@@ -25,7 +25,7 @@ import java.util.*
  * Game checks if the player say the lyrics of the given song correct
  */
 class LyricsBelongGameActivity : AppCompatActivity() {
-    private val REQUEST_AUDIO = 100
+    private val requestAudio = 100
     private lateinit var speechInput: String
     private lateinit var lyrics: String
     private var songName = "Thunder"
@@ -60,12 +60,12 @@ class LyricsBelongGameActivity : AppCompatActivity() {
             RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
         )
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
-        startActivityForResult(intent, REQUEST_AUDIO)
+        startActivityForResult(intent, requestAudio) //deprecated but works
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_AUDIO || data != null) {
+        super.onActivityResult(requestCode, resultCode, data) //deprecated but works
+        if (requestCode == requestAudio || data != null) {
             val res = data!!.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
             speechInput = res?.get(0) ?: "Didn't catch"
             updateSpeechResult(speechInput)
@@ -89,8 +89,7 @@ class LyricsBelongGameActivity : AppCompatActivity() {
                     ).getShuffledSongList()[0]
                     songName = track.first
                     artistName = track.second
-                    findViewById<TextView>(R.id.lyricResult).text =
-                        "Say something from %s - %s".format(songName, artistName)
+                    findViewById<TextView>(R.id.lyricResult).text = "Say something from $songName - $artistName"
                 }
             }
         })
@@ -120,10 +119,7 @@ class LyricsBelongGameActivity : AppCompatActivity() {
                     val result = response.body()
                     if (response.isSuccessful && result != null) {
                         lyrics = result.lyrics.toString().replace(",", "")
-                        checkLyrics(
-                            speechInput,
-                            lyrics
-                        ) // be sure the lyrics is ready when checking
+                        checkLyrics( speechInput, lyrics) // be sure the lyrics is ready when checking
                     } else {
                         findViewById<TextView>(R.id.lyricMatchResult).text =
                             "No lyrics found, try another song"
@@ -137,11 +133,8 @@ class LyricsBelongGameActivity : AppCompatActivity() {
      * show the result of lyrics matching
      */
     private fun checkLyrics(lyricToBeCheck: String, lyrics: String) {
-        findViewById<TextView>(R.id.lyricMatchResult).text = if (lyrics.contains(
-                lyricToBeCheck,
-                ignoreCase = true
-            )
-        ) "res: correct" else "res: too bad"
+        findViewById<TextView>(R.id.lyricMatchResult).text =
+            if (lyrics.contains(lyricToBeCheck, ignoreCase = true)) "res: correct" else "res: too bad"
     }
 
     private fun clearResult() {

@@ -269,11 +269,11 @@ class TypingGameActivity : AppCompatActivity() {
      * Function to set a new round. It includes reinitializing activity elements,
      * and setting new song for the round.
      */
-
-    fun playRound(ctx: Context, gameManager: GameManager) {
+    private fun startRound(ctx: Context, gameManager: GameManager) {
         if (gameManager.checkGameStatus() && gameManager.setNextSong()) {
             findViewById<LinearLayout>(R.id.displayGuess).removeAllViews()
             findViewById<EditText>(R.id.yourGuessET).text.clear()
+            findViewById<Button>(R.id.nextSong).visibility = android.view.View.GONE
             gameManager.playSong()
             if (runnable != null) {
                 h.removeCallbacks(runnable!!)

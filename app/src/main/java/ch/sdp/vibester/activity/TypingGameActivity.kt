@@ -99,7 +99,7 @@ class TypingGameActivity : AppCompatActivity() {
         val getIntent = intent.extras
         if (getIntent != null) {
             gameManager = getIntent.getSerializable("gameManager") as GameManager
-            playRound(ctx, gameManager)
+            startRound(ctx, gameManager)
             setMax(intent)
         }
 
@@ -184,7 +184,7 @@ class TypingGameActivity : AppCompatActivity() {
             hasWon(ctx, gameManager.getScore(), false, playedSong)
             gameManager.addWrongSong()
         }
-        playRound(ctx, gameManager)
+        endRound(ctx, gameManager)
     }
 
     /**

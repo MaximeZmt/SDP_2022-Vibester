@@ -2,7 +2,6 @@ package ch.sdp.vibester
 
 import android.content.Intent
 import ch.sdp.vibester.activity.TypingGameActivity
-import ch.sdp.vibester.helper.GameManager
 import ch.sdp.vibester.helper.TypingGameManager
 
 class GenreToTyping : GenreTemporary() {

@@ -40,28 +40,28 @@ class BuzzerSetupActivityTest {
     @Test
     fun checkCustomSelectOne() {
         onView(withId(R.id.nb_player_spinner)).perform(click())
-        onData(Matchers.anything()).atPosition(0).perform(click())
+        onData(Matchers.anything()).atPosition(0).perform(scrollTo(),click())
         onView(withId(R.id.nb_player_spinner)).check(matches(withSpinnerText("One")))
     }
 
     @Test
     fun checkCustomSelectTwo() {
         onView(withId(R.id.nb_player_spinner)).perform(click())
-        onData(Matchers.anything()).atPosition(1).perform(click())
+        onData(Matchers.anything()).atPosition(1).perform(scrollTo(),click())
         onView(withId(R.id.nb_player_spinner)).check(matches(withSpinnerText("Two")))
     }
 
     @Test
     fun checkCustomSelectThree() {
         onView(withId(R.id.nb_player_spinner)).perform(click())
-        onData(Matchers.anything()).atPosition(2).perform(click())
+        onData(Matchers.anything()).atPosition(2).perform(scrollTo(),click())
         onView(withId(R.id.nb_player_spinner)).check(matches(withSpinnerText("Three")))
     }
 
     @Test
     fun checkCustomSelectFour() {
         onView(withId(R.id.nb_player_spinner)).perform(click())
-        onData(Matchers.anything()).atPosition(3).perform(click())
+        onData(Matchers.anything()).atPosition(3).perform(scrollTo(),click())
         onView(withId(R.id.nb_player_spinner)).check(matches(withSpinnerText("Four")))
     }
 
@@ -75,7 +75,7 @@ class BuzzerSetupActivityTest {
     @Test
     fun checkIntentOnProceedOne() {
         onView(withId(R.id.nb_player_spinner)).perform(click())
-        onData(Matchers.anything()).atPosition(0).perform(click())
+        onData(Matchers.anything()).atPosition(0).perform(scrollTo(),click())
         onView(withId(R.id.nb_players_selected)).perform(click())
         intended(hasComponent(BuzzerScreenActivity::class.java.name))
         intended(hasExtra("Number of players", 1))
@@ -84,7 +84,7 @@ class BuzzerSetupActivityTest {
     @Test
     fun checkIntentOnProceedTwo() {
         onView(withId(R.id.nb_player_spinner)).perform(click())
-        onData(Matchers.anything()).atPosition(1).perform(click())
+        onData(Matchers.anything()).atPosition(1).perform(scrollTo(),click())
         onView(withId(R.id.nb_players_selected)).perform(click())
         intended(hasComponent(BuzzerScreenActivity::class.java.name))
         intended(hasExtra("Number of players", 2))
@@ -93,7 +93,7 @@ class BuzzerSetupActivityTest {
     @Test
     fun checkIntentOnProceedThree() {
         onView(withId(R.id.nb_player_spinner)).perform(click())
-        onData(Matchers.anything()).atPosition(2).perform(click())
+        onData(Matchers.anything()).atPosition(2).perform(scrollTo(),click())
         onView(withId(R.id.nb_players_selected)).perform(click())
         intended(hasComponent(BuzzerScreenActivity::class.java.name))
         intended(hasExtra("Number of players", 3))
@@ -102,7 +102,7 @@ class BuzzerSetupActivityTest {
     @Test
     fun checkIntentOnProceedFour() {
         onView(withId(R.id.nb_player_spinner)).perform(click())
-        onData(Matchers.anything()).atPosition(3).perform(click())
+        onData(Matchers.anything()).atPosition(3).perform(scrollTo(),click())
         onView(withId(R.id.nb_players_selected)).perform(click())
         intended(hasComponent(BuzzerScreenActivity::class.java.name))
         intended(hasExtra("Number of players", 4))

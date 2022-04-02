@@ -36,9 +36,6 @@ class TypingGameActivity : AppCompatActivity() {
     private var maxTime: Int = 30
     private lateinit var gameManager: GameManager
 
-    fun setGameManager(gameManager: GameManager){
-        this.gameManager = gameManager
-    }
     companion object {
         /**
          * Generate spaces widget programmatically
@@ -98,13 +95,11 @@ class TypingGameActivity : AppCompatActivity() {
         if (getIntent != null) {
             gameManager = getIntent.getSerializable("gameManager") as GameManager
             startRound(ctx, gameManager)
+            setbtnlistener(ctx, gameManager)
+
             setMax(intent)
         }
 
-        val nextSongBtn = findViewById<Button>(R.id.nextSong)
-        nextSongBtn.setOnClickListener {
-            startRound(ctx, gameManager)
-        }
         setListener(inputTxt, guessLayout)
 
     }
@@ -116,6 +111,12 @@ class TypingGameActivity : AppCompatActivity() {
                 "Medium" -> maxTime = 15
                 "Hard" -> maxTime = 5
             }
+        }
+    }
+
+      fun setbtnlistener(ctx: Context, gameManager: GameManager){
+          findViewById<Button>(R.id.nextSong).setOnClickListener {
+            startRound(ctx, gameManager)
         }
     }
     private fun setListener(inputTxt:EditText, guessLayout: LinearLayout){

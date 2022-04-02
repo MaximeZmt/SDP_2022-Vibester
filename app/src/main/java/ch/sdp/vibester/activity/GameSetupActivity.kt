@@ -29,15 +29,7 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         supportActionBar?.hide()
         setContentView(R.layout.activity_game_setup_screen)
-
-        gameToGenre(R.id.local_buzzer_game_button,
-            findViewById<LinearLayout>(R.id.chooseGame),
-            findViewById<ConstraintLayout>(R.id.chooseGenre), "local_buzzer")
-
-        gameToGenre(R.id.local_typing_game_button,
-            findViewById<LinearLayout>(R.id.chooseGame),
-            findViewById<ConstraintLayout>(R.id.chooseGenre), "local_typing")
-
+        val ctx: Context = this
 
         val spinnerDifficulty: Spinner = findViewById(R.id.difficulty_spinner)
         initSpinner(spinnerDifficulty, R.array.difficulties_name)
@@ -84,16 +76,7 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         finish()
     }
 
-    private fun gameToGenre(buttonId: Int, currentLayout: ViewGroup, nextLayout: ViewGroup, game: String) {
-        val btn = findViewById<Button>(buttonId)
-        btn.setOnClickListener {
-            currentLayout.visibility = GONE
-            nextLayout.visibility = VISIBLE
-            this.game = game
-        }
-    }
-
-    private fun genreToDifficulty(currentLayout: ViewGroup, nextLayout: ViewGroup) {
+    private fun changeLayout(currentLayout: ViewGroup, nextLayout: ViewGroup) {
         currentLayout.visibility = GONE
         nextLayout.visibility = VISIBLE
     }
@@ -117,8 +100,15 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         })
     }
 
+    fun chooseGame(view: View){
+        when (view.getId()) {
+            R.id.local_buzzer_game_button -> {game  = "local_buzzer" }
+            R.id.local_typing_game_button -> {game = "local_typing" }
+        }
+        changeLayout(findViewById<ConstraintLayout>(R.id.chooseGame),
+            findViewById<ConstraintLayout>(R.id.chooseGenre))
+    }
 
-    fun play(view: View) {
         var method =  ""
         var artist = ""
         var tag = ""
@@ -135,7 +125,7 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         uri.artist = artist
         uri.tag = tag
         
-        genreToDifficulty(findViewById<ConstraintLayout>(R.id.chooseGenre),
+        changeLayout(findViewById<ConstraintLayout>(R.id.chooseGenre),
             findViewById<ConstraintLayout>(R.id.chooseDifficulty))
         setGameSongList(uri)
     }

@@ -90,11 +90,7 @@ class TypingGameActivity : AppCompatActivity() {
 
         val guessLayout = findViewById<LinearLayout>(R.id.displayGuess)
         val inputTxt = findViewById<EditText>(R.id.yourGuessET)
-
-        var mysong: Song? = null
-        var mediaPlayer: CompletableFuture<MediaPlayer>? = null
         val ctx: Context = this
-        val h = Handler()
 
         val getIntent = intent.extras
         if (getIntent != null) {
@@ -153,6 +149,12 @@ class TypingGameActivity : AppCompatActivity() {
             gameManager.stopMediaPlayer()
         }
         super.onDestroy()
+    }
+
+    private fun toggleVisibility(value: Boolean){
+        val nextSongBtn = findViewById<Button>(R.id.nextSong)
+        if(value){nextSongBtn.visibility = android.view.View.VISIBLE}
+        nextSongBtn.visibility = android.view.View.GONE
     }
 
     /**
@@ -259,7 +261,7 @@ class TypingGameActivity : AppCompatActivity() {
 
     }
     private fun endRound(ctx: Context, gameManager: GameManager){
-        findViewById<Button>(R.id.nextSong).visibility = android.view.View.VISIBLE
+        toggleVisibility(true)
         if (runnable != null) {
             h.removeCallbacks(runnable!!)
         }
@@ -276,7 +278,7 @@ class TypingGameActivity : AppCompatActivity() {
         if (gameManager.checkGameStatus() && gameManager.setNextSong()) {
             findViewById<LinearLayout>(R.id.displayGuess).removeAllViews()
             findViewById<EditText>(R.id.yourGuessET).text.clear()
-            findViewById<Button>(R.id.nextSong).visibility = android.view.View.GONE
+            toggleVisibility(false)
             gameManager.playSong()
             if (runnable != null) {
                 h.removeCallbacks(runnable!!)

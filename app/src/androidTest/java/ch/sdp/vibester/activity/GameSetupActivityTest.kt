@@ -45,6 +45,7 @@ class GameSetupActivityTest {
     @Test
     fun checkCustomSelectEasy() {
         onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
+        onView(withId(R.id.btsButton)).perform(click())
         onView(withId(R.id.difficulty_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(0).perform(click())
         onView(withId(R.id.difficulty_spinner)).check(matches(withSpinnerText("Easy")))
@@ -53,6 +54,7 @@ class GameSetupActivityTest {
     @Test
     fun checkCustomSelectMedium() {
         onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
+        onView(withId(R.id.btsButton)).perform(click())
         onView(withId(R.id.difficulty_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(1).perform(click())
         onView(withId(R.id.difficulty_spinner)).check(matches(withSpinnerText("Medium")))
@@ -61,6 +63,7 @@ class GameSetupActivityTest {
     @Test
     fun checkCustomSelectHard() {
         onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
+        onView(withId(R.id.btsButton)).perform(click())
         onView(withId(R.id.difficulty_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(2).perform(click())
         onView(withId(R.id.difficulty_spinner)).check(matches(withSpinnerText("Hard")))
@@ -69,6 +72,7 @@ class GameSetupActivityTest {
     @Test
     fun checkIntentOnProceedEasy() {
         onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
+        onView(withId(R.id.btsButton)).perform(click())
         onView(withId(R.id.difficulty_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(0).perform(click())
         onView(withId(R.id.difficulty_proceed)).perform(click())
@@ -79,6 +83,7 @@ class GameSetupActivityTest {
     @Test
     fun checkIntentOnProceedMedium() {
         onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
+        onView(withId(R.id.btsButton)).perform(click())
         onView(withId(R.id.difficulty_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(1).perform(click())
         onView(withId(R.id.difficulty_proceed)).perform(click())
@@ -89,6 +94,7 @@ class GameSetupActivityTest {
     @Test
     fun checkIntentOnProceedHard() {
         onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
+        onView(withId(R.id.btsButton)).perform(click())
         onView(withId(R.id.difficulty_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(2).perform(click())
         onView(withId(R.id.difficulty_proceed)).perform(click())

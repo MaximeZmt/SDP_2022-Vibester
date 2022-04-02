@@ -72,11 +72,6 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         finish()
     }
 
-    private fun changeLayout(currentLayout: ViewGroup, nextLayout: ViewGroup) {
-        currentLayout.visibility = GONE
-        nextLayout.visibility = VISIBLE
-    }
-
     private fun setDifficultyText(mode: Int) {
         findViewById<TextView>(R.id.difficulty_explanation).setText(mode)
     }
@@ -98,11 +93,11 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
 
     fun chooseGame(view: View){
         when (view.getId()) {
-            R.id.local_buzzer_game_button -> {game  = "local_buzzer" }
-            R.id.local_typing_game_button -> {game = "local_typing" }
+            R.id.local_buzzer_game_button -> {game  = "local_buzzer"}
+            R.id.local_typing_game_button -> {game = "local_typing"}
         }
-        changeLayout(findViewById<ConstraintLayout>(R.id.chooseGame),
-            findViewById<ConstraintLayout>(R.id.chooseGenre))
+        findViewById<LinearLayout>(R.id.chooseGame).visibility = GONE
+        findViewById<ConstraintLayout>(R.id.chooseGenre).visibility = VISIBLE
     }
 
     fun chooseGenre(view: View) {
@@ -121,9 +116,10 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         uri.method = method
         uri.artist = artist
         uri.tag = tag
-        
-        changeLayout(findViewById<ConstraintLayout>(R.id.chooseGenre),
-            findViewById<ConstraintLayout>(R.id.chooseDifficulty))
+
+        findViewById<ConstraintLayout>(R.id.chooseGenre).visibility = GONE
+        findViewById<ConstraintLayout>(R.id.chooseDifficulty).visibility = VISIBLE
+
         setGameSongList(uri)
     }
 

@@ -67,19 +67,21 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
 
     override fun onNothingSelected(parent: AdapterView<*>) {difficulty = "Easy"}
 
-     fun proceedGame(view:View){
+    fun proceedGame(view:View){
          if(this.game == "local_buzzer"){
-             val newIntent = Intent(this, BuzzerSetupActivity::class.java)
-             newIntent.putExtra("gameManager", gameManager)
-             newIntent.putExtra("Difficulty", difficulty)
-             startActivity(newIntent)
+             switchToGame(BuzzerSetupActivity())
          }
          else if(this.game == "local_typing"){
-             val newIntent = Intent(this, TypingGameActivity::class.java)
-             newIntent.putExtra("gameManager", gameManager)
-             newIntent.putExtra("Difficulty", difficulty)
-             startActivity(newIntent)
+             switchToGame(TypingGameActivity())
          }
+    }
+
+    private fun switchToGame(nextActivity: AppCompatActivity){
+        val newIntent = Intent(this, nextActivity::class.java)
+        newIntent.putExtra("gameManager", gameManager)
+        newIntent.putExtra("Difficulty", difficulty)
+        startActivity(newIntent)
+        finish()
     }
 
     private fun gameToGenre(buttonId: Int, currentLayout: ViewGroup, nextLayout: ViewGroup, game: String) {

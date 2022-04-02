@@ -69,6 +69,7 @@
                             android:background="@drawable/squared_button"
                             android:backgroundTint="@color/cg_blue"
                             android:elevation="10dp"
+                            android:onClick="chooseGame"
                             android:stateListAnimator="@null"
                             android:text="@string/game_typing"
                             android:textColor="@color/white"
@@ -132,6 +133,7 @@
                             android:backgroundTint="@color/cg_blue"
                             android:elevation="10dp"
                             android:stateListAnimator="@null"
+                            android:onClick="chooseGame"
                             android:text="@string/game_buzzer_title"
                             android:textColor="@color/white"
                             android:translationZ="10dp" />

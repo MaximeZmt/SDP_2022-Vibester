@@ -165,7 +165,7 @@ class BuzzerScreenActivity : AppCompatActivity() {
     fun switchToEnding(view: View) {
         val mockArray = arrayListOf<String>("One", "Two", "Three", "Four", "Five")
         val intent = Intent(this, GameEndingActivity::class.java)
-        
+
         val incArray: ArrayList<String> = mockArray
         val statNames: ArrayList<String> = mockArray
         val statVal: ArrayList<String> = mockArray

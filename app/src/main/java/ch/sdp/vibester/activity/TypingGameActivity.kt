@@ -1,8 +1,6 @@
 package ch.sdp.vibester.activity
 
 import android.content.Context
-import android.content.Intent
-import android.content.res.ColorStateList
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
@@ -10,14 +8,13 @@ import android.util.Log
 import android.view.Gravity
 import android.view.Window
 import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.getColor
 import androidx.core.widget.addTextChangedListener
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.BitmapGetterApi
 import ch.sdp.vibester.api.ItunesMusicApi
 import ch.sdp.vibester.helper.DisplayContents
-import ch.sdp.vibester.helper.GameManager
+import ch.sdp.vibester.helper.TypingGameManager
 import ch.sdp.vibester.model.Song
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -30,12 +27,8 @@ import java.util.concurrent.CompletableFuture
  * Class that represent a game
  */
 
-class TypingGameActivity : AppCompatActivity() {
-    private val h = Handler()
-    private  var runnable: Runnable? = null
-    private var maxTime: Int = 30
-
-    private lateinit var gameManager: GameManager
+class TypingGameActivity : GameActivity() {
+    private lateinit var gameManager: TypingGameManager
 
     companion object {
         /**
@@ -53,7 +46,7 @@ class TypingGameActivity : AppCompatActivity() {
          */
         fun generateText(txt: String, ctx: Context): TextView {
             val txtView = TextView(ctx)
-            txtView.setText(txt)
+            txtView.text = txt
             txtView.gravity = Gravity.CENTER
             txtView.minHeight = 200
             txtView.textSize = 20F
@@ -62,7 +55,7 @@ class TypingGameActivity : AppCompatActivity() {
         }
 
         /**
-         * Generate an images widget programmatically given a song (retrieve song artwork asychronously)
+         * Generate an images widget programmatically given a song (retrieve song artwork asynchronously)
          */
         fun generateImage(song: Song, ctx: Context): ImageView {
             val imgView = ImageView(ctx)
@@ -91,16 +84,16 @@ class TypingGameActivity : AppCompatActivity() {
         val guessLayout = findViewById<LinearLayout>(R.id.displayGuess)
         val inputTxt = findViewById<EditText>(R.id.yourGuessET)
 
-        var mysong: Song? = null
-        var mediaPlayer: CompletableFuture<MediaPlayer>? = null
+        // var mysong: Song? = null
+        // var mediaPlayer: CompletableFuture<MediaPlayer>? = null
         val ctx: Context = this
-        val h = Handler()
+        // val h = Handler()
 
         val getIntent = intent.extras
         if (getIntent != null) {
-            gameManager = getIntent.getSerializable("gameManager") as GameManager
+            gameManager = getIntent.getSerializable("gameManager") as TypingGameManager
             playRound(ctx, gameManager)
-            setMax(intent)
+            super.setMax(intent)
         }
 
         //Listener when we modify the input
@@ -115,12 +108,7 @@ class TypingGameActivity : AppCompatActivity() {
                     try {
                         val list = Song.listSong(task.await())
                         for (x: Song in list) {
-                            guess(
-                                x,
-                                findViewById(R.id.displayGuess),
-                                this@TypingGameActivity,
-                                gameManager
-                            )
+                            guess(x, findViewById(R.id.displayGuess), this@TypingGameActivity, gameManager )
                         }
                     } catch (e: Exception) {
                         Log.e("Exception: ", e.toString())
@@ -130,19 +118,9 @@ class TypingGameActivity : AppCompatActivity() {
         }
     }
 
-    private fun setMax(intent: Intent) {
-        if(intent.hasExtra("Difficulty")) {
-            when(intent.extras?.getString("Difficulty", "Easy")) {
-                "Easy" -> maxTime = 30
-                "Medium" -> maxTime = 15
-                "Hard" -> maxTime = 5
-            }
-        }
-    }
-
     override fun onDestroy() {
         if (runnable != null) {
-            h.removeCallbacks(runnable!!)
+            handler.removeCallbacks(runnable!!)
         }
         if (this::gameManager.isInitialized) {
             gameManager.stopMediaPlayer()
@@ -153,25 +131,25 @@ class TypingGameActivity : AppCompatActivity() {
     /**
      * announce if the player won or not
      */
-    private fun hasWon(ctx: Context, score: Int, hasWon: Boolean, itwas: Song) {
+    private fun hasWon(ctx: Context, score: Int, hasWon: Boolean, itWas: Song) {
         if (hasWon) {
-            Toast.makeText(ctx, score.toString() + " Well Done!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(ctx, "$score Well Done!", Toast.LENGTH_SHORT).show()
         } else {
             Toast.makeText(
                 ctx,
-                "Sadly you're wrong, it was: " + itwas.getTrackName() + " by " + itwas.getArtistName(),
+                "Sadly you're wrong, it was: " + itWas.getTrackName() + " by " + itWas.getArtistName(),
                 Toast.LENGTH_SHORT
             ).show()
         }
     }
 
     /**
-     * Generate a change of intent at the end of the game
+     * Generate a change of intent at the end of a game
      */
-    fun checkAnswer(ctx: Context, choosenSong: Song?, gameManager: GameManager) {
+    fun checkAnswer(ctx: Context, chosenSong: Song?, gameManager: TypingGameManager) {
         val playedSong = gameManager.getCurrentSong()
 
-        if (choosenSong != null && choosenSong.getTrackName() == playedSong.getTrackName() && choosenSong.getArtistName() == playedSong.getArtistName()) {
+        if (chosenSong != null && chosenSong.getTrackName() == playedSong.getTrackName() && chosenSong.getArtistName() == playedSong.getArtistName()) {
             gameManager.increaseScore()
             gameManager.addCorrectSong()
             hasWon(ctx, gameManager.getScore(), true, playedSong)
@@ -179,18 +157,13 @@ class TypingGameActivity : AppCompatActivity() {
             hasWon(ctx, gameManager.getScore(), false, playedSong)
             gameManager.addWrongSong()
         }
-        playRound(ctx, gameManager)
+        playRound(ctx, gameManager) //play the next round
     }
 
     /**
      * Create the frame layout and its logic of the suggestion when user is typing
      */
-    fun guess(
-        song: Song,
-        guessLayout: LinearLayout,
-        ctx: Context,
-        gameManager: GameManager
-    ): FrameLayout {
+    fun guess(song: Song, guessLayout: LinearLayout, ctx: Context, gameManager: TypingGameManager): FrameLayout {
         val frameLay = FrameLayout(ctx)
         frameLay.background = DisplayContents.borderGen(ctx, R.color.maximum_yellow_red)
 
@@ -207,7 +180,7 @@ class TypingGameActivity : AppCompatActivity() {
         frameLay.addView(linLay)
         guessLayout.addView(frameLay)
 
-        //Create the Listener that is executed if we click on the framelayer
+        //Create the Listener that is executed if we click on the frame layer
         frameLay.setOnClickListener {
             frameLay.setBackgroundColor(getColor(ctx, R.color.tiffany_blue))
             guessLayout.removeAllViews()
@@ -225,23 +198,13 @@ class TypingGameActivity : AppCompatActivity() {
     /**
      * Custom handle of the bar progress.
      */
-
-    private fun barTimer(myBar: ProgressBar, ctx:Context, gameManager: GameManager){
-        myBar.max = maxTime
-        myBar.progress = maxTime
-        myBar.progressTintList = ColorStateList.valueOf(getColor(R.color.cg_blue))
+    private fun barTimer(myBar: ProgressBar, ctx:Context, gameManager: TypingGameManager){
+        initializeBarTimer(myBar)
         runnable = object : Runnable {
             override fun run() {
                 if (myBar.progress > 0) {
-                    if (myBar.progress == 15) {
-                        myBar.progressTintList =
-                            ColorStateList.valueOf(getColor(R.color.maximum_yellow_red))
-                    } else if (myBar.progress == 5) {
-                        myBar.progressTintList =
-                            ColorStateList.valueOf(getColor(R.color.light_coral))
-                    }
-                    myBar.progress -= 1
-                    h.postDelayed(this, 999) //just a bit shorter than a second for safety
+                    decreaseBarTimer(myBar)
+                    handler.postDelayed(this, 999) //just a bit shorter than a second for safety
                 } else if (myBar.progress == 0) {
                     if (gameManager.playingMediaPlayer()) {
                         gameManager.stopMediaPlayer()
@@ -250,51 +213,25 @@ class TypingGameActivity : AppCompatActivity() {
                 }
             }
         }
-        h.post(runnable!!)
-
+        handler.post(runnable!!)
     }
 
     /**
      * Function to set a new round. It includes reinitializing activity elements,
      * and setting new song for the round.
      */
-
-    fun playRound(ctx: Context, gameManager: GameManager) {
+    private fun playRound(ctx: Context, gameManager: TypingGameManager) {
         if (gameManager.checkGameStatus() && gameManager.setNextSong()) {
             findViewById<LinearLayout>(R.id.displayGuess).removeAllViews()
             findViewById<EditText>(R.id.yourGuessET).text.clear()
             gameManager.playSong()
-            if (runnable != null) {
-                h.removeCallbacks(runnable!!)
-            }
-            barTimer(findViewById<ProgressBar>(R.id.progressBar), ctx, gameManager)
+            checkRunnable()
+            barTimer(findViewById(R.id.progressBarTyping), ctx, gameManager)
         } else {
-            if (runnable != null) {
-                h.removeCallbacks(runnable!!)
-            }
+            checkRunnable()
             switchToEnding(gameManager)
         }
     }
 
-    private fun switchToEnding(gameManager: GameManager) {
-        val intent = Intent(this, GameEndingActivity::class.java)
-        val incArray: ArrayList<String> = ArrayList(
-            gameManager.getWrongSongs().map { it.getTrackName() + " - " + it.getArtistName() })
 
-        val statNames: ArrayList<String> = arrayListOf()
-        val statName = "Total Score"
-        statNames.addAll(arrayOf(statName, statName, statName, statName, statName))
-
-        val statVal: ArrayList<String> = arrayListOf()
-        val score = gameManager.getScore().toString()
-        statVal.addAll(arrayOf(score, score, score, score, score))
-
-        intent.putExtra("nbIncorrectSong", gameManager.gameSize - gameManager.getScore())
-
-        intent.putStringArrayListExtra("str_arr_inc", incArray)
-        intent.putStringArrayListExtra("str_arr_name", statNames)
-        intent.putStringArrayListExtra("str_arr_val", statVal)
-
-        startActivity(intent)
-    }
 }

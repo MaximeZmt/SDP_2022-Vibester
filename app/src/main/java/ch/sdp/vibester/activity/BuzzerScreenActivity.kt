@@ -12,30 +12,30 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.BuzzerScoreUpdater
 import ch.sdp.vibester.R
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 
 class BuzzerScreenActivity : AppCompatActivity() {
 
     private val MAX_N_PLAYERS = 4
     private val NO_BUZZER_PRESSED = -1
-    private val rowsIdArray = arrayOf(R.id.row_0, R.id.row_1, R.id.row_2, R.id.row_3)
-    private val buzIds = arrayOf(R.id.buzzer_0, R.id.buzzer_1, R.id.buzzer_2, R.id.buzzer_3)
+    private val buzzersToRows:HashMap<Int, Int> = initHashmap()
+    private val rowsIdArray = ArrayList(buzzersToRows.values)
+    private val buzIds = ArrayList(buzzersToRows.keys)
 
+    private fun initHashmap(): HashMap<Int, Int> {
+        val buzzersToRows:HashMap<Int, Int> = hashMapOf()
+        buzzersToRows.put(R.id.buzzer_0, R.id.row_0)
+        buzzersToRows.put(R.id.buzzer_1, R.id.row_1)
+        buzzersToRows.put(R.id.buzzer_2, R.id.row_2)
+        buzzersToRows.put(R.id.buzzer_3, R.id.row_3)
+        return buzzersToRows
+    }
     var pressedBuzzer = NO_BUZZER_PRESSED
 
     private fun setPressed(id: Int) {
         pressedBuzzer = id
-    }
-
-    private fun fetchBuzToScoreRowMap(): Map<Int, Int> {
-
-        var theMap = LinkedHashMap<Int, Int>()
-        var i = 0
-        while (i < buzIds.size) {
-            theMap.put(buzIds[i], rowsIdArray[i])
-            i = i + 1
-        }
-        return theMap
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,16 +56,14 @@ class BuzzerScreenActivity : AppCompatActivity() {
         val playersFull = getIntent?.getStringArray("Player Names")
         val players = nPlayers?.let { playersFull?.copyOfRange(0, it) }
 
-        val updater = BuzzerScoreUpdater(buzIds, allPoints)
-
-        val buzToScoreMap = fetchBuzToScoreRowMap()
+        val updater = BuzzerScoreUpdater(buzIds, arrayListOf(*allPoints))
 
         if (players != null) {
             buildScores(players, allPoints)
             buildBuzzers(players, answer)
         }
-        setAnswerButton(answer, findViewById(R.id.buttonCorrect), updater, buzToScoreMap)
-        setAnswerButton(answer, findViewById(R.id.buttonWrong), updater, buzToScoreMap)
+        setAnswerButton(answer, findViewById(R.id.buttonCorrect), updater, buzzersToRows)
+        setAnswerButton(answer, findViewById(R.id.buttonWrong), updater, buzzersToRows)
     }
 
 

@@ -7,12 +7,15 @@ import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
 
+@RunWith(AndroidJUnit4::class)
 class WelcomeActivityTest {
     @get: Rule
     val activityRule = ActivityScenarioRule(WelcomeActivity::class.java)
@@ -46,7 +49,7 @@ class WelcomeActivityTest {
     }
 
     @Test
-    fun checkIntentOnSettings() { //FILLER TESTING
+    fun checkIntentOnSettings() {
         onView(withId(R.id.welcome_settings)).perform(click())
         intended(hasComponent(AuthenticationActivity::class.java.name))
     }

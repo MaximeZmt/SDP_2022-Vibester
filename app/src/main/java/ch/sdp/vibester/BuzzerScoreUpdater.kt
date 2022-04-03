@@ -2,7 +2,7 @@ package ch.sdp.vibester
 
 import kotlin.math.min
 
-public class BuzzerScoreUpdater(ids: Array<Int>, scores: Array<Int>) {
+class BuzzerScoreUpdater(ids: ArrayList<Int>, scores: ArrayList<Int>) {
 
     private var buzzerToScoreMap: LinkedHashMap<Int, Int>
 
@@ -10,7 +10,7 @@ public class BuzzerScoreUpdater(ids: Array<Int>, scores: Array<Int>) {
         buzzerToScoreMap = initMap(ids, scores)
     }
 
-    private fun initMap(ids: Array<Int>, scores: Array<Int>): LinkedHashMap<Int, Int> {
+    private fun initMap(ids: ArrayList<Int>, scores: ArrayList<Int>): LinkedHashMap<Int, Int> {
         var theMap = LinkedHashMap<Int, Int>()
         var i = 0
         while (i < min(ids.size, scores.size)) {

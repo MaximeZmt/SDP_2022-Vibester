@@ -7,12 +7,12 @@ import java.util.concurrent.CompletableFuture
 class TypingGameManager: GameManager() {
     private lateinit var mediaPlayer: CompletableFuture<MediaPlayer>
 
-    /**
-     * Set a media player. Used for testing.
-     */
-    fun setMediaPlayer(mediaPlayer: CompletableFuture<MediaPlayer>) {
-        this.mediaPlayer = mediaPlayer
-    }
+//    /**
+//     * Set a media player. Used for testing.
+//     */
+//    fun setMediaPlayer(mediaPlayer: CompletableFuture<MediaPlayer>) {
+//        this.mediaPlayer = mediaPlayer
+//    }
 
     /**
      * Play current song with media player.

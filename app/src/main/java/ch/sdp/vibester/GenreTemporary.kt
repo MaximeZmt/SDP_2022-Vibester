@@ -43,12 +43,10 @@ open class GenreTemporary : AppCompatActivity() {
     // view is needed, remove it will result failure in tests
     open fun playRock(view: View) {
         queryByMethod(LastfmMethod.BY_TAG.method,"rock")
-        //performQuery(LastfmUri(method = LastfmMethod.BY_TAG.method, tag = "rock"))
     }
 
     open fun playImagineDragons(view: View) {
         queryByMethod(LastfmMethod.BY_ARTIST.method, "Imagine Dragons")
-        //performQuery(LastfmUri(method = LastfmMethod.BY_ARTIST.method, artist = "Imagine Dragons"))
     }
 
     open fun playTopTracks(view: View) {
@@ -57,17 +55,14 @@ open class GenreTemporary : AppCompatActivity() {
 
     open fun playBTS(view: View) {
         queryByMethod(LastfmMethod.BY_ARTIST.method,"BTS")
-        //performQuery(LastfmUri(method = LastfmMethod.BY_ARTIST.method, artist = "BTS"))
     }
 
     open fun playKpop(view: View) {
         queryByMethod(LastfmMethod.BY_TAG.method,"kpop")
-        //performQuery(LastfmUri(method = LastfmMethod.BY_TAG.method, tag = "kpop"))
     }
 
     open fun playBillieEilish(view: View) {
         queryByMethod(LastfmMethod.BY_ARTIST.method,"Billie Eilish")
-        //performQuery(LastfmUri(method = LastfmMethod.BY_ARTIST.method, artist = "Billie Eilish"))
     }
 
     private fun queryByMethod(method: String, artist: String) {

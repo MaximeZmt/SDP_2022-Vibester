@@ -21,6 +21,9 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+/**
+ * Class to choose game mode, genre and difficulty.
+ */
 class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     var difficulty = "Easy"
     var game = "local_buzzer"
@@ -55,6 +58,9 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
 
     override fun onNothingSelected(parent: AdapterView<*>) {difficulty = "Easy"}
 
+    /**
+     * Start the game based on the chosen mode
+     */
     fun proceedGame(view:View){
          if(this.game == "local_buzzer"){
              switchToGame(BuzzerSetupActivity())
@@ -79,9 +85,8 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         findViewById<TextView>(R.id.difficulty_explanation).setText(mode)
     }
 
-
     /**
-     * Fetch data from Lastfm and show song list in a ListView
+     * Fetch data from Lastfm and set song list in a GameManager
      */
     private fun setGameSongList(uri: LastfmUri) {
         val service = LastfmApiInterface.createLastfmService()
@@ -94,6 +99,9 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         })
     }
 
+    /**
+     * Choose game mode. Set appropriate GameManager.
+     */
     fun chooseGame(view: View){
         when (view.getId()) {
             R.id.local_buzzer_game_button -> {game  = "local_buzzer"; gameManager = GameManager()}
@@ -103,6 +111,9 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         findViewById<ConstraintLayout>(R.id.chooseGenre).visibility = VISIBLE
     }
 
+    /**
+     * Choose genre for the game. Call funtion to fetch the data from Lastfm.
+     */
     fun chooseGenre(view: View) {
         var method =  ""
         var artist = ""

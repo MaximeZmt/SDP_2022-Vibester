@@ -8,6 +8,9 @@ import android.widget.ProgressBar
 import ch.sdp.vibester.R
 import ch.sdp.vibester.helper.GameManager
 
+/**
+ * Common set up for all games (difficulty level, progress bar)
+ */
 open class GameActivity : AppCompatActivity() {
     open val handler = Handler()
     open var maxTime: Int = 30

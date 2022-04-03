@@ -9,6 +9,9 @@ import android.widget.*
 import androidx.core.view.children
 import ch.sdp.vibester.R
 
+/**
+ * Class to set up buzzer game (number of players)
+ */
 class BuzzerSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     var text = "One"
     override fun onCreate(savedInstanceState: Bundle?) {

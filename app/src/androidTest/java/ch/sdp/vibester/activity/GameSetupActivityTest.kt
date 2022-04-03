@@ -102,4 +102,49 @@ class GameSetupActivityTest {
         intended(hasExtra("Difficulty", "Hard"))
     }
 
+    @Test
+    fun localTypingOnClick(){
+        onView(withId(R.id.local_typing_game_button)).perform(scrollTo(), click())
+        onView(withId(R.id.btsButton)).perform(click())
+        onView(withId(R.id.difficulty_spinner)).perform(click())
+        onData(Matchers.anything()).atPosition(2).perform(click())
+        onView(withId(R.id.difficulty_proceed)).perform(click())
+        intended(hasComponent(TypingGameActivity::class.java.name))
+    }
+
+    @Test
+    fun rockButtonClick() {
+        onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
+        onView(withId(R.id.rockButton)).perform(click())
+    }
+
+    @Test
+    fun topButtonClick() {
+        onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
+        onView(withId(R.id.topTracksButton)).perform(click())
+    }
+
+    @Test
+    fun kpopButtonClick() {
+        onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
+        onView(withId(R.id.kpopButton)).perform(click())
+    }
+
+    @Test
+    fun billieEilishButtonClick() {
+        onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
+        onView(withId(R.id.billieEilishButton)).perform(click())
+    }
+
+    @Test
+    fun imagineDragonsButtonClick() {
+        onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
+        onView(withId(R.id.imagDragonsButton)).perform(click())
+    }
+
+    @Test
+    fun btsButtonClick() {
+        onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
+        onView(withId(R.id.btsButton)).perform(click())
+    }
 }

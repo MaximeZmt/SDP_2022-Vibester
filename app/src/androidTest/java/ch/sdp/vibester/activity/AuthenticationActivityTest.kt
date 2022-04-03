@@ -21,6 +21,8 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.testing.BindValue
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -42,10 +44,15 @@ import kotlin.random.Random
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 @RunWith(AndroidJUnit4::class)
+@HiltAndroidTest
 class AuthenticationActivityTest {
+
+    @get:Rule
+    var hiltRule = HiltAndroidRule(this)
+
     private val sleepTime: Long = 5000
 
-    @BindValue
+    @BindValue @JvmField
     val mockAuthenticator = mockk<FireBaseAuthenticator>()
 
     private fun createMockTask(succesful: Boolean): Task<AuthResult> {
@@ -67,6 +74,7 @@ class AuthenticationActivityTest {
 
     @Before
     fun setUp() {
+        hiltRule.inject()
         Intents.init()
     }
 
@@ -107,13 +115,15 @@ class AuthenticationActivityTest {
         val password = "password"
 
         val mockTask = createMockTask(false)
-        every { mockAuthenticator.signIn(username, password) } returns mockTask
+        every { mockAuthenticator.createAccount(username, password) } returns mockTask
 
         onView(withId(R.id.username)).perform(ViewActions.typeText(username), closeSoftKeyboard())
         onView(withId(R.id.password)).perform(ViewActions.typeText(password), closeSoftKeyboard())
         onView(withId(R.id.createAcc)).perform(click())
         Thread.sleep(sleepTime)
         onView(withId(R.id.email)).check(matches(withText("Authentication error")))
+
+
     }
 
     @Test
@@ -164,19 +174,17 @@ class AuthenticationActivityTest {
 
     @Test
     fun logInCorrect() {
-        val username = "lisa@test.com"
+        val username = "apdkapodkapd@test.com"
         val password = "password"
 
         val mockTask = createMockTask(true)
         every { mockAuthenticator.signIn(username, password) } returns mockTask
+        createMockUser(username)
 
         onView(withId(R.id.username)).perform(ViewActions.typeText(username), closeSoftKeyboard())
         onView(withId(R.id.password)).perform(ViewActions.typeText(password), closeSoftKeyboard())
         onView(withId(R.id.logIn)).perform(click())
 
-        createMockUser(username)
-
-        Thread.sleep(1000)
         Intents.intended(IntentMatchers.hasComponent(ProfileActivity::class.java.name))
         Intents.intended(IntentMatchers.hasExtra("email", username))
     }
@@ -188,12 +196,12 @@ class AuthenticationActivityTest {
 
         val mockTask = createMockTask(true)
         every { mockAuthenticator.createAccount(username, password) } returns mockTask
+        createMockUser(username)
 
         onView(withId(R.id.username)).perform(ViewActions.typeText(username), closeSoftKeyboard())
         onView(withId(R.id.password)).perform(ViewActions.typeText(password), closeSoftKeyboard())
         onView(withId(R.id.createAcc)).perform(click())
 
-        createMockUser(username)
 
         Intents.intended(IntentMatchers.hasComponent(ProfileActivity::class.java.name))
         Intents.intended(IntentMatchers.hasExtra("email", username))

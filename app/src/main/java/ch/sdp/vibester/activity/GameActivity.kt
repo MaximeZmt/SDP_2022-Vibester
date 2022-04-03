@@ -9,7 +9,7 @@ import ch.sdp.vibester.R
 import ch.sdp.vibester.helper.GameManager
 
 open class GameActivity : AppCompatActivity() {
-    open val h = Handler()
+    open val handler = Handler()
     open var maxTime: Int = 30
     var runnable: Runnable? = null
 
@@ -64,7 +64,7 @@ open class GameActivity : AppCompatActivity() {
 
     fun checkRunnable() {
         if (runnable != null) {
-            h.removeCallbacks(runnable!!)
+            handler.removeCallbacks(runnable!!)
         }
     }
 

@@ -152,7 +152,7 @@ class LyricsBelongGameActivity : GameActivity() {
             override fun run() {
                 if (myBar.progress > 0) {
                     decreaseBarTimer(myBar)
-                    h.postDelayed(this, 999)
+                    handler.postDelayed(this, 999)
                 } else if (myBar.progress == 0) {
                     getAndCheckLyrics(songName, artistName, speechInput, gameManager)
                 }

@@ -84,7 +84,7 @@ class BuzzerSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
         var i = 0
         for (playerView in players) {
             pNameArray[i] = findViewById<EditText>(editTextIdArray[i]).text.toString()
-            i = i + 1
+            i += 1
         }
         intent.putExtra("Player Names", pNameArray)
         startActivity(intent)

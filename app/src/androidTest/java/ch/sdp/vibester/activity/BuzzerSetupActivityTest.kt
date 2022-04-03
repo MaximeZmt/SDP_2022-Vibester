@@ -65,12 +65,12 @@ class BuzzerSetupActivityTest {
         onView(withId(R.id.nb_player_spinner)).check(matches(withSpinnerText("Four")))
     }
 
-//    @Test
-//    fun checkIntentOnProceedDefault() {
-//        onView(withId(R.id.nb_players_selected)).perform(click())
-//        intended(hasComponent(BuzzerScreenActivity::class.java.name))
-//        intended(hasExtra("Number of players", 1))
-//    }
+    @Test
+    fun checkIntentOnProceedDefault() {
+        onView(withId(R.id.nb_players_selected)).perform(click())
+        intended(hasComponent(BuzzerScreenActivity::class.java.name))
+        intended(hasExtra("Number of players", 1))
+    }
 //
 //    @Test
 //    fun checkIntentOnProceedOne() {

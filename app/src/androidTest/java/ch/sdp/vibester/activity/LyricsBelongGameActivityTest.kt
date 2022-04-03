@@ -153,7 +153,7 @@ class LyricsBelongGameActivityTest {
         scn.onActivity { activity ->
             activity.testGetAndCheckLyrics("the best song in the world", "Mr.Mystery", "", gameManager)
         }
-        Thread.sleep(sleepTime)
+        Thread.sleep(10000)
         onView(withId(R.id.lyricMatchResult)).check(matches(withText("No lyrics found, try another song")))
     }
 
@@ -228,7 +228,7 @@ class LyricsBelongGameActivityTest {
         scn.onActivity { activity ->
             activity.testGetAndCheckLyrics(songName, artistName, speechInputCorrect, gameManager)
         }
-        Thread.sleep(sleepTime)
+        Thread.sleep(10000)
         onView(withId(R.id.lyricMatchResult)).check(matches(withText("res: correct")))
     }
 

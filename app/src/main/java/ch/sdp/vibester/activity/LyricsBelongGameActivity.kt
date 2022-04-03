@@ -145,7 +145,6 @@ class LyricsBelongGameActivity : GameActivity() {
          }
     }
 
-    // FIXME: progress bar doesn't decrease
     private fun barTimer(myBar: ProgressBar) {
         initializeBarTimer(myBar)
         runnable = object : Runnable {
@@ -158,6 +157,7 @@ class LyricsBelongGameActivity : GameActivity() {
                 }
             }
         }
+        handler.post(runnable!!)
     }
 
     private fun clearResult() {

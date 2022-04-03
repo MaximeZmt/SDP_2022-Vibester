@@ -59,6 +59,7 @@
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="20dp"
             android:orientation="vertical"
+            android:noHistory="true"
             app:layout_constraintBottom_toTopOf="@+id/nb_players_selected"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"

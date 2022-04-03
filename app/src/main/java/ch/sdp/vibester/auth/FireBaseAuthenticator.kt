@@ -6,17 +6,20 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import dagger.hilt.android.scopes.ServiceScoped
+import javax.inject.Inject
 
-class FireBaseAuthenticator() {
+class FireBaseAuthenticator @Inject constructor() {
 
-    val auth: FirebaseAuth = Firebase.auth
+    private val auth: FirebaseAuth = Firebase.auth
 
     /**
      * A function to log in with email and password
      * @param email email
-     * @param password passwprd
+     * @param password password
      * @return Task of the result
      */
     fun signIn(email: String, password: String): Task<AuthResult> {
@@ -32,6 +35,10 @@ class FireBaseAuthenticator() {
 
     fun createAccount(email: String, password: String): Task<AuthResult> {
         return auth.createUserWithEmailAndPassword(email, password)
+    }
+
+    fun getCurrUser(): FirebaseUser? {
+        return auth.currentUser
     }
 
     /**

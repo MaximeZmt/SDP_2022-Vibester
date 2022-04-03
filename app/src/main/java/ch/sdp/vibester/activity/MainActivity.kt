@@ -7,7 +7,9 @@ import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.GenreTemporary
 import ch.sdp.vibester.R
 import ch.sdp.vibester.helper.IntentSwitcher
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

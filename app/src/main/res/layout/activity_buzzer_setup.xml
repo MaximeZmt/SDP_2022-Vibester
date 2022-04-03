@@ -14,7 +14,7 @@
             android:fontFeatureSettings="smcp"
             android:text="@string/ask_nb_players"
             android:textAlignment="center"
-            android:textSize="30dp"
+            android:textSize="30sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -43,7 +43,7 @@
             android:stateListAnimator="@null"
             android:onClick="switchToGame"
             android:text="@string/proceed"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:translationZ="10dp"
             app:icon="@android:drawable/ic_media_play"
             app:layout_constraintEnd_toEndOf="parent"
@@ -71,7 +71,8 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="Name of Player 1"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:minHeight="48dp" />
 
             <EditText
                 android:id="@+id/namePlayer2"

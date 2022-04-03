@@ -37,70 +37,70 @@
         android:id="@+id/nb_players_selected"
         android:layout_width="256dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:backgroundTint="@color/cg_blue"
         android:onClick="switchToGame"
         android:text="@string/proceed"
         android:textSize="20sp"
         android:visibility="visible"
         app:icon="@android:drawable/ic_media_play"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.529"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/playerNames" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.83" />
 
-        <LinearLayout
-            android:id="@+id/playerNames"
-            android:layout_width="0dp"
-            android:layout_height="183dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="20dp"
-            android:orientation="vertical"
-            android:noHistory="true"
-            app:layout_constraintBottom_toTopOf="@+id/nb_players_selected"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/nb_player_spinner">
+    <LinearLayout
+        android:id="@+id/playerNames"
+        android:layout_width="0dp"
+        android:layout_height="183dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:noHistory="true"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nb_player_spinner">
 
-            <EditText
-                android:id="@+id/namePlayer1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Name of Player 1"
-                android:inputType="textPersonName"
-                android:minHeight="48dp"
-                android:textColorHint="#757575" />
+        <EditText
+            android:id="@+id/namePlayer1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Name of Player 1"
+            android:inputType="textPersonName"
+            android:minHeight="48dp"
+            android:textColorHint="#757575" />
 
-            <EditText
-                android:id="@+id/namePlayer2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Name of Player 2"
-                android:inputType="textPersonName"
-                android:visibility="invisible" />
+        <EditText
+            android:id="@+id/namePlayer2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Name of Player 2"
+            android:inputType="textPersonName"
+            android:visibility="invisible" />
 
-            <EditText
-                android:id="@+id/namePlayer3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Name of Player 3"
-                android:inputType="textPersonName"
-                android:visibility="invisible" />
+        <EditText
+            android:id="@+id/namePlayer3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Name of Player 3"
+            android:inputType="textPersonName"
+            android:visibility="invisible" />
 
-            <EditText
-                android:id="@+id/namePlayer4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Name of Player 4"
-                android:inputType="textPersonName"
-                android:visibility="invisible" />
-        </LinearLayout>
+        <EditText
+            android:id="@+id/namePlayer4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Name of Player 4"
+            android:inputType="textPersonName"
+            android:visibility="invisible" />
+    </LinearLayout>
 
 
 

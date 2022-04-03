@@ -40,9 +40,6 @@
             android:name=".activity.ProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".LyricTemporary"
-            android:exported="false" />
-        <activity
             android:name=".activity.GameSetupActivity"
             android:exported="false" />
         <activity

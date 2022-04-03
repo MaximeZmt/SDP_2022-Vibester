@@ -45,7 +45,6 @@ class GenreToLyricsTest {
     fun topButtonClick() {
         Espresso.onView(ViewMatchers.withId(R.id.topTracksButton)).perform(ViewActions.click())
         Thread.sleep(sleepTime)
-
         Intents.intended(IntentMatchers.hasComponent(LyricsBelongGameActivity::class.java.name))
     }
 

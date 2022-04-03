@@ -44,7 +44,6 @@ class GenreToTypingTest {
     fun topButtonClick() {
         Espresso.onView(ViewMatchers.withId(R.id.topTracksButton)).perform(ViewActions.click())
         Thread.sleep(sleepTime)
-
         Intents.intended(IntentMatchers.hasComponent(TypingGameActivity::class.java.name))
     }
 

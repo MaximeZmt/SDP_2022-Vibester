@@ -164,6 +164,7 @@ class LyricsBelongGameActivity : GameActivity() {
         findViewById<TextView>(R.id.lyricMatchResult).text = "result will show here"
     }
 
+    // temporary hard-coded first song
     private fun setFirstSong(gameManager: GameManager) {
         gameManager.currentSong = Song.singleSong(
             ItunesMusicApi.querySong(songName + " " + artistName, OkHttpClient(), 1).get()
@@ -181,5 +182,21 @@ class LyricsBelongGameActivity : GameActivity() {
 
     fun testGetAndCheckLyrics(songName: String, artistName: String, speechInput: String, gameManager: GameManager) {
         getAndCheckLyrics(songName, artistName, speechInput, gameManager)
+    }
+
+    fun testSetFirstSong(gameManager: GameManager) {
+        setFirstSong(gameManager)
+    }
+
+    fun testClearResult() {
+        clearResult()
+    }
+
+    fun getSongName(): String {
+        return songName
+    }
+
+    fun getArtistName(): String {
+        return artistName
     }
 }

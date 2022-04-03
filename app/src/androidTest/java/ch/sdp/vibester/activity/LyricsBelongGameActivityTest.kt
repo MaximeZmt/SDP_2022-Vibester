@@ -18,10 +18,9 @@ import ch.sdp.vibester.api.LastfmMethod
 import ch.sdp.vibester.helper.GameManager
 import ch.sdp.vibester.model.Song
 import okhttp3.OkHttpClient
-import org.junit.After
-import org.junit.Before
-import org.junit.Rule
-import org.junit.Test
+import org.hamcrest.CoreMatchers.not
+import org.junit.*
+import org.junit.Assert.assertEquals
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
@@ -108,10 +107,14 @@ class LyricsBelongGameActivityTest {
         val gameManager = GameManager()
         gameManager.setGameSongList(managerTxt, LastfmMethod.BY_TAG.method)
 
-        gameManager.currentSong = Song.singleSong(
+        gameManager.currentSong = getFirstSong() // hard-coded
+        return gameManager
+    }
+
+    private fun getFirstSong() :Song {
+        return Song.singleSong(
             ItunesMusicApi.querySong(songName + " " + artistName, OkHttpClient(), 1).get()
         )
-        return gameManager
     }
 
     @get: Rule
@@ -132,6 +135,14 @@ class LyricsBelongGameActivityTest {
     }
 
     @Test
+    fun buttonsShouldBeDisplayedOnCreate() {
+        onView(withId(R.id.btnSpeak)).check(matches(isDisplayed()))
+        onView(withId(R.id.lyricMatchButton)).check(matches(not(isDisplayed())))
+        onView(withId(R.id.nextSongButton)).check(matches(isDisplayed()))
+        onView(withId(R.id.progressBarLyrics)).check(matches(isDisplayed()))
+    }
+
+    @Test
     fun handleLyricsNoFoundCorrectly() {
         val gameManager = setGameManager()
         val intent = Intent(
@@ -144,6 +155,19 @@ class LyricsBelongGameActivityTest {
         }
         Thread.sleep(sleepTime)
         onView(withId(R.id.lyricMatchResult)).check(matches(withText("No lyrics found, try another song")))
+    }
+
+    @Test
+    fun shouldUpdateSpeechFromInput() {
+        val intent = Intent(
+            ApplicationProvider.getApplicationContext(),
+            LyricsBelongGameActivity::class.java
+        )
+        val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
+        scn.onActivity { activity ->
+            activity.testUpdateSpeechResult("hey")
+        }
+        onView(withId(R.id.lyricResult)).check(matches(withText("hey")))
     }
 
     @Test
@@ -160,7 +184,7 @@ class LyricsBelongGameActivityTest {
     }
 
     @Test
-    fun checkLyricsShouldReturnCorrect() {
+    fun checkLyricsCorrectTest() {
         val gameManager = setGameManager()
         val intent = Intent(
             ApplicationProvider.getApplicationContext(),
@@ -172,10 +196,12 @@ class LyricsBelongGameActivityTest {
         }
         Thread.sleep(sleepTime)
         onView(withId(R.id.lyricMatchResult)).check(matches(withText("res: correct")))
+        assertEquals(1, gameManager.getCorrectSongs().size)
+        assertEquals(1, gameManager.getScore())
     }
 
     @Test
-    fun checkLyricsShouldReturnTooBad() {
+    fun checkLyricsWrongTest() {
         val gameManager = setGameManager()
         val intent = Intent(
             ApplicationProvider.getApplicationContext(),
@@ -187,19 +213,8 @@ class LyricsBelongGameActivityTest {
         }
         Thread.sleep(sleepTime)
         onView(withId(R.id.lyricMatchResult)).check(matches(withText("res: too bad")))
-    }
-
-    @Test
-    fun shouldUpdateSpeechFromInput() {
-        val intent = Intent(
-            ApplicationProvider.getApplicationContext(),
-            LyricsBelongGameActivity::class.java
-        )
-        val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
-        scn.onActivity { activity ->
-            activity.testUpdateSpeechResult("hey")
-        }
-        onView(withId(R.id.lyricResult)).check(matches(withText("hey")))
+        assertEquals(true, gameManager.getScore() == 0)
+        assertEquals(1, gameManager.getWrongSongs().size)
     }
 
     @Test
@@ -218,7 +233,7 @@ class LyricsBelongGameActivityTest {
     }
 
     @Test
-    fun checkIntentOnEnding() {
+    fun checkIntentOnEndingForWrongSong() {
         val gameManager = setGameManager()
         gameManager.setNextSong()
         gameManager.gameSize = 1
@@ -249,6 +264,58 @@ class LyricsBelongGameActivityTest {
         Intents.intended(IntentMatchers.hasExtra("str_arr_inc", incArray))
         Intents.intended(IntentMatchers.hasExtra("str_arr_name", statNames))
         Intents.intended(IntentMatchers.hasExtra("str_arr_val", statVal))
+    }
+
+    @Test
+    fun checkIntentOnNextRoundForCorrectSong() {
+        val gameManager = setGameManager()
+        gameManager.gameSize = 1
+
+        var currentArtist = ""
+        var currentSong = ""
+        val intent =
+            Intent(ApplicationProvider.getApplicationContext(), LyricsBelongGameActivity::class.java)
+        val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
+        val ctx = ApplicationProvider.getApplicationContext() as Context
+        scn.onActivity { activity ->
+            activity.playRound(gameManager)
+            currentArtist = activity.getArtistName()
+            currentSong = activity.getSongName()
+        }
+        onView(withId(R.id.lyricMatchResult)).check(matches(withText("result will show here")))
+        onView(withId(R.id.lyricMatchButton)).check(matches(not(isDisplayed())))
+        assertEquals(artistName, currentArtist)
+        assertEquals("Monday", currentSong)
+        onView(withId(R.id.lyricResult)).check(matches(withText("Say something from Monday - $artistName")))
+        onView(withId(R.id.progressBarLyrics)).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun setFirstSongTest() {
+        val gameManager = setGameManager()
+        val intent = Intent(
+            ApplicationProvider.getApplicationContext(),
+            LyricsBelongGameActivity::class.java
+        )
+        val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
+        scn.onActivity { activity ->
+            activity.testSetFirstSong(gameManager)
+        }
+        assertEquals(getFirstSong().getArtistName(), gameManager.currentSong.getArtistName())
+        assertEquals(getFirstSong().getTrackName(), gameManager.currentSong.getTrackName())
+    }
+
+    @Test
+    fun clearResultTest() {
+        val intent = Intent(
+            ApplicationProvider.getApplicationContext(),
+            LyricsBelongGameActivity::class.java
+        )
+        val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
+        scn.onActivity { activity ->
+            activity.testClearResult()
+        }
+        onView(withId(R.id.lyricMatchResult)).check(matches(withText("result will show here")))
     }
 
 }

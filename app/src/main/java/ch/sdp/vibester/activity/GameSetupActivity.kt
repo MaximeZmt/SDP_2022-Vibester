@@ -62,6 +62,9 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
          else if(this.game == "local_typing"){
              switchToGame(TypingGameActivity())
          }
+        else if(this.game == "local_lyrics"){
+            switchToGame(LyricsBelongGameActivity())
+        }
     }
 
     private fun switchToGame(nextActivity: AppCompatActivity){

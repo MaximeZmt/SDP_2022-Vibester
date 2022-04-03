@@ -84,10 +84,10 @@ class TypingGameActivity : GameActivity() {
         val guessLayout = findViewById<LinearLayout>(R.id.displayGuess)
         val inputTxt = findViewById<EditText>(R.id.yourGuessET)
 
-        var mysong: Song? = null
-        var mediaPlayer: CompletableFuture<MediaPlayer>? = null
+        // var mysong: Song? = null
+        // var mediaPlayer: CompletableFuture<MediaPlayer>? = null
         val ctx: Context = this
-        val h = Handler()
+        // val h = Handler()
 
         val getIntent = intent.extras
         if (getIntent != null) {
@@ -120,7 +120,7 @@ class TypingGameActivity : GameActivity() {
 
     override fun onDestroy() {
         if (runnable != null) {
-            h.removeCallbacks(runnable!!)
+            handler.removeCallbacks(runnable!!)
         }
         if (this::gameManager.isInitialized) {
             gameManager.stopMediaPlayer()
@@ -204,7 +204,7 @@ class TypingGameActivity : GameActivity() {
             override fun run() {
                 if (myBar.progress > 0) {
                     decreaseBarTimer(myBar)
-                    h.postDelayed(this, 999) //just a bit shorter than a second for safety
+                    handler.postDelayed(this, 999) //just a bit shorter than a second for safety
                 } else if (myBar.progress == 0) {
                     if (gameManager.playingMediaPlayer()) {
                         gameManager.stopMediaPlayer()
@@ -213,7 +213,7 @@ class TypingGameActivity : GameActivity() {
                 }
             }
         }
-        h.post(runnable!!)
+        handler.post(runnable!!)
     }
 
     /**

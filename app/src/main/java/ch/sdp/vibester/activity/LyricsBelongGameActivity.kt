@@ -145,19 +145,20 @@ class LyricsBelongGameActivity : GameActivity() {
          }
     }
 
-    // FIXME: progress bar doesn't decrease
     private fun barTimer(myBar: ProgressBar) {
         initializeBarTimer(myBar)
         runnable = object : Runnable {
             override fun run() {
                 if (myBar.progress > 0) {
                     decreaseBarTimer(myBar)
-                    h.postDelayed(this, 999)
+                    handler.postDelayed(this, 999)
                 } else if (myBar.progress == 0) {
                     getAndCheckLyrics(songName, artistName, speechInput, gameManager)
                 }
             }
         }
+        //TODO: make the progress bar work once the switch logic is fixed
+        //handler.post(runnable!!)
     }
 
     private fun clearResult() {

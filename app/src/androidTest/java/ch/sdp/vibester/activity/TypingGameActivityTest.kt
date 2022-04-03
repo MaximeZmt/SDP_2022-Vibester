@@ -21,6 +21,7 @@ import org.junit.Rule
 import org.junit.Test
 
 class TypingGameActivityTest {
+    private val expectedSize = 200
     private fun setGameManager(): TypingGameManager {
         val managerTxt = """
             {"tracks":
@@ -73,7 +74,7 @@ class TypingGameActivityTest {
         val ctx = ApplicationProvider.getApplicationContext() as Context
         val myText = TypingGameActivity.generateText(txtInput, ctx)
         assertEquals(txtInput, myText.text.toString())
-        assertEquals(200, myText.minHeight)
+        assertEquals(expectedSize, myText.minHeight)
         assertEquals(ContextCompat.getColor(ctx, R.color.black), myText.textColors.defaultColor)
     }
 
@@ -93,8 +94,8 @@ class TypingGameActivityTest {
         val txtInput = "hello"
         val ctx = ApplicationProvider.getApplicationContext() as Context
         val myTest = TypingGameActivity.generateImage(mySong, ctx)
-        assertEquals(200, myTest.minimumHeight)
-        assertEquals(200, myTest.minimumWidth)
+        assertEquals(expectedSize, myTest.minimumHeight)
+        assertEquals(expectedSize, myTest.minimumWidth)
     }
 
 //    @Test

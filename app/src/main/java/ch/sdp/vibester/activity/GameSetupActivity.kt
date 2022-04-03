@@ -16,6 +16,7 @@ import ch.sdp.vibester.api.LastfmApiInterface
 import ch.sdp.vibester.api.LastfmMethod
 import ch.sdp.vibester.api.LastfmUri
 import ch.sdp.vibester.helper.GameManager
+import ch.sdp.vibester.helper.TypingGameManager
 import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
@@ -24,7 +25,7 @@ import retrofit2.Response
 class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     var difficulty = "Easy"
     var game = "local_buzzer"
-    val gameManager = GameManager()
+     lateinit var gameManager: GameManager;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -96,8 +97,8 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
 
     fun chooseGame(view: View){
         when (view.getId()) {
-            R.id.local_buzzer_game_button -> {game  = "local_buzzer"}
-            R.id.local_typing_game_button -> {game = "local_typing"}
+            R.id.local_buzzer_game_button -> {game  = "local_buzzer"; gameManager = GameManager()}
+            R.id.local_typing_game_button -> {game = "local_typing"; gameManager = TypingGameManager()}
         }
         findViewById<LinearLayout>(R.id.chooseGame).visibility = GONE
         findViewById<ConstraintLayout>(R.id.chooseGenre).visibility = VISIBLE

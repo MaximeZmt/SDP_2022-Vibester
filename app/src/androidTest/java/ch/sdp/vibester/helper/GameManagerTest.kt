@@ -47,7 +47,7 @@ class GameManagerTest {
     @Test
     fun getPlayedSongsCorrect() {
         val gameManager = setGameManager()
-        assertEquals(gameManager.getPlayedSongs(), 0)
+        assertEquals(gameManager.getPlayedSongsCount(), 0)
     }
 
     @Test

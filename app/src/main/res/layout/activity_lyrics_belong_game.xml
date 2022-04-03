@@ -5,8 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <ProgressBar
+        android:id="@+id/progressBarLyrics"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="74dp"
+        android:max="30"
+        android:paddingLeft="25sp"
+        android:paddingRight="25sp"
+        android:progress="15"
+        android:progressTint="@color/tiffany_blue"
+        android:scaleY="3" />
 
+    <TextView
         android:id="@+id/lyricResult"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,7 +38,6 @@
         android:textStyle="bold" />
 
     <ImageView
-
         android:id="@+id/btnSpeak"
         android:layout_width="wrap_content"
         android:layout_height="100dp"

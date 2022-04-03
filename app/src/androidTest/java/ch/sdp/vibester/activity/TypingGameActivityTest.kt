@@ -20,7 +20,7 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.LastfmMethod
-import ch.sdp.vibester.helper.GameManager
+import ch.sdp.vibester.helper.TypingGameManager
 import ch.sdp.vibester.model.Song
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
@@ -32,17 +32,14 @@ import org.junit.Test
 
 
 class TypingGameActivityTest {
-    private fun setGameManager(numSongs: Int = 1): GameManager {
-        val managerTxt = """
-            {"tracks":
-            {"track":[{"name":"Monday","artist":{"name":"Imagine Dragons"}}],
-            "@attr":{"tag":"british","page":"1","perPage":"1","totalPages":"66649","total":"66649"}}}
-            """
+
+    private val expectedSize = 200
+    private fun setGameManager(numSongs:Int = 1): TypingGameManager {
         val epilogue = "{\"tracks\":{\"track\":["
         val prologue =
             "], \"@attr\":{\"tag\":\"british\",\"page\":\"1\",\"perPage\":\"1\",\"totalPages\":\"66649\",\"total\":\"66649\"}}}"
         val middle = "{\"name\":\"Monday\",\"artist\":{\"name\":\"Imagine Dragons\"}}"
-        val gameManager = GameManager()
+        val gameManager = TypingGameManager()
         var i = 0
         var completeMiddle = middle
         while(i < numSongs-1){
@@ -88,7 +85,7 @@ class TypingGameActivityTest {
         val ctx = ApplicationProvider.getApplicationContext() as Context
         val myText = TypingGameActivity.generateText(txtInput, ctx)
         assertEquals(txtInput, myText.text.toString())
-        assertEquals(200, myText.minHeight)
+        assertEquals(expectedSize, myText.minHeight)
         assertEquals(ContextCompat.getColor(ctx, R.color.black), myText.textColors.defaultColor)
     }
 
@@ -107,9 +104,9 @@ class TypingGameActivityTest {
 
         val txtInput = "hello"
         val ctx = ApplicationProvider.getApplicationContext() as Context
-        val mytest = TypingGameActivity.generateImage(mySong, ctx)
-        assertEquals(200, mytest.minimumHeight)
-        assertEquals(200, mytest.minimumWidth)
+        val myTest = TypingGameActivity.generateImage(mySong, ctx)
+        assertEquals(expectedSize, myTest.minimumHeight)
+        assertEquals(expectedSize, myTest.minimumWidth)
     }
 
     @Test
@@ -200,6 +197,10 @@ class TypingGameActivityTest {
     }
 
 
+    /**
+    * Currently testing with the *static* values. Change to *dynamic* once the game is correctly
+    * implemented and all the data are being sent between activities.
+    */
     @Test
     fun checkIntentOnEnding() {
 
@@ -216,14 +217,13 @@ class TypingGameActivityTest {
         val gameManager = setGameManager()
         gameManager.setNextSong()
         gameManager.gameSize = 1
-        lateinit var temp: Unit
 
         val intent =
             Intent(ApplicationProvider.getApplicationContext(), TypingGameActivity::class.java)
         val scn: ActivityScenario<TypingGameActivity> = ActivityScenario.launch(intent)
         val ctx = ApplicationProvider.getApplicationContext() as Context
         scn.onActivity { activity ->
-            temp = activity.checkAnswer(ctx, songTest, gameManager)
+            activity.checkAnswer(ctx, songTest, gameManager)
         }
         val incArray: ArrayList<String> = ArrayList(
             gameManager.getWrongSongs().map { it.getTrackName() + " - " + it.getArtistName() })
@@ -287,7 +287,7 @@ class TypingGameActivityTest {
         )
 
         val incArray: ArrayList<String> = ArrayList(
-            gameManager.getWrongSongs().map { it.getTrackName() + " - " + it.getArtistName() })
+            gameManager.getWrongSongs().map{ it.getTrackName() + " - " + it.getArtistName() })
 
         val statNames: ArrayList<String> = arrayListOf()
         val statName = "Total Score"

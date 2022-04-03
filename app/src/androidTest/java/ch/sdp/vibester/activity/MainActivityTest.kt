@@ -8,7 +8,8 @@ import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import ch.sdp.vibester.GenreTemporary
+import ch.sdp.vibester.GenreToLyrics
+import ch.sdp.vibester.GenreToTyping
 import ch.sdp.vibester.R
 import org.junit.After
 import org.junit.Before
@@ -44,13 +45,13 @@ class MainActivityTest {
     @Test
     fun checkIntentOnGenre() {
         onView(withId(R.id.genreButton)).perform(click())
-        intended(hasComponent(GenreTemporary::class.qualifiedName))
+        intended(hasComponent(GenreToTyping::class.qualifiedName))
     }
 
 
     @Test
     fun checkIntentOnLyric() {
         onView(withId(R.id.lyricButton)).perform(click())
-        intended(hasComponent(LyricsBelongGameActivity::class.qualifiedName))
+        intended(hasComponent(GenreToLyrics::class.qualifiedName))
     }
 }

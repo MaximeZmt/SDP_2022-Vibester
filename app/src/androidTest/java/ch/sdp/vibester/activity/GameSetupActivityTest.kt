@@ -38,7 +38,6 @@ class GameSetupActivityTest {
         Intents.release()
     }
 
-
     @Test
     fun checkDefaultSelectDifficulty() {
         onView(withId(R.id.difficulty_spinner)).check(matches(withSpinnerText("Easy")))
@@ -112,6 +111,7 @@ class GameSetupActivityTest {
         onData(Matchers.anything()).atPosition(2).perform(click())
         onView(withId(R.id.difficulty_proceed)).perform(click())
         intended(hasComponent(TypingGameActivity::class.java.name))
+        intended(hasExtra("Difficulty", "Hard"))
     }
 
     @Test

@@ -112,7 +112,7 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
     }
 
     /**
-     * Choose genre for the game. Call funtion to fetch the data from Lastfm.
+     * Choose genre for the game. Call function to fetch the data from Lastfm.
      */
     fun chooseGenre(view: View) {
         var method =  ""

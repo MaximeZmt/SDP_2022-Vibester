@@ -28,9 +28,9 @@ class UserSharedPref private constructor() {
             val edit = getSharedPreferences(ctx)?.edit()
             if (edit != null) {
                 edit.putString(HANDLE, user.handle)
-                edit.putString(USERNAME, user.handle)
-                edit.putString(IMAGE, user.handle)
-                edit.putString(EMAIL, user.handle)
+                edit.putString(USERNAME, user.username)
+                edit.putString(IMAGE, user.image)
+                edit.putString(EMAIL, user.email)
                 edit.putInt(TOTAL_GAMES, user.totalGames)
                 edit.putInt(BEST_SCORE, user.bestScore)
                 edit.putInt(CORRECT_SONGS, user.correctSongs)
@@ -38,5 +38,48 @@ class UserSharedPref private constructor() {
                 edit.commit()
             }
         }
+
+        fun updateScore(ctx: Context, deltaTotal: Int = 0, deltaBest: Int = 0, deltaCorrect: Int = 0, deltaRanking: Int = 0){
+            val sharedPref = getSharedPreferences(ctx)
+            if(sharedPref != null){
+                val edit = sharedPref.edit()
+                val current_total_games = sharedPref.getInt(TOTAL_GAMES, 0) + deltaTotal
+                val current_best_score = sharedPref.getInt(BEST_SCORE, 0) + deltaBest
+                val current_correct_song = sharedPref.getInt(CORRECT_SONGS, 0) + deltaCorrect
+                val current_ranking = sharedPref.getInt(RANKING, 0) + deltaRanking
+                edit.putInt(TOTAL_GAMES, current_total_games)
+                edit.putInt(BEST_SCORE, current_best_score)
+                edit.putInt(CORRECT_SONGS, current_correct_song)
+                edit.putInt(RANKING, current_ranking)
+                edit.commit()
+            }
+        }
+
+        fun getUser(ctx: Context): UserProfile{
+            val sharedPref = getSharedPreferences(ctx)
+
+            var handle = ""
+            var username = ""
+            var image = ""
+            var email = ""
+            var totalGames = -1
+            var bestScore = -1
+            var correctSongs = -1
+            var ranking = -1
+
+            if(sharedPref != null) {
+                handle = sharedPref.getString(HANDLE, "").toString()
+                username = sharedPref.getString(USERNAME, "").toString()
+                image = sharedPref.getString(IMAGE, "").toString()
+                email = sharedPref.getString(EMAIL, "").toString()
+                totalGames = sharedPref.getInt(TOTAL_GAMES, 0)
+                bestScore = sharedPref.getInt(BEST_SCORE, 0)
+                correctSongs = sharedPref.getInt(CORRECT_SONGS, 0)
+                ranking = sharedPref.getInt(RANKING, 0)
+            }
+            return UserProfile(handle, username, image, email, totalGames, bestScore, correctSongs, ranking)
+        }
+
+
     }
 }

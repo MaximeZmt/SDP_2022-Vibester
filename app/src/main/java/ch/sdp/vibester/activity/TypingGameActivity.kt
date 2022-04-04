@@ -138,7 +138,7 @@ class TypingGameActivity : GameActivity() {
     private fun toggleNextBtnVisibility(value: Boolean){
         val nextSongBtn = findViewById<Button>(R.id.nextSong)
         if(value){nextSongBtn.visibility = android.view.View.VISIBLE}
-        nextSongBtn.visibility = android.view.View.GONE
+        else{nextSongBtn.visibility = android.view.View.GONE}
     }
 
     /**
@@ -201,7 +201,6 @@ class TypingGameActivity : GameActivity() {
             hasWon(ctx, gameManager.getScore(), false, playedSong)
         }
         endRound(gameManager)
-
     }
 
     /**

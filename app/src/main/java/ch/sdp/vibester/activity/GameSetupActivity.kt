@@ -87,6 +87,7 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
 
     /**
      * Fetch data from Lastfm and set song list in a GameManager
+     * @param uri: contains all Lastfm query parameters (method, artist, tag)
      */
     private fun setGameSongList(uri: LastfmUri) {
         val service = LastfmApiInterface.createLastfmService()

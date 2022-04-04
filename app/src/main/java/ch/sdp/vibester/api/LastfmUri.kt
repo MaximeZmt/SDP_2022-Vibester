@@ -1,12 +1,12 @@
 package ch.sdp.vibester.api
 
 data class LastfmUri(
-    val method: String = "",
+    var method: String = "",
     val format: String = "json",
-    val tag: String = "",
+    var tag: String = "",
     val page: String = "1",
     var limit: String = "100",
-    val artist: String = "",
+    var artist: String = "",
     val api_key: String = "52bfdc690dd8373bba5351571a01ac14"
 ) {
     /**

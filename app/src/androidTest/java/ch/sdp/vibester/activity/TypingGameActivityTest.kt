@@ -7,9 +7,11 @@ import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
+import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.ext.junit.rules.ActivityScenarioRule
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.LastfmMethod
 import ch.sdp.vibester.helper.TypingGameManager
@@ -19,7 +21,9 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
 
+@RunWith(AndroidJUnit4::class)
 class TypingGameActivityTest {
     private val expectedSize = 200
     private fun setGameManager(): TypingGameManager {
@@ -226,9 +230,7 @@ class TypingGameActivityTest {
 
         Intents.intended(IntentMatchers.hasComponent(GameEndingActivity::class.java.name))
 
-//        Intents.intended(IntentMatchers.hasExtra("playerName", "Default"))
         Intents.intended(IntentMatchers.hasExtra("nbIncorrectSong", 1))
-
         Intents.intended(IntentMatchers.hasExtra("str_arr_inc", incArray))
         Intents.intended(IntentMatchers.hasExtra("str_arr_name", statNames))
         Intents.intended(IntentMatchers.hasExtra("str_arr_val", statVal))

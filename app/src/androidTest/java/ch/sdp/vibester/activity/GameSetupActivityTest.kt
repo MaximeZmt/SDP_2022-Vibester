@@ -137,6 +137,17 @@ class GameSetupActivityTest {
     }
 
     @Test
+    fun localLyricsOnClickHard(){
+        onView(withId(R.id.local_lyrics_game_button)).perform(scrollTo(), click())
+        onView(withId(R.id.btsButton)).perform(click())
+        onView(withId(R.id.difficulty_spinner)).perform(click())
+        onData(Matchers.anything()).atPosition(2).perform(click())
+        onView(withId(R.id.difficulty_proceed)).perform(click())
+        intended(hasComponent(LyricsBelongGameActivity::class.java.name))
+        intended(hasExtra("Difficulty", "Hard"))
+    }
+
+    @Test
     fun rockButtonClick() {
         onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
         onView(withId(R.id.rockButton)).perform(click())

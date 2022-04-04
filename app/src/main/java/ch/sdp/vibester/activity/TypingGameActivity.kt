@@ -86,7 +86,7 @@ class TypingGameActivity : GameActivity() {
         val getIntent = intent.extras
         if (getIntent != null) {
             gameManager = getIntent.getSerializable("gameManager") as TypingGameManager
-            startRound(ctx, gameManager)
+            startFirstRound(ctx, gameManager)
             setNextButtonListener(ctx, gameManager)
             super.setMax(intent)
         }
@@ -148,6 +148,27 @@ class TypingGameActivity : GameActivity() {
         findViewById<Button>(R.id.nextSong).setOnClickListener {
             startRound(ctx, gameManager)
         }
+    }
+
+    /**
+     * Custom handle of the bar progress.
+     */
+    private fun barTimer(myBar: ProgressBar, ctx:Context, gameManager: TypingGameManager){
+        initializeBarTimer(myBar)
+        runnable = object : Runnable {
+            override fun run() {
+                if (myBar.progress > 0) {
+                    decreaseBarTimer(myBar)
+                    handler.postDelayed(this, 999) //just a bit shorter than a second for safety
+                } else if (myBar.progress == 0) {
+                    if (gameManager.playingMediaPlayer()) {
+                        gameManager.stopMediaPlayer()
+                    }
+                    checkAnswer(ctx, null, gameManager)
+                }
+            }
+        }
+        handler.post(runnable!!)
     }
 
     /**
@@ -218,26 +239,23 @@ class TypingGameActivity : GameActivity() {
         return frameLay
     }
 
+
     /**
-     * Custom handle of the bar progress.
+     * Function to set a song for the first round and play a game.
      */
-    private fun barTimer(myBar: ProgressBar, ctx:Context, gameManager: TypingGameManager){
-        initializeBarTimer(myBar)
-        runnable = object : Runnable {
-            override fun run() {
-                if (myBar.progress > 0) {
-                    decreaseBarTimer(myBar)
-                    handler.postDelayed(this, 999) //just a bit shorter than a second for safety
-                } else if (myBar.progress == 0) {
-                    if (gameManager.playingMediaPlayer()) {
-                        gameManager.stopMediaPlayer()
-                    }
-                    checkAnswer(ctx, null, gameManager)
-                }
-            }
+    private fun startFirstRound(ctx: Context, gameManager: TypingGameManager){
+        if (gameManager.checkGameStatus() && gameManager.setNextSong()) {
+            startRound(ctx, gameManager)
         }
-        handler.post(runnable!!)
+        else{
+            switchToEnding(gameManager)
+        }
     }
+
+    /**
+     * Function called in the end of each round. Displays the button "Next" and
+     * sets the next songs to play.
+     */
     private fun endRound(gameManager: GameManager){
         toggleNextBtnVisibility(true)
         checkRunnable()
@@ -248,14 +266,9 @@ class TypingGameActivity : GameActivity() {
 
     /**
      * Function to set a new round. It includes reinitializing activity elements,
-     * and setting new song for the round.
+     * and playing new song for the round.
      */
     private fun startRound(ctx: Context, gameManager: TypingGameManager) {
-        if (gameManager.getPlayedSongsCount() == 0 && (!gameManager.checkGameStatus() || !gameManager.setNextSong())) {
-            switchToEnding(gameManager)
-            return
-        }
-
         findViewById<LinearLayout>(R.id.displayGuess).removeAllViews()
         findViewById<EditText>(R.id.yourGuessET).text.clear()
         toggleNextBtnVisibility(false)

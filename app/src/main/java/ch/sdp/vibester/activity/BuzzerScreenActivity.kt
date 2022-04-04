@@ -52,11 +52,10 @@ class BuzzerScreenActivity : AppCompatActivity() {
         answerText.text = "The song was Demo by The Placeholders"
 
         val allPoints = if (nPlayers!=null) {Array<Int>(nPlayers, { i -> 0 }) } else Array<Int>(MAX_N_PLAYERS, {i ->0})
-
         val playersFull = getIntent?.getStringArray("Player Names")
         val players = nPlayers?.let { playersFull?.copyOfRange(0, it) }
 
-        val updater = BuzzerScoreUpdater(buzIds, arrayListOf(*allPoints))
+        val updater = BuzzerScoreUpdater(buzIds, allPoints)
 
         if (players != null) {
             buildScores(players, allPoints)

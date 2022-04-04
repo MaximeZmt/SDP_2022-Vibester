@@ -80,6 +80,26 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
+                            android:visibility="visible" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/local_lyrics_game_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/squared_button"
+                            android:backgroundTint="@color/cg_blue"
+                            android:elevation="10dp"
+                            android:onClick="chooseGame"
+                            android:stateListAnimator="@null"
+                            android:text="@string/game_lyrics"
+                            android:textColor="@color/white"
+                            android:translationZ="10dp" />
+
+                        <Space
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
                             android:visibility="gone" />
 
                         <androidx.appcompat.widget.AppCompatButton

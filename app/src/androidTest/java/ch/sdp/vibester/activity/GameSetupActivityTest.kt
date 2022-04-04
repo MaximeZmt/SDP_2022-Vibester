@@ -104,13 +104,46 @@ class GameSetupActivityTest {
     }
 
     @Test
-    fun localTypingOnClick(){
+    fun localTypingOnClickHard(){
         onView(withId(R.id.local_typing_game_button)).perform(scrollTo(), click())
         onView(withId(R.id.btsButton)).perform(click())
         onView(withId(R.id.difficulty_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(2).perform(click())
         onView(withId(R.id.difficulty_proceed)).perform(click())
         intended(hasComponent(TypingGameActivity::class.java.name))
+        intended(hasExtra("Difficulty", "Hard"))
+    }
+
+    @Test
+    fun localTypingOnClickMedium(){
+        onView(withId(R.id.local_typing_game_button)).perform(scrollTo(), click())
+        onView(withId(R.id.btsButton)).perform(click())
+        onView(withId(R.id.difficulty_spinner)).perform(click())
+        onData(Matchers.anything()).atPosition(1).perform(click())
+        onView(withId(R.id.difficulty_proceed)).perform(click())
+        intended(hasComponent(TypingGameActivity::class.java.name))
+        intended(hasExtra("Difficulty", "Medium"))
+    }
+
+    @Test
+    fun localTypingOnClickEasy(){
+        onView(withId(R.id.local_typing_game_button)).perform(scrollTo(), click())
+        onView(withId(R.id.btsButton)).perform(click())
+        onView(withId(R.id.difficulty_spinner)).perform(click())
+        onData(Matchers.anything()).atPosition(0).perform(click())
+        onView(withId(R.id.difficulty_proceed)).perform(click())
+        intended(hasComponent(TypingGameActivity::class.java.name))
+        intended(hasExtra("Difficulty", "Easy"))
+    }
+
+    @Test
+    fun localLyricsOnClickHard(){
+        onView(withId(R.id.local_lyrics_game_button)).perform(scrollTo(), click())
+        onView(withId(R.id.btsButton)).perform(click())
+        onView(withId(R.id.difficulty_spinner)).perform(click())
+        onData(Matchers.anything()).atPosition(2).perform(click())
+        onView(withId(R.id.difficulty_proceed)).perform(click())
+        intended(hasComponent(LyricsBelongGameActivity::class.java.name))
         intended(hasExtra("Difficulty", "Hard"))
     }
 

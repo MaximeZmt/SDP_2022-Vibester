@@ -39,7 +39,7 @@ class BuzzerSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
     /**
      * Converts the spinner text for the number of players into an Int
      * @param
-     * text: the string to be converted
+     
      */
     fun textToNumber(text: String): Int {
         when (text) {

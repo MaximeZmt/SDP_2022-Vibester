@@ -299,6 +299,7 @@ class TypingGameActivityTest {
 
         Intents.intended(IntentMatchers.hasComponent(GameEndingActivity::class.java.name))
         Intents.intended(IntentMatchers.hasExtra("nbIncorrectSong", 1))
+
         Intents.intended(IntentMatchers.hasExtra("str_arr_inc", incArray))
         Intents.intended(IntentMatchers.hasExtra("str_arr_name", statNames))
         Intents.intended(IntentMatchers.hasExtra("str_arr_val", statVal))

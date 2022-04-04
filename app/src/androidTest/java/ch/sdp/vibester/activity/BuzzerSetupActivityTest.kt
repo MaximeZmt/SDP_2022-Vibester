@@ -1,4 +1,10 @@
 package ch.sdp.vibester.activity
+import android.content.Context
+import android.content.Intent
+import android.widget.FrameLayout
+import android.widget.LinearLayout
+import androidx.test.core.app.ActivityScenario
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onData
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
@@ -15,6 +21,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
 import org.hamcrest.Matchers
 import org.junit.After
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -38,6 +45,17 @@ class BuzzerSetupActivityTest {
     @Test
     fun checkDefaultSelect() {
         onView(withId(R.id.nb_player_spinner)).check(matches(withSpinnerText("One")))
+    }
+
+    @Test
+    fun textToNumberWrong(){
+        var res:Int = 0
+        val intent = Intent(ApplicationProvider.getApplicationContext(), BuzzerSetupActivity::class.java)
+        val scn: ActivityScenario<BuzzerSetupActivity> = ActivityScenario.launch(intent)
+        scn.onActivity { activity ->
+            res = activity.textToNumber("Test")
+        }
+        assertEquals(res, 1)
     }
 
     @Test

@@ -87,6 +87,7 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
 
     /**
      * Fetch data from Lastfm and set song list in a GameManager
+     * @param uri: contains all Lastfm query parameters (method, artist, tag)
      */
     private fun setGameSongList(uri: LastfmUri) {
         val service = LastfmApiInterface.createLastfmService()
@@ -106,13 +107,14 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         when (view.getId()) {
             R.id.local_buzzer_game_button -> {game  = "local_buzzer"; gameManager = GameManager()}
             R.id.local_typing_game_button -> {game = "local_typing"; gameManager = TypingGameManager()}
+            R.id.local_lyrics_game_button -> {game = "local_lyrics"; gameManager = GameManager()}
         }
         findViewById<LinearLayout>(R.id.chooseGame).visibility = GONE
         findViewById<ConstraintLayout>(R.id.chooseGenre).visibility = VISIBLE
     }
 
     /**
-     * Choose genre for the game. Call funtion to fetch the data from Lastfm.
+     * Choose genre for the game. Call function to fetch the data from Lastfm.
      */
     fun chooseGenre(view: View) {
         var method =  ""

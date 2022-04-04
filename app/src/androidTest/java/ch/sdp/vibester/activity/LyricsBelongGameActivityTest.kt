@@ -153,6 +153,8 @@ class LyricsBelongGameActivityTest {
         scn.onActivity { activity ->
             activity.testGetAndCheckLyrics("the best song in the world", "Mr.Mystery", "", gameManager)
         }
+        //FIXME
+        // API takes a lot of time to process this request, thus resulting in wrong test output
 //        Thread.sleep(10000)
 //        onView(withId(R.id.lyricMatchResult)).check(matches(withText("No lyrics found, try another song")))
     }
@@ -228,6 +230,8 @@ class LyricsBelongGameActivityTest {
         scn.onActivity { activity ->
             activity.testGetAndCheckLyrics(songName, artistName, speechInputCorrect, gameManager)
         }
+        //FIXME
+        // API takes a lot of time to process this request, thus resulting in wrong test output
 //        Thread.sleep(10000)
 //        onView(withId(R.id.lyricMatchResult)).check(matches(withText("res: correct")))
     }

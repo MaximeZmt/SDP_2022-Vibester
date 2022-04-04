@@ -46,11 +46,16 @@ import kotlin.random.Random
 @RunWith(AndroidJUnit4::class)
 @HiltAndroidTest
 class AuthenticationActivityTest {
+    private val sleepTime: Long = 5000
 
-    @get:Rule
+    @get:Rule(order = 0)
     var hiltRule = HiltAndroidRule(this)
 
-    private val sleepTime: Long = 5000
+
+    @get:Rule(order = 1)
+    val testRule = ActivityScenarioRule(
+        AuthenticationActivity::class.java
+    )
 
     @BindValue @JvmField
     val mockAuthenticator = mockk<FireBaseAuthenticator>()
@@ -67,9 +72,10 @@ class AuthenticationActivityTest {
         return taskResult
     }
 
-    private fun createMockUser(email: String) {
+    private fun createMockUser(email: String): FirebaseUser {
         val mockUser = mockk<FirebaseUser>()
         every { mockUser.email } returns email
+        return mockUser
     }
 
     @Before
@@ -89,10 +95,7 @@ class AuthenticationActivityTest {
         assertEquals("ch.sdp.vibester", appContext.packageName)
     }
 
-    @get:Rule
-    val testRule = ActivityScenarioRule(
-        AuthenticationActivity::class.java
-    )
+
 
     @Test
     fun logInIncorrect() {
@@ -101,6 +104,7 @@ class AuthenticationActivityTest {
 
         val mockTask = createMockTask(false)
         every { mockAuthenticator.signIn(username, password) } returns mockTask
+
 
         onView(withId(R.id.username)).perform(ViewActions.typeText(username), closeSoftKeyboard())
         onView(withId(R.id.password)).perform(ViewActions.typeText(password), closeSoftKeyboard())
@@ -157,20 +161,20 @@ class AuthenticationActivityTest {
         onView(withId(R.id.createAcc)).perform(click())
         onView(withId(R.id.email)).check(matches(withText("Password has to be at least 6 symbols")))
     }
-
-    @Test
-    fun derinTest() {
-        val a = FireBaseAuthenticator()
-        a.googleActivityResult(-1, -1, null)
-        onView(withId(R.id.email)).check(matches(withText("TextView")))
-    }
-
-    @Test
-    fun ardaTest() {
-        val a = FireBaseAuthenticator()
-        a.googleActivityResult(1000, -1, null)
-        onView(withId(R.id.email)).check(matches(withText("TextView")))
-    }
+//
+//    @Test
+//    fun derinTest() {
+//        val a = FireBaseAuthenticator()
+//        a.googleActivityResult(-1, -1, null)
+//        onView(withId(R.id.email)).check(matches(withText("TextView")))
+//    }
+//
+//    @Test
+//    fun ardaTest() {
+//        val a = FireBaseAuthenticator()
+//        a.googleActivityResult(1000, -1, null)
+//        onView(withId(R.id.email)).check(matches(withText("TextView")))
+//    }
 
     @Test
     fun logInCorrect() {
@@ -178,8 +182,11 @@ class AuthenticationActivityTest {
         val password = "password"
 
         val mockTask = createMockTask(true)
+        val mockUser = createMockUser(username)
+//        val mockUser = mockk<FirebaseUser>()
+//        every { mockUser.email } returns "apdkapodkapd@test.com"
         every { mockAuthenticator.signIn(username, password) } returns mockTask
-        createMockUser(username)
+        every { mockAuthenticator.getCurrUser()} returns mockUser
 
         onView(withId(R.id.username)).perform(ViewActions.typeText(username), closeSoftKeyboard())
         onView(withId(R.id.password)).perform(ViewActions.typeText(password), closeSoftKeyboard())

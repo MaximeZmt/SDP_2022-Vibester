@@ -124,7 +124,9 @@ class AuthenticationActivityTest {
         onView(withId(R.id.username)).perform(ViewActions.typeText(username), closeSoftKeyboard())
         onView(withId(R.id.password)).perform(ViewActions.typeText(password), closeSoftKeyboard())
         onView(withId(R.id.createAcc)).perform(click())
-        Thread.sleep(sleepTime)
+
+//        Thread.sleep(sleepTime)
+
         onView(withId(R.id.email)).check(matches(withText("Authentication error")))
 
 
@@ -146,9 +148,11 @@ class AuthenticationActivityTest {
     fun stringValidationWrongEmail() {
         val username = "john"
         val password = "password"
+
         onView(withId(R.id.username)).perform(ViewActions.typeText(username), closeSoftKeyboard())
         onView(withId(R.id.password)).perform(ViewActions.typeText(password), closeSoftKeyboard())
         onView(withId(R.id.createAcc)).perform(click())
+
         onView(withId(R.id.email)).check(matches(withText("Not an email")))
     }
 
@@ -156,35 +160,39 @@ class AuthenticationActivityTest {
     fun stringValidationShorPassword() {
         val username = "john@test.com"
         val password = "12345"
+
         onView(withId(R.id.username)).perform(ViewActions.typeText(username), closeSoftKeyboard())
         onView(withId(R.id.password)).perform(ViewActions.typeText(password), closeSoftKeyboard())
         onView(withId(R.id.createAcc)).perform(click())
+
         onView(withId(R.id.email)).check(matches(withText("Password has to be at least 6 symbols")))
     }
-//
-//    @Test
-//    fun derinTest() {
-//        val a = FireBaseAuthenticator()
-//        a.googleActivityResult(-1, -1, null)
-//        onView(withId(R.id.email)).check(matches(withText("TextView")))
-//    }
-//
-//    @Test
-//    fun ardaTest() {
-//        val a = FireBaseAuthenticator()
-//        a.googleActivityResult(1000, -1, null)
-//        onView(withId(R.id.email)).check(matches(withText("TextView")))
-//    }
+
+    @Test
+    fun derinTest() {
+        val a = FireBaseAuthenticator()
+
+        a.googleActivityResult(-1, -1, null)
+
+        onView(withId(R.id.email)).check(matches(withText("TextView")))
+    }
+
+    @Test
+    fun ardaTest() {
+        val a = FireBaseAuthenticator()
+
+        a.googleActivityResult(1000, -1, null)
+
+        onView(withId(R.id.email)).check(matches(withText("TextView")))
+    }
 
     @Test
     fun logInCorrect() {
-        val username = "apdkapodkapd@test.com"
+        val username = "mockUsername@test.com"
         val password = "password"
 
         val mockTask = createMockTask(true)
         val mockUser = createMockUser(username)
-//        val mockUser = mockk<FirebaseUser>()
-//        every { mockUser.email } returns "apdkapodkapd@test.com"
         every { mockAuthenticator.signIn(username, password) } returns mockTask
         every { mockAuthenticator.getCurrUser()} returns mockUser
 
@@ -202,13 +210,13 @@ class AuthenticationActivityTest {
         val password = "password"
 
         val mockTask = createMockTask(true)
+        val mockUser = createMockUser(username)
         every { mockAuthenticator.createAccount(username, password) } returns mockTask
-        createMockUser(username)
+        every { mockAuthenticator.getCurrUser()} returns mockUser
 
         onView(withId(R.id.username)).perform(ViewActions.typeText(username), closeSoftKeyboard())
         onView(withId(R.id.password)).perform(ViewActions.typeText(password), closeSoftKeyboard())
         onView(withId(R.id.createAcc)).perform(click())
-
 
         Intents.intended(IntentMatchers.hasComponent(ProfileActivity::class.java.name))
         Intents.intended(IntentMatchers.hasExtra("email", username))

@@ -11,11 +11,9 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
-import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.matcher.IntentMatchers
-import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -269,7 +267,7 @@ class TypingGameActivityTest {
         scn.onActivity { activity ->
             temp = activity.checkAnswer(ctx, songTest, gameManager)
             gameManager.gameSize = 1
-            activity.setbtnlistener(ctx, gameManager)
+            activity.setNextButtonlistener(ctx, gameManager)
         }
 
         onView(withId(R.id.nextSong)).check(matches(allOf(isEnabled(), isClickable()))).perform(

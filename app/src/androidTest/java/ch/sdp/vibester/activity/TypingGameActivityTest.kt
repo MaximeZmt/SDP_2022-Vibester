@@ -7,6 +7,7 @@ import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
+import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.ext.junit.rules.ActivityScenarioRule
@@ -229,9 +230,7 @@ class TypingGameActivityTest {
 
         Intents.intended(IntentMatchers.hasComponent(GameEndingActivity::class.java.name))
 
-//        Intents.intended(IntentMatchers.hasExtra("playerName", "Default"))
         Intents.intended(IntentMatchers.hasExtra("nbIncorrectSong", 1))
-
         Intents.intended(IntentMatchers.hasExtra("str_arr_inc", incArray))
         Intents.intended(IntentMatchers.hasExtra("str_arr_name", statNames))
         Intents.intended(IntentMatchers.hasExtra("str_arr_val", statVal))

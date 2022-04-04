@@ -31,13 +31,25 @@ class ProfileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        databaseRef = database.reference
+        Log.w("DEBUG LMAO", "I get to here")
+//        databaseRef.child("hh").child("qq").setValue("aa")
+
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         supportActionBar?.hide()
 
         setContentView(R.layout.activity_profile)
         var email = intent.getStringExtra("email").toString()
+        var createAcc = intent.getBooleanExtra("createAcc", false)
 
-        queryDatabase(email)
+        if(createAcc) {
+            var name = intent.getStringExtra("name").toString()
+            var handle = intent.getStringExtra("handle").toString()
+            createProfile(email, name, handle)
+        }
+        else {
+            queryDatabase(email)
+        }
 
         val editUsername = findViewById<Button>(R.id.editUser)
         val editHandle = findViewById<Button>(R.id.editHandle)
@@ -50,7 +62,6 @@ class ProfileActivity : AppCompatActivity() {
             showGeneralDialog(R.id.handle, "handle")
         }
 
-        databaseRef = database.reference
     }
 
     /**
@@ -130,6 +141,20 @@ class ProfileActivity : AppCompatActivity() {
         })
     }
 
+    private fun createProfile(email: String, name: String, handle: String) {
+        val id = name + handle
+        val userProfile = UserProfile(
+            handle,
+            name,
+            "",
+            email,
+            0,
+            0,
+            0
+        )
+        databaseRef.child("users").child(id).setValue(userProfile)
+        setupProfile(userProfile)
+    }
 
     private fun setupProfile(user: UserProfile){
         findViewById<TextView>(R.id.handle).text =  user.handle

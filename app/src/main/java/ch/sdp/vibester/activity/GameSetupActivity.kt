@@ -106,6 +106,7 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         when (view.getId()) {
             R.id.local_buzzer_game_button -> {game  = "local_buzzer"; gameManager = GameManager()}
             R.id.local_typing_game_button -> {game = "local_typing"; gameManager = TypingGameManager()}
+            R.id.local_lyrics_game_button -> {game = "local_lyrics"; gameManager = GameManager()}
         }
         findViewById<LinearLayout>(R.id.chooseGame).visibility = GONE
         findViewById<ConstraintLayout>(R.id.chooseGenre).visibility = VISIBLE

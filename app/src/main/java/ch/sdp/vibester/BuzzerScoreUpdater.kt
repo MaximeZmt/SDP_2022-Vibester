@@ -1,5 +1,6 @@
 package ch.sdp.vibester
 
+import kotlin.math.max
 import kotlin.math.min
 
 public class BuzzerScoreUpdater(ids: Array<Int>, scores: Array<Int>) {
@@ -28,11 +29,11 @@ public class BuzzerScoreUpdater(ids: Array<Int>, scores: Array<Int>) {
      * updates the score corresponding to the pressed buzzer
      * checks first if the given id is a buzzer id (and not NO_BUZZER_PRESSED)
      */
-    fun updateScoresArray(id: Int) {
+    fun updateScoresArray(id: Int, point: Int) {
         if (!buzzerToScoreMap.keys.contains(id)) {
             return
         }
-        val updatedScore = buzzerToScoreMap.getOrDefault(id, 0) + 1 // should never get to default,
+        val updatedScore = max(buzzerToScoreMap.getOrDefault(id, 0) + point, 0) // should never get to default,
         buzzerToScoreMap.put(id, updatedScore)
     }
 }

@@ -26,7 +26,7 @@ public class BuzzerScoreUpdaterTest {
         val scoreArray = arrayOf(0, 0, 0, 0)
         val testUpdater = BuzzerScoreUpdater(idArray, scoreArray)
         for (id in idArray) {
-            testUpdater.updateScoresArray(id)
+            testUpdater.updateScoresArray(id, 1)
             assertTrue(testUpdater.getMap()[id]==1)
         }
     }
@@ -36,7 +36,7 @@ public class BuzzerScoreUpdaterTest {
         val idArray = arrayOf(R.id.buzzer_0, R.id.buzzer_1, R.id.buzzer_2, R.id.buzzer_3)
         val scoreArray = arrayOf(0, 0, 0, 0)
         val testUpdater = BuzzerScoreUpdater(idArray, scoreArray)
-        testUpdater.updateScoresArray(-1)
+        testUpdater.updateScoresArray(-1, 1)
         for (id in idArray) {
             assertTrue(testUpdater.getMap()[id]==0)
         }

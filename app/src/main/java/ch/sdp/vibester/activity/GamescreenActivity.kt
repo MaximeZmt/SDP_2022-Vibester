@@ -148,13 +148,12 @@ class GamescreenActivity : AppCompatActivity() {
     private fun setAnswerButton(answer: LinearLayout, button: Button, updater: BuzzerScoreUpdater, map: Map<Int, Int>) {
         button.setOnClickListener {
             answer.visibility = android.view.View.INVISIBLE
-            if (button.id==R.id.buttonCorrect) {
-                if (pressedBuzzer >= 0) {
-                    updater.updateScoresArray(pressedBuzzer)
-                    val view = map[pressedBuzzer]?.let { it1 -> findViewById<TextView>(it1) }
-                    if (view != null && updater.getMap().keys.contains(pressedBuzzer)) {view.text=updater.getMap()[pressedBuzzer].toString()}
-                }
+            if (pressedBuzzer >= 0) {
+                if(button.id==R.id.buttonCorrect)  {updater.updateScoresArray(pressedBuzzer, 1)} else {updater.updateScoresArray(pressedBuzzer, -1)}
+                val view = map[pressedBuzzer]?.let { it1 -> findViewById<TextView>(it1) }
+                if (view != null && updater.getMap().keys.contains(pressedBuzzer)) {view.text=updater.getMap()[pressedBuzzer].toString()}
             }
+
         }
         setPressed(NO_BUZZER_PRESSED) // reset the buzzer
     }

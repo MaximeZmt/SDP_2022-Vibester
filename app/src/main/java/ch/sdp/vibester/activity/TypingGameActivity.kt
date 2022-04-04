@@ -1,9 +1,7 @@
 package ch.sdp.vibester.activity
 
 import android.content.Context
-import android.media.MediaPlayer
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.Gravity
 import android.view.Window
@@ -22,7 +20,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
-import java.util.concurrent.CompletableFuture
 
 /**
  * Class that represent a game
@@ -90,21 +87,30 @@ class TypingGameActivity : GameActivity() {
         if (getIntent != null) {
             gameManager = getIntent.getSerializable("gameManager") as TypingGameManager
             startRound(ctx, gameManager)
-            setbtnlistener(ctx, gameManager)
+            setNextButtonListener(ctx, gameManager)
             super.setMax(intent)
         }
-
-        setListener(inputTxt, guessLayout)
-
+        setGuessLayoutListener(inputTxt, guessLayout)
     }
 
-      fun setbtnlistener(ctx: Context, gameManager: TypingGameManager){
-          findViewById<Button>(R.id.nextSong).setOnClickListener {
-            startRound(ctx, gameManager)
+    /**
+     * Custom onDestroy to verify progressbar and media player are stopped
+     */
+    override fun onDestroy() {
+        if (runnable != null) {
+            handler.removeCallbacks(runnable!!)
         }
+        if (this::gameManager.isInitialized) {
+            gameManager.stopMediaPlayer()
+        }
+        super.onDestroy()
     }
-    private fun setListener(inputTxt:EditText, guessLayout: LinearLayout){
-        //Listener when we modify the input
+
+
+    /**
+     * Listener to operate the guess layout.
+     */
+    private fun setGuessLayoutListener(inputTxt:EditText, guessLayout: LinearLayout){
         inputTxt.addTextChangedListener {
             guessLayout.removeAllViews()
             val txtInp = inputTxt.text.toString()
@@ -126,20 +132,22 @@ class TypingGameActivity : GameActivity() {
         }
     }
 
-    override fun onDestroy() {
-        if (runnable != null) {
-            handler.removeCallbacks(runnable!!)
-        }
-        if (this::gameManager.isInitialized) {
-            gameManager.stopMediaPlayer()
-        }
-        super.onDestroy()
-    }
-
-    private fun toggleVisibility(value: Boolean){
+    /**
+     * Set and remove nextBtn during the game
+     */
+    private fun toggleNextBtnVisibility(value: Boolean){
         val nextSongBtn = findViewById<Button>(R.id.nextSong)
         if(value){nextSongBtn.visibility = android.view.View.VISIBLE}
         nextSongBtn.visibility = android.view.View.GONE
+    }
+
+    /**
+     * Set listener for nextButton. When pressed, new round will start.
+     */
+    fun setNextButtonListener(ctx: Context, gameManager: TypingGameManager){
+        findViewById<Button>(R.id.nextSong).setOnClickListener {
+            startRound(ctx, gameManager)
+        }
     }
 
     /**
@@ -168,10 +176,10 @@ class TypingGameActivity : GameActivity() {
             gameManager.addCorrectSong()
             hasWon(ctx, gameManager.getScore(), true, playedSong)
         } else {
-            hasWon(ctx, gameManager.getScore(), false, playedSong)
             gameManager.addWrongSong()
+            hasWon(ctx, gameManager.getScore(), false, playedSong)
         }
-        endRound(ctx, gameManager)
+        endRound(gameManager)
 
     }
 
@@ -230,8 +238,8 @@ class TypingGameActivity : GameActivity() {
         }
         handler.post(runnable!!)
     }
-    private fun endRound(ctx: Context, gameManager: GameManager){
-        toggleVisibility(true)
+    private fun endRound(gameManager: GameManager){
+        toggleNextBtnVisibility(true)
         checkRunnable()
         if (!gameManager.checkGameStatus() || !gameManager.setNextSong()) {
             switchToEnding(gameManager)
@@ -243,18 +251,18 @@ class TypingGameActivity : GameActivity() {
      * and setting new song for the round.
      */
     private fun startRound(ctx: Context, gameManager: TypingGameManager) {
-        if (gameManager.checkGameStatus() && gameManager.setNextSong()) {
-            findViewById<LinearLayout>(R.id.displayGuess).removeAllViews()
-            findViewById<EditText>(R.id.yourGuessET).text.clear()
-            toggleVisibility(false)
-            gameManager.playSong()
-            checkRunnable()
-            barTimer(findViewById(R.id.progressBarTyping), ctx, gameManager)
-        } else {
-            checkRunnable()
+        if (gameManager.getPlayedSongsCount() == 0 && (!gameManager.checkGameStatus() || !gameManager.setNextSong())) {
             switchToEnding(gameManager)
+            return
         }
+
+        findViewById<LinearLayout>(R.id.displayGuess).removeAllViews()
+        findViewById<EditText>(R.id.yourGuessET).text.clear()
+        toggleNextBtnVisibility(false)
+        gameManager.playSong()
+        checkRunnable()
+        barTimer(findViewById(R.id.progressBarTyping), ctx, gameManager)
     }
-
-
 }
+
+

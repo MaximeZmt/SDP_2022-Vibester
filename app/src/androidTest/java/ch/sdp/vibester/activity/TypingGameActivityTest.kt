@@ -267,7 +267,7 @@ class TypingGameActivityTest {
         scn.onActivity { activity ->
             temp = activity.checkAnswer(ctx, songTest, gameManager)
             gameManager.gameSize = 1
-            activity.setNextButtonlistener(ctx, gameManager)
+            activity.setNextButtonListener(ctx, gameManager)
         }
 
         onView(withId(R.id.nextSong)).check(matches(allOf(isEnabled(), isClickable()))).perform(

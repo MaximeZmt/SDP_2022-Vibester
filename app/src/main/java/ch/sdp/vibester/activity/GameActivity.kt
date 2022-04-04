@@ -56,7 +56,7 @@ open class GameActivity : AppCompatActivity() {
         val score = gameManager.getScore().toString()
         statVal.addAll(arrayOf(score, score, score, score, score))
 
-        intent.putExtra("nbIncorrectSong", gameManager.gameSize - gameManager.getScore())
+        intent.putExtra("nbIncorrectSong", gameManager.getWrongSongs().size)
 
         intent.putStringArrayListExtra("str_arr_inc", incArray)
         intent.putStringArrayListExtra("str_arr_name", statNames)

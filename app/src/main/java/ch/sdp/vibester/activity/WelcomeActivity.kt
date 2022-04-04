@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.Window.FEATURE_NO_TITLE
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.R
 import ch.sdp.vibester.model.Song
@@ -14,8 +15,11 @@ class WelcomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         requestWindowFeature(FEATURE_NO_TITLE)
         supportActionBar?.hide()
-
         setContentView(R.layout.activity_welcome_screen)
+
+        val tv = findViewById<TextView>(R.id.WelcomingText)
+        tv.isSelected = true
+
     }
 
     private fun sendDirectIntent(arg: Class<*>?) {

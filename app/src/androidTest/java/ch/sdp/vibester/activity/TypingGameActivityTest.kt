@@ -11,6 +11,7 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
+import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.matcher.IntentMatchers
@@ -23,6 +24,7 @@ import ch.sdp.vibester.helper.TypingGameManager
 import ch.sdp.vibester.model.Song
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
+import org.hamcrest.Matchers.not
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -259,50 +261,15 @@ class TypingGameActivityTest {
         val gameManager = setGameManager(2)
         gameManager.setNextSong()
         gameManager.gameSize = 2
-        lateinit var temp: Unit
 
         val intent = Intent(ApplicationProvider.getApplicationContext(), TypingGameActivity::class.java)
         val scn: ActivityScenario<TypingGameActivity> = ActivityScenario.launch(intent)
         val ctx = ApplicationProvider.getApplicationContext() as Context
         scn.onActivity { activity ->
-            temp = activity.checkAnswer(ctx, songTest, gameManager)
-            gameManager.gameSize = 1
-            activity.setNextButtonListener(ctx, gameManager)
+            activity.checkAnswer(ctx, songTest, gameManager)
         }
-
-        onView(withId(R.id.nextSong)).check(matches(allOf(isEnabled(), isClickable()))).perform(
-            object : ViewAction {
-                override fun getConstraints(): Matcher<View> {
-                    return isEnabled()
-                }
-
-                override fun getDescription(): String {
-                    return "click plus button"
-                }
-
-                override fun perform(uiController: UiController?, view: View) {
-                    view.performClick()
-                }
-            }
-        )
-
-        val incArray: ArrayList<String> = ArrayList(
-            gameManager.getWrongSongs().map{ it.getTrackName() + " - " + it.getArtistName() })
-
-        val statNames: ArrayList<String> = arrayListOf()
-        val statName = "Total Score"
-        statNames.addAll(arrayOf(statName, statName, statName, statName, statName))
-
-        val statVal: ArrayList<String> = arrayListOf()
-        val score = gameManager.getScore().toString()
-        statVal.addAll(arrayOf(score, score, score, score, score))
-
-        Intents.intended(IntentMatchers.hasComponent(GameEndingActivity::class.java.name))
-        Intents.intended(IntentMatchers.hasExtra("nbIncorrectSong", 1))
-
-        Intents.intended(IntentMatchers.hasExtra("str_arr_inc", incArray))
-        Intents.intended(IntentMatchers.hasExtra("str_arr_name", statNames))
-        Intents.intended(IntentMatchers.hasExtra("str_arr_val", statVal))
+        onView(withId(R.id.nextSong)).check(matches(isDisplayed()))
+        onView(withId(R.id.nextSong)).check(matches(allOf(isEnabled(), isClickable()))).perform(click())
     }
 
 }

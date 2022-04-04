@@ -16,6 +16,12 @@
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".GenreToLyrics"
+            android:exported="false" />
+        <activity
+            android:name=".GenreToTyping"
+            android:exported="false" />
+        <activity
             android:name=".activity.IncorrectSongsActivity"
             android:exported="false" />
         <activity
@@ -32,9 +38,6 @@
             android:exported="false" />
         <activity
             android:name=".activity.ProfileActivity"
-            android:exported="false" />
-        <activity
-            android:name=".LyricTemporary"
             android:exported="false" />
         <activity
             android:name=".activity.GameSetupActivity"

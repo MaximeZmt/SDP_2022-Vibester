@@ -33,6 +33,12 @@ class GameManagerTest {
     }
 
     @Test
+    fun setNextSongError(){
+        val gameManager = setGameManager(false)
+        assertEquals(gameManager.setNextSong(), false)
+    }
+
+    @Test
     fun getScoreCorrect() {
         val gameManager = setGameManager()
         assertEquals(gameManager.getScore(), 0)

@@ -75,7 +75,7 @@ class AuthenticationActivity : AppCompatActivity() {
      */
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        updateUI(authenticator.googleActivityResult(requestCode, resultCode, data), false, "", "")
+        updateUI(authenticator.googleActivityResult(requestCode, resultCode, data), false)
     }
 
     /**
@@ -135,14 +135,14 @@ class AuthenticationActivity : AppCompatActivity() {
             ).show()
             val user = authenticator.auth.currentUser
             if (user != null) {
-                updateUI(user.email, createAcc, "name", "handle")
+                updateUI(user.email, createAcc)
             }
         } else {
             Toast.makeText(
                 baseContext, "Authentication failed.",
                 Toast.LENGTH_SHORT
             ).show()
-            updateUI("Authentication error", false, "", "")
+            updateUI("Authentication error", false)
         }
     }
 
@@ -152,8 +152,6 @@ class AuthenticationActivity : AppCompatActivity() {
 
     private fun updateUI(emailText: String?,
                          createAcc: Boolean,
-                         name: String,
-                         handle: String
     ) {
         if (emailText != null) {
             if('@' in emailText && !createAcc) {
@@ -164,11 +162,8 @@ class AuthenticationActivity : AppCompatActivity() {
             }
 
             else if('@' in emailText && createAcc) {
-                val newIntent = Intent(this, ProfileActivity::class.java)
+                val newIntent = Intent(this, CreateProfileFormActivity::class.java)
                 newIntent.putExtra("email", emailText)
-                newIntent.putExtra("name", name)
-                newIntent.putExtra("handle", handle)
-                newIntent.putExtra("createAcc", createAcc)
                 startActivity(newIntent)
             }
 

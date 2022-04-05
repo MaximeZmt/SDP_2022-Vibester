@@ -337,4 +337,22 @@ class TypingGameActivityTest {
         Intents.intended(IntentMatchers.hasExtra("str_arr_val", statVal))
     }
 
+    @Test
+    fun firstRoundFail(){
+        val gameManager = setGameManager(valid = false)
+        val intent = Intent(ApplicationProvider.getApplicationContext(), TypingGameActivity::class.java)
+        intent.putExtra("gameManager", gameManager)
+        val scn: ActivityScenario<TypingGameActivity> = ActivityScenario.launch(intent)
+
+        val statNames: ArrayList<String> = arrayListOf()
+        val statName = "Total Score"
+        statNames.addAll(arrayOf(statName, statName, statName, statName, statName))
+        val statVal: ArrayList<String> = arrayListOf()
+        val score = "0"
+        statVal.addAll(arrayOf(score, score, score, score, score))
+        Intents.intended(IntentMatchers.hasComponent(GameEndingActivity::class.java.name))
+        Intents.intended(IntentMatchers.hasExtra("nbIncorrectSong", 0))
+        Intents.intended(IntentMatchers.hasExtra("str_arr_name", statNames))
+        Intents.intended(IntentMatchers.hasExtra("str_arr_val", statVal))
+    }
 }

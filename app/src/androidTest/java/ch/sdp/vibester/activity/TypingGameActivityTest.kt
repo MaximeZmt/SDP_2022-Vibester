@@ -2,15 +2,13 @@ package ch.sdp.vibester.activity
 
 import android.content.Context
 import android.content.Intent
-import android.view.View
+import android.content.res.ColorStateList
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.UiController
-import androidx.test.espresso.ViewAction
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
@@ -22,9 +20,8 @@ import ch.sdp.vibester.R
 import ch.sdp.vibester.api.LastfmMethod
 import ch.sdp.vibester.helper.TypingGameManager
 import ch.sdp.vibester.model.Song
-import org.hamcrest.Matcher
+import com.google.android.material.color.MaterialColors.getColor
 import org.hamcrest.Matchers.allOf
-import org.hamcrest.Matchers.not
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before

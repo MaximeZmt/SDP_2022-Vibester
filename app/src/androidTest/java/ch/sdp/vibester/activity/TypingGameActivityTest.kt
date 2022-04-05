@@ -305,4 +305,36 @@ class TypingGameActivityTest {
         Intents.intended(IntentMatchers.hasExtra("str_arr_val", statVal))
     }
 
+    @Test
+    fun nextButtonOnClick(){
+        val gameManager = setGameManager(2)
+        assertEquals(gameManager.getSongList().size, 2)
+
+        val intent = Intent(ApplicationProvider.getApplicationContext(), TypingGameActivity::class.java)
+        intent.putExtra("gameManager", gameManager)
+        val scn: ActivityScenario<TypingGameActivity> = ActivityScenario.launch(intent)
+        scn.onActivity { activity ->
+            activity.testProgressBar()
+        }
+        Thread.sleep(1000)
+
+        onView(withId(R.id.nextSong)).check(matches(isDisplayed())).perform(click())
+        scn.onActivity { activity ->
+            activity.testProgressBar()
+        }
+        Thread.sleep(1000)
+
+        val statNames: ArrayList<String> = arrayListOf()
+        val statName = "Total Score"
+        statNames.addAll(arrayOf(statName, statName, statName, statName, statName))
+
+        val statVal: ArrayList<String> = arrayListOf()
+        val score = "0"
+        statVal.addAll(arrayOf(score, score, score, score, score))
+        Intents.intended(IntentMatchers.hasComponent(GameEndingActivity::class.java.name))
+        Intents.intended(IntentMatchers.hasExtra("nbIncorrectSong", 2))
+        Intents.intended(IntentMatchers.hasExtra("str_arr_name", statNames))
+        Intents.intended(IntentMatchers.hasExtra("str_arr_val", statVal))
+    }
+
 }

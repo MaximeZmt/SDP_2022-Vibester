@@ -36,12 +36,14 @@ import org.junit.runner.RunWith
 class TypingGameActivityTest {
 
     private val expectedSize = 200
-    private fun setGameManager(numSongs:Int = 1): TypingGameManager {
+    private fun setGameManager(numSongs:Int = 1, valid: Boolean = true): TypingGameManager {
         val epilogue = "{\"tracks\":{\"track\":["
         val prologue =
             "], \"@attr\":{\"tag\":\"british\",\"page\":\"1\",\"perPage\":\"1\",\"totalPages\":\"66649\",\"total\":\"66649\"}}}"
-        val middle = "{\"name\":\"Monday\",\"artist\":{\"name\":\"Imagine Dragons\"}}"
+        var middle = "{\"name\":\"Monday\",\"artist\":{\"name\":\"Imagine Dragons\"}}"
+        if(!valid) middle = "{\"name\":\"TEST_SONG_TEST\",\"artist\":{\"name\":\"TEST_ARTIST_TEST\"}}"
         val gameManager = TypingGameManager()
+
         var i = 0
         var completeMiddle = middle
         while(i < numSongs-1){

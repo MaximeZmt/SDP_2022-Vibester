@@ -10,21 +10,41 @@ import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.matcher.ViewMatchers.* //change this import
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
+import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.profile.UserProfile
+import com.google.firebase.database.DatabaseReference
+import dagger.hilt.android.testing.BindValue
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
+import io.mockk.mockk
 import org.junit.After
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
 
 @RunWith(AndroidJUnit4::class)
+@HiltAndroidTest
 class ProfileActivityTest {
 
     private val sleepTime: Long = 4000
 
+    @get:Rule(order = 0)
+    var hiltRule = HiltAndroidRule(this)
+
     @Before
     fun setUp() {
+        hiltRule.inject()
         Intents.init()
+    }
+
+    @BindValue @JvmField
+    val mockAuthenticator = mockk<DatabaseReference>()
+
+
+    private fun createMockListener() {
+
     }
 
     @After

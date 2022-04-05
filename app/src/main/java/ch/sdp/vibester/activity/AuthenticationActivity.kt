@@ -64,10 +64,6 @@ class AuthenticationActivity : AppCompatActivity() {
 
     public override fun onStart() {
         super.onStart()
-//        val currentUser = authenticator.getCurrUser()
-//        if (currentUser != null) {
-//            reload()
-//        }
     }
 
     /**
@@ -147,10 +143,6 @@ class AuthenticationActivity : AppCompatActivity() {
             ).show()
             updateUI("Authentication error")
         }
-    }
-
-    private fun reload() {
-
     }
 
     private fun updateUI(emailText: String?) {

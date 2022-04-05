@@ -18,15 +18,22 @@ import ch.sdp.vibester.profile.UserProfile
 import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.database.ktx.database
+import com.google.firebase.database.ktx.getValue
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import java.util.*
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class ProfileActivity : AppCompatActivity() {
-    private var database: FirebaseDatabase = Firebase.database("https://vibester-sdp-default-rtdb.europe-west1.firebasedatabase.app")
-    private lateinit var databaseRef: DatabaseReference
+    private var database: FirebaseDatabase =
+        Firebase.database("https://vibester-sdp-default-rtdb.europe-west1.firebasedatabase.app")
+
+    @Inject
+    private var databaseUserRef: DatabaseReference = database.getReference("users")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,8 +56,6 @@ class ProfileActivity : AppCompatActivity() {
         editHandle.setOnClickListener {
             showGeneralDialog(R.id.handle, "handle")
         }
-
-        databaseRef = database.reference
     }
 
     /**
@@ -72,13 +77,12 @@ class ProfileActivity : AppCompatActivity() {
         input.id = id
 
         builder.setView(input)
-        builder.setPositiveButton("OK", DialogInterface.OnClickListener { _, _ ->
+        builder.setPositiveButton("OK") { _, _ ->
             findViewById<TextView>(textId).text = input.text.toString()
-            databaseRef.child("users")
-                .child("-Myfy9TlCUTWYRxVLBsQ") //For now ID is hardcoded, will generate it creating new users next week
+            databaseUserRef.child("-Myfy9TlCUTWYRxVLBsQ") //For now ID is hardcoded, will generate it creating new users next week
                 .child(name)
                 .setValue(input.text.toString())
-        })
+        }
         builder.setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }
         builder.show()
     }
@@ -100,30 +104,21 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun queryDatabase(email: String) {
         var user: UserProfile
-        val userRef = database.getReference("users")
-        userRef.addValueEventListener(object : ValueEventListener {
+        databaseUserRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for (dataSnapShot in dataSnapshot.children) {
-                    val dbContents: Map<String, Objects> = dataSnapShot.value as Map<String, Objects>
-                    if(dbContents["email"].toString() == email) {
-                        user = UserProfile(
-                            dbContents["handle"].toString(),
-                            dbContents["username"].toString(),
-                            dbContents["image"].toString(),
-                            dbContents["email"].toString(),
-                            dbContents["totalGames"].toString().toInt(),
-                            dbContents["bestScore"].toString().toInt(),
-                            dbContents["correctSongs"].toString().toInt()
-                        )
-                        setupProfile(user)
-                        break
-                    }
-                    else {
-                        setupProfile(UserProfile())
+                    val dbContents = dataSnapShot.getValue<UserProfile>()
+                    if (dbContents != null) {
+                        if(dbContents.email == email) {
+                            user = dbContents
+                            setupProfile(user)
+                            break
+                        } else {
+                            setupProfile(UserProfile())
+                        }
                     }
                 }
             }
-
             override fun onCancelled(databaseError: DatabaseError) {
                 Log.w(TAG, "loadUsers:onCancelled", databaseError.toException())
             }

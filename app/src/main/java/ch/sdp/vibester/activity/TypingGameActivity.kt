@@ -280,9 +280,8 @@ class TypingGameActivity : GameActivity() {
     /**
      * Functions for testing
      */
-     fun testProgressBar(progressTime:Int = 0) {
-     findViewById<ProgressBar>(R.id.progressBarTyping).progress = progressTime
-
+    fun testProgressBar(progressTime:Int = 0) {
+        findViewById<ProgressBar>(R.id.progressBarTyping).progress = progressTime
     }
 
     fun testFirstRound(ctx: Context, gameManager: TypingGameManager){

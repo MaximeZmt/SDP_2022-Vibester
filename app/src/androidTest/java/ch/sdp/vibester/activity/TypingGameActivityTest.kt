@@ -355,4 +355,35 @@ class TypingGameActivityTest {
         Intents.intended(IntentMatchers.hasExtra("str_arr_name", statNames))
         Intents.intended(IntentMatchers.hasExtra("str_arr_val", statVal))
     }
+
+    @Test
+    fun testProgressBarColor() {
+        val gameManager = setGameManager()
+        val intent = Intent(ApplicationProvider.getApplicationContext(), TypingGameActivity::class.java)
+        intent.putExtra("gameManager", gameManager)
+        val scn: ActivityScenario<TypingGameActivity> = ActivityScenario.launch(intent)
+        val ctx = ApplicationProvider.getApplicationContext() as Context
+        var color:ColorStateList = ctx.getResources().getColorStateList(R.color.floral_white)
+
+        /* Test progress bar is yellow*/
+        scn.onActivity { activity ->
+            activity.testProgressBarYellow()
+        }
+        Thread.sleep(1000)
+        scn.onActivity { activity->
+            color = activity.testProgressBarColor()!!
+        }
+        assertEquals(color, ctx.getResources().getColorStateList(R.color.maximum_yellow_red))
+
+        /* Test progress bar is red*/
+        scn.onActivity { activity ->
+            activity.testProgressBarRed()
+        }
+        Thread.sleep(1000)
+        scn.onActivity { activity->
+            color = activity.testProgressBarColor()!!
+        }
+        assertEquals(color, ctx.getResources().getColorStateList(R.color.light_coral))
+    }
+
 }

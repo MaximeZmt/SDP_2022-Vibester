@@ -86,8 +86,8 @@ class TypingGameActivity : GameActivity() {
         val getIntent = intent.extras
         if (getIntent != null) {
             gameManager = getIntent.getSerializable("gameManager") as TypingGameManager
-            startFirstRound(ctx, gameManager)
             setNextButtonListener(ctx, gameManager)
+            startFirstRound(ctx, gameManager)
             super.setMax(intent)
         }
         setGuessLayoutListener(inputTxt, guessLayout)

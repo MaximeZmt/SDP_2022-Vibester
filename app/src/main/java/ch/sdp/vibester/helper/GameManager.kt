@@ -121,7 +121,6 @@ open class GameManager : Serializable {
             } catch (e: Exception) {
                 nextSongInd++
                 return setNextSong()
-
             }
             return true
         }

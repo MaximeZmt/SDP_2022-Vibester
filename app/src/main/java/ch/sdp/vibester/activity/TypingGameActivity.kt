@@ -1,9 +1,8 @@
 package ch.sdp.vibester.activity
 
 import android.content.Context
-import android.media.MediaPlayer
+import android.content.res.ColorStateList
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.Gravity
 import android.view.Window
@@ -14,6 +13,7 @@ import ch.sdp.vibester.R
 import ch.sdp.vibester.api.BitmapGetterApi
 import ch.sdp.vibester.api.ItunesMusicApi
 import ch.sdp.vibester.helper.DisplayContents
+import ch.sdp.vibester.helper.GameManager
 import ch.sdp.vibester.helper.TypingGameManager
 import ch.sdp.vibester.model.Song
 import kotlinx.coroutines.CoroutineScope
@@ -21,7 +21,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
-import java.util.concurrent.CompletableFuture
 
 /**
  * Class that represent a game
@@ -83,20 +82,36 @@ class TypingGameActivity : GameActivity() {
 
         val guessLayout = findViewById<LinearLayout>(R.id.displayGuess)
         val inputTxt = findViewById<EditText>(R.id.yourGuessET)
-
-        // var mysong: Song? = null
-        // var mediaPlayer: CompletableFuture<MediaPlayer>? = null
         val ctx: Context = this
-        // val h = Handler()
 
         val getIntent = intent.extras
         if (getIntent != null) {
             gameManager = getIntent.getSerializable("gameManager") as TypingGameManager
-            playRound(ctx, gameManager)
+            setNextButtonListener(ctx, gameManager)
+            startFirstRound(ctx, gameManager)
             super.setMax(intent)
         }
+        setGuessLayoutListener(inputTxt, guessLayout)
+    }
 
-        //Listener when we modify the input
+    /**
+     * Custom onDestroy to verify progressbar and media player are stopped
+     */
+    override fun onDestroy() {
+        if (runnable != null) {
+            handler.removeCallbacks(runnable!!)
+        }
+        if (this::gameManager.isInitialized && gameManager.initializeMediaPlayer()) {
+            gameManager.stopMediaPlayer()
+        }
+        super.onDestroy()
+    }
+
+
+    /**
+     * Listener to operate the guess layout.
+     */
+    private fun setGuessLayoutListener(inputTxt:EditText, guessLayout: LinearLayout){
         inputTxt.addTextChangedListener {
             guessLayout.removeAllViews()
             val txtInp = inputTxt.text.toString()
@@ -108,7 +123,7 @@ class TypingGameActivity : GameActivity() {
                     try {
                         val list = Song.listSong(task.await())
                         for (x: Song in list) {
-                            guess(x, findViewById(R.id.displayGuess), this@TypingGameActivity, gameManager )
+                            guess(x, findViewById(R.id.displayGuess), this@TypingGameActivity, gameManager)
                         }
                     } catch (e: Exception) {
                         Log.e("Exception: ", e.toString())
@@ -118,14 +133,43 @@ class TypingGameActivity : GameActivity() {
         }
     }
 
-    override fun onDestroy() {
-        if (runnable != null) {
-            handler.removeCallbacks(runnable!!)
+    /**
+     * Set and remove nextBtn during the game
+     */
+    private fun toggleNextBtnVisibility(value: Boolean){
+        val nextSongBtn = findViewById<Button>(R.id.nextSong)
+        if(value){nextSongBtn.visibility = android.view.View.VISIBLE}
+        else{nextSongBtn.visibility = android.view.View.GONE}
+    }
+
+    /**
+     * Set listener for nextButton. When pressed, new round will start.
+     */
+    private fun setNextButtonListener(ctx: Context, gameManager: TypingGameManager){
+        findViewById<Button>(R.id.nextSong).setOnClickListener {
+            startRound(ctx, gameManager)
         }
-        if (this::gameManager.isInitialized) {
-            gameManager.stopMediaPlayer()
+    }
+
+    /**
+     * Custom handle of the bar progress.
+     */
+    private fun barTimer(myBar: ProgressBar, ctx:Context, gameManager: TypingGameManager){
+        initializeBarTimer(myBar)
+        runnable = object : Runnable {
+            override fun run() {
+                if (myBar.progress > 0) {
+                    decreaseBarTimer(myBar)
+                    handler.postDelayed(this, 999) //just a bit shorter than a second for safety
+                } else if (myBar.progress == 0) {
+                    if (gameManager.playingMediaPlayer()) {
+                        gameManager.stopMediaPlayer()
+                    }
+                    checkAnswer(ctx, null, gameManager)
+                }
+            }
         }
-        super.onDestroy()
+        handler.post(runnable!!)
     }
 
     /**
@@ -154,10 +198,10 @@ class TypingGameActivity : GameActivity() {
             gameManager.addCorrectSong()
             hasWon(ctx, gameManager.getScore(), true, playedSong)
         } else {
-            hasWon(ctx, gameManager.getScore(), false, playedSong)
             gameManager.addWrongSong()
+            hasWon(ctx, gameManager.getScore(), false, playedSong)
         }
-        playRound(ctx, gameManager) //play the next round
+        endRound(gameManager)
     }
 
     /**
@@ -195,43 +239,60 @@ class TypingGameActivity : GameActivity() {
         return frameLay
     }
 
-    /**
-     * Custom handle of the bar progress.
-     */
-    private fun barTimer(myBar: ProgressBar, ctx:Context, gameManager: TypingGameManager){
-        initializeBarTimer(myBar)
-        runnable = object : Runnable {
-            override fun run() {
-                if (myBar.progress > 0) {
-                    decreaseBarTimer(myBar)
-                    handler.postDelayed(this, 999) //just a bit shorter than a second for safety
-                } else if (myBar.progress == 0) {
-                    if (gameManager.playingMediaPlayer()) {
-                        gameManager.stopMediaPlayer()
-                    }
-                    checkAnswer(ctx, null, gameManager)
-                }
-            }
-        }
-        handler.post(runnable!!)
-    }
 
     /**
-     * Function to set a new round. It includes reinitializing activity elements,
-     * and setting new song for the round.
+     * Function to set a song for the first round and play a game.
      */
-    private fun playRound(ctx: Context, gameManager: TypingGameManager) {
+    private fun startFirstRound(ctx: Context, gameManager: TypingGameManager){
         if (gameManager.checkGameStatus() && gameManager.setNextSong()) {
-            findViewById<LinearLayout>(R.id.displayGuess).removeAllViews()
-            findViewById<EditText>(R.id.yourGuessET).text.clear()
-            gameManager.playSong()
-            checkRunnable()
-            barTimer(findViewById(R.id.progressBarTyping), ctx, gameManager)
-        } else {
-            checkRunnable()
+            startRound(ctx, gameManager)
+        }
+        else{
             switchToEnding(gameManager)
         }
     }
 
+    /**
+     * Function called in the end of each round. Displays the button "Next" and
+     * sets the next songs to play.
+     */
+    private fun endRound(gameManager: GameManager){
+        checkRunnable()
+        toggleNextBtnVisibility(true)
+        if (!gameManager.checkGameStatus() || !gameManager.setNextSong()) {
+            switchToEnding(gameManager)
+        }
+    }
+
+    /**
+     * Function to set a new round. It includes reinitializing activity elements,
+     * and playing new song for the round.
+     */
+    private fun startRound(ctx: Context, gameManager: TypingGameManager) {
+        findViewById<LinearLayout>(R.id.displayGuess).removeAllViews()
+        findViewById<EditText>(R.id.yourGuessET).text.clear()
+        toggleNextBtnVisibility(false)
+        gameManager.playSong()
+        checkRunnable()
+        barTimer(findViewById(R.id.progressBarTyping), ctx, gameManager)
+    }
+
+    /**
+     * Functions for testing
+     */
+    fun testProgressBar(progressTime:Int = 0) {
+        findViewById<ProgressBar>(R.id.progressBarTyping).progress = progressTime
+    }
+
+    fun testFirstRound(ctx: Context, gameManager: TypingGameManager){
+        startFirstRound(ctx, gameManager)
+    }
+
+    fun testProgressBarColor(): ColorStateList? {
+        return findViewById<ProgressBar>(R.id.progressBarTyping).progressTintList
+    }
+
 
 }
+
+

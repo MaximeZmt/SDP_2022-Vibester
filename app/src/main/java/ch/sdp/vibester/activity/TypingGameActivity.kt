@@ -123,7 +123,7 @@ class TypingGameActivity : GameActivity() {
                     try {
                         val list = Song.listSong(task.await())
                         for (x: Song in list) {
-                            guess(x,findViewById(R.id.displayGuess),this@TypingGameActivity,gameManager)
+                            guess(x, findViewById(R.id.displayGuess), this@TypingGameActivity, gameManager)
                         }
                     } catch (e: Exception) {
                         Log.e("Exception: ", e.toString())

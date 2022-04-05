@@ -1,6 +1,7 @@
 package ch.sdp.vibester.activity
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity

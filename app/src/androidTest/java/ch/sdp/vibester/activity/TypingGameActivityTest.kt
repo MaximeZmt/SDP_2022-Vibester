@@ -339,7 +339,7 @@ class TypingGameActivityTest {
 
         /* Test progress bar is yellow*/
         scn.onActivity { activity ->
-            activity.testProgressBarYellow()
+            activity.testProgressBar(15)
         }
         Thread.sleep(1000)
         scn.onActivity { activity->
@@ -349,7 +349,7 @@ class TypingGameActivityTest {
 
         /* Test progress bar is red*/
         scn.onActivity { activity ->
-            activity.testProgressBarRed()
+            activity.testProgressBar(5)
         }
         Thread.sleep(1000)
         scn.onActivity { activity->

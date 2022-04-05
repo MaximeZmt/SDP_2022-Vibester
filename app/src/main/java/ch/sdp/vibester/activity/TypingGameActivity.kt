@@ -145,7 +145,7 @@ class TypingGameActivity : GameActivity() {
     /**
      * Set listener for nextButton. When pressed, new round will start.
      */
-    fun setNextButtonListener(ctx: Context, gameManager: TypingGameManager){
+    private fun setNextButtonListener(ctx: Context, gameManager: TypingGameManager){
         findViewById<Button>(R.id.nextSong).setOnClickListener {
             startRound(ctx, gameManager)
         }
@@ -280,16 +280,9 @@ class TypingGameActivity : GameActivity() {
     /**
      * Functions for testing
      */
-     fun testProgressBar() {
-        findViewById<ProgressBar>(R.id.progressBarTyping).progress = 0
-    }
+     fun testProgressBar(progressTime:Int = 0) {
+     findViewById<ProgressBar>(R.id.progressBarTyping).progress = progressTime
 
-    fun testProgressBarYellow() {
-        findViewById<ProgressBar>(R.id.progressBarTyping).progress = 15
-    }
-
-    fun testProgressBarRed() {
-        findViewById<ProgressBar>(R.id.progressBarTyping).progress = 5
     }
 
     fun testFirstRound(ctx: Context, gameManager: TypingGameManager){

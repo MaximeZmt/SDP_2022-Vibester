@@ -256,7 +256,6 @@ class TypingGameActivity : GameActivity() {
      * sets the next songs to play.
      */
     private fun endRound(gameManager: GameManager){
-        toggleNextBtnVisibility(true)
         checkRunnable()
         toggleNextBtnVisibility(true)
         if (!gameManager.checkGameStatus() || !gameManager.setNextSong()) {

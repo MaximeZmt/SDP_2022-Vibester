@@ -258,6 +258,7 @@ class TypingGameActivity : GameActivity() {
     private fun endRound(gameManager: GameManager){
         toggleNextBtnVisibility(true)
         checkRunnable()
+        toggleNextBtnVisibility(true)
         if (!gameManager.checkGameStatus() || !gameManager.setNextSong()) {
             switchToEnding(gameManager)
         }

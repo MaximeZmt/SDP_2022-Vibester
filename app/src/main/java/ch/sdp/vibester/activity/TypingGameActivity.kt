@@ -275,6 +275,17 @@ class TypingGameActivity : GameActivity() {
         checkRunnable()
         barTimer(findViewById(R.id.progressBarTyping), ctx, gameManager)
     }
+
+    /**
+     * Functions for testing
+     */
+     fun testProgressBar() {
+        findViewById<ProgressBar>(R.id.progressBarTyping).progress = 0
+    }
+
+    fun testFirstRound(ctx: Context, gameManager: TypingGameManager){
+        startFirstRound(ctx, gameManager)
+    }
 }
 
 

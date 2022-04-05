@@ -100,7 +100,7 @@ class TypingGameActivity : GameActivity() {
         if (runnable != null) {
             handler.removeCallbacks(runnable!!)
         }
-        if (this::gameManager.isInitialized) {
+        if (this::gameManager.isInitialized && gameManager.initializeMediaPlayer()) {
             gameManager.stopMediaPlayer()
         }
         super.onDestroy()

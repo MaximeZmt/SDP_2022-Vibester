@@ -283,9 +283,23 @@ class TypingGameActivity : GameActivity() {
         findViewById<ProgressBar>(R.id.progressBarTyping).progress = 0
     }
 
+    fun testProgressBarYellow() {
+        findViewById<ProgressBar>(R.id.progressBarTyping).progress = 15
+    }
+
+    fun testProgressBarRed() {
+        findViewById<ProgressBar>(R.id.progressBarTyping).progress = 5
+    }
+
     fun testFirstRound(ctx: Context, gameManager: TypingGameManager){
         startFirstRound(ctx, gameManager)
     }
+
+    fun testProgressBarColor(): ColorStateList? {
+        return findViewById<ProgressBar>(R.id.progressBarTyping).progressTintList
+    }
+
+
 }
 
 

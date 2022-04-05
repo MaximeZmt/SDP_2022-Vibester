@@ -272,4 +272,37 @@ class TypingGameActivityTest {
         onView(withId(R.id.nextSong)).check(matches(allOf(isEnabled(), isClickable()))).perform(click())
     }
 
+    @Test
+    fun testProgressBarOnZero() {
+        val gameManager = setGameManager()
+        assertEquals(gameManager.getSongList().size, 1)
+
+        val intent = Intent(ApplicationProvider.getApplicationContext(), TypingGameActivity::class.java)
+        val scn: ActivityScenario<TypingGameActivity> = ActivityScenario.launch(intent)
+        val ctx = ApplicationProvider.getApplicationContext() as Context
+        scn.onActivity { activity ->
+            activity.testFirstRound(ctx, gameManager)
+            activity.testProgressBar()
+        }
+        assertEquals(gameManager.numPlayedSongs, 1)
+        Thread.sleep(1000)
+
+        val incArray: ArrayList<String> = ArrayList(
+            gameManager.getWrongSongs().map { it.getTrackName() + " - " + it.getArtistName() })
+
+        val statNames: ArrayList<String> = arrayListOf()
+        val statName = "Total Score"
+        statNames.addAll(arrayOf(statName, statName, statName, statName, statName))
+
+        val statVal: ArrayList<String> = arrayListOf()
+        val score = gameManager.getScore().toString()
+        statVal.addAll(arrayOf(score, score, score, score, score))
+
+        Intents.intended(IntentMatchers.hasComponent(GameEndingActivity::class.java.name))
+        Intents.intended(IntentMatchers.hasExtra("nbIncorrectSong", 1))
+        Intents.intended(IntentMatchers.hasExtra("str_arr_inc", incArray))
+        Intents.intended(IntentMatchers.hasExtra("str_arr_name", statNames))
+        Intents.intended(IntentMatchers.hasExtra("str_arr_val", statVal))
+    }
+
 }

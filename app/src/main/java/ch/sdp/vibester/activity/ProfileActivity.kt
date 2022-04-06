@@ -36,7 +36,9 @@ class ProfileActivity : AppCompatActivity() {
         setContentView(R.layout.activity_profile)
         var email = intent.getStringExtra("email").toString()
 
-        queryDatabase(email)
+        //queryDatabase(email)
+
+        setupProfile(UserSharedPref.getUser(this))
 
         val editUsername = findViewById<Button>(R.id.editUser)
         val editHandle = findViewById<Button>(R.id.editHandle)

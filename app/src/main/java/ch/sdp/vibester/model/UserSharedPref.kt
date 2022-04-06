@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import android.util.Log
+import ch.sdp.vibester.database.UsersRepo
 import ch.sdp.vibester.profile.UserProfile
 import com.google.firebase.database.*
 import com.google.firebase.database.DataSnapshot
@@ -23,20 +24,32 @@ class UserSharedPref private constructor() {
         val CORRECT_SONGS = "correctSongs"
         val RANKING = "ranking"
 
+        var dbAccess : UsersRepo = UsersRepo()
+
+        /*
         val database: FirebaseDatabase = Firebase.database("https://vibester-sdp-default-rtdb.europe-west1.firebasedatabase.app")
         private lateinit var databaseRef: DatabaseReference
         //databaseRef = database.reference
                 /*
                     https://stackoverflow.com/questions/12744337/how-to-keep-android-applications-always-be-logged-in-state#:~:text=When%20users%20log%20in%20to,direct%20to%20the%20login%20page.
                  */
-
+ */
         fun getSharedPreferences(ctx: Context): SharedPreferences? {
             return PreferenceManager.getDefaultSharedPreferences(ctx)
+        }
+
+
+        fun userReset(ctx: Context, email: String){
+            dbAccess = UsersRepo()
+            setUser(ctx, UserProfile(email=email))
+            val call = {prof:UserProfile -> setUser(ctx, prof)}
+            dbAccess.getUserData(email, call)
         }
 
         fun setUser(ctx: Context, user: UserProfile){
             val edit = getSharedPreferences(ctx)?.edit()
             if (edit != null) {
+                Log.e("HELLO", "My Friends Changes")
                 edit.putString(HANDLE, user.handle)
                 edit.putString(USERNAME, user.username)
                 edit.putString(IMAGE, user.image)
@@ -46,25 +59,13 @@ class UserSharedPref private constructor() {
                 edit.putInt(CORRECT_SONGS, user.correctSongs)
                 edit.putInt(RANKING, user.ranking)
                 edit.commit()
-                databaseRef = database.reference
-                /*databaseRef.child("users")
-                    .child("-Myfy9TlCUTWYRxVLBsQ") //For now ID is hardcoded, will generate it creating new users next week
-                    .child(name)
-                    .setValue(input.text.toString())
+                //databaseRef = database.reference
 
-                 */
             }
         }
 
 
-        /*
-databaseRef.child("users")
-    .child("-Myfy9TlCUTWYRxVLBsQ") //For now ID is hardcoded, will generate it creating new users next week
-    .child(name)
-    .setValue(input.text.toString())
-
- */
-
+/*
         private fun queryDatabase(email: String) {
             var user: UserProfile
 
@@ -99,6 +100,8 @@ databaseRef.child("users")
 
         }
 
+ */
+
         fun updateScore(ctx: Context, deltaTotal: Int = 0, deltaBest: Int = 0, deltaCorrect: Int = 0, deltaRanking: Int = 0){
             val sharedPref = getSharedPreferences(ctx)
             if(sharedPref != null){
@@ -107,6 +110,10 @@ databaseRef.child("users")
                 val current_best_score = sharedPref.getInt(BEST_SCORE, 0) + deltaBest
                 val current_correct_song = sharedPref.getInt(CORRECT_SONGS, 0) + deltaCorrect
                 val current_ranking = sharedPref.getInt(RANKING, 0) + deltaRanking
+                dbAccess.updateField("testUser", current_total_games.toString(), "totalGames")
+                dbAccess.updateField("testUser", current_ranking.toString(), "ranking")
+                dbAccess.updateField("testUser", current_correct_song.toString(), "correctSongs")
+                dbAccess.updateField("testUser", current_best_score.toString(), "bestScore")
                 edit.putInt(TOTAL_GAMES, current_total_games)
                 edit.putInt(BEST_SCORE, current_best_score)
                 edit.putInt(CORRECT_SONGS, current_correct_song)

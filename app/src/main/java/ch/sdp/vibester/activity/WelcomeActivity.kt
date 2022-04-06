@@ -17,7 +17,7 @@ class WelcomeActivity : AppCompatActivity() {
         requestWindowFeature(FEATURE_NO_TITLE)
         supportActionBar?.hide()
         setContentView(R.layout.activity_welcome_screen)
-
+        UserSharedPref.userReset(this, "lisa@test.com")
         val tv = findViewById<TextView>(R.id.user_status)
 
         val username = UserSharedPref.getUser(this).username

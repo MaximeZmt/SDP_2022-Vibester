@@ -7,6 +7,7 @@ import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -14,8 +15,10 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
 
 @HiltAndroidTest
+@RunWith(AndroidJUnit4::class)
 class WelcomeActivityTest {
     @get:Rule(order = 0)
     var hiltRule = HiltAndroidRule(this)
@@ -43,7 +46,7 @@ class WelcomeActivityTest {
     }
 
     @Test
-    fun checkIntentOnProfile() { //FILLER TESTING
+    fun checkIntentOnProfile() { 
         onView(withId(R.id.welcome_profile)).perform(click())
         intended(hasComponent(ProfileActivity::class.java.name))
     }
@@ -54,26 +57,9 @@ class WelcomeActivityTest {
         intended(hasComponent(ScoreBoardActivity::class.java.name))
     }
 
-//    @Test
-//    fun checkIntentOnListen(){ //FILLER TESTING
-//        onView(withId(R.id.welcome_listen)).perform(click())
-//        intended(hasComponent(TypingGameActivity::class.java.name))
-//    }
-
     @Test
-    fun checkIntentOnSettings() { //FILLER TESTING
+    fun checkIntentOnSettings() {
         onView(withId(R.id.welcome_settings)).perform(click())
         intended(hasComponent(AuthenticationActivity::class.java.name))
     }
-
-    /*
-     * Belongs to a previously implemented button, taken out for UI purposes.
-     * Might bring it back, thus leaving the code for now.
-     */
-
-    /*@Test
-    fun checkIntentOnLogin(){ //FILLER TESTING
-        onView(withId(R.id.welcome_login)).perform(click())
-        intended(hasComponent(GameSetupScreen::class.java.name))
-    }*/
 }

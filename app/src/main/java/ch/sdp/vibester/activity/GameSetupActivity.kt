@@ -1,141 +1,142 @@
 package ch.sdp.vibester.activity
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.text.Layout
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.view.ViewGroup
 import android.view.Window
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.constraintlayout.widget.ConstraintSet
-import androidx.core.view.children
 import ch.sdp.vibester.R
+import ch.sdp.vibester.api.LastfmApiInterface
+import ch.sdp.vibester.api.LastfmMethod
+import ch.sdp.vibester.api.LastfmUri
+import ch.sdp.vibester.helper.GameManager
+import ch.sdp.vibester.helper.TypingGameManager
+import com.google.gson.Gson
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
+/**
+ * Class to choose game mode, genre and difficulty.
+ */
 class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
-    var text = "One"
     var difficulty = "Easy"
+    var game = "local_buzzer"
+     lateinit var gameManager: GameManager;
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         supportActionBar?.hide()
         setContentView(R.layout.activity_game_setup_screen)
-
-        chooseListener(R.id.local_buzzer_game_button,
-            findViewById<LinearLayout>(R.id.chooseGame),
-            findViewById<ConstraintLayout>(R.id.chooseDifficulty))
-
-        chooseListener(R.id.difficulty_proceed,
-            findViewById<ConstraintLayout>(R.id.chooseDifficulty),
-            findViewById<ConstraintLayout>(R.id.buzzerSetup))
-
-        val spinner: Spinner = findViewById(R.id.nb_player_spinner)
-        //spinner.background = DisplayContents.borderGen(this, R.color.floral_white)
-        initSpinner(spinner, R.array.nb_players)
+        val ctx: Context = this
 
         val spinnerDifficulty: Spinner = findViewById(R.id.difficulty_spinner)
-        initSpinner(spinnerDifficulty, R.array.difficulties_name)
-    }
-
-    private fun initSpinner(spinner: Spinner, spinner_array: Int) {
-        ArrayAdapter.createFromResource(
-            this,
-            spinner_array,
+        val adapter = ArrayAdapter.createFromResource(
+            ctx,
+            R.array.difficulties_name,
             android.R.layout.simple_spinner_item
-        ).also { adapter ->
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            spinner.adapter = adapter
-            spinner.onItemSelectedListener = this
-        }
+        )
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerDifficulty.adapter = adapter
+        spinnerDifficulty.onItemSelectedListener = this
     }
+
     override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-        if(parent.id == R.id.nb_player_spinner) {
-            text = parent.getItemAtPosition(position).toString()
-            updatePlayerNameVisibility(textToNumber(text), R.id.namePlayer2)
-            updatePlayerNameVisibility(textToNumber(text), R.id.namePlayer3)
-            updatePlayerNameVisibility(textToNumber(text), R.id.namePlayer4)
-            // update linear layout's visibility, add linear layout with certain visible number of rows
-            // or just make 4 rows at first and update that later
-        } else {
-            difficulty = parent.getItemAtPosition(position).toString()
-            when(difficulty) {
-                "Easy"      -> setDifficultyText(R.string.difficulty_easy)
-                "Medium"    -> setDifficultyText(R.string.difficulty_medium)
-                "Hard"      -> setDifficultyText(R.string.difficulty_hard)
-            }
+        difficulty = parent.getItemAtPosition(position).toString()
+        when(difficulty) {
+            "Easy"      -> setDifficultyText(R.string.difficulty_easy)
+            "Medium"    -> setDifficultyText(R.string.difficulty_medium)
+            "Hard"      -> setDifficultyText(R.string.difficulty_hard)
         }
     }
+
+    override fun onNothingSelected(parent: AdapterView<*>) {difficulty = "Easy"}
 
     /**
-     * Converts the spinner text for the number of players into an Int
-     * @param
-     * text: the string to be converted
+     * Start the game based on the chosen mode
      */
-    fun textToNumber(text: String): Int {
-        when (text) {
-            "One" -> return 1
-            "Two" -> return 2
-            "Three" -> return 3
-            "Four" -> return 4
+    fun proceedGame(view:View){
+         if(this.game == "local_buzzer"){
+             switchToGame(BuzzerSetupActivity())
+         }
+         else if(this.game == "local_typing"){
+             switchToGame(TypingGameActivity())
+         }
+         else if(this.game == "local_lyrics"){
+            switchToGame(LyricsBelongGameActivity())
         }
-        return 1
     }
 
-
-    override fun onNothingSelected(parent: AdapterView<*>) {text = "One"; difficulty = "Easy"}
-
-    /**
-     * Updates visibility of player name entry fields according to number of players selected in the spinner
-     * @param
-     * n: number of players selected in the spinner
-     * id: the id of the field to update
-     */
-    fun updatePlayerNameVisibility(n: Int, id: Int) {
-        var i = when (id) {
-            R.id.namePlayer2 -> 2
-            R.id.namePlayer3 -> 3
-            R.id.namePlayer4 -> 4
-            else -> 0
-        }
-        findViewById<EditText>(id).visibility =
-            if (n >= i) android.view.View.VISIBLE else android.view.View.INVISIBLE
-    }
-
-    fun proceedToGame(view: View) { //FILLER INTENT
-        val intent = Intent(this, GamescreenActivity::class.java)
-        val players =
-            findViewById<LinearLayout>(R.id.playerNames).children.filter { child: View -> child.visibility == android.view.View.VISIBLE }
-        val pNameArray = arrayOfNulls<String>(players.count())
-        if (players.count() > 0) {
-            intent.putExtra("Number of players", players.count())
-        } else {
-            intent.putExtra("Number of players", 1)
-        }
-        val editTextIdArray =
-            arrayOf(R.id.namePlayer1, R.id.namePlayer2, R.id.namePlayer3, R.id.namePlayer4)
-        var i = 0
-        for (playerView in players) {
-            pNameArray[i] = findViewById<EditText>(editTextIdArray[i]).text.toString()
-            i = i + 1
-        }
-        intent.putExtra("Player Names", pNameArray)
-        intent.putExtra("Difficulty", difficulty)
-        startActivity(intent)
-    }
-
-    private fun chooseListener(buttonId: Int, currentLayout: ViewGroup, nextLayout: ViewGroup) {
-        val btn = findViewById<Button>(buttonId)
-        btn.setOnClickListener {
-            currentLayout.visibility = GONE
-            nextLayout.visibility = VISIBLE
-        }
+    private fun switchToGame(nextActivity: AppCompatActivity){
+        val newIntent = Intent(this, nextActivity::class.java)
+        newIntent.putExtra("gameManager", gameManager)
+        newIntent.putExtra("Difficulty", difficulty)
+        startActivity(newIntent)
+        finish()
     }
 
     private fun setDifficultyText(mode: Int) {
         findViewById<TextView>(R.id.difficulty_explanation).setText(mode)
+    }
+
+    /**
+     * Fetch data from Lastfm and set song list in a GameManager
+     * @param uri: contains all Lastfm query parameters (method, artist, tag)
+     */
+    private fun setGameSongList(uri: LastfmUri) {
+        val service = LastfmApiInterface.createLastfmService()
+        val call = service.getSongList(uri.convertToHashmap())
+        call.enqueue(object : Callback<Any> {
+            override fun onFailure(call: Call<Any>, t: Throwable?) {}
+            override fun onResponse(call: Call<Any>, response: Response<Any>) {
+                gameManager.setGameSongList(Gson().toJson(response.body()), uri.method)
+            }
+        })
+    }
+
+    /**
+     * Choose game mode. Set appropriate GameManager.
+     */
+    fun chooseGame(view: View){
+        when (view.getId()) {
+            R.id.local_buzzer_game_button -> {game  = "local_buzzer"; gameManager = GameManager()}
+            R.id.local_typing_game_button -> {game = "local_typing"; gameManager = TypingGameManager()}
+            R.id.local_lyrics_game_button -> {game = "local_lyrics"; gameManager = GameManager()}
+        }
+        findViewById<LinearLayout>(R.id.chooseGame).visibility = GONE
+        findViewById<ConstraintLayout>(R.id.chooseGenre).visibility = VISIBLE
+    }
+
+    /**
+     * Choose genre for the game. Call function to fetch the data from Lastfm.
+     */
+    fun chooseGenre(view: View) {
+        var method =  ""
+        var artist = ""
+        var tag = ""
+        val uri = LastfmUri()
+        when (view.getId()) {
+            R.id.btsButton -> {method = LastfmMethod.BY_ARTIST.method; artist = "BTS" }
+            R.id.kpopButton -> {method = LastfmMethod.BY_TAG.method; tag = "kpop" }
+            R.id.imagDragonsButton -> {method = LastfmMethod.BY_ARTIST.method; artist = "Imagine Dragons"}
+            R.id.rockButton-> {method = LastfmMethod.BY_TAG.method; tag = "rock" }
+            R.id.topTracksButton -> {method = LastfmMethod.BY_CHART.method}
+            R.id.billieEilishButton -> {method =LastfmMethod.BY_ARTIST.method; artist = "Billie Eilish"}
+        }
+        uri.method = method
+        uri.artist = artist
+        uri.tag = tag
+
+        findViewById<ConstraintLayout>(R.id.chooseGenre).visibility = GONE
+        findViewById<ConstraintLayout>(R.id.chooseDifficulty).visibility = VISIBLE
+
+        setGameSongList(uri)
     }
 
 }

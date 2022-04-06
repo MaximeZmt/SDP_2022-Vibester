@@ -90,4 +90,5 @@
     <string name="next">Next</string>
     <string name="check_for_correctness">Check for correctness</string>
     <string name="result_will_show_here">result will show here</string>
+    <string name="game_lyrics">Local Lyrics</string>
 </resources>

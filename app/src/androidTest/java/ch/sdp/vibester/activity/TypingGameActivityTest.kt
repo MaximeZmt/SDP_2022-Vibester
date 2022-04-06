@@ -2,40 +2,53 @@ package ch.sdp.vibester.activity
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
+import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.matcher.IntentMatchers
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.LastfmMethod
-import ch.sdp.vibester.helper.GameManager
+import ch.sdp.vibester.helper.TypingGameManager
 import ch.sdp.vibester.model.Song
+import com.google.android.material.color.MaterialColors.getColor
+import org.hamcrest.Matchers.allOf
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
 
+@RunWith(AndroidJUnit4::class)
 class TypingGameActivityTest {
-    private fun setGameManager(): GameManager {
-        val managerTxt = """
-            {"tracks":
-            {"track":[{"name":"Monday","duration":"259","mbid":"31623cce-9717-4513-9d83-1b5d04e44f9b",
-            "url":"https://www.last.fm/music/Oasis/_/Wonderwall",
-            "streamable":{"#text":"0","fulltrack":"0"},
-            "artist":{"name":"Imagine Dragons","mbid":"ecf9f3a3-35e9-4c58-acaa-e707fba45060","url":"https://www.last.fm/music/Oasis"},
-            "image":[{"#text":"https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png","size":"small"},
-            {"#text":"https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png","size":"medium"},
-            {"#text":"https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png","size":"large"},
-            {"#text":"https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png","size":"extralarge"}],
-            "@attr":{"rank":"1"}}],"@attr":{"tag":"british","page":"1","perPage":"1","totalPages":"66649","total":"66649"}}}
-            """
-        val gameManager = GameManager()
-        gameManager.setGameSongList(managerTxt, LastfmMethod.BY_TAG.method)
+
+    private val expectedSize = 200
+    private fun setGameManager(numSongs:Int = 1, valid: Boolean = true): TypingGameManager {
+        val epilogue = "{\"tracks\":{\"track\":["
+        val prologue =
+            "], \"@attr\":{\"tag\":\"british\",\"page\":\"1\",\"perPage\":\"1\",\"totalPages\":\"66649\",\"total\":\"66649\"}}}"
+        var middle = "{\"name\":\"Monday\",\"artist\":{\"name\":\"Imagine Dragons\"}}"
+        if(!valid) middle = "{\"name\":\"TEST_SONG_TEST\",\"artist\":{\"name\":\"TEST_ARTIST_TEST\"}}"
+        val gameManager = TypingGameManager()
+
+        var i = 0
+        var completeMiddle = middle
+        while(i < numSongs-1){
+            completeMiddle += ","+middle
+            i++
+        }
+        gameManager.setGameSongList(epilogue + completeMiddle + prologue, LastfmMethod.BY_TAG.method)
+
         return gameManager
     }
 
@@ -73,7 +86,7 @@ class TypingGameActivityTest {
         val ctx = ApplicationProvider.getApplicationContext() as Context
         val myText = TypingGameActivity.generateText(txtInput, ctx)
         assertEquals(txtInput, myText.text.toString())
-        assertEquals(200, myText.minHeight)
+        assertEquals(expectedSize, myText.minHeight)
         assertEquals(ContextCompat.getColor(ctx, R.color.black), myText.textColors.defaultColor)
     }
 
@@ -92,9 +105,9 @@ class TypingGameActivityTest {
 
         val txtInput = "hello"
         val ctx = ApplicationProvider.getApplicationContext() as Context
-        val mytest = TypingGameActivity.generateImage(mySong, ctx)
-        assertEquals(200, mytest.minimumHeight)
-        assertEquals(200, mytest.minimumWidth)
+        val myTest = TypingGameActivity.generateImage(mySong, ctx)
+        assertEquals(expectedSize, myTest.minimumHeight)
+        assertEquals(expectedSize, myTest.minimumWidth)
     }
 
     @Test
@@ -184,10 +197,11 @@ class TypingGameActivityTest {
         assertEquals(true, gameManager.getScore() == 0)
     }
 
-    /*
- * Currently testing with the *static* values. Change to *dynamic* once the game is correctly
- * implemented and all the data are being sent between activities.
- */
+
+    /**
+    * Currently testing with the *static* values. Change to *dynamic* once the game is correctly
+    * implemented and all the data are being sent between activities.
+    */
     @Test
     fun checkIntentOnEnding() {
 
@@ -204,14 +218,13 @@ class TypingGameActivityTest {
         val gameManager = setGameManager()
         gameManager.setNextSong()
         gameManager.gameSize = 1
-        lateinit var temp: Unit
 
         val intent =
             Intent(ApplicationProvider.getApplicationContext(), TypingGameActivity::class.java)
         val scn: ActivityScenario<TypingGameActivity> = ActivityScenario.launch(intent)
         val ctx = ApplicationProvider.getApplicationContext() as Context
         scn.onActivity { activity ->
-            temp = activity.checkAnswer(ctx, songTest, gameManager)
+            activity.checkAnswer(ctx, songTest, gameManager)
         }
         val incArray: ArrayList<String> = ArrayList(
             gameManager.getWrongSongs().map { it.getTrackName() + " - " + it.getArtistName() })
@@ -225,13 +238,124 @@ class TypingGameActivityTest {
         statVal.addAll(arrayOf(score, score, score, score, score))
 
         Intents.intended(IntentMatchers.hasComponent(GameEndingActivity::class.java.name))
-
-//        Intents.intended(IntentMatchers.hasExtra("playerName", "Default"))
         Intents.intended(IntentMatchers.hasExtra("nbIncorrectSong", 1))
-
         Intents.intended(IntentMatchers.hasExtra("str_arr_inc", incArray))
         Intents.intended(IntentMatchers.hasExtra("str_arr_name", statNames))
         Intents.intended(IntentMatchers.hasExtra("str_arr_val", statVal))
+    }
+
+    @Test
+    fun testProgressBarOnZero() {
+        val gameManager = setGameManager()
+        assertEquals(gameManager.getSongList().size, 1)
+
+        val intent = Intent(ApplicationProvider.getApplicationContext(), TypingGameActivity::class.java)
+        val scn: ActivityScenario<TypingGameActivity> = ActivityScenario.launch(intent)
+        val ctx = ApplicationProvider.getApplicationContext() as Context
+        scn.onActivity { activity ->
+            activity.testFirstRound(ctx, gameManager)
+            activity.testProgressBar()
+        }
+        assertEquals(gameManager.numPlayedSongs, 1)
+        Thread.sleep(1000)
+
+        val incArray: ArrayList<String> = ArrayList(
+            gameManager.getWrongSongs().map { it.getTrackName() + " - " + it.getArtistName() })
+
+        val statNames: ArrayList<String> = arrayListOf()
+        val statName = "Total Score"
+        statNames.addAll(arrayOf(statName, statName, statName, statName, statName))
+
+        val statVal: ArrayList<String> = arrayListOf()
+        val score = gameManager.getScore().toString()
+        statVal.addAll(arrayOf(score, score, score, score, score))
+
+        Intents.intended(IntentMatchers.hasComponent(GameEndingActivity::class.java.name))
+        Intents.intended(IntentMatchers.hasExtra("nbIncorrectSong", 1))
+        Intents.intended(IntentMatchers.hasExtra("str_arr_inc", incArray))
+        Intents.intended(IntentMatchers.hasExtra("str_arr_name", statNames))
+        Intents.intended(IntentMatchers.hasExtra("str_arr_val", statVal))
+    }
+
+    @Test
+    fun nextButtonOnClick(){
+        val gameManager = setGameManager(2)
+        assertEquals(gameManager.getSongList().size, 2)
+
+        val intent = Intent(ApplicationProvider.getApplicationContext(), TypingGameActivity::class.java)
+        intent.putExtra("gameManager", gameManager)
+        val scn: ActivityScenario<TypingGameActivity> = ActivityScenario.launch(intent)
+        scn.onActivity { activity ->
+            activity.testProgressBar()
+        }
+        Thread.sleep(1000)
+
+        onView(withId(R.id.nextSong)).check(matches(isDisplayed())).perform(click())
+        scn.onActivity { activity ->
+            activity.testProgressBar()
+        }
+        Thread.sleep(1000)
+
+        val statNames: ArrayList<String> = arrayListOf()
+        val statName = "Total Score"
+        statNames.addAll(arrayOf(statName, statName, statName, statName, statName))
+
+        val statVal: ArrayList<String> = arrayListOf()
+        val score = "0"
+        statVal.addAll(arrayOf(score, score, score, score, score))
+        Intents.intended(IntentMatchers.hasComponent(GameEndingActivity::class.java.name))
+        Intents.intended(IntentMatchers.hasExtra("nbIncorrectSong", 2))
+        Intents.intended(IntentMatchers.hasExtra("str_arr_name", statNames))
+        Intents.intended(IntentMatchers.hasExtra("str_arr_val", statVal))
+    }
+
+    @Test
+    fun firstRoundFail(){
+        val gameManager = setGameManager(valid = false)
+        val intent = Intent(ApplicationProvider.getApplicationContext(), TypingGameActivity::class.java)
+        intent.putExtra("gameManager", gameManager)
+        val scn: ActivityScenario<TypingGameActivity> = ActivityScenario.launch(intent)
+
+        val statNames: ArrayList<String> = arrayListOf()
+        val statName = "Total Score"
+        statNames.addAll(arrayOf(statName, statName, statName, statName, statName))
+        val statVal: ArrayList<String> = arrayListOf()
+        val score = "0"
+        statVal.addAll(arrayOf(score, score, score, score, score))
+        Intents.intended(IntentMatchers.hasComponent(GameEndingActivity::class.java.name))
+        Intents.intended(IntentMatchers.hasExtra("nbIncorrectSong", 0))
+        Intents.intended(IntentMatchers.hasExtra("str_arr_name", statNames))
+        Intents.intended(IntentMatchers.hasExtra("str_arr_val", statVal))
+    }
+
+    @Test
+    fun testProgressBarColor() {
+        val gameManager = setGameManager()
+        val intent = Intent(ApplicationProvider.getApplicationContext(), TypingGameActivity::class.java)
+        intent.putExtra("gameManager", gameManager)
+        val scn: ActivityScenario<TypingGameActivity> = ActivityScenario.launch(intent)
+        val ctx = ApplicationProvider.getApplicationContext() as Context
+        var color:ColorStateList = ctx.getResources().getColorStateList(R.color.floral_white)
+
+        /* Test progress bar is yellow*/
+        scn.onActivity { activity ->
+            activity.testProgressBar(15)
+        }
+        Thread.sleep(1000)
+        scn.onActivity { activity->
+            color = activity.testProgressBarColor()!!
+        }
+        assertEquals(color, ctx.getResources().getColorStateList(R.color.maximum_yellow_red))
+
+        /* Test progress bar is red*/
+        scn.onActivity { activity ->
+            activity.testProgressBar(5)
+        }
+        Thread.sleep(1000)
+        scn.onActivity { activity->
+            color = activity.testProgressBarColor()!!
+        }
+        assertEquals(color, ctx.getResources().getColorStateList(R.color.light_coral))
     }
 
 }

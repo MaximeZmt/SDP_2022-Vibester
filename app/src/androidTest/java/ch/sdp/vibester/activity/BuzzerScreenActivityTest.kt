@@ -18,12 +18,11 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-
-class GamescreenActivityTest {
+class BuzzerScreenActivityTest {
 
     @get:Rule
     val testRule = ActivityScenarioRule(
-        GamescreenActivity::class.java
+        BuzzerScreenActivity::class.java
     )
 
     @Before
@@ -77,30 +76,13 @@ class GamescreenActivityTest {
      */
     @Test
     fun checkIntentOnEnding() {
-        val incArray: ArrayList<String> = arrayListOf()
-        incArray.addAll(arrayOf("One", "Two", "Three"))
+        val mockArray = arrayListOf<String>("One", "Two", "Three", "Four", "Five")
 
-        val statNames: ArrayList<String> = arrayListOf()
-        statNames.addAll(
-            arrayOf(
-                "Hello there",
-                "Second Stat",
-                "Third Stat",
-                "Fourth Stat",
-                "Fifth Stat"
-            )
-        )
+        val incArray: ArrayList<String> = mockArray
 
-        val statVal: ArrayList<String> = arrayListOf()
-        statVal.addAll(
-            arrayOf(
-                "General Kenobi",
-                "----- *2 -----",
-                "----- *3 -----",
-                "----- *4 -----",
-                "----- *5 -----"
-            )
-        )
+        val statNames: ArrayList<String> = mockArray
+
+        val statVal: ArrayList<String> = mockArray
 
         onView(withId(R.id.go_to_end)).perform(click())
         intended(hasComponent(GameEndingActivity::class.java.name))

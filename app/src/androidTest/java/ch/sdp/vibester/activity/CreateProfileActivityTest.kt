@@ -7,6 +7,7 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
+import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.matcher.ViewMatchers.* //change this import
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
@@ -42,11 +43,14 @@ class CreateProfileActivityTest {
     @BindValue @JvmField
     val mockUsersRepo = mockk<UsersRepo>()
 
-    private fun createMockInvocation(mockProfile: UserProfile) {
-        every { mockUsersRepo.getUserData(any(), any()) } answers {
-            secondArg<(UserProfile) -> Unit>().invoke(mockProfile)
+    private fun createMockInvocation(email: String) {
+        every {mockUsersRepo.createUser(any(), any(), any(), any())} answers {
+            lastArg<(String) -> Unit>().invoke(email)
         }
-        every { mockUsersRepo.updateField(any(), any(), any()) } answers {}
+
+        every { mockUsersRepo.getUserData(any(), any()) } answers {
+            secondArg<(UserProfile) -> Unit>().invoke(UserProfile())
+        }
     }
 
     @After
@@ -55,6 +59,29 @@ class CreateProfileActivityTest {
     }
 
     @Test
+    fun createAccCorrect() {
+        var username = "mockUsername"
+        var handle = "mockHandle"
+        var mockEmail = "mockEmail@test.com"
+
+        val intent = Intent(ApplicationProvider.getApplicationContext(), CreateProfileActivity::class.java)
+        intent.putExtra("email", mockEmail)
+
+        createMockInvocation(mockEmail)
+
+        val scn: ActivityScenario<CreateProfileActivity> = ActivityScenario.launch(intent)
+
+        onView(withId(R.id.accountUsername)).perform(ViewActions.typeText(username),
+            ViewActions.closeSoftKeyboard()
+        )
+        onView(withId(R.id.accountHandle)).perform(ViewActions.typeText(handle),
+            ViewActions.closeSoftKeyboard()
+        )
+        onView(withId(R.id.createButton)).perform(ViewActions.click())
+
+        Intents.intended(IntentMatchers.hasComponent(ProfileActivity::class.java.name))
+        Intents.intended(IntentMatchers.hasExtra("email", mockEmail))
+    }
 
 
 }

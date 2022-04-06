@@ -32,11 +32,6 @@ class CreateProfileActivity : AppCompatActivity() {
                 username.text.toString(),
                 handle.text.toString(),
                 this::startNewActivity)
-
-            val newIntent = Intent(this, ProfileActivity::class.java)
-            newIntent.putExtra("email", email)
-
-            startActivity(newIntent)
         }
     }
 

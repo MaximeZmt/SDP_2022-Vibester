@@ -122,8 +122,6 @@ class AuthenticationActivityTest {
         onView(withId(R.id.createAcc)).perform(click())
 
         onView(withId(R.id.email)).check(matches(withText("Authentication error")))
-
-
     }
 
     @Test

@@ -64,7 +64,7 @@ class ProfileActivity : AppCompatActivity() {
         builder.setView(input)
         builder.setPositiveButton("OK") { _, _ ->
             findViewById<TextView>(textId).text = input.text.toString()
-            usersRepo.updateField("-Myfy9TlCUTWYRxVLBsQ", input.text.toString() ,name)
+            usersRepo.updateField("testUser", input.text.toString() ,name)
         }
         builder.setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }
         builder.show()

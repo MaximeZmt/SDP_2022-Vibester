@@ -40,7 +40,13 @@ class UsersRepo @Inject constructor() {
             0
         )
 
-        dbRef.setValue(newUser)
+        val charPool : List<Char> = ('a'..'z') + ('A'..'Z') + ('0'..'9')
+        val randomString = (1..10)
+            .map { i -> kotlin.random.Random.nextInt(0, charPool.size) }
+            .map(charPool::get)
+            .joinToString("");
+
+        dbRef.child(randomString).setValue(newUser)
             .addOnSuccessListener {
                 newActivity(email)
             }

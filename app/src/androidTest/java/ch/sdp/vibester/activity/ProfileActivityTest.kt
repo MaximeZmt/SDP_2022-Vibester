@@ -45,6 +45,12 @@ class ProfileActivityTest {
     @BindValue @JvmField
     val mockUsersRepo = mockk<UsersRepo>()
 
+    private fun createMockInvocation(mockProfile: UserProfile) {
+        every { mockUsersRepo.getUserData(any(), any()) } answers {
+            secondArg<(UserProfile) -> Unit>().invoke(mockProfile)
+        }
+        every { mockUsersRepo.updateName(any(), any(), any()) } answers {}
+    }
 
     @After
     fun clean() {
@@ -57,13 +63,10 @@ class ProfileActivityTest {
         val intent = Intent(ApplicationProvider.getApplicationContext(), ProfileActivity::class.java)
         intent.putExtra("email", inputProfile.email)
 
-        every { mockUsersRepo.getUserData(any(), any()) } answers {
-            secondArg<(UserProfile) -> Unit>().invoke(inputProfile)
-        }
+        createMockInvocation(inputProfile)
 
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
 
-        Thread.sleep(sleepTime)
         onView(withId(R.id.handle)).check(matches(withText(inputProfile.handle)))
         onView(withId(R.id.username)).check(matches(withText(inputProfile.username)))
         onView(withId(R.id.correctSongs)).check(matches(withText(inputProfile.correctSongs.toString())))
@@ -76,12 +79,15 @@ class ProfileActivityTest {
         val inputProfile = UserProfile("@lisa", "Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8, 29, 0)
         val intent = Intent(ApplicationProvider.getApplicationContext(), ProfileActivity::class.java)
         intent.putExtra("email", inputProfile.email)
+
+        createMockInvocation(inputProfile)
+
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
-        Thread.sleep(sleepTime)
+
         onView(withId(R.id.profileStatistics)).check(matches(isDisplayed()))
         onView(withId(R.id.handle)).check(matches(isDisplayed()))
         onView(withId(R.id.username)).check(matches(isDisplayed()))
-//        onView(withId(R.id.avatar)).check(matches(isDisplayed()))
+        onView(withId(R.id.avatar)).check(matches(isDisplayed()))
     }
 
     @Test
@@ -89,9 +95,12 @@ class ProfileActivityTest {
         val inputProfile = UserProfile("@lisa", "Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8, 29, 0)
         val intent = Intent(ApplicationProvider.getApplicationContext(), ProfileActivity::class.java)
         intent.putExtra("email", inputProfile.email)
+
+        createMockInvocation(inputProfile)
+
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
 
-        val newUsername = "Lalisa Bon"
+        val newUsername = "Lalisa Bon idomesniu"
         onView(withId(R.id.editUser)).perform(ViewActions.click())
         onView(withId(0)).perform(
             ViewActions.typeText(newUsername),
@@ -107,8 +116,11 @@ class ProfileActivityTest {
         val inputProfile = UserProfile("@lisa", "Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8, 29, 0)
         val intent = Intent(ApplicationProvider.getApplicationContext(), ProfileActivity::class.java)
         intent.putExtra("email", inputProfile.email)
+
+        createMockInvocation(inputProfile)
+
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
-        Thread.sleep(sleepTime)
+
         onView(withId(R.id.editUser)).perform(ViewActions.click())
         onView(withText("Cancel")).perform(ViewActions.click())
         onView(withId(R.id.username)).check(matches(withText("Lalisa Bon")))
@@ -119,8 +131,11 @@ class ProfileActivityTest {
         val inputProfile = UserProfile("@lisa", "Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8, 29, 0)
         val intent = Intent(ApplicationProvider.getApplicationContext(), ProfileActivity::class.java)
         intent.putExtra("email", inputProfile.email)
+
+        createMockInvocation(inputProfile)
+
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
-        Thread.sleep(sleepTime)
+
         val newUserHandle = "@lisa"
         onView(withId(R.id.editHandle)).perform(ViewActions.click())
         onView(withId(0)).perform(
@@ -137,8 +152,11 @@ class ProfileActivityTest {
         val inputProfile = UserProfile("@lisa", "Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8, 29, 0)
         val intent = Intent(ApplicationProvider.getApplicationContext(), ProfileActivity::class.java)
         intent.putExtra("email", inputProfile.email)
+
+        createMockInvocation(inputProfile)
+
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
-        Thread.sleep(sleepTime)
+
         onView(withId(R.id.editHandle)).perform(ViewActions.click())
         onView(withText("Cancel")).perform(ViewActions.click())
         onView(withId(R.id.handle)).check(matches(withText("@lisa")))

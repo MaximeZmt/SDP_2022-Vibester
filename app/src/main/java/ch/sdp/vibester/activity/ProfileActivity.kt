@@ -111,14 +111,14 @@ class ProfileActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.correctSongs).text = user.correctSongs.toString()
         findViewById<TextView>(R.id.bestScore).text = user.bestScore.toString()
         findViewById<TextView>(R.id.ranking).text = user.ranking.toString()
-//        CoroutineScope(Dispatchers.Main).launch {
-//            val task = async(Dispatchers.IO) {
-//                val bit = BitmapGetterApi.download("https://"+user.image)
-//                bit.get()
-//            }
-//            val bm = task.await()
-//            findViewById<ImageView>(R.id.avatar).setImageBitmap(bm)
-//        }
+        CoroutineScope(Dispatchers.Main).launch {
+            val task = async(Dispatchers.IO) {
+                val bit = BitmapGetterApi.download("https://"+user.image)
+                bit.get()
+            }
+            val bm = task.await()
+            findViewById<ImageView>(R.id.avatar).setImageBitmap(bm)
+        }
     }
 }
 

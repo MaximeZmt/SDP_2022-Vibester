@@ -8,14 +8,23 @@ import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import ch.sdp.vibester.R
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
+@HiltAndroidTest
 class WelcomeActivityTest {
-    @get: Rule
-    val activityRule = ActivityScenarioRule(WelcomeActivity::class.java)
+    @get:Rule(order = 0)
+    var hiltRule = HiltAndroidRule(this)
+
+
+    @get:Rule(order = 1)
+    val testRule = ActivityScenarioRule(
+        WelcomeActivity::class.java
+    )
 
     @Before
     fun setUp() {

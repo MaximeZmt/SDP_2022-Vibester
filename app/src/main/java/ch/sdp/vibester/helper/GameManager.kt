@@ -120,7 +120,7 @@ open class GameManager : Serializable {
                 numPlayedSongs++
             } catch (e: Exception) {
                 nextSongInd++
-                setNextSong()
+                return setNextSong()
             }
             return true
         }

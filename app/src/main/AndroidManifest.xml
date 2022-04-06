@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="ch.sdp.vibester">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -8,18 +9,17 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
+        android:name=".VibesterApp"
         android:allowBackup="true"
         android:icon="@drawable/logo"
         android:label="@string/app_name"
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
+        android:extractNativeLibs="true"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".GenreToLyrics"
-            android:exported="false" />
-        <activity
-            android:name=".GenreToTyping"
+            android:name=".activity.BuzzerSetupActivity"
             android:exported="false" />
         <activity
             android:name=".activity.IncorrectSongsActivity"
@@ -34,7 +34,7 @@
             android:name=".activity.TypingGameActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.GamescreenActivity"
+            android:name=".activity.BuzzerScreenActivity"
             android:exported="false" />
         <activity
             android:name=".activity.ProfileActivity"
@@ -46,16 +46,10 @@
             android:name=".activity.ScoreBoardActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.WelcomeActivity"
-            android:exported="false" />
-        <activity
             android:name=".activity.AuthenticationActivity"
             android:exported="true" />
         <activity
-            android:name=".GenreTemporary"
-            android:exported="false" />
-        <activity
-            android:name=".activity.MainActivity"
+            android:name=".activity.WelcomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

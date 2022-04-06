@@ -8,6 +8,9 @@ import android.widget.ProgressBar
 import ch.sdp.vibester.R
 import ch.sdp.vibester.helper.GameManager
 
+/**
+ * Common set up for all games (difficulty level, progress bar)
+ */
 open class GameActivity : AppCompatActivity() {
     open val handler = Handler()
     open var maxTime: Int = 30
@@ -53,7 +56,7 @@ open class GameActivity : AppCompatActivity() {
         val score = gameManager.getScore().toString()
         statVal.addAll(arrayOf(score, score, score, score, score))
 
-        intent.putExtra("nbIncorrectSong", gameManager.gameSize - gameManager.getScore())
+        intent.putExtra("nbIncorrectSong", gameManager.getWrongSongs().size)
 
         intent.putStringArrayListExtra("str_arr_inc", incArray)
         intent.putStringArrayListExtra("str_arr_name", statNames)

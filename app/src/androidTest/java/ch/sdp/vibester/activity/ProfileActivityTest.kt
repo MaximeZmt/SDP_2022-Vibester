@@ -1,6 +1,5 @@
 package ch.sdp.vibester.activity
 
-import android.app.Activity
 import android.content.Intent
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
@@ -13,8 +12,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
 import ch.sdp.vibester.database.UsersRepo
 import ch.sdp.vibester.profile.UserProfile
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.auth.AuthResult
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -49,7 +46,7 @@ class ProfileActivityTest {
         every { mockUsersRepo.getUserData(any(), any()) } answers {
             secondArg<(UserProfile) -> Unit>().invoke(mockProfile)
         }
-        every { mockUsersRepo.updateName(any(), any(), any()) } answers {}
+        every { mockUsersRepo.updateField(any(), any(), any()) } answers {}
     }
 
     @After
@@ -69,8 +66,7 @@ class ProfileActivityTest {
 
         onView(withId(R.id.handle)).check(matches(withText(inputProfile.handle)))
         onView(withId(R.id.username)).check(matches(withText(inputProfile.username)))
-        //FIXME the data has changed in the database, thus the test is failing
-//        onView(withId(R.id.correctSongs)).check(matches(withText(inputProfile.correctSongs.toString())))
+        onView(withId(R.id.correctSongs)).check(matches(withText(inputProfile.correctSongs.toString())))
         onView(withId(R.id.totalGames)).check(matches(withText(inputProfile.totalGames.toString())))
         onView(withId(R.id.ranking)).check(matches(withText(inputProfile.ranking.toString())))
     }
@@ -88,6 +84,7 @@ class ProfileActivityTest {
         onView(withId(R.id.profileStatistics)).check(matches(isDisplayed()))
         onView(withId(R.id.handle)).check(matches(isDisplayed()))
         onView(withId(R.id.username)).check(matches(isDisplayed()))
+        //TODO not sure why but this tests fails on CI but passes locally
 //        onView(withId(R.id.avatar)).check(matches(isDisplayed()))
     }
 

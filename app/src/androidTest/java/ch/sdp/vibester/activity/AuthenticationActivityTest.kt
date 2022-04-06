@@ -51,7 +51,6 @@ class AuthenticationActivityTest {
     @get:Rule(order = 0)
     var hiltRule = HiltAndroidRule(this)
 
-
     @get:Rule(order = 1)
     val testRule = ActivityScenarioRule(
         AuthenticationActivity::class.java
@@ -105,7 +104,6 @@ class AuthenticationActivityTest {
         val mockTask = createMockTask(false)
         every { mockAuthenticator.signIn(username, password) } returns mockTask
 
-
         onView(withId(R.id.username)).perform(ViewActions.typeText(username), closeSoftKeyboard())
         onView(withId(R.id.password)).perform(ViewActions.typeText(password), closeSoftKeyboard())
         onView(withId(R.id.logIn)).perform(click())
@@ -124,8 +122,6 @@ class AuthenticationActivityTest {
         onView(withId(R.id.username)).perform(ViewActions.typeText(username), closeSoftKeyboard())
         onView(withId(R.id.password)).perform(ViewActions.typeText(password), closeSoftKeyboard())
         onView(withId(R.id.createAcc)).perform(click())
-
-//        Thread.sleep(sleepTime)
 
         onView(withId(R.id.email)).check(matches(withText("Authentication error")))
 

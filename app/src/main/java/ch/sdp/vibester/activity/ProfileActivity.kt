@@ -1,31 +1,17 @@
 package ch.sdp.vibester.activity
 
-import android.content.ContentValues.TAG
-import android.content.DialogInterface
 import android.os.Bundle
 import android.text.InputType
-import android.util.Log
 import android.view.Window
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.R
-import ch.sdp.vibester.api.BitmapGetterApi
 import ch.sdp.vibester.database.UsersRepo
 import ch.sdp.vibester.profile.UserProfile
-import com.google.firebase.database.*
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.database.ktx.database
-import com.google.firebase.database.ktx.getValue
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
-import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -78,7 +64,7 @@ class ProfileActivity : AppCompatActivity() {
         builder.setView(input)
         builder.setPositiveButton("OK") { _, _ ->
             findViewById<TextView>(textId).text = input.text.toString()
-            usersRepo.updateName("-Myfy9TlCUTWYRxVLBsQ", input.text.toString() ,name)
+            usersRepo.updateField("-Myfy9TlCUTWYRxVLBsQ", input.text.toString() ,name)
         }
         builder.setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }
         builder.show()

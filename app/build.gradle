@@ -104,32 +104,14 @@ dependencies {
     })
     kapt 'com.github.bumptech.glide:compiler:4.13.0'
 
-    // For instrumented tests.
     androidTestImplementation 'com.google.dagger:hilt-android-testing:2.38.1'
-    // ...with Kotlin.
     kaptAndroidTest 'com.google.dagger:hilt-android-compiler:2.38.1'
 
     implementation "com.google.dagger:hilt-android:2.38.1"
     kapt "com.google.dagger:hilt-compiler:2.38.1"
 
-
-
-//    implementation "com.google.dagger:hilt-android:2.38.1"
-//    kapt "com.google.dagger:hilt-compiler:2.38.1"
-//
-//    annotationProcessor 'com.google.dagger:hilt-compiler:2.41'
-//
-//    // For instrumentation tests
-//    androidTestImplementation  'com.google.dagger:hilt-android-testing:2.41'
-//    androidTestAnnotationProcessor 'com.google.dagger:hilt-compiler:2.41'
-//
-//    // For local unit tests
-//    testImplementation 'com.google.dagger:hilt-android-testing:2.41'
-//    testAnnotationProcessor 'com.google.dagger:hilt-compiler:2.41'
-
     testImplementation "io.mockk:mockk:1.12.3"
     androidTestImplementation "io.mockk:mockk-android:1.12.3"
-//    androidTestImplementation "io.mockk:mockk-agent-jvm:1.12.3"
 
 }
 
@@ -137,10 +119,6 @@ tasks.withType(Test) {
     jacoco.includeNoLocationClasses = true
     jacoco.excludes = ['jdk.internal.*']
 }
-
-//tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-//    kotlinOptions.jvmTarget = "1.8"android
-//}
 
 task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'createDebugCoverageReport']) {
     reports {
@@ -155,7 +133,6 @@ task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'crea
             '**/Manifest*.*',
             '**/*Test*.*',
             'android/**/*.*',
-            // Exclude Hilt generated classes
             '**/*Hilt*.*',
             'hilt_aggregated_deps/**',
             '**/*_Factory.class',

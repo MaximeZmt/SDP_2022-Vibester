@@ -101,6 +101,13 @@ class AuthenticationActivity : AppCompatActivity() {
         return true
     }
 
+    /**
+     * A function that authenticates the user
+     * @param email email of the user
+     * @param password password of the user
+     * @param createAcc boolean to check if the authentication is a login or account creation
+     */
+
     private fun authenticate(email: String, password: String, createAcc: Boolean) {
         if (stringValidation(email, password)) {
             var auth: Task<AuthResult> = if (createAcc) {

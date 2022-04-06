@@ -28,9 +28,7 @@ import org.junit.runner.RunWith
 @HiltAndroidTest
 class ProfileActivityTest {
 
-    private val sleepTime: Long = 4000
-
-    @get:Rule(order = 0)
+    @get:Rule
     var hiltRule = HiltAndroidRule(this)
 
     @Before

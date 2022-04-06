@@ -17,18 +17,25 @@ class UsersRepo @Inject constructor() {
     private val dbRef = Database.get().getReference("users")
 
     /**
-     * The users class which handled all the interactions with the database that are linked to users
+     * This function updates a specific field of a user in the database
      * @param userID the id of the user which is being updated
      * @param newVal the new value of the field that is being updated
      * @param fieldName the field name of the field that is being updated
      */
     fun updateField(userID: String, newVal: String, fieldName: String) {
-        dbRef.child(userID) //For now ID is hardcoded, will generate it creating new users next week "-Myfy9TlCUTWYRxVLBsQ"
+        dbRef.child(userID) //For now ID is hardcoded, will generate it creating new users next week "testUser"
             .child(fieldName)
             .setValue(newVal)
     }
 
-    fun createUser(email: String, username: String, handle: String, newActivity: (String) -> Unit) {
+    /**
+     * This function creates a new user account in the database
+     * @param email the email of the new user
+     * @param username the username of the new user
+     * @param handle the handle of the new user
+     * @param callback function to be called when the the user has been created
+     */
+    fun createUser(email: String, username: String, handle: String, callback: (String) -> Unit) {
         var newUser = UserProfile(
             handle,
             username,
@@ -41,21 +48,21 @@ class UsersRepo @Inject constructor() {
         )
 
         val charPool : List<Char> = ('a'..'z') + ('A'..'Z') + ('0'..'9')
-        val randomString = (1..10)
+        val newId = (1..10)
             .map { i -> kotlin.random.Random.nextInt(0, charPool.size) }
             .map(charPool::get)
             .joinToString("");
 
-        dbRef.child(randomString).setValue(newUser)
+        dbRef.child(newId).setValue(newUser)
             .addOnSuccessListener {
-                newActivity(email)
+                callback(email)
             }
     }
 
     /**
-     * The users class which handled all the interactions with the database that are linked to users
+     * This functions fetches the data from the database
      * @param email the of the user
-     * @param callback the callback function to be called when the data of the appropriate user is available
+     * @param callback the function to be called when the data of the appropriate user is available
      */
     fun getUserData(email: String, callback: (UserProfile) -> Unit) {
         dbRef.addValueEventListener(object : ValueEventListener {

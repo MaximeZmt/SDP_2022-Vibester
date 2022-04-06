@@ -75,7 +75,13 @@ class ProfileActivity : AppCompatActivity() {
         builder.setPositiveButton("OK") { _, _ ->
             findViewById<TextView>(textId).text = input.text.toString()
 
-            usersRepo.updateField("-Myfy9TlCUTWYRxVLBsQ", input.text.toString() ,name)
+            //usersRepo.updateField("-Myfy9TlCUTWYRxVLBsQ", input.text.toString(), name)
+
+            if(name == "username"){
+                UserSharedPref.updateUsername(this, input.text.toString())
+            }else if (name == "handle"){
+                UserSharedPref.updateHandle(this, input.text.toString())
+            }
         }
 
         builder.setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }

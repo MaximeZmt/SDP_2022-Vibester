@@ -20,7 +20,7 @@ class UsersRepo @Inject constructor() {
     /**
      * The users class which handled all the interactions with the database that are linked to users
      * @param userID the id of the user which is being updated
-     * @param newVal the new value of the field that is being updated
+     * @param newVal (String) the new value of the field that is being updated
      * @param fieldName the field name of the field that is being updated
      */
     fun updateField(userID: String, newVal: String, fieldName: String) {
@@ -28,6 +28,19 @@ class UsersRepo @Inject constructor() {
             .child(fieldName)
             .setValue(newVal)
     }
+
+    /**
+     * The users class which handled all the interactions with the database that are linked to users
+     * @param userID the id of the user which is being updated
+     * @param newVal (Int) the new value of the field that is being updated
+     * @param fieldName the field name of the field that is being updated
+     */
+    fun updateField(userID: String, newVal: Int, fieldName: String) {
+        dbRef.child(userID) //For now ID is hardcoded, will generate it creating new users next week "-Myfy9TlCUTWYRxVLBsQ"
+            .child(fieldName)
+            .setValue(newVal)
+    }
+
 
     /**
      * The users class which handled all the interactions with the database that are linked to users

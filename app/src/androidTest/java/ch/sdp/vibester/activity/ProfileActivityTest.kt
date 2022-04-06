@@ -1,5 +1,6 @@
 package ch.sdp.vibester.activity
 
+import android.app.Activity
 import android.content.Intent
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
@@ -10,12 +11,14 @@ import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.matcher.ViewMatchers.* //change this import
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
-import ch.sdp.vibester.auth.FireBaseAuthenticator
+import ch.sdp.vibester.database.UsersRepo
 import ch.sdp.vibester.profile.UserProfile
-import com.google.firebase.database.DatabaseReference
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.auth.AuthResult
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import io.mockk.every
 import io.mockk.mockk
 import org.junit.After
 import org.junit.Before
@@ -40,12 +43,8 @@ class ProfileActivityTest {
     }
 
     @BindValue @JvmField
-    val mockAuthenticator = mockk<DatabaseReference>()
+    val mockUsersRepo = mockk<UsersRepo>()
 
-
-    private fun createMockListener() {
-
-    }
 
     @After
     fun clean() {
@@ -57,8 +56,13 @@ class ProfileActivityTest {
         val inputProfile = UserProfile("@lisa", "Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8, 29, 0)
         val intent = Intent(ApplicationProvider.getApplicationContext(), ProfileActivity::class.java)
         intent.putExtra("email", inputProfile.email)
-        intent.putExtra("userProfile", inputProfile)
+
+        every { mockUsersRepo.getUserData(any(), any()) } answers {
+            secondArg<(UserProfile) -> Unit>().invoke(inputProfile)
+        }
+
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
+
         Thread.sleep(sleepTime)
         onView(withId(R.id.handle)).check(matches(withText(inputProfile.handle)))
         onView(withId(R.id.username)).check(matches(withText(inputProfile.username)))

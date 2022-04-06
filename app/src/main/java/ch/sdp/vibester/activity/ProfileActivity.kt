@@ -14,6 +14,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.BitmapGetterApi
+import ch.sdp.vibester.database.UsersRepo
 import ch.sdp.vibester.profile.UserProfile
 import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
@@ -29,11 +30,9 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class ProfileActivity : AppCompatActivity() {
-    private var database: FirebaseDatabase =
-        Firebase.database("https://vibester-sdp-default-rtdb.europe-west1.firebasedatabase.app")
 
     @Inject
-    private var databaseUserRef: DatabaseReference = database.getReference("users")
+    lateinit var usersRepo: UsersRepo
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,9 +78,7 @@ class ProfileActivity : AppCompatActivity() {
         builder.setView(input)
         builder.setPositiveButton("OK") { _, _ ->
             findViewById<TextView>(textId).text = input.text.toString()
-            databaseUserRef.child("-Myfy9TlCUTWYRxVLBsQ") //For now ID is hardcoded, will generate it creating new users next week
-                .child(name)
-                .setValue(input.text.toString())
+            usersRepo.updateName("-Myfy9TlCUTWYRxVLBsQ", input.text.toString() ,name)
         }
         builder.setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }
         builder.show()
@@ -103,26 +100,7 @@ class ProfileActivity : AppCompatActivity() {
      */
 
     private fun queryDatabase(email: String) {
-        var user: UserProfile
-        databaseUserRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                for (dataSnapShot in dataSnapshot.children) {
-                    val dbContents = dataSnapShot.getValue<UserProfile>()
-                    if (dbContents != null) {
-                        if(dbContents.email == email) {
-                            user = dbContents
-                            setupProfile(user)
-                            break
-                        } else {
-                            setupProfile(UserProfile())
-                        }
-                    }
-                }
-            }
-            override fun onCancelled(databaseError: DatabaseError) {
-                Log.w(TAG, "loadUsers:onCancelled", databaseError.toException())
-            }
-        })
+        usersRepo.getUserData(email, this::setupProfile)
     }
 
 

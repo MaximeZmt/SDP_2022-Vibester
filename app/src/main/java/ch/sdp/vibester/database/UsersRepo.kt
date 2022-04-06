@@ -16,7 +16,6 @@ import javax.inject.Inject
 class UsersRepo @Inject constructor() {
     private val dbRef = Database.get().getReference("users")
 
-
     /**
      * The users class which handled all the interactions with the database that are linked to users
      * @param userID the id of the user which is being updated
@@ -27,6 +26,24 @@ class UsersRepo @Inject constructor() {
         dbRef.child(userID) //For now ID is hardcoded, will generate it creating new users next week "-Myfy9TlCUTWYRxVLBsQ"
             .child(fieldName)
             .setValue(newVal)
+    }
+
+    fun createUser(email: String, username: String, handle: String, newActivity: (String) -> Unit) {
+        var newUser = UserProfile(
+            handle,
+            username,
+            "",
+            email,
+            0,
+            0,
+            0,
+            0
+        )
+
+        dbRef.setValue(newUser)
+            .addOnSuccessListener {
+                newActivity(email)
+            }
     }
 
     /**

@@ -11,13 +11,16 @@
     <application
         android:name=".VibesterApp"
         android:allowBackup="true"
+        android:extractNativeLibs="true"
         android:icon="@drawable/logo"
         android:label="@string/app_name"
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
-        android:extractNativeLibs="true"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".activity.CreateProfileActivity"
+            android:exported="false" />
         <activity
             android:name=".activity.BuzzerSetupActivity"
             android:exported="false" />

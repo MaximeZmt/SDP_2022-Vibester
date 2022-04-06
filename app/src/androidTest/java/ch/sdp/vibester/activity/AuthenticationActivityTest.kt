@@ -46,7 +46,6 @@ import kotlin.random.Random
 @RunWith(AndroidJUnit4::class)
 @HiltAndroidTest
 class AuthenticationActivityTest {
-    private val sleepTime: Long = 5000
 
     @get:Rule(order = 0)
     var hiltRule = HiltAndroidRule(this)
@@ -89,7 +88,6 @@ class AuthenticationActivityTest {
     }
     @Test
     fun useAppContext() {
-        // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
         assertEquals("ch.sdp.vibester", appContext.packageName)
     }
@@ -214,8 +212,9 @@ class AuthenticationActivityTest {
         onView(withId(R.id.password)).perform(ViewActions.typeText(password), closeSoftKeyboard())
         onView(withId(R.id.createAcc)).perform(click())
 
-        Intents.intended(IntentMatchers.hasComponent(ProfileActivity::class.java.name))
+        Intents.intended(IntentMatchers.hasComponent(CreateProfileActivity::class.java.name))
         Intents.intended(IntentMatchers.hasExtra("email", username))
+
     }
 
 }

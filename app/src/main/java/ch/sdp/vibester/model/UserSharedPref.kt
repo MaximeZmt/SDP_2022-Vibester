@@ -110,10 +110,10 @@ class UserSharedPref private constructor() {
                 val current_best_score = sharedPref.getInt(BEST_SCORE, 0) + deltaBest
                 val current_correct_song = sharedPref.getInt(CORRECT_SONGS, 0) + deltaCorrect
                 val current_ranking = sharedPref.getInt(RANKING, 0) + deltaRanking
-                dbAccess.updateField("testUser", current_total_games, "totalGames")
-                dbAccess.updateField("testUser", current_ranking, "ranking")
-                dbAccess.updateField("testUser", current_correct_song, "correctSongs")
-                dbAccess.updateField("testUser", current_best_score, "bestScore")
+                dbAccess.updateFieldInt("testUser", current_total_games, "totalGames")
+                dbAccess.updateFieldInt("testUser", current_ranking, "ranking")
+                dbAccess.updateFieldInt("testUser", current_correct_song, "correctSongs")
+                dbAccess.updateFieldInt("testUser", current_best_score, "bestScore")
                 edit.putInt(TOTAL_GAMES, current_total_games)
                 edit.putInt(BEST_SCORE, current_best_score)
                 edit.putInt(CORRECT_SONGS, current_correct_song)
@@ -128,7 +128,7 @@ class UserSharedPref private constructor() {
             if(sharedPref != null){
                 val edit = sharedPref.edit()
                 edit.putString(USERNAME, username)
-                dbAccess.updateField("testUser", username, "username")
+                dbAccess.updateFieldString("testUser", username, "username")
                 edit.commit()
             }
         }
@@ -138,7 +138,7 @@ class UserSharedPref private constructor() {
             if(sharedPref != null){
                 val edit = sharedPref.edit()
                 edit.putString(HANDLE, handle)
-                dbAccess.updateField("testUser", handle, "handle")
+                dbAccess.updateFieldString("testUser", handle, "handle")
                 edit.commit()
             }
         }

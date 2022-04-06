@@ -27,6 +27,11 @@ class BuzzerSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
         )
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.onItemSelectedListener = this
+
+        findViewById<Button>(R.id.missingNameOk).setOnClickListener {
+            findViewById<LinearLayout>(R.id.missingNameAlert).visibility=View.INVISIBLE
+            findViewById<Button>(R.id.nb_players_selected).visibility=View.VISIBLE
+        }
     }
 
     override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
@@ -66,7 +71,7 @@ class BuzzerSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
             else -> 0
         }
         findViewById<EditText>(id).visibility =
-            if (n >= i) android.view.View.VISIBLE else android.view.View.INVISIBLE
+            if (n >= i) View.VISIBLE else View.INVISIBLE
     }
 
     override fun onNothingSelected(parent: AdapterView<*>) {text = "One"}
@@ -86,7 +91,14 @@ class BuzzerSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
             arrayOf(R.id.namePlayer1, R.id.namePlayer2, R.id.namePlayer3, R.id.namePlayer4)
         var i = 0
         for (playerView in players) {
-            pNameArray[i] = findViewById<EditText>(editTextIdArray[i]).text.toString()
+            val name = findViewById<EditText>(editTextIdArray[i]).text.toString()
+            if (name.isNotEmpty()) {
+                pNameArray[i] = name
+            } else {
+                findViewById<LinearLayout>(R.id.missingNameAlert).visibility=View.VISIBLE
+                findViewById<Button>(R.id.nb_players_selected).visibility=View.INVISIBLE
+                return
+            }
             i += 1
         }
         intent.putExtra("Player Names", pNameArray)

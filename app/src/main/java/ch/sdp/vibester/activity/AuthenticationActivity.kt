@@ -15,15 +15,19 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+
+@AndroidEntryPoint
 class AuthenticationActivity : AppCompatActivity() {
 
     private lateinit var googleSignInClient: GoogleSignInClient
 
-    private lateinit var authenticator: FireBaseAuthenticator
+    @Inject
+    lateinit var authenticator: FireBaseAuthenticator
 
     private lateinit var email: TextView
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +40,6 @@ class AuthenticationActivity : AppCompatActivity() {
             .build()
 
         googleSignInClient = GoogleSignIn.getClient(this, gso)
-        authenticator = FireBaseAuthenticator()
 
         val btCreateAcc = findViewById<Button>(R.id.createAcc)
         val btLogIn = findViewById<Button>(R.id.logIn)
@@ -61,10 +64,6 @@ class AuthenticationActivity : AppCompatActivity() {
 
     public override fun onStart() {
         super.onStart()
-        val currentUser = authenticator.auth.currentUser
-        if (currentUser != null) {
-            reload()
-        }
     }
 
     /**
@@ -102,9 +101,9 @@ class AuthenticationActivity : AppCompatActivity() {
         return true
     }
 
-    private fun authenticate(email: String, password: String, creatAcc: Boolean) {
+    private fun authenticate(email: String, password: String, createAcc: Boolean) {
         if (stringValidation(email, password)) {
-            var auth: Task<AuthResult> = if (creatAcc) {
+            var auth: Task<AuthResult> = if (createAcc) {
                 authenticator.createAccount(email, password)
             }else {
                 authenticator.signIn(email, password)
@@ -133,7 +132,7 @@ class AuthenticationActivity : AppCompatActivity() {
                 baseContext, "You have logged in successfully",
                 Toast.LENGTH_SHORT
             ).show()
-            val user = authenticator.auth.currentUser
+            val user = authenticator.getCurrUser()
             if (user != null) {
                 updateUI(user.email)
             }
@@ -144,10 +143,6 @@ class AuthenticationActivity : AppCompatActivity() {
             ).show()
             updateUI("Authentication error")
         }
-    }
-
-    private fun reload() {
-
     }
 
     private fun updateUI(emailText: String?) {

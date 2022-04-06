@@ -92,13 +92,10 @@ class BuzzerSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
         var i = 0
         for (playerView in players) {
             val name = findViewById<EditText>(editTextIdArray[i]).text.toString()
-            if (name.isNotEmpty()) {
-                pNameArray[i] = name
-            } else {
+            if (name.isNotEmpty()) { pNameArray[i] = name } else {
                 findViewById<LinearLayout>(R.id.missingNameAlert).visibility=View.VISIBLE
                 findViewById<Button>(R.id.nb_players_selected).visibility=View.INVISIBLE
-                return
-            }
+                return }
             i += 1
         }
         intent.putExtra("Player Names", pNameArray)

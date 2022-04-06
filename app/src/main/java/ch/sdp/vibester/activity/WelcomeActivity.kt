@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.R
 import ch.sdp.vibester.model.Song
+import ch.sdp.vibester.model.UserSharedPref
 
 class WelcomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,8 +18,14 @@ class WelcomeActivity : AppCompatActivity() {
         supportActionBar?.hide()
         setContentView(R.layout.activity_welcome_screen)
 
-        val tv = findViewById<TextView>(R.id.WelcomingText)
-        tv.isSelected = true
+        val tv = findViewById<TextView>(R.id.user_status)
+
+        val username = UserSharedPref.getUser(this).username
+        if(username != "")
+        {
+            tv.text = "User: " + username
+        }
+
 
     }
 

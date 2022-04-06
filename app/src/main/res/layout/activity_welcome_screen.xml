@@ -21,11 +21,12 @@
     <ScrollView
         android:layout_width="468dp"
         android:layout_height="0dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="27dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/WelcomingText">
+        app:layout_constraintTop_toBottomOf="@+id/vibester_welcome_logo"
+        app:layout_constraintVertical_bias="0.0">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -40,10 +41,10 @@
                 android:layout_marginTop="10dp"
                 android:backgroundTint="@color/cg_blue"
                 android:elevation="10dp"
-                android:onClick="switchToPlay"
                 android:stateListAnimator="@null"
-                android:text="@string/play_a_game"
                 android:translationZ="10dp"
+                android:onClick="switchToPlay"
+                android:text="@string/play_a_game"
                 app:icon="@android:drawable/ic_media_play" />
 
             <Button
@@ -79,7 +80,6 @@
                 android:layout_marginTop="10dp"
                 android:backgroundTint="@color/cg_blue"
                 android:elevation="10dp"
-                android:onClick="switchToListen"
                 android:stateListAnimator="@null"
                 android:text="@string/listen_to_music"
                 android:translationZ="10dp"
@@ -102,29 +102,17 @@
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="42dp" />
+
+            <TextView
+                android:id="@+id/user_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:fontFamily="monospace"
+                android:textSize="20sp"
+                android:text="@string/welcome_not_logged_in" />
         </LinearLayout>
     </ScrollView>
-
-    <TextView
-        android:id="@+id/WelcomingText"
-        android:layout_width="407dp"
-        android:layout_height="28dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="17dp"
-        android:layout_marginEnd="5dp"
-        android:ellipsize="marquee"
-        android:marqueeRepeatLimit="marquee_forever"
-        android:scrollHorizontally="true"
-        android:singleLine="true"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:fontFamily="monospace"
-        android:gravity="center"
-        android:text="Welcome New Player, create an account in the profile section"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/vibester_welcome_logo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

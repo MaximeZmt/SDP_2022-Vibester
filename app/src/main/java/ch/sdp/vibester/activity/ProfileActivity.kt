@@ -14,6 +14,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.BitmapGetterApi
+import ch.sdp.vibester.model.UserSharedPref
 import ch.sdp.vibester.profile.UserProfile
 import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
@@ -25,8 +26,8 @@ import kotlinx.coroutines.launch
 import java.util.*
 
 class ProfileActivity : AppCompatActivity() {
-    private var database: FirebaseDatabase = Firebase.database("https://vibester-sdp-default-rtdb.europe-west1.firebasedatabase.app")
-    private lateinit var databaseRef: DatabaseReference
+    //private var database: FirebaseDatabase = Firebase.database("https://vibester-sdp-default-rtdb.europe-west1.firebasedatabase.app")
+    //private lateinit var databaseRef: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +51,8 @@ class ProfileActivity : AppCompatActivity() {
             showGeneralDialog(R.id.handle, "handle")
         }
 
-        databaseRef = database.reference
+        setupProfile(UserSharedPref.getUser(this))
+        //databaseRef = database.reference
     }
 
     /**
@@ -74,10 +76,13 @@ class ProfileActivity : AppCompatActivity() {
         builder.setView(input)
         builder.setPositiveButton("OK", DialogInterface.OnClickListener { _, _ ->
             findViewById<TextView>(textId).text = input.text.toString()
+            /*
             databaseRef.child("users")
                 .child("-Myfy9TlCUTWYRxVLBsQ") //For now ID is hardcoded, will generate it creating new users next week
                 .child(name)
                 .setValue(input.text.toString())
+
+             */
         })
         builder.setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }
         builder.show()
@@ -100,6 +105,7 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun queryDatabase(email: String) {
         var user: UserProfile
+        /*
         val userRef = database.getReference("users")
         userRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -128,6 +134,9 @@ class ProfileActivity : AppCompatActivity() {
                 Log.w(TAG, "loadUsers:onCancelled", databaseError.toException())
             }
         })
+
+         */
+
     }
 
 
@@ -138,14 +147,14 @@ class ProfileActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.correctSongs).text = user.correctSongs.toString()
         findViewById<TextView>(R.id.bestScore).text = user.bestScore.toString()
         findViewById<TextView>(R.id.ranking).text = user.ranking.toString()
-//        CoroutineScope(Dispatchers.Main).launch {
-//            val task = async(Dispatchers.IO) {
-//                val bit = BitmapGetterApi.download("https://"+user.image)
-//                bit.get()
-//            }
-//            val bm = task.await()
-//            findViewById<ImageView>(R.id.avatar).setImageBitmap(bm)
-//        }
+        CoroutineScope(Dispatchers.Main).launch {
+            val task = async(Dispatchers.IO) {
+                val bit = BitmapGetterApi.download("https://"+user.image)
+                bit.get()
+            }
+            val bm = task.await()
+            findViewById<ImageView>(R.id.avatar).setImageBitmap(bm)
+        }
     }
 }
 

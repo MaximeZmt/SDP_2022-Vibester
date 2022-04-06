@@ -88,7 +88,7 @@ class ProfileActivityTest {
         onView(withId(R.id.profileStatistics)).check(matches(isDisplayed()))
         onView(withId(R.id.handle)).check(matches(isDisplayed()))
         onView(withId(R.id.username)).check(matches(isDisplayed()))
-        onView(withId(R.id.avatar)).check(matches(isDisplayed()))
+//        onView(withId(R.id.avatar)).check(matches(isDisplayed()))
     }
 
     @Test

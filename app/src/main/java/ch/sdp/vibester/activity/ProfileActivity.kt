@@ -5,20 +5,27 @@ import android.text.InputType
 import android.view.Window
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.R
+import ch.sdp.vibester.api.BitmapGetterApi
+import ch.sdp.vibester.model.UserSharedPref
 import ch.sdp.vibester.database.UsersRepo
 import ch.sdp.vibester.profile.UserProfile
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class ProfileActivity : AppCompatActivity() {
-
     @Inject
     lateinit var usersRepo: UsersRepo
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,9 +34,8 @@ class ProfileActivity : AppCompatActivity() {
         supportActionBar?.hide()
 
         setContentView(R.layout.activity_profile)
-        var email = intent.getStringExtra("email").toString()
 
-        queryDatabase(email)
+        setupProfile(UserSharedPref.getUser(this))
 
         val editUsername = findViewById<Button>(R.id.editUser)
         val editHandle = findViewById<Button>(R.id.editHandle)
@@ -41,6 +47,7 @@ class ProfileActivity : AppCompatActivity() {
         editHandle.setOnClickListener {
             showGeneralDialog(R.id.handle, "handle")
         }
+
     }
 
     /**
@@ -64,8 +71,14 @@ class ProfileActivity : AppCompatActivity() {
         builder.setView(input)
         builder.setPositiveButton("OK") { _, _ ->
             findViewById<TextView>(textId).text = input.text.toString()
-            usersRepo.updateField("testUser", input.text.toString() ,name)
+
+            if(name == "username"){
+                UserSharedPref.updateUsername(this, input.text.toString())
+            }else if (name == "handle"){
+                UserSharedPref.updateHandle(this, input.text.toString())
+            }
         }
+
         builder.setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }
         builder.show()
     }
@@ -87,6 +100,7 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun queryDatabase(email: String) {
         usersRepo.getUserData(email, this::setupProfile)
+
     }
 
 
@@ -97,14 +111,18 @@ class ProfileActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.correctSongs).text = user.correctSongs.toString()
         findViewById<TextView>(R.id.bestScore).text = user.bestScore.toString()
         findViewById<TextView>(R.id.ranking).text = user.ranking.toString()
-//        CoroutineScope(Dispatchers.Main).launch {
-//            val task = async(Dispatchers.IO) {
-//                val bit = BitmapGetterApi.download("https://"+user.image)
-//                bit.get()
-//            }
-//            val bm = task.await()
-//            findViewById<ImageView>(R.id.avatar).setImageBitmap(bm)
-//        }
+        CoroutineScope(Dispatchers.Main).launch {
+            val task = async(Dispatchers.IO) {
+                try {
+                    val bit = BitmapGetterApi.download("https://" + user.image)
+                    bit.get()
+                }catch (e: Exception){
+                    null
+                }
+            }
+            val bm = task.await()
+            findViewById<ImageView>(R.id.avatar).setImageBitmap(bm)
+        }
     }
 }
 

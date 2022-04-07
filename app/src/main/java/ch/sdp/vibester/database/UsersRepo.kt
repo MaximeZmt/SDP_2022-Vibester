@@ -19,16 +19,30 @@ class UsersRepo @Inject constructor() {
     /**
      * This function updates a specific field of a user in the database
      * @param userID the id of the user which is being updated
-     * @param newVal the new value of the field that is being updated
+     * @param newVal (String) the new value of the field that is being updated
      * @param fieldName the field name of the field that is being updated
      */
-    fun updateField(userID: String, newVal: String, fieldName: String) {
+    fun updateFieldString(userID: String, newVal: String, fieldName: String) {
         dbRef.child(userID) //For now ID is hardcoded, will generate it creating new users next week "testUser"
             .child(fieldName)
             .setValue(newVal)
     }
 
     /**
+     * The users class which handled all the interactions with the database that are linked to users
+     * @param userID the id of the user which is being updated
+     * @param newVal (Int) the new value of the field that is being updated
+     * @param fieldName the field name of the field that is being updated
+     */
+    fun updateFieldInt(userID: String, newVal: Int, fieldName: String) {
+        dbRef.child(userID) //For now ID is hardcoded, will generate it creating new users next week "testUser"
+            .child(fieldName)
+            .setValue(newVal)
+    }
+
+
+    /**
+     * The users class which handled all the interactions with the database that are linked to users
      * This function creates a new user account in the database
      * @param email the email of the new user
      * @param username the username of the new user

@@ -7,6 +7,7 @@ import android.view.Window
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.R
+import ch.sdp.vibester.model.UserSharedPref
 
 /*
  * A class representing the activity which appears upon
@@ -40,6 +41,9 @@ class GameEndingActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_game_ending_screen)
 
+        //Method to update score (locally and on DB)
+        UserSharedPref.updateScore(this, 1)
+
         if (intent.hasExtra("Winner Name")) {
             val winner = intent.getStringExtra("Winner Name")
             // FIXME: commented until I get the winner panel to work without crashing the app
@@ -49,6 +53,7 @@ class GameEndingActivity : AppCompatActivity() {
             } else {findViewById<TextView>(R.id.winnerText).text="Nobody won this game!"}
             */
         }
+
 
         if (intent.hasExtra("playerName")) {
             playerName = intent.getStringExtra("playerName")

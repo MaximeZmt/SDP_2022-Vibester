@@ -40,6 +40,16 @@ class GameEndingActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_game_ending_screen)
 
+        if (intent.hasExtra("Winner Name")) {
+            val winner = intent.getStringExtra("Winner Name")
+            // FIXME: commented until I get the winner panel to work without crashing the app
+            /*
+            if (winner!=null) {
+                findViewById<TextView>(R.id.winnerText).text="And the winner is... $winner!"
+            } else {findViewById<TextView>(R.id.winnerText).text="Nobody won this game!"}
+            */
+        }
+
         if (intent.hasExtra("playerName")) {
             playerName = intent.getStringExtra("playerName")
         }
@@ -90,7 +100,12 @@ class GameEndingActivity : AppCompatActivity() {
         playerNameView.text = statPlayerText
     }
 
-
+    // FIXME: commented until I get the winner panel to work without crashing the app
+/*
+    fun hideWinnerPanel(view: View) {
+        findViewById<TextView>(R.id.winnerPanel).visibility=View.INVISIBLE
+    }
+*/
     fun goToIncorrectlyGuessedSongs(view: View) {
         val intent = Intent(this, IncorrectSongsActivity::class.java)
         intent.putExtra("nb_false", nbIncorrectSongs)

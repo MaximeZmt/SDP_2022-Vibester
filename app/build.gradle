@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'jacoco'
     id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
 
 jacoco {
@@ -29,7 +30,8 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+//        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "ch.sdp.vibester.CustomTestRunner"
     }
 
     buildTypes {
@@ -52,6 +54,11 @@ android {
     testOptions {
         unitTests {
             includeAndroidResources = true
+        }
+        packagingOptions {
+            jniLibs {
+                useLegacyPackaging true
+            }
         }
     }
     buildFeatures {
@@ -87,7 +94,6 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-intents:3.4.0'
     androidTestImplementation 'com.android.support.test.espresso:espresso-contrib:3.0.2'
     implementation platform('com.google.firebase:firebase-bom:29.1.0')
-    implementation 'com.google.dagger:dagger:2.38.1'
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
@@ -97,7 +103,16 @@ dependencies {
         exclude group: 'com.android.support'
     })
     kapt 'com.github.bumptech.glide:compiler:4.13.0'
-    kapt 'com.google.dagger:dagger-compiler:2.28.3'
+
+    androidTestImplementation 'com.google.dagger:hilt-android-testing:2.38.1'
+    kaptAndroidTest 'com.google.dagger:hilt-android-compiler:2.38.1'
+
+    implementation "com.google.dagger:hilt-android:2.38.1"
+    kapt "com.google.dagger:hilt-compiler:2.38.1"
+
+    testImplementation "io.mockk:mockk:1.12.3"
+    androidTestImplementation "io.mockk:mockk-android:1.12.3"
+
 }
 
 tasks.withType(Test) {
@@ -118,7 +133,6 @@ task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'crea
             '**/Manifest*.*',
             '**/*Test*.*',
             'android/**/*.*',
-            // Exclude Hilt generated classes
             '**/*Hilt*.*',
             'hilt_aggregated_deps/**',
             '**/*_Factory.class',

@@ -15,15 +15,19 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+
+@AndroidEntryPoint
 class AuthenticationActivity : AppCompatActivity() {
 
     private lateinit var googleSignInClient: GoogleSignInClient
 
-    private lateinit var authenticator: FireBaseAuthenticator
+    @Inject
+    lateinit var authenticator: FireBaseAuthenticator
 
     private lateinit var email: TextView
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +40,6 @@ class AuthenticationActivity : AppCompatActivity() {
             .build()
 
         googleSignInClient = GoogleSignIn.getClient(this, gso)
-        authenticator = FireBaseAuthenticator()
 
         val btCreateAcc = findViewById<Button>(R.id.createAcc)
         val btLogIn = findViewById<Button>(R.id.logIn)
@@ -61,10 +64,6 @@ class AuthenticationActivity : AppCompatActivity() {
 
     public override fun onStart() {
         super.onStart()
-        val currentUser = authenticator.auth.currentUser
-        if (currentUser != null) {
-            reload()
-        }
     }
 
     /**
@@ -75,7 +74,7 @@ class AuthenticationActivity : AppCompatActivity() {
      */
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        updateUI(authenticator.googleActivityResult(requestCode, resultCode, data))
+        updateUI(authenticator.googleActivityResult(requestCode, resultCode, data), false)
     }
 
     /**
@@ -102,15 +101,21 @@ class AuthenticationActivity : AppCompatActivity() {
         return true
     }
 
-    private fun authenticate(email: String, password: String, creatAcc: Boolean) {
+    /**
+     * A function that authenticates the user
+     * @param email email of the user
+     * @param password password of the user
+     * @param createAcc boolean to check if the authentication is a login or account creation
+     */
+    private fun authenticate(email: String, password: String, createAcc: Boolean) {
         if (stringValidation(email, password)) {
-            var auth: Task<AuthResult> = if (creatAcc) {
+            var auth: Task<AuthResult> = if (createAcc) {
                 authenticator.createAccount(email, password)
             }else {
                 authenticator.signIn(email, password)
             }
             auth.addOnCompleteListener(this) { task ->
-                onCompleteAuthentication(task)
+                onCompleteAuthentication(task, createAcc)
             }
         }
     }
@@ -127,36 +132,41 @@ class AuthenticationActivity : AppCompatActivity() {
      * A function changes the UI based on the authentication result
      * @param task result
      */
-    private fun onCompleteAuthentication(task: Task<AuthResult>) {
+    private fun onCompleteAuthentication(task: Task<AuthResult>, createAcc: Boolean) {
         if (task.isSuccessful) {
             Toast.makeText(
                 baseContext, "You have logged in successfully",
                 Toast.LENGTH_SHORT
             ).show()
-            val user = authenticator.auth.currentUser
+            val user = authenticator.getCurrUser()
             if (user != null) {
-                updateUI(user.email)
+                updateUI(user.email, createAcc)
             }
         } else {
             Toast.makeText(
                 baseContext, "Authentication failed.",
                 Toast.LENGTH_SHORT
             ).show()
-            updateUI("Authentication error")
+            updateUI("Authentication error", false)
         }
     }
 
-    private fun reload() {
-
-    }
-
-    private fun updateUI(emailText: String?) {
+    private fun updateUI(emailText: String?,
+                         createAcc: Boolean,
+    ) {
         if (emailText != null) {
-            if('@' in emailText) {
+            if('@' in emailText && !createAcc) {
                 val newIntent = Intent(this, ProfileActivity::class.java)
                 newIntent.putExtra("email", emailText)
                 startActivity(newIntent)
             }
+
+            else if('@' in emailText && createAcc) {
+                val newIntent = Intent(this, CreateProfileActivity::class.java)
+                newIntent.putExtra("email", emailText)
+                startActivity(newIntent)
+            }
+
             else {
                 email.text = emailText
             }

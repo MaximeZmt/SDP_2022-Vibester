@@ -10,6 +10,16 @@ import org.junit.Test
 class UserSharedPrefTest {
     @Test
     fun sharedPrefTest(){
+        val ctx = ApplicationProvider.getApplicationContext() as Context
+
+        val mailTest = "lisa@test.com"
+        UserSharedPref.userReset(ctx, mailTest)
+        UserSharedPref.updateUsername(ctx, "Lalisa Bon")
+        UserSharedPref.updateHandle(ctx, "@lisa")
+        UserSharedPref.updateScore(ctx)
+        assertEquals(mailTest, UserSharedPref.getUser(ctx).email)
+
+
         val handle: String = "myHandle"
         val username: String = "myUsername"
         val image: String = "myImage"
@@ -19,10 +29,8 @@ class UserSharedPrefTest {
         val correctSongs: Int = 16
         val ranking: Int = 6
 
-        val ctx = ApplicationProvider.getApplicationContext() as Context
-
         val pro = UserProfile(handle, username, image, email, totalGames, bestScore, correctSongs, ranking)
-        UserSharedPref.setUser(ctx, pro)
+        UserSharedPref.setUser(ctx, pro, false)
         UserSharedPref.updateScore(ctx, 1, -1, 0, 1)
 
         val updated = UserSharedPref.getUser(ctx)
@@ -35,6 +43,5 @@ class UserSharedPrefTest {
         assertEquals(pro.bestScore-1, updated.bestScore)
         assertEquals(pro.correctSongs, updated.correctSongs)
         assertEquals(pro.ranking+1, updated.ranking)
-
     }
 }

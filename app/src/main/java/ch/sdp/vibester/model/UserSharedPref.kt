@@ -23,6 +23,7 @@ class UserSharedPref private constructor() {
         val BEST_SCORE = "bestScore"
         val CORRECT_SONGS = "correctSongs"
         val RANKING = "ranking"
+        val ONLINE = "online"
 
         var dbAccess : UsersRepo = UsersRepo()
 
@@ -39,17 +40,18 @@ class UserSharedPref private constructor() {
         }
 
 
-        fun userReset(ctx: Context, email: String){
-            dbAccess = UsersRepo()
-            setUser(ctx, UserProfile(email=email))
-            val call = {prof:UserProfile -> setUser(ctx, prof)}
-            dbAccess.getUserData(email, call)
+        fun userReset(ctx: Context, email: String, online: Boolean = true){
+            setUser(ctx, UserProfile(email=email), online)
+            if (online){
+                dbAccess = UsersRepo()
+                val call = {prof:UserProfile -> setUser(ctx, prof, online)}
+                dbAccess.getUserData(email, call)
+            }
         }
 
-        fun setUser(ctx: Context, user: UserProfile){
+        fun setUser(ctx: Context, user: UserProfile, online: Boolean){
             val edit = getSharedPreferences(ctx)?.edit()
             if (edit != null) {
-                Log.e("HELLO", "My Friends Changes")
                 edit.putString(HANDLE, user.handle)
                 edit.putString(USERNAME, user.username)
                 edit.putString(IMAGE, user.image)
@@ -58,49 +60,11 @@ class UserSharedPref private constructor() {
                 edit.putInt(BEST_SCORE, user.bestScore)
                 edit.putInt(CORRECT_SONGS, user.correctSongs)
                 edit.putInt(RANKING, user.ranking)
+                edit.putBoolean(ONLINE, online)
                 edit.commit()
-                //databaseRef = database.reference
-
             }
         }
 
-
-/*
-        private fun queryDatabase(email: String) {
-            var user: UserProfile
-
-            val userRef = database.getReference("users")
-            userRef.addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    for (dataSnapShot in dataSnapshot.children) {
-                        val dbContents: Map<String, Objects> = dataSnapShot.value as Map<String, Objects>
-                        if(dbContents["email"].toString() == email) {
-                            user = UserProfile(
-                                dbContents["handle"].toString(),
-                                dbContents["username"].toString(),
-                                dbContents["image"].toString(),
-                                dbContents["email"].toString(),
-                                dbContents["totalGames"].toString().toInt(),
-                                dbContents["bestScore"].toString().toInt(),
-                                dbContents["correctSongs"].toString().toInt()
-                            )
-                            //setupProfile(user)
-                            break
-                        }
-                        else {
-                            //setupProfile(UserProfile())
-                        }
-                    }
-                }
-
-                override fun onCancelled(databaseError: DatabaseError) {
-                    Log.w("TAGGGG", "loadUsers:onCancelled", databaseError.toException())
-                }
-            })
-
-        }
-
- */
 
         fun updateScore(ctx: Context, deltaTotal: Int = 0, deltaBest: Int = 0, deltaCorrect: Int = 0, deltaRanking: Int = 0){
             val sharedPref = getSharedPreferences(ctx)
@@ -110,10 +74,12 @@ class UserSharedPref private constructor() {
                 val current_best_score = sharedPref.getInt(BEST_SCORE, 0) + deltaBest
                 val current_correct_song = sharedPref.getInt(CORRECT_SONGS, 0) + deltaCorrect
                 val current_ranking = sharedPref.getInt(RANKING, 0) + deltaRanking
-                dbAccess.updateFieldInt("testUser", current_total_games, "totalGames")
-                dbAccess.updateFieldInt("testUser", current_ranking, "ranking")
-                dbAccess.updateFieldInt("testUser", current_correct_song, "correctSongs")
-                dbAccess.updateFieldInt("testUser", current_best_score, "bestScore")
+                if(sharedPref.getBoolean(ONLINE, false)) {
+                    dbAccess.updateFieldInt("testUser", current_total_games, "totalGames")
+                    dbAccess.updateFieldInt("testUser", current_ranking, "ranking")
+                    dbAccess.updateFieldInt("testUser", current_correct_song, "correctSongs")
+                    dbAccess.updateFieldInt("testUser", current_best_score, "bestScore")
+                }
                 edit.putInt(TOTAL_GAMES, current_total_games)
                 edit.putInt(BEST_SCORE, current_best_score)
                 edit.putInt(CORRECT_SONGS, current_correct_song)
@@ -128,7 +94,9 @@ class UserSharedPref private constructor() {
             if(sharedPref != null){
                 val edit = sharedPref.edit()
                 edit.putString(USERNAME, username)
-                dbAccess.updateFieldString("testUser", username, "username")
+                if(sharedPref.getBoolean(ONLINE, false)) {
+                    dbAccess.updateFieldString("testUser", username, "username")
+                }
                 edit.commit()
             }
         }
@@ -138,7 +106,9 @@ class UserSharedPref private constructor() {
             if(sharedPref != null){
                 val edit = sharedPref.edit()
                 edit.putString(HANDLE, handle)
-                dbAccess.updateFieldString("testUser", handle, "handle")
+                if(sharedPref.getBoolean(ONLINE, false)) {
+                    dbAccess.updateFieldString("testUser", handle, "handle")
+                }
                 edit.commit()
             }
         }

@@ -41,7 +41,8 @@ class BuzzerSetupActivityTest {
      */
     private fun enterNames(n: Int) {
         var i = 0
-        while (i < n) { onView(withId(editTextIdArray[i])).perform(typeText(mockArray[i]), closeSoftKeyboard())
+        while (i < n) {
+            onView(withId(editTextIdArray[i])).perform(typeText(mockArray[i]), closeSoftKeyboard())
             i += 1
         }
     }

@@ -42,6 +42,7 @@ class GameEndingActivity : AppCompatActivity() {
 
         if (intent.hasExtra("Winner Name")) {
             val winner = intent.getStringExtra("Winner Name")
+            // FIXME: commented until I get the winner panel to work without crashing the app
             /*
             if (winner!=null) {
                 findViewById<TextView>(R.id.winnerText).text="And the winner is... $winner!"
@@ -98,6 +99,8 @@ class GameEndingActivity : AppCompatActivity() {
         val statPlayerText = "Here are the stats for the player $playerName"
         playerNameView.text = statPlayerText
     }
+
+    // FIXME: commented until I get the winner panel to work without crashing the app
 /*
     fun hideWinnerPanel(view: View) {
         findViewById<TextView>(R.id.winnerPanel).visibility=View.INVISIBLE

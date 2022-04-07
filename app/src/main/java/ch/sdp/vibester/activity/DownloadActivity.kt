@@ -27,14 +27,13 @@ class DownloadActivity : AppCompatActivity() {
     private lateinit var song: Song
     private var songName: String = "imagine dragons believer"
     private var downloadId: Long = 0
+    private val songNameView = findViewById<TextView>(R.id.download_songName)
+    private val downloadButton = findViewById<Button>(R.id.download_downloadsong)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_download)
 
-        val songNameView = findViewById<TextView>(R.id.download_songName)
-
-        val downloadButton = findViewById<Button>(R.id.download_downloadsong)
         downloadButton.setOnClickListener {
             songName = songNameView.text.toString()
             val songFuture = ItunesMusicApi.querySong(songName, OkHttpClient(), 1)
@@ -43,8 +42,7 @@ class DownloadActivity : AppCompatActivity() {
                 checkPermissionsAndDownload()
             } catch (e: IllegalArgumentException) {
                 Toast.makeText(applicationContext, "Unable to find song, please retry!", Toast.LENGTH_LONG).show()
-                songNameView.text = ""
-                songNameView.hint = "Please retry!"
+                editTextView("Please retry!")
             }
         }
 
@@ -53,13 +51,17 @@ class DownloadActivity : AppCompatActivity() {
                 var id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
                 if(id == downloadId) {
                     Toast.makeText(applicationContext, "Download completed!", Toast.LENGTH_LONG).show()
-                    songNameView.text = ""
-                    songNameView.hint = "Try another song!"
+                    editTextView("Try another song!")
                 }
             }
         }
 
         registerReceiver(broadcast, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
+    }
+
+    fun editTextView(hint: String) {
+        songNameView.text = ""
+        songNameView.hint = hint
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {

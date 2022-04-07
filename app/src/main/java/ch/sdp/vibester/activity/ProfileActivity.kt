@@ -75,8 +75,6 @@ class ProfileActivity : AppCompatActivity() {
         builder.setPositiveButton("OK") { _, _ ->
             findViewById<TextView>(textId).text = input.text.toString()
 
-            //usersRepo.updateField("-Myfy9TlCUTWYRxVLBsQ", input.text.toString(), name)
-
             if(name == "username"){
                 UserSharedPref.updateUsername(this, input.text.toString())
             }else if (name == "handle"){

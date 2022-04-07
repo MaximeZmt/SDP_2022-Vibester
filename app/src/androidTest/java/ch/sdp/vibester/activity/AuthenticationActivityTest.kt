@@ -6,7 +6,6 @@ import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.closeSoftKeyboard
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.core.internal.deps.guava.base.Joiner.on
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withId
@@ -25,7 +24,6 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.verify
 //import io.mockk.mockk
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -33,9 +31,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mockito.mock
-import java.util.concurrent.Executor
-import kotlin.random.Random
 
 
 /**
@@ -46,7 +41,6 @@ import kotlin.random.Random
 @RunWith(AndroidJUnit4::class)
 @HiltAndroidTest
 class AuthenticationActivityTest {
-    private val sleepTime: Long = 5000
 
     @get:Rule(order = 0)
     var hiltRule = HiltAndroidRule(this)
@@ -59,10 +53,10 @@ class AuthenticationActivityTest {
     @BindValue @JvmField
     val mockAuthenticator = mockk<FireBaseAuthenticator>()
 
-    private fun createMockTask(succesful: Boolean): Task<AuthResult> {
+    private fun createMockTask(successful: Boolean): Task<AuthResult> {
         val taskResult = mockk<Task<AuthResult>>()
 
-        every {taskResult.isSuccessful} returns succesful
+        every {taskResult.isSuccessful} returns successful
         every {taskResult.addOnCompleteListener(any<Activity>(), any<OnCompleteListener<AuthResult>>())} answers {
             secondArg<OnCompleteListener<AuthResult>>().onComplete(taskResult)
             taskResult
@@ -89,7 +83,6 @@ class AuthenticationActivityTest {
     }
     @Test
     fun useAppContext() {
-        // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
         assertEquals("ch.sdp.vibester", appContext.packageName)
     }
@@ -124,8 +117,6 @@ class AuthenticationActivityTest {
         onView(withId(R.id.createAcc)).perform(click())
 
         onView(withId(R.id.email)).check(matches(withText("Authentication error")))
-
-
     }
 
     @Test
@@ -214,8 +205,9 @@ class AuthenticationActivityTest {
         onView(withId(R.id.password)).perform(ViewActions.typeText(password), closeSoftKeyboard())
         onView(withId(R.id.createAcc)).perform(click())
 
-        Intents.intended(IntentMatchers.hasComponent(ProfileActivity::class.java.name))
+        Intents.intended(IntentMatchers.hasComponent(CreateProfileActivity::class.java.name))
         Intents.intended(IntentMatchers.hasExtra("email", username))
+
     }
 
 }

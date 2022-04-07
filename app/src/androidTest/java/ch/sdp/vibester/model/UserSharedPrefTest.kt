@@ -19,7 +19,6 @@ class UserSharedPrefTest {
         UserSharedPref.updateScore(ctx)
         assertEquals(mailTest, UserSharedPref.getUser(ctx).email)
 
-
         val handle: String = "myHandle"
         val username: String = "myUsername"
         val image: String = "myImage"

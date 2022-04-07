@@ -23,6 +23,7 @@ class BuzzerScreenActivity : AppCompatActivity() {
     private val buzzersToRows:HashMap<Int, Int> = initHashmap()
     private val rowsIdArray = ArrayList(buzzersToRows.values)
     private val buzIds = ArrayList(buzzersToRows.keys)
+    private var winnerId = -1 // same function as the winnerId in the updater. Ugly placeholder solution for now
 
     private fun initHashmap(): HashMap<Int, Int> {
         val buzzersToRows:HashMap<Int, Int> = hashMapOf()
@@ -145,7 +146,10 @@ class BuzzerScreenActivity : AppCompatActivity() {
         button.setOnClickListener {
             answer.visibility = android.view.View.INVISIBLE
             if (pressedBuzzer >= 0) {
-                if(button.id==R.id.buttonCorrect)  {updater.updateScoresArray(pressedBuzzer, 1)} else {updater.updateScoresArray(pressedBuzzer, -1)}
+                if(button.id==R.id.buttonCorrect)  {
+                    updater.updateScoresArray(pressedBuzzer, 1)
+                    winnerId = updater.getWinnerId()
+                } else {updater.updateScoresArray(pressedBuzzer, -1)}
                 val view = map[pressedBuzzer]?.let { it1 -> findViewById<TextView>(it1) }
                 if (view != null && updater.getMap().keys.contains(pressedBuzzer)) {view.text=updater.getMap()[pressedBuzzer].toString()}
             }
@@ -168,6 +172,8 @@ class BuzzerScreenActivity : AppCompatActivity() {
 
         intent.putExtra("playerName", "Arda")
         intent.putExtra("nbIncorrectSong", 3)
+
+        intent.putExtra("Winner Name", if (winnerId>0) {findViewById<Button>(winnerId).text} else {null})
 
         intent.putStringArrayListExtra("str_arr_inc", incArray)
         intent.putStringArrayListExtra("str_arr_name", statNames)

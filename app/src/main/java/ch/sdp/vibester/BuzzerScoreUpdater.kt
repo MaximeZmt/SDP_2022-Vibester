@@ -6,9 +6,11 @@ import kotlin.math.min
 class BuzzerScoreUpdater(ids: ArrayList<Int>, scores: Array<Int>) {
 
     private var buzzerToScoreMap: LinkedHashMap<Int, Int>
+    private var winnerId: Int
 
     init {
         buzzerToScoreMap = initMap(ids, scores)
+        winnerId = -1
     }
 
     private fun initMap(ids: ArrayList<Int>, scores: Array<Int>): LinkedHashMap<Int, Int> {
@@ -25,6 +27,10 @@ class BuzzerScoreUpdater(ids: ArrayList<Int>, scores: Array<Int>) {
         return buzzerToScoreMap
     }
 
+    fun getWinnerId(): Int {
+        return winnerId
+    }
+
     /**
      * updates the score corresponding to the pressed buzzer
      * checks first if the given id is a buzzer id (and not NO_BUZZER_PRESSED)
@@ -35,5 +41,17 @@ class BuzzerScoreUpdater(ids: ArrayList<Int>, scores: Array<Int>) {
         }
         val updatedScore = max(buzzerToScoreMap.getOrDefault(id, 0) + point, 0) // should never get to default
         buzzerToScoreMap.put(id, updatedScore)
+        updateWinner(id, updatedScore)
+    }
+
+    /**
+     * checks if the winner changes after a player scores a point
+     * @param potentialWinnerId: id of the player who scored a point
+     * @param potentialWinnerScore: that player's new score
+     */
+    private fun updateWinner(potentialWinnerId: Int, potentialWinnerScore: Int) {
+        if (winnerId<0 || potentialWinnerScore> buzzerToScoreMap[winnerId]!!) {
+            winnerId = potentialWinnerId
+        }
     }
 }

@@ -40,6 +40,14 @@ class GameEndingActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_game_ending_screen)
 
+        if (intent.hasExtra("Winner Name")) {
+            val winner = intent.getStringExtra("Winner Name")
+            if (winner!=null) {
+                findViewById<TextView>(R.id.winnerText).text="And the winner is... $winner!"
+            } else {findViewById<TextView>(R.id.winnerText).text="Nobody won this game!"}
+            findViewById<TextView>(R.id.proceedToStats).setOnClickListener { findViewById<TextView>(R.id.winnerPanel).visibility=View.INVISIBLE }
+        }
+
         if (intent.hasExtra("playerName")) {
             playerName = intent.getStringExtra("playerName")
         }

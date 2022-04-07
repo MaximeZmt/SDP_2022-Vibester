@@ -71,6 +71,7 @@ class ProfileActivityTest {
         onView(withId(R.id.ranking)).check(matches(withText(inputProfile.ranking.toString())))
     }
 
+    /*
     @Test
     fun checkProfileLayout() {
         val inputProfile = UserProfile("@lisa", "Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8, 29, 0)
@@ -161,5 +162,5 @@ class ProfileActivityTest {
         onView(withText("Cancel")).perform(ViewActions.click())
         onView(withId(R.id.handle)).check(matches(withText("@lisa")))
     }
-
+*/
 }

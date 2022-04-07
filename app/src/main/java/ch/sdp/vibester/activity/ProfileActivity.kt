@@ -118,8 +118,12 @@ class ProfileActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.ranking).text = user.ranking.toString()
         CoroutineScope(Dispatchers.Main).launch {
             val task = async(Dispatchers.IO) {
-                val bit = BitmapGetterApi.download("https://"+user.image)
-                bit.get()
+                try {
+                    val bit = BitmapGetterApi.download("https://" + user.image)
+                    bit.get()
+                }catch (e: Exception){
+                    null
+                }
             }
             val bm = task.await()
             findViewById<ImageView>(R.id.avatar).setImageBitmap(bm)

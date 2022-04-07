@@ -20,6 +20,7 @@ import ch.sdp.vibester.R
 import ch.sdp.vibester.api.ItunesMusicApi
 import ch.sdp.vibester.model.Song
 import okhttp3.OkHttpClient
+import org.w3c.dom.Text
 import java.lang.IllegalArgumentException
 
 class DownloadActivity : AppCompatActivity() {
@@ -27,12 +28,13 @@ class DownloadActivity : AppCompatActivity() {
     private lateinit var song: Song
     private var songName: String = "imagine dragons believer"
     private var downloadId: Long = 0
-    private val songNameView = findViewById<TextView>(R.id.download_songName)
-    private val downloadButton = findViewById<Button>(R.id.download_downloadsong)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_download)
+
+        val songNameView = findViewById<TextView>(R.id.download_songName)
+        val downloadButton = findViewById<Button>(R.id.download_downloadsong)
 
         downloadButton.setOnClickListener {
             songName = songNameView.text.toString()
@@ -41,7 +43,7 @@ class DownloadActivity : AppCompatActivity() {
                 song = Song.singleSong(songFuture.get())
                 checkPermissionsAndDownload()
             } catch (e: IllegalArgumentException) {
-                alert("Unable to find song, please retry!", "Please retry!")
+                alert("Unable to find song, please retry!", "Please retry!", songNameView)
             }
         }
 
@@ -49,7 +51,7 @@ class DownloadActivity : AppCompatActivity() {
             override fun onReceive(context: Context?, intent: Intent?) {
                 var id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
                 if(id == downloadId) {
-                    alert("Download completed!", "Try another song!")
+                    alert("Download completed!", "Try another song!", songNameView)
                 }
             }
         }
@@ -57,12 +59,12 @@ class DownloadActivity : AppCompatActivity() {
         registerReceiver(broadcast, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
     }
 
-    fun alert(toast: String, hint: String) {
+    fun alert(toast: String, hint: String, view: TextView) {
         Toast.makeText(applicationContext, toast, Toast.LENGTH_LONG).show()
-        editTextView(hint)
+        editTextView(hint, view)
     }
 
-    fun editTextView(hint: String) {
+    private fun editTextView(hint: String, songNameView: TextView) {
         songNameView.text = ""
         songNameView.hint = hint
     }

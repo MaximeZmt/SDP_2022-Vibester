@@ -23,14 +23,9 @@ class DownloadActivityTest {
     @JvmField
     val activityRule = ActivityScenarioRule(DownloadActivity::class.java)
 
-    private lateinit var decorView : View
-
     @Before
     fun setUp() {
         Intents.init()
-        activityRule.scenario.onActivity {
-                activity -> decorView = activity.window.decorView
-        }
     }
 
     @After
@@ -49,12 +44,6 @@ class DownloadActivityTest {
         Thread.sleep(100)
         onView(withId(R.id.download_downloadsong)).perform(click())
         Thread.sleep(2000)
-
-        //Commented as it does not work, albeit we "see" the toast.
-        //TODO: Replace with something else in the future, i.e another type of notifier.
-        /*onView(withText("Download completed!"))
-            .inRoot(withDecorView(not(decorView)))
-            .check(matches(isDisplayed()))*/
 
         onView(withId(R.id.download_songName)).check(matches(withText("")))
         onView(withId(R.id.download_songName)).check(matches(withHint("Try another song!")))

@@ -6,31 +6,33 @@
     android:layout_height="match_parent"
     tools:context=".activity.BuzzerSetupActivity">
 
-        <TextView
-            android:id="@+id/getPlayerNumberText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:fontFeatureSettings="smcp"
-            android:text="@string/ask_nb_players"
-            android:textAlignment="center"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/getPlayerNumberText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="26dp"
+        android:layout_marginBottom="329dp"
+        android:fontFeatureSettings="smcp"
+        android:text="@string/ask_nb_players"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/missingNameAlert"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <Spinner
-            android:id="@+id/nb_player_spinner"
-            android:layout_width="248dp"
-            android:layout_height="80dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="20dp"
-            android:entries="@array/nb_players"
-            app:layout_constraintBottom_toTopOf="@+id/playerNames"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/getPlayerNumberText" />
+    <Spinner
+        android:id="@+id/nb_player_spinner"
+        android:layout_width="248dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="20dp"
+        android:entries="@array/nb_players"
+        app:layout_constraintBottom_toTopOf="@+id/playerNames"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/getPlayerNumberText" />
 
 
     <Button
@@ -100,8 +102,41 @@
             android:hint="Name of Player 4"
             android:inputType="textPersonName"
             android:visibility="invisible" />
+
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/missingNameAlert"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="41dp"
+        android:layout_marginEnd="41dp"
+        android:layout_marginBottom="48dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="#AAAAAA"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/getPlayerNumberText">
+
+        <TextView
+            android:id="@+id/missingNameMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/player_missing"
+            android:visibility="visible" />
+
+        <Button
+            android:id="@+id/missingNameOk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ok"
+            android:backgroundTint="@color/cg_blue"
+            android:visibility="visible" />
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

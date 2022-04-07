@@ -79,6 +79,11 @@
         <item>Hard</item>
     </string-array>
 
+    <string name="player_missing">Please enter a name for every player.</string>
+    <string name="ok">OK</string>
+    <string name="winner">And the winner is… </string>
+    <string name="noWinner">Nobody won this game!</string>
+
     <string name="difficulty_easy">The difficulty setting recommended for when you want to have a chill time.
             You have 30 seconds to guess each song!</string>
     <string name="difficulty_medium">The difficulty setting recommended for when you want to both savor the song, and see

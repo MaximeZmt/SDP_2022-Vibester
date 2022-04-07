@@ -33,6 +33,8 @@ class DownloadActivityTest {
         Intents.release()
     }
 
+    private var waitForButton: Long = 100
+    private var waitForDownload: Long = 2000
 
     @Test
     fun downloadCorrectSong() {
@@ -41,19 +43,15 @@ class DownloadActivityTest {
         val songName = "imagine dragons believer"
 
         onView(withId(R.id.download_songName)).perform(typeText(songName), closeSoftKeyboard())
-        Thread.sleep(100)
+        Thread.sleep(waitForButton)
         onView(withId(R.id.download_downloadsong)).perform(click())
-        Thread.sleep(2000)
+        Thread.sleep(waitForDownload)
 
         onView(withId(R.id.download_songName)).check(matches(withText("")))
         onView(withId(R.id.download_songName)).check(matches(withHint("Try another song!")))
 
         val extract = File("storage/emulated/0/Download", "extract_of_$songName")
-        if(extract.exists()) {
-            assert(true)
-        } else {
-            assert(false)
-        }
+        assert(extract.exists())
     }
 
     @Test
@@ -71,10 +69,6 @@ class DownloadActivityTest {
         onView(withId(R.id.download_songName)).check(matches(withHint("Please retry!")))
 
         val extract = File("storage/emulated/0/Download", "extract_of_$songName")
-        if(extract.exists()) {
-            assert(false)
-        } else {
-            assert(true)
-        }
+        assert(!extract.exists())
     }
 }

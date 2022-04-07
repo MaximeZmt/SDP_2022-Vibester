@@ -62,4 +62,10 @@ class WelcomeActivityTest {
         onView(withId(R.id.welcome_settings)).perform(click())
         intended(hasComponent(AuthenticationActivity::class.java.name))
     }
+
+    @Test
+    fun checkIntentOnDownload() {
+        onView(withId(R.id.welcome_download)).perform(click())
+        intended(hasComponent(DownloadActivity::class.java.name))
+    }
 }

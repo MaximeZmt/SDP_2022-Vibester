@@ -22,7 +22,9 @@ import ch.sdp.vibester.model.Song
 import okhttp3.OkHttpClient
 import org.w3c.dom.Text
 import java.lang.IllegalArgumentException
-
+/*
+ * Activity that handles downloading of song extracts.
+ */
 class DownloadActivity : AppCompatActivity() {
     private val STORAGE_PERMISSION_CODE = 1000
     private lateinit var song: Song
@@ -59,11 +61,24 @@ class DownloadActivity : AppCompatActivity() {
         registerReceiver(broadcast, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
     }
 
-    fun alert(toast: String, hint: String, view: TextView) {
+    /*
+     * Displays a Toast on the screen while editing the existing textView.
+     *
+     * @param toast: String to be displayed on the Toast.
+     * @param hint : String to be set as the hint of the textView.
+     * @param view : The textView that will be updated.
+     */
+    private fun alert(toast: String, hint: String, view: TextView) {
         Toast.makeText(applicationContext, toast, Toast.LENGTH_LONG).show()
         editTextView(hint, view)
     }
 
+    /*
+     * Sets the hint of the given textview with the given hint, and clears the entered text.
+     *
+     * @param hint          : String to be set as the hint of the textView.
+     * @param songNameView  : The textView that will be updated.
+     */
     private fun editTextView(hint: String, songNameView: TextView) {
         songNameView.text = ""
         songNameView.hint = hint
@@ -80,6 +95,9 @@ class DownloadActivity : AppCompatActivity() {
         }
     }
 
+    /*
+     * Checks if the required app permissions are already given. If not, request those permissions.
+     */
     private fun checkPermissionsAndDownload() {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
             Build.VERSION.SDK_INT <  Build.VERSION_CODES.Q) {
@@ -93,6 +111,9 @@ class DownloadActivity : AppCompatActivity() {
         }
     }
 
+    /*
+     * Download a file from the private URL value of the class.
+     */
     private fun startDownload(): Long {
         val request = DownloadManager.Request(Uri.parse(song.getPreviewUrl()))
         request.setAllowedNetworkTypes(

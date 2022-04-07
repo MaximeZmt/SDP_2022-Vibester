@@ -41,8 +41,7 @@ class DownloadActivity : AppCompatActivity() {
                 song = Song.singleSong(songFuture.get())
                 checkPermissionsAndDownload()
             } catch (e: IllegalArgumentException) {
-                Toast.makeText(applicationContext, "Unable to find song, please retry!", Toast.LENGTH_LONG).show()
-                editTextView("Please retry!")
+                alert("Unable to find song, please retry!", "Please retry!")
             }
         }
 
@@ -50,13 +49,17 @@ class DownloadActivity : AppCompatActivity() {
             override fun onReceive(context: Context?, intent: Intent?) {
                 var id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
                 if(id == downloadId) {
-                    Toast.makeText(applicationContext, "Download completed!", Toast.LENGTH_LONG).show()
-                    editTextView("Try another song!")
+                    alert("Download completed!", "Try another song!")
                 }
             }
         }
 
         registerReceiver(broadcast, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
+    }
+
+    fun alert(toast: String, hint: String) {
+        Toast.makeText(applicationContext, toast, Toast.LENGTH_LONG).show()
+        editTextView(hint)
     }
 
     fun editTextView(hint: String) {

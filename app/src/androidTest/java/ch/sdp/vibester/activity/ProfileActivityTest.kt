@@ -1,5 +1,6 @@
 package ch.sdp.vibester.activity
 
+import android.content.Context
 import android.content.Intent
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
@@ -11,6 +12,7 @@ import androidx.test.espresso.matcher.ViewMatchers.* //change this import
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
 import ch.sdp.vibester.database.UsersRepo
+import ch.sdp.vibester.model.UserSharedPref
 import ch.sdp.vibester.profile.UserProfile
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -23,7 +25,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
-/*
+
 @RunWith(AndroidJUnit4::class)
 @HiltAndroidTest
 class ProfileActivityTest {
@@ -55,11 +57,12 @@ class ProfileActivityTest {
     @Test
     fun checkProfileData() {
         val inputProfile = UserProfile("@lisa", "Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8, 29, 0)
-        val intent = Intent(ApplicationProvider.getApplicationContext(), ProfileActivity::class.java)
+        val ctx = ApplicationProvider.getApplicationContext() as Context
+        val intent = Intent(ctx, ProfileActivity::class.java)
         intent.putExtra("email", inputProfile.email)
 
         createMockInvocation(inputProfile)
-
+        UserSharedPref.setUser(ctx, inputProfile, false)
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
 
         onView(withId(R.id.handle)).check(matches(withText(inputProfile.handle)))
@@ -159,5 +162,3 @@ class ProfileActivityTest {
     }
 
 }
-
- */

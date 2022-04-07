@@ -34,9 +34,6 @@ class ProfileActivity : AppCompatActivity() {
         supportActionBar?.hide()
 
         setContentView(R.layout.activity_profile)
-        var email = intent.getStringExtra("email").toString()
-
-        //queryDatabase(email)
 
         setupProfile(UserSharedPref.getUser(this))
 

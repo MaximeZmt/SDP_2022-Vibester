@@ -12,7 +12,9 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.database.ktx.database
 import java.util.*
 
-
+/**
+ * This static class store the users data offline + in the db
+ */
 class UserSharedPref private constructor() {
     companion object{
         val HANDLE = "handle"
@@ -27,19 +29,17 @@ class UserSharedPref private constructor() {
 
         var dbAccess : UsersRepo = UsersRepo()
 
-        /*
-        val database: FirebaseDatabase = Firebase.database("https://vibester-sdp-default-rtdb.europe-west1.firebasedatabase.app")
-        private lateinit var databaseRef: DatabaseReference
-        //databaseRef = database.reference
-                /*
-                    https://stackoverflow.com/questions/12744337/how-to-keep-android-applications-always-be-logged-in-state#:~:text=When%20users%20log%20in%20to,direct%20to%20the%20login%20page.
-                 */
- */
-        fun getSharedPreferences(ctx: Context): SharedPreferences? {
+
+        private fun getSharedPreferences(ctx: Context): SharedPreferences? {
             return PreferenceManager.getDefaultSharedPreferences(ctx)
         }
 
-
+        /**
+         * Reset the current user stored locally with a retrieved one from db
+         * @param Context The app context
+         * @param email the email of the user
+         * @param online if false, does not store in db
+         */
         fun userReset(ctx: Context, email: String, online: Boolean = true){
             setUser(ctx, UserProfile(email=email), online)
             if (online){
@@ -49,6 +49,12 @@ class UserSharedPref private constructor() {
             }
         }
 
+        /**
+         * Set the user locally by hand
+         * @param Context The app context
+         * @param UserProfile the profile of the user
+         * @param online if false, does not store in db
+         */
         fun setUser(ctx: Context, user: UserProfile, online: Boolean){
             val edit = getSharedPreferences(ctx)?.edit()
             if (edit != null) {
@@ -65,7 +71,14 @@ class UserSharedPref private constructor() {
             }
         }
 
-
+        /**
+         * Update the score locally and in db (if enabled for the user)
+         * @param Context The app context
+         * @param deltaTotal how much increase the ranking
+         * @param deltaBest how much increase best_score
+         * @param deltaCorrect how much increase correct guesses song
+         * @param deltaRanking How much increase ranking
+         */
         fun updateScore(ctx: Context, deltaTotal: Int = 0, deltaBest: Int = 0, deltaCorrect: Int = 0, deltaRanking: Int = 0){
             val sharedPref = getSharedPreferences(ctx)
             if(sharedPref != null){
@@ -88,7 +101,11 @@ class UserSharedPref private constructor() {
             }
         }
 
-
+        /**
+         * Update the username locally and in db (if enabled for the user)
+         * @param Context The app context
+         * @param username new username
+         */
         fun updateUsername(ctx: Context, username: String){
             val sharedPref = getSharedPreferences(ctx)
             if(sharedPref != null){
@@ -101,6 +118,11 @@ class UserSharedPref private constructor() {
             }
         }
 
+        /**
+         * Update the handle locally and in db (if enabled for the user)
+         * @param Context The app context
+         * @param handle new handle
+         */
         fun updateHandle(ctx: Context, handle: String){
             val sharedPref = getSharedPreferences(ctx)
             if(sharedPref != null){
@@ -114,6 +136,11 @@ class UserSharedPref private constructor() {
         }
 
 
+        /**
+         * Getter for locally store profile
+         * @param Context The app context
+         * @return UserProfile
+         */
         fun getUser(ctx: Context): UserProfile{
             val sharedPref = getSharedPreferences(ctx)
 

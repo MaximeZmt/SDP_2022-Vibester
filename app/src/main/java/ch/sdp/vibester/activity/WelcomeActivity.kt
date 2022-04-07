@@ -3,6 +3,7 @@ package ch.sdp.vibester.activity
 //import ch.sdp.vibester.profile.ProfileDataProvider
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.Window.FEATURE_NO_TITLE
 import android.widget.TextView
@@ -17,16 +18,18 @@ class WelcomeActivity : AppCompatActivity() {
         requestWindowFeature(FEATURE_NO_TITLE)
         supportActionBar?.hide()
         setContentView(R.layout.activity_welcome_screen)
-        //UserSharedPref.userReset(this, "lisa@test.com")
-        val tv = findViewById<TextView>(R.id.user_status)
 
+        val tv = findViewById<TextView>(R.id.user_status)
         val username = UserSharedPref.getUser(this).username
         if(username != "")
         {
             tv.text = "User: " + username
         }
 
-
+        val currentEmail = UserSharedPref.getUser(this).email
+        if (currentEmail != null){
+            UserSharedPref.userReset(this, currentEmail)
+        }
     }
 
     private fun sendDirectIntent(arg: Class<*>?) {

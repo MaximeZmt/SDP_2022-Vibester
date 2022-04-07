@@ -59,7 +59,6 @@ class ProfileActivityTest {
         val inputProfile = UserProfile("@lisa", "Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8, 29, 0)
         val ctx = ApplicationProvider.getApplicationContext() as Context
         val intent = Intent(ctx, ProfileActivity::class.java)
-        intent.putExtra("email", inputProfile.email)
 
         createMockInvocation(inputProfile)
         UserSharedPref.setUser(ctx, inputProfile, false)
@@ -75,26 +74,25 @@ class ProfileActivityTest {
     @Test
     fun checkProfileLayout() {
         val inputProfile = UserProfile("@lisa", "Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8, 29, 0)
-        val intent = Intent(ApplicationProvider.getApplicationContext(), ProfileActivity::class.java)
-        intent.putExtra("email", inputProfile.email)
+        val ctx = ApplicationProvider.getApplicationContext() as Context
+        val intent = Intent(ctx, ProfileActivity::class.java)
 
         createMockInvocation(inputProfile)
-
+        UserSharedPref.setUser(ctx, inputProfile, false)
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
 
         onView(withId(R.id.profileStatistics)).check(matches(isDisplayed()))
         onView(withId(R.id.handle)).check(matches(isDisplayed()))
         onView(withId(R.id.username)).check(matches(isDisplayed()))
-        //TODO not sure why but this tests fails on CI but passes locally
-//        onView(withId(R.id.avatar)).check(matches(isDisplayed()))
     }
 
     @Test
     fun checkEditProfile() {
         val inputProfile = UserProfile("@lisa", "Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8, 29, 0)
-        val intent = Intent(ApplicationProvider.getApplicationContext(), ProfileActivity::class.java)
-        intent.putExtra("email", inputProfile.email)
+        val ctx = ApplicationProvider.getApplicationContext() as Context
+        val intent = Intent(ctx, ProfileActivity::class.java)
 
+        UserSharedPref.setUser(ctx, inputProfile, false)
         createMockInvocation(inputProfile)
 
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
@@ -113,9 +111,10 @@ class ProfileActivityTest {
     @Test
     fun checkEditProfileClickCancel() {
         val inputProfile = UserProfile("@lisa", "Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8, 29, 0)
-        val intent = Intent(ApplicationProvider.getApplicationContext(), ProfileActivity::class.java)
-        intent.putExtra("email", inputProfile.email)
+        val ctx = ApplicationProvider.getApplicationContext() as Context
+        val intent = Intent(ctx, ProfileActivity::class.java)
 
+        UserSharedPref.setUser(ctx, inputProfile, false)
         createMockInvocation(inputProfile)
 
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
@@ -128,9 +127,10 @@ class ProfileActivityTest {
     @Test
     fun checkEditHandle() {
         val inputProfile = UserProfile("@lisa", "Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8, 29, 0)
-        val intent = Intent(ApplicationProvider.getApplicationContext(), ProfileActivity::class.java)
-        intent.putExtra("email", inputProfile.email)
+        val ctx = ApplicationProvider.getApplicationContext() as Context
+        val intent = Intent(ctx, ProfileActivity::class.java)
 
+        UserSharedPref.setUser(ctx, inputProfile, false)
         createMockInvocation(inputProfile)
 
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
@@ -149,9 +149,10 @@ class ProfileActivityTest {
     @Test
     fun checkEditHandleClickCancel() {
         val inputProfile = UserProfile("@lisa", "Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8, 29, 0)
-        val intent = Intent(ApplicationProvider.getApplicationContext(), ProfileActivity::class.java)
-        intent.putExtra("email", inputProfile.email)
+        val ctx = ApplicationProvider.getApplicationContext() as Context
+        val intent = Intent(ctx, ProfileActivity::class.java)
 
+        UserSharedPref.setUser(ctx, inputProfile, false)
         createMockInvocation(inputProfile)
 
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)

@@ -74,7 +74,7 @@ class AuthenticationActivity : AppCompatActivity() {
      */
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        updateUI(authenticator.googleActivityResult(requestCode, resultCode, data))
+        updateUI(authenticator.googleActivityResult(requestCode, resultCode, data), false)
     }
 
     /**
@@ -101,6 +101,12 @@ class AuthenticationActivity : AppCompatActivity() {
         return true
     }
 
+    /**
+     * A function that authenticates the user
+     * @param email email of the user
+     * @param password password of the user
+     * @param createAcc boolean to check if the authentication is a login or account creation
+     */
     private fun authenticate(email: String, password: String, createAcc: Boolean) {
         if (stringValidation(email, password)) {
             var auth: Task<AuthResult> = if (createAcc) {
@@ -109,7 +115,7 @@ class AuthenticationActivity : AppCompatActivity() {
                 authenticator.signIn(email, password)
             }
             auth.addOnCompleteListener(this) { task ->
-                onCompleteAuthentication(task)
+                onCompleteAuthentication(task, createAcc)
             }
         }
     }
@@ -126,7 +132,7 @@ class AuthenticationActivity : AppCompatActivity() {
      * A function changes the UI based on the authentication result
      * @param task result
      */
-    private fun onCompleteAuthentication(task: Task<AuthResult>) {
+    private fun onCompleteAuthentication(task: Task<AuthResult>, createAcc: Boolean) {
         if (task.isSuccessful) {
             Toast.makeText(
                 baseContext, "You have logged in successfully",
@@ -134,24 +140,33 @@ class AuthenticationActivity : AppCompatActivity() {
             ).show()
             val user = authenticator.getCurrUser()
             if (user != null) {
-                updateUI(user.email)
+                updateUI(user.email, createAcc)
             }
         } else {
             Toast.makeText(
                 baseContext, "Authentication failed.",
                 Toast.LENGTH_SHORT
             ).show()
-            updateUI("Authentication error")
+            updateUI("Authentication error", false)
         }
     }
 
-    private fun updateUI(emailText: String?) {
+    private fun updateUI(emailText: String?,
+                         createAcc: Boolean,
+    ) {
         if (emailText != null) {
-            if('@' in emailText) {
+            if('@' in emailText && !createAcc) {
                 val newIntent = Intent(this, ProfileActivity::class.java)
                 newIntent.putExtra("email", emailText)
                 startActivity(newIntent)
             }
+
+            else if('@' in emailText && createAcc) {
+                val newIntent = Intent(this, CreateProfileActivity::class.java)
+                newIntent.putExtra("email", emailText)
+                startActivity(newIntent)
+            }
+
             else {
                 email.text = emailText
             }

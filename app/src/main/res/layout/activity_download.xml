@@ -26,23 +26,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:layout_marginBottom="20dp"
         android:text="@string/download_download"
-        app:layout_constraintBottom_toTopOf="@+id/download_backtowelcome"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/download_songName" />
-
-    <Button
-        android:id="@+id/download_backtowelcome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
-        android:onClick="goBackToWelcome"
-        android:text="@string/game_end__go_back"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/download_downloadsong" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

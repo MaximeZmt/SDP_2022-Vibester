@@ -104,9 +104,4 @@ class DownloadActivity : AppCompatActivity() {
         val downloader = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         return downloader.enqueue(request)
     }
-
-    fun goBackToWelcome(view: View) {
-        val intent = Intent(this, WelcomeActivity::class.java)
-        startActivity(intent)
-    }
 }

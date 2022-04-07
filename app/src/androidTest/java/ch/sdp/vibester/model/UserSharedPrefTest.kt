@@ -19,7 +19,11 @@ class UserSharedPrefTest {
         UserSharedPref.updateScore(ctx)
         Thread.sleep(1000)
         assertEquals(mailTest, UserSharedPref.getUser(ctx).email) //TODO temporary disable does not pass on CI
+    }
 
+    @Test
+    fun sharedPrefTest2(){
+        val ctx = ApplicationProvider.getApplicationContext() as Context
         val handle: String = "myHandle"
         val username: String = "myUsername"
         val image: String = "myImage"
@@ -44,4 +48,6 @@ class UserSharedPrefTest {
         assertEquals(pro.correctSongs, updated.correctSongs)
         assertEquals(pro.ranking+1, updated.ranking)
     }
+
+
 }

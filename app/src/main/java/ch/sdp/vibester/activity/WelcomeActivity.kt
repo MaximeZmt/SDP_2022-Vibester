@@ -39,6 +39,10 @@ class WelcomeActivity : AppCompatActivity() {
         sendDirectIntent(AuthenticationActivity::class.java)
     }
 
+    fun switchToDownload(view: View) {
+        sendDirectIntent(DownloadActivity::class.java)
+    }
+
     /*
      * Belongs to a previously implemented button, taken out for UI purposes.
      * Might bring it back, thus leaving the code for now.

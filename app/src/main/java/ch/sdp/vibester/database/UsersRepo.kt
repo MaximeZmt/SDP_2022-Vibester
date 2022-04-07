@@ -36,15 +36,7 @@ class UsersRepo @Inject constructor() {
      * @param callback function to be called when the the user has been created
      */
     fun createUser(email: String, username: String, handle: String, callback: (String) -> Unit) {
-        var newUser = UserProfile(
-            handle,
-            username,
-            "",
-            email,
-            0,
-            0,
-            0,
-            0
+        var newUser = UserProfile(handle, username, "", email, 0, 0, 0, 0
         )
 
         val charPool : List<Char> = ('a'..'z') + ('A'..'Z') + ('0'..'9')

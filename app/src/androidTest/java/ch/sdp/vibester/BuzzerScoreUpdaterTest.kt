@@ -25,8 +25,18 @@ public class BuzzerScoreUpdaterTest {
         val testUpdater = BuzzerScoreUpdater(idArray, scoreArray)
         for (id in idArray) {
             testUpdater.updateScoresArray(id, 1)
-            assertTrue(testUpdater.getMap()[id]==1)
+            assertTrue(testUpdater.getMap()[id] == 1)
         }
+    }
+
+    @Test
+    fun getWinnerIdTest() {
+        val idArray = arrayListOf(R.id.buzzer_0, R.id.buzzer_1, R.id.buzzer_2, R.id.buzzer_3)
+        val scoreArray = arrayOf(0, 0, 0, 0)
+        val testUpdater = BuzzerScoreUpdater(idArray, scoreArray)
+        assertTrue(testUpdater.getWinnerId() == -1)
+        testUpdater.updateScoresArray(idArray[0], 1)
+        assertTrue(testUpdater.getWinnerId() == idArray[0])
     }
 
     @Test

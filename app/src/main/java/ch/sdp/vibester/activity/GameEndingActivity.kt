@@ -98,11 +98,11 @@ class GameEndingActivity : AppCompatActivity() {
         val statPlayerText = "Here are the stats for the player $playerName"
         playerNameView.text = statPlayerText
     }
-
+/*
     fun hideWinnerPanel(view: View) {
         findViewById<TextView>(R.id.winnerPanel).visibility=View.INVISIBLE
     }
-
+*/
     fun goToIncorrectlyGuessedSongs(view: View) {
         val intent = Intent(this, IncorrectSongsActivity::class.java)
         intent.putExtra("nb_false", nbIncorrectSongs)

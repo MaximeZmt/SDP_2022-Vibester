@@ -56,6 +56,9 @@
     <string name="editUsername">Edit Username</string>
     <string name="editHandle">Edit Handle</string>
     <string name="holder_setup_game_type">Choose the game you want to play:</string>
+    <string name="welcome_download">DOWNLOAD</string>
+    <string name="download_songname">Enter a song name...</string>
+    <string name="download_download">DOWNLOAD SONG</string>
 
     <string name="Singleplayer">Singleplayer</string>
     <string name="Multiplayer">Multiplayer</string>

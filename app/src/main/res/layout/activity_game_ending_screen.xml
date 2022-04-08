@@ -177,15 +177,17 @@
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="44dp"
+        android:backgroundTint="@color/cg_blue"
+        android:elevation="10dp"
         android:onClick="goToIncorrectlyGuessedSongs"
+        android:stateListAnimator="@null"
         android:text="@string/game_end__view_incorrect_songs"
+        android:translationZ="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        android:backgroundTint="@color/cg_blue"
-        android:elevation="10dp"
-        android:stateListAnimator="@null"
-        android:translationZ="10dp"
         app:layout_constraintTop_toBottomOf="@+id/end_stat_table" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

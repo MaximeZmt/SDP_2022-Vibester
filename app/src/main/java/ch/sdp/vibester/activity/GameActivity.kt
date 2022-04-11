@@ -1,9 +1,11 @@
 package ch.sdp.vibester.activity
 
+import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Handler
+import android.widget.Button
 import android.widget.ProgressBar
 import ch.sdp.vibester.R
 import ch.sdp.vibester.helper.GameManager
@@ -43,6 +45,12 @@ open class GameActivity : AppCompatActivity() {
         myBar.progress -= 1
     }
 
+    fun checkRunnable() {
+        if (runnable != null) {
+            handler.removeCallbacks(runnable!!)
+        }
+    }
+
     fun switchToEnding(gameManager: GameManager) {
         val intent = Intent(this, GameEndingActivity::class.java)
         val incArray: ArrayList<String> = ArrayList(
@@ -65,11 +73,26 @@ open class GameActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    fun checkRunnable() {
-        if (runnable != null) {
-            handler.removeCallbacks(runnable!!)
+    fun toggleBtnVisibility(btnId: Int, value: Boolean){
+        val btn = findViewById<Button>(btnId)
+        if (value) {
+            btn.visibility = android.view.View.VISIBLE
+        } else {
+            btn.visibility = android.view.View.GONE
         }
     }
+
+    open fun endRound(gameManager: GameManager) {
+        checkRunnable()
+        if (endGame(gameManager)) {
+            switchToEnding(gameManager)
+        }
+    }
+
+    fun endGame(gameManager: GameManager): Boolean {
+        return !gameManager.checkGameStatus() || !gameManager.setNextSong()
+    }
+
 
 
 }

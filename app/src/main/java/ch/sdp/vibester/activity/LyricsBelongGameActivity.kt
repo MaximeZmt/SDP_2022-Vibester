@@ -38,6 +38,7 @@ class LyricsBelongGameActivity : GameActivity() {
         val getIntent = intent.extras
         if (getIntent != null) {
             gameManager = getIntent.getSerializable("gameManager") as GameManager
+            setNextButtonListener(gameManager)
             super.setMax(intent)
             setFirstSong(gameManager)
         }
@@ -53,10 +54,10 @@ class LyricsBelongGameActivity : GameActivity() {
             getAndCheckLyrics(songName, artistName, speechInput, gameManager)
         }
 
-        val btnNext = findViewById<Button>(R.id.nextSongButton)
+        /*val btnNext = findViewById<Button>(R.id.nextSongButton)
         btnNext.setOnClickListener {
             playRound(gameManager)
-        }
+        }*/
 
         barTimer(findViewById(R.id.progressBarLyrics))
     }
@@ -80,14 +81,23 @@ class LyricsBelongGameActivity : GameActivity() {
         }
     }
 
+    private fun setNextButtonListener(gameManager: GameManager) {
+        findViewById<Button>(R.id.nextSongButton).setOnClickListener {
+            playRound(gameManager)
+        }
+    }
+
+
     /**
      * Function to set a new round. It includes reinitializing activity elements,
      * and setting new song for the round.
      */
     fun playRound(gameManager: GameManager) {
-        if (gameManager.checkGameStatus() && gameManager.setNextSong()) {
+        if (!endGame(gameManager)) {
             clearResult()
-            findViewById<Button>(R.id.lyricMatchButton).visibility = View.INVISIBLE
+            //findViewById<Button>(R.id.lyricMatchButton).visibility = View.INVISIBLE
+            toggleBtnVisibility(R.id.lyricMatchButton, false)
+            toggleBtnVisibility(R.id.nextSongButton, false)
             songName = gameManager.currentSong.getTrackName()
             artistName = gameManager.currentSong.getArtistName()
             findViewById<TextView>(R.id.lyricResult).text = "Say something from $songName - $artistName"
@@ -97,6 +107,13 @@ class LyricsBelongGameActivity : GameActivity() {
             switchToEnding(gameManager)
         }
     }
+
+    override fun endRound(gameManager: GameManager) {
+        super.endRound(gameManager)
+        toggleBtnVisibility(R.id.nextSongButton, true)
+    }
+
+
 
     /**
      * display the given String in lyricResult
@@ -143,6 +160,7 @@ class LyricsBelongGameActivity : GameActivity() {
              gameManager.addWrongSong()
              findViewById<TextView>(R.id.lyricMatchResult).text = "res: too bad"
          }
+        endRound(gameManager)
     }
 
     private fun barTimer(myBar: ProgressBar) {

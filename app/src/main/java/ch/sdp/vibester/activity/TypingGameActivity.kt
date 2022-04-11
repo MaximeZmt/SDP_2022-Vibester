@@ -137,9 +137,10 @@ class TypingGameActivity : GameActivity() {
      * Set and remove nextBtn during the game
      */
     private fun toggleNextBtnVisibility(value: Boolean){
-        val nextSongBtn = findViewById<Button>(R.id.nextSong)
+        /*val nextSongBtn = findViewById<Button>(R.id.nextSong)
         if(value){nextSongBtn.visibility = android.view.View.VISIBLE}
-        else{nextSongBtn.visibility = android.view.View.GONE}
+        else{nextSongBtn.visibility = android.view.View.INVISIBLE}*/
+        toggleBtnVisibility(R.id.nextSong, value)
     }
 
     /**
@@ -188,7 +189,7 @@ class TypingGameActivity : GameActivity() {
     }
 
     /**
-     * Generate a change of intent at the end of a game
+     * Generate a change of intent at the end of a game (??? this is not the right description)
      */
     fun checkAnswer(ctx: Context, chosenSong: Song?, gameManager: TypingGameManager) {
         val playedSong = gameManager.getCurrentSong()
@@ -244,7 +245,7 @@ class TypingGameActivity : GameActivity() {
      * Function to set a song for the first round and play a game.
      */
     private fun startFirstRound(ctx: Context, gameManager: TypingGameManager){
-        if (gameManager.checkGameStatus() && gameManager.setNextSong()) {
+        if (!endGame(gameManager)) {
             startRound(ctx, gameManager)
         }
         else{
@@ -256,12 +257,14 @@ class TypingGameActivity : GameActivity() {
      * Function called in the end of each round. Displays the button "Next" and
      * sets the next songs to play.
      */
-    private fun endRound(gameManager: GameManager){
-        checkRunnable()
+    override fun endRound(gameManager: GameManager){
+        //checkRunnable()
+        super.endRound(gameManager)
+        //TODO: is it ok for the last round to go to the end game directly? without waiting for the next btn
         toggleNextBtnVisibility(true)
-        if (!gameManager.checkGameStatus() || !gameManager.setNextSong()) {
+        /*if (endGame(gameManager)) {
             switchToEnding(gameManager)
-        }
+        }*/
     }
 
     /**

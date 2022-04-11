@@ -93,19 +93,15 @@ class LyricsBelongGameActivity : GameActivity() {
      * and setting new song for the round.
      */
     fun playRound(gameManager: GameManager) {
-        if (!endGame(gameManager)) {
-            clearResult()
-            //findViewById<Button>(R.id.lyricMatchButton).visibility = View.INVISIBLE
-            toggleBtnVisibility(R.id.lyricMatchButton, false)
-            toggleBtnVisibility(R.id.nextSongButton, false)
-            songName = gameManager.currentSong.getTrackName()
-            artistName = gameManager.currentSong.getArtistName()
-            findViewById<TextView>(R.id.lyricResult).text = "Say something from $songName - $artistName"
-            checkRunnable()
-            barTimer(findViewById(R.id.progressBarLyrics))
-        } else {
-            switchToEnding(gameManager)
-        }
+        clearResult()
+        //findViewById<Button>(R.id.lyricMatchButton).visibility = View.INVISIBLE
+        toggleBtnVisibility(R.id.lyricMatchButton, false)
+        toggleBtnVisibility(R.id.nextSongButton, false)
+        songName = gameManager.currentSong.getTrackName()
+        artistName = gameManager.currentSong.getArtistName()
+        findViewById<TextView>(R.id.lyricResult).text = "Say something from $songName - $artistName"
+        checkRunnable()
+        barTimer(findViewById(R.id.progressBarLyrics))
     }
 
     override fun endRound(gameManager: GameManager) {

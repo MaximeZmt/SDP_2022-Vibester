@@ -89,7 +89,6 @@ class LyricsBelongGameActivity : GameActivity() {
      */
     fun playRound(gameManager: GameManager) {
         clearResult()
-        //findViewById<Button>(R.id.lyricMatchButton).visibility = View.INVISIBLE
         toggleBtnVisibility(R.id.lyricMatchButton, false)
         toggleBtnVisibility(R.id.nextSongButton, false)
         songName = gameManager.currentSong.getTrackName()
@@ -105,7 +104,7 @@ class LyricsBelongGameActivity : GameActivity() {
     }
 
     /**
-     * display the given String in lyricResult
+     * display the given String in lyricResult and show the check button
      */
     private fun updateSpeechResult(speechInput: String) {
         findViewById<TextView>(R.id.lyricResult).text = speechInput
@@ -113,7 +112,7 @@ class LyricsBelongGameActivity : GameActivity() {
     }
 
     /**
-     * get the lyrics of a given song
+     * get the lyrics of a given song and check if the result matches
      */
     private fun getAndCheckLyrics(songName: String, artistName: String, speechInput: String, gameManager: GameManager) {
         val service = LyricsOVHApiInterface.createLyricService()
@@ -129,8 +128,7 @@ class LyricsBelongGameActivity : GameActivity() {
                         lyrics = result.lyrics.toString().replace(",", "")
                         checkLyrics( speechInput, lyrics, gameManager) // be sure the lyrics is ready when checking
                     } else {
-                        findViewById<TextView>(R.id.lyricMatchResult).text =
-                            "No lyrics found, try another song"
+                        findViewById<TextView>(R.id.lyricMatchResult).text = "No lyrics found, try another song"
                         endRound(gameManager)
                     }
                 }

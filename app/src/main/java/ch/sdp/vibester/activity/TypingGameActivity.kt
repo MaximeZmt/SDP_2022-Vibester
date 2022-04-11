@@ -250,10 +250,6 @@ class TypingGameActivity : GameActivity() {
         }
     }
 
-    /**
-     * Function called in the end of each round. Displays the button "Next" and
-     * sets the next songs to play.
-     */
     override fun endRound(gameManager: GameManager){
         //checkRunnable()
         super.endRound(gameManager)

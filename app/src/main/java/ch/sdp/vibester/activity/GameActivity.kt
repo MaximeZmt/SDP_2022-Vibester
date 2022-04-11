@@ -82,6 +82,9 @@ open class GameActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Function called in the end of each round.
+     */
     open fun endRound(gameManager: GameManager) {
         checkRunnable()
         if (endGame(gameManager)) {

@@ -39,6 +39,7 @@ class LyricsBelongGameActivity : GameActivity() {
         if (getIntent != null) {
             gameManager = getIntent.getSerializable("gameManager") as GameManager
             setNextButtonListener(gameManager)
+            setCheckButtonListener()
             super.setMax(intent)
             setFirstSong(gameManager)
         }
@@ -47,17 +48,6 @@ class LyricsBelongGameActivity : GameActivity() {
         btnSpeak.setOnClickListener {
             getSpeechInput()
         }
-
-        val btnCheck = findViewById<Button>(R.id.lyricMatchButton)
-        btnCheck.visibility = View.INVISIBLE
-        btnCheck.setOnClickListener {
-            getAndCheckLyrics(songName, artistName, speechInput, gameManager)
-        }
-
-        /*val btnNext = findViewById<Button>(R.id.nextSongButton)
-        btnNext.setOnClickListener {
-            playRound(gameManager)
-        }*/
 
         barTimer(findViewById(R.id.progressBarLyrics))
     }
@@ -81,12 +71,17 @@ class LyricsBelongGameActivity : GameActivity() {
         }
     }
 
+    private fun setCheckButtonListener(){
+        findViewById<Button>(R.id.lyricMatchButton).setOnClickListener {
+            getAndCheckLyrics(songName, artistName, speechInput, gameManager)
+        }
+    }
+
     private fun setNextButtonListener(gameManager: GameManager) {
         findViewById<Button>(R.id.nextSongButton).setOnClickListener {
             playRound(gameManager)
         }
     }
-
 
     /**
      * Function to set a new round. It includes reinitializing activity elements,
@@ -108,8 +103,6 @@ class LyricsBelongGameActivity : GameActivity() {
         super.endRound(gameManager)
         toggleBtnVisibility(R.id.nextSongButton, true)
     }
-
-
 
     /**
      * display the given String in lyricResult

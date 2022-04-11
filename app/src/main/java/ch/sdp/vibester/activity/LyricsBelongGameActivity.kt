@@ -26,7 +26,7 @@ class LyricsBelongGameActivity : GameActivity() {
     private lateinit var gameManager: GameManager
 
     private val requestAudio = 100
-    private lateinit var speechInput: String
+    private var speechInput = "-1"
     private lateinit var lyrics: String
     private var songName = "Thunder"
     private var artistName = "Imagine Dragons"
@@ -142,6 +142,7 @@ class LyricsBelongGameActivity : GameActivity() {
                     } else {
                         findViewById<TextView>(R.id.lyricMatchResult).text =
                             "No lyrics found, try another song"
+                        endRound(gameManager)
                     }
                 }
             }

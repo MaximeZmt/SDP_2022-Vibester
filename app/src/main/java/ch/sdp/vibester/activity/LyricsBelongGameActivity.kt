@@ -172,7 +172,12 @@ class LyricsBelongGameActivity : GameActivity() {
                     decreaseBarTimer(myBar)
                     handler.postDelayed(this, 999)
                 } else if (myBar.progress == 0) {
-                    getAndCheckLyrics(songName, artistName, speechInput, gameManager)
+                    if (speechInput == "-1"){
+                        gameManager.addWrongSong()
+                        endRound(gameManager)
+                    } else {
+                        getAndCheckLyrics(songName, artistName, speechInput, gameManager)
+                    }
                 }
             }
         }

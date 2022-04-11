@@ -61,7 +61,7 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
     /**
      * Start the game based on the chosen mode
      */
-    fun proceedGame(view:View){
+    fun proceedGame(view: View){
          if(this.game == "local_buzzer"){
              switchToGame(BuzzerSetupActivity())
          }
@@ -104,7 +104,7 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
      * Choose game mode. Set appropriate GameManager.
      */
     fun chooseGame(view: View){
-        when (view.getId()) {
+        when (view.id) {
             R.id.local_buzzer_game_button -> {game  = "local_buzzer"; gameManager = GameManager()}
             R.id.local_typing_game_button -> {game = "local_typing"; gameManager = TypingGameManager()}
             R.id.local_lyrics_game_button -> {game = "local_lyrics"; gameManager = GameManager()}
@@ -121,7 +121,7 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         var artist = ""
         var tag = ""
         val uri = LastfmUri()
-        when (view.getId()) {
+        when (view.id) {
             R.id.btsButton -> {method = LastfmMethod.BY_ARTIST.method; artist = "BTS" }
             R.id.kpopButton -> {method = LastfmMethod.BY_TAG.method; tag = "kpop" }
             R.id.imagDragonsButton -> {method = LastfmMethod.BY_ARTIST.method; artist = "Imagine Dragons"}

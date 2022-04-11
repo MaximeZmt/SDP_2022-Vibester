@@ -175,8 +175,7 @@ class LyricsBelongGameActivity : GameActivity() {
                 }
             }
         }
-        //TODO: make the progress bar work once the switch logic is fixed
-        //handler.post(runnable!!)
+        handler.post(runnable!!)
     }
 
     private fun clearResult() {

@@ -37,7 +37,6 @@ class LyricsBelongGameActivity : GameActivity() {
             gameManager = getIntent.getSerializable("gameManager") as GameManager
             setNextButtonListener(ctx, gameManager)
             setCheckButtonListener(ctx)
-            //startFirstRound(ctx, gameManager)
             gameManager.setNextSong()
             startRound(ctx, gameManager)
             super.setMax(intent)
@@ -148,6 +147,9 @@ class LyricsBelongGameActivity : GameActivity() {
         endRound(gameManager)
     }
 
+    /**
+     * announce if the player won or not
+     */
     private fun hasWon(ctx: Context, score: Int, hasWon: Boolean) {
         if (hasWon) {
             Toast.makeText(ctx, "$score Well Done!", Toast.LENGTH_SHORT).show()
@@ -156,6 +158,9 @@ class LyricsBelongGameActivity : GameActivity() {
         }
     }
 
+    /**
+     * Custom handle of the bar progress.
+     */
     private fun barTimer(ctx: Context, myBar: ProgressBar) {
         initializeBarTimer(myBar)
         runnable = object : Runnable {
@@ -176,22 +181,7 @@ class LyricsBelongGameActivity : GameActivity() {
         handler.post(runnable!!)
     }
 
-    /*private fun startFirstRound(ctx: Context, gameManager: GameManager) {
-        if (!isEndGame(gameManager)) {
-            startRound(ctx, gameManager)
-        } else {
-            switchToEnding(gameManager)
-        }
-    }*/
-
-    // temporary hard-coded first song
-    /*private fun setFirstSong(gameManager: GameManager) {
-        gameManager.currentSong = Song.singleSong(
-            ItunesMusicApi.querySong(songName + " " + artistName, OkHttpClient(), 1).get()
-        )
-    }*/
-
-    // helper functions to test private functions
+    /** helper functions to test private functions */
     fun testCheckLyrics(ctx: Context, lyricToBeCheck: String, lyrics: String, gameManager: GameManager) {
         checkAnswer(ctx, lyricToBeCheck, lyrics, gameManager)
     }

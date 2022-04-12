@@ -111,12 +111,6 @@ class LyricsBelongGameActivityTest {
         return gameManager
     }
 
-    private fun getFirstSong() :Song {
-        return Song.singleSong(
-            ItunesMusicApi.querySong(songName + " " + artistName, OkHttpClient(), 1).get()
-        )
-    }
-
     @get: Rule
     val activityRule = ActivityScenarioRule(LyricsBelongGameActivity::class.java)
 
@@ -176,7 +170,7 @@ class LyricsBelongGameActivityTest {
 
     @Test
     fun nextButtonOnClick() {
-        val gameManager = setGameManager(1)
+        val gameManager = setGameManager(2)
         val intent = Intent(ApplicationProvider.getApplicationContext(), LyricsBelongGameActivity::class.java)
         intent.putExtra("gameManager", gameManager)
         val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
@@ -268,7 +262,7 @@ class LyricsBelongGameActivityTest {
 
     @Test
     fun checkIntentOnNextRoundForCorrectSong() {
-        val gameManager = setGameManager(1)
+        val gameManager = setGameManager(2)
         gameManager.setNextSong()
 
         var currentArtist = ""
@@ -289,21 +283,6 @@ class LyricsBelongGameActivityTest {
         onView(withId(R.id.progressBarLyrics)).check(matches(isDisplayed()))
         assertEquals(1, gameManager.nextSongInd)
         assertEquals(1, gameManager.numPlayedSongs)
-    }
-
-    @Test
-    fun setFirstSongTest() {
-        val gameManager = setGameManager()
-        val intent = Intent(
-            ApplicationProvider.getApplicationContext(),
-            LyricsBelongGameActivity::class.java
-        )
-        val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
-        scn.onActivity { activity ->
-            activity.testSetFirstSong(gameManager)
-        }
-        assertEquals(getFirstSong().getArtistName(), gameManager.currentSong.getArtistName())
-        assertEquals(getFirstSong().getTrackName(), gameManager.currentSong.getTrackName())
     }
 
 

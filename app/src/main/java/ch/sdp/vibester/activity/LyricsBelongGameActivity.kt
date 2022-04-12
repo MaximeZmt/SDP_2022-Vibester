@@ -2,7 +2,6 @@ package ch.sdp.vibester.activity
 
 import android.content.Context
 import android.content.Intent
-import android.content.res.ColorStateList
 import android.os.Bundle
 import android.speech.RecognizerIntent
 import android.view.View
@@ -11,8 +10,6 @@ import ch.sdp.vibester.R
 import ch.sdp.vibester.api.*
 import ch.sdp.vibester.helper.GameManager
 import ch.sdp.vibester.model.Lyric
-import ch.sdp.vibester.model.Song
-import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -27,8 +24,8 @@ class LyricsBelongGameActivity : GameActivity() {
     private val requestAudio = 100
     private var speechInput = "-1"
     private lateinit var lyrics: String
-    private var songName = "Thunder"
-    private var artistName = "Imagine Dragons"
+    private lateinit var songName: String
+    private lateinit var artistName: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,8 +37,10 @@ class LyricsBelongGameActivity : GameActivity() {
             gameManager = getIntent.getSerializable("gameManager") as GameManager
             setNextButtonListener(ctx, gameManager)
             setCheckButtonListener(ctx)
+            //startFirstRound(ctx, gameManager)
+            gameManager.setNextSong()
+            startRound(ctx, gameManager)
             super.setMax(intent)
-            setFirstSong(gameManager)
         }
 
         findViewById<ImageView>(R.id.btnSpeak).setOnClickListener {
@@ -177,12 +176,20 @@ class LyricsBelongGameActivity : GameActivity() {
         handler.post(runnable!!)
     }
 
+    /*private fun startFirstRound(ctx: Context, gameManager: GameManager) {
+        if (!isEndGame(gameManager)) {
+            startRound(ctx, gameManager)
+        } else {
+            switchToEnding(gameManager)
+        }
+    }*/
+
     // temporary hard-coded first song
-    private fun setFirstSong(gameManager: GameManager) {
+    /*private fun setFirstSong(gameManager: GameManager) {
         gameManager.currentSong = Song.singleSong(
             ItunesMusicApi.querySong(songName + " " + artistName, OkHttpClient(), 1).get()
         )
-    }
+    }*/
 
     // helper functions to test private functions
     fun testCheckLyrics(ctx: Context, lyricToBeCheck: String, lyrics: String, gameManager: GameManager) {
@@ -196,10 +203,6 @@ class LyricsBelongGameActivity : GameActivity() {
         getAndCheckLyrics(ctx, songName, artistName, speechInput, gameManager)
     }
 
-    fun testSetFirstSong(gameManager: GameManager) {
-        setFirstSong(gameManager)
-    }
-
     fun getSongName(): String {
         return songName
     }
@@ -210,10 +213,6 @@ class LyricsBelongGameActivity : GameActivity() {
 
     fun testProgressBar(progressTime:Int = 0) {
         superTestProgressBar(findViewById(R.id.progressBarLyrics), progressTime)
-    }
-
-    fun testProgressBarColor(): ColorStateList? {
-        return superTestProgressBarColor(findViewById(R.id.progressBarLyrics))
     }
 
     fun testStartRound(ctx: Context, gameManager: GameManager) {

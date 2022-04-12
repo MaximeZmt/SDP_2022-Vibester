@@ -1,6 +1,5 @@
 package ch.sdp.vibester.activity
 
-import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
 import androidx.appcompat.app.AppCompatActivity
@@ -87,12 +86,12 @@ open class GameActivity : AppCompatActivity() {
      */
     open fun endRound(gameManager: GameManager) {
         checkRunnable()
-        if (endGame(gameManager)) {
+        if (isEndGame(gameManager)) {
             switchToEnding(gameManager)
         }
     }
 
-    fun endGame(gameManager: GameManager): Boolean {
+    fun isEndGame(gameManager: GameManager): Boolean {
         return !gameManager.checkGameStatus() || !gameManager.setNextSong()
     }
 

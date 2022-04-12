@@ -242,7 +242,7 @@ class TypingGameActivity : GameActivity() {
      * Function to set a song for the first round and play a game.
      */
     private fun startFirstRound(ctx: Context, gameManager: TypingGameManager){
-        if (!endGame(gameManager)) {
+        if (!isEndGame(gameManager)) {
             startRound(ctx, gameManager)
         }
         else{
@@ -278,7 +278,6 @@ class TypingGameActivity : GameActivity() {
      */
     fun testProgressBar(progressTime:Int = 0) {
         superTestProgressBar(findViewById(R.id.progressBarTyping), progressTime)
-        //findViewById<ProgressBar>(R.id.progressBarTyping).progress = progressTime
     }
 
     fun testFirstRound(ctx: Context, gameManager: TypingGameManager){
@@ -287,7 +286,6 @@ class TypingGameActivity : GameActivity() {
 
     fun testProgressBarColor(): ColorStateList? {
         return superTestProgressBarColor(findViewById(R.id.progressBarTyping))
-        //findViewById<ProgressBar>(R.id.progressBarTyping).progressTintList
     }
 
 

@@ -55,15 +55,6 @@
         android:visibility="gone"
         android:text="@string/check_for_correctness" />
 
-    <TextView
-        android:id="@+id/lyricMatchResult"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="253dp"
-        android:text="@string/result_will_show_here" />
-
     <Button
         android:id="@+id/nextSongButton"
         android:layout_width="wrap_content"

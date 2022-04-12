@@ -16,7 +16,6 @@ import androidx.test.rule.GrantPermissionRule
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.ItunesMusicApi
 import ch.sdp.vibester.api.LastfmMethod
-import ch.sdp.vibester.helper.GameManager
 import ch.sdp.vibester.helper.TypingGameManager
 import ch.sdp.vibester.model.Song
 import okhttp3.OkHttpClient
@@ -93,25 +92,6 @@ class LyricsBelongGameActivityTest {
             "Thunder, thun-, thunder\n" +
             "Thun-thun-thunder, thunder"
 
-    /*private fun setGameManager() : GameManager {
-        val managerTxt = """
-            {"tracks":
-            {"track":[{"name":"Monday","duration":"259","mbid":"31623cce-9717-4513-9d83-1b5d04e44f9b",
-            "url":"https://www.last.fm/music/Oasis/_/Wonderwall",
-            "streamable":{"#text":"0","fulltrack":"0"},
-            "artist":{"name":"Imagine Dragons","mbid":"ecf9f3a3-35e9-4c58-acaa-e707fba45060","url":"https://www.last.fm/music/Oasis"},
-            "image":[{"#text":"https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png","size":"small"},
-            {"#text":"https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png","size":"medium"},
-            {"#text":"https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png","size":"large"},
-            {"#text":"https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png","size":"extralarge"}],
-            "@attr":{"rank":"1"}}],"@attr":{"tag":"british","page":"1","perPage":"1","totalPages":"66649","total":"66649"}}}
-            """
-        val gameManager = GameManager()
-        gameManager.setGameSongList(managerTxt, LastfmMethod.BY_TAG.method)
-
-        gameManager.currentSong = getFirstSong() // hard-coded
-        return gameManager
-    }*/
     private fun setGameManager(numSongs:Int = 1, valid: Boolean = true): TypingGameManager {
         val epilogue = "{\"tracks\":{\"track\":["
         val prologue =
@@ -220,71 +200,39 @@ class LyricsBelongGameActivityTest {
         Intents.intended(IntentMatchers.hasExtra("str_arr_val", statVal))
     }
 
-/*    @Test
-    fun btnCheckVisibleAfterSpeak() {
+    @Test
+    fun btnCheckVisibilityAfterSpeak() {
         val intent = Intent(
             ApplicationProvider.getApplicationContext(),
             LyricsBelongGameActivity::class.java
         )
         val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
+        onView(withId(R.id.lyricMatchButton)).check(matches(not(isDisplayed())))
         scn.onActivity { activity ->
             activity.testUpdateSpeechResult("hey")
         }
-        onView(withId(R.id.lyricMatchResult)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
-    }*/
-/*
+        onView(withId(R.id.lyricMatchButton)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+    }
+
     @Test
-    fun checkLyricsCorrectTest() {
-        val gameManager = setGameManager()
-        val intent = Intent(
-            ApplicationProvider.getApplicationContext(),
-            LyricsBelongGameActivity::class.java
-        )
-        val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
-        scn.onActivity { activity ->
-            activity.testCheckLyrics(speechInputCorrect, lyrics, gameManager)
-        }
-        Thread.sleep(sleepTime)
-        onView(withId(R.id.lyricMatchResult)).check(matches(withText("res: correct")))
-        assertEquals(1, gameManager.getCorrectSongs().size)
-        assertEquals(1, gameManager.getScore())
-    }*/
-
-/*    @Test
-    fun checkLyricsWrongTest() {
-        val gameManager = setGameManager()
-        val intent = Intent(
-            ApplicationProvider.getApplicationContext(),
-            LyricsBelongGameActivity::class.java
-        )
-        val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
-        scn.onActivity { activity ->
-            activity.testCheckLyrics(speechInputWrong, lyrics, gameManager)
-        }
-        Thread.sleep(sleepTime)
-        onView(withId(R.id.lyricMatchResult)).check(matches(withText("res: too bad")))
-        assertEquals(true, gameManager.getScore() == 0)
-        assertEquals(1, gameManager.getWrongSongs().size)
-    }*/
-
-/*    @Test
     fun getAndCheckLyricsGivesCorrectAnswerWhenMatch() {
         val gameManager = setGameManager()
+        gameManager.setNextSong()
         val intent = Intent(
             ApplicationProvider.getApplicationContext(),
             LyricsBelongGameActivity::class.java
         )
         val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
+        val ctx = ApplicationProvider.getApplicationContext() as Context
         scn.onActivity { activity ->
-            activity.testGetAndCheckLyrics(songName, artistName, speechInputCorrect, gameManager)
+            activity.testGetAndCheckLyrics(ctx, songName, artistName, speechInputCorrect, gameManager)
         }
-        //FIXME
-        // API takes a lot of time to process this request, thus resulting in wrong test output
-//        Thread.sleep(10000)
-//        onView(withId(R.id.lyricMatchResult)).check(matches(withText("res: correct")))
-    }*/
+        //FIXME: API takes a lot of time to process this request
+        //comment the following lines if this test fail
+        Thread.sleep(sleepTime)
+        assertEquals(true, gameManager.getScore() == 1)
+    }
 
-/*
     @Test
     fun checkIntentOnEndingForWrongSong() {
         val gameManager = setGameManager()
@@ -296,8 +244,7 @@ class LyricsBelongGameActivityTest {
         val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
         val ctx = ApplicationProvider.getApplicationContext() as Context
         scn.onActivity { activity ->
-            activity.testCheckLyrics(speechInputWrong, lyrics, gameManager)
-            activity.playRound(gameManager)
+            activity.testCheckLyrics(ctx, speechInputWrong, lyrics, gameManager)
         }
         val incArray: ArrayList<String> = ArrayList(
             gameManager.getWrongSongs().map { it.getTrackName() + " - " + it.getArtistName() })
@@ -318,12 +265,11 @@ class LyricsBelongGameActivityTest {
         Intents.intended(IntentMatchers.hasExtra("str_arr_name", statNames))
         Intents.intended(IntentMatchers.hasExtra("str_arr_val", statVal))
     }
-*/
 
-/*    @Test
+    @Test
     fun checkIntentOnNextRoundForCorrectSong() {
-        val gameManager = setGameManager()
-        gameManager.gameSize = 1
+        val gameManager = setGameManager(1)
+        gameManager.setNextSong()
 
         var currentArtist = ""
         var currentSong = ""
@@ -332,11 +278,10 @@ class LyricsBelongGameActivityTest {
         val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
         val ctx = ApplicationProvider.getApplicationContext() as Context
         scn.onActivity { activity ->
-            activity.playRound(gameManager)
+            activity.testStartRound(ctx, gameManager)
             currentArtist = activity.getArtistName()
             currentSong = activity.getSongName()
         }
-        onView(withId(R.id.lyricMatchResult)).check(matches(withText("result will show here")))
         onView(withId(R.id.lyricMatchButton)).check(matches(not(isDisplayed())))
         assertEquals(artistName, currentArtist)
         assertEquals("Monday", currentSong)
@@ -344,7 +289,7 @@ class LyricsBelongGameActivityTest {
         onView(withId(R.id.progressBarLyrics)).check(matches(isDisplayed()))
         assertEquals(1, gameManager.nextSongInd)
         assertEquals(1, gameManager.numPlayedSongs)
-    }*/
+    }
 
     @Test
     fun setFirstSongTest() {
@@ -361,17 +306,5 @@ class LyricsBelongGameActivityTest {
         assertEquals(getFirstSong().getTrackName(), gameManager.currentSong.getTrackName())
     }
 
-/*    @Test
-    fun clearResultTest() {
-        val intent = Intent(
-            ApplicationProvider.getApplicationContext(),
-            LyricsBelongGameActivity::class.java
-        )
-        val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
-        scn.onActivity { activity ->
-            activity.testClearResult()
-        }
-        onView(withId(R.id.lyricMatchResult)).check(matches(withText("result will show here")))
-    }*/
 
 }

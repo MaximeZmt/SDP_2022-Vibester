@@ -185,10 +185,9 @@ class LyricsBelongGameActivity : GameActivity() {
     }
 
     // helper functions to test private functions
-    /*fun testCheckLyrics(ctx: Context, lyricToBeCheck: String, lyrics: String, gameManager: GameManager) {
+    fun testCheckLyrics(ctx: Context, lyricToBeCheck: String, lyrics: String, gameManager: GameManager) {
         checkAnswer(ctx, lyricToBeCheck, lyrics, gameManager)
     }
-*/
     fun testUpdateSpeechResult(speechInput: String) {
         updateSpeechResult(speechInput)
     }
@@ -215,6 +214,10 @@ class LyricsBelongGameActivity : GameActivity() {
 
     fun testProgressBarColor(): ColorStateList? {
         return superTestProgressBarColor(findViewById(R.id.progressBarLyrics))
+    }
+
+    fun testStartRound(ctx: Context, gameManager: GameManager) {
+        startRound(ctx, gameManager)
     }
 
 }

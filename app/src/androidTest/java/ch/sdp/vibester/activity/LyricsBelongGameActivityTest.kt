@@ -135,14 +135,12 @@ class LyricsBelongGameActivityTest {
     }
 
     @Test
-    fun buttonsShouldBeDisplayedOnCreate() {
+    fun elementsShouldBeDisplayedOnCreate() {
         onView(withId(R.id.btnSpeak)).check(matches(isDisplayed()))
-        onView(withId(R.id.lyricMatchButton)).check(matches(not(isDisplayed())))
-        onView(withId(R.id.nextSongButton)).check(matches(isDisplayed()))
         onView(withId(R.id.progressBarLyrics)).check(matches(isDisplayed()))
     }
 
-/*    @Test
+    @Test
     fun handleLyricsNoFoundCorrectly() {
         val gameManager = setGameManager()
         val intent = Intent(
@@ -150,14 +148,18 @@ class LyricsBelongGameActivityTest {
             LyricsBelongGameActivity::class.java
         )
         val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
+        val ctx = ApplicationProvider.getApplicationContext() as Context
         scn.onActivity { activity ->
-            activity.testGetAndCheckLyrics("the best song in the world", "Mr.Mystery", "", gameManager)
+            activity.testGetAndCheckLyrics(ctx, "the best song in the world", "Mr.Mystery", "", gameManager)
         }
-        //FIXME
-        // API takes a lot of time to process this request, thus resulting in wrong test output
-//        Thread.sleep(10000)
-//        onView(withId(R.id.lyricMatchResult)).check(matches(withText("No lyrics found, try another song")))
-    }*/
+        //FIXME: API takes a lot of time to process this request
+        //comment the following lines if this test fail
+        Thread.sleep(sleepTime)
+        onView(withId(R.id.nextSongButton)).check(matches(isDisplayed()))
+        //song skipped, not consider as wrong
+        assertEquals(true, gameManager.getScore() == 0)
+        assertEquals(true, gameManager.getWrongSongs().size == 0)
+    }
 
     @Test
     fun shouldUpdateSpeechFromInput() {

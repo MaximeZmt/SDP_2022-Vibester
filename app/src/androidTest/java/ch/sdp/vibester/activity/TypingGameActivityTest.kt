@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.widget.FrameLayout
 import android.widget.LinearLayout
+import android.widget.ProgressBar
 import androidx.core.content.ContextCompat
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
@@ -20,8 +21,6 @@ import ch.sdp.vibester.R
 import ch.sdp.vibester.api.LastfmMethod
 import ch.sdp.vibester.helper.TypingGameManager
 import ch.sdp.vibester.model.Song
-import com.google.android.material.color.MaterialColors.getColor
-import org.hamcrest.Matchers.allOf
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -335,7 +334,7 @@ class TypingGameActivityTest {
         intent.putExtra("gameManager", gameManager)
         val scn: ActivityScenario<TypingGameActivity> = ActivityScenario.launch(intent)
         val ctx = ApplicationProvider.getApplicationContext() as Context
-        var color:ColorStateList = ctx.getResources().getColorStateList(R.color.floral_white)
+        var color:ColorStateList = ctx.resources.getColorStateList(R.color.floral_white)
 
         /* Test progress bar is yellow*/
         scn.onActivity { activity ->
@@ -345,7 +344,7 @@ class TypingGameActivityTest {
         scn.onActivity { activity->
             color = activity.testProgressBarColor()!!
         }
-        assertEquals(color, ctx.getResources().getColorStateList(R.color.maximum_yellow_red))
+        assertEquals(color, ctx.resources.getColorStateList(R.color.maximum_yellow_red))
 
         /* Test progress bar is red*/
         scn.onActivity { activity ->
@@ -355,7 +354,7 @@ class TypingGameActivityTest {
         scn.onActivity { activity->
             color = activity.testProgressBarColor()!!
         }
-        assertEquals(color, ctx.getResources().getColorStateList(R.color.light_coral))
+        assertEquals(color, ctx.resources.getColorStateList(R.color.light_coral))
     }
 
 }

@@ -96,6 +96,14 @@ open class GameActivity : AppCompatActivity() {
         return !gameManager.checkGameStatus() || !gameManager.setNextSong()
     }
 
+    fun superTestProgressBar(myBar: ProgressBar, progressTime: Int=0){
+        myBar.progress = progressTime
+    }
+
+    fun superTestProgressBarColor(myBar: ProgressBar): ColorStateList? {
+        return myBar.progressTintList
+    }
+
 
 
 }

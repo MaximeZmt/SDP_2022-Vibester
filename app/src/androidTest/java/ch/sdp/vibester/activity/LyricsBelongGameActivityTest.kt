@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.matcher.IntentMatchers
@@ -16,6 +17,7 @@ import ch.sdp.vibester.R
 import ch.sdp.vibester.api.ItunesMusicApi
 import ch.sdp.vibester.api.LastfmMethod
 import ch.sdp.vibester.helper.GameManager
+import ch.sdp.vibester.helper.TypingGameManager
 import ch.sdp.vibester.model.Song
 import okhttp3.OkHttpClient
 import org.hamcrest.CoreMatchers.not
@@ -91,7 +93,7 @@ class LyricsBelongGameActivityTest {
             "Thunder, thun-, thunder\n" +
             "Thun-thun-thunder, thunder"
 
-    private fun setGameManager() : GameManager {
+    /*private fun setGameManager() : GameManager {
         val managerTxt = """
             {"tracks":
             {"track":[{"name":"Monday","duration":"259","mbid":"31623cce-9717-4513-9d83-1b5d04e44f9b",
@@ -108,6 +110,24 @@ class LyricsBelongGameActivityTest {
         gameManager.setGameSongList(managerTxt, LastfmMethod.BY_TAG.method)
 
         gameManager.currentSong = getFirstSong() // hard-coded
+        return gameManager
+    }*/
+    private fun setGameManager(numSongs:Int = 1, valid: Boolean = true): TypingGameManager {
+        val epilogue = "{\"tracks\":{\"track\":["
+        val prologue =
+            "], \"@attr\":{\"tag\":\"british\",\"page\":\"1\",\"perPage\":\"1\",\"totalPages\":\"66649\",\"total\":\"66649\"}}}"
+        var middle = "{\"name\":\"Monday\",\"artist\":{\"name\":\"Imagine Dragons\"}}"
+        if(!valid) middle = "{\"name\":\"TEST_SONG_TEST\",\"artist\":{\"name\":\"TEST_ARTIST_TEST\"}}"
+        val gameManager = TypingGameManager()
+
+        var i = 0
+        var completeMiddle = middle
+        while(i < numSongs-1){
+            completeMiddle += ",$middle"
+            i++
+        }
+        gameManager.setGameSongList(epilogue + completeMiddle + prologue, LastfmMethod.BY_TAG.method)
+
         return gameManager
     }
 
@@ -172,6 +192,32 @@ class LyricsBelongGameActivityTest {
             activity.testUpdateSpeechResult("hey")
         }
         onView(withId(R.id.lyricResult)).check(matches(withText("hey")))
+    }
+
+    @Test
+    fun nextButtonOnClick() {
+        val gameManager = setGameManager(1)
+        val intent = Intent(ApplicationProvider.getApplicationContext(), LyricsBelongGameActivity::class.java)
+        intent.putExtra("gameManager", gameManager)
+        val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
+        scn.onActivity { activityRule -> activityRule.testProgressBar() }
+        Thread.sleep(1000)
+
+        onView(withId(R.id.nextSongButton)).check(matches(isDisplayed())).perform(click())
+        scn.onActivity { activityRule -> activityRule.testProgressBar() }
+        Thread.sleep(1000)
+
+        val statNames: ArrayList<String> = arrayListOf()
+        val statName = "Total Score"
+        statNames.addAll(arrayOf(statName, statName, statName, statName, statName))
+
+        val statVal: ArrayList<String> = arrayListOf()
+        val score = "0"
+        statVal.addAll(arrayOf(score, score, score, score, score))
+        Intents.intended(IntentMatchers.hasComponent(GameEndingActivity::class.java.name))
+        Intents.intended(IntentMatchers.hasExtra("nbIncorrectSong", 2))
+        Intents.intended(IntentMatchers.hasExtra("str_arr_name", statNames))
+        Intents.intended(IntentMatchers.hasExtra("str_arr_val", statVal))
     }
 
 /*    @Test

@@ -43,7 +43,7 @@ class TypingGameActivityTest {
         var i = 0
         var completeMiddle = middle
         while(i < numSongs-1){
-            completeMiddle += ","+middle
+            completeMiddle += ",$middle"
             i++
         }
         gameManager.setGameSongList(epilogue + completeMiddle + prologue, LastfmMethod.BY_TAG.method)

@@ -2,6 +2,7 @@ package ch.sdp.vibester.activity
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.speech.RecognizerIntent
 import android.view.View
@@ -85,7 +86,7 @@ class LyricsBelongGameActivity : GameActivity() {
      * Function to set a new round. It includes reinitializing activity elements,
      * and setting new song for the round.
      */
-    fun startRound(ctx: Context, gameManager: GameManager) {
+    private fun startRound(ctx: Context, gameManager: GameManager) {
         toggleBtnVisibility(R.id.lyricMatchButton, false)
         toggleBtnVisibility(R.id.nextSongButton, false)
         songName = gameManager.currentSong.getTrackName()
@@ -207,4 +208,13 @@ class LyricsBelongGameActivity : GameActivity() {
     fun getArtistName(): String {
         return artistName
     }
+
+    fun testProgressBar(progressTime:Int = 0) {
+        superTestProgressBar(findViewById(R.id.progressBarLyrics), progressTime)
+    }
+
+    fun testProgressBarColor(): ColorStateList? {
+        return superTestProgressBarColor(findViewById(R.id.progressBarLyrics))
+    }
+
 }

@@ -277,7 +277,7 @@ class TypingGameActivity : GameActivity() {
      * Functions for testing
      */
     fun testProgressBar(progressTime:Int = 0) {
-        superTestProgressBar(findViewById<ProgressBar>(R.id.progressBarTyping), progressTime)
+        superTestProgressBar(findViewById(R.id.progressBarTyping), progressTime)
         //findViewById<ProgressBar>(R.id.progressBarTyping).progress = progressTime
     }
 
@@ -286,7 +286,7 @@ class TypingGameActivity : GameActivity() {
     }
 
     fun testProgressBarColor(): ColorStateList? {
-        return superTestProgressBarColor(findViewById<ProgressBar>(R.id.progressBarTyping))
+        return superTestProgressBarColor(findViewById(R.id.progressBarTyping))
         //findViewById<ProgressBar>(R.id.progressBarTyping).progressTintList
     }
 

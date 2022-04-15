@@ -1,7 +1,9 @@
 package ch.sdp.vibester.activity
 
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.text.InputType
+import android.util.Log
 import android.view.Window
 import android.widget.Button
 import android.widget.EditText
@@ -19,6 +21,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -35,7 +38,7 @@ class ProfileActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_profile)
 
-        setupProfile(UserSharedPref.getUser(this))
+        setupProfile(UserSharedPref.getUser(applicationContext))
 
         val editUsername = findViewById<Button>(R.id.editUser)
         val editHandle = findViewById<Button>(R.id.editHandle)
@@ -114,14 +117,23 @@ class ProfileActivity : AppCompatActivity() {
         CoroutineScope(Dispatchers.Main).launch {
             val task = async(Dispatchers.IO) {
                 try {
-                    val bit = BitmapGetterApi.download("https://" + user.image)
-                    bit.get()
+                    Log.e("DISP img ",user.image)
+                    val bit = BitmapGetterApi.download(user.image)
+                    bit.get(10, TimeUnit.SECONDS)
                 }catch (e: Exception){
                     null
                 }
             }
             val bm = task.await()
-            findViewById<ImageView>(R.id.avatar).setImageBitmap(bm)
+            if (bm != null) {
+                Log.e("tttt", bm.height.toString() + " - " + bm.width.toString())
+            }else{
+                Log.e("nullllll", "ahhhh merde")
+            }
+            val avatar = findViewById<ImageView>(R.id.avatar)
+            if(bm != null){
+                avatar.setImageBitmap(Bitmap.createScaledBitmap(bm, 1000,1000, false))
+            }
         }
     }
 }

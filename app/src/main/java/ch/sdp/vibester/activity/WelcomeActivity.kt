@@ -19,17 +19,26 @@ class WelcomeActivity : AppCompatActivity() {
         supportActionBar?.hide()
         setContentView(R.layout.activity_welcome_screen)
 
+        UserSharedPref.userReset(applicationContext, "lisa@test.com")
+        Log.e("MAILLL ", UserSharedPref.getUser(applicationContext).email)
+        Log.e("IMAGE ", UserSharedPref.getUser(applicationContext).image)
+
+
+
         val tv = findViewById<TextView>(R.id.user_status)
-        val username = UserSharedPref.getUser(this).username
+        val username = UserSharedPref.getUser(applicationContext).username
         if(username != "")
         {
             tv.text = "User: " + username
         }
 
-        val currentEmail = UserSharedPref.getUser(this).email
+        /*
+        val currentEmail = UserSharedPref.getUser(applicationContext).email
         if (currentEmail != null){
             UserSharedPref.userReset(this, currentEmail)
         }
+
+         */
     }
 
     private fun sendDirectIntent(arg: Class<*>?) {

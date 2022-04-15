@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.R
 import ch.sdp.vibester.auth.FireBaseAuthenticator
+import ch.sdp.vibester.model.UserSharedPref
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions

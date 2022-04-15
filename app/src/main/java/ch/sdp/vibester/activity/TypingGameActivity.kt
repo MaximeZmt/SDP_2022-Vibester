@@ -261,6 +261,7 @@ class TypingGameActivity : GameActivity() {
      */
     private fun endRound(gameManager: GameManager){
         gameIsOn = false
+        findViewById<EditText>(R.id.yourGuessET).setEnabled(false)
         checkRunnable()
         toggleNextBtnVisibility(true)
         if (!gameManager.checkGameStatus() || !gameManager.setNextSong()) {
@@ -276,6 +277,7 @@ class TypingGameActivity : GameActivity() {
         gameIsOn = true
         findViewById<LinearLayout>(R.id.displayGuess).removeAllViews()
         findViewById<EditText>(R.id.yourGuessET).text.clear()
+        findViewById<EditText>(R.id.yourGuessET).setEnabled(true)
         toggleNextBtnVisibility(false)
         gameManager.playSong()
         checkRunnable()

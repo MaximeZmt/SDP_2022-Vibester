@@ -28,6 +28,7 @@ import okhttp3.OkHttpClient
 
 class TypingGameActivity : GameActivity() {
     private lateinit var gameManager: TypingGameManager
+    private var gameIsOn: Boolean = true // done to avoid clicks on songs after the round is over
 
     companion object {
         /**
@@ -226,13 +227,15 @@ class TypingGameActivity : GameActivity() {
 
         //Create the Listener that is executed if we click on the frame layer
         frameLay.setOnClickListener {
-            frameLay.setBackgroundColor(getColor(ctx, R.color.tiffany_blue))
-            guessLayout.removeAllViews()
-            guessLayout.addView(frameLay)
-            if (gameManager.playingMediaPlayer()) {
-                gameManager.stopMediaPlayer()
+            if(gameIsOn){
+                frameLay.setBackgroundColor(getColor(ctx, R.color.tiffany_blue))
+                guessLayout.removeAllViews()
+                guessLayout.addView(frameLay)
+                if (gameManager.playingMediaPlayer()) {
+                    gameManager.stopMediaPlayer()
+                }
+                checkAnswer(ctx, song, gameManager)
             }
-            checkAnswer(ctx, song, gameManager)
         }
 
         guessLayout.addView(generateSpace(75, 75, ctx))
@@ -257,6 +260,7 @@ class TypingGameActivity : GameActivity() {
      * sets the next songs to play.
      */
     private fun endRound(gameManager: GameManager){
+        gameIsOn = false
         checkRunnable()
         toggleNextBtnVisibility(true)
         if (!gameManager.checkGameStatus() || !gameManager.setNextSong()) {
@@ -269,6 +273,7 @@ class TypingGameActivity : GameActivity() {
      * and playing new song for the round.
      */
     private fun startRound(ctx: Context, gameManager: TypingGameManager) {
+        gameIsOn = true
         findViewById<LinearLayout>(R.id.displayGuess).removeAllViews()
         findViewById<EditText>(R.id.yourGuessET).text.clear()
         toggleNextBtnVisibility(false)

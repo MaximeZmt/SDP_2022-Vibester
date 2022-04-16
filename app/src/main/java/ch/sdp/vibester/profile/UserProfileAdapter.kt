@@ -1,29 +1,30 @@
-package ch.sdp.vibester.activity
+package ch.sdp.vibester.profile
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
-import ch.sdp.vibester.profile.UserProfile
 
 /**
  * UserAdapter that is used in the RecycleView to search users
  */
-class UserAdapter(
-    private val mContext: Context,
-    private val mUsers: List<UserProfile>,
-): RecyclerView.Adapter<UserAdapter.UserProfileViewHolder?>() {
+class UserProfileAdapter(val users: MutableList<UserProfile>):
+    RecyclerView.Adapter<UserProfileAdapter.UserProfileViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserProfileViewHolder {
-        val view: View = LayoutInflater.from(mContext).inflate(R.layout.user_search_item_layout, parent, false)
+        val view: View = LayoutInflater.from(parent.context)
+            .inflate(R.layout.user_search_item_layout, parent, false)
         return UserProfileViewHolder(view)
     }
 
+    override fun onBindViewHolder(holder: UserProfileViewHolder, position: Int) {
+        holder.bind(users[position])
+    }
+
     override fun getItemCount(): Int {
-        return  mUsers.size
+        return  users.size
     }
 
     /**
@@ -35,12 +36,21 @@ class UserAdapter(
          */
         fun bind(user: UserProfile) {
             itemView.findViewById<TextView>(R.id.username).text = user.username
-//            itemView.findViewById<ImageView>(R.id.iv_photo).loadImg(player.photo)
+//            itemView.findViewById<ImageView>(R.id.iv_photo).loadImg(player.photo) TODO fix the image upload
         }
     }
 
-    override fun onBindViewHolder(holder: UserProfileViewHolder, position: Int) {
-        holder.bind(mUsers[position])
+    /**
+     * Functions for testing
+     */
+
+    fun addUsers(users: List<UserProfile>) {
+        this.users.apply {
+            clear()
+            addAll(users)
+        }
+        notifyDataSetChanged()
     }
+
 
 }

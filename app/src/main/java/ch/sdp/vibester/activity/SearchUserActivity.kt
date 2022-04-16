@@ -1,10 +1,8 @@
 package ch.sdp.vibester.activity
 
-import android.content.ContentValues
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.Window
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
 import ch.sdp.vibester.database.Database
 import ch.sdp.vibester.profile.UserProfile
+import ch.sdp.vibester.profile.UserProfileAdapter
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -23,8 +22,8 @@ import com.google.firebase.database.ValueEventListener
 
 class SearchUserActivity : AppCompatActivity() {
 
-    private var userAdapter: UserAdapter? = null
-    private var mUsers: List<UserProfile>? = null
+    private var userProfileAdapter: UserProfileAdapter? = null
+    private var mUsers: MutableList<UserProfile>? = null
     private var recyclerView: RecyclerView? = null
     private var searchEditText: EditText? = null
     private val dbRef: DatabaseReference = Database.get().getReference("users")
@@ -71,8 +70,8 @@ class SearchUserActivity : AppCompatActivity() {
                         (mUsers as ArrayList<UserProfile>).add(user)
                     }
                 }
-                userAdapter = UserAdapter(this@SearchUserActivity, mUsers!!)
-                recyclerView!!.adapter = userAdapter
+                userProfileAdapter = UserProfileAdapter(mUsers!!)
+                recyclerView!!.adapter = userProfileAdapter
             }
             override fun onCancelled(error: DatabaseError) {
             }

@@ -1,8 +1,10 @@
 package ch.sdp.vibester.activity
 
+import android.content.ContentValues
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.Window
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
@@ -25,7 +27,7 @@ class SearchUserActivity : AppCompatActivity() {
     private var users: MutableList<UserProfile>? = null
     private var recyclerView: RecyclerView? = null
     private var searchEditText: EditText? = null
-    private val dbRef: DatabaseReference = Database.get().getReference("users")
+    private var dbRef: DatabaseReference = Database.get().getReference("users")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,6 +78,7 @@ class SearchUserActivity : AppCompatActivity() {
                 recyclerView!!.adapter = userProfileAdapter
             }
             override fun onCancelled(error: DatabaseError) {
+                Log.w(ContentValues.TAG, "searchForUsers:onCancelled", error.toException())
             }
         })
     }

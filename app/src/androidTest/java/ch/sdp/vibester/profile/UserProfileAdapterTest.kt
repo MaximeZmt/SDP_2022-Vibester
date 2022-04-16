@@ -3,8 +3,6 @@ package ch.sdp.vibester.profile
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ApplicationProvider
-import ch.sdp.vibester.profile.UserProfileAdapter
-import ch.sdp.vibester.profile.UserProfile
 import org.hamcrest.CoreMatchers
 import org.hamcrest.MatcherAssert
 import org.junit.Test

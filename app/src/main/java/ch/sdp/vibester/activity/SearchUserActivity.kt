@@ -41,7 +41,8 @@ class SearchUserActivity : AppCompatActivity() {
         mUsers = ArrayList()
 
         searchEditText = findViewById(R.id.searchUserET)
-        displayAllUsers()
+        searchForUsers("")
+
 
         searchEditText!!.addTextChangedListener(object:TextWatcher{
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -52,28 +53,6 @@ class SearchUserActivity : AppCompatActivity() {
             }
 
             override fun afterTextChanged(p0: Editable?) {
-            }
-        })
-    }
-
-    private fun displayAllUsers(){
-        val dbRef = Database.get().getReference("users")
-
-        dbRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                (mUsers as ArrayList<UserProfile>).clear()
-                if (searchEditText!!.text.isEmpty()) {
-                    for (dataSnapShot in snapshot.children) {
-                        val user: UserProfile? = dataSnapShot.getValue(UserProfile::class.java)
-                        if (user != null) {
-                            (mUsers as ArrayList<UserProfile>).add(user)
-                        }
-                    }
-                    userProfileAdapter = UserProfileAdapter(mUsers!!)
-                    recyclerView!!.adapter = userProfileAdapter
-                }
-            }
-            override fun onCancelled(error: DatabaseError) {
             }
         })
     }

@@ -10,6 +10,7 @@ import com.google.firebase.ktx.Firebase
 
 object Database {
     fun get(): FirebaseDatabase {
-        return Firebase.database("https://vibester-sdp-default-rtdb.europe-west1.firebasedatabase.app")
+        val db = Firebase.database("https://vibester-sdp-default-rtdb.europe-west1.firebasedatabase.app")
+        return db
     }
 }

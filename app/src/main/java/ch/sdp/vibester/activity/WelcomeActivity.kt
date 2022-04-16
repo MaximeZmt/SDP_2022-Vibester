@@ -9,8 +9,10 @@ import android.view.Window.FEATURE_NO_TITLE
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.R
+import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.model.Song
 import ch.sdp.vibester.model.UserSharedPref
+import com.google.firebase.auth.FirebaseAuth
 
 class WelcomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,26 +21,22 @@ class WelcomeActivity : AppCompatActivity() {
         supportActionBar?.hide()
         setContentView(R.layout.activity_welcome_screen)
 
-        UserSharedPref.userReset(applicationContext, "lisa@test.com")
+        //UserSharedPref.userReset(applicationContext, "mickey@mouse.com")
         Log.e("MAILLL ", UserSharedPref.getUser(applicationContext).email)
         Log.e("IMAGE ", UserSharedPref.getUser(applicationContext).image)
+        Log.e("CURR FIREBASE USER: ", FirebaseAuth.getInstance().currentUser?.email.toString())
 
 
 
         val tv = findViewById<TextView>(R.id.user_status)
         val username = UserSharedPref.getUser(applicationContext).username
-        if(username != "")
+        Log.e("USN: ", username)
+        if(FirebaseAuth.getInstance().currentUser != null)
         {
-            tv.text = "User: " + username
+            tv.text = "User: " + FirebaseAuth.getInstance().currentUser?.email.toString()
         }
 
-        /*
-        val currentEmail = UserSharedPref.getUser(applicationContext).email
-        if (currentEmail != null){
-            UserSharedPref.userReset(this, currentEmail)
-        }
 
-         */
     }
 
     private fun sendDirectIntent(arg: Class<*>?) {

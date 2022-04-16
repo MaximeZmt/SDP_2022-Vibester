@@ -117,7 +117,7 @@ class ProfileActivity : AppCompatActivity() {
         CoroutineScope(Dispatchers.Main).launch {
             val task = async(Dispatchers.IO) {
                 try {
-                    Log.e("DISP img ",user.image)
+                    Log.e(getString(R.string.log_tag),user.image)
                     val bit = BitmapGetterApi.download(user.image)
                     bit.get(10, TimeUnit.SECONDS)
                 }catch (e: Exception){
@@ -126,12 +126,14 @@ class ProfileActivity : AppCompatActivity() {
             }
             val bm = task.await()
             if (bm != null) {
-                Log.e("tttt", bm.height.toString() + " - " + bm.width.toString())
+                Log.e(getString(R.string.log_tag), bm.height.toString() + " - " + bm.width.toString())
             }else{
-                Log.e("nullllll", "ahhhh merde")
+                Log.e(getString(R.string.log_tag), "ahhhh merde")
             }
-            val avatar = findViewById<ImageView>(R.id.avatar)
+
             if(bm != null){
+                val avatar = findViewById<ImageView>(R.id.avatar)
+                Log.i(getString(R.string.log_tag), "test")
                 avatar.setImageBitmap(Bitmap.createScaledBitmap(bm, 1000,1000, false))
             }
         }

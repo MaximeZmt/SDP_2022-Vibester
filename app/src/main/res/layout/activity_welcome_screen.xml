@@ -69,7 +69,7 @@
                 android:elevation="10dp"
                 android:onClick="switchToProfile"
                 android:stateListAnimator="@null"
-                android:text="@string/profile"
+                android:text="@string/welcomeScreen_stats"
                 android:translationZ="10dp"
                 app:icon="@android:drawable/ic_menu_edit" />
 
@@ -95,7 +95,7 @@
                 android:elevation="10dp"
                 android:onClick="switchToSettings"
                 android:stateListAnimator="@null"
-                android:text="@string/settings"
+                android:text="@string/welcomeScreen_account"
                 android:translationZ="10dp"
                 app:icon="@android:drawable/ic_menu_manage" />
 

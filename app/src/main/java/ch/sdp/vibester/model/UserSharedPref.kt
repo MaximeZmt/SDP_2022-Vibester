@@ -57,7 +57,6 @@ class UserSharedPref private constructor() {
          */
         fun setUser(ctx: Context, user: UserProfile, online: Boolean){
             val edit = getSharedPreferences(ctx)?.edit()
-            Log.e("set User", " - - - ")
             if (edit != null) {
                 edit.putString(HANDLE, user.handle)
                 edit.putString(USERNAME, user.username)

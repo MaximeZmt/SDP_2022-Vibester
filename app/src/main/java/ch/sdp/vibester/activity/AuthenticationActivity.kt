@@ -10,12 +10,14 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.R
 import ch.sdp.vibester.auth.FireBaseAuthenticator
+import ch.sdp.vibester.helper.IntentSwitcher
 import ch.sdp.vibester.model.UserSharedPref
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -45,10 +47,16 @@ class AuthenticationActivity : AppCompatActivity() {
         val btCreateAcc = findViewById<Button>(R.id.createAcc)
         val btLogIn = findViewById<Button>(R.id.logIn)
         val googleSignIn = findViewById<Button>(R.id.googleBtn)
+        val logoutbutton = findViewById<Button>(R.id.logout)
 
         val username = findViewById<EditText>(R.id.username)
         val password = findViewById<EditText>(R.id.password)
         email = findViewById(R.id.email)
+
+        logoutbutton.setOnClickListener{
+            FirebaseAuth.getInstance().signOut()
+            IntentSwitcher.switchBackToWelcome(this)
+        }
 
         btCreateAcc.setOnClickListener {
             authenticate(username.text.toString(), password.text.toString(), true)

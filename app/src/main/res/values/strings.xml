@@ -1,5 +1,16 @@
 <resources>
+    <!-- Cleaned String-->
+    <!-- General -->
     <string name="app_name">Vibester</string>
+    <string name="log_tag">[VibesterLOG]</string>
+
+    <!-- Welcome Screen -->
+    <string name="welcomeScreen_account">My Account</string>
+    <string name="welcomeScreen_stats">My Stats</string>
+
+    <!-- OLD String-->
+
+
     <string name="greeting_txt">Greeting:</string>
     <string name="default_txtview_txt">empty text view</string>
     <string name="button_txt">Enter</string>

@@ -20,7 +20,7 @@
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".SearchUsers"
+            android:name=".activity.SearchUserActivity"
             android:exported="false" />
         <activity
             android:name=".activity.DownloadActivity"

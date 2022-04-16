@@ -3,13 +3,11 @@ package ch.sdp.vibester.activity
 //import ch.sdp.vibester.profile.ProfileDataProvider
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.Window.FEATURE_NO_TITLE
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.R
-import ch.sdp.vibester.model.Song
 import ch.sdp.vibester.model.UserSharedPref
 
 class WelcomeActivity : AppCompatActivity() {
@@ -57,14 +55,6 @@ class WelcomeActivity : AppCompatActivity() {
         sendDirectIntent(DownloadActivity::class.java)
     }
 
-    /*
-     * Belongs to a previously implemented button, taken out for UI purposes.
-     * Might bring it back, thus leaving the code for now.
-     */
-
-    /*fun switchToLogin(view: View) { //FILLER INTENT
-        sendDirectIntent(GameSetupScreen::class.java)
-    }*/
     fun switchToSearch(view: View) {
         sendDirectIntent(SearchUserActivity::class.java)
     }

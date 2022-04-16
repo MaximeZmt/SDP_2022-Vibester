@@ -17,13 +17,12 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 
-
-
-
+/**
+ * Search for users based on their usernames.
+ */
 class SearchUserActivity : AppCompatActivity() {
-
     private var userProfileAdapter: UserProfileAdapter? = null
-    private var mUsers: MutableList<UserProfile>? = null
+    private var users: MutableList<UserProfile>? = null
     private var recyclerView: RecyclerView? = null
     private var searchEditText: EditText? = null
     private val dbRef: DatabaseReference = Database.get().getReference("users")
@@ -38,41 +37,42 @@ class SearchUserActivity : AppCompatActivity() {
         recyclerView!!.setHasFixedSize(true)
         recyclerView!!.layoutManager = LinearLayoutManager(this)
 
-        mUsers = ArrayList()
+        users = ArrayList()
 
         searchEditText = findViewById(R.id.searchUserET)
         searchForUsers("")
 
-
         searchEditText!!.addTextChangedListener(object:TextWatcher{
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
-
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 searchForUsers(p0.toString())
             }
-
             override fun afterTextChanged(p0: Editable?) {
             }
         })
     }
 
-    private fun searchForUsers(str:String){
-        val queryUsers = Database.get().getReference("users")
+    /**
+     * Search for users by usernames in Firebase Realtime Database
+     * @param inputUsername search text inputed by user
+     */
+    private fun searchForUsers(inputUsername:String){
+        val queryUsers = dbRef
             .orderByChild("username")
-            .startAt(str)
-            .endAt(str+"\uf8ff")
+            .startAt(inputUsername)
+            .endAt(inputUsername+"\uf8ff")
 
         queryUsers.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                (mUsers as ArrayList<UserProfile>).clear()
-                for (dataSnapShot in snapshot.children) {
-                    val user:UserProfile? = dataSnapShot.getValue(UserProfile::class.java)
-                    if (user != null) {
-                        (mUsers as ArrayList<UserProfile>).add(user)
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                (users as ArrayList<UserProfile>).clear()
+                for (snapshot in dataSnapshot.children) {
+                    val userProfile:UserProfile? = snapshot.getValue(UserProfile::class.java)
+                    if (userProfile != null) {
+                        (users as ArrayList<UserProfile>).add(userProfile)
                     }
                 }
-                userProfileAdapter = UserProfileAdapter(mUsers!!)
+                userProfileAdapter = UserProfileAdapter(users!!)
                 recyclerView!!.adapter = userProfileAdapter
             }
             override fun onCancelled(error: DatabaseError) {

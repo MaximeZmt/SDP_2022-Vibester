@@ -14,7 +14,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
 import org.junit.After
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertThat
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -37,16 +36,15 @@ class SearchUserActivityTest {
         Intents.release()
     }
 
-
     @Test
     fun recycleViewToViewTest() {
-        Espresso.onView(ViewMatchers.withId(R.id.searchList))
+        onView(ViewMatchers.withId(R.id.searchList))
             .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
     }
 
     @Test
     fun recycleViewClickTest() {
-        Espresso.onView((ViewMatchers.withId(R.id.searchList)))
+        onView((ViewMatchers.withId(R.id.searchList)))
             .perform(
                 RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                     2,
@@ -60,7 +58,7 @@ class SearchUserActivityTest {
         val recyclerView = RecyclerView(ApplicationProvider.getApplicationContext())
         val itemCount = recyclerView.adapter?.itemCount
         if (itemCount != null) {
-            Espresso.onView(ViewMatchers.withId(R.id.searchList)).perform(
+            onView(ViewMatchers.withId(R.id.searchList)).perform(
                 RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(
                     itemCount.minus(1)
                 )

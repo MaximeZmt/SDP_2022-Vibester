@@ -65,4 +65,7 @@ class WelcomeActivity : AppCompatActivity() {
     /*fun switchToLogin(view: View) { //FILLER INTENT
         sendDirectIntent(GameSetupScreen::class.java)
     }*/
+    fun switchToSearch(view: View) {
+        sendDirectIntent(SearchUserActivity::class.java)
+    }
 }

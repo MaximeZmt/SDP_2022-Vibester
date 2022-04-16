@@ -112,6 +112,19 @@
                 android:translationZ="10dp"
                 app:icon="@android:drawable/stat_sys_download" />
 
+            <Button
+                android:id="@+id/welcome_search"
+                android:layout_width="200dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="@color/cg_blue"
+                android:elevation="10dp"
+                android:onClick="switchToSearch"
+                android:stateListAnimator="@null"
+                android:text="SEARCH USERS"
+                android:translationZ="10dp"/>
+
+
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="42dp" />

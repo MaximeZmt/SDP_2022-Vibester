@@ -36,20 +36,9 @@ class UserProfileAdapter(val users: MutableList<UserProfile>):
          */
         fun bind(user: UserProfile) {
             itemView.findViewById<TextView>(R.id.search_user_username).text = user.username
-//            itemView.findViewById<ImageView>(R.id.iv_photo).loadImg(player.photo) TODO fix the image upload
+//                TODO fix the image upload
+//            itemView.findViewById<ImageView>(R.id.iv_photo).loadImg(player.photo)
         }
-    }
-
-    /**
-     * Functions for testing
-     */
-
-    fun addUsers(users: List<UserProfile>) {
-        this.users.apply {
-            clear()
-            addAll(users)
-        }
-        notifyDataSetChanged()
     }
 
 

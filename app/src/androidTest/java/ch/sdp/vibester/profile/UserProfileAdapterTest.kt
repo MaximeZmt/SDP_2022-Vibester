@@ -8,6 +8,7 @@ import org.hamcrest.MatcherAssert
 import org.junit.Test
 
 class UserProfileAdapterTest {
+
     @Test
     fun recyclerViewShowsCorrectCount() {
         val user1 = UserProfile("test1", "Brownie", "https://images.app.goo.gl/yiPpy7JDRFaZRiAg9", "test1@gmail.com")

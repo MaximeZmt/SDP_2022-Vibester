@@ -3,6 +3,7 @@ package ch.sdp.vibester.activity
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso
+import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.contrib.RecyclerViewActions
@@ -12,6 +13,8 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
 import org.junit.After
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertThat
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -63,5 +66,15 @@ class SearchUserActivityTest {
                 )
             )
         }
+    }
+    @Test
+    fun recycleViewCheckEmpty() {
+        val inputTxt= "TESTESTESTEST"
+        onView(ViewMatchers.withId(R.id.searchUserET)).perform(ViewActions.typeText(inputTxt),
+            ViewActions.closeSoftKeyboard()
+        )
+        val recyclerView = RecyclerView(ApplicationProvider.getApplicationContext())
+        val itemCount = recyclerView.adapter?.itemCount
+        assertEquals(itemCount, null)
     }
 }

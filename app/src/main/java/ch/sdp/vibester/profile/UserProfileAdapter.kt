@@ -35,7 +35,7 @@ class UserProfileAdapter(val users: MutableList<UserProfile>):
          * @param userProfile with all the parameters
          */
         fun bind(user: UserProfile) {
-            itemView.findViewById<TextView>(R.id.username).text = user.username
+            itemView.findViewById<TextView>(R.id.search_user_username).text = user.username
 //            itemView.findViewById<ImageView>(R.id.iv_photo).loadImg(player.photo) TODO fix the image upload
         }
     }

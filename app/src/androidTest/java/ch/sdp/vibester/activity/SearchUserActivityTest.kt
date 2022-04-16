@@ -69,8 +69,7 @@ class SearchUserActivityTest {
     fun recycleViewCheckEmpty() {
         val inputTxt= "TESTESTESTEST"
         onView(ViewMatchers.withId(R.id.searchUserET)).perform(ViewActions.typeText(inputTxt),
-            ViewActions.closeSoftKeyboard()
-        )
+            ViewActions.closeSoftKeyboard())
         val recyclerView = RecyclerView(ApplicationProvider.getApplicationContext())
         val itemCount = recyclerView.adapter?.itemCount
         assertEquals(itemCount, null)

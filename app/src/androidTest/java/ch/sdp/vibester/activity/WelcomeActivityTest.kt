@@ -1,5 +1,7 @@
 package ch.sdp.vibester.activity
 
+import android.content.Intent
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.intent.Intents
@@ -9,6 +11,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import org.junit.After
@@ -23,11 +26,8 @@ class WelcomeActivityTest {
     @get:Rule(order = 0)
     var hiltRule = HiltAndroidRule(this)
 
-
     @get:Rule(order = 1)
-    val testRule = ActivityScenarioRule(
-        WelcomeActivity::class.java
-    )
+    val testRule = ActivityScenarioRule(WelcomeActivity::class.java)
 
     @Before
     fun setUp() {
@@ -46,7 +46,15 @@ class WelcomeActivityTest {
     }
 
     @Test
-    fun checkIntentOnProfile() { 
+    fun checkIntentOnMyAccountLoggedOut() {
+        FirebaseAuth.getInstance().signOut()
+        onView(withId(R.id.welcome_profile)).perform(click())
+        intended(hasComponent(AuthenticationActivity::class.java.name))
+    }
+
+    @Test
+    fun checkIntentOnMyAccountLoggedIn() {
+        WelcomeActivity.setLoggedIn()
         onView(withId(R.id.welcome_profile)).perform(click())
         intended(hasComponent(ProfileActivity::class.java.name))
     }
@@ -55,12 +63,6 @@ class WelcomeActivityTest {
     fun checkIntentOnScoreboard() {
         onView(withId(R.id.welcome_scoreboard)).perform(click())
         intended(hasComponent(ScoreBoardActivity::class.java.name))
-    }
-
-    @Test
-    fun checkIntentOnSettings() {
-        onView(withId(R.id.welcome_settings)).perform(click())
-        intended(hasComponent(AuthenticationActivity::class.java.name))
     }
 
     @Test

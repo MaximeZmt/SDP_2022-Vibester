@@ -14,16 +14,35 @@ import com.google.firebase.ktx.Firebase
 import ch.sdp.vibester.model.UserSharedPref
 
 class WelcomeActivity : AppCompatActivity() {
+
+    // For test purpose
+    companion object{
+        var testLoggedIn: Boolean = false
+
+        fun setLoggedIn(){
+            testLoggedIn = true
+        }
+
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(FEATURE_NO_TITLE)
         supportActionBar?.hide()
         setContentView(R.layout.activity_welcome_screen)
 
+        /*
+        val getIntent = intent.extras
+        if (getIntent!=null){
+            testLoggedIn = getIntent.getBoolean("testLoggedIn", false)
+        }
+
+         */
+
 
 
         val userStatusTextValue = findViewById<TextView>(R.id.user_status)
-        if(FireBaseAuthenticator.isLoggedIn())
+        if(FireBaseAuthenticator.isLoggedIn() ||  testLoggedIn)
         {
             userStatusTextValue.text = "User: " + FireBaseAuthenticator.getCurrentUserMail()
         }
@@ -41,7 +60,7 @@ class WelcomeActivity : AppCompatActivity() {
     }
 
     fun switchToProfile(view: View) {
-        if (FireBaseAuthenticator.isLoggedIn()){
+        if (FireBaseAuthenticator.isLoggedIn() || testLoggedIn){
             sendDirectIntent(ProfileActivity::class.java)
         }else{
             sendDirectIntent(AuthenticationActivity::class.java)

@@ -100,20 +100,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/createAcc" />
 
-    <Button
-        android:id="@+id/logout"
-        android:layout_width="200dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:backgroundTint="@color/cg_blue"
-        android:elevation="10dp"
-        android:stateListAnimator="@null"
-        android:text="logout"
-        android:translationZ="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/googleBtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/createAcc" />
 </androidx.constraintlayout.widget.ConstraintLayout>

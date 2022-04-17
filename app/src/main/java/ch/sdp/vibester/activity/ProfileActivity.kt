@@ -19,6 +19,7 @@ import ch.sdp.vibester.database.UsersRepo
 import ch.sdp.vibester.helper.IntentSwitcher
 import ch.sdp.vibester.profile.UserProfile
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -46,6 +47,8 @@ class ProfileActivity : AppCompatActivity() {
         val editUsername = findViewById<Button>(R.id.editUser)
         val editHandle = findViewById<Button>(R.id.editHandle)
 
+        val logoutbutton = findViewById<Button>(R.id.logout)
+
         val retToMain = findViewById<FloatingActionButton>(R.id.profile_returnToMain)
 
         editUsername.setOnClickListener {
@@ -57,6 +60,11 @@ class ProfileActivity : AppCompatActivity() {
         }
 
         retToMain.setOnClickListener{
+            IntentSwitcher.switchBackToWelcome(this)
+        }
+
+        logoutbutton.setOnClickListener{
+            FirebaseAuth.getInstance().signOut()
             IntentSwitcher.switchBackToWelcome(this)
         }
 

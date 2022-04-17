@@ -47,16 +47,12 @@ class AuthenticationActivity : AppCompatActivity() {
         val btCreateAcc = findViewById<Button>(R.id.createAcc)
         val btLogIn = findViewById<Button>(R.id.logIn)
         val googleSignIn = findViewById<Button>(R.id.googleBtn)
-        val logoutbutton = findViewById<Button>(R.id.logout)
 
         val username = findViewById<EditText>(R.id.username)
         val password = findViewById<EditText>(R.id.password)
         email = findViewById(R.id.email)
 
-        logoutbutton.setOnClickListener{
-            FirebaseAuth.getInstance().signOut()
-            IntentSwitcher.switchBackToWelcome(this)
-        }
+
 
         btCreateAcc.setOnClickListener {
             authenticate(username.text.toString(), password.text.toString(), true)

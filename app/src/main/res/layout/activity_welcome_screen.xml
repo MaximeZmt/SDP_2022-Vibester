@@ -121,7 +121,7 @@
                 android:elevation="10dp"
                 android:onClick="switchToSearch"
                 android:stateListAnimator="@null"
-                android:text="SEARCH USERS"
+                android:text="@string/search_users"
                 android:translationZ="10dp"/>
 
 

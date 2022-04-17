@@ -3,6 +3,7 @@ package ch.sdp.vibester.database
 import android.content.ContentValues
 import android.util.Log
 import ch.sdp.vibester.profile.UserProfile
+import ch.sdp.vibester.util.Util
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -53,11 +54,7 @@ class UsersRepo @Inject constructor() {
         var newUser = UserProfile(handle, username, "", email, 0, 0, 0, 0
         )
 
-        val charPool : List<Char> = ('a'..'z') + ('A'..'Z') + ('0'..'9')
-        val newId = (1..10)
-            .map { i -> kotlin.random.Random.nextInt(0, charPool.size) }
-            .map(charPool::get)
-            .joinToString("");
+        val newId = Util.createNewId()
 
         dbRef.child(newId).setValue(newUser)
             .addOnSuccessListener {

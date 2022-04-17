@@ -13,6 +13,7 @@ import android.widget.TextView
 import ch.sdp.vibester.R
 import ch.sdp.vibester.database.ImageRepo
 import ch.sdp.vibester.database.UsersRepo
+import ch.sdp.vibester.util.Util
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -74,21 +75,12 @@ class CreateProfileActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.uploadStatus).text = "Upload OK"
     }
 
-    private fun createNewId(): String {
-        val charPool : List<Char> = ('a'..'z') + ('A'..'Z') + ('0'..'9')
-        val newId = (1..10)
-            .map { i -> kotlin.random.Random.nextInt(0, charPool.size) }
-            .map(charPool::get)
-            .joinToString("");
-
-        return newId
-    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE){
             val uri: Uri = data?.data!!
-            val imgId = createNewId()
+            val imgId = Util.createNewId()
             imageRepo.uploadFile("profileImg/${imgId}", uri) { updateUI() }
         }
     }

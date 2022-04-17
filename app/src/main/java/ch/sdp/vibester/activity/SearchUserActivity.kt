@@ -27,7 +27,7 @@ class SearchUserActivity : AppCompatActivity() {
     private var users: MutableList<UserProfile>? = null
     private var recyclerView: RecyclerView? = null
     private var searchEditText: EditText? = null
-    private var dbRef: DatabaseReference = Database.get().getReference("users")
+    private val dbRef: DatabaseReference = Database.get().getReference("users")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +58,9 @@ class SearchUserActivity : AppCompatActivity() {
     /**
      * Search for users by usernames in Firebase Realtime Database
      * @param inputUsername search text inputed by user
+     * Comment about \uf8ff:
+     * The \uf8ff character used in the query above is a very high code point in the Unicode range.
+     * Because it is after most regular characters in Unicode, the query matches all values that start with a inputUsername.
      */
     private fun searchForUsers(inputUsername:String){
         val queryUsers = dbRef

@@ -30,6 +30,7 @@
         android:layout_height="30dp"
         android:layout_marginTop="216dp"
         android:fontFamily="monospace"
+        android:text="@string/authentication_placeholderHandle"
         android:textAlignment="center"
         android:textColor="#000"
         android:textSize="16sp"
@@ -46,6 +47,7 @@
         android:layout_height="30dp"
         android:layout_marginBottom="109dp"
         android:fontFamily="monospace"
+        android:text="@string/authentication_placeholderUsername"
         android:textAlignment="center"
         android:textColor="#000"
         android:textSize="16sp"
@@ -55,6 +57,19 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/handle" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/profile_returnToMain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/light_coral"
+        app:borderWidth="0dp"
+        android:clickable="true"
+        android:src="@android:drawable/ic_menu_revert"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TableLayout
         android:id="@+id/profileStatistics"
@@ -88,6 +103,7 @@
                 android:layout_height="match_parent"
                 android:fontFamily="monospace"
                 android:padding="18dip"
+                android:text="@string/authentication_placeholderEmptyScore"
                 android:textAlignment="viewEnd"
                 android:textColor="#000"
                 android:textSize="16sp" />
@@ -110,10 +126,13 @@
                 android:id="@+id/totalGames"
                 android:layout_width="147dp"
                 android:layout_height="wrap_content"
+                android:fontFamily="monospace"
                 android:padding="18dip"
+                android:text="@string/authentication_placeholderEmptyScore"
                 android:textAlignment="viewEnd"
                 android:textColor="#000"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                tools:text="@string/authentication_placeholderEmptyScore" />
         </TableRow>
 
         <TableRow
@@ -133,10 +152,13 @@
                 android:id="@+id/bestScore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="monospace"
                 android:padding="18dip"
+                android:text="@string/authentication_placeholderEmptyScore"
                 android:textAlignment="viewEnd"
                 android:textColor="#000"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                tools:text="@string/authentication_placeholderEmptyScore" />
         </TableRow>
 
         <TableRow
@@ -156,10 +178,13 @@
                 android:id="@+id/correctSongs"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="monospace"
                 android:padding="18dip"
+                android:text="@string/authentication_placeholderEmptyScore"
                 android:textAlignment="viewEnd"
                 android:textColor="#000"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                tools:text="@string/authentication_placeholderEmptyScore" />
 
         </TableRow>
 

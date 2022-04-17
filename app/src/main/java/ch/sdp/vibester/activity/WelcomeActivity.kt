@@ -3,16 +3,14 @@ package ch.sdp.vibester.activity
 //import ch.sdp.vibester.profile.ProfileDataProvider
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.Window.FEATURE_NO_TITLE
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.R
 import ch.sdp.vibester.auth.FireBaseAuthenticator
-import ch.sdp.vibester.model.Song
-import ch.sdp.vibester.model.UserSharedPref
-import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 class WelcomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,19 +19,12 @@ class WelcomeActivity : AppCompatActivity() {
         supportActionBar?.hide()
         setContentView(R.layout.activity_welcome_screen)
 
-        //UserSharedPref.userReset(applicationContext, "mickey@mouse.com")
-        Log.e("MAILLL ", UserSharedPref.getUser(applicationContext).email)
-        Log.e("IMAGE ", UserSharedPref.getUser(applicationContext).image)
-        Log.e("CURR FIREBASE USER: ", FirebaseAuth.getInstance().currentUser?.email.toString())
 
 
-
-        val tv = findViewById<TextView>(R.id.user_status)
-        val username = UserSharedPref.getUser(applicationContext).username
-        Log.e("USN: ", username)
-        if(FirebaseAuth.getInstance().currentUser != null)
+        val userStatusTextValue = findViewById<TextView>(R.id.user_status)
+        if(FireBaseAuthenticator.isLoggedIn())
         {
-            tv.text = "User: " + FirebaseAuth.getInstance().currentUser?.email.toString()
+            userStatusTextValue.text = "User: " + FireBaseAuthenticator.getCurrentUserMail()
         }
 
 
@@ -49,15 +40,15 @@ class WelcomeActivity : AppCompatActivity() {
     }
 
     fun switchToProfile(view: View) {
-        sendDirectIntent(ProfileActivity::class.java)
+        if (FireBaseAuthenticator.isLoggedIn()){
+            sendDirectIntent(ProfileActivity::class.java)
+        }else{
+            sendDirectIntent(AuthenticationActivity::class.java)
+        }
     }
 
     fun switchToScoreboard(view: View) {
         sendDirectIntent(ScoreBoardActivity::class.java)
-    }
-
-    fun switchToSettings(view: View) {
-        sendDirectIntent(AuthenticationActivity::class.java)
     }
 
     fun switchToDownload(view: View) {

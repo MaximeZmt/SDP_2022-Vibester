@@ -11,11 +11,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.graphics.drawable.toBitmap
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.BitmapGetterApi
 import ch.sdp.vibester.model.UserSharedPref
 import ch.sdp.vibester.database.UsersRepo
+import ch.sdp.vibester.helper.IntentSwitcher
 import ch.sdp.vibester.profile.UserProfile
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -43,12 +46,18 @@ class ProfileActivity : AppCompatActivity() {
         val editUsername = findViewById<Button>(R.id.editUser)
         val editHandle = findViewById<Button>(R.id.editHandle)
 
+        val retToMain = findViewById<FloatingActionButton>(R.id.profile_returnToMain)
+
         editUsername.setOnClickListener {
             showGeneralDialog(R.id.username, "username")
         }
 
         editHandle.setOnClickListener {
             showGeneralDialog(R.id.handle, "handle")
+        }
+
+        retToMain.setOnClickListener{
+            IntentSwitcher.switchBackToWelcome(this)
         }
 
     }
@@ -108,17 +117,23 @@ class ProfileActivity : AppCompatActivity() {
 
 
     private fun setupProfile(user: UserProfile){
-        findViewById<TextView>(R.id.handle).text =  user.handle
-        findViewById<TextView>(R.id.username).text = user.username
-        findViewById<TextView>(R.id.totalGames).text = user.totalGames.toString()
-        findViewById<TextView>(R.id.correctSongs).text = user.correctSongs.toString()
-        findViewById<TextView>(R.id.bestScore).text = user.bestScore.toString()
-        findViewById<TextView>(R.id.ranking).text = user.ranking.toString()
+
+        // Currently assuming that empty username means no user !
+        if (user.username != ""){
+            findViewById<TextView>(R.id.username).text =  user.username
+            if (user.handle != ""){
+                findViewById<TextView>(R.id.handle).text =  user.handle
+            }
+            findViewById<TextView>(R.id.totalGames).text = user.totalGames.toString()
+            findViewById<TextView>(R.id.correctSongs).text = user.correctSongs.toString()
+            findViewById<TextView>(R.id.bestScore).text = user.bestScore.toString()
+            findViewById<TextView>(R.id.ranking).text = user.ranking.toString()
+        }
         CoroutineScope(Dispatchers.Main).launch {
             val task = async(Dispatchers.IO) {
                 try {
                     Log.e(getString(R.string.log_tag),user.image)
-                    val bit = BitmapGetterApi.download(user.image)
+                    val bit = BitmapGetterApi.download("https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/45.png")
                     bit.get(10, TimeUnit.SECONDS)
                 }catch (e: Exception){
                     null
@@ -137,6 +152,7 @@ class ProfileActivity : AppCompatActivity() {
                 avatar.setImageBitmap(Bitmap.createScaledBitmap(bm, 1000,1000, false))
             }
         }
+
     }
 }
 

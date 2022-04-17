@@ -120,4 +120,6 @@
     <string name="result_will_show_here">result will show here</string>
     <string name="welcome_not_logged_in">"User: Not Logged In"</string>
     <string name="game_lyrics">Local Lyrics</string>
+    <string name="profile_username">Profile Username</string>
+    <string name="search_users">SEARCH USERS</string>
 </resources>

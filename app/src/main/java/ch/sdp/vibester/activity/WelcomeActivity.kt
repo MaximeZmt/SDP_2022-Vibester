@@ -11,6 +11,7 @@ import ch.sdp.vibester.R
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import ch.sdp.vibester.model.UserSharedPref
 
 class WelcomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,12 +56,7 @@ class WelcomeActivity : AppCompatActivity() {
         sendDirectIntent(DownloadActivity::class.java)
     }
 
-    /*
-     * Belongs to a previously implemented button, taken out for UI purposes.
-     * Might bring it back, thus leaving the code for now.
-     */
-
-    /*fun switchToLogin(view: View) { //FILLER INTENT
-        sendDirectIntent(GameSetupScreen::class.java)
-    }*/
+    fun switchToSearch(view: View) {
+        sendDirectIntent(SearchUserActivity::class.java)
+    }
 }

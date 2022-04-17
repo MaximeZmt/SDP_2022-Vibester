@@ -9,7 +9,9 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import ch.sdp.vibester.R
+import ch.sdp.vibester.database.ImageRepo
 import ch.sdp.vibester.database.UsersRepo
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
@@ -25,11 +27,10 @@ class CreateProfileActivity : AppCompatActivity() {
     @Inject
     lateinit var usersRepo: UsersRepo
 
+    @Inject
+    lateinit var imageRepo: ImageRepo
+
     private val REQUEST_CODE = 500
-
-    lateinit var storage: FirebaseStorage
-
-    lateinit var storageRef: StorageReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,9 +42,6 @@ class CreateProfileActivity : AppCompatActivity() {
 
         val btCreateAcc = findViewById<Button>(R.id.createButton)
         val btnUploadImg = findViewById<Button>(R.id.uploadImg)
-
-        storage = Firebase.storage("gs://vibester-sdp.appspot.com")
-        storageRef = storage.reference
 
         btCreateAcc.setOnClickListener {
             usersRepo.createUser(
@@ -71,22 +69,27 @@ class CreateProfileActivity : AppCompatActivity() {
         startActivityForResult(intent, REQUEST_CODE)
     }
 
+
+    private fun updateUI() {
+        findViewById<TextView>(R.id.uploadStatus).text = "Upload OK"
+    }
+
+    private fun createNewId(): String {
+        val charPool : List<Char> = ('a'..'z') + ('A'..'Z') + ('0'..'9')
+        val newId = (1..10)
+            .map { i -> kotlin.random.Random.nextInt(0, charPool.size) }
+            .map(charPool::get)
+            .joinToString("");
+
+        return newId
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-//        var image : ImageView = ImageView(this)
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE){
             val uri: Uri = data?.data!!
-            val riversRef = storageRef.child("testImg.jpg")
-
-            var uploadTask = riversRef.putFile(uri)
-
-            uploadTask.addOnFailureListener {
-                // Handle unsuccessful uploads
-            }.addOnSuccessListener { taskSnapshot ->
-                // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
-                // ...
-            }
-
+            val imgId = createNewId()
+            imageRepo.uploadFile("profileImg/${imgId}", uri) { updateUI() }
         }
     }
 }

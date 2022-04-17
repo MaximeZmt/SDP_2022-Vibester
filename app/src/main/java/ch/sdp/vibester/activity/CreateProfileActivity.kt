@@ -3,6 +3,7 @@ package ch.sdp.vibester.activity
 import android.app.Activity
 import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -10,7 +11,12 @@ import android.widget.EditText
 import android.widget.ImageView
 import ch.sdp.vibester.R
 import ch.sdp.vibester.database.UsersRepo
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.ktx.storage
 import dagger.hilt.android.AndroidEntryPoint
+import java.io.File
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -20,6 +26,10 @@ class CreateProfileActivity : AppCompatActivity() {
     lateinit var usersRepo: UsersRepo
 
     private val REQUEST_CODE = 500
+
+    lateinit var storage: FirebaseStorage
+
+    lateinit var storageRef: StorageReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +42,8 @@ class CreateProfileActivity : AppCompatActivity() {
         val btCreateAcc = findViewById<Button>(R.id.createButton)
         val btnUploadImg = findViewById<Button>(R.id.uploadImg)
 
+        storage = Firebase.storage("gs://vibester-sdp.appspot.com")
+        storageRef = storage.reference
 
         btCreateAcc.setOnClickListener {
             usersRepo.createUser(
@@ -61,10 +73,19 @@ class CreateProfileActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        var image : ImageView = ImageView(this)
+//        var image : ImageView = ImageView(this)
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE){
-            image.setImageURI(data?.data)
-            var bitmap = (image.drawable as BitmapDrawable).bitmap
+            val uri: Uri = data?.data!!
+            val riversRef = storageRef.child("testImg.jpg")
+
+            var uploadTask = riversRef.putFile(uri)
+
+            uploadTask.addOnFailureListener {
+                // Handle unsuccessful uploads
+            }.addOnSuccessListener { taskSnapshot ->
+                // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
+                // ...
+            }
 
         }
     }

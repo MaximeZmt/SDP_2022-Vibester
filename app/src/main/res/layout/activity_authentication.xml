@@ -7,97 +7,106 @@
     android:background="@color/floral_white"
     tools:context=".activity.AuthenticationActivity">
 
-    <Button
-        android:id="@+id/createAcc"
-        android:layout_width="200dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="10dp"
-        android:backgroundTint="@color/cg_blue"
-        android:elevation="10dp"
-        android:stateListAnimator="@null"
-        android:text="@string/createAcc"
-        android:translationZ="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/googleBtn"
+    <TextView
+        android:id="@+id/email"
+        android:layout_width="357dp"
+        android:layout_height="220dp"
+        android:layout_marginStart="27dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="27dp"
+        android:fontFamily="monospace"
+        android:text="@string/authentication_noActionDoneYet"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@+id/scrollView2"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="59dp"
-        android:layout_marginBottom="21dp"
-        android:fontFamily="monospace"
-        android:textColor="@color/black"
-        android:text="TextView"
-        android:textSize="25sp"
-        app:layout_constraintBottom_toTopOf="@+id/username"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logIn" />
-
-    <EditText
-        android:id="@+id/username"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="31dp"
-        android:layout_marginBottom="19dp"
-        android:ems="10"
-        android:hint="email"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/password"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email"
-        tools:ignore="TouchTargetSizeCheck" />
-
-    <EditText
-        android:id="@+id/password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="19dp"
-        android:layout_marginBottom="175dp"
-        android:ems="10"
-        android:hint="password"
-        android:inputType="textPassword"
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="409dp"
+        android:layout_height="530dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginEnd="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/username" />
+        app:layout_constraintTop_toBottomOf="@+id/email">
 
-    <Button
-        android:id="@+id/logIn"
-        android:layout_width="200dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="27dp"
-        android:text="@string/logIn"
-        android:backgroundTint="@color/cg_blue"
-        android:elevation="10dp"
-        android:stateListAnimator="@null"
-        android:translationZ="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/email"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/googleBtn" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
 
-    <Button
-        android:id="@+id/googleBtn"
-        android:layout_width="200dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="28dp"
-        android:text="@string/logInGoogle"
-        android:backgroundTint="@color/cg_blue"
-        android:elevation="10dp"
-        android:stateListAnimator="@null"
-        android:translationZ="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/logIn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/createAcc" />
+            <Button
+                android:id="@+id/googleBtn"
+                android:layout_width="200dp"
+                android:layout_height="48dp"
+                android:backgroundTint="@color/cg_blue"
+                android:elevation="10dp"
+                android:stateListAnimator="@null"
+                android:text="@string/logInGoogle"
+                android:translationZ="10dp" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="75dp" />
+
+            <EditText
+                android:id="@+id/username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="email"
+                android:inputType="textPersonName"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="18dp" />
+
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="password"
+                android:inputType="textPassword" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="18dp" />
+
+            <Button
+                android:id="@+id/createAcc"
+                android:layout_width="200dp"
+                android:layout_height="48dp"
+                android:backgroundTint="@color/cg_blue"
+                android:elevation="10dp"
+                android:stateListAnimator="@null"
+                android:text="@string/createAcc"
+                android:translationZ="10dp" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="15dp" />
+
+            <Button
+                android:id="@+id/logIn"
+                android:layout_width="200dp"
+                android:layout_height="48dp"
+
+                android:backgroundTint="@color/cg_blue"
+                android:elevation="10dp"
+                android:stateListAnimator="@null"
+                android:text="@string/logIn"
+                android:translationZ="10dp" />
+
+        </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

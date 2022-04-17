@@ -15,6 +15,7 @@
     <string name="authentication_placeholderHandle">Placeholder Handle</string>
     <string name="authentication_placeholderUsername">Placeholder Username</string>
     <string name="authentication_placeholderEmptyScore">Error</string>
+    <string name="authentication_noActionDoneYet">Either log in with your google account or fill in credentials to create an account or log in</string>
 
     <!-- OLD String-->
 

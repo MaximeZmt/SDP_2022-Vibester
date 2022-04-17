@@ -10,7 +10,7 @@ import org.junit.Assert.*
  *
  * See [testing documentation](http://d.android.com/tools/testing).
  */
-class UtilTests {
+class UtilTest {
     @Test
     fun newIdIsCorrectLength() {
         assertEquals(Util.createNewId().length, 10)

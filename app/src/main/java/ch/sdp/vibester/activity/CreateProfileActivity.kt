@@ -79,9 +79,7 @@ class CreateProfileActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE){
-            val uri: Uri = data?.data!!
-            val imgId = Util.createNewId()
-            imageRepo.uploadFile("profileImg/${imgId}", uri) { updateUI() }
+            imageRepo.uploadFile("profileImg/${Util.createNewId()}", data?.data!!) { updateUI() }
         }
     }
 }

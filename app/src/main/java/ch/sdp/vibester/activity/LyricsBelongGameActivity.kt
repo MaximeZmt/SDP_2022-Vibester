@@ -154,7 +154,7 @@ class LyricsBelongGameActivity : GameActivity() {
      */
     private fun hasWon(ctx: Context, score: Int, hasWon: Boolean) {
         if (hasWon) {
-            Toast.makeText(ctx, ctx.getString(R.string.correct_message, score), Toast.LENGTH_SHORT).show()
+            toastShowCorrect(ctx, score)
         } else {
             Toast.makeText(ctx, ctx.getString(R.string.wrong_message), Toast.LENGTH_SHORT).show()
         }

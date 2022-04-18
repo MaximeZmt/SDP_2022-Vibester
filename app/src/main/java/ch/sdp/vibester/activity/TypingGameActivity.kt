@@ -129,7 +129,7 @@ class TypingGameActivity : GameActivity() {
      */
     private fun hasWon(ctx: Context, score: Int, hasWon: Boolean, itWas: Song) {
         if (hasWon) {
-            Toast.makeText(ctx, ctx.getString(R.string.correct_message, score), Toast.LENGTH_SHORT).show()
+            toastShowCorrect(ctx, score)
         } else {
             Toast.makeText(
                 ctx,

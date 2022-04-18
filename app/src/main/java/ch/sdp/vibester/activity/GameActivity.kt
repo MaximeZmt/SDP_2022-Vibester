@@ -111,6 +111,10 @@ open class GameActivity : AppCompatActivity() {
         return myBar.progressTintList
     }
 
+    fun toastShowCorrect(ctx: Context, score: Int) {
+        Toast.makeText(ctx, ctx.getString(R.string.correct_message, score), Toast.LENGTH_SHORT).show()
+    }
+
     companion object {
         /**
          * Generate spaces widget programmatically

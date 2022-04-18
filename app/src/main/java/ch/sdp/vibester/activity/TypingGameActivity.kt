@@ -29,51 +29,6 @@ import okhttp3.OkHttpClient
 class TypingGameActivity : GameActivity() {
     private lateinit var gameManager: TypingGameManager
 
-    companion object {
-        /**
-         * Generate spaces widget programmatically
-         */
-        fun generateSpace(width: Int, height: Int, ctx: Context): Space {
-            val space = Space(ctx)
-            space.minimumWidth = width
-            space.minimumHeight = height
-            return space
-        }
-
-        /**
-         * Generate Text widget programmatically
-         */
-        fun generateText(txt: String, ctx: Context): TextView {
-            val txtView = TextView(ctx)
-            txtView.text = txt
-            txtView.gravity = Gravity.CENTER
-            txtView.minHeight = 200
-            txtView.textSize = 20F
-            txtView.setTextColor(getColor(ctx, R.color.black))
-            return txtView
-        }
-
-        /**
-         * Generate an images widget programmatically given a song (retrieve song artwork asynchronously)
-         */
-        fun generateImage(song: Song, ctx: Context): ImageView {
-            val imgView = ImageView(ctx)
-            imgView.minimumWidth = 200
-            imgView.minimumHeight = 200
-
-            CoroutineScope(Dispatchers.Main).launch {
-                val task = async(Dispatchers.IO) {
-                    val bit = BitmapGetterApi.download(song.getArtworkUrl())
-                    bit.get()
-                }
-                val bm = task.await()
-                imgView.setImageBitmap(bm)
-            }
-            imgView.foregroundGravity = Gravity.LEFT
-            return imgView
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)

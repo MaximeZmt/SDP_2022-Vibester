@@ -1,13 +1,21 @@
 package ch.sdp.vibester.activity
 
+import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Handler
-import android.widget.Button
-import android.widget.ProgressBar
+import android.view.Gravity
+import android.widget.*
+import androidx.core.content.ContextCompat
 import ch.sdp.vibester.R
+import ch.sdp.vibester.api.BitmapGetterApi
 import ch.sdp.vibester.helper.GameManager
+import ch.sdp.vibester.model.Song
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 /**
  * Common set up for all games (difficulty level, progress bar)
@@ -101,6 +109,51 @@ open class GameActivity : AppCompatActivity() {
 
     fun superTestProgressBarColor(myBar: ProgressBar): ColorStateList? {
         return myBar.progressTintList
+    }
+
+    companion object {
+        /**
+         * Generate spaces widget programmatically
+         */
+        fun generateSpace(width: Int, height: Int, ctx: Context): Space {
+            val space = Space(ctx)
+            space.minimumWidth = width
+            space.minimumHeight = height
+            return space
+        }
+
+        /**
+         * Generate Text widget programmatically
+         */
+        fun generateText(txt: String, ctx: Context): TextView {
+            val txtView = TextView(ctx)
+            txtView.text = txt
+            txtView.gravity = Gravity.CENTER
+            txtView.minHeight = 200
+            txtView.textSize = 20F
+            txtView.setTextColor(ContextCompat.getColor(ctx, R.color.black))
+            return txtView
+        }
+
+        /**
+         * Generate an images widget programmatically given a song (retrieve song artwork asynchronously)
+         */
+        fun generateImage(song: Song, ctx: Context): ImageView {
+            val imgView = ImageView(ctx)
+            imgView.minimumWidth = 200
+            imgView.minimumHeight = 200
+
+            CoroutineScope(Dispatchers.Main).launch {
+                val task = async(Dispatchers.IO) {
+                    val bit = BitmapGetterApi.download(song.getArtworkUrl())
+                    bit.get()
+                }
+                val bm = task.await()
+                imgView.setImageBitmap(bm)
+            }
+            imgView.foregroundGravity = Gravity.LEFT
+            return imgView
+        }
     }
 
 

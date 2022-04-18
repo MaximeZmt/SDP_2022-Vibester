@@ -155,23 +155,6 @@ class AuthenticationActivityTest {
         onView(withId(R.id.email)).check(matches(withText("Password has to be at least 6 symbols")))
     }
 
-    @Test
-    fun derinTest() {
-        val a = FireBaseAuthenticator()
-
-        a.googleActivityResult(-1, -1, null)
-
-        onView(withId(R.id.email)).check(matches(withText("TextView")))
-    }
-
-    @Test
-    fun ardaTest() {
-        val a = FireBaseAuthenticator()
-
-        a.googleActivityResult(1000, -1, null)
-
-        onView(withId(R.id.email)).check(matches(withText("TextView")))
-    }
 
     @Test
     fun logInCorrect() {

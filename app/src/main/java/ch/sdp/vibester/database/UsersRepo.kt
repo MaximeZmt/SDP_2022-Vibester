@@ -79,8 +79,6 @@ class UsersRepo @Inject constructor() {
                         if(dbContents.email == email) {
                             callback(dbContents)
                             break
-                        } else {
-                            callback(UserProfile())
                         }
                     }
                 }

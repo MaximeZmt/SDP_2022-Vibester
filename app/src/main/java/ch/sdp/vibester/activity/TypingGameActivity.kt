@@ -4,13 +4,11 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity
 import android.view.Window
 import android.widget.*
 import androidx.core.content.ContextCompat.getColor
 import androidx.core.widget.addTextChangedListener
 import ch.sdp.vibester.R
-import ch.sdp.vibester.api.BitmapGetterApi
 import ch.sdp.vibester.api.ItunesMusicApi
 import ch.sdp.vibester.helper.DisplayContents
 import ch.sdp.vibester.helper.GameManager
@@ -28,6 +26,7 @@ import okhttp3.OkHttpClient
 
 class TypingGameActivity : GameActivity() {
     private lateinit var gameManager: TypingGameManager
+    private var gameIsOn: Boolean = true // done to avoid clicks on songs after the round is over
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,10 +40,10 @@ class TypingGameActivity : GameActivity() {
 
         val getIntent = intent.extras
         if (getIntent != null) {
+            super.setMax(intent)
             gameManager = getIntent.getSerializable("gameManager") as TypingGameManager
             setNextButtonListener(ctx, gameManager)
             startFirstRound(ctx, gameManager)
-            super.setMax(intent)
         }
         setGuessLayoutListener(inputTxt, guessLayout)
     }
@@ -141,7 +140,7 @@ class TypingGameActivity : GameActivity() {
     }
 
     /**
-     * Generate a change of intent at the end of a game (??? this is not the right description)
+     * Generate a change of intent at the end of a game
      */
     fun checkAnswer(ctx: Context, chosenSong: Song?, gameManager: TypingGameManager) {
         val playedSong = gameManager.getCurrentSong()
@@ -169,13 +168,15 @@ class TypingGameActivity : GameActivity() {
 
         //Create the Listener that is executed if we click on the frame layer
         frameLay.setOnClickListener {
-            frameLay.setBackgroundColor(getColor(ctx, R.color.tiffany_blue))
-            guessLayout.removeAllViews()
-            guessLayout.addView(frameLay)
-            if (gameManager.playingMediaPlayer()) {
-                gameManager.stopMediaPlayer()
+            if(gameIsOn){
+                frameLay.setBackgroundColor(getColor(ctx, R.color.tiffany_blue))
+                guessLayout.removeAllViews()
+                guessLayout.addView(frameLay)
+                if (gameManager.playingMediaPlayer()) {
+                    gameManager.stopMediaPlayer()
+                }
+                checkAnswer(ctx, song, gameManager)
             }
-            checkAnswer(ctx, song, gameManager)
         }
 
         guessLayout.addView(generateSpace(75, 75, ctx))
@@ -195,7 +196,13 @@ class TypingGameActivity : GameActivity() {
         }
     }
 
+    /**
+     * Function called in the end of each round. Displays the button "Next" and
+     * sets the next songs to play.
+     */
     override fun endRound(gameManager: GameManager){
+        gameIsOn = false
+        findViewById<EditText>(R.id.yourGuessET).setEnabled(false)
         //checkRunnable()
         super.endRound(gameManager)
         //TODO: is it ok for the last round to go to the end game directly without waiting for the next btn?
@@ -210,8 +217,10 @@ class TypingGameActivity : GameActivity() {
      * and playing new song for the round.
      */
     private fun startRound(ctx: Context, gameManager: TypingGameManager) {
+        gameIsOn = true
         findViewById<LinearLayout>(R.id.displayGuess).removeAllViews()
         findViewById<EditText>(R.id.yourGuessET).text.clear()
+        findViewById<EditText>(R.id.yourGuessET).setEnabled(true)
         toggleNextBtnVisibility(false)
         gameManager.playSong()
         checkRunnable()

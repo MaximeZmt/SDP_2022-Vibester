@@ -82,18 +82,6 @@ class LyricsBelongGameActivity : GameActivity() {
         }
     }
 
-    private fun showSongInQuestion(song: Song, ctx: Context): LinearLayout {
-        val linLay = LinearLayout(ctx)
-        linLay.setHorizontalGravity(1)
-        linLay.gravity = Gravity.LEFT
-
-        linLay.addView(generateImage(song, ctx))
-        linLay.addView(generateSpace(100, 100, ctx))
-        linLay.addView(generateText(song.getArtistName() + " - " + song.getTrackName(), ctx))
-
-        return linLay
-    }
-
     /**
      * Function to set a new round. It includes reinitializing activity elements,
      * and setting new song for the round.
@@ -105,7 +93,7 @@ class LyricsBelongGameActivity : GameActivity() {
         artistName = gameManager.currentSong.getArtistName()
         val frameLay = findViewById<FrameLayout>(R.id.LyricsSongQuestion)
         frameLay.removeAllViews()
-        frameLay.addView(showSongInQuestion(gameManager.currentSong, this@LyricsBelongGameActivity))
+        frameLay.addView(showSongAndImage(gameManager.currentSong, this@LyricsBelongGameActivity))
         checkRunnable()
         barTimer(ctx, findViewById(R.id.progressBarLyrics))
     }

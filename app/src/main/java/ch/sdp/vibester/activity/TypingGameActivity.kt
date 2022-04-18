@@ -164,17 +164,7 @@ class TypingGameActivity : GameActivity() {
         val frameLay = FrameLayout(ctx)
         frameLay.background = DisplayContents.borderGen(ctx, R.color.maximum_yellow_red)
 
-        // Horizontal Linear Layout to put Images and Text next one another
-        val linLay = LinearLayout(ctx)
-        linLay.setHorizontalGravity(1)
-        linLay.gravity = Gravity.LEFT
-
-        //Generate and add its component
-        linLay.addView(generateImage(song, ctx))
-        linLay.addView(generateSpace(100, 100, ctx))
-        linLay.addView(generateText(song.getArtistName() + " - " + song.getTrackName(), ctx))
-
-        frameLay.addView(linLay)
+        frameLay.addView(showSongAndImage(song, ctx))
         guessLayout.addView(frameLay)
 
         //Create the Listener that is executed if we click on the frame layer

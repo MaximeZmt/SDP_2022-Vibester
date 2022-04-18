@@ -156,6 +156,20 @@ open class GameActivity : AppCompatActivity() {
         }
     }
 
+    fun showSongAndImage(song: Song, ctx: Context): LinearLayout {
+        val linLay = LinearLayout(ctx)
+        linLay.setHorizontalGravity(1)
+        linLay.gravity = Gravity.LEFT
+
+        linLay.addView(generateImage(song, ctx))
+        linLay.addView(generateSpace(100, 100, ctx))
+        linLay.addView(generateText(song.getArtistName() + " - " + song.getTrackName(), ctx))
+
+        return linLay
+    }
+
+
+
 
 
 }

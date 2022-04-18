@@ -4,14 +4,12 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.speech.RecognizerIntent
-import android.view.Gravity
 import android.view.View
 import android.widget.*
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.*
 import ch.sdp.vibester.helper.GameManager
 import ch.sdp.vibester.model.Lyric
-import ch.sdp.vibester.model.Song
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -47,8 +45,6 @@ class LyricsBelongGameActivity : GameActivity() {
         findViewById<ImageView>(R.id.btnSpeak).setOnClickListener {
             getSpeechInput()
         }
-
-        //barTimer(ctx, findViewById(R.id.progressBarLyrics))
     }
 
     private fun getSpeechInput() {

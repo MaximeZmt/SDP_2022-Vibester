@@ -14,11 +14,8 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.GrantPermissionRule
 import ch.sdp.vibester.R
-import ch.sdp.vibester.api.ItunesMusicApi
 import ch.sdp.vibester.api.LastfmMethod
 import ch.sdp.vibester.helper.TypingGameManager
-import ch.sdp.vibester.model.Song
-import okhttp3.OkHttpClient
 import org.hamcrest.CoreMatchers.not
 import org.junit.*
 import org.junit.Assert.assertEquals
@@ -134,7 +131,7 @@ class LyricsBelongGameActivityTest {
         onView(withId(R.id.progressBarLyrics)).check(matches(isDisplayed()))
     }
 
-    /*@Test
+    @Test
     fun handleLyricsNoFoundCorrectly() {
         val gameManager = setGameManager()
         val intent = Intent(
@@ -146,14 +143,14 @@ class LyricsBelongGameActivityTest {
         scn.onActivity { activity ->
             activity.testGetAndCheckLyrics(ctx, "the best song in the world", "Mr.Mystery", "", gameManager)
         }
-        //FIXME: API takes a lot of time to process this request
-        //comment the following lines if this test fail
+        /** FIXME: API takes a lot of time to process this request
+        comment the following lines if this test fail */
         Thread.sleep(sleepTime)
-        //onView(withId(R.id.nextSongButton)).check(matches(isDisplayed()))
+        onView(withId(R.id.nextSongButton)).check(matches(isDisplayed()))
         //song skipped, not consider as wrong
-        //assertEquals(true, gameManager.getScore() == 0)
-        //assertEquals(true, gameManager.getWrongSongs().size == 0)
-    }*/
+        assertEquals(true, gameManager.getScore() == 0)
+        assertEquals(true, gameManager.getWrongSongs().size == 0)
+    }
 
     @Test
     fun shouldUpdateSpeechFromInput() {

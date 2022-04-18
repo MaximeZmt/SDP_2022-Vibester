@@ -48,7 +48,7 @@ class LyricsBelongGameActivity : GameActivity() {
             getSpeechInput()
         }
 
-        barTimer(ctx, findViewById(R.id.progressBarLyrics))
+        //barTimer(ctx, findViewById(R.id.progressBarLyrics))
     }
 
     private fun getSpeechInput() {

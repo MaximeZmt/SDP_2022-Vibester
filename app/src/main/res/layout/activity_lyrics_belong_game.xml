@@ -48,7 +48,6 @@
         android:layout_marginRight="10dp"
         android:fontFamily="sans-serif"
         android:gravity="center"
-        android:hint="What you said will show here"
         android:textColor="#009688"
         android:textColorHint="#009688"
         android:textSize="26sp"

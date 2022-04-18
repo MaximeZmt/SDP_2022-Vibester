@@ -4,12 +4,14 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.speech.RecognizerIntent
+import android.view.Gravity
 import android.view.View
 import android.widget.*
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.*
 import ch.sdp.vibester.helper.GameManager
 import ch.sdp.vibester.model.Lyric
+import ch.sdp.vibester.model.Song
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -80,6 +82,18 @@ class LyricsBelongGameActivity : GameActivity() {
         }
     }
 
+    private fun showSongInQuestion(song: Song, ctx: Context): LinearLayout {
+        val linLay = LinearLayout(ctx)
+        linLay.setHorizontalGravity(1)
+        linLay.gravity = Gravity.LEFT
+
+        linLay.addView(generateImage(song, ctx))
+        linLay.addView(generateSpace(100, 100, ctx))
+        linLay.addView(generateText(song.getArtistName() + " - " + song.getTrackName(), ctx))
+
+        return linLay
+    }
+
     /**
      * Function to set a new round. It includes reinitializing activity elements,
      * and setting new song for the round.
@@ -89,7 +103,9 @@ class LyricsBelongGameActivity : GameActivity() {
         toggleBtnVisibility(R.id.nextSongButton, false)
         songName = gameManager.currentSong.getTrackName()
         artistName = gameManager.currentSong.getArtistName()
-        findViewById<TextView>(R.id.lyricResult).text = "Say something from $songName - $artistName"
+        val frameLay = findViewById<FrameLayout>(R.id.LyricsSongQuestion)
+        frameLay.removeAllViews()
+        frameLay.addView(showSongInQuestion(gameManager.currentSong, this@LyricsBelongGameActivity))
         checkRunnable()
         barTimer(ctx, findViewById(R.id.progressBarLyrics))
     }

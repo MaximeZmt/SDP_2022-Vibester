@@ -208,7 +208,7 @@ class TypingGameActivity : GameActivity() {
     override fun endRound(gameManager: GameManager){
         //checkRunnable()
         super.endRound(gameManager)
-        //TODO: is it ok for the last round to go to the end game directly? without waiting for the next btn
+        //TODO: is it ok for the last round to go to the end game directly without waiting for the next btn?
         toggleNextBtnVisibility(true)
         /*if (endGame(gameManager)) {
             switchToEnding(gameManager)

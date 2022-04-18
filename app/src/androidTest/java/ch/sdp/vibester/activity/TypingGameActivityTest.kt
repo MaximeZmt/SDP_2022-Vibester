@@ -20,8 +20,6 @@ import ch.sdp.vibester.R
 import ch.sdp.vibester.api.LastfmMethod
 import ch.sdp.vibester.helper.TypingGameManager
 import ch.sdp.vibester.model.Song
-import com.google.android.material.color.MaterialColors.getColor
-import org.hamcrest.Matchers.allOf
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -44,7 +42,7 @@ class TypingGameActivityTest {
         var i = 0
         var completeMiddle = middle
         while(i < numSongs-1){
-            completeMiddle += ","+middle
+            completeMiddle += ",$middle"
             i++
         }
         gameManager.setGameSongList(epilogue + completeMiddle + prologue, LastfmMethod.BY_TAG.method)
@@ -71,7 +69,7 @@ class TypingGameActivityTest {
     fun spaceGenTest() {
         val height = 10
         val width = 10
-        val spaceeeeee = TypingGameActivity.generateSpace(
+        val spaceeeeee = GameActivity.generateSpace(
             width,
             height,
             ApplicationProvider.getApplicationContext()
@@ -84,7 +82,7 @@ class TypingGameActivityTest {
     fun textGenTest() {
         val txtInput = "hello"
         val ctx = ApplicationProvider.getApplicationContext() as Context
-        val myText = TypingGameActivity.generateText(txtInput, ctx)
+        val myText = GameActivity.generateText(txtInput, ctx)
         assertEquals(txtInput, myText.text.toString())
         assertEquals(expectedSize, myText.minHeight)
         assertEquals(ContextCompat.getColor(ctx, R.color.black), myText.textColors.defaultColor)
@@ -103,9 +101,8 @@ class TypingGameActivityTest {
 
         val mySong = Song.singleSong(inputTxt)
 
-        val txtInput = "hello"
         val ctx = ApplicationProvider.getApplicationContext() as Context
-        val myTest = TypingGameActivity.generateImage(mySong, ctx)
+        val myTest = GameActivity.generateImage(mySong, ctx)
         assertEquals(expectedSize, myTest.minimumHeight)
         assertEquals(expectedSize, myTest.minimumWidth)
     }
@@ -157,7 +154,6 @@ class TypingGameActivityTest {
         val songTest = Song.singleSong(inputTxt)
         val gameManager = setGameManager()
         gameManager.setNextSong()
-        lateinit var temp: Unit
 
         val intent =
             Intent(ApplicationProvider.getApplicationContext(), TypingGameActivity::class.java)
@@ -166,7 +162,7 @@ class TypingGameActivityTest {
         val scn: ActivityScenario<TypingGameActivity> = ActivityScenario.launch(intent)
         val ctx = ApplicationProvider.getApplicationContext() as Context
         scn.onActivity { activity ->
-            temp = activity.checkAnswer(ctx, songTest, gameManager)
+            activity.checkAnswer(ctx, songTest, gameManager)
         }
         assertEquals(true, gameManager.getScore() == 1)
     }
@@ -185,14 +181,13 @@ class TypingGameActivityTest {
         val songTest = Song.singleSong(inputTxt)
         val gameManager = setGameManager()
         gameManager.setNextSong()
-        lateinit var temp: Unit
 
         val intent =
             Intent(ApplicationProvider.getApplicationContext(), TypingGameActivity::class.java)
         val scn: ActivityScenario<TypingGameActivity> = ActivityScenario.launch(intent)
         val ctx = ApplicationProvider.getApplicationContext() as Context
         scn.onActivity { activity ->
-            temp = activity.checkAnswer(ctx, songTest, gameManager)
+            activity.checkAnswer(ctx, songTest, gameManager)
         }
         assertEquals(true, gameManager.getScore() == 0)
     }
@@ -335,7 +330,7 @@ class TypingGameActivityTest {
         intent.putExtra("gameManager", gameManager)
         val scn: ActivityScenario<TypingGameActivity> = ActivityScenario.launch(intent)
         val ctx = ApplicationProvider.getApplicationContext() as Context
-        var color:ColorStateList = ctx.getResources().getColorStateList(R.color.floral_white)
+        var color:ColorStateList = ctx.resources.getColorStateList(R.color.floral_white)
 
         /* Test progress bar is yellow*/
         scn.onActivity { activity ->
@@ -345,7 +340,7 @@ class TypingGameActivityTest {
         scn.onActivity { activity->
             color = activity.testProgressBarColor()!!
         }
-        assertEquals(color, ctx.getResources().getColorStateList(R.color.maximum_yellow_red))
+        assertEquals(color, ctx.resources.getColorStateList(R.color.maximum_yellow_red))
 
         /* Test progress bar is red*/
         scn.onActivity { activity ->
@@ -355,7 +350,7 @@ class TypingGameActivityTest {
         scn.onActivity { activity->
             color = activity.testProgressBarColor()!!
         }
-        assertEquals(color, ctx.getResources().getColorStateList(R.color.light_coral))
+        assertEquals(color, ctx.resources.getColorStateList(R.color.light_coral))
     }
 
 }

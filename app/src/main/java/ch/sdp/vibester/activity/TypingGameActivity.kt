@@ -4,13 +4,11 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity
 import android.view.Window
 import android.widget.*
 import androidx.core.content.ContextCompat.getColor
 import androidx.core.widget.addTextChangedListener
 import ch.sdp.vibester.R
-import ch.sdp.vibester.api.BitmapGetterApi
 import ch.sdp.vibester.api.ItunesMusicApi
 import ch.sdp.vibester.helper.DisplayContents
 import ch.sdp.vibester.helper.GameManager
@@ -29,51 +27,6 @@ import okhttp3.OkHttpClient
 class TypingGameActivity : GameActivity() {
     private lateinit var gameManager: TypingGameManager
     private var gameIsOn: Boolean = true // done to avoid clicks on songs after the round is over
-
-    companion object {
-        /**
-         * Generate spaces widget programmatically
-         */
-        fun generateSpace(width: Int, height: Int, ctx: Context): Space {
-            val space = Space(ctx)
-            space.minimumWidth = width
-            space.minimumHeight = height
-            return space
-        }
-
-        /**
-         * Generate Text widget programmatically
-         */
-        fun generateText(txt: String, ctx: Context): TextView {
-            val txtView = TextView(ctx)
-            txtView.text = txt
-            txtView.gravity = Gravity.CENTER
-            txtView.minHeight = 200
-            txtView.textSize = 20F
-            txtView.setTextColor(getColor(ctx, R.color.black))
-            return txtView
-        }
-
-        /**
-         * Generate an images widget programmatically given a song (retrieve song artwork asynchronously)
-         */
-        fun generateImage(song: Song, ctx: Context): ImageView {
-            val imgView = ImageView(ctx)
-            imgView.minimumWidth = 200
-            imgView.minimumHeight = 200
-
-            CoroutineScope(Dispatchers.Main).launch {
-                val task = async(Dispatchers.IO) {
-                    val bit = BitmapGetterApi.download(song.getArtworkUrl())
-                    bit.get()
-                }
-                val bm = task.await()
-                imgView.setImageBitmap(bm)
-            }
-            imgView.foregroundGravity = Gravity.LEFT
-            return imgView
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -138,9 +91,7 @@ class TypingGameActivity : GameActivity() {
      * Set and remove nextBtn during the game
      */
     private fun toggleNextBtnVisibility(value: Boolean){
-        val nextSongBtn = findViewById<Button>(R.id.nextSong)
-        if(value){nextSongBtn.visibility = android.view.View.VISIBLE}
-        else{nextSongBtn.visibility = android.view.View.GONE}
+        toggleBtnVisibility(R.id.nextSong, value)
     }
 
     /**
@@ -178,11 +129,11 @@ class TypingGameActivity : GameActivity() {
      */
     private fun hasWon(ctx: Context, score: Int, hasWon: Boolean, itWas: Song) {
         if (hasWon) {
-            Toast.makeText(ctx, "$score Well Done!", Toast.LENGTH_SHORT).show()
+            toastShowCorrect(ctx, score)
         } else {
             Toast.makeText(
                 ctx,
-                "Sadly you're wrong, it was: " + itWas.getTrackName() + " by " + itWas.getArtistName(),
+                ctx.getString(R.string.wrong_message_with_answer, itWas.getTrackName(), itWas.getArtistName()),
                 Toast.LENGTH_SHORT
             ).show()
         }
@@ -212,17 +163,7 @@ class TypingGameActivity : GameActivity() {
         val frameLay = FrameLayout(ctx)
         frameLay.background = DisplayContents.borderGen(ctx, R.color.maximum_yellow_red)
 
-        // Horizontal Linear Layout to put Images and Text next one another
-        val linLay = LinearLayout(ctx)
-        linLay.setHorizontalGravity(1)
-        linLay.gravity = Gravity.LEFT
-
-        //Generate and add its component
-        linLay.addView(generateImage(song, ctx))
-        linLay.addView(generateSpace(100, 100, ctx))
-        linLay.addView(generateText(song.getArtistName() + " - " + song.getTrackName(), ctx))
-
-        frameLay.addView(linLay)
+        frameLay.addView(showSongAndImage(song, ctx))
         guessLayout.addView(frameLay)
 
         //Create the Listener that is executed if we click on the frame layer
@@ -247,7 +188,7 @@ class TypingGameActivity : GameActivity() {
      * Function to set a song for the first round and play a game.
      */
     private fun startFirstRound(ctx: Context, gameManager: TypingGameManager){
-        if (gameManager.checkGameStatus() && gameManager.setNextSong()) {
+        if (!isEndGame(gameManager)) {
             startRound(ctx, gameManager)
         }
         else{
@@ -259,14 +200,16 @@ class TypingGameActivity : GameActivity() {
      * Function called in the end of each round. Displays the button "Next" and
      * sets the next songs to play.
      */
-    private fun endRound(gameManager: GameManager){
+    override fun endRound(gameManager: GameManager){
         gameIsOn = false
-        findViewById<EditText>(R.id.yourGuessET).setEnabled(false)
-        checkRunnable()
+        findViewById<EditText>(R.id.yourGuessET).isEnabled = false
+        //checkRunnable()
+        super.endRound(gameManager)
+        //TODO: is it ok for the last round to go to the end game directly without waiting for the next btn?
         toggleNextBtnVisibility(true)
-        if (!gameManager.checkGameStatus() || !gameManager.setNextSong()) {
+        /*if (endGame(gameManager)) {
             switchToEnding(gameManager)
-        }
+        }*/
     }
 
     /**
@@ -277,7 +220,7 @@ class TypingGameActivity : GameActivity() {
         gameIsOn = true
         findViewById<LinearLayout>(R.id.displayGuess).removeAllViews()
         findViewById<EditText>(R.id.yourGuessET).text.clear()
-        findViewById<EditText>(R.id.yourGuessET).setEnabled(true)
+        findViewById<EditText>(R.id.yourGuessET).isEnabled = true
         toggleNextBtnVisibility(false)
         gameManager.playSong()
         checkRunnable()
@@ -288,7 +231,7 @@ class TypingGameActivity : GameActivity() {
      * Functions for testing
      */
     fun testProgressBar(progressTime:Int = 0) {
-        findViewById<ProgressBar>(R.id.progressBarTyping).progress = progressTime
+        superTestProgressBar(findViewById(R.id.progressBarTyping), progressTime)
     }
 
     fun testFirstRound(ctx: Context, gameManager: TypingGameManager){
@@ -296,7 +239,7 @@ class TypingGameActivity : GameActivity() {
     }
 
     fun testProgressBarColor(): ColorStateList? {
-        return findViewById<ProgressBar>(R.id.progressBarTyping).progressTintList
+        return superTestProgressBarColor(findViewById(R.id.progressBarTyping))
     }
 
 

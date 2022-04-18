@@ -126,7 +126,7 @@ class LyricsBelongGameActivity : GameActivity() {
                         lyrics = result.lyrics.toString().replace(",", "")
                         checkAnswer(ctx, speechInput, lyrics, gameManager) // be sure the lyrics is ready when checking
                     } else {
-                        Toast.makeText(ctx, ctx.getString(R.string.no_lyrics_found), Toast.LENGTH_SHORT).show()
+                        toastShowSimpleMsg(ctx, R.string.no_lyrics_found)
                         endRound(gameManager)
                     }
                 }
@@ -156,7 +156,7 @@ class LyricsBelongGameActivity : GameActivity() {
         if (hasWon) {
             toastShowCorrect(ctx, score)
         } else {
-            Toast.makeText(ctx, ctx.getString(R.string.wrong_message), Toast.LENGTH_SHORT).show()
+            toastShowSimpleMsg(ctx, R.string.wrong_message)
         }
     }
 

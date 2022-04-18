@@ -115,6 +115,10 @@ open class GameActivity : AppCompatActivity() {
         Toast.makeText(ctx, ctx.getString(R.string.correct_message, score), Toast.LENGTH_SHORT).show()
     }
 
+    fun toastShowSimpleMsg(ctx: Context, SId: Int) {
+        Toast.makeText(ctx, ctx.getString(SId), Toast.LENGTH_SHORT).show()
+    }
+
     companion object {
         /**
          * Generate spaces widget programmatically

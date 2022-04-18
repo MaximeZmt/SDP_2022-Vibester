@@ -87,9 +87,11 @@ class LyricsBelongGameActivity : GameActivity() {
         toggleBtnVisibility(R.id.nextSongButton, false)
         songName = gameManager.currentSong.getTrackName()
         artistName = gameManager.currentSong.getArtistName()
+
         val frameLay = findViewById<FrameLayout>(R.id.LyricsSongQuestion)
         frameLay.removeAllViews()
         frameLay.addView(showSongAndImage(gameManager.currentSong, this@LyricsBelongGameActivity))
+
         checkRunnable()
         barTimer(ctx, findViewById(R.id.progressBarLyrics))
     }
@@ -170,7 +172,9 @@ class LyricsBelongGameActivity : GameActivity() {
                     handler.postDelayed(this, 999)
                 } else if (myBar.progress == 0) {
                     if (speechInput == "-1"){
-                        gameManager.addWrongSong()
+                        if (this@LyricsBelongGameActivity::gameManager.isInitialized) {
+                            gameManager.addWrongSong()
+                        }
                         endRound(gameManager)
                     } else {
                         getAndCheckLyrics(ctx, songName, artistName, speechInput, gameManager)

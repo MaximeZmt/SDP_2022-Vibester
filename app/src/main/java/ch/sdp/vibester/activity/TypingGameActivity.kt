@@ -202,7 +202,7 @@ class TypingGameActivity : GameActivity() {
      */
     override fun endRound(gameManager: GameManager){
         gameIsOn = false
-        findViewById<EditText>(R.id.yourGuessET).setEnabled(false)
+        findViewById<EditText>(R.id.yourGuessET).isEnabled = false
         //checkRunnable()
         super.endRound(gameManager)
         //TODO: is it ok for the last round to go to the end game directly without waiting for the next btn?
@@ -220,7 +220,7 @@ class TypingGameActivity : GameActivity() {
         gameIsOn = true
         findViewById<LinearLayout>(R.id.displayGuess).removeAllViews()
         findViewById<EditText>(R.id.yourGuessET).text.clear()
-        findViewById<EditText>(R.id.yourGuessET).setEnabled(true)
+        findViewById<EditText>(R.id.yourGuessET).isEnabled = true
         toggleNextBtnVisibility(false)
         gameManager.playSong()
         checkRunnable()

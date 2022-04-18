@@ -148,15 +148,9 @@ class ProfileActivity : AppCompatActivity() {
                 }
             }
             val bm = task.await()
-            if (bm != null) {
-                Log.e(getString(R.string.log_tag), bm.height.toString() + " - " + bm.width.toString())
-            }else{
-                Log.e(getString(R.string.log_tag), "ahhhh merde")
-            }
 
             if(bm != null){
                 val avatar = findViewById<ImageView>(R.id.avatar)
-                Log.i(getString(R.string.log_tag), "test")
                 avatar.setImageBitmap(Bitmap.createScaledBitmap(bm, 1000,1000, false))
             }
         }

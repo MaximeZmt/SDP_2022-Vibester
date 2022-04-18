@@ -76,15 +76,9 @@ class UsersRepo @Inject constructor() {
                 for (dataSnapShot in dataSnapshot.children) {
                     val dbContents = dataSnapShot.getValue<UserProfile>()
                     if (dbContents != null) {
-                        Log.e("pp urepo ",dbContents.image )
-                        Log.e("memail 1 ",dbContents.email )
-                        Log.e("memail 2 ",email )
                         if(dbContents.email == email) {
-                            Log.e("pp repo ", "heyyou")
                             callback(dbContents)
                             break
-                        } else {
-                            //callback(UserProfile())
                         }
                     }
                 }

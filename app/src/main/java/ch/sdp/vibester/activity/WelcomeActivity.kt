@@ -31,16 +31,6 @@ class WelcomeActivity : AppCompatActivity() {
         supportActionBar?.hide()
         setContentView(R.layout.activity_welcome_screen)
 
-        /*
-        val getIntent = intent.extras
-        if (getIntent!=null){
-            testLoggedIn = getIntent.getBoolean("testLoggedIn", false)
-        }
-
-         */
-
-
-
         val userStatusTextValue = findViewById<TextView>(R.id.user_status)
         if(FireBaseAuthenticator.isLoggedIn() ||  testLoggedIn)
         {

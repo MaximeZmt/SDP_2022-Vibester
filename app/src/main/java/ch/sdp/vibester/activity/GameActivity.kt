@@ -103,7 +103,7 @@ open class GameActivity : AppCompatActivity() {
         return !gameManager.checkGameStatus() || !gameManager.setNextSong()
     }
 
-    fun superTestProgressBar(myBar: ProgressBar, progressTime: Int=0){
+    fun superTestProgressBar(myBar: ProgressBar, progressTime: Int=0) {
         myBar.progress = progressTime
     }
 

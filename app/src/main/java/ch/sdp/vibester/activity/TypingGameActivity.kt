@@ -129,11 +129,11 @@ class TypingGameActivity : GameActivity() {
      */
     private fun hasWon(ctx: Context, score: Int, hasWon: Boolean, itWas: Song) {
         if (hasWon) {
-            Toast.makeText(ctx, "$score Well Done!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(ctx, ctx.getString(R.string.correct_message, score), Toast.LENGTH_SHORT).show()
         } else {
             Toast.makeText(
                 ctx,
-                "Sadly you're wrong, it was: " + itWas.getTrackName() + " by " + itWas.getArtistName(),
+                ctx.getString(R.string.wrong_message_with_answer, itWas.getTrackName(), itWas.getArtistName()),
                 Toast.LENGTH_SHORT
             ).show()
         }

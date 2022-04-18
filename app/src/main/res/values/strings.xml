@@ -5,7 +5,7 @@
     <string name="button_txt">Enter</string>
     <string name="hint_input_txt">Enter</string>
     <string name="scoreboard">S C O R E B O A R D</string>
-    <string name="the_song_was">The song was...</string>
+    <string name="the_song_was">The song was…</string>
     <string name="wrong">Wrong</string>
     <string name="correct">Correct</string>
     <string name="best_score">Best Score</string>
@@ -57,10 +57,10 @@
     <string name="editHandle">Edit Handle</string>
     <string name="holder_setup_game_type">Choose the game you want to play:</string>
     <string name="welcome_download">DOWNLOAD</string>
-    <string name="download_songname">Enter a song name...</string>
+    <string name="download_songname">Enter a song name…</string>
     <string name="download_download">DOWNLOAD SONG</string>
 
-    <string name="Singleplayer">Singleplayer</string>
+    <string name="Singleplayer">Single-player</string>
     <string name="Multiplayer">Multiplayer</string>
     <string name="game_buzzer_title">Local Buzzer</string>
     <string name="game_typing">Local Typing</string>
@@ -103,4 +103,9 @@
     <string name="game_lyrics">Local Lyrics</string>
     <string name="profile_username">Profile Username</string>
     <string name="search_users">SEARCH USERS</string>
+
+    <string name="no_lyrics_found">No lyrics found, try the next song</string>
+    <string name="correct_message">%1$d Well Done!</string>
+    <string name="wrong_message">Sadly you\'re wrong</string>
+    <string name="wrong_message_with_answer">Sadly you\'re wrong, it was %1$s by %2$s</string>
 </resources>

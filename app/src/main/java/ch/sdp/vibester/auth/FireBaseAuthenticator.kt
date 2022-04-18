@@ -13,6 +13,27 @@ import dagger.hilt.android.scopes.ServiceScoped
 import javax.inject.Inject
 
 class FireBaseAuthenticator @Inject constructor() {
+    companion object{
+
+        /**
+         * API: return true if firebase authentication is logged in
+         */
+        fun isLoggedIn(): Boolean {
+            return !(FirebaseAuth.getInstance().currentUser == null)
+        }
+
+        /**
+         * API: return the mail of the user if logged in otherwise empty string
+         */
+        fun getCurrentUserMail(): String {
+            if (isLoggedIn()) {
+                return FirebaseAuth.getInstance().currentUser!!.email.toString()
+            } else {
+                return ""
+            }
+        }
+
+    }
 
     private val auth: FirebaseAuth = Firebase.auth
 

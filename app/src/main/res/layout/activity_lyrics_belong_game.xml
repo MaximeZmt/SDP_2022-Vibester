@@ -22,16 +22,32 @@
         android:scaleY="3" />
 
     <TextView
+        android:id="@+id/LyricsQuestion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="111dp"
+        android:text="Say something from ..." />
+
+    <FrameLayout
+        android:id="@+id/LyricsSongQuestion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="156dp" />
+
+    <TextView
         android:id="@+id/lyricResult"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="300dp"
         android:layout_marginRight="10dp"
         android:fontFamily="sans-serif"
         android:gravity="center"
-        android:hint="Say something from Thunder - Imagine Dragons"
         android:textColor="#009688"
         android:textColorHint="#009688"
         android:textSize="26sp"
@@ -52,16 +68,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:visibility="gone"
         android:text="@string/check_for_correctness" />
-
-    <TextView
-        android:id="@+id/lyricMatchResult"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="253dp"
-        android:text="@string/result_will_show_here" />
 
     <Button
         android:id="@+id/nextSongButton"
@@ -70,6 +78,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="184dp"
+        android:visibility="gone"
         android:text="@string/next" />
 
 </RelativeLayout>

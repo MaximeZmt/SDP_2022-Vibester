@@ -3,33 +3,41 @@ package ch.sdp.vibester.activity
 //import ch.sdp.vibester.profile.ProfileDataProvider
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.Window.FEATURE_NO_TITLE
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.R
-import ch.sdp.vibester.model.Song
+import ch.sdp.vibester.auth.FireBaseAuthenticator
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import ch.sdp.vibester.model.UserSharedPref
 
 class WelcomeActivity : AppCompatActivity() {
+
+    // For test purpose
+    companion object{
+        var testLoggedIn: Boolean = false
+
+        fun setLoggedIn(){
+            testLoggedIn = true
+        }
+
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(FEATURE_NO_TITLE)
         supportActionBar?.hide()
         setContentView(R.layout.activity_welcome_screen)
 
-        val tv = findViewById<TextView>(R.id.user_status)
-        val username = UserSharedPref.getUser(this).username
-        if(username != "")
+        val userStatusTextValue = findViewById<TextView>(R.id.user_status)
+        if(FireBaseAuthenticator.isLoggedIn() ||  testLoggedIn)
         {
-            tv.text = "User: " + username
+            userStatusTextValue.text = "User: " + FireBaseAuthenticator.getCurrentUserMail()
         }
 
-        val currentEmail = UserSharedPref.getUser(this).email
-        if (currentEmail != null){
-            UserSharedPref.userReset(this, currentEmail)
-        }
+
     }
 
     private fun sendDirectIntent(arg: Class<*>?) {
@@ -42,27 +50,22 @@ class WelcomeActivity : AppCompatActivity() {
     }
 
     fun switchToProfile(view: View) {
-        sendDirectIntent(ProfileActivity::class.java)
+        if (FireBaseAuthenticator.isLoggedIn() || testLoggedIn){
+            sendDirectIntent(ProfileActivity::class.java)
+        }else{
+            sendDirectIntent(AuthenticationActivity::class.java)
+        }
     }
 
     fun switchToScoreboard(view: View) {
         sendDirectIntent(ScoreBoardActivity::class.java)
     }
 
-    fun switchToSettings(view: View) {
-        sendDirectIntent(AuthenticationActivity::class.java)
-    }
-
     fun switchToDownload(view: View) {
         sendDirectIntent(DownloadActivity::class.java)
     }
 
-    /*
-     * Belongs to a previously implemented button, taken out for UI purposes.
-     * Might bring it back, thus leaving the code for now.
-     */
-
-    /*fun switchToLogin(view: View) { //FILLER INTENT
-        sendDirectIntent(GameSetupScreen::class.java)
-    }*/
+    fun switchToSearch(view: View) {
+        sendDirectIntent(SearchUserActivity::class.java)
+    }
 }

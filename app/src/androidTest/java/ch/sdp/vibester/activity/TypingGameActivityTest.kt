@@ -69,7 +69,7 @@ class TypingGameActivityTest {
     fun spaceGenTest() {
         val height = 10
         val width = 10
-        val spaceeeeee = TypingGameActivity.generateSpace(
+        val spaceeeeee = GameActivity.generateSpace(
             width,
             height,
             ApplicationProvider.getApplicationContext()
@@ -82,7 +82,7 @@ class TypingGameActivityTest {
     fun textGenTest() {
         val txtInput = "hello"
         val ctx = ApplicationProvider.getApplicationContext() as Context
-        val myText = TypingGameActivity.generateText(txtInput, ctx)
+        val myText = GameActivity.generateText(txtInput, ctx)
         assertEquals(txtInput, myText.text.toString())
         assertEquals(expectedSize, myText.minHeight)
         assertEquals(ContextCompat.getColor(ctx, R.color.black), myText.textColors.defaultColor)
@@ -101,9 +101,8 @@ class TypingGameActivityTest {
 
         val mySong = Song.singleSong(inputTxt)
 
-        val txtInput = "hello"
         val ctx = ApplicationProvider.getApplicationContext() as Context
-        val myTest = TypingGameActivity.generateImage(mySong, ctx)
+        val myTest = GameActivity.generateImage(mySong, ctx)
         assertEquals(expectedSize, myTest.minimumHeight)
         assertEquals(expectedSize, myTest.minimumWidth)
     }
@@ -155,7 +154,6 @@ class TypingGameActivityTest {
         val songTest = Song.singleSong(inputTxt)
         val gameManager = setGameManager()
         gameManager.setNextSong()
-        lateinit var temp: Unit
 
         val intent =
             Intent(ApplicationProvider.getApplicationContext(), TypingGameActivity::class.java)
@@ -164,7 +162,7 @@ class TypingGameActivityTest {
         val scn: ActivityScenario<TypingGameActivity> = ActivityScenario.launch(intent)
         val ctx = ApplicationProvider.getApplicationContext() as Context
         scn.onActivity { activity ->
-            temp = activity.checkAnswer(ctx, songTest, gameManager)
+            activity.checkAnswer(ctx, songTest, gameManager)
         }
         assertEquals(true, gameManager.getScore() == 1)
     }
@@ -183,14 +181,13 @@ class TypingGameActivityTest {
         val songTest = Song.singleSong(inputTxt)
         val gameManager = setGameManager()
         gameManager.setNextSong()
-        lateinit var temp: Unit
 
         val intent =
             Intent(ApplicationProvider.getApplicationContext(), TypingGameActivity::class.java)
         val scn: ActivityScenario<TypingGameActivity> = ActivityScenario.launch(intent)
         val ctx = ApplicationProvider.getApplicationContext() as Context
         scn.onActivity { activity ->
-            temp = activity.checkAnswer(ctx, songTest, gameManager)
+            activity.checkAnswer(ctx, songTest, gameManager)
         }
         assertEquals(true, gameManager.getScore() == 0)
     }

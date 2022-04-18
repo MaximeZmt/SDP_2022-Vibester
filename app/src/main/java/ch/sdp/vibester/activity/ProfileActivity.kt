@@ -1,7 +1,9 @@
 package ch.sdp.vibester.activity
 
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.text.InputType
+import android.util.Log
 import android.view.Window
 import android.widget.Button
 import android.widget.EditText
@@ -9,16 +11,21 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.graphics.drawable.toBitmap
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.BitmapGetterApi
 import ch.sdp.vibester.model.UserSharedPref
 import ch.sdp.vibester.database.UsersRepo
+import ch.sdp.vibester.helper.IntentSwitcher
 import ch.sdp.vibester.profile.UserProfile
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -35,10 +42,14 @@ class ProfileActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_profile)
 
-        setupProfile(UserSharedPref.getUser(this))
+        setupProfile(UserSharedPref.getUser(applicationContext))
 
         val editUsername = findViewById<Button>(R.id.editUser)
         val editHandle = findViewById<Button>(R.id.editHandle)
+
+        val logoutbutton = findViewById<Button>(R.id.logout)
+
+        val retToMain = findViewById<FloatingActionButton>(R.id.profile_returnToMain)
 
         editUsername.setOnClickListener {
             showGeneralDialog(R.id.username, "username")
@@ -46,6 +57,15 @@ class ProfileActivity : AppCompatActivity() {
 
         editHandle.setOnClickListener {
             showGeneralDialog(R.id.handle, "handle")
+        }
+
+        retToMain.setOnClickListener{
+            IntentSwitcher.switchBackToWelcome(this)
+        }
+
+        logoutbutton.setOnClickListener{
+            FirebaseAuth.getInstance().signOut()
+            IntentSwitcher.switchBackToWelcome(this)
         }
 
     }
@@ -105,24 +125,36 @@ class ProfileActivity : AppCompatActivity() {
 
 
     private fun setupProfile(user: UserProfile){
-        findViewById<TextView>(R.id.handle).text =  user.handle
-        findViewById<TextView>(R.id.username).text = user.username
-        findViewById<TextView>(R.id.totalGames).text = user.totalGames.toString()
-        findViewById<TextView>(R.id.correctSongs).text = user.correctSongs.toString()
-        findViewById<TextView>(R.id.bestScore).text = user.bestScore.toString()
-        findViewById<TextView>(R.id.ranking).text = user.ranking.toString()
+
+        // Currently assuming that empty username means no user !
+        if (user.username != ""){
+            findViewById<TextView>(R.id.username).text =  user.username
+            if (user.handle != ""){
+                findViewById<TextView>(R.id.handle).text =  user.handle
+            }
+            findViewById<TextView>(R.id.totalGames).text = user.totalGames.toString()
+            findViewById<TextView>(R.id.correctSongs).text = user.correctSongs.toString()
+            findViewById<TextView>(R.id.bestScore).text = user.bestScore.toString()
+            findViewById<TextView>(R.id.ranking).text = user.ranking.toString()
+        }
         CoroutineScope(Dispatchers.Main).launch {
             val task = async(Dispatchers.IO) {
                 try {
-                    val bit = BitmapGetterApi.download("https://" + user.image)
-                    bit.get()
+                    Log.e(getString(R.string.log_tag),user.image)
+                    val bit = BitmapGetterApi.download("https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/45.png")
+                    bit.get(10, TimeUnit.SECONDS)
                 }catch (e: Exception){
                     null
                 }
             }
             val bm = task.await()
-            findViewById<ImageView>(R.id.avatar).setImageBitmap(bm)
+
+            if(bm != null){
+                val avatar = findViewById<ImageView>(R.id.avatar)
+                avatar.setImageBitmap(Bitmap.createScaledBitmap(bm, 1000,1000, false))
+            }
         }
+
     }
 }
 

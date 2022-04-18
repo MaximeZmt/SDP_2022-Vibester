@@ -171,11 +171,13 @@ class LyricsBelongGameActivity : GameActivity() {
                     decreaseBarTimer(myBar)
                     handler.postDelayed(this, 999)
                 } else if (myBar.progress == 0) {
-                    if (speechInput == "-1" && this@LyricsBelongGameActivity::gameManager.isInitialized){
-                        gameManager.addWrongSong()
-                        endRound(gameManager)
-                    } else {
-                        getAndCheckLyrics(ctx, songName, artistName, speechInput, gameManager)
+                    if (this@LyricsBelongGameActivity::gameManager.isInitialized) {
+                        if (speechInput == "-1"){
+                            gameManager.addWrongSong()
+                            endRound(gameManager)
+                        } else {
+                            getAndCheckLyrics(ctx, songName, artistName, speechInput, gameManager)
+                        }
                     }
                 }
             }

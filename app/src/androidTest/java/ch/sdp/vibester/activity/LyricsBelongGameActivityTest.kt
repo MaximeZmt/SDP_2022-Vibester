@@ -279,7 +279,6 @@ class LyricsBelongGameActivityTest {
         onView(withId(R.id.lyricMatchButton)).check(matches(not(isDisplayed())))
         assertEquals(artistName, currentArtist)
         assertEquals("Monday", currentSong)
-        onView(withId(R.id.lyricResult)).check(matches(withText("Say something from Monday - $artistName")))
         onView(withId(R.id.progressBarLyrics)).check(matches(isDisplayed()))
         assertEquals(1, gameManager.nextSongInd)
         assertEquals(1, gameManager.numPlayedSongs)

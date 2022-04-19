@@ -15,7 +15,7 @@ open class GameManager : Serializable {
     var numPlayedSongs = 0
     open lateinit var currentSong: Song
     var gameSongList: MutableList<Pair<String, String>> = mutableListOf()
-    private val correctSongs = mutableListOf<Song>()
+    private val correctSongs = mutableListOf<Song>() //TODO: question: why this is a val but the next one is a var?
     private var wrongSongs = mutableListOf<Song>()
     var nextSongInd = 0
 

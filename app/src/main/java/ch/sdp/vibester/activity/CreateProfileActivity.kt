@@ -72,7 +72,7 @@ class CreateProfileActivity : AppCompatActivity() {
 
 
     private fun updateUI() {
-        findViewById<TextView>(R.id.uploadStatus).text = "Upload OK"
+        findViewById<TextView>(R.id.uploadStatus).text = getString(R.string.uploadImageStatus)
     }
 
 

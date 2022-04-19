@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.Window
+import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.R
@@ -46,12 +47,9 @@ class GameEndingActivity : AppCompatActivity() {
 
         if (intent.hasExtra("Winner Name")) {
             val winner = intent.getStringExtra("Winner Name")
-            // FIXME: commented until I get the winner panel to work without crashing the app
-            /*
             if (winner!=null) {
                 findViewById<TextView>(R.id.winnerText).text="And the winner is... $winner!"
             } else {findViewById<TextView>(R.id.winnerText).text="Nobody won this game!"}
-            */
         }
 
 
@@ -105,12 +103,8 @@ class GameEndingActivity : AppCompatActivity() {
         playerNameView.text = statPlayerText
     }
 
-    // FIXME: commented until I get the winner panel to work without crashing the app
-/*
-    fun hideWinnerPanel(view: View) {
-        findViewById<TextView>(R.id.winnerPanel).visibility=View.INVISIBLE
-    }
-*/
+
+
     fun goToIncorrectlyGuessedSongs(view: View) {
         val intent = Intent(this, IncorrectSongsActivity::class.java)
         intent.putExtra("nb_false", nbIncorrectSongs)

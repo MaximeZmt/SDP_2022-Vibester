@@ -123,7 +123,6 @@
     <string name="game_lyrics">Local Lyrics</string>
     <string name="profile_username">Profile Username</string>
     <string name="search_users">SEARCH USERS</string>
-
     <string name="no_lyrics_found">No lyrics found, try the next song</string>
     <string name="correct_message">%1$d Well Done!</string>
     <string name="wrong_message">Sadly you\'re wrong</string>

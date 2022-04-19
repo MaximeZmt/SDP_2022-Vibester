@@ -51,6 +51,7 @@
     <string name="notAnEmail">Not an email</string>
     <string name="shortPassword">Password has to be at least 6 symbols</string>
     <string name="AccCreation">Account creation form</string>
+    <string name="uploadImageStatus">Upload OK</string>
 
     <string name="game_end__player_name">Player Name Here</string>
     <string name="game_end__show_stats">Here are your stats!</string>

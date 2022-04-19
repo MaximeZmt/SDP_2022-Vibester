@@ -10,8 +10,7 @@ import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasExtra
-import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withText
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
@@ -43,6 +42,7 @@ class GameEndingActivityTest {
     private var incArray: ArrayList<String> = arrayListOf()
     private var statNames: ArrayList<String> = arrayListOf()
     private var statRes: ArrayList<String> = arrayListOf()
+    private var wName = "Winner"
 
 
     @Test
@@ -129,5 +129,10 @@ class GameEndingActivityTest {
         intended(hasExtra("str_arr_inc", incArray))
 
         intended(hasComponent(IncorrectSongsActivity::class.java.name))
+    }
+
+    @Test
+    fun winnerTextIsVisible() {
+        onView(withId(R.id.winnerText)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
     }
 }

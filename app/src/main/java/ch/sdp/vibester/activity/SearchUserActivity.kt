@@ -74,6 +74,7 @@ class SearchUserActivity : AppCompatActivity() {
                 for (snapshot in dataSnapshot.children) {
                     val userProfile:UserProfile? = snapshot.getValue(UserProfile::class.java)
                     if (userProfile != null) {
+                        userProfile.uid = snapshot.getKey().toString()
                         (users as ArrayList<UserProfile>).add(userProfile)
                     }
                 }

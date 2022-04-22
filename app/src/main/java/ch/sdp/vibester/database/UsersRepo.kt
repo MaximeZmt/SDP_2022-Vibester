@@ -43,6 +43,21 @@ class UsersRepo @Inject constructor() {
 
 
     /**
+     * Update a subfield of user's field
+     * @param userID the id of the user which is being updated
+     * @param newVal (Boolean) the new value of the field that is being updated
+     * @param fieldName the field name of the field that is being updated
+     * @param subFieldName the field name of the field that is being updated
+
+     */
+    fun updateFieldSubFieldBoolean(userID: String, newVal: Boolean, fieldName: String, subFieldName: String) {
+        dbRef.child(userID) //For now ID is hardcoded, will generate it creating new users next week "testUser"
+            .child(fieldName)
+            .child(subFieldName)
+            .setValue(newVal)
+    }
+
+    /**
      * The users class which handled all the interactions with the database that are linked to users
      * This function creates a new user account in the database
      * @param email the email of the new user

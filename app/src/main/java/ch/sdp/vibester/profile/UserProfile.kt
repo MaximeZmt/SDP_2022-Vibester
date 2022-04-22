@@ -1,8 +1,8 @@
 package ch.sdp.vibester.profile
-//import kotlinx.serialization.Serializable
 import java.io.Serializable
 
 data class UserProfile(
+    var uid: String = "",
     var handle: String = "",
     var username: String = "",
     var image: String = "",

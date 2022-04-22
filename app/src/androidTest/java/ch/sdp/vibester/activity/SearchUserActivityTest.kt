@@ -52,7 +52,7 @@ class SearchUserActivityTest {
             .perform(
                 RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                     2,
-                    ViewActions.click()
+                    click()
                 )
             )
     }

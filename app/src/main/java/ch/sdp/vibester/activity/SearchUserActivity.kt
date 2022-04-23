@@ -72,7 +72,7 @@ class SearchUserActivity : AppCompatActivity() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 (users as ArrayList<UserProfile>).clear()
                 for (snapshot in dataSnapshot.children) {
-                    val userProfile:UserProfile? = snapshot.getValue(UserProfile::class.java)
+                    val userProfile: UserProfile? = snapshot.getValue(UserProfile::class.java)
                     if (userProfile != null) {
                         (users as ArrayList<UserProfile>).add(userProfile)
                     }

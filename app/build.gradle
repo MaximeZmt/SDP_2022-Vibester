@@ -82,6 +82,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-database-ktx'
     implementation 'com.google.firebase:firebase-storage-ktx'
     implementation 'junit:junit:4.13.2'
+    implementation 'com.google.firebase:firebase-firestore-ktx:24.0.2'
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'org.json:json:20180813'
     testImplementation 'org.robolectric:robolectric:4.6'

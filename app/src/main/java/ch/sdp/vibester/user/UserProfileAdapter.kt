@@ -38,7 +38,7 @@ class UserProfileAdapter(val users: MutableList<User>):
      */
     inner class UserProfileViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         /**
-         * @param userProfile with all the parameters
+         * @param user with all the parameters
          */
         fun bind(user: User) {
             itemView.findViewById<TextView>(R.id.search_user_username).text = user.username

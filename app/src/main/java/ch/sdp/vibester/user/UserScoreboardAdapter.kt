@@ -7,7 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
-import ch.sdp.vibester.scoreboard.loadImg
+import ch.sdp.vibester.helper.loadImg
 
 class UserScoreboardAdapter(playersInit: List<User>) :
     RecyclerView.Adapter<UserScoreboardAdapter.PlayerViewHolder>() {

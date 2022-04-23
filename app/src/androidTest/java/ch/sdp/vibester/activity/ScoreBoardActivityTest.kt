@@ -31,8 +31,7 @@ class ScoreBoardActivityTest {
         onView((withId(R.id.recycler_view)))
             .perform(
                 RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                    2,
-                    click()
+                    2, click()
                 )
             )
     }
@@ -58,7 +57,7 @@ class ScoreBoardActivityTest {
                 click()
             )
         )
-        val nameItem = "Cinnamon Roll"
+        val nameItem = "YOLO" //name of the player at the 5th position
         onView(withText(nameItem)).check(matches(isDisplayed()))
     }
 }

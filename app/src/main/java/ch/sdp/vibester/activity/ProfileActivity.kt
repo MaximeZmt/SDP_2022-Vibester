@@ -16,7 +16,7 @@ import ch.sdp.vibester.api.BitmapGetterApi
 import ch.sdp.vibester.model.UserSharedPref
 import ch.sdp.vibester.database.UsersRepo
 import ch.sdp.vibester.helper.IntentSwitcher
-import ch.sdp.vibester.profile.UserProfile
+import ch.sdp.vibester.user.User
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
@@ -122,7 +122,7 @@ class ProfileActivity : AppCompatActivity() {
     }
 
 
-    private fun setupProfile(user: UserProfile){
+    private fun setupProfile(user: User){
 
         // Currently assuming that empty username means no user !
         if (user.username != ""){

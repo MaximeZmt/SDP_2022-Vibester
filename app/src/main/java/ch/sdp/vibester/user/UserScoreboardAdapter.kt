@@ -1,4 +1,4 @@
-package ch.sdp.vibester.scoreboard
+package ch.sdp.vibester.user
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,12 +7,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
-import ch.sdp.vibester.profile.UserProfile
+import ch.sdp.vibester.scoreboard.loadImg
 
-class PlayerAdapter(playersInit: List<UserProfile>) :
-    RecyclerView.Adapter<PlayerAdapter.PlayerViewHolder>() {
+class UserScoreboardAdapter(playersInit: List<User>) :
+    RecyclerView.Adapter<UserScoreboardAdapter.PlayerViewHolder>() {
 
-    var players: MutableList<UserProfile> = playersInit.toMutableList()
+    var players: MutableList<User> = playersInit.toMutableList()
 
     override fun getItemCount(): Int = players.size
 
@@ -26,7 +26,7 @@ class PlayerAdapter(playersInit: List<UserProfile>) :
         holder.bind(players[position], position)
     }
 
-    fun addPlayers(players: List<UserProfile>?) {
+    fun addPlayers(players: List<User>?) {
         this.players.apply {
             clear()
             if (players != null) {
@@ -45,7 +45,7 @@ class PlayerAdapter(playersInit: List<UserProfile>) :
          * @param player
          * @param position position of the player
          */
-        fun bind(player: UserProfile, position: Int) {
+        fun bind(player: User, position: Int) {
             val newPosition = position + 1
             itemView.findViewById<TextView>(R.id.tv_position).text = (newPosition).toString()
             itemView.findViewById<TextView>(R.id.tv_name).text = player.username

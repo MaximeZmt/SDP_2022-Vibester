@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
 import ch.sdp.vibester.database.Database
-import ch.sdp.vibester.profile.UserProfile
-import ch.sdp.vibester.scoreboard.PlayerAdapter
+import ch.sdp.vibester.user.User
+import ch.sdp.vibester.user.UserScoreboardAdapter
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -17,8 +17,8 @@ import com.google.firebase.database.ValueEventListener
 
 class ScoreBoardActivity : AppCompatActivity() {
     private val dbRef: DatabaseReference = Database.get().getReference("users")
-    private var players: List<UserProfile>? = null
-    private var playerAdapter: PlayerAdapter? = null
+    private var players: List<User>? = null
+    private var userScoreboardAdapter: UserScoreboardAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +32,7 @@ class ScoreBoardActivity : AppCompatActivity() {
     private fun setupRecycleView() {
         findViewById<RecyclerView>(R.id.recycler_view).apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = players?.let { PlayerAdapter(it) }
+            adapter = players?.let { UserScoreboardAdapter(it) }
             setHasFixedSize(true)
         }
     }
@@ -42,9 +42,9 @@ class ScoreBoardActivity : AppCompatActivity() {
             .addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshots: DataSnapshot) {
                 for (snapshot in snapshots.children) {
-                    val player: UserProfile? = snapshot.getValue(UserProfile::class.java)
+                    val player: User? = snapshot.getValue(User::class.java)
                     if (player != null) {
-                        (players as? ArrayList<UserProfile>)?.add(player)
+                        (players as? ArrayList<User>)?.add(player)
                     }
                 }
                 showPlayersPosition(players)
@@ -56,8 +56,8 @@ class ScoreBoardActivity : AppCompatActivity() {
         })
     }
 
-    private fun showPlayersPosition(players: List<UserProfile>?) {
-        playerAdapter = PlayerAdapter(players!!)
-        findViewById<RecyclerView>(R.id.recycler_view)!!.adapter = playerAdapter
+    private fun showPlayersPosition(players: List<User>?) {
+        userScoreboardAdapter = UserScoreboardAdapter(players!!)
+        findViewById<RecyclerView>(R.id.recycler_view)!!.adapter = userScoreboardAdapter
     }
 }

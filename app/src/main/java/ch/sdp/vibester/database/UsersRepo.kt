@@ -2,7 +2,7 @@ package ch.sdp.vibester.database
 
 import android.content.ContentValues
 import android.util.Log
-import ch.sdp.vibester.profile.UserProfile
+import ch.sdp.vibester.user.User
 import ch.sdp.vibester.util.Util
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -50,7 +50,7 @@ class UsersRepo @Inject constructor() {
      * @param callback function to be called when the the user has been created
      */
     fun createUser(email: String, username: String, handle: String, callback: (String) -> Unit) {
-        var newUser = UserProfile(handle, username, "", email, 0, 0, 0, 0
+        var newUser = User(handle, username, "", email, 0, 0, 0, 0
         )
 
         val newId = Util.createNewId()
@@ -66,11 +66,11 @@ class UsersRepo @Inject constructor() {
      * @param email the of the user
      * @param callback the function to be called when the data of the appropriate user is available
      */
-    fun getUserData(email: String, callback: (UserProfile) -> Unit) {
+    fun getUserData(email: String, callback: (User) -> Unit) {
         dbRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for (dataSnapShot in dataSnapshot.children) {
-                    val dbContents = dataSnapShot.getValue<UserProfile>()
+                    val dbContents = dataSnapShot.getValue<User>()
                     if (dbContents != null) {
                         if(dbContents.email == email) {
                             callback(dbContents)

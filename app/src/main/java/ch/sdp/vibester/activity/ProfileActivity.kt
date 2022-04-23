@@ -11,7 +11,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.graphics.drawable.toBitmap
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.BitmapGetterApi
 import ch.sdp.vibester.model.UserSharedPref
@@ -47,7 +46,7 @@ class ProfileActivity : AppCompatActivity() {
         val editUsername = findViewById<Button>(R.id.editUser)
         val editHandle = findViewById<Button>(R.id.editHandle)
 
-        val logoutbutton = findViewById<Button>(R.id.logout)
+        val logoutButton = findViewById<Button>(R.id.logout)
 
         val retToMain = findViewById<FloatingActionButton>(R.id.profile_returnToMain)
 
@@ -63,7 +62,7 @@ class ProfileActivity : AppCompatActivity() {
             IntentSwitcher.switchBackToWelcome(this)
         }
 
-        logoutbutton.setOnClickListener{
+        logoutButton.setOnClickListener{
             FirebaseAuth.getInstance().signOut()
             IntentSwitcher.switchBackToWelcome(this)
         }

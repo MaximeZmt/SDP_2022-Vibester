@@ -1,5 +1,4 @@
 package ch.sdp.vibester.profile
-//import kotlinx.serialization.Serializable
 import java.io.Serializable
 
 data class UserProfile(

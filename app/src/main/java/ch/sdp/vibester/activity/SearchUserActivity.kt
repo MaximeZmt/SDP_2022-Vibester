@@ -58,15 +58,15 @@ class SearchUserActivity : AppCompatActivity() {
     /**
      * Search for users by usernames in Firebase Realtime Database
      * @param inputUsername search text inputed by user
-     * Comment about \uf8ff:
-     * The \uf8ff character used in the query above is a very high code point in the Unicode range.
-     * Because it is after most regular characters in Unicode, the query matches all values that start with a inputUsername.
      */
     private fun searchForUsers(inputUsername:String){
         val queryUsers = dbRef
             .orderByChild("username")
             .startAt(inputUsername)
             .endAt(inputUsername+"\uf8ff")
+        /** Comment about \uf8ff:
+         * The \uf8ff character used in the query above is a very high code point in the Unicode range.
+         * Because it is after most regular characters in Unicode, the query matches all values that start with a inputUsername. */
 
         queryUsers.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {

@@ -18,7 +18,7 @@ class UsersRepo @Inject constructor() {
     private val dbRef = Database.get().getReference("users")
 
     /**
-     * This function updates a specific field of a user in the database
+     * This function updates a specific string field of a user in the database
      * @param userID the id of the user which is being updated
      * @param newVal (String) the new value of the field that is being updated
      * @param fieldName the field name of the field that is being updated
@@ -30,7 +30,7 @@ class UsersRepo @Inject constructor() {
     }
 
     /**
-     * The users class which handled all the interactions with the database that are linked to users
+     * This function updates a specific int field of a user in the database
      * @param userID the id of the user which is being updated
      * @param newVal (Int) the new value of the field that is being updated
      * @param fieldName the field name of the field that is being updated
@@ -43,7 +43,6 @@ class UsersRepo @Inject constructor() {
 
 
     /**
-     * The users class which handled all the interactions with the database that are linked to users
      * This function creates a new user account in the database
      * @param email the email of the new user
      * @param username the username of the new user
@@ -63,7 +62,7 @@ class UsersRepo @Inject constructor() {
     }
 
     /**
-     * This functions fetches the data from the database
+     * This functions fetches the data of the given user from the database
      * @param email the of the user
      * @param callback the function to be called when the data of the appropriate user is available
      */

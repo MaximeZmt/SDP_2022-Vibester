@@ -51,8 +51,7 @@ class ScoreBoardActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Log.w(ContentValues.TAG, "loadPlayers:onCancelled", error.toException())
-            }
+                Log.w(ContentValues.TAG, "loadPlayers:onCancelled", error.toException()) }
         })
     }
 

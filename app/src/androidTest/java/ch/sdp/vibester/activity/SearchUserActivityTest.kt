@@ -17,6 +17,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.UsersRepo
+import ch.sdp.vibester.profile.UserProfile
+import ch.sdp.vibester.profile.UserProfileAdapter
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -31,36 +33,15 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 
+
 @RunWith(AndroidJUnit4::class)
-@HiltAndroidTest
 class SearchUserActivityTest {
 
-    @get:Rule(order = 0)
-    var hiltRule = HiltAndroidRule(this)
-
-    @get:Rule(order = 1)
+    @get:Rule
     val activityRule = ActivityScenarioRule(SearchUserActivity::class.java)
-
-    @BindValue @JvmField
-    val mockAuthenticator = mockk<FireBaseAuthenticator>()
-
-    @BindValue @JvmField
-    val mockUsersRepo = mockk<UsersRepo>()
-
-    private fun createMockUser(email: String): FirebaseUser {
-        val mockUser = mockk<FirebaseUser>()
-        every { mockUser.email } returns email
-        return mockUser
-    }
-
-    private fun createMockUpdate(mockProfile: FirebaseUser) {
-        every { mockUsersRepo.updateFieldSubFieldBoolean(mockProfile.uid, any(), any(), any()) } answers {}
-    }
-
 
     @Before
     fun setUp() {
-        hiltRule.inject()
         Intents.init()
     }
 
@@ -109,20 +90,12 @@ class SearchUserActivityTest {
     }
     @Test
     fun checkAddBtnClick(){
-        val usernameUID = "mockUser@email.com"
-
-        val mockUser = createMockUser(usernameUID)
-        every { mockAuthenticator.getCurrUser()} returns mockUser
-
-        Thread.sleep(10000)
         onView(ViewMatchers.withId(R.id.searchList))
             .perform(
                 RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                     2,
                     clickOnViewChild(R.id.addFriendBtn))
             )
-
-        createMockUpdate(mockUser)
     }
 
     /**

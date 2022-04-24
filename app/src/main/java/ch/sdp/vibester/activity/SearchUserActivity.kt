@@ -18,13 +18,11 @@ import javax.inject.Inject
 /**
  * Search for users based on their usernames.
  */
-@AndroidEntryPoint
 class SearchUserActivity : AppCompatActivity() {
     private var userProfileAdapter: UserProfileAdapter? = null
     private var recyclerView: RecyclerView? = null
     private var searchEditText: EditText? = null
-    @Inject
-    lateinit var usersRepo: UsersRepo
+    var usersRepo= UsersRepo()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

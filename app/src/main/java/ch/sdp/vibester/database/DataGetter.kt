@@ -2,6 +2,7 @@ package ch.sdp.vibester.database
 
 import android.content.ContentValues
 import android.util.Log
+import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.profile.UserProfile
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -13,8 +14,13 @@ import javax.inject.Inject
  * The users class which handled all the interactions with the database that are linked to users
  */
 
-class UsersRepo @Inject constructor() {
+class DataGetter @Inject constructor() {
     private val dbRef = Database.get().getReference("users")
+
+    // Constructor
+    init {
+        Log.e("DATAGETTER","Hello world")
+    }
 
     /**
      * This function updates a specific field of a user in the database
@@ -38,6 +44,17 @@ class UsersRepo @Inject constructor() {
         dbRef.child(userID) //For now ID is hardcoded, will generate it creating new users next week "testUser"
             .child(fieldName)
             .setValue(newVal)
+    }
+
+    fun updateRelativeFieldInt(userID: String, newVal: Int, fieldName: String) {
+        dbRef.child(userID) //For now ID is hardcoded, will generate it creating new users next week "testUser"
+            .child(fieldName)
+            .get().addOnCompleteListener { t ->
+                dbRef.child(userID) //For now ID is hardcoded, will generate it creating new users next week "testUser"
+                    .child(fieldName)
+                    .setValue((t.result.value as Int?)!! + newVal)
+            }
+
     }
 
 
@@ -70,13 +87,14 @@ class UsersRepo @Inject constructor() {
      * @param email the of the user
      * @param callback the function to be called when the data of the appropriate user is available
      */
-    fun getUserData(email: String, callback: (UserProfile) -> Unit) {
+    fun getUserData(callback: (UserProfile) -> Unit) {
         dbRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for (dataSnapShot in dataSnapshot.children) {
                     val dbContents = dataSnapShot.getValue<UserProfile>()
                     if (dbContents != null) {
-                        if(dbContents.email == email) {
+                        if(FireBaseAuthenticator.isLoggedIn() && dbContents.email == FireBaseAuthenticator.getCurrentUserMail()) {
+                            DbUserIdStore.storeUID(dataSnapShot.key!!)
                             callback(dbContents)
                             break
                         }

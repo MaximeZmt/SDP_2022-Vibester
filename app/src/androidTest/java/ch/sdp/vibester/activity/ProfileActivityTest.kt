@@ -5,13 +5,12 @@ import android.content.Intent
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.matcher.ViewMatchers.* //change this import
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
-import ch.sdp.vibester.database.UsersRepo
+import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.model.UserSharedPref
 import ch.sdp.vibester.profile.UserProfile
 import dagger.hilt.android.testing.BindValue
@@ -40,10 +39,10 @@ class ProfileActivityTest {
     }
 
     @BindValue @JvmField
-    val mockUsersRepo = mockk<UsersRepo>()
+    val mockUsersRepo = mockk<DataGetter>()
 
     private fun createMockInvocation(mockProfile: UserProfile) {
-        every { mockUsersRepo.getUserData(any(), any()) } answers {
+        every { mockUsersRepo.getUserData(any()) } answers {
             secondArg<(UserProfile) -> Unit>().invoke(mockProfile)
         }
         every { mockUsersRepo.updateFieldString(any(), any(), any()) } answers {}

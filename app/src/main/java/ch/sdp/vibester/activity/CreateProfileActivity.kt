@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import ch.sdp.vibester.R
-import ch.sdp.vibester.database.UsersRepo
+import ch.sdp.vibester.database.DataGetter
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -14,7 +14,7 @@ import javax.inject.Inject
 class CreateProfileActivity : AppCompatActivity() {
 
     @Inject
-    lateinit var usersRepo: UsersRepo
+    lateinit var dataGetter: DataGetter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,7 +27,7 @@ class CreateProfileActivity : AppCompatActivity() {
         val btCreateAcc = findViewById<Button>(R.id.createButton)
 
         btCreateAcc.setOnClickListener {
-            usersRepo.createUser(
+            dataGetter.createUser(
                 email,
                 username.text.toString(),
                 handle.text.toString(),

@@ -11,11 +11,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.graphics.drawable.toBitmap
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.BitmapGetterApi
 import ch.sdp.vibester.model.UserSharedPref
-import ch.sdp.vibester.database.UsersRepo
+import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.helper.IntentSwitcher
 import ch.sdp.vibester.profile.UserProfile
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -31,7 +30,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class ProfileActivity : AppCompatActivity() {
     @Inject
-    lateinit var usersRepo: UsersRepo
+    lateinit var dataGetter: DataGetter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,6 +66,7 @@ class ProfileActivity : AppCompatActivity() {
             FirebaseAuth.getInstance().signOut()
             IntentSwitcher.switchBackToWelcome(this)
         }
+        queryDatabase()
 
     }
 
@@ -118,8 +118,8 @@ class ProfileActivity : AppCompatActivity() {
      * Hard coded for now
      */
 
-    private fun queryDatabase(email: String) {
-        usersRepo.getUserData(email, this::setupProfile)
+    private fun queryDatabase() {
+        dataGetter.getUserData(this::setupProfile)
 
     }
 

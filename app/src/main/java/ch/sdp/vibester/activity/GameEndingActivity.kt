@@ -8,13 +8,22 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.R
+import ch.sdp.vibester.auth.FireBaseAuthenticator
+import ch.sdp.vibester.database.DataGetter
+import ch.sdp.vibester.database.DbUserIdStore
 import ch.sdp.vibester.model.UserSharedPref
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-/*
+/**
  * A class representing the activity which appears upon
  * completion of a game. Shows various stats.
  */
+@AndroidEntryPoint
 class GameEndingActivity : AppCompatActivity() {
+
+    @Inject
+    lateinit var dataGetter: DataGetter
 
     private var incorrectSongs: ArrayList<String>? = arrayListOf("Default song")
     private var statNames: ArrayList<String>? = arrayListOf(
@@ -43,7 +52,7 @@ class GameEndingActivity : AppCompatActivity() {
         setContentView(R.layout.activity_game_ending_screen)
 
         //Method to update score (locally and on DB)
-        UserSharedPref.updateScore(this, 1)
+
 
         if (intent.hasExtra("Winner Name")) {
             val winner = intent.getStringExtra("Winner Name")
@@ -52,6 +61,7 @@ class GameEndingActivity : AppCompatActivity() {
             } else {findViewById<TextView>(R.id.winnerText).text="Nobody won this game!"}
         }
 
+        //dataGetter.updateRelativeFieldInt(DbUserIdStore.getUID(), 1, "totalGames")
 
         if (intent.hasExtra("playerName")) {
             playerName = intent.getStringExtra("playerName")

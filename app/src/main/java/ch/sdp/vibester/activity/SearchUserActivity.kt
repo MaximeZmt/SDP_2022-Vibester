@@ -23,7 +23,7 @@ class SearchUserActivity : AppCompatActivity() {
 
     private var recyclerView: RecyclerView? = null
     private var searchEditText: EditText? = null
-    var usersRepo= UsersRepo()
+    var usersRepo = UsersRepo()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

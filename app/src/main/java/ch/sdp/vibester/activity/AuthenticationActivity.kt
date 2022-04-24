@@ -182,7 +182,7 @@ class AuthenticationActivity : AppCompatActivity() {
                 baseContext, "You have logged in successfully",
                 Toast.LENGTH_SHORT
             ).show()
-            val user = FireBaseAuthenticator.getCurrUser()
+            val user = authenticator.getCurrUser()
             if (user != null) {
                 updateUI(user.email, createAcc)
             }

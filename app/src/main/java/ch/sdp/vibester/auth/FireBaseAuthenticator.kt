@@ -86,16 +86,18 @@ class FireBaseAuthenticator @Inject constructor() {
             }
         }
 
-        /**
-         * Getter for the current user
-         */
-        fun getCurrUser(): FirebaseUser? {
-            return Firebase.auth.currentUser
-        }
-
     }
 
     private val auth: FirebaseAuth = Firebase.auth
+
+
+    /**
+     * Getter for the current user
+     */
+    fun getCurrUser(): FirebaseUser? {
+        return Firebase.auth.currentUser
+    }
+
 
     /**
      * A function to log in with email and password

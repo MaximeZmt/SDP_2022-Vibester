@@ -6,7 +6,6 @@ import ch.sdp.vibester.profile.UserProfile
 import ch.sdp.vibester.util.Util
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.Query
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
 import javax.inject.Inject
@@ -79,7 +78,7 @@ class UsersRepo @Inject constructor() {
      * @param field user fields used for a search
      * @param searchInput search text inputed by user
      * @param callback function to call with found users by username
-     * 
+     *
      * Comment about \uf8ff:
      * The \uf8ff character used in the query above is a very high code point in the Unicode range.
      * Because it is after most regular characters in Unicode, the query matches all values that start with a inputUsername.

@@ -80,5 +80,4 @@ class CreateProfileActivityTest {
         Intents.intended(IntentMatchers.hasExtra("email", mockEmail))
     }
 
-
 }

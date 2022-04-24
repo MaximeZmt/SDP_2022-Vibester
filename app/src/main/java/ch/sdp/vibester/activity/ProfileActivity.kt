@@ -118,9 +118,9 @@ class ProfileActivity : AppCompatActivity() {
      * Hard coded for now
      */
 
+
     private fun queryDatabase() {
         dataGetter.getUserData(this::setupProfile)
-
     }
 
 

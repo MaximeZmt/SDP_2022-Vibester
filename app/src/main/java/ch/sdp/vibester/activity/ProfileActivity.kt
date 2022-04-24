@@ -120,7 +120,6 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun queryDatabase(email: String) {
         usersRepo.getUserData(email, this::setupProfile)
-
     }
 
 

@@ -11,6 +11,7 @@ import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.matcher.ViewMatchers.* //change this import
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
+import ch.sdp.vibester.database.ImageRepo
 import ch.sdp.vibester.database.UsersRepo
 import ch.sdp.vibester.profile.UserProfile
 import dagger.hilt.android.testing.BindValue
@@ -80,6 +81,5 @@ class CreateProfileActivityTest {
         Intents.intended(IntentMatchers.hasComponent(ProfileActivity::class.java.name))
         Intents.intended(IntentMatchers.hasExtra("email", mockEmail))
     }
-
 
 }

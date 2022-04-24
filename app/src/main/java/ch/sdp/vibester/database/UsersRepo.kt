@@ -6,6 +6,7 @@ import ch.sdp.vibester.profile.UserProfile
 import ch.sdp.vibester.util.Util
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.Query
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
 import javax.inject.Inject
@@ -71,6 +72,35 @@ class UsersRepo @Inject constructor() {
             .addOnSuccessListener {
                 callback(email)
             }
+    }
+
+    /**
+     * Search for users by its any field in Firebase Realtime Database
+     * @param field user fields used for a search
+     * @param searchInput search text inputed by user
+     * Comment about \uf8ff:
+     * The \uf8ff character used in the query above is a very high code point in the Unicode range.
+     * Because it is after most regular characters in Unicode, the query matches all values that start with a inputUsername.
+     */
+    fun searchByField(field: String, searchInput: String, users: ArrayList<UserProfile>, callback: Unit) {
+        println(searchInput)
+        val query = dbRef.orderByChild(field).startAt(searchInput).endAt(searchInput+"\uf8ff")
+        query.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                users.clear()
+                for (snapshot in dataSnapshot.children) {
+                    val userProfile:UserProfile? = snapshot.getValue(UserProfile::class.java)
+                    if (userProfile != null) {
+                        userProfile.uid = snapshot.getKey().toString()
+                        users.add(userProfile)
+                    }
+                }
+                return callback;
+            }
+            override fun onCancelled(error: DatabaseError) {
+                Log.w(ContentValues.TAG, "searchForUsers:onCancelled", error.toException())
+            }
+        })
     }
 
     /**

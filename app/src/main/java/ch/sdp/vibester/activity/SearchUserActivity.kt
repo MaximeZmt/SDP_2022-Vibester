@@ -11,23 +11,26 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
-import ch.sdp.vibester.database.Database
+import ch.sdp.vibester.database.UsersRepo
 import ch.sdp.vibester.profile.UserProfile
 import ch.sdp.vibester.profile.UserProfileAdapter
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 /**
  * Search for users based on their usernames.
  */
+@AndroidEntryPoint
 class SearchUserActivity : AppCompatActivity() {
     private var userProfileAdapter: UserProfileAdapter? = null
     private var users: MutableList<UserProfile>? = null
     private var recyclerView: RecyclerView? = null
     private var searchEditText: EditText? = null
-    private val dbRef: DatabaseReference = Database.get().getReference("users")
+    @Inject
+    lateinit var usersRepo: UsersRepo
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,35 +59,21 @@ class SearchUserActivity : AppCompatActivity() {
     }
 
     /**
+     * Callback to update users in adapter during search
+     */
+    private fun setUserInAdapter(){
+//        println(users)
+        userProfileAdapter = UserProfileAdapter(users!!)
+        recyclerView!!.adapter = userProfileAdapter
+    }
+
+    /**
      * Search for users by usernames in Firebase Realtime Database
      * @param inputUsername search text inputed by user
-     * Comment about \uf8ff:
-     * The \uf8ff character used in the query above is a very high code point in the Unicode range.
-     * Because it is after most regular characters in Unicode, the query matches all values that start with a inputUsername.
      */
     private fun searchForUsers(inputUsername:String){
-        val queryUsers = dbRef
-            .orderByChild("username")
-            .startAt(inputUsername)
-            .endAt(inputUsername+"\uf8ff")
-
-        queryUsers.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                (users as ArrayList<UserProfile>).clear()
-                for (snapshot in dataSnapshot.children) {
-                    val userProfile:UserProfile? = snapshot.getValue(UserProfile::class.java)
-                    if (userProfile != null) {
-                        userProfile.uid = snapshot.getKey().toString()
-                        (users as ArrayList<UserProfile>).add(userProfile)
-                    }
-                }
-                userProfileAdapter = UserProfileAdapter(users!!)
-                recyclerView!!.adapter = userProfileAdapter
-            }
-            override fun onCancelled(error: DatabaseError) {
-                Log.w(ContentValues.TAG, "searchForUsers:onCancelled", error.toException())
-            }
-        })
+        usersRepo.searchByField("username", inputUsername,
+            users as ArrayList<UserProfile>, callback = setUserInAdapter())
     }
 }
 

@@ -48,10 +48,9 @@ class UsersRepo @Inject constructor() {
      * @param newVal (Boolean) the new value of the field that is being updated
      * @param fieldName the field name of the field that is being updated
      * @param subFieldName the field name of the field that is being updated
-
      */
     fun updateFieldSubFieldBoolean(userID: String, newVal: Boolean, fieldName: String, subFieldName: String) {
-        dbRef.child(userID) //For now ID is hardcoded, will generate it creating new users next week "testUser"
+        dbRef.child(userID)
             .child(fieldName)
             .child(subFieldName)
             .setValue(newVal)
@@ -66,11 +65,8 @@ class UsersRepo @Inject constructor() {
      * @param callback function to be called when the the user has been created
      */
     fun createUser(email: String, username: String, handle: String, callback: (String) -> Unit) {
-        var newUser = UserProfile(handle, username, "", email, 0, 0, 0, 0
-        )
-
+        val newUser = UserProfile(handle, username, "", email, 0, 0, 0, 0)
         val newId = Util.createNewId()
-
         dbRef.child(newId).setValue(newUser)
             .addOnSuccessListener {
                 callback(email)

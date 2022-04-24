@@ -1,13 +1,6 @@
 package ch.sdp.vibester.database
 
-import android.content.ContentValues
 import android.net.Uri
-import android.util.Log
-import ch.sdp.vibester.profile.UserProfile
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.getValue
 import javax.inject.Inject
 
 /**

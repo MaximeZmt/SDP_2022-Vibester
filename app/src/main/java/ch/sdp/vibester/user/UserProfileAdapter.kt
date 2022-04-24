@@ -1,4 +1,4 @@
-package ch.sdp.vibester.profile
+package ch.sdp.vibester.user
 
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +10,7 @@ import ch.sdp.vibester.R
 /**
  * UserAdapter to set userProfile views with username and image in RecycleView. It is used to search for users.
  */
-class UserProfileAdapter(val users: MutableList<UserProfile>):
+class UserProfileAdapter(val users: MutableList<User>):
     RecyclerView.Adapter<UserProfileAdapter.UserProfileViewHolder>() {
 
     /**
@@ -38,9 +38,9 @@ class UserProfileAdapter(val users: MutableList<UserProfile>):
      */
     inner class UserProfileViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         /**
-         * @param userProfile with all the parameters
+         * @param user with all the parameters
          */
-        fun bind(user: UserProfile) {
+        fun bind(user: User) {
             itemView.findViewById<TextView>(R.id.search_user_username).text = user.username
 //                TODO fix the image upload
 //            itemView.findViewById<ImageView>(R.id.iv_photo).loadImg(player.photo)

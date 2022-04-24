@@ -2,8 +2,7 @@ package ch.sdp.vibester.model
 
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
-import ch.sdp.vibester.profile.UserProfile
-import org.junit.Assert
+import ch.sdp.vibester.user.User
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -33,7 +32,7 @@ class UserSharedPrefTest {
         val correctSongs: Int = 16
         val ranking: Int = 6
 
-        val pro = UserProfile(handle, username, image, email, totalGames, bestScore, correctSongs, ranking)
+        val pro = User(handle, username, image, email, totalGames, bestScore, correctSongs, ranking)
         UserSharedPref.setUser(ctx, pro, false)
         UserSharedPref.updateScore(ctx, 1, -1, 0, 1)
         Thread.sleep(1000)

@@ -5,7 +5,6 @@ import android.content.Intent
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.matcher.ViewMatchers.* //change this import
@@ -13,7 +12,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
 import ch.sdp.vibester.database.UsersRepo
 import ch.sdp.vibester.model.UserSharedPref
-import ch.sdp.vibester.profile.UserProfile
+import ch.sdp.vibester.user.User
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -42,9 +41,9 @@ class ProfileActivityTest {
     @BindValue @JvmField
     val mockUsersRepo = mockk<UsersRepo>()
 
-    private fun createMockInvocation(mockProfile: UserProfile) {
+    private fun createMockInvocation(mockUser: User) {
         every { mockUsersRepo.getUserData(any(), any()) } answers {
-            secondArg<(UserProfile) -> Unit>().invoke(mockProfile)
+            secondArg<(User) -> Unit>().invoke(mockUser)
         }
         every { mockUsersRepo.updateFieldString(any(), any(), any()) } answers {}
     }
@@ -56,7 +55,7 @@ class ProfileActivityTest {
 
     @Test
     fun checkProfileData() {
-        val inputProfile = UserProfile("@lisa", "Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8, 29, 0)
+        val inputProfile = User("@lisa", "Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8, 29, 0)
         val ctx = ApplicationProvider.getApplicationContext() as Context
         val intent = Intent(ctx, ProfileActivity::class.java)
 

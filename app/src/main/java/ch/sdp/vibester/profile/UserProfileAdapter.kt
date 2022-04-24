@@ -9,12 +9,19 @@ import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.UsersRepo
+import javax.inject.Inject
 
 /**
  * UserAdapter to set userProfile views with username and image in RecycleView. It is used to search for users.
  */
 class UserProfileAdapter(val users: MutableList<UserProfile>):
     RecyclerView.Adapter<UserProfileAdapter.UserProfileViewHolder>() {
+
+    @Inject
+    lateinit var authenticator: FireBaseAuthenticator
+
+    @Inject
+    lateinit var usersRepo: UsersRepo
 
     /**
      * Create a RecycleView layout with the userProfile view as an item
@@ -46,9 +53,9 @@ class UserProfileAdapter(val users: MutableList<UserProfile>):
         fun bind(user: UserProfile) {
             itemView.findViewById<TextView>(R.id.search_user_username).text = user.username
             itemView.findViewById<Button>(R.id.addFriendBtn).setOnClickListener{
-                val currentUser = FireBaseAuthenticator().getCurrUser()
+                val currentUser = authenticator.getCurrUser()
                 if(currentUser != null){
-                    UsersRepo().updateFieldSubFieldBoolean(currentUser.uid, true, "friends", user.uid)
+                    usersRepo.updateFieldSubFieldBoolean(currentUser.uid, true, "friends", user.uid)
                 }
             }
 //                TODO fix the image upload

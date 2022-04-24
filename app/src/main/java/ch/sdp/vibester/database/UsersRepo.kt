@@ -78,24 +78,29 @@ class UsersRepo @Inject constructor() {
      * Search for users by its any field in Firebase Realtime Database
      * @param field user fields used for a search
      * @param searchInput search text inputed by user
+     * @param callback function to call with found users by username
+     * 
      * Comment about \uf8ff:
      * The \uf8ff character used in the query above is a very high code point in the Unicode range.
      * Because it is after most regular characters in Unicode, the query matches all values that start with a inputUsername.
      */
-    fun searchByField(field: String, searchInput: String, users: ArrayList<UserProfile>, callback: Unit) {
-        println(searchInput)
-        val query = dbRef.orderByChild(field).startAt(searchInput).endAt(searchInput+"\uf8ff")
-        query.addValueEventListener(object : ValueEventListener {
+    fun searchByField(field: String, searchInput: String, callback:(ArrayList<UserProfile>) -> Unit) {
+        val queryUsers = dbRef
+            .orderByChild(field)
+            .startAt(searchInput)
+            .endAt(searchInput+"\uf8ff")
+
+        val users: ArrayList<UserProfile> = ArrayList()
+        queryUsers.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 users.clear()
                 for (snapshot in dataSnapshot.children) {
                     val userProfile:UserProfile? = snapshot.getValue(UserProfile::class.java)
                     if (userProfile != null) {
-                        userProfile.uid = snapshot.getKey().toString()
                         users.add(userProfile)
                     }
                 }
-                return callback;
+                return callback(users)
             }
             override fun onCancelled(error: DatabaseError) {
                 Log.w(ContentValues.TAG, "searchForUsers:onCancelled", error.toException())

@@ -1,10 +1,8 @@
 package ch.sdp.vibester.activity
 
-import android.content.ContentValues
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.Window
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
@@ -14,9 +12,6 @@ import ch.sdp.vibester.R
 import ch.sdp.vibester.database.UsersRepo
 import ch.sdp.vibester.profile.UserProfile
 import ch.sdp.vibester.profile.UserProfileAdapter
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -26,7 +21,6 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class SearchUserActivity : AppCompatActivity() {
     private var userProfileAdapter: UserProfileAdapter? = null
-    private var users: MutableList<UserProfile>? = null
     private var recyclerView: RecyclerView? = null
     private var searchEditText: EditText? = null
     @Inject
@@ -41,8 +35,6 @@ class SearchUserActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.searchList)
         recyclerView!!.setHasFixedSize(true)
         recyclerView!!.layoutManager = LinearLayoutManager(this)
-
-        users = ArrayList()
 
         searchEditText = findViewById(R.id.searchUserET)
         searchForUsers("")
@@ -61,9 +53,8 @@ class SearchUserActivity : AppCompatActivity() {
     /**
      * Callback to update users in adapter during search
      */
-    private fun setUserInAdapter(){
-//        println(users)
-        userProfileAdapter = UserProfileAdapter(users!!)
+    private fun setUserInAdapter(users: ArrayList<UserProfile> = ArrayList()) {
+        userProfileAdapter = UserProfileAdapter(users)
         recyclerView!!.adapter = userProfileAdapter
     }
 
@@ -72,8 +63,8 @@ class SearchUserActivity : AppCompatActivity() {
      * @param inputUsername search text inputed by user
      */
     private fun searchForUsers(inputUsername:String){
-        usersRepo.searchByField("username", inputUsername,
-            users as ArrayList<UserProfile>, callback = setUserInAdapter())
+        usersRepo.searchByField("username", inputUsername, callback = ::setUserInAdapter)
     }
 }
+
 

@@ -1,4 +1,4 @@
-package ch.sdp.vibester.scoreboard
+package ch.sdp.vibester.helper
 
 import android.widget.ImageView
 import ch.sdp.vibester.GlideApp

@@ -1,54 +1,62 @@
 package ch.sdp.vibester.activity
 
+import android.content.ContentValues
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
-import ch.sdp.vibester.scoreboard.Player
-import ch.sdp.vibester.scoreboard.PlayerAdapter
+import ch.sdp.vibester.database.Database
+import ch.sdp.vibester.user.User
+import ch.sdp.vibester.user.UserScoreboardAdapter
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ValueEventListener
 
 class ScoreBoardActivity : AppCompatActivity() {
+    private val dbRef: DatabaseReference = Database.get().getReference("users")
+    private var players: List<User>? = null
+    private var userScoreboardAdapter: UserScoreboardAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.scoreboard_scoreboard)
         setSupportActionBar(findViewById(R.id.toolbar))
         setupRecycleView()
+        players = ArrayList()
         loadPlayers()
     }
-
-    // temporary hard-coded list of players for display
-    private val players: List<Player> = listOf(
-        Player(111, "Brownie", "https://images.app.goo.gl/yiPpy7JDRFaZRiAg9", 687),
-        Player(555, "Cheesecake", "https://images.app.goo.gl/REJnoWR2t3mi2kYJA", 678),
-        Player(444, "Scone", "https://images.app.goo.gl/YkBi16zwyjB7ejj96", 659),
-        Player(333, "Cookie", "https://images.app.goo.gl/49955BeModw7Q1Ls5", 593),
-        Player(981, "Cinnamon Roll", "https://images.app.goo.gl/o8oYg2jAjQc757nn6", 568),
-        Player(267, "Fruits Tart", "https://images.app.goo.gl/uMstJPy6SrbpZC3v6", 523),
-        Player(222, "Pancake", "https://images.app.goo.gl/3BAnNtTn6isYGgQX9", 498),
-        Player(143, "Ice Cream", "https://images.app.goo.gl/f2iKsWuhQYaB9GB58", 450),
-        Player(528, "Waffle", "https://images.app.goo.gl/jsjRdqah1RfMtfXM8", 439),
-        Player(628, "Macaron", "https://images.app.goo.gl/J6bm9BqNTiKPwDju9", 412),
-        Player(729, "Croissant", "https://images.app.goo.gl/WVAL5WaWRUW2gFys8", 385),
-        Player(963, "Pudding", "https://images.app.goo.gl/UpXEDTFLbcTL5mTJ8", 127),
-    )
 
     private fun setupRecycleView() {
         findViewById<RecyclerView>(R.id.recycler_view).apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = PlayerAdapter(players)
+            adapter = players?.let { UserScoreboardAdapter(it) }
             setHasFixedSize(true)
         }
     }
 
     private fun loadPlayers() {
-        //TODO: replace hard-coded players by firebase query
-        showPlayersPosition(players)
+        dbRef.orderByChild("ranking")
+            .addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshots: DataSnapshot) {
+                for (snapshot in snapshots.children) {
+                    val player: User? = snapshot.getValue(User::class.java)
+                    if (player != null) {
+                        (players as? ArrayList<User>)?.add(player)
+                    }
+                }
+                showPlayersPosition(players)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.w(ContentValues.TAG, "loadPlayers:onCancelled", error.toException()) }
+        })
     }
 
-    private fun showPlayersPosition(players: List<Player>) {
-        val adapter = findViewById<RecyclerView>(R.id.recycler_view).adapter as PlayerAdapter
-        adapter.addPlayers(players)
+    private fun showPlayersPosition(players: List<User>?) {
+        userScoreboardAdapter = UserScoreboardAdapter(players!!)
+        findViewById<RecyclerView>(R.id.recycler_view)!!.adapter = userScoreboardAdapter
     }
 }

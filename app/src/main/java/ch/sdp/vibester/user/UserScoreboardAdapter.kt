@@ -1,4 +1,4 @@
-package ch.sdp.vibester.scoreboard
+package ch.sdp.vibester.user
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,11 +7,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
+import ch.sdp.vibester.helper.loadImg
 
-class PlayerAdapter(playersInit: List<Player>) :
-    RecyclerView.Adapter<PlayerAdapter.PlayerViewHolder>() {
+class UserScoreboardAdapter(playersInit: List<User>) :
+    RecyclerView.Adapter<UserScoreboardAdapter.PlayerViewHolder>() {
 
-    var players: MutableList<Player> = playersInit.toMutableList()
+    var players: MutableList<User> = playersInit.toMutableList()
 
     override fun getItemCount(): Int = players.size
 
@@ -25,10 +26,12 @@ class PlayerAdapter(playersInit: List<Player>) :
         holder.bind(players[position], position)
     }
 
-    fun addPlayers(players: List<Player>) {
+    fun addPlayers(players: List<User>?) {
         this.players.apply {
             clear()
-            addAll(players)
+            if (players != null) {
+                addAll(players)
+            }
         }
         notifyDataSetChanged()
     }
@@ -42,12 +45,12 @@ class PlayerAdapter(playersInit: List<Player>) :
          * @param player
          * @param position position of the player
          */
-        fun bind(player: Player, position: Int) {
+        fun bind(player: User, position: Int) {
             val newPosition = position + 1
             itemView.findViewById<TextView>(R.id.tv_position).text = (newPosition).toString()
-            itemView.findViewById<TextView>(R.id.tv_name).text = player.name
-            itemView.findViewById<TextView>(R.id.tv_score).text = player.score.toString()
-            itemView.findViewById<ImageView>(R.id.iv_photo).loadImg(player.photo)
+            itemView.findViewById<TextView>(R.id.tv_name).text = player.username
+            itemView.findViewById<TextView>(R.id.tv_score).text = player.ranking.toString()
+            itemView.findViewById<ImageView>(R.id.iv_photo).loadImg(player.image)
         }
     }
 }

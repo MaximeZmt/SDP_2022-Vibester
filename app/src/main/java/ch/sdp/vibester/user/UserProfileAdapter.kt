@@ -1,4 +1,4 @@
-package ch.sdp.vibester.profile
+package ch.sdp.vibester.user
 
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +13,7 @@ import ch.sdp.vibester.database.UsersRepo
 /**
  * UserAdapter to set userProfile views with username and image in RecycleView. It is used to search for users.
  */
-class UserProfileAdapter constructor(val users: MutableList<UserProfile>,
+class UserProfileAdapter constructor(val users: MutableList<User>,
                          val authenticator: FireBaseAuthenticator = FireBaseAuthenticator(),
                          val usersRepo: UsersRepo = UsersRepo()
                         ):
@@ -44,9 +44,9 @@ class UserProfileAdapter constructor(val users: MutableList<UserProfile>,
      */
     inner class UserProfileViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         /**
-         * @param userProfile with all the parameters
+         * @param user with all the parameters
          */
-        fun bind(user: UserProfile) {
+        fun bind(user: User) {
             itemView.findViewById<TextView>(R.id.search_user_username).text = user.username
             itemView.findViewById<Button>(R.id.addFriendBtn).setOnClickListener{
                 val currentUser = authenticator.getCurrUser()

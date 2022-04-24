@@ -16,7 +16,7 @@ import ch.sdp.vibester.api.BitmapGetterApi
 import ch.sdp.vibester.model.UserSharedPref
 import ch.sdp.vibester.database.UsersRepo
 import ch.sdp.vibester.helper.IntentSwitcher
-import ch.sdp.vibester.profile.UserProfile
+import ch.sdp.vibester.user.User
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
@@ -46,7 +46,7 @@ class ProfileActivity : AppCompatActivity() {
         val editUsername = findViewById<Button>(R.id.editUser)
         val editHandle = findViewById<Button>(R.id.editHandle)
 
-        val logoutbutton = findViewById<Button>(R.id.logout)
+        val logoutButton = findViewById<Button>(R.id.logout)
 
         val retToMain = findViewById<FloatingActionButton>(R.id.profile_returnToMain)
 
@@ -62,7 +62,7 @@ class ProfileActivity : AppCompatActivity() {
             IntentSwitcher.switchBackToWelcome(this)
         }
 
-        logoutbutton.setOnClickListener{
+        logoutButton.setOnClickListener{
             FirebaseAuth.getInstance().signOut()
             IntentSwitcher.switchBackToWelcome(this)
         }
@@ -122,7 +122,7 @@ class ProfileActivity : AppCompatActivity() {
     }
 
 
-    private fun setupProfile(user: UserProfile){
+    private fun setupProfile(user: User){
 
         // Currently assuming that empty username means no user !
         if (user.username != ""){

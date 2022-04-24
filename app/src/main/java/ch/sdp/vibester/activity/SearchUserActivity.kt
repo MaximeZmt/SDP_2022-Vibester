@@ -10,16 +10,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
 import ch.sdp.vibester.database.UsersRepo
-import ch.sdp.vibester.profile.UserProfile
-import ch.sdp.vibester.profile.UserProfileAdapter
-import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
+import ch.sdp.vibester.user.User
+
+import ch.sdp.vibester.user.UserProfileAdapter
+
 
 /**
  * Search for users based on their usernames.
  */
 class SearchUserActivity : AppCompatActivity() {
     private var userProfileAdapter: UserProfileAdapter? = null
+
     private var recyclerView: RecyclerView? = null
     private var searchEditText: EditText? = null
     var usersRepo= UsersRepo()
@@ -51,7 +52,7 @@ class SearchUserActivity : AppCompatActivity() {
     /**
      * Callback to update users in adapter during search
      */
-    private fun setUserInAdapter(users: ArrayList<UserProfile> = ArrayList()) {
+    private fun setUserInAdapter(users: ArrayList<User> = ArrayList()) {
         userProfileAdapter = UserProfileAdapter(users)
         recyclerView!!.adapter = userProfileAdapter
     }

@@ -57,6 +57,8 @@ class DownloadActivityTest {
 
  */
 
+    //TODO: test does not work locally and remotely.
+    // FIXME I am not sure if assert(extract.exists()) is correct. Should be AssertTrue probably.
 //    @Test
 //    fun downloadIncorrectSong() {
 //        val intent = Intent(ApplicationProvider.getApplicationContext(), DownloadActivity::class.java)

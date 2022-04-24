@@ -77,16 +77,17 @@ class UsersRepo @Inject constructor() {
      * @param field user fields used for a search
      * @param searchInput search text inputed by user
      * @param callback function to call with found users by username
-     *
-     * Comment about \uf8ff:
-     * The \uf8ff character used in the query above is a very high code point in the Unicode range.
-     * Because it is after most regular characters in Unicode, the query matches all values that start with a inputUsername.
      */
     fun searchByField(field: String, searchInput: String, callback:(ArrayList<User>) -> Unit) {
         val queryUsers = dbRef
             .orderByChild(field)
             .startAt(searchInput)
             .endAt(searchInput+"\uf8ff")
+        /**
+         * Comment about \uf8ff:
+         * The \uf8ff character used in the query above is a very high code point in the Unicode range.
+         * Because it is after most regular characters in Unicode, the query matches all values that start with a inputUsername.
+         */
 
         val users: ArrayList<User> = ArrayList()
         queryUsers.addValueEventListener(object : ValueEventListener {

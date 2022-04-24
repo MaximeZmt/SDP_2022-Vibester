@@ -15,16 +15,6 @@ import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
-import ch.sdp.vibester.auth.FireBaseAuthenticator
-import ch.sdp.vibester.database.UsersRepo
-import ch.sdp.vibester.profile.UserProfile
-import ch.sdp.vibester.profile.UserProfileAdapter
-import com.google.firebase.auth.FirebaseUser
-import dagger.hilt.android.testing.BindValue
-import dagger.hilt.android.testing.HiltAndroidRule
-import dagger.hilt.android.testing.HiltAndroidTest
-import io.mockk.every
-import io.mockk.mockk
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before

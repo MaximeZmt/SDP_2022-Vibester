@@ -15,6 +15,13 @@ import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
+import ch.sdp.vibester.auth.FireBaseAuthenticator
+import com.google.firebase.auth.FirebaseUser
+import dagger.hilt.android.testing.BindValue
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
+import io.mockk.every
+import io.mockk.mockk
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -24,14 +31,25 @@ import org.junit.runner.RunWith
 
 
 @RunWith(AndroidJUnit4::class)
+@HiltAndroidTest
 class SearchUserActivityTest {
 
-    @Rule
-    @JvmField
+    @get:Rule(order = 0)
+    var hiltRule = HiltAndroidRule(this)
+
+    @get:Rule(order = 1)
     val activityRule = ActivityScenarioRule(SearchUserActivity::class.java)
 
+    @BindValue @JvmField
+    val mockAuthenticator = mockk<FireBaseAuthenticator>()
+    private fun createMockUser(email: String): FirebaseUser {
+        val mockUser = mockk<FirebaseUser>()
+        every { mockUser.email } returns email
+        return mockUser
+    }
     @Before
     fun setUp() {
+        hiltRule.inject()
         Intents.init()
     }
 
@@ -80,6 +98,10 @@ class SearchUserActivityTest {
     }
     @Test
     fun checkAddBtnClick(){
+        val usernameUID = "mockUser@email.com"
+
+        val mockUser = createMockUser(usernameUID)
+        every { mockAuthenticator.getCurrUser()} returns mockUser
         onView(ViewMatchers.withId(R.id.searchList))
             .perform(
                 RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(

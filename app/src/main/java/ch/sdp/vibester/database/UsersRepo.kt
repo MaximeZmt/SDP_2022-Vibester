@@ -101,7 +101,7 @@ class UsersRepo @Inject constructor() {
                 return callback(users)
             }
             override fun onCancelled(error: DatabaseError) {
-                Log.w(ContentValues.TAG, "searchForUsers:onCancelled", error.toException())
+                Log.w(ContentValues.TAG, "searchByField:onCancelled", error.toException())
             }
         })
     }

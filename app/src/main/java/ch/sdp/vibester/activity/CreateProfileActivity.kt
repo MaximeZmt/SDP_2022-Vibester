@@ -29,9 +29,9 @@ class CreateProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_profile)
 
-        var email = intent.getStringExtra("email").toString()
-        var username = findViewById<EditText>(R.id.accountUsername)
-        var handle = findViewById<EditText>(R.id.accountHandle)
+        val email = intent.getStringExtra("email").toString()
+        val username = findViewById<EditText>(R.id.accountUsername)
+        val handle = findViewById<EditText>(R.id.accountHandle)
 
         val btCreateAcc = findViewById<Button>(R.id.createButton)
         val btnUploadImg = findViewById<Button>(R.id.uploadImg)

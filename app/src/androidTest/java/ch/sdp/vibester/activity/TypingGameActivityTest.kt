@@ -30,11 +30,21 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-@HiltAndroidTest
 class TypingGameActivityTest {
 
-    @get:Rule(order = 0)
-    var hiltRule = HiltAndroidRule(this)
+    @JvmField
+    @get:Rule
+    val activityRule = ActivityScenarioRule(TypingGameActivity::class.java)
+
+    @Before
+    fun setUp() {
+        Intents.init()
+    }
+
+    @After
+    fun clean() {
+        Intents.release()
+    }
 
     private val expectedSize = 200
     private fun setGameManager(numSongs:Int = 1, valid: Boolean = true): TypingGameManager {
@@ -55,21 +65,6 @@ class TypingGameActivityTest {
 
         return gameManager
     }
-
-    @Rule
-    @JvmField
-    val activityRule = ActivityScenarioRule(TypingGameActivity::class.java)
-
-    @Before
-    fun setUp() {
-        Intents.init()
-    }
-
-    @After
-    fun clean() {
-        Intents.release()
-    }
-
 
     @Test
     fun spaceGenTest() {

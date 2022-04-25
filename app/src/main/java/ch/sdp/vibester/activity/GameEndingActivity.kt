@@ -19,10 +19,8 @@ import javax.inject.Inject
  * A class representing the activity which appears upon
  * completion of a game. Shows various stats.
  */
-@AndroidEntryPoint
 class GameEndingActivity : AppCompatActivity() {
 
-    @Inject
     lateinit var dataGetter: DataGetter
 
     private var incorrectSongs: ArrayList<String>? = arrayListOf("Default song")

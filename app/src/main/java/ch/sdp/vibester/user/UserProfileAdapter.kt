@@ -50,10 +50,14 @@ class UserProfileAdapter constructor(val users: MutableList<User>,
          */
         fun bind(user: User) {
             itemView.findViewById<TextView>(R.id.search_user_username).text = user.username
-            itemView.findViewById<Button>(R.id.addFriendBtn).setOnClickListener{
+
+            val addFriendBtn = itemView.findViewById<Button>(R.id.addFriendBtn)
+            addFriendBtn.setOnClickListener{
                 val currentUser = authenticator.getCurrUser()
                 if(currentUser != null){
                     usersRepo.updateFieldSubFieldBoolean(currentUser.uid, true, "friends", user.uid)
+                    addFriendBtn.visibility = View.INVISIBLE
+                    itemView.findViewById<ImageView>(R.id.addedFriendIcon).visibility = View.VISIBLE
                 }
             }
             itemView.findViewById<ImageView>(R.id.profile_image).loadImg(user.image)

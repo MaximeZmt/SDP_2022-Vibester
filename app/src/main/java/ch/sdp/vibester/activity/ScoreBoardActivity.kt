@@ -49,7 +49,7 @@ class ScoreBoardActivity : AppCompatActivity() {
         findViewById<ConstraintLayout>(R.id.genrePerScoreboard).visibility = GONE
         findViewById<ConstraintLayout>(R.id.scoreboard).visibility = VISIBLE
 
-        loadSortedPlayersBy(sortedBy)
+        loadPlayersSortedBy(sortedBy)
     }
 
     private fun setupRecycleView() {
@@ -60,7 +60,7 @@ class ScoreBoardActivity : AppCompatActivity() {
         }
     }
 
-    private fun loadSortedPlayersBy(order: String) {
+    private fun loadPlayersSortedBy(order: String) {
         dbRef.orderByChild(order)
             .addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshots: DataSnapshot) {

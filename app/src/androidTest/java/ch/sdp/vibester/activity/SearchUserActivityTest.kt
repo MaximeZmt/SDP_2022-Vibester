@@ -78,9 +78,9 @@ class SearchUserActivityTest {
         val itemCount = recyclerView.adapter?.itemCount
         assertEquals(itemCount, null)
     }
+    
     @Test
     fun checkAddBtnClick(){
-        SearchUserActivity.setVisibility()
         onView(ViewMatchers.withId(R.id.searchList))
             .perform(
                 RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(

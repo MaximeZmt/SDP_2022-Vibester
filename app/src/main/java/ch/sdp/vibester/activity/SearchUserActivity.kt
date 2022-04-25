@@ -19,16 +19,6 @@ import ch.sdp.vibester.user.UserProfileAdapter
  * Search for users based on their usernames.
  */
 class SearchUserActivity : AppCompatActivity() {
-
-    // For test purpose
-    companion object{
-        var testVisibility: Boolean = false
-
-        fun setVisibility(){
-            testVisibility = true
-        }
-    }
-
     private var userProfileAdapter: UserProfileAdapter? = null
 
     private var recyclerView: RecyclerView? = null
@@ -63,7 +53,7 @@ class SearchUserActivity : AppCompatActivity() {
      * Callback to update users in adapter during search
      */
     private fun setUserInAdapter(users: ArrayList<User> = ArrayList()) {
-        userProfileAdapter = UserProfileAdapter(users, testVisibility)
+        userProfileAdapter = UserProfileAdapter(users)
         recyclerView!!.adapter = userProfileAdapter
     }
 

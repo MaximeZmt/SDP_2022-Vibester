@@ -5,6 +5,7 @@ import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
+import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.matcher.ViewMatchers.* //change this import
@@ -63,21 +64,24 @@ class CreateProfileActivityTest {
 
         val intent = Intent(ApplicationProvider.getApplicationContext(), CreateProfileActivity::class.java)
         intent.putExtra("email", mockEmail)
+        intent.putExtra("isUnitTest", true)
 
         createMockInvocation(mockEmail)
 
         val scn: ActivityScenario<CreateProfileActivity> = ActivityScenario.launch(intent)
 
-        onView(withId(R.id.accountUsername)).perform(ViewActions.typeText(username),
-            ViewActions.closeSoftKeyboard()
+        onView(withId(R.id.accountUsername)).perform(typeText(username),
+            closeSoftKeyboard()
         )
-        onView(withId(R.id.accountHandle)).perform(ViewActions.typeText(handle),
-            ViewActions.closeSoftKeyboard()
+        onView(withId(R.id.accountHandle)).perform(typeText(handle),
+            closeSoftKeyboard()
         )
-        onView(withId(R.id.createButton)).perform(ViewActions.click())
 
-        Intents.intended(IntentMatchers.hasComponent(ProfileActivity::class.java.name))
-        Intents.intended(IntentMatchers.hasExtra("email", mockEmail))
+       onView(withId(R.id.createButton)).perform(click())
+
+       Intents.intended(IntentMatchers.hasComponent(ProfileActivity::class.java.name))
+       Intents.intended(IntentMatchers.hasExtra("email", mockEmail))
+       Intents.intended(IntentMatchers.hasExtra("isUnitTest", true))
     }
 
 }

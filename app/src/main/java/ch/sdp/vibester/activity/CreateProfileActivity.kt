@@ -25,9 +25,13 @@ class CreateProfileActivity : AppCompatActivity() {
 
     private val REQUEST_CODE = 500
 
+    var isUnitTest: Boolean = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_profile)
+
+        isUnitTest = intent.getBooleanExtra("isUnitTest", false)
 
         var email = intent.getStringExtra("email").toString()
         var username = findViewById<EditText>(R.id.accountUsername)
@@ -52,6 +56,7 @@ class CreateProfileActivity : AppCompatActivity() {
     private fun startNewActivity(email: String) {
         val newIntent = Intent(this, ProfileActivity::class.java)
         newIntent.putExtra("email", email)
+        newIntent.putExtra("isUnitTest", isUnitTest)
 
         startActivity(newIntent)
     }

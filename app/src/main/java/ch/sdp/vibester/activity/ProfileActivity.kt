@@ -66,7 +66,12 @@ class ProfileActivity : AppCompatActivity() {
             FirebaseAuth.getInstance().signOut()
             IntentSwitcher.switchBackToWelcome(this)
         }
-        queryDatabase()
+
+        // Do not enable querying database while executing unit test
+        val isUnitTest: Boolean = intent.getBooleanExtra("isUnitTest", false)
+        if(!isUnitTest){
+            queryDatabase()
+        }
 
     }
 

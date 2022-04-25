@@ -63,13 +63,12 @@ class UsersRepo @Inject constructor() {
      * This function creates a new user account in the database
      * @param email the email of the new user
      * @param username the username of the new user
-     * @param handle the handle of the new user
      * @param callback function to be called when the the user has been created
      */
-    fun createUser(email: String, username: String, handle: String, callback: (String) -> Unit) {
-        val newUser = User(handle, username, "", email, 0, 0, 0, 0)
-        val uid = authenticator.getCurrUser()!!.uid
-        dbRef.child(uid).setValue(newUser)
+    fun createUser(email: String, username: String, callback: (String) -> Unit) {
+        var newUser = User(username, "", email, 0, 0, 0, 0)
+        val newId = Util.createNewId()
+        dbRef.child(newId).setValue(newUser)
             .addOnSuccessListener {
                 callback(email)
             }

@@ -55,7 +55,7 @@ class ProfileActivityTest {
 
     @Test
     fun checkProfileData() {
-        val inputProfile = User("@lisa", "Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8, 29, 0)
+        val inputProfile = User("Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8, 29, 0)
         val ctx = ApplicationProvider.getApplicationContext() as Context
         val intent = Intent(ctx, ProfileActivity::class.java)
 
@@ -63,7 +63,6 @@ class ProfileActivityTest {
         UserSharedPref.setUser(ctx, inputProfile, false)
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
 
-        onView(withId(R.id.handle)).check(matches(withText(inputProfile.handle)))
         onView(withId(R.id.username)).check(matches(withText(inputProfile.username)))
         onView(withId(R.id.correctSongs)).check(matches(withText(inputProfile.correctSongs.toString())))
         onView(withId(R.id.totalGames)).check(matches(withText(inputProfile.totalGames.toString())))

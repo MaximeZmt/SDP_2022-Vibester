@@ -69,6 +69,7 @@ class SearchUserActivityTest {
             )
         }
     }
+
     @Test
     fun recycleViewCheckEmpty() {
         val inputTxt= "TESTESTESTEST"
@@ -78,6 +79,7 @@ class SearchUserActivityTest {
         val itemCount = recyclerView.adapter?.itemCount
         assertEquals(itemCount, null)
     }
+    
     @Test
     fun checkAddBtnClick(){
         onView(ViewMatchers.withId(R.id.searchList))

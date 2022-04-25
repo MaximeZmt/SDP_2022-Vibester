@@ -14,7 +14,6 @@ class UserSharedPrefTest {
         val mailTest = "lisa@test.com"
         UserSharedPref.userReset(ctx, mailTest)
         UserSharedPref.updateUsername(ctx, "Lalisa Bon")
-        UserSharedPref.updateHandle(ctx, "@lisa")
         UserSharedPref.updateScore(ctx)
         Thread.sleep(1000)
 //        assertEquals(mailTest, UserSharedPref.getUser(ctx).email) //TODO temporary disable does not pass on CI
@@ -23,7 +22,6 @@ class UserSharedPrefTest {
     @Test
     fun sharedPrefTest2(){
         val ctx = ApplicationProvider.getApplicationContext() as Context
-        val handle: String = "myHandle"
         val username: String = "myUsername"
         val image: String = "myImage"
         val email: String = "myEmail"
@@ -32,13 +30,12 @@ class UserSharedPrefTest {
         val correctSongs: Int = 16
         val ranking: Int = 6
 
-        val pro = User(handle, username, image, email, totalGames, bestScore, correctSongs, ranking)
+        val pro = User(username, image, email, totalGames, bestScore, correctSongs, ranking)
         UserSharedPref.setUser(ctx, pro, false)
         UserSharedPref.updateScore(ctx, 1, -1, 0, 1)
         Thread.sleep(1000)
         val updated = UserSharedPref.getUser(ctx)
 
-        assertEquals(pro.handle, updated.handle)
         assertEquals(pro.username, updated.username)
         assertEquals(pro.image, updated.image)
         assertEquals(pro.email, updated.email)

@@ -67,9 +67,9 @@ class UsersRepo @Inject constructor() {
      * @param callback function to be called when the the user has been created
      */
     fun createUser(email: String, username: String, handle: String, callback: (String) -> Unit) {
-        var newUser = User(handle, username, "", email, 0, 0, 0, 0)
-        val newId = authenticator.getCurrUser()!!.uid
-        dbRef.child(newId).setValue(newUser)
+        val newUser = User(handle, username, "", email, 0, 0, 0, 0)
+        val uid = authenticator.getCurrUser()!!.uid
+        dbRef.child(uid).setValue(newUser)
             .addOnSuccessListener {
                 callback(email)
             }

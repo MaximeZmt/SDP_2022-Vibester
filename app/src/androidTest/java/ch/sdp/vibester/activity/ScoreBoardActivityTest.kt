@@ -48,16 +48,4 @@ class ScoreBoardActivityTest {
             )
         }
     }
-
-    @Test
-    fun recycleViewShowItemTest() {
-        onView(withId(R.id.recycler_view)).perform(
-            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                5,
-                click()
-            )
-        )
-        val nameItem = "YOLO" //name of the player at the 5th position
-        onView(withText(nameItem)).check(matches(isDisplayed()))
-    }
 }

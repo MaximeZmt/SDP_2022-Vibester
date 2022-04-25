@@ -138,7 +138,8 @@ class UserSharedPref private constructor() {
                 correctSongs = sharedPref.getInt(CORRECT_SONGS, 0)
                 ranking = sharedPref.getInt(RANKING, 0)
             }
-            return User( username, image, email, totalGames, bestScore, correctSongs, ranking)
+            return User(username, image, email, totalGames, bestScore, correctSongs, ranking)
+
         }
 
 

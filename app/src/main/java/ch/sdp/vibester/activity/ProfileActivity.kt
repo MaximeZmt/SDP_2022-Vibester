@@ -72,9 +72,9 @@ class ProfileActivity : AppCompatActivity() {
         if(!isUnitTest){
             queryDatabase()
         }else{
-            var upTest: UserProfile? = intent.getSerializableExtra("userTestProfile") as UserProfile?
+            var upTest: User? = intent.getSerializableExtra("userTestProfile") as User?
             if (upTest == null) {
-                setupProfile(UserProfile())
+                setupProfile(User())
             }else{
                 setupProfile(upTest)
             }

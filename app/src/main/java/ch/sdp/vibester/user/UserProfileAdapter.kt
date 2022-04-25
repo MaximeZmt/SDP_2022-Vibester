@@ -8,14 +8,15 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
 import ch.sdp.vibester.auth.FireBaseAuthenticator
-import ch.sdp.vibester.database.UsersRepo
+import ch.sdp.vibester.database.DataGetter
+
 
 /**
  * UserAdapter to set userProfile views with username and image in RecycleView. It is used to search for users.
  */
 class UserProfileAdapter constructor(val users: MutableList<User>,
                          val authenticator: FireBaseAuthenticator = FireBaseAuthenticator(),
-                         val usersRepo: UsersRepo = UsersRepo()
+                         val usersRepo: DataGetter = DataGetter()
                         ):
     RecyclerView.Adapter<UserProfileAdapter.UserProfileViewHolder>() {
 

@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
-import ch.sdp.vibester.database.UsersRepo
+import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.user.User
 
 import ch.sdp.vibester.user.UserProfileAdapter
@@ -23,7 +23,7 @@ class SearchUserActivity : AppCompatActivity() {
 
     private var recyclerView: RecyclerView? = null
     private var searchEditText: EditText? = null
-    var usersRepo = UsersRepo()
+    var usersRepo = DataGetter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

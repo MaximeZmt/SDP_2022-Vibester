@@ -59,9 +59,9 @@ class ProfileActivityTest {
         val ctx = ApplicationProvider.getApplicationContext() as Context
         val intent = Intent(ctx, ProfileActivity::class.java)
         intent.putExtra("isUnitTest", true)
+        intent.putExtra("userTestProfile",  inputProfile)
 
         createMockInvocation(inputProfile)
-        //UserSharedPref.setUser(ctx, inputProfile, false)
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
 
         onView(withId(R.id.handle)).check(matches(withText(inputProfile.handle)))

@@ -41,8 +41,6 @@ class ProfileActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_profile)
 
-        setupProfile(UserSharedPref.getUser(applicationContext))
-
         val editUsername = findViewById<Button>(R.id.editUser)
         val editHandle = findViewById<Button>(R.id.editHandle)
 
@@ -71,6 +69,9 @@ class ProfileActivity : AppCompatActivity() {
         val isUnitTest: Boolean = intent.getBooleanExtra("isUnitTest", false)
         if(!isUnitTest){
             queryDatabase()
+        }else{
+            var upTest: UserProfile? = intent.getSerializableExtra("userTestProfile") as UserProfile?
+            if (upTest == null) {setupProfile(UserProfile())}else{ setupProfile(upTest)}
         }
 
     }

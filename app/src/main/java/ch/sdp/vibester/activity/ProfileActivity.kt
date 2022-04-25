@@ -58,11 +58,13 @@ class ProfileActivity : AppCompatActivity() {
 
         retToMain.setOnClickListener{
             IntentSwitcher.switchBackToWelcome(this)
+            finish()
         }
 
         logoutbutton.setOnClickListener{
             FirebaseAuth.getInstance().signOut()
             IntentSwitcher.switchBackToWelcome(this)
+            finish()
         }
 
         // Do not enable querying database while executing unit test
@@ -71,7 +73,11 @@ class ProfileActivity : AppCompatActivity() {
             queryDatabase()
         }else{
             var upTest: UserProfile? = intent.getSerializableExtra("userTestProfile") as UserProfile?
-            if (upTest == null) {setupProfile(UserProfile())}else{ setupProfile(upTest)}
+            if (upTest == null) {
+                setupProfile(UserProfile())
+            }else{
+                setupProfile(upTest)
+            }
         }
 
     }

@@ -11,11 +11,13 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.R
 import ch.sdp.vibester.auth.FireBaseAuthenticator
+import ch.sdp.vibester.helper.IntentSwitcher
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
@@ -56,6 +58,8 @@ class AuthenticationActivity : AppCompatActivity() {
         val btLogIn = findViewById<Button>(R.id.logIn)
         val googleSignIn = findViewById<Button>(R.id.googleBtn)
 
+        val returnToMain = findViewById<FloatingActionButton>(R.id.authentication_returnToMain)
+
         val username = findViewById<EditText>(R.id.username)
         val password = findViewById<EditText>(R.id.password)
         email = findViewById(R.id.email)
@@ -72,6 +76,11 @@ class AuthenticationActivity : AppCompatActivity() {
 
         googleSignIn.setOnClickListener {
             signInGoogle()
+        }
+
+        returnToMain.setOnClickListener {
+            IntentSwitcher.switchBackToWelcome(this)
+            finish()
         }
     }
 

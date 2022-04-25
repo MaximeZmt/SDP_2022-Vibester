@@ -11,8 +11,8 @@ class UserProfileAdapterTest {
 
     @Test
     fun recyclerViewShowsCorrectCount() {
-        val user1 = User("test1", "Brownie", "https://images.app.goo.gl/yiPpy7JDRFaZRiAg9", "test1@gmail.com")
-        val user2 = User("test2", "Cookie", "https://images.app.goo.gl/yiPpy7JDRFaZRiAg9", "test2@gmail.com")
+        val user1 = User("test1",  "https://images.app.goo.gl/yiPpy7JDRFaZRiAg9", "test1@gmail.com")
+        val user2 = User("test2",  "https://images.app.goo.gl/yiPpy7JDRFaZRiAg9", "test2@gmail.com")
         val users: MutableList<User> = arrayListOf()
         users.addAll(listOf(user1, user2))
         val userProfileViewHolder: RecyclerView.Adapter<UserProfileAdapter.UserProfileViewHolder> = UserProfileAdapter(users)
@@ -21,8 +21,8 @@ class UserProfileAdapterTest {
 
     @Test
     fun itemTypeIsCorrect() {
-        val user1 = User("test1", "Brownie", "https://images.app.goo.gl/yiPpy7JDRFaZRiAg9", "test1@gmail.com")
-        val user2 = User("test2", "Cookie", "https://images.app.goo.gl/yiPpy7JDRFaZRiAg9", "test2@gmail.com")
+        val user1 = User("test1", "https://images.app.goo.gl/yiPpy7JDRFaZRiAg9", "test1@gmail.com")
+        val user2 = User("test2", "https://images.app.goo.gl/yiPpy7JDRFaZRiAg9", "test2@gmail.com")
         val users: MutableList<User> = arrayListOf()
         users.addAll(listOf(user1, user2))
         val userProfileViewHolder: RecyclerView.Adapter<UserProfileAdapter.UserProfileViewHolder> = UserProfileAdapter(users)

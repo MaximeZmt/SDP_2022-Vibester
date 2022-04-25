@@ -54,10 +54,6 @@ class ProfileActivity : AppCompatActivity() {
             showGeneralDialog(R.id.username, "username")
         }
 
-        editHandle.setOnClickListener {
-            showGeneralDialog(R.id.handle, "handle")
-        }
-
         retToMain.setOnClickListener{
             IntentSwitcher.switchBackToWelcome(this)
         }
@@ -93,8 +89,6 @@ class ProfileActivity : AppCompatActivity() {
 
             if(name == "username"){
                 UserSharedPref.updateUsername(this, input.text.toString())
-            }else if (name == "handle"){
-                UserSharedPref.updateHandle(this, input.text.toString())
             }
         }
 
@@ -127,9 +121,6 @@ class ProfileActivity : AppCompatActivity() {
         // Currently assuming that empty username means no user !
         if (user.username != ""){
             findViewById<TextView>(R.id.username).text =  user.username
-            if (user.handle != ""){
-                findViewById<TextView>(R.id.handle).text =  user.handle
-            }
             findViewById<TextView>(R.id.totalGames).text = user.totalGames.toString()
             findViewById<TextView>(R.id.correctSongs).text = user.correctSongs.toString()
             findViewById<TextView>(R.id.bestScore).text = user.bestScore.toString()

@@ -15,12 +15,11 @@ import ch.sdp.vibester.helper.loadImg
 /**
  * UserAdapter to set userProfile views with username and image in RecycleView. It is used to search for users.
  */
-class UserProfileAdapter constructor(val users: MutableList<User>,
-                         val authenticator: FireBaseAuthenticator = FireBaseAuthenticator(),
-                         val usersRepo: UsersRepo = UsersRepo()
-                        ):
+class UserProfileAdapter constructor(val users: MutableList<User>, val testVisibility: Boolean = false):
     RecyclerView.Adapter<UserProfileAdapter.UserProfileViewHolder>() {
 
+    val authenticator: FireBaseAuthenticator = FireBaseAuthenticator()
+    val usersRepo: UsersRepo = UsersRepo()
     /**
      * Create a RecycleView layout with the userProfile view as an item
      */
@@ -55,8 +54,8 @@ class UserProfileAdapter constructor(val users: MutableList<User>,
             val addFriendBtn = itemView.findViewById<Button>(R.id.addFriendBtn)
             addFriendBtn.setOnClickListener{
                 val currentUser = authenticator.getCurrUser()
-                if(currentUser != null){
-                    usersRepo.updateFieldSubFieldBoolean(currentUser.uid, true, "friends", user.uid)
+                if(currentUser != null || testVisibility){
+                    if(!testVisibility)usersRepo.updateFieldSubFieldBoolean(currentUser!!.uid, true, "friends", user.uid)
                     addFriendBtn.visibility = View.INVISIBLE
                     itemView.findViewById<ImageView>(R.id.addedFriendIcon).visibility = View.VISIBLE
                 }

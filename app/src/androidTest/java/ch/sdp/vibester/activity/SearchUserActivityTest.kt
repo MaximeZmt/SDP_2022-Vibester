@@ -80,6 +80,7 @@ class SearchUserActivityTest {
     }
     @Test
     fun checkAddBtnClick(){
+        SearchUserActivity.setVisibility()
         onView(ViewMatchers.withId(R.id.searchList))
             .perform(
                 RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(

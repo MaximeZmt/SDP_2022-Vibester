@@ -99,6 +99,7 @@ class UsersRepo @Inject constructor() {
                 for (snapshot in dataSnapshot.children) {
                     val userProfile:User? = snapshot.getValue(User::class.java)
                     if (userProfile != null) {
+                        userProfile.uid = snapshot.key.toString()
                         users.add(userProfile)
                     }
                 }

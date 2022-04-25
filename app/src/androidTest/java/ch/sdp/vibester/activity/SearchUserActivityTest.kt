@@ -69,6 +69,7 @@ class SearchUserActivityTest {
             )
         }
     }
+
     @Test
     fun recycleViewCheckEmpty() {
         val inputTxt= "TESTESTESTEST"

@@ -4,11 +4,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.UsersRepo
+import ch.sdp.vibester.helper.loadImg
 
 /**
  * UserAdapter to set userProfile views with username and image in RecycleView. It is used to search for users.
@@ -54,8 +56,7 @@ class UserProfileAdapter constructor(val users: MutableList<User>,
                     usersRepo.updateFieldSubFieldBoolean(currentUser.uid, true, "friends", user.uid)
                 }
             }
-//                TODO fix the image upload
-//            itemView.findViewById<ImageView>(R.id.iv_photo).loadImg(player.photo)
+            itemView.findViewById<ImageView>(R.id.profile_image).loadImg(user.image)
         }
 
     }

@@ -58,7 +58,6 @@ class CreateProfileActivityTest {
     @Test
     fun createAccCorrect() {
         var username = "mockUsername"
-        var handle = "mockHandle"
         var mockEmail = "mockEmail@test.com"
 
         val intent = Intent(ApplicationProvider.getApplicationContext(), CreateProfileActivity::class.java)
@@ -71,9 +70,7 @@ class CreateProfileActivityTest {
         onView(withId(R.id.accountUsername)).perform(ViewActions.typeText(username),
             ViewActions.closeSoftKeyboard()
         )
-        onView(withId(R.id.accountHandle)).perform(ViewActions.typeText(handle),
-            ViewActions.closeSoftKeyboard()
-        )
+
         onView(withId(R.id.createButton)).perform(ViewActions.click())
 
         Intents.intended(IntentMatchers.hasComponent(ProfileActivity::class.java.name))

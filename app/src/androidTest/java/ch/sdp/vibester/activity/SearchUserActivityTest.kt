@@ -1,10 +1,13 @@
 package ch.sdp.vibester.activity
 
+import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ApplicationProvider
-import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.UiController
+import androidx.test.espresso.ViewAction
 import androidx.test.espresso.action.ViewActions
+import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.intent.Intents
@@ -19,11 +22,12 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
+
+
 @RunWith(AndroidJUnit4::class)
 class SearchUserActivityTest {
 
-    @Rule
-    @JvmField
+    @get:Rule
     val activityRule = ActivityScenarioRule(SearchUserActivity::class.java)
 
     @Before
@@ -48,7 +52,7 @@ class SearchUserActivityTest {
             .perform(
                 RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                     2,
-                    ViewActions.click()
+                    click()
                 )
             )
     }
@@ -73,5 +77,25 @@ class SearchUserActivityTest {
         val recyclerView = RecyclerView(ApplicationProvider.getApplicationContext())
         val itemCount = recyclerView.adapter?.itemCount
         assertEquals(itemCount, null)
+    }
+    @Test
+    fun checkAddBtnClick(){
+        onView(ViewMatchers.withId(R.id.searchList))
+            .perform(
+                RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                    2,
+                    clickOnViewChild(R.id.addFriendBtn))
+            )
+    }
+
+    /**
+     * Custom function to handle button clicks inside recycleView
+     */
+    private fun clickOnViewChild(viewId: Int) = object : ViewAction {
+        override fun getConstraints() = null
+
+        override fun getDescription() = "Click on a child view with specified id."
+
+        override fun perform(uiController: UiController, view: View) = click().perform(uiController, view.findViewById<View>(viewId))
     }
 }

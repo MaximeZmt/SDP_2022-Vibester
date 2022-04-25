@@ -2,24 +2,16 @@ package ch.sdp.vibester.activity
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.drawable.BitmapDrawable
-import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ImageView
 import android.widget.TextView
 import ch.sdp.vibester.R
 import ch.sdp.vibester.database.ImageRepo
 import ch.sdp.vibester.database.UsersRepo
 import ch.sdp.vibester.util.Util
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
-import com.google.firebase.storage.ktx.storage
 import dagger.hilt.android.AndroidEntryPoint
-import java.io.File
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -37,9 +29,9 @@ class CreateProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_profile)
 
-        var email = intent.getStringExtra("email").toString()
-        var username = findViewById<EditText>(R.id.accountUsername)
-        var handle = findViewById<EditText>(R.id.accountHandle)
+        val email = intent.getStringExtra("email").toString()
+        val username = findViewById<EditText>(R.id.accountUsername)
+        val handle = findViewById<EditText>(R.id.accountHandle)
 
         val btCreateAcc = findViewById<Button>(R.id.createButton)
         val btnUploadImg = findViewById<Button>(R.id.uploadImg)

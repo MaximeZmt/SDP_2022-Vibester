@@ -43,6 +43,20 @@ class UsersRepo @Inject constructor() {
 
 
     /**
+     * Update a subfield of user's field
+     * @param userID the id of the user which is being updated
+     * @param newVal (Boolean) the new value of the field that is being updated
+     * @param fieldName the field name of the field that is being updated
+     * @param subFieldName the field name of the field that is being updated
+     */
+    fun updateFieldSubFieldBoolean(userID: String, newVal: Boolean, fieldName: String, subFieldName: String) {
+        dbRef.child(userID)
+            .child(fieldName)
+            .child(subFieldName)
+            .setValue(newVal)
+    }
+
+    /**
      * This function creates a new user account in the database
      * @param email the email of the new user
      * @param username the username of the new user
@@ -50,15 +64,47 @@ class UsersRepo @Inject constructor() {
      * @param callback function to be called when the the user has been created
      */
     fun createUser(email: String, username: String, handle: String, callback: (String) -> Unit) {
-        var newUser = User(handle, username, "", email, 0, 0, 0, 0
-        )
-
+        var newUser = User(handle, username, "", email, 0, 0, 0, 0)
         val newId = Util.createNewId()
-
         dbRef.child(newId).setValue(newUser)
             .addOnSuccessListener {
                 callback(email)
             }
+    }
+
+    /**
+     * Search for users by its any field in Firebase Realtime Database
+     * @param field user fields used for a search
+     * @param searchInput search text inputed by user
+     * @param callback function to call with found users by username
+     */
+    fun searchByField(field: String, searchInput: String, callback:(ArrayList<User>) -> Unit) {
+        val queryUsers = dbRef
+            .orderByChild(field)
+            .startAt(searchInput)
+            .endAt(searchInput+"\uf8ff")
+        /**
+         * Comment about \uf8ff:
+         * The \uf8ff character used in the query above is a very high code point in the Unicode range.
+         * Because it is after most regular characters in Unicode, the query matches all values that start with a inputUsername.
+         */
+
+        val users: ArrayList<User> = ArrayList()
+        queryUsers.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                users.clear()
+                for (snapshot in dataSnapshot.children) {
+                    val userProfile:User? = snapshot.getValue(User::class.java)
+                    if (userProfile != null) {
+                        users.add(userProfile)
+                    }
+                }
+                return callback(users)
+            }
+            override fun onCancelled(error: DatabaseError) {
+                Log.w(ContentValues.TAG, "searchByField:onCancelled", error.toException())
+            }
+        })
     }
 
     /**

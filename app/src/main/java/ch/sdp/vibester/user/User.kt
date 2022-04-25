@@ -9,5 +9,6 @@ data class User(
     var totalGames: Int = 0,
     var bestScore: Int = 0,
     var correctSongs: Int = 0,
-    var ranking: Int = 0
-) : Serializable {}
+    var ranking: Int = 0,
+    var uid: String = ""
+    ) : Serializable {}

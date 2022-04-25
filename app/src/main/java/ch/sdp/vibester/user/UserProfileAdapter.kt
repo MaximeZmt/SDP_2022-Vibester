@@ -50,6 +50,7 @@ class UserProfileAdapter constructor(val users: MutableList<User>,
          */
         fun bind(user: User) {
             itemView.findViewById<TextView>(R.id.search_user_username).text = user.username
+            itemView.findViewById<ImageView>(R.id.profile_image).loadImg(user.image)
 
             val addFriendBtn = itemView.findViewById<Button>(R.id.addFriendBtn)
             addFriendBtn.setOnClickListener{
@@ -60,7 +61,6 @@ class UserProfileAdapter constructor(val users: MutableList<User>,
                     itemView.findViewById<ImageView>(R.id.addedFriendIcon).visibility = View.VISIBLE
                 }
             }
-            itemView.findViewById<ImageView>(R.id.profile_image).loadImg(user.image)
         }
 
     }

@@ -128,4 +128,5 @@
     <string name="correct_message">%1$d Well Done!</string>
     <string name="wrong_message">Sadly you\'re wrong</string>
     <string name="wrong_message_with_answer">Sadly you\'re wrong, it was %1$s by %2$s</string>
+    <string name="user_add_friend">Add</string>
 </resources>

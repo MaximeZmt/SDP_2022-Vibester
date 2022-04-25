@@ -1,5 +1,8 @@
 package ch.sdp.vibester.activity
 
+import android.content.Intent
+import androidx.test.core.app.ActivityScenario
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -51,11 +54,22 @@ class BuzzerScreenActivityTest {
     fun answerIsPresentButInvisibleOnStartup() {
         onView(withId(R.id.answer)).check(matches(withEffectiveVisibility(Visibility.INVISIBLE)))
     }
-/*
+    
     @Test
     fun clickingBuzzerMakesAnswerVisible() {
+        val intent = Intent(ApplicationProvider.getApplicationContext(), BuzzerScreenActivity::class.java)
+
+        // Put mock extras inside
+        val mockPlayersNumber = 2
+        val mockNameArray = arrayOfNulls<String>(mockPlayersNumber)
+        mockNameArray[0] = "John"
+        mockNameArray[1] = "Bob"
+        intent.putExtra("Number of players", mockPlayersNumber)
+        intent.putExtra("Player Names", mockNameArray)
+        val scn: ActivityScenario<BuzzerScreenActivity> = ActivityScenario.launch(intent)
+
         onView(withId(R.id.answer)).check(matches(withEffectiveVisibility(Visibility.INVISIBLE)))
-        onView(withId(R.id.buzzer_0)).perform(click()) // why does it not find the buzzer???
+        onView(withId(R.id.buzzer_0)).perform(click())
         onView(withId(R.id.answer)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
         onView(withId(R.id.buttonWrong)).perform(click())
     }
@@ -63,6 +77,17 @@ class BuzzerScreenActivityTest {
 
     @Test
     fun clickingAnswerButtonsMakesAnswerInvisible() {
+        val intent = Intent(ApplicationProvider.getApplicationContext(), BuzzerScreenActivity::class.java)
+
+        // Put mock extras inside
+        val mockPlayersNumber = 2
+        val mockNameArray = arrayOfNulls<String>(mockPlayersNumber)
+        mockNameArray[0] = "John"
+        mockNameArray[1] = "Bob"
+        intent.putExtra("Number of players", mockPlayersNumber)
+        intent.putExtra("Player Names", mockNameArray)
+        val scn: ActivityScenario<BuzzerScreenActivity> = ActivityScenario.launch(intent)
+
         val buttonIdArray = arrayOf(R.id.buttonCorrect, R.id.buttonWrong)
         for (butId in buttonIdArray) {
             onView(withId(R.id.buzzer_0)).perform(click()) // make answer visible first
@@ -70,7 +95,6 @@ class BuzzerScreenActivityTest {
             onView(withId(R.id.answer)).check(matches(withEffectiveVisibility(Visibility.INVISIBLE)))
         }
     }
-*/
 
     /*
      * Currently testing with the *static* values. Change to *dynamic* once the game is correctly

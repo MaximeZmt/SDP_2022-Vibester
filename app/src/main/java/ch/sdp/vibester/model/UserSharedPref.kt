@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import ch.sdp.vibester.database.DataGetter
-import ch.sdp.vibester.profile.UserProfile
+import ch.sdp.vibester.user.User
 import com.google.firebase.database.*
 import java.util.*
 
@@ -37,10 +37,10 @@ class UserSharedPref private constructor() {
          * @param online if false, does not store in db
          */
         fun userReset(ctx: Context, email: String, online: Boolean = true){
-            setUser(ctx, UserProfile(email=email), online)
+            setUser(ctx, User(email=email), online)
             if (online){
                 dbAccess = DataGetter()
-                val call = {prof:UserProfile -> setUser(ctx, prof, online)}
+                val call = {prof:User -> setUser(ctx, prof, online)}
                 dbAccess.getUserData(call)
             }
         }
@@ -51,7 +51,7 @@ class UserSharedPref private constructor() {
          * @param UserProfile the profile of the user
          * @param online if false, does not store in db
          */
-        fun setUser(ctx: Context, user: UserProfile, online: Boolean){
+        fun setUser(ctx: Context, user: User, online: Boolean){
             val edit = getSharedPreferences(ctx)?.edit()
             if (edit != null) {
                 edit.putString(HANDLE, user.handle)
@@ -137,7 +137,7 @@ class UserSharedPref private constructor() {
          * @param Context The app context
          * @return UserProfile
          */
-        fun getUser(ctx: Context): UserProfile{
+        fun getUser(ctx: Context): User {
             val sharedPref = getSharedPreferences(ctx)
 
             var handle = ""
@@ -159,7 +159,7 @@ class UserSharedPref private constructor() {
                 correctSongs = sharedPref.getInt(CORRECT_SONGS, 0)
                 ranking = sharedPref.getInt(RANKING, 0)
             }
-            return UserProfile(handle, username, image, email, totalGames, bestScore, correctSongs, ranking)
+            return User(handle, username, image, email, totalGames, bestScore, correctSongs, ranking)
         }
 
 

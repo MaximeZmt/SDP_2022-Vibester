@@ -6,7 +6,7 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
 /**
- * The Database objects that returns our databse instance
+ * The Database objects that returns our database instance
  */
 
 object Database {

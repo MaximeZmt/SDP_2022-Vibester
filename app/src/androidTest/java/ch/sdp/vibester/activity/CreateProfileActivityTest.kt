@@ -4,7 +4,6 @@ import android.content.Intent
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.matcher.IntentMatchers
@@ -12,7 +11,7 @@ import androidx.test.espresso.matcher.ViewMatchers.* //change this import
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
 import ch.sdp.vibester.database.DataGetter
-import ch.sdp.vibester.profile.UserProfile
+import ch.sdp.vibester.user.User
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -47,7 +46,7 @@ class CreateProfileActivityTest {
         }
 
         every { mockUsersRepo.getUserData(any()) } answers {
-            secondArg<(UserProfile) -> Unit>().invoke(UserProfile())
+            secondArg<(User) -> Unit>().invoke(User())
         }
     }
 

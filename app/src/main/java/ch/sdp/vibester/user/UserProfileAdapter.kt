@@ -1,16 +1,22 @@
-package ch.sdp.vibester.profile
+package ch.sdp.vibester.user
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
+import ch.sdp.vibester.auth.FireBaseAuthenticator
+import ch.sdp.vibester.database.UsersRepo
 
 /**
  * UserAdapter to set userProfile views with username and image in RecycleView. It is used to search for users.
  */
-class UserProfileAdapter(val users: MutableList<UserProfile>):
+class UserProfileAdapter constructor(val users: MutableList<User>,
+                         val authenticator: FireBaseAuthenticator = FireBaseAuthenticator(),
+                         val usersRepo: UsersRepo = UsersRepo()
+                        ):
     RecyclerView.Adapter<UserProfileAdapter.UserProfileViewHolder>() {
 
     /**
@@ -38,13 +44,20 @@ class UserProfileAdapter(val users: MutableList<UserProfile>):
      */
     inner class UserProfileViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         /**
-         * @param userProfile with all the parameters
+         * @param user with all the parameters
          */
-        fun bind(user: UserProfile) {
+        fun bind(user: User) {
             itemView.findViewById<TextView>(R.id.search_user_username).text = user.username
+            itemView.findViewById<Button>(R.id.addFriendBtn).setOnClickListener{
+                val currentUser = authenticator.getCurrUser()
+                if(currentUser != null){
+                    usersRepo.updateFieldSubFieldBoolean(currentUser.uid, true, "friends", user.uid)
+                }
+            }
 //                TODO fix the image upload
 //            itemView.findViewById<ImageView>(R.id.iv_photo).loadImg(player.photo)
         }
+
     }
 
 

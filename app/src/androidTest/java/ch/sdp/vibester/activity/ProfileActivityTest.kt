@@ -12,7 +12,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.model.UserSharedPref
-import ch.sdp.vibester.profile.UserProfile
+import ch.sdp.vibester.user.User
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -41,9 +41,9 @@ class ProfileActivityTest {
     @BindValue @JvmField
     val mockUsersRepo = mockk<DataGetter>()
 
-    private fun createMockInvocation(mockProfile: UserProfile) {
+    private fun createMockInvocation(mockProfile: User) {
         every { mockUsersRepo.getUserData(any()) } answers {
-            secondArg<(UserProfile) -> Unit>().invoke(mockProfile)
+            secondArg<(User) -> Unit>().invoke(mockProfile)
         }
         every { mockUsersRepo.updateFieldString(any(), any(), any()) } answers {}
     }
@@ -55,7 +55,7 @@ class ProfileActivityTest {
 
     @Test
     fun checkProfileData() {
-        val inputProfile = UserProfile("@lisa", "Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8, 29, 0)
+        val inputProfile = User("@lisa", "Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8, 29, 0)
         val ctx = ApplicationProvider.getApplicationContext() as Context
         val intent = Intent(ctx, ProfileActivity::class.java)
         intent.putExtra("isUnitTest", true)

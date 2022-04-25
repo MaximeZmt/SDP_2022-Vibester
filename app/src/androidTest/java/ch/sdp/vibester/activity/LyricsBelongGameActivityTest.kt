@@ -24,11 +24,7 @@ import org.junit.Assert.assertEquals
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-@HiltAndroidTest
 class LyricsBelongGameActivityTest {
-
-    @get:Rule
-    var hiltRule = HiltAndroidRule(this)
 
     private val sleepTime: Long = 5000
     private val songName = "Thunder"

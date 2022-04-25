@@ -20,16 +20,12 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-@HiltAndroidTest
 class BuzzerScreenActivityTest {
 
     @get:Rule
     val testRule = ActivityScenarioRule(
         BuzzerScreenActivity::class.java
     )
-
-    @get:Rule
-    var hiltRule = HiltAndroidRule(this)
 
     @Before
     fun setUp() {

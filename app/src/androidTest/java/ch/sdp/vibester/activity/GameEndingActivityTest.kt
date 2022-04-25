@@ -23,14 +23,10 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-@HiltAndroidTest
 class GameEndingActivityTest {
 
     @get:Rule
     val activityRule = ActivityScenarioRule(GameEndingActivity::class.java)
-
-    @get:Rule
-    var hiltRule = HiltAndroidRule(this)
 
     @Before
     fun setUp() {

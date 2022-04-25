@@ -27,7 +27,7 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 @HiltAndroidTest
-class ProfileActivityTest { 
+class ProfileActivityTest {
 
     @get:Rule
     var hiltRule = HiltAndroidRule(this)

@@ -30,7 +30,7 @@ class ScoreBoardActivityTest {
     }
 
     @Test
-    fun rockBtnShouldSetUpRecycleVie() {
+    fun rockBtnShouldSetUpRecycleView() {
         onView(withId(R.id.rockButton)).perform(click())
         onView(withId(R.id.recycler_view)).check(matches(isDisplayed()))
     }

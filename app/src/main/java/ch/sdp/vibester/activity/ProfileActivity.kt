@@ -13,6 +13,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.BitmapGetterApi
+import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.model.UserSharedPref
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.helper.IntentSwitcher
@@ -100,7 +101,7 @@ class ProfileActivity : AppCompatActivity() {
             findViewById<TextView>(textId).text = input.text.toString()
 
             if(name == "username"){
-                UserSharedPref.updateUsername(this, input.text.toString())
+                dataGetter.updateFieldString(FireBaseAuthenticator.getCurrentUID(), input.text.toString(), "username")
             }
         }
 

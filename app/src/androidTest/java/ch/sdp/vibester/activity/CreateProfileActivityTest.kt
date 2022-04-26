@@ -41,7 +41,7 @@ class CreateProfileActivityTest {
     val mockUsersRepo = mockk<DataGetter>()
 
     private fun createMockInvocation(email: String) {
-        every {mockUsersRepo.createUser(any(), any(), any())} answers {
+        every {mockUsersRepo.createUser(any(), any(), any(), any())} answers {
             lastArg<(String) -> Unit>().invoke(email)
         }
 

@@ -52,12 +52,11 @@ class DataGetter @Inject constructor() {
     fun updateRelativeFieldInt(userID: String, newVal: Int, fieldName: String) {
         dbRef.child(userID) //For now ID is hardcoded, will generate it creating new users next week "testUser"
             .child(fieldName)
-            .get().addOnCompleteListener { t ->
+            .get().addOnSuccessListener {t ->
                 dbRef.child(userID) //For now ID is hardcoded, will generate it creating new users next week "testUser"
                     .child(fieldName)
-                    .setValue((t.result.value as Int?)!! + newVal)
+                    .setValue((t.value as Long?)!!.toInt() + newVal)
             }
-
     }
 
 
@@ -81,9 +80,8 @@ class DataGetter @Inject constructor() {
      * @param username the username of the new user
      * @param callback function to be called when the the user has been created
      */
-    fun createUser(email: String, username: String, callback: (String) -> Unit) {
-        var newUser = User(username, "", email, 0, 0, 0, 0)
-        val newId = Util.createNewId()
+    fun createUser(email: String, username: String, callback: (String) -> Unit, newId: String) {
+        var newUser = User(username, "", email, 0, 0, 0, 0, newId)
         dbRef.child(newId).setValue(newUser)
             .addOnSuccessListener {
                 callback(email)
@@ -114,7 +112,7 @@ class DataGetter @Inject constructor() {
                 for (snapshot in dataSnapshot.children) {
                     val userProfile:User? = snapshot.getValue(User::class.java)
                     if (userProfile != null) {
-                        userProfile.uid = snapshot.key.toString()
+                        //TODO dont care userProfile.uid = snapshot.key.toString()
                         users.add(userProfile)
                     }
                 }

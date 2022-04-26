@@ -21,7 +21,7 @@ import javax.inject.Inject
  */
 class GameEndingActivity : AppCompatActivity() {
 
-    lateinit var dataGetter: DataGetter
+    var dataGetter = DataGetter()
 
     private var incorrectSongs: ArrayList<String>? = arrayListOf("Default song")
     private var statNames: ArrayList<String>? = arrayListOf(
@@ -59,7 +59,8 @@ class GameEndingActivity : AppCompatActivity() {
             } else {findViewById<TextView>(R.id.winnerText).text="Nobody won this game!"}
         }
 
-        //dataGetter.updateRelativeFieldInt(FireBaseAuthenticator.getCurrentUID(), 1, "totalGames")
+        dataGetter.updateRelativeFieldInt(FireBaseAuthenticator.getCurrentUID(), 1, "totalGames")
+        //dataGetter.updateFieldInt(FireBaseAuthenticator.getCurrentUID(), 1, "totalGames")
 
         if (intent.hasExtra("playerName")) {
             playerName = intent.getStringExtra("playerName")

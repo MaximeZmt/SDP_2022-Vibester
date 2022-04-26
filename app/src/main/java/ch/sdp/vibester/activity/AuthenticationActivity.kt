@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.R
 import ch.sdp.vibester.auth.FireBaseAuthenticator
+import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.helper.IntentSwitcher
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -20,6 +21,7 @@ import com.google.android.gms.tasks.Task
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -31,6 +33,9 @@ import javax.inject.Inject
 class AuthenticationActivity : AppCompatActivity() {
 
     private lateinit var googleSignInClient: GoogleSignInClient
+
+    @Inject
+    lateinit var dataGetter: DataGetter
 
     @Inject
     lateinit var authenticator: FireBaseAuthenticator
@@ -104,7 +109,7 @@ class AuthenticationActivity : AppCompatActivity() {
                 googleAuthFirebase(account.idToken!!)
             } catch (e: ApiException) {
                 Log.d(getString(R.string.log_tag), "Google sign in failed", e)
-                updateUI("Authentication Error", false)
+                updateUI("Authentication Error", false, null)
             }
         }
     }
@@ -117,14 +122,18 @@ class AuthenticationActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(getString(R.string.log_tag), "signInWithCredential:success")
+                    var createAcc: Boolean = false
+                    if(task.getResult().additionalUserInfo != null){
+                        createAcc = task.getResult().additionalUserInfo!!.isNewUser
+                    }
                     val user = auth.currentUser
                     if (user != null) {
-                        updateUI(user.email.toString(), false)
+                        updateUI(user.email.toString(), createAcc, user)
                     }
                 } else {
                     // fail
                     Log.d(getString(R.string.log_tag), "signInWithCredential:failure", task.exception)
-                    updateUI("Authentication Error", false)
+                    updateUI("Authentication Error", false, null)
                 }
             }
     }
@@ -193,32 +202,47 @@ class AuthenticationActivity : AppCompatActivity() {
             ).show()
             val user = authenticator.getCurrUser()
             if (user != null) {
-                updateUI(user.email, createAcc)
+                updateUI(user.email, createAcc, user)
             }
         } else {
             Toast.makeText(
                 baseContext, "Authentication failed.",
                 Toast.LENGTH_SHORT
             ).show()
-            updateUI("Authentication error", false)
+            updateUI("Authentication error", false, null)
         }
     }
+
+
+//TODO
+    private fun startNewActivity(email: String) {
+        val newIntent = Intent(this, CreateProfileActivity::class.java)
+        newIntent.putExtra("email", email)
+        startActivity(newIntent)
+    }
+
 
     private fun updateUI(
         emailText: String?,
         createAcc: Boolean,
+        user: FirebaseUser?
     ) {
         if (emailText != null) {
             if('@' in emailText && !createAcc) {
+                Log.e("baby shark", "true")
                 val newIntent = Intent(this, ProfileActivity::class.java)
                 newIntent.putExtra("email", emailText)
                 startActivity(newIntent)
             }
 
-            else if('@' in emailText && createAcc) {
-                val newIntent = Intent(this, CreateProfileActivity::class.java)
-                newIntent.putExtra("email", emailText)
-                startActivity(newIntent)
+            else if('@' in emailText && createAcc && user != null) { //
+                Log.e("baby shart", "toudoudoud")
+                dataGetter.createUser(
+                    emailText,
+                    user.uid,
+                    this::startNewActivity,
+                    user.uid
+                )
             }
 
             else {

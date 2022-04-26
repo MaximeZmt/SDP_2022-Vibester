@@ -77,6 +77,8 @@ class ProfileActivityTest {
     fun clickBackToMain(){
         val ctx = ApplicationProvider.getApplicationContext() as Context
         val intent = Intent(ctx, ProfileActivity::class.java)
+        intent.putExtra("isUnitTest", true)
+
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
 
         onView(withId(R.id.profile_returnToMain)).perform(click())
@@ -91,7 +93,7 @@ class ProfileActivityTest {
         val intent = Intent(ctx, ProfileActivity::class.java)
         intent.putExtra("isUnitTest", true)
         intent.putExtra("userTestProfile", inputProfile)
-        
+
         UserSharedPref.setUser(ctx, inputProfile, false)
         createMockInvocation(inputProfile)
 

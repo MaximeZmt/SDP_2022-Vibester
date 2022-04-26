@@ -37,13 +37,14 @@ class ScoreBoardActivity : AppCompatActivity() {
      */
     fun selectScoreboard(view: View) {
         var sortedBy = ""
+        val ranking = "ranking"
         when (view.id) {
-            R.id.btsButton -> sortedBy = "ranking"
-            R.id.kpopButton -> sortedBy = "ranking"
-            R.id.imagDragonsButton -> sortedBy = "ranking"
-            R.id.billieEilishButton -> sortedBy = "ranking"
-            R.id.rockButton -> sortedBy = "ranking"
-            R.id.topTracksButton -> sortedBy = "ranking"
+            R.id.btsButton -> sortedBy = ranking
+            R.id.kpopButton -> sortedBy = ranking
+            R.id.imagDragonsButton -> sortedBy = ranking
+            R.id.billieEilishButton -> sortedBy = ranking
+            R.id.rockButton -> sortedBy = ranking
+            R.id.topTracksButton -> sortedBy = ranking
         }
 
         findViewById<ConstraintLayout>(R.id.genrePerScoreboard).visibility = GONE

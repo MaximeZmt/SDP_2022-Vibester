@@ -71,7 +71,7 @@ class CreateProfileActivityTest {
         onView(withId(R.id.accountUsername)).perform(typeText(username),
             closeSoftKeyboard()
         )
-        
+
        onView(withId(R.id.createButton)).perform(click())
 
        Intents.intended(IntentMatchers.hasComponent(ProfileActivity::class.java.name))

@@ -37,6 +37,14 @@ class FireBaseAuthenticator @Inject constructor() {
             }
         }
 
+        fun getCurrentUID(): String {
+            if (isLoggedIn()) {
+                return FirebaseAuth.getInstance().currentUser!!.uid
+            } else {
+                return ""
+            }
+        }
+
 
         /**
          * A function to return the result of google sign in

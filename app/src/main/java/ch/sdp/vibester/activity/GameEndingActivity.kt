@@ -59,7 +59,7 @@ class GameEndingActivity : AppCompatActivity() {
             } else {findViewById<TextView>(R.id.winnerText).text="Nobody won this game!"}
         }
 
-        //dataGetter.updateRelativeFieldInt(DbUserIdStore.getUID(), 1, "totalGames")
+        //dataGetter.updateRelativeFieldInt(FireBaseAuthenticator.getCurrentUID(), 1, "totalGames")
 
         if (intent.hasExtra("playerName")) {
             playerName = intent.getStringExtra("playerName")

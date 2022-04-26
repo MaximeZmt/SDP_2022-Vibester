@@ -2,6 +2,7 @@ package ch.sdp.vibester.database
 
 import android.content.ContentValues
 import android.util.Log
+import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.user.User
 import ch.sdp.vibester.util.Util
 import com.google.firebase.database.DataSnapshot
@@ -16,6 +17,8 @@ import javax.inject.Inject
 
 class UsersRepo @Inject constructor() {
     private val dbRef = Database.get().getReference("users")
+    val authenticator: FireBaseAuthenticator = FireBaseAuthenticator()
+
 
     /**
      * This function updates a specific string field of a user in the database
@@ -95,6 +98,7 @@ class UsersRepo @Inject constructor() {
                 for (snapshot in dataSnapshot.children) {
                     val userProfile:User? = snapshot.getValue(User::class.java)
                     if (userProfile != null) {
+                        userProfile.uid = snapshot.key.toString()
                         users.add(userProfile)
                     }
                 }

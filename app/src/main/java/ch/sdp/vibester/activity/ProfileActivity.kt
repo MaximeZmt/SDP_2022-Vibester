@@ -44,7 +44,6 @@ class ProfileActivity : AppCompatActivity() {
         setupProfile(UserSharedPref.getUser(applicationContext))
 
         val editUsername = findViewById<Button>(R.id.editUser)
-        val editHandle = findViewById<Button>(R.id.editHandle)
 
         val logoutButton = findViewById<Button>(R.id.logout)
 

@@ -41,7 +41,7 @@ class CreateProfileActivityTest {
     val mockUsersRepo = mockk<DataGetter>()
 
     private fun createMockInvocation(email: String) {
-        every {mockUsersRepo.createUser(any(), any(), any(), any())} answers {
+        every {mockUsersRepo.createUser(any(), any(), any())} answers {
             lastArg<(String) -> Unit>().invoke(email)
         }
 
@@ -58,7 +58,6 @@ class CreateProfileActivityTest {
     @Test
     fun createAccCorrect() {
         var username = "mockUsername"
-        var handle = "mockHandle"
         var mockEmail = "mockEmail@test.com"
 
         val intent = Intent(ApplicationProvider.getApplicationContext(), CreateProfileActivity::class.java)
@@ -72,10 +71,7 @@ class CreateProfileActivityTest {
         onView(withId(R.id.accountUsername)).perform(typeText(username),
             closeSoftKeyboard()
         )
-        onView(withId(R.id.accountHandle)).perform(typeText(handle),
-            closeSoftKeyboard()
-        )
-
+        
        onView(withId(R.id.createButton)).perform(click())
 
        Intents.intended(IntentMatchers.hasComponent(ProfileActivity::class.java.name))

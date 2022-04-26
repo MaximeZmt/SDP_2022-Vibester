@@ -35,7 +35,6 @@ class CreateProfileActivity : AppCompatActivity() {
 
         val email = intent.getStringExtra("email").toString()
         val username = findViewById<EditText>(R.id.accountUsername)
-        val handle = findViewById<EditText>(R.id.accountHandle)
 
         val btCreateAcc = findViewById<Button>(R.id.createButton)
         val btnUploadImg = findViewById<Button>(R.id.uploadImg)
@@ -44,7 +43,6 @@ class CreateProfileActivity : AppCompatActivity() {
             dataGetter.createUser(
                 email,
                 username.text.toString(),
-                handle.text.toString(),
                 this::startNewActivity)
         }
 

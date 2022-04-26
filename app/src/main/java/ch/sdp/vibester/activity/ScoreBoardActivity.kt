@@ -3,7 +3,11 @@ package ch.sdp.vibester.activity
 import android.content.ContentValues
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
@@ -26,7 +30,27 @@ class ScoreBoardActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.toolbar))
         setupRecycleView()
         players = ArrayList()
-        loadPlayers()
+    }
+
+    /**
+     * TODO: replace "ranking" by appropriate label
+     */
+    fun selectScoreboard(view: View) {
+        var sortedBy = ""
+        val ranking = "ranking"
+        when (view.id) {
+            R.id.btsButton -> sortedBy = ranking
+            R.id.kpopButton -> sortedBy = ranking
+            R.id.imagDragonsButton -> sortedBy = ranking
+            R.id.billieEilishButton -> sortedBy = ranking
+            R.id.rockButton -> sortedBy = ranking
+            R.id.topTracksButton -> sortedBy = ranking
+        }
+
+        findViewById<ConstraintLayout>(R.id.genrePerScoreboard).visibility = GONE
+        findViewById<ConstraintLayout>(R.id.scoreboard).visibility = VISIBLE
+
+        loadPlayersSortedBy(sortedBy)
     }
 
     private fun setupRecycleView() {
@@ -37,8 +61,8 @@ class ScoreBoardActivity : AppCompatActivity() {
         }
     }
 
-    private fun loadPlayers() {
-        dbRef.orderByChild("ranking")
+    private fun loadPlayersSortedBy(order: String) {
+        dbRef.orderByChild(order)
             .addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshots: DataSnapshot) {
                 for (snapshot in snapshots.children) {

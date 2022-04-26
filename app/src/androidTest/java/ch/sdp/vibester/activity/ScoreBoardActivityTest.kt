@@ -10,6 +10,7 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
+import org.hamcrest.CoreMatchers.not
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -22,18 +23,53 @@ class ScoreBoardActivityTest {
     val activityRule = ActivityScenarioRule(ScoreBoardActivity::class.java)
 
     @Test
-    fun recycleViewToViewTest() {
+    fun genreShouldDisappearAfterSelected() {
+        onView(withId(R.id.genrePerScoreboard)).check(matches(isDisplayed()))
+        onView(withId(R.id.rockButton)).perform(click())
+        onView(withId(R.id.genrePerScoreboard)).check(matches(not(isDisplayed())))
+    }
+
+    @Test
+    fun rockBtnShouldSetUpRecycleView() {
+        onView(withId(R.id.rockButton)).perform(click())
         onView(withId(R.id.recycler_view)).check(matches(isDisplayed()))
     }
 
     @Test
-    fun recycleViewClickTest() {
+    fun rockBtnShouldEnableRecycleViewClick() {
+        onView(withId(R.id.rockButton)).perform(click())
+
         onView((withId(R.id.recycler_view)))
             .perform(
                 RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                     2, click()
                 )
             )
+    }
+
+    @Test
+    fun topBtnClick() {
+        onView(withId(R.id.topTracksButton)).perform(click())
+    }
+
+    @Test
+    fun kpopBtnClick() {
+        onView(withId(R.id.kpopButton)).perform(click())
+    }
+
+    @Test
+    fun billieEilishButtonClick() {
+        onView(withId(R.id.billieEilishButton)).perform(click())
+    }
+
+    @Test
+    fun imagineDragonsButtonClick() {
+        onView(withId(R.id.imagDragonsButton)).perform(click())
+    }
+
+    @Test
+    fun btsButtonClick() {
+        onView(withId(R.id.btsButton)).perform(click())
     }
 
     @Test
@@ -47,17 +83,5 @@ class ScoreBoardActivityTest {
                 )
             )
         }
-    }
-
-    @Test
-    fun recycleViewShowItemTest() {
-        onView(withId(R.id.recycler_view)).perform(
-            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                5,
-                click()
-            )
-        )
-        val nameItem = "YOLO" //name of the player at the 5th position
-        onView(withText(nameItem)).check(matches(isDisplayed()))
     }
 }

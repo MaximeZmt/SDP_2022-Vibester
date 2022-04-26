@@ -42,7 +42,6 @@ class ProfileActivity : AppCompatActivity() {
         setContentView(R.layout.activity_profile)
 
         val editUsername = findViewById<Button>(R.id.editUser)
-        val editHandle = findViewById<Button>(R.id.editHandle)
 
         val logoutButton = findViewById<Button>(R.id.logout)
 
@@ -50,10 +49,6 @@ class ProfileActivity : AppCompatActivity() {
 
         editUsername.setOnClickListener {
             showGeneralDialog(R.id.username, "username")
-        }
-
-        editHandle.setOnClickListener {
-            showGeneralDialog(R.id.handle, "handle")
         }
 
         retToMain.setOnClickListener{
@@ -106,8 +101,6 @@ class ProfileActivity : AppCompatActivity() {
 
             if(name == "username"){
                 UserSharedPref.updateUsername(this, input.text.toString())
-            }else if (name == "handle"){
-                UserSharedPref.updateHandle(this, input.text.toString())
             }
         }
 
@@ -141,9 +134,6 @@ class ProfileActivity : AppCompatActivity() {
         // Currently assuming that empty username means no user !
         if (user.username != ""){
             findViewById<TextView>(R.id.username).text =  user.username
-            if (user.handle != ""){
-                findViewById<TextView>(R.id.handle).text =  user.handle
-            }
             findViewById<TextView>(R.id.totalGames).text = user.totalGames.toString()
             findViewById<TextView>(R.id.correctSongs).text = user.correctSongs.toString()
             findViewById<TextView>(R.id.bestScore).text = user.bestScore.toString()

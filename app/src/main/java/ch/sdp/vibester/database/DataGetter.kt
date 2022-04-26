@@ -17,6 +17,8 @@ import javax.inject.Inject
 
 class DataGetter @Inject constructor() {
     private val dbRef = Database.get().getReference("users")
+    val authenticator: FireBaseAuthenticator = FireBaseAuthenticator()
+
 
     // Constructor
     init {
@@ -77,11 +79,10 @@ class DataGetter @Inject constructor() {
      * This function creates a new user account in the database
      * @param email the email of the new user
      * @param username the username of the new user
-     * @param handle the handle of the new user
      * @param callback function to be called when the the user has been created
      */
-    fun createUser(email: String, username: String, handle: String, callback: (String) -> Unit) {
-        var newUser = User(handle, username, "", email, 0, 0, 0, 0)
+    fun createUser(email: String, username: String, callback: (String) -> Unit) {
+        var newUser = User(username, "", email, 0, 0, 0, 0)
         val newId = Util.createNewId()
         dbRef.child(newId).setValue(newUser)
             .addOnSuccessListener {
@@ -113,6 +114,7 @@ class DataGetter @Inject constructor() {
                 for (snapshot in dataSnapshot.children) {
                     val userProfile:User? = snapshot.getValue(User::class.java)
                     if (userProfile != null) {
+                        userProfile.uid = snapshot.key.toString()
                         users.add(userProfile)
                     }
                 }

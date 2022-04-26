@@ -5,8 +5,11 @@ import android.content.Intent
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions
+import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
+import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.matcher.ViewMatchers.* //change this import
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
@@ -55,7 +58,7 @@ class ProfileActivityTest {
 
     @Test
     fun checkProfileData() {
-        val inputProfile = User("@lisa", "Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8, 29, 0)
+        val inputProfile = User("Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8, 29, 0)
         val ctx = ApplicationProvider.getApplicationContext() as Context
         val intent = Intent(ctx, ProfileActivity::class.java)
         intent.putExtra("isUnitTest", true)
@@ -64,32 +67,26 @@ class ProfileActivityTest {
         createMockInvocation(inputProfile)
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
 
-        onView(withId(R.id.handle)).check(matches(withText(inputProfile.handle)))
         onView(withId(R.id.username)).check(matches(withText(inputProfile.username)))
         onView(withId(R.id.correctSongs)).check(matches(withText(inputProfile.correctSongs.toString())))
         onView(withId(R.id.totalGames)).check(matches(withText(inputProfile.totalGames.toString())))
         onView(withId(R.id.ranking)).check(matches(withText(inputProfile.ranking.toString())))
     }
 
-    /*
     @Test
-    fun checkProfileLayout() {
-        val inputProfile = UserProfile("@lisa", "Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8, 29, 0)
+    fun clickBackToMain(){
         val ctx = ApplicationProvider.getApplicationContext() as Context
         val intent = Intent(ctx, ProfileActivity::class.java)
-
-        createMockInvocation(inputProfile)
-        UserSharedPref.setUser(ctx, inputProfile, false)
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
 
-        onView(withId(R.id.profileStatistics)).check(matches(isDisplayed()))
-        onView(withId(R.id.handle)).check(matches(isDisplayed()))
-        onView(withId(R.id.username)).check(matches(isDisplayed()))
+        onView(withId(R.id.profile_returnToMain)).perform(click())
+        Intents.intended(IntentMatchers.hasComponent(WelcomeActivity::class.java.name))
     }
+
 
     @Test
     fun checkEditProfile() {
-        val inputProfile = UserProfile("@lisa", "Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8, 29, 0)
+        val inputProfile = User("Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8, 29, 0)
         val ctx = ApplicationProvider.getApplicationContext() as Context
         val intent = Intent(ctx, ProfileActivity::class.java)
 
@@ -111,7 +108,7 @@ class ProfileActivityTest {
 
     @Test
     fun checkEditProfileClickCancel() {
-        val inputProfile = UserProfile("@lisa", "Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8, 29, 0)
+        val inputProfile = User( "Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8, 29, 0)
         val ctx = ApplicationProvider.getApplicationContext() as Context
         val intent = Intent(ctx, ProfileActivity::class.java)
 
@@ -125,42 +122,4 @@ class ProfileActivityTest {
         onView(withId(R.id.username)).check(matches(withText("Lalisa Bon")))
     }
 
-    @Test
-    fun checkEditHandle() {
-        val inputProfile = UserProfile("@lisa", "Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8, 29, 0)
-        val ctx = ApplicationProvider.getApplicationContext() as Context
-        val intent = Intent(ctx, ProfileActivity::class.java)
-
-        UserSharedPref.setUser(ctx, inputProfile, false)
-        createMockInvocation(inputProfile)
-
-        val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
-
-        val newUserHandle = "@lisa"
-        onView(withId(R.id.editHandle)).perform(ViewActions.click())
-        onView(withId(0)).perform(
-            ViewActions.typeText(newUserHandle),
-            ViewActions.closeSoftKeyboard()
-        )
-        onView(withText("OK")).perform(ViewActions.click())
-        onView(withId(R.id.handle)).check(matches(withText("@lisa")))
-
-    }
-
-    @Test
-    fun checkEditHandleClickCancel() {
-        val inputProfile = UserProfile("@lisa", "Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8, 29, 0)
-        val ctx = ApplicationProvider.getApplicationContext() as Context
-        val intent = Intent(ctx, ProfileActivity::class.java)
-
-        UserSharedPref.setUser(ctx, inputProfile, false)
-        createMockInvocation(inputProfile)
-
-        val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
-
-        onView(withId(R.id.editHandle)).perform(ViewActions.click())
-        onView(withText("Cancel")).perform(ViewActions.click())
-        onView(withId(R.id.handle)).check(matches(withText("@lisa")))
-    }
-*/
 }

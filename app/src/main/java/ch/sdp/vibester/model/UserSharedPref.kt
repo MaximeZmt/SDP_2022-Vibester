@@ -13,7 +13,6 @@ import java.util.*
  */
 class UserSharedPref private constructor() {
     companion object{
-        val HANDLE = "handle"
         val USERNAME = "username"
         val IMAGE = "image"
         val EMAIL = "email"
@@ -54,7 +53,6 @@ class UserSharedPref private constructor() {
         fun setUser(ctx: Context, user: User, online: Boolean){
             val edit = getSharedPreferences(ctx)?.edit()
             if (edit != null) {
-                edit.putString(HANDLE, user.handle)
                 edit.putString(USERNAME, user.username)
                 edit.putString(IMAGE, user.image)
                 edit.putString(EMAIL, user.email)
@@ -114,23 +112,6 @@ class UserSharedPref private constructor() {
             }
         }
 
-        /**
-         * Update the handle locally and in db (if enabled for the user)
-         * @param Context The app context
-         * @param handle new handle
-         */
-        fun updateHandle(ctx: Context, handle: String){
-            val sharedPref = getSharedPreferences(ctx)
-            if(sharedPref != null){
-                val edit = sharedPref.edit()
-                edit.putString(HANDLE, handle)
-                if(sharedPref.getBoolean(ONLINE, false)) {
-                    dbAccess.updateFieldString("testUser", handle, "handle")
-                }
-                edit.commit()
-            }
-        }
-
 
         /**
          * Getter for locally store profile
@@ -140,7 +121,6 @@ class UserSharedPref private constructor() {
         fun getUser(ctx: Context): User {
             val sharedPref = getSharedPreferences(ctx)
 
-            var handle = ""
             var username = ""
             var image = ""
             var email = ""
@@ -150,7 +130,6 @@ class UserSharedPref private constructor() {
             var ranking = -1
 
             if(sharedPref != null) {
-                handle = sharedPref.getString(HANDLE, "").toString()
                 username = sharedPref.getString(USERNAME, "").toString()
                 image = sharedPref.getString(IMAGE, "").toString()
                 email = sharedPref.getString(EMAIL, "").toString()
@@ -159,7 +138,8 @@ class UserSharedPref private constructor() {
                 correctSongs = sharedPref.getInt(CORRECT_SONGS, 0)
                 ranking = sharedPref.getInt(RANKING, 0)
             }
-            return User(handle, username, image, email, totalGames, bestScore, correctSongs, ranking)
+            return User(username, image, email, totalGames, bestScore, correctSongs, ranking)
+
         }
 
 

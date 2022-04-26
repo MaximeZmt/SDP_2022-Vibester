@@ -35,4 +35,16 @@
         android:layout_marginEnd="25dp"
         android:text="@string/user_add_friend" />
 
+    <ImageView
+        android:id="@+id/addedFriendIcon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="49dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="25dp"
+        android:visibility="invisible"
+        android:src="@drawable/green_tick">
+    </ImageView>
 </RelativeLayout>

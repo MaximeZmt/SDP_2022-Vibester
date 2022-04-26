@@ -36,7 +36,7 @@ class ScoreBoardActivityTest {
     }
 
     @Test
-    fun rockBtnShouldEnableRecycleViewClickTest() {
+    fun rockBtnShouldEnableRecycleViewClick() {
         onView(withId(R.id.rockButton)).perform(click())
 
         onView((withId(R.id.recycler_view)))

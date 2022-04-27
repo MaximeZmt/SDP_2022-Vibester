@@ -1,13 +1,11 @@
 package ch.sdp.vibester.activity
 
-//import ch.sdp.vibester.profile.ProfileDataProvider
-import android.content.Context
 import android.content.Intent
-import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.Window.FEATURE_NO_TITLE
+import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.R
@@ -16,13 +14,7 @@ import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.database.Database
 import ch.sdp.vibester.database.PersistanceSetter
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
-import ch.sdp.vibester.model.UserSharedPref
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
-import java.util.function.BinaryOperator
+
 
 class WelcomeActivity : AppCompatActivity() {
 
@@ -53,6 +45,12 @@ class WelcomeActivity : AppCompatActivity() {
         Log.e("INFO: Should Access", ((InternetState.hasAccessedInternetOnce(this))).toString())
         PersistanceSetter.setPersistance()
         Database.get()
+
+        // Disable User Search if not connected
+        if(!FireBaseAuthenticator.isLoggedIn()){
+            val buttonToSearchUser = findViewById<Button>(R.id.welcome_search)
+            buttonToSearchUser.isEnabled = false
+        }
 
     }
 

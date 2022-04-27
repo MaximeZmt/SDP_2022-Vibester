@@ -29,7 +29,7 @@ class FireBaseAuthenticator @Inject constructor() {
          * API: return the mail of the user if logged in otherwise empty string
          */
         fun getCurrentUserMail(): String {
-            if (isLoggedIn() || TestMode.isTest()) {
+            if ( (isLoggedIn() || TestMode.isTest()) && !TestMode.isTest2() ) {
                 return FirebaseAuth.getInstance().currentUser!!.email.toString()
             } else {
                 return ""

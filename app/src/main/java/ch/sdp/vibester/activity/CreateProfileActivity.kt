@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import ch.sdp.vibester.R
+import ch.sdp.vibester.TestMode
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.database.ImageRepo
@@ -41,7 +42,13 @@ class CreateProfileActivity : AppCompatActivity() {
         val btnUploadImg = findViewById<Button>(R.id.uploadImg)
 
         btCreateAcc.setOnClickListener {
-            dataGetter.updateFieldString(FireBaseAuthenticator.getCurrentUID(), username.text.toString(), "username")
+            if (!TestMode.isTest()) {
+                dataGetter.updateFieldString(
+                    FireBaseAuthenticator.getCurrentUID(),
+                    username.text.toString(),
+                    "username"
+                )
+            }
             startNewActivity(email)
         }
 

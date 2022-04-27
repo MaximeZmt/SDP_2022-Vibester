@@ -10,6 +10,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.R
+import ch.sdp.vibester.TestMode
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.helper.IntentSwitcher
@@ -229,20 +230,22 @@ class AuthenticationActivity : AppCompatActivity() {
     ) {
         if (emailText != null) {
             if('@' in emailText && !createAcc) {
-                Log.e("baby shark", "true")
                 val newIntent = Intent(this, ProfileActivity::class.java)
                 newIntent.putExtra("email", emailText)
                 startActivity(newIntent)
             }
 
             else if('@' in emailText && createAcc && user != null) { //
-                Log.e("baby shart", "toudoudoud")
-                dataGetter.createUser(
-                    emailText,
-                    user.uid,
-                    this::startNewActivity,
-                    user.uid
-                )
+                if(TestMode.isTest()){
+                    startNewActivity(emailText)
+                }else{
+                    dataGetter.createUser(
+                        emailText,
+                        user.uid,
+                        this::startNewActivity,
+                        user.uid
+                    )
+                }
             }
 
             else {

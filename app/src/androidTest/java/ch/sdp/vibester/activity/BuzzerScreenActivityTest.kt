@@ -14,6 +14,7 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
+import ch.sdp.vibester.TestMode
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import org.junit.After
@@ -102,6 +103,8 @@ class BuzzerScreenActivityTest {
      */
     @Test
     fun checkIntentOnEnding() {
+        TestMode.setTest()
+
         val mockArray = arrayListOf<String>("One", "Two", "Three", "Four", "Five")
 
         val incArray: ArrayList<String> = mockArray

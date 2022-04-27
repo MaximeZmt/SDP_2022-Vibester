@@ -2,6 +2,7 @@ package ch.sdp.vibester.database
 
 import android.content.ContentValues
 import android.util.Log
+import ch.sdp.vibester.TestMode
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.user.User
 import ch.sdp.vibester.util.Util
@@ -50,13 +51,17 @@ class DataGetter @Inject constructor() {
     }
 
     fun updateRelativeFieldInt(userID: String, newVal: Int, fieldName: String) {
-        dbRef.child(userID) //For now ID is hardcoded, will generate it creating new users next week "testUser"
-            .child(fieldName)
-            .get().addOnSuccessListener {t ->
-                dbRef.child(userID) //For now ID is hardcoded, will generate it creating new users next week "testUser"
-                    .child(fieldName)
-                    .setValue((t.value as Long?)!!.toInt() + newVal)
-            }
+        if(!TestMode.isTest()) {
+            dbRef.child(userID) //For now ID is hardcoded, will generate it creating new users next week "testUser"
+                .child(fieldName)
+                .get().addOnSuccessListener { t ->
+                    if(!TestMode.isTest()) {
+                        dbRef.child(userID) //For now ID is hardcoded, will generate it creating new users next week "testUser"
+                            .child(fieldName)
+                            .setValue((t.value as Long?)!!.toInt() + newVal)
+                    }
+                }
+        }
     }
 
 

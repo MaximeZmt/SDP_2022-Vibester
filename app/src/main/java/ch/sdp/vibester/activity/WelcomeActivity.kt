@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.R
+import ch.sdp.vibester.TestMode
 import ch.sdp.vibester.api.InternetState
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
@@ -45,13 +46,6 @@ class WelcomeActivity : AppCompatActivity() {
         Log.e("INFO: Should Access", ((InternetState.hasAccessedInternetOnce(this))).toString())
         PersistanceSetter.setPersistance()
         Database.get()
-
-        // Disable User Search if not connected
-        if(!FireBaseAuthenticator.isLoggedIn()){
-            val buttonToSearchUser = findViewById<Button>(R.id.welcome_search)
-            buttonToSearchUser.isEnabled = false
-        }
-
     }
 
     private fun sendDirectIntent(arg: Class<*>?) {
@@ -80,6 +74,12 @@ class WelcomeActivity : AppCompatActivity() {
     }
 
     fun switchToSearch(view: View) {
-        sendDirectIntent(SearchUserActivity::class.java)
+        // Disable User Search if not connected
+        if(!FireBaseAuthenticator.isLoggedIn() && !TestMode.isTest()){
+            val buttonToSearchUser = findViewById<Button>(R.id.welcome_search)
+            buttonToSearchUser.isEnabled = false
+        }else{
+            sendDirectIntent(SearchUserActivity::class.java)
+        }
     }
 }

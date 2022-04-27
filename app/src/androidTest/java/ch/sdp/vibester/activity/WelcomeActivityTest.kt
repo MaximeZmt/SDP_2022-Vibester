@@ -1,5 +1,7 @@
 package ch.sdp.vibester.activity
 
+import android.content.Context
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.intent.Intents
@@ -9,6 +11,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
+import ch.sdp.vibester.TestMode
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -17,6 +20,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.junit.runner.manipulation.Ordering
 
 @HiltAndroidTest
 @RunWith(AndroidJUnit4::class)
@@ -71,6 +75,7 @@ class WelcomeActivityTest {
 
     @Test
     fun checkIntentOnSearch() {
+        TestMode.setTest()
         onView(withId(R.id.welcome_search)).perform(click())
         intended(hasComponent(SearchUserActivity::class.java.name))
     }

@@ -4,13 +4,14 @@ import android.content.Intent
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions
+import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.matcher.ViewMatchers.* //change this import
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
-import ch.sdp.vibester.database.UsersRepo
+import ch.sdp.vibester.TestMode
+import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.user.User
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -38,14 +39,14 @@ class CreateProfileActivityTest {
     }
 
     @BindValue @JvmField
-    val mockUsersRepo = mockk<UsersRepo>()
+    val mockUsersRepo = mockk<DataGetter>()
 
     private fun createMockInvocation(email: String) {
-        every {mockUsersRepo.createUser(any(), any(), any())} answers {
+        every {mockUsersRepo.createUser(any(), any(), any(), any())} answers {
             lastArg<(String) -> Unit>().invoke(email)
         }
 
-        every { mockUsersRepo.getUserData(any(), any()) } answers {
+        every { mockUsersRepo.getUserData(any()) } answers {
             secondArg<(User) -> Unit>().invoke(User())
         }
     }
@@ -57,24 +58,28 @@ class CreateProfileActivityTest {
 
     @Test
     fun createAccCorrect() {
+        TestMode.setTest()
+
         var username = "mockUsername"
         var mockEmail = "mockEmail@test.com"
 
         val intent = Intent(ApplicationProvider.getApplicationContext(), CreateProfileActivity::class.java)
         intent.putExtra("email", mockEmail)
+        intent.putExtra("isUnitTest", true)
 
         createMockInvocation(mockEmail)
 
         val scn: ActivityScenario<CreateProfileActivity> = ActivityScenario.launch(intent)
 
-        onView(withId(R.id.accountUsername)).perform(ViewActions.typeText(username),
-            ViewActions.closeSoftKeyboard()
+        onView(withId(R.id.accountUsername)).perform(typeText(username),
+            closeSoftKeyboard()
         )
 
-        onView(withId(R.id.createButton)).perform(ViewActions.click())
+       onView(withId(R.id.createButton)).perform(click())
 
-        Intents.intended(IntentMatchers.hasComponent(ProfileActivity::class.java.name))
-        Intents.intended(IntentMatchers.hasExtra("email", mockEmail))
+       Intents.intended(IntentMatchers.hasComponent(ProfileActivity::class.java.name))
+       Intents.intended(IntentMatchers.hasExtra("email", mockEmail))
+       Intents.intended(IntentMatchers.hasExtra("isUnitTest", true))
     }
 
 }

@@ -2,9 +2,10 @@ package ch.sdp.vibester.database
 
 import android.content.ContentValues
 import android.util.Log
+import ch.sdp.vibester.TestMode
 import ch.sdp.vibester.auth.FireBaseAuthenticator
+import ch.sdp.vibester.helper.AllPurposeFunction
 import ch.sdp.vibester.user.User
-import ch.sdp.vibester.util.Util
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -15,7 +16,7 @@ import javax.inject.Inject
  * The users class which handled all the interactions with the database that are linked to users
  */
 
-class UsersRepo @Inject constructor() {
+class DataGetter @Inject constructor() {
     private val dbRef = Database.get().getReference("users")
     val authenticator: FireBaseAuthenticator = FireBaseAuthenticator()
 
@@ -27,7 +28,7 @@ class UsersRepo @Inject constructor() {
      * @param fieldName the field name of the field that is being updated
      */
     fun updateFieldString(userID: String, newVal: String, fieldName: String) {
-        dbRef.child(userID) //For now ID is hardcoded, will generate it creating new users next week "testUser"
+        dbRef.child(userID)
             .child(fieldName)
             .setValue(newVal)
     }
@@ -39,9 +40,50 @@ class UsersRepo @Inject constructor() {
      * @param fieldName the field name of the field that is being updated
      */
     fun updateFieldInt(userID: String, newVal: Int, fieldName: String) {
-        dbRef.child(userID) //For now ID is hardcoded, will generate it creating new users next week "testUser"
+        dbRef.child(userID)
             .child(fieldName)
             .setValue(newVal)
+    }
+
+
+    /**
+     * This function increments a specific int field of a user in the database
+     * @param userID the id of the user which is being updated
+     * @param newVal (Int) the increment value of the field that is being updated
+     * @param fieldName the field name of the field that is being updated
+     */
+    fun updateRelativeFieldInt(userID: String, newVal: Int, fieldName: String) {
+        if(!TestMode.isTest()) {
+            dbRef.child(userID)
+                .child(fieldName)
+                .get().addOnSuccessListener { t ->
+                    if(!TestMode.isTest()) {
+                        dbRef.child(userID)
+                            .child(fieldName)
+                            .setValue((t.value as Long?)!!.toInt() + newVal)
+                    }
+                }
+        }
+    }
+
+    /**
+     * This function sets the best between current and given in argument value
+     * @param userID the id of the user which is being updated
+     * @param newVal (Int) the new value of the field that is being compared and updated
+     * @param fieldName the field name of the field that is being updated
+     */
+    fun updateBestFieldInt(userID: String, newVal: Int, fieldName: String) {
+        if(!TestMode.isTest()) {
+            dbRef.child(userID)
+                .child(fieldName)
+                .get().addOnSuccessListener { t ->
+                    if(!TestMode.isTest()) {
+                        dbRef.child(userID)
+                            .child(fieldName)
+                            .setValue(AllPurposeFunction.biggerInt((t.value as Long?)!!.toInt(), newVal))
+                    }
+                }
+        }
     }
 
 
@@ -65,9 +107,8 @@ class UsersRepo @Inject constructor() {
      * @param username the username of the new user
      * @param callback function to be called when the the user has been created
      */
-    fun createUser(email: String, username: String, callback: (String) -> Unit) {
-        var newUser = User(username, "", email, 0, 0, 0, 0)
-        val newId = Util.createNewId()
+    fun createUser(email: String, username: String, callback: (String) -> Unit, newId: String) {
+        var newUser = User(username, "", email, 0, 0, 0, 0, newId)
         dbRef.child(newId).setValue(newUser)
             .addOnSuccessListener {
                 callback(email)
@@ -98,7 +139,6 @@ class UsersRepo @Inject constructor() {
                 for (snapshot in dataSnapshot.children) {
                     val userProfile:User? = snapshot.getValue(User::class.java)
                     if (userProfile != null) {
-                        userProfile.uid = snapshot.key.toString()
                         users.add(userProfile)
                     }
                 }
@@ -115,13 +155,14 @@ class UsersRepo @Inject constructor() {
      * @param email the of the user
      * @param callback the function to be called when the data of the appropriate user is available
      */
-    fun getUserData(email: String, callback: (User) -> Unit) {
+    fun getUserData(callback: (User) -> Unit) {
         dbRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for (dataSnapShot in dataSnapshot.children) {
                     val dbContents = dataSnapShot.getValue<User>()
                     if (dbContents != null) {
-                        if(dbContents.email == email) {
+                        if(FireBaseAuthenticator.isLoggedIn() && dbContents.email == FireBaseAuthenticator.getCurrentUserMail()) {
+                            DbUserIdStore.storeUID(dataSnapShot.key!!)
                             callback(dbContents)
                             break
                         }

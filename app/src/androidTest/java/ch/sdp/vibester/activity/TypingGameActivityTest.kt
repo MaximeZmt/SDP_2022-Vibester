@@ -20,6 +20,8 @@ import ch.sdp.vibester.R
 import ch.sdp.vibester.api.LastfmMethod
 import ch.sdp.vibester.helper.TypingGameManager
 import ch.sdp.vibester.model.Song
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -29,6 +31,20 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class TypingGameActivityTest {
+
+    @JvmField
+    @get:Rule
+    val activityRule = ActivityScenarioRule(TypingGameActivity::class.java)
+
+    @Before
+    fun setUp() {
+        Intents.init()
+    }
+
+    @After
+    fun clean() {
+        Intents.release()
+    }
 
     private val expectedSize = 200
     private fun setGameManager(numSongs:Int = 1, valid: Boolean = true): TypingGameManager {
@@ -49,21 +65,6 @@ class TypingGameActivityTest {
 
         return gameManager
     }
-
-    @Rule
-    @JvmField
-    val activityRule = ActivityScenarioRule(TypingGameActivity::class.java)
-
-    @Before
-    fun setUp() {
-        Intents.init()
-    }
-
-    @After
-    fun clean() {
-        Intents.release()
-    }
-
 
     @Test
     fun spaceGenTest() {

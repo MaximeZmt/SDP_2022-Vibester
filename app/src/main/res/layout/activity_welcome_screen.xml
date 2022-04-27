@@ -94,12 +94,12 @@
                 android:layout_marginTop="10dp"
                 android:backgroundTint="@color/cg_blue"
                 android:elevation="10dp"
+                android:enabled="false"
                 android:stateListAnimator="@null"
                 android:text="@string/welcomeScreen_settings"
                 android:translationZ="10dp"
-                app:icon="@android:drawable/ic_menu_manage"
-                android:enabled="false"
-                />
+                android:visibility="gone"
+                app:icon="@android:drawable/ic_menu_manage" />
 
             <Button
                 android:id="@+id/welcome_download"
@@ -124,7 +124,8 @@
                 android:onClick="switchToSearch"
                 android:stateListAnimator="@null"
                 android:text="@string/search_users"
-                android:translationZ="10dp"/>
+                android:translationZ="10dp"
+                app:icon="@android:drawable/ic_menu_search" />
 
 
             <Space

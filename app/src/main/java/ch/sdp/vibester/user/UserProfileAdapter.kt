@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
 import ch.sdp.vibester.auth.FireBaseAuthenticator
-import ch.sdp.vibester.database.UsersRepo
+import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.helper.loadImg
 
 /**
@@ -19,7 +19,7 @@ class UserProfileAdapter constructor(val users: MutableList<User>):
     RecyclerView.Adapter<UserProfileAdapter.UserProfileViewHolder>() {
 
     val authenticator: FireBaseAuthenticator = FireBaseAuthenticator()
-    val usersRepo: UsersRepo = UsersRepo()
+    val usersRepo: DataGetter = DataGetter()
     /**
      * Create a RecycleView layout with the userProfile view as an item
      */

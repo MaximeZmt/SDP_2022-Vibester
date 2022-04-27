@@ -3,7 +3,7 @@ package ch.sdp.vibester.model
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
-import ch.sdp.vibester.database.UsersRepo
+import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.user.User
 import com.google.firebase.database.*
 import java.util.*
@@ -22,7 +22,7 @@ class UserSharedPref private constructor() {
         val RANKING = "ranking"
         val ONLINE = "online"
 
-        var dbAccess : UsersRepo = UsersRepo()
+        var dbAccess : DataGetter = DataGetter()
 
 
         private fun getSharedPreferences(ctx: Context): SharedPreferences? {
@@ -38,9 +38,9 @@ class UserSharedPref private constructor() {
         fun userReset(ctx: Context, email: String, online: Boolean = true){
             setUser(ctx, User(email=email), online)
             if (online){
-                dbAccess = UsersRepo()
-                val call = {prof: User -> setUser(ctx, prof, online)}
-                dbAccess.getUserData(email, call)
+                dbAccess = DataGetter()
+                val call = {prof:User -> setUser(ctx, prof, online)}
+                dbAccess.getUserData(call)
             }
         }
 

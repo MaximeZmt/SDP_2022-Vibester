@@ -33,7 +33,7 @@ class FireBaseAuthenticator @Inject constructor() {
             if (isLoggedIn()) {
                 mail = FirebaseAuth.getInstance().currentUser!!.email.toString()
             }
-            return mails
+            return mail
         }
 
         fun getCurrentUID(): String {

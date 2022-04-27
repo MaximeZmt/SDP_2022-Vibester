@@ -4,17 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.Window
-import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.R
-import ch.sdp.vibester.TestMode
-import ch.sdp.vibester.auth.FireBaseAuthenticator
-import ch.sdp.vibester.database.DataGetter
-import ch.sdp.vibester.database.DbUserIdStore
-import ch.sdp.vibester.model.UserSharedPref
-import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 /**
  * A class representing the activity which appears upon

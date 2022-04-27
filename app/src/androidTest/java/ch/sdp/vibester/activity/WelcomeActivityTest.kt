@@ -1,7 +1,5 @@
 package ch.sdp.vibester.activity
 
-import android.content.Context
-import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.intent.Intents
@@ -20,7 +18,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.junit.runner.manipulation.Ordering
 
 @HiltAndroidTest
 @RunWith(AndroidJUnit4::class)
@@ -78,5 +75,10 @@ class WelcomeActivityTest {
         TestMode.setTest()
         onView(withId(R.id.welcome_search)).perform(click())
         intended(hasComponent(SearchUserActivity::class.java.name))
+    }
+
+    @Test
+    fun checkIntentOnSearchWithoutTestMode() {
+        onView(withId(R.id.welcome_search)).perform(click())
     }
 }

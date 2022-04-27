@@ -7,7 +7,7 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.matcher.IntentMatchers
-import androidx.test.espresso.matcher.ViewMatchers.* //change this import
+import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
 import ch.sdp.vibester.TestMode
@@ -59,7 +59,6 @@ class CreateProfileActivityTest {
     @Test
     fun createAccCorrect() {
         TestMode.setTest()
-
         var username = "mockUsername"
         var mockEmail = "mockEmail@test.com"
 

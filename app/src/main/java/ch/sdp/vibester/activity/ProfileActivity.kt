@@ -14,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.BitmapGetterApi
 import ch.sdp.vibester.auth.FireBaseAuthenticator
-import ch.sdp.vibester.model.UserSharedPref
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.helper.IntentSwitcher
 import ch.sdp.vibester.user.User

@@ -3,10 +3,9 @@ package ch.sdp.vibester.auth
 
 import android.content.Context
 import android.content.Intent
-import android.util.Log
+import ch.sdp.vibester.TestMode
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
@@ -30,7 +29,7 @@ class FireBaseAuthenticator @Inject constructor() {
          * API: return the mail of the user if logged in otherwise empty string
          */
         fun getCurrentUserMail(): String {
-            if (isLoggedIn()) {
+            if (isLoggedIn() || TestMode.isTest()) {
                 return FirebaseAuth.getInstance().currentUser!!.email.toString()
             } else {
                 return ""
@@ -38,7 +37,7 @@ class FireBaseAuthenticator @Inject constructor() {
         }
 
         fun getCurrentUID(): String {
-            if (isLoggedIn()) {
+            if (isLoggedIn() || TestMode.isTest()) {
                 return FirebaseAuth.getInstance().currentUser!!.uid
             } else {
                 return ""
@@ -57,31 +56,14 @@ class FireBaseAuthenticator @Inject constructor() {
                 try {
                     val account = GoogleSignIn.getSignedInAccountFromIntent(data).result
                     val client = Identity.getSignInClient(ctx)
-
-
-
                     val idToken = client.getSignInCredentialFromIntent(data).googleIdToken
-                    Log.e("IDTOK", idToken!!)
                     val ficred = GoogleAuthProvider.getCredential(idToken, null)
-                    FirebaseAuth.getInstance().signInWithCredential(ficred).addOnCompleteListener{ task->
-                        if(task.isSuccessful){
-
-                            Log.e("Task", "successful")
-                        }else{
-                            Log.e("Task","not success")
-                        }
-                    }
-
-
-
-
+                    FirebaseAuth.getInstance().signInWithCredential(ficred)
                     return account.email
-                } catch (e: ApiException) {
-                    Log.e("hey you one", e.stackTraceToString())
+                } catch (e: Exception) {
                     return "Authentication error"
                 }
             } else {
-                Log.e("hey you two", "")
                 return "Authentication error"
             }
         }

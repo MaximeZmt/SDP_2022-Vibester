@@ -9,19 +9,17 @@ import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
-import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.ItunesMusicApi
 import ch.sdp.vibester.model.Song
 import okhttp3.OkHttpClient
-import org.w3c.dom.Text
-import java.lang.IllegalArgumentException
+
 /*
  * Activity that handles downloading of song extracts.
  */

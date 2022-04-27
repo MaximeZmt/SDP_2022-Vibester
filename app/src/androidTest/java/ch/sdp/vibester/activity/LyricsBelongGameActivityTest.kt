@@ -16,11 +16,12 @@ import androidx.test.rule.GrantPermissionRule
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.LastfmMethod
 import ch.sdp.vibester.helper.TypingGameManager
-import dagger.hilt.android.testing.HiltAndroidRule
-import dagger.hilt.android.testing.HiltAndroidTest
 import org.hamcrest.CoreMatchers.not
-import org.junit.*
+import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)

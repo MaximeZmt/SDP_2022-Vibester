@@ -15,8 +15,6 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
 import ch.sdp.vibester.TestMode
-import dagger.hilt.android.testing.HiltAndroidRule
-import dagger.hilt.android.testing.HiltAndroidTest
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -75,6 +73,7 @@ class GameEndingActivityTest {
             Intent(ApplicationProvider.getApplicationContext(), GameEndingActivity::class.java)
         intent.putExtra("playerName", name)
         intent.putExtra("nbIncorrectSong", nbInc)
+        intent.putExtra("Winner Name", "Testing the Placeholder")
 
         intent.putStringArrayListExtra("str_arr_inc", incArray)
         intent.putStringArrayListExtra("str_arr_name", statNames)

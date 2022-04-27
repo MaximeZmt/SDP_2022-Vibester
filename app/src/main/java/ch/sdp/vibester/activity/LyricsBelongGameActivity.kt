@@ -7,7 +7,7 @@ import android.speech.RecognizerIntent
 import android.view.View
 import android.widget.*
 import ch.sdp.vibester.R
-import ch.sdp.vibester.api.*
+import ch.sdp.vibester.api.LyricsOVHApiInterface
 import ch.sdp.vibester.helper.GameManager
 import ch.sdp.vibester.model.Lyric
 import retrofit2.Call

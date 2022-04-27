@@ -1,22 +1,10 @@
 package ch.sdp.vibester.activity
 
-import android.content.Intent
-import android.view.View
-import androidx.test.core.app.ActivityScenario
-import androidx.test.core.app.ApplicationProvider
-import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions.*
-import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
-import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
-import ch.sdp.vibester.R
 import org.junit.After
-import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
-import org.junit.Test
-import java.io.File
 
 class DownloadActivityTest {
 

@@ -12,7 +12,6 @@ import ch.sdp.vibester.R
 import ch.sdp.vibester.TestMode
 import ch.sdp.vibester.api.InternetState
 import ch.sdp.vibester.auth.FireBaseAuthenticator
-import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.database.Database
 import ch.sdp.vibester.database.PersistanceSetter
 

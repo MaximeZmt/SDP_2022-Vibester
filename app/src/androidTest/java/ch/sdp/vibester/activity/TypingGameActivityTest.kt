@@ -18,6 +18,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
+import ch.sdp.vibester.TestMode
 import ch.sdp.vibester.api.LastfmMethod
 import ch.sdp.vibester.helper.TypingGameManager
 import ch.sdp.vibester.model.Song
@@ -109,6 +110,7 @@ class TypingGameActivityTest {
 
     @Test
     fun guessLayoutTest() {
+        TestMode.setTest()
         val inputTxt = """
             {
                 "resultCount":1,
@@ -199,7 +201,7 @@ class TypingGameActivityTest {
     */
     @Test
     fun checkIntentOnEnding() {
-
+        TestMode.setTest()
         val inputTxt = """
             {
                 "resultCount":1,

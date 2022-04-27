@@ -37,7 +37,7 @@ class FireBaseAuthenticator @Inject constructor() {
         }
 
         fun getCurrentUID(): String {
-            if (isLoggedIn() || TestMode.isTest()) {
+            if ( (isLoggedIn() || TestMode.isTest()) && !TestMode.isTest2()) {
                 return FirebaseAuth.getInstance().currentUser!!.uid
             } else {
                 return ""

@@ -12,6 +12,14 @@ class TestMode private constructor(){
             return isTest
         }
 
+        private var isTest2: Boolean = false
 
+        fun setTest2(){
+            isTest2 = true
+        }
+
+        fun isTest2(): Boolean {
+            return isTest2
+        }
     }
 }

@@ -16,6 +16,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.R
+import ch.sdp.vibester.TestMode
 import ch.sdp.vibester.api.ItunesMusicApi
 import ch.sdp.vibester.model.Song
 import okhttp3.OkHttpClient
@@ -33,30 +34,33 @@ class DownloadActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_download)
 
+
         val songNameView = findViewById<TextView>(R.id.download_songName)
         val downloadButton = findViewById<Button>(R.id.download_downloadsong)
 
-        downloadButton.setOnClickListener {
-            songName = songNameView.text.toString()
-            val songFuture = ItunesMusicApi.querySong(songName, OkHttpClient(), 1)
-            try {
-                song = Song.singleSong(songFuture.get())
-                checkPermissionsAndDownload()
-            } catch (e: IllegalArgumentException) {
-                alert("Unable to find song, please retry!", "Please retry!", songNameView)
-            }
-        }
-
-        var broadcast = object:BroadcastReceiver() {
-            override fun onReceive(context: Context?, intent: Intent?) {
-                var id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
-                if(id == downloadId) {
-                    alert("Download completed!", "Try another song!", songNameView)
+        if (!TestMode.isTest()) {
+            downloadButton.setOnClickListener {
+                songName = songNameView.text.toString()
+                val songFuture = ItunesMusicApi.querySong(songName, OkHttpClient(), 1)
+                try {
+                    song = Song.singleSong(songFuture.get())
+                    checkPermissionsAndDownload()
+                } catch (e: IllegalArgumentException) {
+                    alert("Unable to find song, please retry!", "Please retry!", songNameView)
                 }
             }
-        }
 
-        registerReceiver(broadcast, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
+            var broadcast = object : BroadcastReceiver() {
+                override fun onReceive(context: Context?, intent: Intent?) {
+                    var id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
+                    if (id == downloadId) {
+                        alert("Download completed!", "Try another song!", songNameView)
+                    }
+                }
+            }
+
+            registerReceiver(broadcast, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
+        }
     }
 
     /*

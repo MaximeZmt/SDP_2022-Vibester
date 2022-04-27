@@ -22,12 +22,11 @@ class ChoosePartyRoomActivity : AppCompatActivity() {
         val partyRoomInput = findViewById<EditText>(R.id.roomNameInput)
 
         joinPartyRoom.setOnClickListener {
-//            Log.w("DEBUGING LMAO", partyRoomInput.to)
             switchToRoom(partyRoomInput.text.toString(), false)
         }
 
         createPartyRoom.setOnClickListener {
-            switchToRoom(partyRoomInput.toString(), true)
+            switchToRoom(partyRoomInput.text.toString(), true)
         }
     }
 

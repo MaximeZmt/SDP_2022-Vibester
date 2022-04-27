@@ -11,17 +11,17 @@ class FireBaseAuthenticatorTest {
     @Test
     fun checkTestModeGetMail(){
         TestMode.setTest()
-        assertThrows(NullPointerException::class.java, {
+        assertThrows(Exception::class.java) {
             FireBaseAuthenticator.getCurrentUserMail()
-        })
+        }
     }
 
     @Test
     fun checkTestModeGetUID(){
         TestMode.setTest()
-        assertThrows(NullPointerException::class.java, {
+        assertThrows(Exception::class.java) {
             FireBaseAuthenticator.getCurrentUID()
-        })
+        }
     }
 
     @Test

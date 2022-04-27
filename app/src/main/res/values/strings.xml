@@ -84,6 +84,11 @@
     <string name="Singleplayer">Single-player</string>
     <string name="Multiplayer">Multiplayer</string>
     <string name="game_buzzer_title">Local Buzzer</string>
+    <string name="online_game_buzzer_title">Online Buzzer</string>
+    <string name="join_room">Join party room</string>
+    <string name="create_room">Create party room</string>
+
+
     <string name="game_typing">Local Typing</string>
     <string name="game_setup_ask_difficulty">Please choose the difficulty of your game</string>
 

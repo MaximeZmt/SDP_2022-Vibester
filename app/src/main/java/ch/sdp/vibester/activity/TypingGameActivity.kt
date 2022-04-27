@@ -9,7 +9,10 @@ import android.widget.*
 import androidx.core.content.ContextCompat.getColor
 import androidx.core.widget.addTextChangedListener
 import ch.sdp.vibester.R
+import ch.sdp.vibester.TestMode
 import ch.sdp.vibester.api.ItunesMusicApi
+import ch.sdp.vibester.auth.FireBaseAuthenticator
+import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.helper.DisplayContents
 import ch.sdp.vibester.helper.GameManager
 import ch.sdp.vibester.helper.TypingGameManager
@@ -207,9 +210,16 @@ class TypingGameActivity : GameActivity() {
         super.endRound(gameManager)
         //TODO: is it ok for the last round to go to the end game directly without waiting for the next btn?
         toggleNextBtnVisibility(true)
-        /*if (endGame(gameManager)) {
-            switchToEnding(gameManager)
-        }*/
+
+        // If currently not in test and has finished the game, update the scores
+        if (isEndGame(gameManager) && !TestMode.isTest()) {
+            val dataGetter = DataGetter()
+            dataGetter.updateRelativeFieldInt(FireBaseAuthenticator.getCurrentUID(), 1, "totalGames")
+            dataGetter.updateRelativeFieldInt(FireBaseAuthenticator.getCurrentUID(), gameManager.getCorrectSongs().size, "correctSongs")
+            dataGetter.updateBestFieldInt(FireBaseAuthenticator.getCurrentUID(), gameManager.getScore(), "bestScore")
+
+        }
+
     }
 
     /**

@@ -22,7 +22,6 @@ import javax.inject.Inject
  */
 class GameEndingActivity : AppCompatActivity() {
 
-    var dataGetter = DataGetter()
 
     private var incorrectSongs: ArrayList<String>? = arrayListOf("Default song")
     private var statNames: ArrayList<String>? = arrayListOf(
@@ -60,9 +59,6 @@ class GameEndingActivity : AppCompatActivity() {
             } else {findViewById<TextView>(R.id.winnerText).text="Nobody won this game!"}
         }
 
-        if(!TestMode.isTest()){
-            dataGetter.updateRelativeFieldInt(FireBaseAuthenticator.getCurrentUID(), 1, "totalGames")
-        }
 
         if (intent.hasExtra("playerName")) {
             playerName = intent.getStringExtra("playerName")

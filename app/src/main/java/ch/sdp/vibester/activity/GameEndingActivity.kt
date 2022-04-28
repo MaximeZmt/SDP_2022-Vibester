@@ -41,7 +41,7 @@ class GameEndingActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_game_ending_screen)
 
-        //Method to update score (locally and on DB)
+        
 
 
         if (intent.hasExtra("Winner Name")) {

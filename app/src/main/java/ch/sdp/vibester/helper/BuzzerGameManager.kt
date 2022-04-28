@@ -1,12 +1,14 @@
 package ch.sdp.vibester.helper
 
 import android.media.MediaPlayer
+import ch.sdp.vibester.BuzzerScoreUpdater
 import ch.sdp.vibester.api.AudioPlayer
 import java.util.concurrent.CompletableFuture
 
 class BuzzerGameManager: GameManager() {
 
     private lateinit var mediaPlayer: CompletableFuture<MediaPlayer>
+    lateinit var scoreUpdater: BuzzerScoreUpdater
 
     /**
      * Check if mediaPlayer is initialized

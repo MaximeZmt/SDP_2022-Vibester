@@ -12,7 +12,6 @@ import ch.sdp.vibester.BuzzerScoreUpdater
 import ch.sdp.vibester.R
 import ch.sdp.vibester.helper.GameManager
 import ch.sdp.vibester.helper.BuzzerGameManager
-import ch.sdp.vibester.helper.TypingGameManager
 import ch.sdp.vibester.model.Song
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
@@ -26,7 +25,7 @@ class BuzzerScreenActivity : GameActivity() {
     private val rowsIdArray = ArrayList(buzzersToRows.values)
     private val buzIds = ArrayList(buzzersToRows.keys)
     private var winnerId = -1 // same function as the winnerId in the updater. Ugly placeholder solution for now
-    private lateinit var gameManager: BuzzerGameManager
+    //private lateinit var gameManager: BuzzerGameManager
     private var gameIsOn: Boolean = true
 
     private fun initHashmap(): HashMap<Int, Int> {
@@ -49,12 +48,12 @@ class BuzzerScreenActivity : GameActivity() {
         supportActionBar?.hide()
         setContentView(R.layout.activity_buzzer_screen)
 
-        val ctx: Context = this
+        //val ctx: Context = this
 
         val getIntent = intent.extras
         if (getIntent != null) {
 
-            gameManager = getIntent.getSerializable("gameManager") as BuzzerGameManager
+            //gameManager = getIntent.getSerializable("gameManager") as BuzzerGameManager
 
             val nPlayers = getIntent.getInt("Number of players")
 
@@ -75,10 +74,10 @@ class BuzzerScreenActivity : GameActivity() {
             setAnswerButton(answer, findViewById(R.id.buttonCorrect), updater, buzzersToRows)
             setAnswerButton(answer, findViewById(R.id.buttonWrong), updater, buzzersToRows)
 
-            startFirstRound(ctx, gameManager)
+            //startFirstRound(ctx, gameManager)
         }
     }
-
+/*
     /**
      * Custom onDestroy to verify progressbar and media player are stopped
      */
@@ -91,7 +90,7 @@ class BuzzerScreenActivity : GameActivity() {
         }
         super.onDestroy()
     }
-
+*/
     /**
      * Function to set a song for the first round and play a game.
      */
@@ -117,8 +116,7 @@ class BuzzerScreenActivity : GameActivity() {
         findViewById<TextView>(R.id.answerText).text=title
         gameManager.playSong()
         checkRunnable()
-        // ajouter la barre au xml!!
-        barTimer(findViewById(R.id.progressBarTyping), ctx, gameManager)
+        barTimer(findViewById(R.id.progressBarBuzzer), ctx, gameManager)
     }
 
     /**

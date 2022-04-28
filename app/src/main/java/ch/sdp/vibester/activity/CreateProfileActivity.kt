@@ -2,15 +2,16 @@ package ch.sdp.vibester.activity
 
 import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.R
+import ch.sdp.vibester.TestMode
+import ch.sdp.vibester.auth.FireBaseAuthenticator
+import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.database.ImageRepo
-import ch.sdp.vibester.database.UsersRepo
-import ch.sdp.vibester.util.Util
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -18,16 +19,20 @@ import javax.inject.Inject
 class CreateProfileActivity : AppCompatActivity() {
 
     @Inject
-    lateinit var usersRepo: UsersRepo
+    lateinit var dataGetter: DataGetter
 
     @Inject
     lateinit var imageRepo: ImageRepo
 
     private val REQUEST_CODE = 500
 
+    var isUnitTest: Boolean = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_profile)
+
+        isUnitTest = intent.getBooleanExtra("isUnitTest", false)
 
         val email = intent.getStringExtra("email").toString()
         val username = findViewById<EditText>(R.id.accountUsername)
@@ -36,10 +41,10 @@ class CreateProfileActivity : AppCompatActivity() {
         val btnUploadImg = findViewById<Button>(R.id.uploadImg)
 
         btCreateAcc.setOnClickListener {
-            usersRepo.createUser(
-                email,
-                username.text.toString(),
-                this::startNewActivity)
+            if (!TestMode.isTest()){
+                dataGetter.updateFieldString(FireBaseAuthenticator.getCurrentUID(), username.text.toString(), "username")
+            }
+            startNewActivity(email)
         }
 
         btnUploadImg.setOnClickListener {
@@ -50,6 +55,7 @@ class CreateProfileActivity : AppCompatActivity() {
     private fun startNewActivity(email: String) {
         val newIntent = Intent(this, ProfileActivity::class.java)
         newIntent.putExtra("email", email)
+        newIntent.putExtra("isUnitTest", isUnitTest)
 
         startActivity(newIntent)
     }
@@ -66,10 +72,11 @@ class CreateProfileActivity : AppCompatActivity() {
     }
 
 
+    //check the UID here not sure
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE){
-            imageRepo.uploadFile("profileImg/${Util.createNewId()}", data?.data!!) { updateUI() }
+            imageRepo.uploadFile("profileImg/${FireBaseAuthenticator.getCurrentUID()}", data?.data!!) { updateUI() }
         }
     }
 }

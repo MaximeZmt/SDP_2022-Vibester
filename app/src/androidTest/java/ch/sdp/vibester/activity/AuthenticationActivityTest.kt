@@ -14,6 +14,7 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import ch.sdp.vibester.R
+import ch.sdp.vibester.TestMode
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
@@ -132,6 +133,13 @@ class AuthenticationActivityTest {
     }
 
     @Test
+    fun returnToMain() {
+        onView(withId(R.id.authentication_returnToMain)).perform(click())
+        Intents.intended(IntentMatchers.hasComponent(WelcomeActivity::class.java.name))
+    }
+
+
+    @Test
     fun stringValidationWrongEmail() {
         val username = "john"
         val password = "password"
@@ -179,6 +187,8 @@ class AuthenticationActivityTest {
         val username = "user@user.com"
         val password = "password"
 
+        TestMode.setTest()
+
         val mockTask = createMockTask(true)
         val mockUser = createMockUser(username)
         every { mockAuthenticator.createAccount(username, password) } returns mockTask
@@ -187,7 +197,6 @@ class AuthenticationActivityTest {
         onView(withId(R.id.username)).perform(ViewActions.typeText(username), closeSoftKeyboard())
         onView(withId(R.id.password)).perform(ViewActions.typeText(password), closeSoftKeyboard())
         onView(withId(R.id.createAcc)).perform(click())
-
         Intents.intended(IntentMatchers.hasComponent(CreateProfileActivity::class.java.name))
         Intents.intended(IntentMatchers.hasExtra("email", username))
 

@@ -1,8 +1,5 @@
 package ch.sdp.vibester.activity
-import android.content.Context
 import android.content.Intent
-import android.widget.FrameLayout
-import android.widget.LinearLayout
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onData
@@ -22,7 +19,6 @@ import ch.sdp.vibester.R
 import org.hamcrest.Matchers
 import org.junit.After
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

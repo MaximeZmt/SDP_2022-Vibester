@@ -4,21 +4,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
 import ch.sdp.vibester.auth.FireBaseAuthenticator
-import ch.sdp.vibester.database.UsersRepo
+import ch.sdp.vibester.database.DataGetter
+import ch.sdp.vibester.helper.loadImg
 
 /**
  * UserAdapter to set userProfile views with username and image in RecycleView. It is used to search for users.
  */
-class UserProfileAdapter constructor(val users: MutableList<User>,
-                         val authenticator: FireBaseAuthenticator = FireBaseAuthenticator(),
-                         val usersRepo: UsersRepo = UsersRepo()
-                        ):
+class UserProfileAdapter constructor(val users: MutableList<User>):
     RecyclerView.Adapter<UserProfileAdapter.UserProfileViewHolder>() {
 
+    val authenticator: FireBaseAuthenticator = FireBaseAuthenticator()
+    val usersRepo: DataGetter = DataGetter()
     /**
      * Create a RecycleView layout with the userProfile view as an item
      */
@@ -48,14 +49,17 @@ class UserProfileAdapter constructor(val users: MutableList<User>,
          */
         fun bind(user: User) {
             itemView.findViewById<TextView>(R.id.search_user_username).text = user.username
-            itemView.findViewById<Button>(R.id.addFriendBtn).setOnClickListener{
+            itemView.findViewById<ImageView>(R.id.profile_image).loadImg(user.image)
+
+            val addFriendBtn = itemView.findViewById<Button>(R.id.addFriendBtn)
+            addFriendBtn.setOnClickListener{
                 val currentUser = authenticator.getCurrUser()
                 if(currentUser != null){
-                    usersRepo.updateFieldSubFieldBoolean(currentUser.uid, true, "friends", user.uid)
+                    usersRepo.updateFieldSubFieldBoolean(currentUser!!.uid, true, "friends", user.uid)
+                    addFriendBtn.visibility = View.INVISIBLE
+                    itemView.findViewById<ImageView>(R.id.addedFriendIcon).visibility = View.VISIBLE
                 }
             }
-//                TODO fix the image upload
-//            itemView.findViewById<ImageView>(R.id.iv_photo).loadImg(player.photo)
         }
 
     }

@@ -20,6 +20,9 @@
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".activity.DeleteSongsActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.SearchUserActivity"
             android:exported="false" />
         <activity

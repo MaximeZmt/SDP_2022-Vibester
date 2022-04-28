@@ -21,15 +21,22 @@ import ch.sdp.vibester.api.ItunesMusicApi
 import ch.sdp.vibester.model.Song
 import okhttp3.OkHttpClient
 import org.w3c.dom.Text
+import java.io.File
 import java.lang.IllegalArgumentException
 /*
  * Activity that handles downloading of song extracts.
  */
 class DownloadActivity : AppCompatActivity() {
+    //Companion object to indicate when the download completes.
+    companion object {
+        var downloadComplete = false
+    }
+
     private val STORAGE_PERMISSION_CODE = 1000
     private lateinit var song: Song
     private var songName: String = "imagine dragons believer"
     private var downloadId: Long = 0
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,13 +46,18 @@ class DownloadActivity : AppCompatActivity() {
         val downloadButton = findViewById<Button>(R.id.download_downloadsong)
 
         downloadButton.setOnClickListener {
+            downloadComplete = false
             songName = songNameView.text.toString()
-            val songFuture = ItunesMusicApi.querySong(songName, OkHttpClient(), 1)
-            try {
-                song = Song.singleSong(songFuture.get())
-                checkPermissionsAndDownload()
-            } catch (e: IllegalArgumentException) {
-                alert("Unable to find song, please retry!", "Please retry!", songNameView)
+            if(checkExistingSong()) {
+                alert("Song already downloaded!", "Try a different song!", songNameView)
+            } else {
+                val songFuture = ItunesMusicApi.querySong(songName, OkHttpClient(), 1)
+                try {
+                    song = Song.singleSong(songFuture.get())
+                    checkPermissionsAndDownload()
+                } catch (e: IllegalArgumentException) {
+                    alert("Unable to find song, please retry!", "Please retry!", songNameView)
+                }
             }
         }
 
@@ -69,6 +81,7 @@ class DownloadActivity : AppCompatActivity() {
      * @param view : The textView that will be updated.
      */
     private fun alert(toast: String, hint: String, view: TextView) {
+        downloadComplete = true
         Toast.makeText(applicationContext, toast, Toast.LENGTH_LONG).show()
         editTextView(hint, view)
     }
@@ -115,21 +128,53 @@ class DownloadActivity : AppCompatActivity() {
      * Download a file from the private URL value of the class.
      */
     private fun startDownload(): Long {
+        record()
         val request = DownloadManager.Request(Uri.parse(song.getPreviewUrl()))
         request.setAllowedNetworkTypes(
             DownloadManager.Request.NETWORK_MOBILE
                     or DownloadManager.Request.NETWORK_WIFI
-        )
+            )
             .setTitle("extract_of_$songName")
             .setAllowedOverRoaming(true)
             .setDescription("Downloading extract of the song + $songName")
             .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-            .setDestinationInExternalPublicDir(
-                Environment.DIRECTORY_DOWNLOADS,
-                "extract_of_$songName"
-            )
+            .setDestinationInExternalFilesDir(this,
+            Environment.DIRECTORY_DOWNLOADS,
+            "extract_of_$songName")
 
         val downloader = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         return downloader.enqueue(request)
     }
+
+    /*
+     * Indicator of if the song already exists or not.
+     */
+    private fun checkExistingSong(): Boolean {
+        var existing = File(applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "extract_of_$songName")
+        return existing.exists()
+    }
+
+    /*
+     * Helps keep track of the currently downloaded songs in the form of a txt file.
+     * If the file does not exist, it is created.
+     */
+    private fun record() {
+        var records = File(applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "records.txt")
+
+        if(!records.exists()) {
+            records.createNewFile()
+        }
+        records.appendText("$songName\n")
+    }
+
+    fun switchToWelcome(view: View) {
+        val intent = Intent(this, WelcomeActivity::class.java)
+        startActivity(intent)
+    }
+
+    fun switchToDeleteSongs(view: View) {
+        val intent = Intent(this, DeleteSongsActivity::class.java)
+        startActivity(intent)
+    }
+
 }

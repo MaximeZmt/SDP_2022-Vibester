@@ -80,6 +80,9 @@
     <string name="welcome_download">DOWNLOAD</string>
     <string name="download_songname">Enter a song name…</string>
     <string name="download_download">DOWNLOAD SONG</string>
+    <string name="download_to_delete">DELETE SONGS</string>
+    <string name="delete_songs_description">CHOOSE A SONG TO DELETE:</string>
+    <string name="delete_nothing_to_delete">YOU HAVE NO DOWNLOADED SONGS!</string>
 
     <string name="Singleplayer">Single-player</string>
     <string name="Multiplayer">Multiplayer</string>

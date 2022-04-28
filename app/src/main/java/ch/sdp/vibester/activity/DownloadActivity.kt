@@ -63,6 +63,9 @@ class DownloadActivity : AppCompatActivity() {
         registerReceiver(broadcast, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
     }
 
+    /**
+     * Function that handles deletion button pushes.
+     */
     private fun downloadListener(songView: TextView) {
         downloadComplete = false
         songName = songView.text.toString()

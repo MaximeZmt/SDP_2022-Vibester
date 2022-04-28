@@ -56,14 +56,17 @@ class DownloadActivity : AppCompatActivity() {
         var broadcast = object:BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
                 var id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
-                if(id == downloadId) {
-                    alert(getString(R.string.download_download_complete), getString(R.string.download_try_another), songNameView)
+                if (id == downloadId) {
+                    alert(
+                        getString(R.string.download_download_complete),
+                        getString(R.string.download_try_another),
+                        songNameView
+                    )
                 }
             }
-
+        }
             registerReceiver(broadcast, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
         }
-    }
 
     /**
      * Function that handles deletion button pushes.

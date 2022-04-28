@@ -10,11 +10,12 @@ import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.matcher.IntentMatchers
-import androidx.test.espresso.matcher.ViewMatchers.* //change this import
+import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
-import ch.sdp.vibester.database.UsersRepo
-import ch.sdp.vibester.model.UserSharedPref
+import ch.sdp.vibester.TestMode
+import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.user.User
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -42,13 +43,15 @@ class ProfileActivityTest {
     }
 
     @BindValue @JvmField
-    val mockUsersRepo = mockk<UsersRepo>()
+    val mockUsersRepo = mockk<DataGetter>()
 
-    private fun createMockInvocation(mockUser: User) {
-        every { mockUsersRepo.getUserData(any(), any()) } answers {
-            secondArg<(User) -> Unit>().invoke(mockUser)
+    private fun createMockInvocation(mockProfile: User) {
+        every { mockUsersRepo.getUserData(any()) } answers {
+            secondArg<(User) -> Unit>().invoke(mockProfile)
         }
         every { mockUsersRepo.updateFieldString(any(), any(), any()) } answers {}
+
+        every { mockUsersRepo.getUserData(any())} answers {}
     }
 
     @After
@@ -61,9 +64,10 @@ class ProfileActivityTest {
         val inputProfile = User("Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8, 29, 0)
         val ctx = ApplicationProvider.getApplicationContext() as Context
         val intent = Intent(ctx, ProfileActivity::class.java)
+        intent.putExtra("isUnitTest", true)
+        intent.putExtra("userTestProfile",  inputProfile)
 
         createMockInvocation(inputProfile)
-        UserSharedPref.setUser(ctx, inputProfile, false)
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
 
         onView(withId(R.id.username)).check(matches(withText(inputProfile.username)))
@@ -76,6 +80,8 @@ class ProfileActivityTest {
     fun clickBackToMain(){
         val ctx = ApplicationProvider.getApplicationContext() as Context
         val intent = Intent(ctx, ProfileActivity::class.java)
+        intent.putExtra("isUnitTest", true)
+
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
 
         onView(withId(R.id.profile_returnToMain)).perform(click())
@@ -88,8 +94,9 @@ class ProfileActivityTest {
         val inputProfile = User("Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8, 29, 0)
         val ctx = ApplicationProvider.getApplicationContext() as Context
         val intent = Intent(ctx, ProfileActivity::class.java)
+        intent.putExtra("isUnitTest", true)
+        intent.putExtra("userTestProfile", inputProfile)
 
-        UserSharedPref.setUser(ctx, inputProfile, false)
         createMockInvocation(inputProfile)
 
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
@@ -110,8 +117,9 @@ class ProfileActivityTest {
         val inputProfile = User( "Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8, 29, 0)
         val ctx = ApplicationProvider.getApplicationContext() as Context
         val intent = Intent(ctx, ProfileActivity::class.java)
+        intent.putExtra("isUnitTest", true)
+        intent.putExtra("userTestProfile", inputProfile)
 
-        UserSharedPref.setUser(ctx, inputProfile, false)
         createMockInvocation(inputProfile)
 
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)

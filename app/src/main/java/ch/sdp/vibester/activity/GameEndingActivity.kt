@@ -4,17 +4,16 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.Window
-import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.R
-import ch.sdp.vibester.model.UserSharedPref
 
-/*
+/**
  * A class representing the activity which appears upon
  * completion of a game. Shows various stats.
  */
 class GameEndingActivity : AppCompatActivity() {
+
 
     private var incorrectSongs: ArrayList<String>? = arrayListOf("Default song")
     private var statNames: ArrayList<String>? = arrayListOf(
@@ -42,8 +41,8 @@ class GameEndingActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_game_ending_screen)
 
-        //Method to update score (locally and on DB)
-        UserSharedPref.updateScore(this, 1)
+        
+
 
         if (intent.hasExtra("Winner Name")) {
             val winner = intent.getStringExtra("Winner Name")

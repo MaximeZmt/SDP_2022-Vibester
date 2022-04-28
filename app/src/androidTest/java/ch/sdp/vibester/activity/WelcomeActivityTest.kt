@@ -9,6 +9,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
+import ch.sdp.vibester.TestMode
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -71,7 +72,13 @@ class WelcomeActivityTest {
 
     @Test
     fun checkIntentOnSearch() {
+        TestMode.setTest()
         onView(withId(R.id.welcome_search)).perform(click())
         intended(hasComponent(SearchUserActivity::class.java.name))
+    }
+
+    @Test
+    fun checkIntentOnSearchWithoutTestMode() {
+        onView(withId(R.id.welcome_search)).perform(click())
     }
 }

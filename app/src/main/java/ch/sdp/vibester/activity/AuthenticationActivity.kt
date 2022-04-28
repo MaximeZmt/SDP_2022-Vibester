@@ -2,6 +2,7 @@ package ch.sdp.vibester.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Window
 import android.widget.Button
 import android.widget.EditText
@@ -9,23 +10,39 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.R
+import ch.sdp.vibester.TestMode
 import ch.sdp.vibester.auth.FireBaseAuthenticator
+import ch.sdp.vibester.database.DataGetter
+import ch.sdp.vibester.helper.IntentSwitcher
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 
 @AndroidEntryPoint
 class AuthenticationActivity : AppCompatActivity() {
+    private val AUTHENTICATION_PERMISSION_CODE = 1000
 
     private lateinit var googleSignInClient: GoogleSignInClient
 
     @Inject
+    lateinit var dataGetter: DataGetter
+
+    @Inject
     lateinit var authenticator: FireBaseAuthenticator
+
+    private lateinit var auth: FirebaseAuth
 
     private lateinit var email: TextView
 
@@ -35,16 +52,22 @@ class AuthenticationActivity : AppCompatActivity() {
         supportActionBar?.hide()
         setContentView(R.layout.activity_authentication)
 
+        val googleSignInToken = "7687769601-qiqrp6kt48v89ub76k9lkpefh9ls36ha.apps.googleusercontent.com"
+
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(googleSignInToken)
             .requestEmail()
             .build()
 
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
+        auth = Firebase.auth
 
         val btCreateAcc = findViewById<Button>(R.id.createAcc)
         val btLogIn = findViewById<Button>(R.id.logIn)
         val googleSignIn = findViewById<Button>(R.id.googleBtn)
+
+        val returnToMain = findViewById<FloatingActionButton>(R.id.authentication_returnToMain)
 
         val username = findViewById<EditText>(R.id.username)
         val password = findViewById<EditText>(R.id.password)
@@ -63,6 +86,11 @@ class AuthenticationActivity : AppCompatActivity() {
         googleSignIn.setOnClickListener {
             signInGoogle()
         }
+
+        returnToMain.setOnClickListener {
+            IntentSwitcher.switchBackToWelcome(this)
+            finish()
+        }
     }
 
     public override fun onStart() {
@@ -70,15 +98,50 @@ class AuthenticationActivity : AppCompatActivity() {
     }
 
     /**
-     * A function to updates the UI based on google sign in result
+     * A function that is called on google sign in result
      * @param requestCode a request code
      * @param resultCode a result code
      * @param data intent returned from google sign in
      */
-    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        updateUI(authenticator.googleActivityResult(requestCode, resultCode, data), false)
+        if (requestCode == AUTHENTICATION_PERMISSION_CODE) {
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            try {
+                val account = task.getResult(ApiException::class.java)!!
+                Log.d(getString(R.string.log_tag), "firebaseAuthWithGoogle:" + account.id)
+                googleAuthFirebase(account.idToken!!)
+            } catch (e: ApiException) {
+                Log.d(getString(R.string.log_tag), "Google sign in failed", e)
+                updateUI("Authentication Error", false, null)
+            }
+        }
     }
+
+
+    private fun googleAuthFirebase(idToken: String) {
+        val credential = GoogleAuthProvider.getCredential(idToken, null)
+        auth.signInWithCredential(credential)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d(getString(R.string.log_tag), "signInWithCredential:success")
+                    var createAcc: Boolean = false
+                    if (task.getResult().additionalUserInfo != null) {
+                        createAcc = task.getResult().additionalUserInfo!!.isNewUser
+                    }
+                    val user = auth.currentUser
+                    if (user != null) {
+                        updateUI(user.email.toString(), createAcc, user)
+                    }
+                } else {
+                    // fail
+                    Log.d(getString(R.string.log_tag), "signInWithCredential:failure", task.exception)
+                    updateUI("Authentication Error", false, null)
+                }
+            }
+    }
+
 
     /**
      * A function validates email and password
@@ -128,7 +191,7 @@ class AuthenticationActivity : AppCompatActivity() {
      */
     private fun signInGoogle() {
         val intent = googleSignInClient.signInIntent
-        startActivityForResult(intent, 1000)
+        startActivityForResult(intent, AUTHENTICATION_PERMISSION_CODE)
     }
 
     /**
@@ -143,19 +206,29 @@ class AuthenticationActivity : AppCompatActivity() {
             ).show()
             val user = authenticator.getCurrUser()
             if (user != null) {
-                updateUI(user.email, createAcc)
+                updateUI(user.email, createAcc, user)
             }
         } else {
             Toast.makeText(
                 baseContext, "Authentication failed.",
                 Toast.LENGTH_SHORT
             ).show()
-            updateUI("Authentication error", false)
+            updateUI("Authentication error", false, null)
         }
     }
 
-    private fun updateUI(emailText: String?,
-                         createAcc: Boolean,
+
+    private fun startNewActivity(email: String) {
+        val newIntent = Intent(this, CreateProfileActivity::class.java)
+        newIntent.putExtra("email", email)
+        startActivity(newIntent)
+    }
+
+
+    private fun updateUI(
+        emailText: String?,
+        createAcc: Boolean,
+        user: FirebaseUser?
     ) {
         if (emailText != null) {
             if('@' in emailText && !createAcc) {
@@ -164,10 +237,12 @@ class AuthenticationActivity : AppCompatActivity() {
                 startActivity(newIntent)
             }
 
-            else if('@' in emailText && createAcc) {
-                val newIntent = Intent(this, CreateProfileActivity::class.java)
-                newIntent.putExtra("email", emailText)
-                startActivity(newIntent)
+            else if('@' in emailText && createAcc && user != null) { //
+                if (TestMode.isTest()) {
+                    startNewActivity(emailText)
+                }else{
+                    dataGetter.createUser(emailText, user.uid, this::startNewActivity, user.uid)
+                }
             }
 
             else {

@@ -14,6 +14,7 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
+import ch.sdp.vibester.TestMode
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -23,8 +24,7 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class GameEndingActivityTest {
 
-    @Rule
-    @JvmField
+    @get:Rule
     val activityRule = ActivityScenarioRule(GameEndingActivity::class.java)
 
     @Before
@@ -71,6 +71,7 @@ class GameEndingActivityTest {
             Intent(ApplicationProvider.getApplicationContext(), GameEndingActivity::class.java)
         intent.putExtra("playerName", name)
         intent.putExtra("nbIncorrectSong", nbInc)
+        intent.putExtra("Winner Name", "Testing the Placeholder")
 
         intent.putStringArrayListExtra("str_arr_inc", incArray)
         intent.putStringArrayListExtra("str_arr_name", statNames)

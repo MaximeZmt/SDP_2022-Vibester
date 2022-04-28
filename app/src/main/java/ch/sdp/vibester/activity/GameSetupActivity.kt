@@ -3,6 +3,7 @@ package ch.sdp.vibester.activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -15,7 +16,9 @@ import ch.sdp.vibester.api.LastfmApiInterface
 import ch.sdp.vibester.api.LastfmMethod
 import ch.sdp.vibester.api.LastfmUri
 import ch.sdp.vibester.helper.GameManager
+import ch.sdp.vibester.helper.IntentSwitcher
 import ch.sdp.vibester.helper.TypingGameManager
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
@@ -35,6 +38,22 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         supportActionBar?.hide()
         setContentView(R.layout.activity_game_setup_screen)
         val ctx: Context = this
+
+        val retButton: FloatingActionButton = findViewById(R.id.gameSetup_returnToMain)
+
+        retButton.setOnClickListener {
+            if(findViewById<LinearLayout>(R.id.chooseGame).visibility == VISIBLE){
+                IntentSwitcher.switchBackToWelcome(this)
+                finish()
+            }else if (findViewById<ConstraintLayout>(R.id.chooseGenre).visibility == VISIBLE){
+                findViewById<LinearLayout>(R.id.chooseGame).visibility = VISIBLE
+                findViewById<ConstraintLayout>(R.id.chooseGenre).visibility = GONE
+            }else if (findViewById<ConstraintLayout>(R.id.chooseDifficulty).visibility == VISIBLE){
+                findViewById<ConstraintLayout>(R.id.chooseGenre).visibility = VISIBLE
+                findViewById<ConstraintLayout>(R.id.chooseDifficulty).visibility = GONE
+            }
+        }
+
 
         val spinnerDifficulty: Spinner = findViewById(R.id.difficulty_spinner)
         val adapter = ArrayAdapter.createFromResource(

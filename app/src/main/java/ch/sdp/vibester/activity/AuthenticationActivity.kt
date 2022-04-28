@@ -191,7 +191,7 @@ class AuthenticationActivity : AppCompatActivity() {
      */
     private fun signInGoogle() {
         val intent = googleSignInClient.signInIntent
-        startActivityForResult(intent, 1000)
+        startActivityForResult(intent, AUTHENTICATION_PERMISSION_CODE)
     }
 
     /**

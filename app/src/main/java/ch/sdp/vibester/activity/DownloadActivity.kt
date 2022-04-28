@@ -168,12 +168,15 @@ class DownloadActivity : AppCompatActivity() {
     }
 
     fun switchToWelcome(view: View) {
-        val intent = Intent(this, WelcomeActivity::class.java)
-        startActivity(intent)
+        sendDirectIntent(WelcomeActivity::class.java)
     }
 
     fun switchToDeleteSongs(view: View) {
-        val intent = Intent(this, DeleteSongsActivity::class.java)
+        sendDirectIntent(DeleteSongsActivity::class.java)
+    }
+
+    private fun sendDirectIntent(arg: Class<*>?) {
+        val intent = Intent(this, arg)
         startActivity(intent)
     }
 

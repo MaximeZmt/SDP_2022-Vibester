@@ -71,8 +71,11 @@ class IncorrectSongsActivity : AppCompatActivity() {
     }
 
     fun switchBackToWelcome(view: View) {
-        val intent = Intent(this, WelcomeActivity::class.java)
-        startActivity(intent)
+        sendDirectIntent(WelcomeActivity::class.java)
     }
 
+    private fun sendDirectIntent(arg: Class<*>?) {
+        val intent = Intent(this, arg)
+        startActivity(intent)
+    }
 }

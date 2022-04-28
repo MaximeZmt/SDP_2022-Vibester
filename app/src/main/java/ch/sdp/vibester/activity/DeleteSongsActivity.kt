@@ -33,6 +33,10 @@ class DeleteSongsActivity : AppCompatActivity() {
         generateButtons(layout)
     }
 
+    /*
+     * Generates buttons for each downloaded extract to be added to the scrollview layout.
+     * Assigns each button a call to the "deleteDownloadedSong" function as a listener.
+     */
     private fun generateButtons(layout: LinearLayout) {
         var records = File(applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "records.txt")
 
@@ -46,14 +50,7 @@ class DeleteSongsActivity : AppCompatActivity() {
             while(currentLine != null) {
                 var trimmed = currentLine.trim()
                 if(trimmed.isNotEmpty()) {
-                    val deleteButton = Button(this)
-                    deleteButton.id = iterator //resources.getIdentifier("id_$trimmed", "id", packageName)
-                    deleteButton.text = trimmed
-                    deleteButton.gravity = Gravity.CENTER
-                    deleteButton.layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT)
-                    deleteButton.setOnClickListener {
-                        deleteDownloadedSong(it, layout)
-                    }
+                    val deleteButton = createButton(trimmed, iterator, layout)
                     layout.addView(deleteButton)
                 }
                 currentLine = reader.readLine()
@@ -63,6 +60,25 @@ class DeleteSongsActivity : AppCompatActivity() {
         }
     }
 
+    /*
+     * Handles the creation and initialization of buttons.
+     */
+    private fun createButton(trimmed: String, iterator: Int, layout: LinearLayout): Button {
+        val deleteButton = Button(this)
+        deleteButton.id = iterator //resources.getIdentifier("id_$trimmed", "id", packageName)
+        deleteButton.text = trimmed
+        deleteButton.gravity = Gravity.CENTER
+        deleteButton.layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT)
+        deleteButton.setOnClickListener {
+            deleteDownloadedSong(it, layout)
+        }
+        return deleteButton
+    }
+
+    /*
+     * Handles the deletion of a downloaded extract. Also handles the removal of the said extract
+     * from the text file which keeps track of all downloads.
+     */
     private fun deleteDownloadedSong(btn: View, layout: LinearLayout): Boolean {
         var records = File(applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "records.txt")
         var tempRecords = File(applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "temp.txt")
@@ -106,6 +122,9 @@ class DeleteSongsActivity : AppCompatActivity() {
         return false
     }
 
+    /*
+     * Handles the creation and initialization of a TextView which is then added to the layout.
+     */
     private fun createNoSongsView(layout: LinearLayout) {
         val noDownloadsText = TextView(this)
         noDownloadsText.id = resources.getIdentifier("noDownloadsView", "id", packageName)
@@ -116,7 +135,11 @@ class DeleteSongsActivity : AppCompatActivity() {
     }
 
     fun switchToWelcome(view: View) {
-        val intent = Intent(this, WelcomeActivity::class.java)
+        sendDirectIntent(WelcomeActivity::class.java)
+    }
+
+    private fun sendDirectIntent(arg: Class<*>?) {
+        val intent = Intent(this, arg)
         startActivity(intent)
     }
 }

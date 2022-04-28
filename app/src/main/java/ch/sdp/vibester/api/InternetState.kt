@@ -21,7 +21,8 @@ class InternetState private constructor(){
 
         private var hasAlreadyAccessedInternetOnce: Boolean = false
         fun hasAccessedInternetOnce(ctx: Context):Boolean{
-            if(!hasAlreadyAccessedInternetOnce&& getInternetStatus(ctx)){
+            if (!hasAlreadyAccessedInternetOnce && getInternetStatus(ctx)) {
+
                 hasAlreadyAccessedInternetOnce = true
             }
             return hasAlreadyAccessedInternetOnce

@@ -67,7 +67,6 @@ class WelcomeActivityTest {
     @Test
     fun checkIntentOnDownload() {
         TestMode.setTest()
-        TestMode.setTest2()
         onView(withId(R.id.welcome_download)).perform(click())
         intended(hasComponent(DownloadActivity::class.java.name))
     }

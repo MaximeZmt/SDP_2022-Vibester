@@ -89,7 +89,6 @@ class ProfileActivityTest {
 
     @Test
     fun checkEditProfile() {
-        TestMode.setTest2()
         val inputProfile = User("Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8, 29, 0)
         val ctx = ApplicationProvider.getApplicationContext() as Context
         val intent = Intent(ctx, ProfileActivity::class.java)

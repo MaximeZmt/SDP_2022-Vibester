@@ -162,7 +162,6 @@ class DataGetter @Inject constructor() {
                     val dbContents = dataSnapShot.getValue<User>()
                     if (dbContents != null) {
                         if(FireBaseAuthenticator.isLoggedIn() && dbContents.email == FireBaseAuthenticator.getCurrentUserMail()) {
-                            DbUserIdStore.storeUID(dataSnapShot.key!!)
                             callback(dbContents)
                             break
                         }

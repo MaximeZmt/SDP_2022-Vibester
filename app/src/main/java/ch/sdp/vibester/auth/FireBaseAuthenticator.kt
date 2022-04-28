@@ -17,6 +17,7 @@ import javax.inject.Inject
 
 class FireBaseAuthenticator @Inject constructor() {
     companion object{
+        private val AUTHENTICATION_PERMISSION_CODE = 1000
 
         /**
          * API: return true if firebase authentication is logged in
@@ -50,9 +51,10 @@ class FireBaseAuthenticator @Inject constructor() {
          * @param requestCode a request code
          * @param resultCode a result code
          * @param data intent returned from google sign in
+         * @param ctx current app context
          */
         fun googleActivityResult(requestCode: Int, resultCode: Int, data: Intent?, ctx: Context): String? {
-            if (requestCode == 1000) {
+            if (requestCode == AUTHENTICATION_PERMISSION_CODE) {
                 try {
                     val account = GoogleSignIn.getSignedInAccountFromIntent(data).result
                     val client = Identity.getSignInClient(ctx)

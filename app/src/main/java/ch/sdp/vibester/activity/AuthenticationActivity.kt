@@ -32,6 +32,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class AuthenticationActivity : AppCompatActivity() {
+    private val AUTHENTICATION_PERMISSION_CODE = 1000
 
     private lateinit var googleSignInClient: GoogleSignInClient
 
@@ -51,8 +52,10 @@ class AuthenticationActivity : AppCompatActivity() {
         supportActionBar?.hide()
         setContentView(R.layout.activity_authentication)
 
+        val googleSignInToken = "7687769601-qiqrp6kt48v89ub76k9lkpefh9ls36ha.apps.googleusercontent.com"
+
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken("7687769601-qiqrp6kt48v89ub76k9lkpefh9ls36ha.apps.googleusercontent.com")
+            .requestIdToken(googleSignInToken)
             .requestEmail()
             .build()
 
@@ -102,7 +105,7 @@ class AuthenticationActivity : AppCompatActivity() {
      */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 1000) {
+        if (requestCode == AUTHENTICATION_PERMISSION_CODE) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
                 val account = task.getResult(ApiException::class.java)!!
@@ -239,12 +242,7 @@ class AuthenticationActivity : AppCompatActivity() {
                 if(TestMode.isTest()){
                     startNewActivity(emailText)
                 }else{
-                    dataGetter.createUser(
-                        emailText,
-                        user.uid,
-                        this::startNewActivity,
-                        user.uid
-                    )
+                    dataGetter.createUser(emailText, user.uid, this::startNewActivity, user.uid)
                 }
             }
 

@@ -29,6 +29,20 @@ class PartyRoomTest {
     }
 
     @Test
+    fun correctAddEmail() {
+        var emailList = mutableListOf("email1", "email2")
+        val testPartyRoom = PartyRoom()
+
+        testPartyRoom.setEmailList(emailList)
+        testPartyRoom.addUserEmail("email3")
+        emailList = mutableListOf("email1", "email2", "email3")
+
+        for(email in emailList) {
+            assert(testPartyRoom.getEmailList().contains(email))
+        }
+    }
+
+    @Test
     fun correctSetRoomID() {
         val roomID = "testRoomID"
         val testPartyRoom = PartyRoom()

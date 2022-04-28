@@ -124,7 +124,7 @@ class AuthenticationActivity : AppCompatActivity() {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(getString(R.string.log_tag), "signInWithCredential:success")
                     var createAcc: Boolean = false
-                    if(task.getResult().additionalUserInfo != null){
+                    if (task.getResult().additionalUserInfo != null) {
                         createAcc = task.getResult().additionalUserInfo!!.isNewUser
                     }
                     val user = auth.currentUser

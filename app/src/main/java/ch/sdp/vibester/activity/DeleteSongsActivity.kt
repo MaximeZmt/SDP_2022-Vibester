@@ -17,9 +17,12 @@ import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.TextView
 import android.widget.Toast
 import ch.sdp.vibester.R
+import ch.sdp.vibester.helper.IntentSwitcher
 import org.w3c.dom.Text
 import java.io.*
-
+/**
+ * Class that handles deleting files, more specifically songs in the scope of this project.
+ */
 class DeleteSongsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +36,7 @@ class DeleteSongsActivity : AppCompatActivity() {
         generateButtons(layout)
     }
 
-    /*
+    /**
      * Generates buttons for each downloaded extract to be added to the scrollview layout.
      * Assigns each button a call to the "deleteDownloadedSong" function as a listener.
      */
@@ -60,12 +63,12 @@ class DeleteSongsActivity : AppCompatActivity() {
         }
     }
 
-    /*
+    /**
      * Handles the creation and initialization of buttons.
      */
     private fun createButton(trimmed: String, iterator: Int, layout: LinearLayout): Button {
         val deleteButton = Button(this)
-        deleteButton.id = iterator //resources.getIdentifier("id_$trimmed", "id", packageName)
+        deleteButton.id = iterator
         deleteButton.text = trimmed
         deleteButton.gravity = Gravity.CENTER
         deleteButton.layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT)
@@ -75,7 +78,7 @@ class DeleteSongsActivity : AppCompatActivity() {
         return deleteButton
     }
 
-    /*
+    /**
      * Handles the deletion of a downloaded extract. Also handles the removal of the said extract
      * from the text file which keeps track of all downloads.
      */
@@ -122,7 +125,7 @@ class DeleteSongsActivity : AppCompatActivity() {
         return false
     }
 
-    /*
+    /**
      * Handles the creation and initialization of a TextView which is then added to the layout.
      */
     private fun createNoSongsView(layout: LinearLayout) {
@@ -135,11 +138,6 @@ class DeleteSongsActivity : AppCompatActivity() {
     }
 
     fun switchToWelcome(view: View) {
-        sendDirectIntent(WelcomeActivity::class.java)
-    }
-
-    private fun sendDirectIntent(arg: Class<*>?) {
-        val intent = Intent(this, arg)
-        startActivity(intent)
+        IntentSwitcher.switchBackToWelcome(this)
     }
 }

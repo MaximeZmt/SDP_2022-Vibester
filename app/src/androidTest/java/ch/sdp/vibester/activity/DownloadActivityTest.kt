@@ -43,7 +43,7 @@ class DownloadActivityTest {
     private var waitForButton: Long = 100
     private var waitForDownload: Long = 1000
 
-    /*:
+    /*
     @Test
     //Test that takes too long to execute. Uncomment towards the last sprint.
     fun downloadCorrectSong() {

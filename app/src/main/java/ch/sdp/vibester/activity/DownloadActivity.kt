@@ -18,12 +18,14 @@ import android.widget.TextView
 import android.widget.Toast
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.ItunesMusicApi
+import ch.sdp.vibester.helper.IntentSwitcher
 import ch.sdp.vibester.model.Song
 import okhttp3.OkHttpClient
 import org.w3c.dom.Text
 import java.io.File
 import java.lang.IllegalArgumentException
-/*
+
+/**
  * Activity that handles downloading of song extracts.
  */
 class DownloadActivity : AppCompatActivity() {
@@ -53,7 +55,7 @@ class DownloadActivity : AppCompatActivity() {
             override fun onReceive(context: Context?, intent: Intent?) {
                 var id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
                 if(id == downloadId) {
-                    alert("Download completed!", "Try another song!", songNameView)
+                    alert(getString(R.string.download_download_complete), getString(R.string.download_try_another), songNameView)
                 }
             }
         }
@@ -66,19 +68,19 @@ class DownloadActivity : AppCompatActivity() {
         songName = songView.text.toString()
 
         if(checkExistingSong()) {
-            alert("Song already downloaded!", "Try a different song!", songView)
+            alert(getString(R.string.download_already_done), getString(R.string.download_try_different), songView)
         } else {
             val songFuture = ItunesMusicApi.querySong(songName, OkHttpClient(), 1)
             try {
                 song = Song.singleSong(songFuture.get())
                 checkPermissionsAndDownload()
             } catch (e: IllegalArgumentException) {
-                alert("Unable to find song, please retry!", "Please retry!", songView)
+                alert(getString(R.string.download_unable_to_find), getString(R.string.download_retry), songView)
             }
         }
     }
 
-    /*
+    /**
      * Displays a Toast on the screen while editing the existing textView.
      *
      * @param toast: String to be displayed on the Toast.
@@ -91,7 +93,7 @@ class DownloadActivity : AppCompatActivity() {
         editTextView(hint, view)
     }
 
-    /*
+    /**
      * Sets the hint of the given textview with the given hint, and clears the entered text.
      *
      * @param hint          : String to be set as the hint of the textView.
@@ -109,11 +111,11 @@ class DownloadActivity : AppCompatActivity() {
                 downloadId = startDownload()
             }
         } else {
-            Toast.makeText(this, "Permission denied, cannot download!", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, getString(R.string.download_permission_denied), Toast.LENGTH_LONG).show()
         }
     }
 
-    /*
+    /**
      * Checks if the required app permissions are already given. If not, request those permissions.
      */
     private fun checkPermissionsAndDownload() {
@@ -129,7 +131,7 @@ class DownloadActivity : AppCompatActivity() {
         }
     }
 
-    /*
+    /**
      * Download a file from the private URL value of the class.
      */
     private fun startDownload(): Long {
@@ -151,7 +153,7 @@ class DownloadActivity : AppCompatActivity() {
         return downloader.enqueue(request)
     }
 
-    /*
+    /**
      * Indicator of if the song already exists or not.
      */
     private fun checkExistingSong(): Boolean {
@@ -159,7 +161,7 @@ class DownloadActivity : AppCompatActivity() {
         return existing.exists()
     }
 
-    /*
+    /**
      * Helps keep track of the currently downloaded songs in the form of a txt file.
      * If the file does not exist, it is created.
      */
@@ -173,15 +175,11 @@ class DownloadActivity : AppCompatActivity() {
     }
 
     fun switchToWelcome(view: View) {
-        sendDirectIntent(WelcomeActivity::class.java)
+        IntentSwitcher.switchBackToWelcome(this)
     }
 
     fun switchToDeleteSongs(view: View) {
-        sendDirectIntent(DeleteSongsActivity::class.java)
-    }
-
-    private fun sendDirectIntent(arg: Class<*>?) {
-        val intent = Intent(this, arg)
+        val intent = Intent(this, DeleteSongsActivity::class.java)
         startActivity(intent)
     }
 

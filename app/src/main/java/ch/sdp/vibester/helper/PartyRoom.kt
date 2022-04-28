@@ -5,6 +5,7 @@ class PartyRoom() {
     private lateinit var roomName: String
     private lateinit var userEmails: MutableList<String>
     private lateinit var roomID: String
+    private var userCount = 0
 
     fun addUserEmail(email: String) {
         userEmails.add(email)
@@ -16,6 +17,14 @@ class PartyRoom() {
 
     fun setRoomID(roomID: String) {
         this.roomID = roomID
+    }
+
+    fun getUserCount(): Int {
+        return userCount
+    }
+
+    fun setUserCount(userCount: Int) {
+        this.userCount = userCount
     }
 
     fun getEmailList(): MutableList<String> {

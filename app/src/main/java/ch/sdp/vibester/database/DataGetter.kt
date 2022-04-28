@@ -121,6 +121,7 @@ class DataGetter @Inject constructor() {
         val partyRoom = PartyRoom()
         partyRoom.setRoomName(roomName)
         partyRoom.setEmailList(mutableListOf(authenticator.getCurrUser()?.email!!))
+        partyRoom.setUserCount(1)
         val ref = dbRoomRef.push()
         val key = ref.key
         if (key != null) {
@@ -190,26 +191,33 @@ class DataGetter @Inject constructor() {
         })
     }
 
-    fun addUserToRoom(roomID: String, email: String) {
-        dbRoomRef.child(roomID).child("emailList").push().setValue(email)
+    fun addUserToRoom(roomID: String, email: String, userID: Int) {
+        dbRoomRef.child(roomID).child("emailList").child(userID.toString()).setValue(email)
+    }
+
+    fun incrementUserCount(roomID: String, userCount: Int) {
+        dbRoomRef.child(roomID).child("userCount").setValue(userCount)
     }
 
     fun getRoomData(roomName: String, callback: (PartyRoom) -> Unit) {
         val queryRooms = dbRoomRef
             .orderByChild("roomName")
-            .startAt(roomName)
-            .endAt(roomName+"\uf8ff")
+            .equalTo(roomName)
+
+        Log.w("DEBUG LMAO:", "I get to here")
+        Log.w("DEBUG LMAO:", roomName)
 
         queryRooms.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for (snapshot in dataSnapshot.children) {
                     val partyRoom: PartyRoom? = snapshot.getValue(PartyRoom::class.java)
                     if(partyRoom != null) {
-//                        val currUserEmail = authenticator.getCurrUser()?.email!!
-//                        if(!partyRoom.getEmailList().contains(currUserEmail)) {
-//                            partyRoom.addUserEmail(currUserEmail)
-//                            addUserToRoom(partyRoom.getRoomID(), currUserEmail)
-//                        }
+                        val currUserEmail = authenticator.getCurrUser()?.email!!
+                        if(!partyRoom.getEmailList().contains(currUserEmail)) {
+                            partyRoom.addUserEmail(currUserEmail)
+                            addUserToRoom(partyRoom.getRoomID(), currUserEmail, partyRoom.getUserCount())
+                            incrementUserCount(partyRoom.getRoomID(), partyRoom.getUserCount() + 1)
+                        }
                         callback(partyRoom)
                     }
                 }

@@ -43,7 +43,7 @@ class DownloadActivityTest {
     private var waitForButton: Long = 100
     private var waitForDownload: Long = 1000
 
-    /*
+    /*:
     @Test
     //Test that takes too long to execute. Uncomment towards the last sprint.
     fun downloadCorrectSong() {
@@ -74,11 +74,8 @@ class DownloadActivityTest {
             assertEquals(songName, text)
             records.delete()
         }
-    }
-*/
+    } */
 
-
-    //TODO: test does not work locally and remotely.
     @Test
     fun downloadIncorrectSong() {
         val intent = Intent(ApplicationProvider.getApplicationContext(), DownloadActivity::class.java)
@@ -154,8 +151,8 @@ class DownloadActivityTest {
             assertEquals(songName, text)
             records.delete()
         }
-    }
-     */
+    }*/
+
 
     @Test
     fun checkIntentOnGoBack() {

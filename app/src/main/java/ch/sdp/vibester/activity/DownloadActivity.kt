@@ -46,19 +46,7 @@ class DownloadActivity : AppCompatActivity() {
         val downloadButton = findViewById<Button>(R.id.download_downloadsong)
 
         downloadButton.setOnClickListener {
-            downloadComplete = false
-            songName = songNameView.text.toString()
-            if(checkExistingSong()) {
-                alert("Song already downloaded!", "Try a different song!", songNameView)
-            } else {
-                val songFuture = ItunesMusicApi.querySong(songName, OkHttpClient(), 1)
-                try {
-                    song = Song.singleSong(songFuture.get())
-                    checkPermissionsAndDownload()
-                } catch (e: IllegalArgumentException) {
-                    alert("Unable to find song, please retry!", "Please retry!", songNameView)
-                }
-            }
+            downloadListener(songNameView)
         }
 
         var broadcast = object:BroadcastReceiver() {
@@ -71,6 +59,23 @@ class DownloadActivity : AppCompatActivity() {
         }
 
         registerReceiver(broadcast, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
+    }
+
+    private fun downloadListener(songView: TextView) {
+        downloadComplete = false
+        songName = songView.text.toString()
+
+        if(checkExistingSong()) {
+            alert("Song already downloaded!", "Try a different song!", songView)
+        } else {
+            val songFuture = ItunesMusicApi.querySong(songName, OkHttpClient(), 1)
+            try {
+                song = Song.singleSong(songFuture.get())
+                checkPermissionsAndDownload()
+            } catch (e: IllegalArgumentException) {
+                alert("Unable to find song, please retry!", "Please retry!", songView)
+            }
+        }
     }
 
     /*

@@ -236,7 +236,7 @@ class AuthenticationActivity : AppCompatActivity() {
             }
 
             else if('@' in emailText && createAcc && user != null) { //
-                if(TestMode.isTest()){
+                if (TestMode.isTest()) {
                     startNewActivity(emailText)
                 }else{
                     dataGetter.createUser(

@@ -3,13 +3,9 @@ package ch.sdp.vibester.activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 import ch.sdp.vibester.R
-import ch.sdp.vibester.database.Database
-import ch.sdp.vibester.helper.PartyRoom
 
 class ChoosePartyRoomActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

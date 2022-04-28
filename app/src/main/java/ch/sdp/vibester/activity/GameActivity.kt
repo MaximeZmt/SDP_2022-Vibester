@@ -3,10 +3,10 @@ package ch.sdp.vibester.activity
 import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Handler
 import android.view.Gravity
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.BitmapGetterApi

@@ -9,14 +9,14 @@ import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
-import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.R
+import ch.sdp.vibester.TestMode
 import ch.sdp.vibester.api.ItunesMusicApi
 import ch.sdp.vibester.helper.IntentSwitcher
 import ch.sdp.vibester.model.Song
@@ -44,8 +44,10 @@ class DownloadActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_download)
 
+
         val songNameView = findViewById<TextView>(R.id.download_songName)
         val downloadButton = findViewById<Button>(R.id.download_downloadsong)
+
 
         downloadButton.setOnClickListener {
             downloadListener(songNameView)
@@ -58,9 +60,9 @@ class DownloadActivity : AppCompatActivity() {
                     alert(getString(R.string.download_download_complete), getString(R.string.download_try_another), songNameView)
                 }
             }
-        }
 
-        registerReceiver(broadcast, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
+            registerReceiver(broadcast, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
+        }
     }
 
     /**

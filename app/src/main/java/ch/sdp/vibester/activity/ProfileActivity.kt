@@ -13,8 +13,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.BitmapGetterApi
-import ch.sdp.vibester.model.UserSharedPref
-import ch.sdp.vibester.database.UsersRepo
+import ch.sdp.vibester.auth.FireBaseAuthenticator
+import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.helper.IntentSwitcher
 import ch.sdp.vibester.user.User
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -30,7 +30,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class ProfileActivity : AppCompatActivity() {
     @Inject
-    lateinit var usersRepo: UsersRepo
+    lateinit var dataGetter: DataGetter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,8 +40,6 @@ class ProfileActivity : AppCompatActivity() {
         supportActionBar?.hide()
 
         setContentView(R.layout.activity_profile)
-
-        setupProfile(UserSharedPref.getUser(applicationContext))
 
         val editUsername = findViewById<Button>(R.id.editUser)
 
@@ -55,11 +53,27 @@ class ProfileActivity : AppCompatActivity() {
 
         retToMain.setOnClickListener{
             IntentSwitcher.switchBackToWelcome(this)
+            finish()
         }
 
         logoutButton.setOnClickListener{
             FirebaseAuth.getInstance().signOut()
             IntentSwitcher.switchBackToWelcome(this)
+            finish()
+        }
+
+        // Do not enable querying database while executing unit test
+        val isUnitTest: Boolean = intent.getBooleanExtra("isUnitTest", false)
+
+        if (!isUnitTest) {
+            queryDatabase()
+        } else {
+            var upTest: User? = intent.getSerializableExtra("userTestProfile") as User?
+            if (upTest == null) {
+                setupProfile(User())
+            } else {
+                setupProfile(upTest)
+            }
         }
 
     }
@@ -87,7 +101,7 @@ class ProfileActivity : AppCompatActivity() {
             findViewById<TextView>(textId).text = input.text.toString()
 
             if(name == "username"){
-                UserSharedPref.updateUsername(this, input.text.toString())
+                dataGetter.updateFieldString(FireBaseAuthenticator.getCurrentUID(), input.text.toString(), "username")
             }
         }
 
@@ -110,8 +124,9 @@ class ProfileActivity : AppCompatActivity() {
      * Hard coded for now
      */
 
-    private fun queryDatabase(email: String) {
-        usersRepo.getUserData(email, this::setupProfile)
+
+    private fun queryDatabase() {
+        dataGetter.getUserData(this::setupProfile)
     }
 
 

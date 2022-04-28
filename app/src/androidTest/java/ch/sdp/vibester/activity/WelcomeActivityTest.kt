@@ -66,14 +66,13 @@ class WelcomeActivityTest {
 
     @Test
     fun checkIntentOnDownload() {
-        TestMode.setTest()
         onView(withId(R.id.welcome_download)).perform(click())
         intended(hasComponent(DownloadActivity::class.java.name))
     }
 
     @Test
     fun checkIntentOnSearch() {
-        TestMode.setTest()
+        //TestMode.setTest()
         onView(withId(R.id.welcome_search)).perform(click())
         intended(hasComponent(SearchUserActivity::class.java.name))
     }

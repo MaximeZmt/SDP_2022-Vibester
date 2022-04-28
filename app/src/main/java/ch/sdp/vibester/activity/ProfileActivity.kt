@@ -72,7 +72,6 @@ class ProfileActivity : AppCompatActivity() {
             if (upTest == null) {
                 setupProfile(User())
             } else {
-
                 setupProfile(upTest)
             }
         }

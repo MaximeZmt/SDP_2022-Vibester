@@ -50,6 +50,8 @@ class ProfileActivityTest {
             secondArg<(User) -> Unit>().invoke(mockProfile)
         }
         every { mockUsersRepo.updateFieldString(any(), any(), any()) } answers {}
+
+        every { mockUsersRepo.getUserData(any())} answers {}
     }
 
     @After

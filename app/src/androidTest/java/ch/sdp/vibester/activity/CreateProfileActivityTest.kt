@@ -49,6 +49,7 @@ class CreateProfileActivityTest {
         every { mockUsersRepo.getUserData(any()) } answers {
             secondArg<(User) -> Unit>().invoke(User())
         }
+
     }
 
     @After

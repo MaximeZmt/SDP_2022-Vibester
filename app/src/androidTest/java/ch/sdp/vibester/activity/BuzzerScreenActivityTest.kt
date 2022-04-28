@@ -101,8 +101,6 @@ class BuzzerScreenActivityTest {
      */
     @Test
     fun checkIntentOnEnding() {
-        TestMode.setTest()
-
         val mockArray = arrayListOf<String>("One", "Two", "Three", "Four", "Five")
 
         val incArray: ArrayList<String> = mockArray

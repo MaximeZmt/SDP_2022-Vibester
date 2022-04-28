@@ -47,8 +47,6 @@ class GameEndingActivityTest {
 
     @Test
     fun checkIntentOnCalled() {
-        TestMode.setTest()
-
         incArray.addAll(arrayOf("One", "Two", "Three"))
         statNames.addAll(
             arrayOf(

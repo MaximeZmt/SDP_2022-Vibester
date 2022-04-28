@@ -12,7 +12,6 @@ import ch.sdp.vibester.TestMode
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.database.ImageRepo
-import ch.sdp.vibester.util.Util
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -73,10 +72,11 @@ class CreateProfileActivity : AppCompatActivity() {
     }
 
 
+    //check the UID here not sure
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE){
-            imageRepo.uploadFile("profileImg/${Util.createNewId()}", data?.data!!) { updateUI() }
+            imageRepo.uploadFile("profileImg/${FireBaseAuthenticator.getCurrentUID()}", data?.data!!) { updateUI() }
         }
     }
 }

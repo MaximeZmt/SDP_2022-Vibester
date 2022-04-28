@@ -14,6 +14,7 @@ import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
+import ch.sdp.vibester.R
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue

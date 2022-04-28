@@ -27,4 +27,14 @@ class PartyRoomTest {
             assert(testPartyRoom.getEmailList().contains(email))
         }
     }
+
+    @Test
+    fun correctSetRoomID() {
+        val roomID = "testRoomID"
+        val testPartyRoom = PartyRoom()
+
+        testPartyRoom.setRoomID(roomID)
+
+        assertEquals(testPartyRoom.getRoomID(), roomID)
+    }
 }

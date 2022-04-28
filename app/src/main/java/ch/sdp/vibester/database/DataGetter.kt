@@ -183,14 +183,6 @@ class DataGetter @Inject constructor() {
         })
     }
 
-//    fun addUserToRoom(roomID: String, email: String, userID: Int) {
-//        dbRoomRef.child(roomID).child("emailList").child(userID.toString()).setValue(email)
-//    }
-//
-//    fun incrementUserCount(roomID: String, userCount: Int) {
-//        dbRoomRef.child(roomID).child("userCount").setValue(userCount)
-//    }
-
     fun getRoomData(roomName: String, callback: (PartyRoom) -> Unit) {
         val queryRooms = dbRoomRef
             .orderByChild("roomName")

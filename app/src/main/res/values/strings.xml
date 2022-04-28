@@ -80,6 +80,16 @@
     <string name="welcome_download">DOWNLOAD</string>
     <string name="download_songname">Enter a song name…</string>
     <string name="download_download">DOWNLOAD SONG</string>
+    <string name="download_to_delete">DELETE SONGS</string>
+    <string name="delete_songs_description">CHOOSE A SONG TO DELETE:</string>
+    <string name="delete_nothing_to_delete">YOU HAVE NO DOWNLOADED SONGS!</string>
+    <string name="download_download_complete">Download completed!</string>
+    <string name="download_try_another">Try another song!</string>
+    <string name="download_already_done">Song already downloaded!</string>
+    <string name="download_try_different">Try a different song!</string>
+    <string name="download_unable_to_find">Unable to find song, please retry!</string>
+    <string name="download_retry">Please retry!</string>
+    <string name="download_permission_denied">Permission denied, cannot download!</string>
 
     <string name="Singleplayer">Single-player</string>
     <string name="Multiplayer">Multiplayer</string>

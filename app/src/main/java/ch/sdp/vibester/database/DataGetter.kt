@@ -111,6 +111,11 @@ class DataGetter @Inject constructor() {
             }
     }
 
+    /**
+     * This function creates a new room in the database
+     * @param roomName the name of the new room
+     * @param callback function to be called when the room has been created
+     */
     fun createRoom(roomName: String,  callback: (PartyRoom) -> Unit) {
         val partyRoom = PartyRoom()
         partyRoom.setRoomName(roomName)
@@ -183,13 +188,24 @@ class DataGetter @Inject constructor() {
         })
     }
 
+    /**
+     * This functions that updates the users of a room
+     * @param partyRoom the new room
+     */
+    fun updateRoomUserList(partyRoom: PartyRoom) {
+        dbRoomRef.child(partyRoom.getRoomID()).child("emailList").setValue(partyRoom.getEmailList())
+    }
+
+    /**
+     * This functions fetches the data of the given user from the database
+     * @param roomName the name of the room to retrieve data from
+     * @param callback the function to be called when the data of the appropriate user is available
+     */
+
     fun getRoomData(roomName: String, callback: (PartyRoom) -> Unit) {
         val queryRooms = dbRoomRef
             .orderByChild("roomName")
             .equalTo(roomName)
-
-        Log.w("DEBUG LMAO:", "I get to here")
-        Log.w("DEBUG LMAO:", roomName)
 
         queryRooms.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -199,14 +215,14 @@ class DataGetter @Inject constructor() {
                         val currUserEmail = authenticator.getCurrUser()?.email!!
                         if(!partyRoom.getEmailList().contains(currUserEmail)) {
                             partyRoom.addUserEmail(currUserEmail)
-                            dbRoomRef.child(partyRoom.getRoomID()).child("emailList").setValue(partyRoom.getEmailList())
+                            updateRoomUserList(partyRoom)
                         }
                         callback(partyRoom)
                     }
                 }
             }
             override fun onCancelled(error: DatabaseError) {
-                Log.w(ContentValues.TAG, "searchByField:onCancelled", error.toException())
+                Log.w(ContentValues.TAG, "getRoomData:onCancelled", error.toException())
             }
         })
     }

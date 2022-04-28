@@ -187,15 +187,4 @@ class DeleteSongsActivityTest {
         testing1.delete()
         testing2.delete()
     }
-
-
-
-
-
-
-
-
-
-
-
 }

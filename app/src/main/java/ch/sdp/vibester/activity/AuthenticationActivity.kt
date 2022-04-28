@@ -32,6 +32,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class AuthenticationActivity : AppCompatActivity() {
+    private val AUTHENTICATION_PERMISSION_CODE = 1000
 
     private lateinit var googleSignInClient: GoogleSignInClient
 
@@ -51,8 +52,10 @@ class AuthenticationActivity : AppCompatActivity() {
         supportActionBar?.hide()
         setContentView(R.layout.activity_authentication)
 
+        val googleSignInToken = "7687769601-qiqrp6kt48v89ub76k9lkpefh9ls36ha.apps.googleusercontent.com"
+
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken("7687769601-qiqrp6kt48v89ub76k9lkpefh9ls36ha.apps.googleusercontent.com")
+            .requestIdToken(googleSignInToken)
             .requestEmail()
             .build()
 
@@ -102,7 +105,7 @@ class AuthenticationActivity : AppCompatActivity() {
      */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 1000) {
+        if (requestCode == AUTHENTICATION_PERMISSION_CODE) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
                 val account = task.getResult(ApiException::class.java)!!
@@ -124,7 +127,7 @@ class AuthenticationActivity : AppCompatActivity() {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(getString(R.string.log_tag), "signInWithCredential:success")
                     var createAcc: Boolean = false
-                    if(task.getResult().additionalUserInfo != null){
+                    if (task.getResult().additionalUserInfo != null) {
                         createAcc = task.getResult().additionalUserInfo!!.isNewUser
                     }
                     val user = auth.currentUser
@@ -188,7 +191,7 @@ class AuthenticationActivity : AppCompatActivity() {
      */
     private fun signInGoogle() {
         val intent = googleSignInClient.signInIntent
-        startActivityForResult(intent, 1000)
+        startActivityForResult(intent, AUTHENTICATION_PERMISSION_CODE)
     }
 
     /**
@@ -215,7 +218,6 @@ class AuthenticationActivity : AppCompatActivity() {
     }
 
 
-//TODO
     private fun startNewActivity(email: String) {
         val newIntent = Intent(this, CreateProfileActivity::class.java)
         newIntent.putExtra("email", email)
@@ -236,15 +238,10 @@ class AuthenticationActivity : AppCompatActivity() {
             }
 
             else if('@' in emailText && createAcc && user != null) { //
-                if(TestMode.isTest()){
+                if (TestMode.isTest()) {
                     startNewActivity(emailText)
                 }else{
-                    dataGetter.createUser(
-                        emailText,
-                        user.uid,
-                        this::startNewActivity,
-                        user.uid
-                    )
+                    dataGetter.createUser(emailText, user.uid, this::startNewActivity, user.uid)
                 }
             }
 

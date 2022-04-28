@@ -4,17 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.Window
-import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.R
-import ch.sdp.vibester.TestMode
-import ch.sdp.vibester.auth.FireBaseAuthenticator
-import ch.sdp.vibester.database.DataGetter
-import ch.sdp.vibester.database.DbUserIdStore
-import ch.sdp.vibester.model.UserSharedPref
-import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 /**
  * A class representing the activity which appears upon
@@ -22,7 +14,6 @@ import javax.inject.Inject
  */
 class GameEndingActivity : AppCompatActivity() {
 
-    var dataGetter = DataGetter()
 
     private var incorrectSongs: ArrayList<String>? = arrayListOf("Default song")
     private var statNames: ArrayList<String>? = arrayListOf(
@@ -50,7 +41,7 @@ class GameEndingActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_game_ending_screen)
 
-        //Method to update score (locally and on DB)
+        
 
 
         if (intent.hasExtra("Winner Name")) {
@@ -60,9 +51,6 @@ class GameEndingActivity : AppCompatActivity() {
             } else {findViewById<TextView>(R.id.winnerText).text="Nobody won this game!"}
         }
 
-        if(!TestMode.isTest()){
-            dataGetter.updateRelativeFieldInt(FireBaseAuthenticator.getCurrentUID(), 1, "totalGames")
-        }
 
         if (intent.hasExtra("playerName")) {
             playerName = intent.getStringExtra("playerName")

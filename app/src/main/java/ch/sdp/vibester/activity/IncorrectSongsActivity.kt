@@ -10,6 +10,7 @@ import android.widget.LinearLayout.LayoutParams
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.R
+import ch.sdp.vibester.helper.IntentSwitcher
 
 /**
  * A class representing the activity which shows the list of songs the user
@@ -71,8 +72,6 @@ class IncorrectSongsActivity : AppCompatActivity() {
     }
 
     fun switchBackToWelcome(view: View) {
-        val intent = Intent(this, WelcomeActivity::class.java)
-        startActivity(intent)
+        IntentSwitcher.switchBackToWelcome(this)
     }
-
 }

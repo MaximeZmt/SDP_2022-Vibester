@@ -8,6 +8,7 @@ import androidx.test.espresso.action.ViewActions.scrollTo
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intended
+import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasExtra
 import androidx.test.espresso.matcher.ViewMatchers.withId
@@ -50,6 +51,16 @@ class GameSetupActivityTest {
         onView(withId(R.id.difficulty_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(0).perform(click())
         onView(withId(R.id.difficulty_spinner)).check(matches(withSpinnerText("Easy")))
+    }
+
+    @Test
+    fun checkReturnButton() {
+        onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
+        onView(withId(R.id.btsButton)).perform(click())
+        onView(withId(R.id.gameSetup_returnToMain)).perform(click())
+        onView(withId(R.id.gameSetup_returnToMain)).perform(click())
+        onView(withId(R.id.gameSetup_returnToMain)).perform(click())
+        Intents.intended(IntentMatchers.hasComponent(WelcomeActivity::class.java.name))
     }
 
     @Test

@@ -4,7 +4,6 @@ import android.content.ContentValues
 import android.util.Log
 import ch.sdp.vibester.TestMode
 import ch.sdp.vibester.auth.FireBaseAuthenticator
-import ch.sdp.vibester.helper.AllPurposeFunction
 import ch.sdp.vibester.helper.PartyRoom
 import ch.sdp.vibester.user.User
 import com.google.firebase.database.DataSnapshot
@@ -56,13 +55,10 @@ class DataGetter @Inject constructor() {
      */
     fun updateRelativeFieldInt(userID: String, newVal: Int, fieldName: String) {
         if(!TestMode.isTest()) {
-            dbUserRef.child(userID)
-                .child(fieldName)
+            dbUserRef.child(userID).child(fieldName)
                 .get().addOnSuccessListener { t ->
                     if(!TestMode.isTest()) {
-                        dbUserRef.child(userID)
-                            .child(fieldName)
-                            .setValue((t.value as Long?)!!.toInt() + newVal)
+                        updateFieldInt(userID, (t.value as Long?)!!.toInt() + newVal, fieldName)
                     }
                 }
         }
@@ -76,13 +72,10 @@ class DataGetter @Inject constructor() {
      */
     fun updateBestFieldInt(userID: String, newVal: Int, fieldName: String) {
         if(!TestMode.isTest()) {
-            dbUserRef.child(userID)
-                .child(fieldName)
+            dbUserRef.child(userID).child(fieldName)
                 .get().addOnSuccessListener { t ->
                     if(!TestMode.isTest()) {
-                        dbUserRef.child(userID)
-                            .child(fieldName)
-                            .setValue(AllPurposeFunction.biggerInt((t.value as Long?)!!.toInt(), newVal))
+                        updateFieldInt(userID, maxOf((t.value as Long?)!!.toInt(), newVal), fieldName)
                     }
                 }
         }
@@ -108,10 +101,11 @@ class DataGetter @Inject constructor() {
      * @param email the email of the new user
      * @param username the username of the new user
      * @param callback function to be called when the the user has been created
+     * @param uid id of the new user
      */
-    fun createUser(email: String, username: String, callback: (String) -> Unit, newId: String) {
-        var newUser = User(username, "", email, 0, 0, 0, 0, newId)
-        dbUserRef.child(newId).setValue(newUser)
+    fun createUser(email: String, username: String, callback: (String) -> Unit, uid: String) {
+        var newUser = User(username, "", email, 0, 0, 0, 0, uid)
+        dbUserRef.child(uid).setValue(newUser)
             .addOnSuccessListener {
                 callback(email)
             }
@@ -168,7 +162,6 @@ class DataGetter @Inject constructor() {
 
     /**
      * This functions fetches the data of the given user from the database
-     * @param email the of the user
      * @param callback the function to be called when the data of the appropriate user is available
      */
     fun getUserData(callback: (User) -> Unit) {
@@ -178,7 +171,6 @@ class DataGetter @Inject constructor() {
                     val dbContents = dataSnapShot.getValue<User>()
                     if (dbContents != null) {
                         if(FireBaseAuthenticator.isLoggedIn() && dbContents.email == FireBaseAuthenticator.getCurrentUserMail()) {
-                            DbUserIdStore.storeUID(dataSnapShot.key!!)
                             callback(dbContents)
                             break
                         }

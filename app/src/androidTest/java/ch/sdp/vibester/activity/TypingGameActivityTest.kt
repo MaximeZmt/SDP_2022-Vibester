@@ -13,15 +13,15 @@ import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.matcher.IntentMatchers
-import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
+import ch.sdp.vibester.TestMode
 import ch.sdp.vibester.api.LastfmMethod
 import ch.sdp.vibester.helper.TypingGameManager
 import ch.sdp.vibester.model.Song
-import dagger.hilt.android.testing.HiltAndroidRule
-import dagger.hilt.android.testing.HiltAndroidTest
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -110,6 +110,7 @@ class TypingGameActivityTest {
 
     @Test
     fun guessLayoutTest() {
+        TestMode.setTest()
         val inputTxt = """
             {
                 "resultCount":1,
@@ -200,7 +201,7 @@ class TypingGameActivityTest {
     */
     @Test
     fun checkIntentOnEnding() {
-
+        TestMode.setTest()
         val inputTxt = """
             {
                 "resultCount":1,
@@ -275,6 +276,7 @@ class TypingGameActivityTest {
 
     @Test
     fun nextButtonOnClick(){
+        TestMode.setTest()
         val gameManager = setGameManager(2)
         assertEquals(gameManager.getSongList().size, 2)
 

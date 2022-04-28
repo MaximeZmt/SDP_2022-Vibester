@@ -12,8 +12,6 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.BuzzerScoreUpdater
 import ch.sdp.vibester.R
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 
 class BuzzerScreenActivity : AppCompatActivity() {

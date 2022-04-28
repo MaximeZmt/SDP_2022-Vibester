@@ -14,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.BitmapGetterApi
 import ch.sdp.vibester.auth.FireBaseAuthenticator
-import ch.sdp.vibester.model.UserSharedPref
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.helper.IntentSwitcher
 import ch.sdp.vibester.user.User
@@ -65,13 +64,14 @@ class ProfileActivity : AppCompatActivity() {
 
         // Do not enable querying database while executing unit test
         val isUnitTest: Boolean = intent.getBooleanExtra("isUnitTest", false)
-        if(!isUnitTest){
+
+        if (!isUnitTest) {
             queryDatabase()
-        }else{
+        } else {
             var upTest: User? = intent.getSerializableExtra("userTestProfile") as User?
             if (upTest == null) {
                 setupProfile(User())
-            }else{
+            } else {
                 setupProfile(upTest)
             }
         }

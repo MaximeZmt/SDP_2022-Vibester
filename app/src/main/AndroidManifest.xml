@@ -25,6 +25,10 @@
         <activity
             android:name=".activity.PartyRoomActivity"
             android:exported="false" />
+
+        <activity
+            android:name=".activity.DeleteSongsActivity"
+            android:exported="false" />
         <activity
             android:name=".activity.SearchUserActivity"
             android:exported="false" />

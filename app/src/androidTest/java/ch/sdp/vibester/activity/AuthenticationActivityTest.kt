@@ -133,6 +133,13 @@ class AuthenticationActivityTest {
     }
 
     @Test
+    fun returnToMain() {
+        onView(withId(R.id.authentication_returnToMain)).perform(click())
+        Intents.intended(IntentMatchers.hasComponent(WelcomeActivity::class.java.name))
+    }
+
+
+    @Test
     fun stringValidationWrongEmail() {
         val username = "john"
         val password = "password"

@@ -43,15 +43,12 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
 
         retButton.setOnClickListener {
             if(findViewById<LinearLayout>(R.id.chooseGame).visibility == VISIBLE){
-                Log.e("MENU LOGIC", "should return menu")
                 IntentSwitcher.switchBackToWelcome(this)
                 finish()
             }else if (findViewById<ConstraintLayout>(R.id.chooseGenre).visibility == VISIBLE){
-                Log.e("MENU LOGIC", "back to choose game")
                 findViewById<LinearLayout>(R.id.chooseGame).visibility = VISIBLE
                 findViewById<ConstraintLayout>(R.id.chooseGenre).visibility = GONE
             }else if (findViewById<ConstraintLayout>(R.id.chooseDifficulty).visibility == VISIBLE){
-                Log.e("MENU LOGIC", "back to choose genre")
                 findViewById<ConstraintLayout>(R.id.chooseGenre).visibility = VISIBLE
                 findViewById<ConstraintLayout>(R.id.chooseDifficulty).visibility = GONE
             }

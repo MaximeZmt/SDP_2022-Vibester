@@ -10,11 +10,12 @@ import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.matcher.IntentMatchers
-import androidx.test.espresso.matcher.ViewMatchers.* //change this import
+import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
+import ch.sdp.vibester.TestMode
 import ch.sdp.vibester.database.DataGetter
-import ch.sdp.vibester.model.UserSharedPref
 import ch.sdp.vibester.user.User
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -49,6 +50,8 @@ class ProfileActivityTest {
             secondArg<(User) -> Unit>().invoke(mockProfile)
         }
         every { mockUsersRepo.updateFieldString(any(), any(), any()) } answers {}
+
+        every { mockUsersRepo.getUserData(any())} answers {}
     }
 
     @After
@@ -94,7 +97,6 @@ class ProfileActivityTest {
         intent.putExtra("isUnitTest", true)
         intent.putExtra("userTestProfile", inputProfile)
 
-        UserSharedPref.setUser(ctx, inputProfile, false)
         createMockInvocation(inputProfile)
 
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
@@ -118,7 +120,6 @@ class ProfileActivityTest {
         intent.putExtra("isUnitTest", true)
         intent.putExtra("userTestProfile", inputProfile)
 
-        UserSharedPref.setUser(ctx, inputProfile, false)
         createMockInvocation(inputProfile)
 
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)

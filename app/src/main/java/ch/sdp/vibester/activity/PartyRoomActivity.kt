@@ -44,6 +44,6 @@ class PartyRoomActivity : AppCompatActivity() {
     }
 
     private fun createRoom(roomName: String) {
-        dataGetter.createRoom(roomName)
+        dataGetter.createRoom(roomName, this::updateUI)
     }
 }

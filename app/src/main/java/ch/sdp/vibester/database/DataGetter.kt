@@ -117,17 +117,17 @@ class DataGetter @Inject constructor() {
             }
     }
 
-    fun createRoom(roomName: String) {
+    fun createRoom(roomName: String,  callback: (PartyRoom) -> Unit) {
         val partyRoom = PartyRoom()
         partyRoom.setRoomName(roomName)
         partyRoom.setEmailList(mutableListOf(authenticator.getCurrUser()?.email!!))
-        partyRoom.setUserCount(1)
         val ref = dbRoomRef.push()
         val key = ref.key
         if (key != null) {
             partyRoom.setRoomID(key)
         }
         ref.setValue(partyRoom)
+        callback(partyRoom)
     }
 
 
@@ -191,13 +191,13 @@ class DataGetter @Inject constructor() {
         })
     }
 
-    fun addUserToRoom(roomID: String, email: String, userID: Int) {
-        dbRoomRef.child(roomID).child("emailList").child(userID.toString()).setValue(email)
-    }
-
-    fun incrementUserCount(roomID: String, userCount: Int) {
-        dbRoomRef.child(roomID).child("userCount").setValue(userCount)
-    }
+//    fun addUserToRoom(roomID: String, email: String, userID: Int) {
+//        dbRoomRef.child(roomID).child("emailList").child(userID.toString()).setValue(email)
+//    }
+//
+//    fun incrementUserCount(roomID: String, userCount: Int) {
+//        dbRoomRef.child(roomID).child("userCount").setValue(userCount)
+//    }
 
     fun getRoomData(roomName: String, callback: (PartyRoom) -> Unit) {
         val queryRooms = dbRoomRef
@@ -215,8 +215,7 @@ class DataGetter @Inject constructor() {
                         val currUserEmail = authenticator.getCurrUser()?.email!!
                         if(!partyRoom.getEmailList().contains(currUserEmail)) {
                             partyRoom.addUserEmail(currUserEmail)
-                            addUserToRoom(partyRoom.getRoomID(), currUserEmail, partyRoom.getUserCount())
-                            incrementUserCount(partyRoom.getRoomID(), partyRoom.getUserCount() + 1)
+                            dbRoomRef.child(partyRoom.getRoomID()).child("emailList").setValue(partyRoom.getEmailList())
                         }
                         callback(partyRoom)
                     }

@@ -276,6 +276,7 @@ class TypingGameActivityTest {
 
     @Test
     fun nextButtonOnClick(){
+        TestMode.setTest()
         val gameManager = setGameManager(2)
         assertEquals(gameManager.getSongList().size, 2)
 

@@ -64,11 +64,10 @@ class ProfileActivity : AppCompatActivity() {
 
         // Do not enable querying database while executing unit test
         val isUnitTest: Boolean = intent.getBooleanExtra("isUnitTest", false)
-        if (!isUnitTest) {
 
+        if (!isUnitTest) {
             queryDatabase()
         } else {
-
             var upTest: User? = intent.getSerializableExtra("userTestProfile") as User?
             if (upTest == null) {
                 setupProfile(User())

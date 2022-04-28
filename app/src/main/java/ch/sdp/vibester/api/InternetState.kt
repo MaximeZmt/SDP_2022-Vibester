@@ -6,7 +6,7 @@ import android.net.ConnectivityManager
 class InternetState private constructor(){
     companion object{
         /**
-         * Get Internet Connexion Status
+         * Get Internet Connection Status
          * @return return true if connected; false otherwise
          */
         fun getInternetStatus(ctx: Context): Boolean{

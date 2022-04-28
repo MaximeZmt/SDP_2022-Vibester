@@ -3,7 +3,6 @@ package ch.sdp.vibester.auth
 
 import android.content.Context
 import android.content.Intent
-import ch.sdp.vibester.TestMode
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.tasks.Task
@@ -37,6 +36,9 @@ class FireBaseAuthenticator @Inject constructor() {
             return mail
         }
 
+        /**
+         * API: return the uid of the user if logged in otherwise empty string
+         */
         fun getCurrentUID(): String {
             var uid = ""
             if (isLoggedIn()) {
@@ -59,8 +61,8 @@ class FireBaseAuthenticator @Inject constructor() {
                     val account = GoogleSignIn.getSignedInAccountFromIntent(data).result
                     val client = Identity.getSignInClient(ctx)
                     val idToken = client.getSignInCredentialFromIntent(data).googleIdToken
-                    val ficred = GoogleAuthProvider.getCredential(idToken, null)
-                    FirebaseAuth.getInstance().signInWithCredential(ficred)
+                    val credential = GoogleAuthProvider.getCredential(idToken, null)
+                    FirebaseAuth.getInstance().signInWithCredential(credential)
                     return account.email
                 } catch (e: Exception) {
                     return "Authentication error"

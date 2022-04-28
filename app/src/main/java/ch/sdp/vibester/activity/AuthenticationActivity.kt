@@ -218,7 +218,6 @@ class AuthenticationActivity : AppCompatActivity() {
     }
 
 
-//TODO
     private fun startNewActivity(email: String) {
         val newIntent = Intent(this, CreateProfileActivity::class.java)
         newIntent.putExtra("email", email)

@@ -20,7 +20,7 @@ import javax.inject.Inject
 class DataGetter @Inject constructor() {
     private val dbUserRef = Database.get().getReference("users")
     private val dbRoomRef = Database.get().getReference("rooms")
-    val authenticator: FireBaseAuthenticator = FireBaseAuthenticator()
+    private val authenticator: FireBaseAuthenticator = FireBaseAuthenticator()
 
 
     /**
@@ -121,7 +121,12 @@ class DataGetter @Inject constructor() {
         val partyRoom = PartyRoom()
         partyRoom.setRoomName(roomName)
         partyRoom.setEmailList(mutableListOf(authenticator.getCurrUser()?.email!!))
-        dbRoomRef.push().setValue(partyRoom)
+        val ref = dbRoomRef.push()
+        val key = ref.key
+        if (key != null) {
+            partyRoom.setRoomID(key)
+        }
+        ref.setValue(partyRoom)
     }
 
 
@@ -185,6 +190,10 @@ class DataGetter @Inject constructor() {
         })
     }
 
+    fun addUserToRoom(roomID: String, email: String) {
+        dbRoomRef.child(roomID).child("emailList").push().setValue(email)
+    }
+
     fun getRoomData(roomName: String, callback: (PartyRoom) -> Unit) {
         val queryRooms = dbRoomRef
             .orderByChild("roomName")
@@ -196,6 +205,11 @@ class DataGetter @Inject constructor() {
                 for (snapshot in dataSnapshot.children) {
                     val partyRoom: PartyRoom? = snapshot.getValue(PartyRoom::class.java)
                     if(partyRoom != null) {
+//                        val currUserEmail = authenticator.getCurrUser()?.email!!
+//                        if(!partyRoom.getEmailList().contains(currUserEmail)) {
+//                            partyRoom.addUserEmail(currUserEmail)
+//                            addUserToRoom(partyRoom.getRoomID(), currUserEmail)
+//                        }
                         callback(partyRoom)
                     }
                 }

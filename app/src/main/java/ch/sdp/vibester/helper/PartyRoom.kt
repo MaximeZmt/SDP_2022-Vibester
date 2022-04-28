@@ -4,9 +4,18 @@ package ch.sdp.vibester.helper
 class PartyRoom() {
     private lateinit var roomName: String
     private lateinit var userEmails: MutableList<String>
+    private lateinit var roomID: String
 
     fun addUserEmail(email: String) {
         userEmails.add(email)
+    }
+
+    fun getRoomID(): String {
+        return roomID
+    }
+
+    fun setRoomID(roomID: String) {
+        this.roomID = roomID
     }
 
     fun getEmailList(): MutableList<String> {

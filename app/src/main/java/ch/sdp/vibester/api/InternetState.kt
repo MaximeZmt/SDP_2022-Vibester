@@ -12,7 +12,8 @@ class InternetState private constructor(){
         fun getInternetStatus(ctx: Context): Boolean{
             val connectivityManager = ctx.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
             val networkInfo = connectivityManager.activeNetworkInfo
-            var isNetwork:Boolean = false
+            var isNetwork: Boolean = false
+
             if(networkInfo != null){
                 isNetwork = networkInfo.isConnected
             }
@@ -21,7 +22,8 @@ class InternetState private constructor(){
 
         private var hasAlreadyAccessedInternetOnce: Boolean = false
         fun hasAccessedInternetOnce(ctx: Context):Boolean{
-            if(!hasAlreadyAccessedInternetOnce&& getInternetStatus(ctx)){
+            if (!hasAlreadyAccessedInternetOnce && getInternetStatus(ctx)) {
+
                 hasAlreadyAccessedInternetOnce = true
             }
             return hasAlreadyAccessedInternetOnce

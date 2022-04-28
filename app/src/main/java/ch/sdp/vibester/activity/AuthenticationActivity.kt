@@ -127,7 +127,7 @@ class AuthenticationActivity : AppCompatActivity() {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(getString(R.string.log_tag), "signInWithCredential:success")
                     var createAcc: Boolean = false
-                    if(task.getResult().additionalUserInfo != null){
+                    if (task.getResult().additionalUserInfo != null) {
                         createAcc = task.getResult().additionalUserInfo!!.isNewUser
                     }
                     val user = auth.currentUser
@@ -239,7 +239,7 @@ class AuthenticationActivity : AppCompatActivity() {
             }
 
             else if('@' in emailText && createAcc && user != null) { //
-                if(TestMode.isTest()){
+                if (TestMode.isTest()) {
                     startNewActivity(emailText)
                 }else{
                     dataGetter.createUser(emailText, user.uid, this::startNewActivity, user.uid)

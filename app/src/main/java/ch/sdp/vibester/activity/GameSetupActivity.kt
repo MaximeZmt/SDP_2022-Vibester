@@ -81,14 +81,16 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
      * Start the game based on the chosen mode
      */
     fun proceedGame(view: View){
-         if(this.game == "local_buzzer"){
-             switchToGame(BuzzerSetupActivity())
-         }
-         else if(this.game == "local_typing"){
-             switchToGame(TypingGameActivity())
-         }
-         else if(this.game == "local_lyrics"){
-            switchToGame(LyricsBelongGameActivity())
+        when (this.game) {
+            "local_buzzer" -> {
+                switchToGame(BuzzerSetupActivity())
+            }
+            "local_typing" -> {
+                switchToGame(TypingGameActivity())
+            }
+            "local_lyrics" -> {
+                switchToGame(LyricsBelongGameActivity())
+            }
         }
     }
 
@@ -127,6 +129,7 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
             R.id.local_buzzer_game_button -> {game  = "local_buzzer"; gameManager = GameManager()}
             R.id.local_typing_game_button -> {game = "local_typing"; gameManager = TypingGameManager()}
             R.id.local_lyrics_game_button -> {game = "local_lyrics"; gameManager = GameManager()}
+            R.id.online_buzzer_game_button -> {game = "online_buzzer"; gameManager = GameManager(); switchToGame(ChoosePartyRoomActivity())}
         }
         findViewById<LinearLayout>(R.id.chooseGame).visibility = GONE
         findViewById<ConstraintLayout>(R.id.chooseGenre).visibility = VISIBLE

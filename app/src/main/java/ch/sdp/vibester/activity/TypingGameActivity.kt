@@ -212,7 +212,7 @@ class TypingGameActivity : GameActivity() {
         toggleNextBtnVisibility(true)
 
         // If currently not in test and has finished the game, update the scores
-        if (isEndGame(gameManager) && !TestMode.isTest()) {
+        if (!TestMode.isTest() && isEndGame(gameManager) && FireBaseAuthenticator.isLoggedIn()) {
             val dataGetter = DataGetter()
             dataGetter.updateRelativeFieldInt(FireBaseAuthenticator.getCurrentUID(), 1, "totalGames")
             dataGetter.updateRelativeFieldInt(FireBaseAuthenticator.getCurrentUID(), gameManager.getCorrectSongs().size, "correctSongs")

@@ -34,17 +34,26 @@ class WelcomeActivity : AppCompatActivity() {
         supportActionBar?.hide()
         setContentView(R.layout.activity_welcome_screen)
 
+        updateUserConnectionStatus()
+
+        !PersistanceSetter.getPersistance()
+
+        Log.e("INFO: Should Access", ((InternetState.hasAccessedInternetOnce(this))).toString())
+        PersistanceSetter.setPersistance()
+        Database.get()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateUserConnectionStatus()
+    }
+
+    private fun updateUserConnectionStatus() {
         val userStatusTextValue = findViewById<TextView>(R.id.user_status)
         if(FireBaseAuthenticator.isLoggedIn() ||  testLoggedIn)
         {
             userStatusTextValue.text = "User: " + FireBaseAuthenticator.getCurrentUserMail()
         }
-
-        val startOfApp = !PersistanceSetter.getPersistance()
-
-        Log.e("INFO: Should Access", ((InternetState.hasAccessedInternetOnce(this))).toString())
-        PersistanceSetter.setPersistance()
-        Database.get()
     }
 
     private fun sendDirectIntent(arg: Class<*>?) {

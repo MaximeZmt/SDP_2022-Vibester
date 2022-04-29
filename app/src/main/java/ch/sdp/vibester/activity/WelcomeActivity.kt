@@ -36,8 +36,6 @@ class WelcomeActivity : AppCompatActivity() {
 
         updateUserConnectionStatus()
 
-        !PersistanceSetter.getPersistance()
-
         Log.e("INFO: Should Access", ((InternetState.hasAccessedInternetOnce(this))).toString())
         PersistanceSetter.setPersistance()
         Database.get()

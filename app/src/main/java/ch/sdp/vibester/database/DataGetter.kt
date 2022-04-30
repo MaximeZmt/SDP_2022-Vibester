@@ -54,14 +54,13 @@ class DataGetter @Inject constructor() {
      * @param fieldName field name to updated
      */
     fun updateRelativeFieldInt(userID: String, newVal: Int, fieldName: String) {
-        if(!TestMode.isTest()) {
-            dbUserRef.child(userID).child(fieldName)
-                .get().addOnSuccessListener { t ->
-                    if(!TestMode.isTest()) {
-                        updateFieldInt(userID, (t.value as Long?)!!.toInt() + newVal, fieldName)
-                    }
-                }
-        }
+        dbUserRef.child(userID).child(fieldName)
+            .get().addOnSuccessListener { t ->
+                var sum  = newVal
+                if(t.value != null){sum += (t.value as Long?)!!.toInt()}
+                updateFieldInt(userID, sum, fieldName)
+            }
+
     }
 
     /**

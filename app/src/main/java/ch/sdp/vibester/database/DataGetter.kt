@@ -98,11 +98,11 @@ class DataGetter @Inject constructor() {
 
 
     /**
-     * Update a subfield of user's field
-     * @param userID the id of the user which is being updated
-     * @param newVal (Boolean) the new value of the field that is being updated
-     * @param fieldName the field name of the field that is being updated
-     * @param subFieldName the field name of the field that is being updated
+     * Update Boolean subfield of user's field
+     * @param userID
+     * @param newVal integer value to update
+     * @param fieldName field name to updated
+     * @param subFieldName subfield name to updated
      */
     fun updateFieldSubFieldBoolean(userID: String, newVal: Boolean, fieldName: String, subFieldName: String) {
         dbUserRef.child(userID)

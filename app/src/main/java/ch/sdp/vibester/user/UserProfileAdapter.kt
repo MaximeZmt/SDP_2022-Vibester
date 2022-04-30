@@ -18,8 +18,15 @@ import ch.sdp.vibester.helper.loadImg
 class UserProfileAdapter constructor(val users: MutableList<User>):
     RecyclerView.Adapter<UserProfileAdapter.UserProfileViewHolder>() {
 
-    val authenticator: FireBaseAuthenticator = FireBaseAuthenticator()
-    val usersRepo: DataGetter = DataGetter()
+    private val authenticator: FireBaseAuthenticator = FireBaseAuthenticator()
+    private val usersRepo: DataGetter = DataGetter()
+    private val currentUser = authenticator.getCurrUser()
+    private var userFriends: Array<String> = arrayOf()
+    private val initFriends = usersRepo.getUserData(currentUser!!.uid,this::setFriends)
+
+    private fun setFriends(user:User){
+        userFriends = user.friends.keys.toTypedArray()
+    }
     /**
      * Create a RecycleView layout with the userProfile view as an item
      */
@@ -50,14 +57,19 @@ class UserProfileAdapter constructor(val users: MutableList<User>):
         fun bind(user: User) {
             itemView.findViewById<TextView>(R.id.search_user_username).text = user.username
             itemView.findViewById<ImageView>(R.id.profile_image).loadImg(user.image)
-
             val addFriendBtn = itemView.findViewById<Button>(R.id.addFriendBtn)
-            addFriendBtn.setOnClickListener{
-                val currentUser = authenticator.getCurrUser()
-                if(currentUser != null){
-                    usersRepo.updateFieldSubFieldBoolean(currentUser!!.uid, true, "friends", user.uid)
-                    addFriendBtn.visibility = View.INVISIBLE
-                    itemView.findViewById<ImageView>(R.id.addedFriendIcon).visibility = View.VISIBLE
+
+            if(userFriends.isNotEmpty() && user.uid in userFriends){
+                addFriendBtn.visibility = View.INVISIBLE
+                itemView.findViewById<ImageView>(R.id.addedFriendIcon).visibility = View.VISIBLE
+            }
+            else{
+                addFriendBtn.setOnClickListener{
+                    if(currentUser != null){
+                        usersRepo.updateFieldSubFieldBoolean(currentUser.uid, true, "friends", user.uid)
+                        addFriendBtn.visibility = View.INVISIBLE
+                        itemView.findViewById<ImageView>(R.id.addedFriendIcon).visibility = View.VISIBLE
+                    }
                 }
             }
         }

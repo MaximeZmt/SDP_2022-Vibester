@@ -19,7 +19,8 @@ import ch.sdp.vibester.user.UserProfileAdapter
  * Search for users based on their usernames.
  */
 class SearchUserActivity : AppCompatActivity() {
-    private var userProfileAdapter: UserProfileAdapter? = null
+    var users = arrayListOf<User>()
+    private var userProfileAdapter: UserProfileAdapter = UserProfileAdapter(this.users)
 
     private var recyclerView: RecyclerView? = null
     private var searchEditText: EditText? = null
@@ -34,6 +35,7 @@ class SearchUserActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.searchList)
         recyclerView!!.setHasFixedSize(true)
         recyclerView!!.layoutManager = LinearLayoutManager(this)
+        recyclerView!!.adapter = userProfileAdapter
 
         searchEditText = findViewById(R.id.searchUserET)
         searchForUsers("")
@@ -53,8 +55,8 @@ class SearchUserActivity : AppCompatActivity() {
      * Callback to update users in adapter during search
      */
     private fun setUserInAdapter(users: ArrayList<User> = ArrayList()) {
-        userProfileAdapter = UserProfileAdapter(users)
-        recyclerView!!.adapter = userProfileAdapter
+        userProfileAdapter.updateUsersList(users)
+        userProfileAdapter.notifyDataSetChanged()
     }
 
     /**

@@ -22,11 +22,25 @@ class UserProfileAdapter constructor(val users: MutableList<User>):
     private val usersRepo: DataGetter = DataGetter()
     private val currentUser = authenticator.getCurrUser()
     private var userFriends: Array<String> = arrayOf()
-    private val initFriends = usersRepo.getUserData(currentUser!!.uid,this::setFriends)
 
+    init{
+        usersRepo.getUserData(currentUser!!.uid,this::setFriends)
+    }
+
+    // Callback for getUserData
     private fun setFriends(user:User){
         userFriends = user.friends.keys.toTypedArray()
     }
+
+    /**
+     * Update users in the search list
+     * @param new_users to set in search list
+     */
+    fun updateUsersList(new_users: MutableList<User>){
+        this.users.clear()
+        this.users.addAll(new_users)
+    }
+
     /**
      * Create a RecycleView layout with the userProfile view as an item
      */
@@ -73,7 +87,6 @@ class UserProfileAdapter constructor(val users: MutableList<User>):
                 }
             }
         }
-
     }
 
 

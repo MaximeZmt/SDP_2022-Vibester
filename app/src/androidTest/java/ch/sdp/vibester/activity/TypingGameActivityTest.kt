@@ -18,10 +18,15 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
-import ch.sdp.vibester.TestMode
 import ch.sdp.vibester.api.LastfmMethod
+import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.helper.TypingGameManager
 import ch.sdp.vibester.model.Song
+import dagger.hilt.android.testing.BindValue
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
+import io.mockk.every
+import io.mockk.mockk
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -30,20 +35,35 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
+@HiltAndroidTest
 class TypingGameActivityTest {
 
-    @JvmField
-    @get:Rule
+    @get:Rule(order = 0)
+    var hiltRule = HiltAndroidRule(this)
+
+    @get:Rule(order = 1)
     val activityRule = ActivityScenarioRule(TypingGameActivity::class.java)
 
     @Before
     fun setUp() {
+        hiltRule.inject()
         Intents.init()
     }
 
     @After
     fun clean() {
         Intents.release()
+    }
+
+    @BindValue
+    @JvmField
+    val mockUsersRepo = mockk<DataGetter>()
+
+    private fun createMockInvocation() {
+        every {mockUsersRepo.updateBestFieldInt(any(), any(), any())} answers {}
+        every {mockUsersRepo.updateRelativeFieldInt(any(), any(), any())} answers {}
+        every {mockUsersRepo.updateFieldInt(any(), any(), any())} answers {}
+
     }
 
     private val expectedSize = 200
@@ -110,7 +130,7 @@ class TypingGameActivityTest {
 
     @Test
     fun guessLayoutTest() {
-        TestMode.setTest()
+        createMockInvocation()
         val inputTxt = """
             {
                 "resultCount":1,
@@ -163,6 +183,7 @@ class TypingGameActivityTest {
         // Do not put gameManager as an extra
         val scn: ActivityScenario<TypingGameActivity> = ActivityScenario.launch(intent)
         val ctx = ApplicationProvider.getApplicationContext() as Context
+        createMockInvocation()
         scn.onActivity { activity ->
             activity.checkAnswer(ctx, songTest, gameManager)
         }
@@ -188,6 +209,7 @@ class TypingGameActivityTest {
             Intent(ApplicationProvider.getApplicationContext(), TypingGameActivity::class.java)
         val scn: ActivityScenario<TypingGameActivity> = ActivityScenario.launch(intent)
         val ctx = ApplicationProvider.getApplicationContext() as Context
+        createMockInvocation()
         scn.onActivity { activity ->
             activity.checkAnswer(ctx, songTest, gameManager)
         }
@@ -201,7 +223,7 @@ class TypingGameActivityTest {
     */
     @Test
     fun checkIntentOnEnding() {
-        TestMode.setTest()
+        createMockInvocation()
         val inputTxt = """
             {
                 "resultCount":1,
@@ -249,6 +271,7 @@ class TypingGameActivityTest {
         val intent = Intent(ApplicationProvider.getApplicationContext(), TypingGameActivity::class.java)
         val scn: ActivityScenario<TypingGameActivity> = ActivityScenario.launch(intent)
         val ctx = ApplicationProvider.getApplicationContext() as Context
+        createMockInvocation()
         scn.onActivity { activity ->
             activity.testFirstRound(ctx, gameManager)
             activity.testProgressBar()
@@ -276,7 +299,7 @@ class TypingGameActivityTest {
 
     @Test
     fun nextButtonOnClick(){
-        TestMode.setTest()
+        createMockInvocation()
         val gameManager = setGameManager(2)
         assertEquals(gameManager.getSongList().size, 2)
 

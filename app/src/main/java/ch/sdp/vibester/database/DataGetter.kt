@@ -68,16 +68,16 @@ class DataGetter @Inject constructor() {
      * @param userID the id of the user which is being updated
      * @param newVal (Int) the new value of the field that is being compared and updated
      * @param fieldName the field name of the field that is being updated
+     * @param newVal integer value to update
+     * @param fieldName field name to updated
      */
     fun updateBestFieldInt(userID: String, newVal: Int, fieldName: String) {
-        if(!TestMode.isTest()) {
-            dbUserRef.child(userID).child(fieldName)
-                .get().addOnSuccessListener { t ->
-                    if(!TestMode.isTest()) {
-                        updateFieldInt(userID, maxOf((t.value as Long?)!!.toInt(), newVal), fieldName)
-                    }
+        dbUserRef.child(userID).child(fieldName)
+            .get().addOnSuccessListener { t ->
+                var maxValue = newVal
+                if(t.value != null){maxValue = maxOf((t.value as Long?)!!.toInt(), newVal)}
+                updateFieldInt(userID, maxValue, fieldName)
                 }
-        }
     }
 
     /**

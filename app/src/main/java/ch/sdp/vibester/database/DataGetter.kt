@@ -25,8 +25,8 @@ class DataGetter @Inject constructor() {
     /**
      * This function updates a specific string field of a user in the database
      * @param userID the id of the user which is being updated
-     * @param newVal (String) the new value of the field that is being updated
-     * @param fieldName the field name of the field that is being updated
+     * @param newVal integer value to update
+     * @param fieldName field name to updated
      */
     fun updateFieldString(userID: String, newVal: String, fieldName: String) {
         dbUserRef.child(userID)
@@ -36,9 +36,9 @@ class DataGetter @Inject constructor() {
 
     /**
      * This function updates a specific int field of a user in the database
-     * @param userID the id of the user which is being updated
-     * @param newVal (Int) the new value of the field that is being updated
-     * @param fieldName the field name of the field that is being updated
+     * @param userID
+     * @param newVal integer value to update
+     * @param fieldName field name to updated
      */
     fun updateFieldInt(userID: String, newVal: Int, fieldName: String) {
         dbUserRef.child(userID)
@@ -49,9 +49,9 @@ class DataGetter @Inject constructor() {
 
     /**
      * This function increments a specific int field of a user in the database
-     * @param userID the id of the user which is being updated
-     * @param newVal (Int) the increment value of the field that is being updated
-     * @param fieldName the field name of the field that is being updated
+     * @param userID
+     * @param newVal integer value to update
+     * @param fieldName field name to updated
      */
     fun updateRelativeFieldInt(userID: String, newVal: Int, fieldName: String) {
         if(!TestMode.isTest()) {
@@ -79,6 +79,15 @@ class DataGetter @Inject constructor() {
                     }
                 }
         }
+    }
+
+    /**
+     * Update the best value of subfield
+     * @param userID
+     * @param newVal integer value to update
+     * @param fieldName field name to updated
+     * @param subFieldName subfield name to updated
+     */
     }
 
 

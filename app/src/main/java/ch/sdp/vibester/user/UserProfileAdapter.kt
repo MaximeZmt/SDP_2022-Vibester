@@ -25,6 +25,7 @@ class UserProfileAdapter constructor(val users: MutableList<User>):
 
     init{
         usersRepo.getUserData(currentUser!!.uid,this::setFriends)
+        if(currentUser!=null) {usersRepo.getUserData(currentUser.uid,this::setFriends)}
     }
 
     // Callback for getUserData

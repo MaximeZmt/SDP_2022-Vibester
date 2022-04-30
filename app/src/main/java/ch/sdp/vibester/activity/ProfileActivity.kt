@@ -62,19 +62,15 @@ class ProfileActivity : AppCompatActivity() {
             finish()
         }
 
-        // Do not enable querying database while executing unit test
-        val isUnitTest: Boolean = intent.getBooleanExtra("isUnitTest", false)
 
-        if (!isUnitTest) {
-            queryDatabase()
+        queryDatabase()
+        val upTest: User? = intent.getSerializableExtra("userTestProfile") as User?
+        if (upTest == null) {
+            setupProfile(User())
         } else {
-            var upTest: User? = intent.getSerializableExtra("userTestProfile") as User?
-            if (upTest == null) {
-                setupProfile(User())
-            } else {
-                setupProfile(upTest)
-            }
+            setupProfile(upTest)
         }
+
 
     }
 
@@ -126,7 +122,10 @@ class ProfileActivity : AppCompatActivity() {
 
 
     private fun queryDatabase() {
-        dataGetter.getUserData(FireBaseAuthenticator().getCurrUser()!!.uid,this::setupProfile)
+        val currentUser = FireBaseAuthenticator().getCurrUser()
+        if(currentUser != null){
+            dataGetter.getUserData(currentUser.uid,this::setupProfile)
+        }
     }
 
 

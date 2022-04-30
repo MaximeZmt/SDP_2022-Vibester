@@ -112,6 +112,20 @@ class DataGetter @Inject constructor() {
     }
 
     /**
+     * Update Integer subfield of user's field
+     * @param userID
+     * @param newVal integer value to update
+     * @param fieldName field name to updated
+     * @param subFieldName subfield name to updated
+     */
+    fun updateFieldSubFieldInt(userID: String, newVal: Int, fieldName: String, subFieldName: String) {
+        dbUserRef.child(userID)
+            .child(fieldName)
+            .child(subFieldName)
+            .setValue(newVal)
+    }
+
+    /**
      * This function creates a new user account in the database
      * @param email the email of the new user
      * @param username the username of the new user

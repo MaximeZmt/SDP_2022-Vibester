@@ -126,7 +126,7 @@ class ProfileActivity : AppCompatActivity() {
 
 
     private fun queryDatabase() {
-        dataGetter.getUserData(this::setupProfile)
+        dataGetter.getUserData(FireBaseAuthenticator().getCurrUser()!!.uid,this::setupProfile)
     }
 
 

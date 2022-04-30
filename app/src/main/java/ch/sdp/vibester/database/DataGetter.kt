@@ -168,25 +168,15 @@ class DataGetter @Inject constructor() {
 
     /**
      * This functions fetches the data of the given user from the database
+     * @param userId
      * @param callback the function to be called when the data of the appropriate user is available
      */
-    fun getUserData(callback: (User) -> Unit) {
-        dbUserRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                for (dataSnapShot in dataSnapshot.children) {
-                    val dbContents = dataSnapShot.getValue<User>()
-                    if (dbContents != null) {
-                        if(FireBaseAuthenticator.isLoggedIn() && dbContents.email == FireBaseAuthenticator.getCurrentUserMail()) {
-                            callback(dbContents)
-                            break
-                        }
-                    }
-                }
-            }
-            override fun onCancelled(databaseError: DatabaseError) {
-                Log.w(ContentValues.TAG, "loadUsers:onCancelled", databaseError.toException())
-            }
-        })
+    fun getUserData(userId: String, callback: (User) -> Unit) {
+        dbUserRef.child(userId).get().addOnSuccessListener {
+            it.getValue<User>()?.let { it1 -> callback(it1) }
+        }.addOnFailureListener{
+            Log.w("DataGetter", "getUserData:onCancelled", it)
+        }
     }
 
     /**

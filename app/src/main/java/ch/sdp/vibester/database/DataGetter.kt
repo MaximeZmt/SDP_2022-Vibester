@@ -157,7 +157,8 @@ class DataGetter @Inject constructor() {
                         users.add(userProfile)
                     }
                 }
-                return callback(users)
+                callback(users)
+                queryUsers.removeEventListener(this);
             }
             override fun onCancelled(error: DatabaseError) {
                 Log.w(ContentValues.TAG, "searchByField:onCancelled", error.toException())

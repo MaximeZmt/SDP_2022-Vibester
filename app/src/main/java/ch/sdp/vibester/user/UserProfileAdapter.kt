@@ -24,7 +24,6 @@ class UserProfileAdapter constructor(val users: MutableList<User>):
     private var userFriends: Array<String> = arrayOf()
 
     init{
-        usersRepo.getUserData(currentUser!!.uid,this::setFriends)
         if(currentUser!=null) {usersRepo.getUserData(currentUser.uid,this::setFriends)}
     }
 
@@ -62,6 +61,8 @@ class UserProfileAdapter constructor(val users: MutableList<User>):
         return users.size
     }
 
+
+
     /**
      * Customer ViewHolder class for UserProfile. Each item contains username and image.
      */
@@ -75,18 +76,21 @@ class UserProfileAdapter constructor(val users: MutableList<User>):
             val addFriendBtn = itemView.findViewById<Button>(R.id.addFriendBtn)
 
             if(userFriends.isNotEmpty() && user.uid in userFriends){
-                addFriendBtn.visibility = View.INVISIBLE
-                itemView.findViewById<ImageView>(R.id.addedFriendIcon).visibility = View.VISIBLE
+                changeBtnToImage()
             }
             else{
                 addFriendBtn.setOnClickListener{
                     if(currentUser != null){
                         usersRepo.updateFieldSubFieldBoolean(currentUser.uid, true, "friends", user.uid)
-                        addFriendBtn.visibility = View.INVISIBLE
-                        itemView.findViewById<ImageView>(R.id.addedFriendIcon).visibility = View.VISIBLE
+                        changeBtnToImage()
                     }
                 }
             }
+        }
+
+        private fun changeBtnToImage(){
+            itemView.findViewById<Button>(R.id.addFriendBtn).visibility = View.INVISIBLE
+            itemView.findViewById<ImageView>(R.id.addedFriendIcon).visibility = View.VISIBLE
         }
     }
 

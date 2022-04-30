@@ -87,6 +87,13 @@ class DataGetter @Inject constructor() {
      * @param fieldName field name to updated
      * @param subFieldName subfield name to updated
      */
+    fun updateBestSubFieldInt(userID: String, newVal: Int, fieldName: String, subFieldName: String) {
+        dbUserRef.child(userID).child(fieldName).child(subFieldName)
+            .get().addOnSuccessListener { t ->
+                var maxValue = newVal
+                if(t.value != null){maxValue = maxOf((t.value as Long?)!!.toInt(), newVal)}
+                updateFieldSubFieldInt(userID, maxValue, fieldName, subFieldName)
+            }
     }
 
 

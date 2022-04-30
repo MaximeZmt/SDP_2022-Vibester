@@ -221,7 +221,7 @@ class TypingGameActivity : GameActivity() {
             dataGetter.updateRelativeFieldInt(FireBaseAuthenticator.getCurrentUID(), 1, "totalGames")
             dataGetter.updateRelativeFieldInt(FireBaseAuthenticator.getCurrentUID(), gameManager.getCorrectSongs().size, "correctSongs")
             dataGetter.updateBestFieldInt(FireBaseAuthenticator.getCurrentUID(), gameManager.getScore(), "bestScore")
-
+            dataGetter.updateBestSubFieldInt(FireBaseAuthenticator.getCurrentUID(), gameManager.getScore(), "scores", gameManager.gameMode)
         }
 
     }

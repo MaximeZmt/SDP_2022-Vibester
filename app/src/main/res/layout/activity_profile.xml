@@ -37,9 +37,11 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/profileStatistics"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.284"
+        app:layout_constraintRight_toLeftOf="@+id/editUser"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/avatar" />
+        app:layout_constraintTop_toBottomOf="@+id/avatar"
+        app:layout_constraintVertical_bias="0.678" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/profile_returnToMain"
@@ -175,22 +177,18 @@
 
     <Button
         android:id="@+id/editUser"
-        android:layout_width="157dp"
-        android:layout_height="58dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="14dp"
-        android:layout_marginBottom="27dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="36dp"
+        android:layout_marginBottom="136dp"
         android:backgroundTint="@color/cg_blue"
         android:elevation="10dp"
         android:stateListAnimator="@null"
-        android:text="@string/editUsername"
+        android:text="Edit"
         android:translationZ="10dp"
         app:layout_constraintBottom_toTopOf="@+id/profileStatistics"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.479"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/username"
-        app:layout_constraintVertical_bias="0.515" />
+        app:layout_constraintLeft_toRightOf="@+id/username" />
 
     <Button
         android:id="@+id/logout"

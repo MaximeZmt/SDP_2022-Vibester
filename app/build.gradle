@@ -116,6 +116,9 @@ dependencies {
     testImplementation "io.mockk:mockk:1.12.3"
     androidTestImplementation "io.mockk:mockk-android:1.12.3"
 
+    implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
+    implementation 'com.google.zxing:core:3.4.0'
+
 }
 
 tasks.withType(Test) {

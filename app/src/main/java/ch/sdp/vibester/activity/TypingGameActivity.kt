@@ -218,10 +218,10 @@ class TypingGameActivity : GameActivity() {
 
         // If currently not in test and has finished the game, update the scores
         if (isEndGame(gameManager)) {
-            dataGetter.updateRelativeFieldInt(FireBaseAuthenticator.getCurrentUID(), 1, "totalGames")
-            dataGetter.updateRelativeFieldInt(FireBaseAuthenticator.getCurrentUID(), gameManager.getCorrectSongs().size, "correctSongs")
-            dataGetter.updateBestFieldInt(FireBaseAuthenticator.getCurrentUID(), gameManager.getScore(), "bestScore")
-            dataGetter.updateBestSubFieldInt(FireBaseAuthenticator.getCurrentUID(), gameManager.getScore(), "scores", gameManager.gameMode)
+            dataGetter.updateFieldInt(FireBaseAuthenticator.getCurrentUID(),  "totalGames", 1, method = "sum")
+            dataGetter.updateFieldInt(FireBaseAuthenticator.getCurrentUID(), "correctSongs", gameManager.getCorrectSongs().size, method = "sum")
+            dataGetter.updateFieldInt(FireBaseAuthenticator.getCurrentUID(),  "bestScore", gameManager.getScore(), method = "best")
+            dataGetter.updateSubFieldInt(FireBaseAuthenticator.getCurrentUID(), gameManager.getScore(), "scores", gameManager.gameMode, method = "best")
         }
 
     }

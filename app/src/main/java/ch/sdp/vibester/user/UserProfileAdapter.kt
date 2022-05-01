@@ -55,7 +55,7 @@ class UserProfileAdapter constructor(val users: MutableList<User>):
             addFriendBtn.setOnClickListener{
                 val currentUser = authenticator.getCurrUser()
                 if(currentUser != null){
-                    usersRepo.updateFieldSubFieldBoolean(currentUser!!.uid, true, "friends", user.uid)
+                    usersRepo.setSubFieldValue(currentUser.uid, "friends", user.uid, true)
                     addFriendBtn.visibility = View.INVISIBLE
                     itemView.findViewById<ImageView>(R.id.addedFriendIcon).visibility = View.VISIBLE
                 }

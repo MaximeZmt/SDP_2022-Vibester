@@ -89,7 +89,7 @@ class DataGetter @Inject constructor() {
         dbUserRef.child(userID).child(fieldName).child(subFieldName)
             .get().addOnSuccessListener { t ->
                 var maxValue = newVal
-                if(t.value != null){maxValue = maxOf((t.value as Long?)!!.toInt(), newVal)}
+                if(t.value != null) {maxValue = maxOf((t.value as Long?)!!.toInt(), newVal)}
                 updateFieldSubFieldInt(userID, maxValue, fieldName, subFieldName)
             }
     }

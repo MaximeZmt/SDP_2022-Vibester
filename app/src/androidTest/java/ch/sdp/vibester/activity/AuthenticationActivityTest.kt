@@ -69,7 +69,7 @@ class AuthenticationActivityTest {
     private fun createMockUser(email: String, uid: String = "mockUID"): FirebaseUser {
         val mockUser = mockk<FirebaseUser>()
         every { mockUser.email } returns email
-        every { mockUser.uid } returns email
+        every { mockUser.uid } returns uid
 
         return mockUser
     }

@@ -174,6 +174,12 @@ class ProfileActivity : AppCompatActivity() {
             findViewById<TextView>(R.id.bestScore).text = user.bestScore.toString()
             findViewById<TextView>(R.id.ranking).text = user.ranking.toString()
         }
+        setupProfilePhoto(user)
+
+        generateQrCode(user.uid)
+    }
+
+    private fun setupProfilePhoto(user: User) {
         CoroutineScope(Dispatchers.Main).launch {
             val task = async(Dispatchers.IO) {
                 try {
@@ -190,8 +196,6 @@ class ProfileActivity : AppCompatActivity() {
                 avatar.setImageBitmap(Bitmap.createScaledBitmap(bm, 1000,1000, false))
             }
         }
-
-        generateQrCode(user.uid)
     }
 
     /**

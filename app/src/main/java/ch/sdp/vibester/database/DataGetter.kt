@@ -57,7 +57,7 @@ class DataGetter @Inject constructor() {
         dbUserRef.child(userID).child(fieldName)
             .get().addOnSuccessListener { t ->
                 var sum  = newVal
-                if(t.value != null){sum += (t.value as Long?)!!.toInt()}
+                if(t.value != null) {sum += (t.value as Long?)!!.toInt()}
                 updateFieldInt(userID, sum, fieldName)
             }
 

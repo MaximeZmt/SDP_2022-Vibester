@@ -4,6 +4,8 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import android.text.InputType
 import android.util.Log
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.Window
 import android.widget.Button
 import android.widget.EditText
@@ -11,6 +13,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.BitmapGetterApi
 import ch.sdp.vibester.auth.FireBaseAuthenticator
@@ -47,19 +50,26 @@ class ProfileActivity : AppCompatActivity() {
 
         val retToMain = findViewById<FloatingActionButton>(R.id.profile_returnToMain)
 
+        val showQrCodeBtn = findViewById<Button>(R.id.showQRCode)
+
         editUsername.setOnClickListener {
             showGeneralDialog(R.id.username, "username")
         }
 
-        retToMain.setOnClickListener{
+        retToMain.setOnClickListener {
             IntentSwitcher.switchBackToWelcome(this)
             finish()
         }
 
-        logoutButton.setOnClickListener{
+        logoutButton.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
             IntentSwitcher.switchBackToWelcome(this)
             finish()
+        }
+
+        showQrCodeBtn.setOnClickListener {
+            findViewById<ConstraintLayout>(R.id.profileContent).visibility = GONE
+            findViewById<ConstraintLayout>(R.id.QrCodePage).visibility = VISIBLE
         }
 
         // Do not enable querying database while executing unit test

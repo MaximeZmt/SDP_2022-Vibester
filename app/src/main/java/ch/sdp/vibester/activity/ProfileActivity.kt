@@ -52,6 +52,8 @@ class ProfileActivity : AppCompatActivity() {
 
         val showQrCodeBtn = findViewById<Button>(R.id.showQRCode)
 
+        val qrCodeToProfile = findViewById<FloatingActionButton>(R.id.qrCode_returnToProfile)
+
         editUsername.setOnClickListener {
             showGeneralDialog(R.id.username, "username")
         }
@@ -70,6 +72,11 @@ class ProfileActivity : AppCompatActivity() {
         showQrCodeBtn.setOnClickListener {
             findViewById<ConstraintLayout>(R.id.profileContent).visibility = GONE
             findViewById<ConstraintLayout>(R.id.QrCodePage).visibility = VISIBLE
+        }
+
+        qrCodeToProfile.setOnClickListener {
+            findViewById<ConstraintLayout>(R.id.QrCodePage).visibility = GONE
+            findViewById<ConstraintLayout>(R.id.profileContent).visibility = VISIBLE
         }
 
         // Do not enable querying database while executing unit test

@@ -104,7 +104,10 @@ class DataGetter @Inject constructor() {
      * @param uid id of the new user
      */
     fun createUser(email: String, username: String, callback: (String) -> Unit, uid: String) {
-        var newUser = User(username, "", email, 0, 0, 0, 0, uid)
+        val newUser = User()
+        newUser.email = email
+        newUser.username = username
+        newUser.uid = uid
         dbUserRef.child(uid).setValue(newUser)
             .addOnSuccessListener {
                 callback(email)

@@ -63,6 +63,8 @@ class TypingGameActivityTest {
         every {mockUsersRepo.updateBestFieldInt(any(), any(), any())} answers {}
         every {mockUsersRepo.updateRelativeFieldInt(any(), any(), any())} answers {}
         every {mockUsersRepo.updateFieldInt(any(), any(), any())} answers {}
+        every {mockUsersRepo.updateBestSubFieldInt(any(), any(), any(), any())} answers {}
+
 
     }
 

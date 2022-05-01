@@ -9,22 +9,33 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
+import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.user.User
 
 import ch.sdp.vibester.user.UserProfileAdapter
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 
 /**
  * Search for users based on their usernames.
  */
+@AndroidEntryPoint
 class SearchUserActivity : AppCompatActivity() {
+
+    @Inject
+    lateinit var usersRepo: DataGetter
+
+    @Inject
+    lateinit var authenticator: FireBaseAuthenticator
+
     var users = arrayListOf<User>()
-    private var userProfileAdapter: UserProfileAdapter = UserProfileAdapter(this.users)
+    lateinit var userProfileAdapter: UserProfileAdapter
 
     private var recyclerView: RecyclerView? = null
     private var searchEditText: EditText? = null
-    var usersRepo = DataGetter()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +46,9 @@ class SearchUserActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.searchList)
         recyclerView!!.setHasFixedSize(true)
         recyclerView!!.layoutManager = LinearLayoutManager(this)
+
+        userProfileAdapter = UserProfileAdapter(this.users, authenticator, usersRepo)
+
         recyclerView!!.adapter = userProfileAdapter
 
         searchEditText = findViewById(R.id.searchUserET)

@@ -197,22 +197,15 @@ class ProfileActivity : AppCompatActivity() {
         val bits = QRCodeWriter().encode(data, BarcodeFormat.QR_CODE, size, size)
         var bmp = MatrixToImageWriter.toBitmap(bits)
         val qrCodeCanvas = Canvas(bmp)
+
         val scaleFactor = 4 // resize the image
         val logo = BitmapFactory.decodeStream(assets.open("logo.png"))
         logo.density = logo.density * scaleFactor
-
         val xLogo = (size - logo.width / scaleFactor) / 2f
         val yLogo = (size - logo.height / scaleFactor) / 2f
 
         qrCodeCanvas.drawBitmap(logo, xLogo, yLogo, null)
 
-        /*val bmp = Bitmap.createBitmap(size, size, Bitmap.Config.RGB_565).also {
-            for (x in 0 until size) {
-                for (y in 0 until size) {
-                    it.setPixel(x, y, if (bits[x, y]) Color.BLACK else Color.WHITE)
-                }
-            }
-        }*/
         findViewById<ImageView>(R.id.qrCode).setImageBitmap(bmp)
     }
 }

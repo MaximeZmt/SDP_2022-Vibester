@@ -165,7 +165,7 @@ class ProfileActivity : AppCompatActivity() {
     }
 
 
-    private fun setupProfile(user: User){
+    private fun setupProfile(user: User) {
         // Currently assuming that empty username means no user !
         if (user.username != ""){
             findViewById<TextView>(R.id.username).text =  user.username
@@ -176,7 +176,9 @@ class ProfileActivity : AppCompatActivity() {
         }
         setupProfilePhoto(user)
 
-        generateQrCode(user.uid)
+        if (user.uid != "") {
+            generateQrCode(user.uid)
+        }
     }
 
     private fun setupProfilePhoto(user: User) {

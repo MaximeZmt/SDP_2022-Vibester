@@ -93,7 +93,6 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun setShowQrCodeBtnListener() {
         findViewById<Button>(R.id.showQRCode).setOnClickListener {
-            //showQrCode(true)
             setLayoutVisibility(R.id.QrCodePage, true)
             setLayoutVisibility(R.id.profileContent, false)
         }
@@ -104,11 +103,6 @@ class ProfileActivity : AppCompatActivity() {
             setLayoutVisibility(R.id.QrCodePage, false)
             setLayoutVisibility(R.id.profileContent, true)
         }
-    }
-
-    private fun showQrCode(boolean: Boolean) {
-        findViewById<ConstraintLayout>(R.id.profileContent).visibility = if (boolean) GONE else VISIBLE
-        findViewById<ConstraintLayout>(R.id.QrCodePage).visibility = if (boolean) VISIBLE else GONE
     }
 
     private fun setLayoutVisibility(layout: Int, isVisible: Boolean){

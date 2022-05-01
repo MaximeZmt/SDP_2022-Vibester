@@ -117,7 +117,6 @@ class ProfileActivity : AppCompatActivity() {
      * @param textId id of the text in the dialog
      * @param name of the dialog
      */
-
     private fun showDialog(title: String, hint: String, id: Int, textId: Int, name: String) {
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
         builder.setTitle(title)

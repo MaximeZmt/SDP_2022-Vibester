@@ -10,8 +10,7 @@ import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.matcher.IntentMatchers
-import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withText
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
 import ch.sdp.vibester.TestMode
@@ -22,6 +21,7 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import io.mockk.every
 import io.mockk.mockk
+import org.hamcrest.CoreMatchers.not
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -77,7 +77,7 @@ class ProfileActivityTest {
     }
 
     @Test
-    fun clickBackToMain(){
+    fun clickBackToMain() {
         val ctx = ApplicationProvider.getApplicationContext() as Context
         val intent = Intent(ctx, ProfileActivity::class.java)
         intent.putExtra("isUnitTest", true)
@@ -86,6 +86,20 @@ class ProfileActivityTest {
 
         onView(withId(R.id.profile_returnToMain)).perform(click())
         Intents.intended(IntentMatchers.hasComponent(WelcomeActivity::class.java.name))
+    }
+
+    @Test
+    fun shouldShowQrCode() {
+        val ctx = ApplicationProvider.getApplicationContext() as Context
+        val intent = Intent(ctx, ProfileActivity::class.java)
+        intent.putExtra("isUnitTest", true)
+
+        val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
+
+        onView(withId(R.id.showQRCode)).perform(click())
+        onView(withId(R.id.QrCodePage)).check(matches(isDisplayed()))
+        onView(withId(R.id.profileContent)).check(matches(not(isDisplayed())))
+        onView(withId(R.id.qrCode)).check(matches(isDisplayed()))
     }
 
 

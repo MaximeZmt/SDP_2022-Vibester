@@ -102,6 +102,19 @@ class ProfileActivityTest {
         onView(withId(R.id.qrCode)).check(matches(isDisplayed()))
     }
 
+    @Test
+    fun clickBackToProfile() {
+        val ctx = ApplicationProvider.getApplicationContext() as Context
+        val intent = Intent(ctx, ProfileActivity::class.java)
+        intent.putExtra("isUnitTest", true)
+
+        val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
+        onView(withId(R.id.showQRCode)).perform(click())
+        onView(withId(R.id.qrCode_returnToProfile)).perform(click())
+        onView(withId(R.id.QrCodePage)).check(matches(not(isDisplayed())))
+        onView(withId(R.id.profileContent)).check(matches(isDisplayed()))
+    }
+
 
     @Test
     fun checkEditProfile() {
@@ -116,14 +129,13 @@ class ProfileActivityTest {
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
 
         val newUsername = "Lalisa Bon idomesniu"
-        onView(withId(R.id.editUser)).perform(ViewActions.click())
+        onView(withId(R.id.editUser)).perform(click())
         onView(withId(0)).perform(
             ViewActions.typeText(newUsername),
             ViewActions.closeSoftKeyboard()
         )
-        onView(withText("OK")).perform(ViewActions.click())
+        onView(withText("OK")).perform(click())
         onView(withId(R.id.username)).check(matches(withText(newUsername)))
-
     }
 
     @Test
@@ -138,9 +150,24 @@ class ProfileActivityTest {
 
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
 
-        onView(withId(R.id.editUser)).perform(ViewActions.click())
-        onView(withText("Cancel")).perform(ViewActions.click())
+        onView(withId(R.id.editUser)).perform(click())
+        onView(withText("Cancel")).perform(click())
         onView(withId(R.id.username)).check(matches(withText("Lalisa Bon")))
+    }
+
+    @Test
+    fun checkQrCodeGenerator() {
+        val inputProfile = User( "Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8, 29, 0, "VvPB47tQCLdjz3YebilS6h5EXdJ3")
+        val ctx = ApplicationProvider.getApplicationContext() as Context
+        val intent = Intent(ctx, ProfileActivity::class.java)
+        intent.putExtra("isUnitTest", true)
+        intent.putExtra("userTestProfile", inputProfile)
+
+        createMockInvocation(inputProfile)
+
+        val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
+        onView(withId(R.id.showQRCode)).perform(click())
+        onView(withId(R.id.qrCode)).check(matches(isDisplayed()))
     }
 
 }

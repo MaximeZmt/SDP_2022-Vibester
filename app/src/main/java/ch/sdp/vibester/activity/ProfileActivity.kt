@@ -31,6 +31,8 @@ import javax.inject.Inject
 class ProfileActivity : AppCompatActivity() {
     @Inject
     lateinit var dataGetter: DataGetter
+    @Inject
+    lateinit var authenticator: FireBaseAuthenticator
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,16 +64,7 @@ class ProfileActivity : AppCompatActivity() {
             finish()
         }
 
-
         queryDatabase()
-        val upTest: User? = intent.getSerializableExtra("userTestProfile") as User?
-        if (upTest == null) {
-            setupProfile(User())
-        } else {
-            setupProfile(upTest)
-        }
-
-
     }
 
     /**
@@ -122,7 +115,7 @@ class ProfileActivity : AppCompatActivity() {
 
 
     private fun queryDatabase() {
-        val currentUser = FireBaseAuthenticator().getCurrUser()
+        val currentUser = authenticator.getCurrUser()
         if(currentUser != null){
             dataGetter.getUserData(currentUser.uid,this::setupProfile)
         }

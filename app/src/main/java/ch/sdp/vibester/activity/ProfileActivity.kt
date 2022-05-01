@@ -1,6 +1,7 @@
 package ch.sdp.vibester.activity
 
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.os.Bundle
 import android.text.InputType
 import android.util.Log
@@ -22,6 +23,8 @@ import ch.sdp.vibester.helper.IntentSwitcher
 import ch.sdp.vibester.user.User
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
+import com.google.zxing.BarcodeFormat
+import com.google.zxing.qrcode.QRCodeWriter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -34,7 +37,6 @@ import javax.inject.Inject
 class ProfileActivity : AppCompatActivity() {
     @Inject
     lateinit var dataGetter: DataGetter
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -140,8 +142,6 @@ class ProfileActivity : AppCompatActivity() {
      * A function that queries the database and fetched the correct user
      * Hard coded for now
      */
-
-
     private fun queryDatabase() {
         dataGetter.getUserData(this::setupProfile)
     }
@@ -175,6 +175,20 @@ class ProfileActivity : AppCompatActivity() {
             }
         }
 
+        generateQrCode(user.uid)
+    }
+
+    private fun generateQrCode(data: String) {
+        val size = 512
+        val bits = QRCodeWriter().encode(data, BarcodeFormat.QR_CODE, size, size)
+        val bmp = Bitmap.createBitmap(size, size, Bitmap.Config.RGB_565).also {
+            for (x in 0 until size) {
+                for (y in 0 until size) {
+                    it.setPixel(x, y, if (bits[x, y]) Color.BLACK else Color.WHITE)
+                }
+            }
+        }
+        findViewById<ImageView>(R.id.qrCode).setImageBitmap(bmp)
     }
 }
 

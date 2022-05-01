@@ -93,16 +93,19 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun setShowQrCodeBtnListener() {
         findViewById<Button>(R.id.showQRCode).setOnClickListener {
-            findViewById<ConstraintLayout>(R.id.profileContent).visibility = GONE
-            findViewById<ConstraintLayout>(R.id.QrCodePage).visibility = VISIBLE
+            showQrCode(true)
         }
     }
 
     private fun setQrCodeToProfileBtnListener() {
         findViewById<FloatingActionButton>(R.id.qrCode_returnToProfile).setOnClickListener {
-            findViewById<ConstraintLayout>(R.id.QrCodePage).visibility = GONE
-            findViewById<ConstraintLayout>(R.id.profileContent).visibility = VISIBLE
+            showQrCode(false)
         }
+    }
+
+    private fun showQrCode(boolean: Boolean) {
+        findViewById<ConstraintLayout>(R.id.profileContent).visibility = if (boolean) GONE else VISIBLE
+        findViewById<ConstraintLayout>(R.id.QrCodePage).visibility = if (boolean) VISIBLE else GONE
     }
 
     /**
@@ -156,7 +159,6 @@ class ProfileActivity : AppCompatActivity() {
 
 
     private fun setupProfile(user: User){
-
         // Currently assuming that empty username means no user !
         if (user.username != ""){
             findViewById<TextView>(R.id.username).text =  user.username
@@ -171,13 +173,12 @@ class ProfileActivity : AppCompatActivity() {
                     Log.e(getString(R.string.log_tag),user.image)
                     val bit = BitmapGetterApi.download("https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/45.png")
                     bit.get(10, TimeUnit.SECONDS)
-                }catch (e: Exception){
+                } catch (e: Exception){
                     null
                 }
             }
             val bm = task.await()
-
-            if(bm != null){
+            if (bm != null) {
                 val avatar = findViewById<ImageView>(R.id.avatar)
                 avatar.setImageBitmap(Bitmap.createScaledBitmap(bm, 1000,1000, false))
             }
@@ -195,7 +196,7 @@ class ProfileActivity : AppCompatActivity() {
         hints[EncodeHintType.ERROR_CORRECTION] = ErrorCorrectionLevel.H
 
         val bits = QRCodeWriter().encode(data, BarcodeFormat.QR_CODE, size, size)
-        var bmp = MatrixToImageWriter.toBitmap(bits)
+        val bmp = MatrixToImageWriter.toBitmap(bits)
         val qrCodeCanvas = Canvas(bmp)
 
         val scaleFactor = 4 // resize the image

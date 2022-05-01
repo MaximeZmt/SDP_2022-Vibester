@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.util.Log
 import ch.sdp.vibester.TestMode
 import ch.sdp.vibester.auth.FireBaseAuthenticator
+import ch.sdp.vibester.helper.PartyRoom
 import ch.sdp.vibester.user.User
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -16,8 +17,9 @@ import javax.inject.Inject
  */
 
 class DataGetter @Inject constructor() {
-    private val dbRef = Database.get().getReference("users")
-    val authenticator: FireBaseAuthenticator = FireBaseAuthenticator()
+    private val dbUserRef = Database.get().getReference("users")
+    private val dbRoomRef = Database.get().getReference("rooms")
+    private val authenticator: FireBaseAuthenticator = FireBaseAuthenticator()
 
 
     /**
@@ -27,7 +29,7 @@ class DataGetter @Inject constructor() {
      * @param fieldName the field name of the field that is being updated
      */
     fun updateFieldString(userID: String, newVal: String, fieldName: String) {
-        dbRef.child(userID)
+        dbUserRef.child(userID)
             .child(fieldName)
             .setValue(newVal)
     }
@@ -39,7 +41,7 @@ class DataGetter @Inject constructor() {
      * @param fieldName the field name of the field that is being updated
      */
     fun updateFieldInt(userID: String, newVal: Int, fieldName: String) {
-        dbRef.child(userID)
+        dbUserRef.child(userID)
             .child(fieldName)
             .setValue(newVal)
     }
@@ -53,7 +55,7 @@ class DataGetter @Inject constructor() {
      */
     fun updateRelativeFieldInt(userID: String, newVal: Int, fieldName: String) {
         if(!TestMode.isTest()) {
-            dbRef.child(userID).child(fieldName)
+            dbUserRef.child(userID).child(fieldName)
                 .get().addOnSuccessListener { t ->
                     if(!TestMode.isTest()) {
                         updateFieldInt(userID, (t.value as Long?)!!.toInt() + newVal, fieldName)
@@ -70,7 +72,7 @@ class DataGetter @Inject constructor() {
      */
     fun updateBestFieldInt(userID: String, newVal: Int, fieldName: String) {
         if(!TestMode.isTest()) {
-            dbRef.child(userID).child(fieldName)
+            dbUserRef.child(userID).child(fieldName)
                 .get().addOnSuccessListener { t ->
                     if(!TestMode.isTest()) {
                         updateFieldInt(userID, maxOf((t.value as Long?)!!.toInt(), newVal), fieldName)
@@ -88,7 +90,7 @@ class DataGetter @Inject constructor() {
      * @param subFieldName the field name of the field that is being updated
      */
     fun updateFieldSubFieldBoolean(userID: String, newVal: Boolean, fieldName: String, subFieldName: String) {
-        dbRef.child(userID)
+        dbUserRef.child(userID)
             .child(fieldName)
             .child(subFieldName)
             .setValue(newVal)
@@ -103,11 +105,30 @@ class DataGetter @Inject constructor() {
      */
     fun createUser(email: String, username: String, callback: (String) -> Unit, uid: String) {
         var newUser = User(username, "", email, 0, 0, 0, 0, uid)
-        dbRef.child(uid).setValue(newUser)
+        dbUserRef.child(uid).setValue(newUser)
             .addOnSuccessListener {
                 callback(email)
             }
     }
+
+    /**
+     * This function creates a new room in the database
+     * @param roomName the name of the new room
+     * @param callback function to be called when the room has been created
+     */
+    fun createRoom(roomName: String,  callback: (PartyRoom) -> Unit) {
+        val partyRoom = PartyRoom()
+        partyRoom.setRoomName(roomName)
+        partyRoom.setEmailList(mutableListOf(authenticator.getCurrUser()?.email!!))
+        val ref = dbRoomRef.push()
+        val key = ref.key
+        if (key != null) {
+            partyRoom.setRoomID(key)
+        }
+        ref.setValue(partyRoom)
+        callback(partyRoom)
+    }
+
 
     /**
      * Search for users by its any field in Firebase Realtime Database
@@ -116,7 +137,7 @@ class DataGetter @Inject constructor() {
      * @param callback function to call with found users by username
      */
     fun searchByField(field: String, searchInput: String, callback:(ArrayList<User>) -> Unit) {
-        val queryUsers = dbRef
+        val queryUsers = dbUserRef
             .orderByChild(field)
             .startAt(searchInput)
             .endAt(searchInput+"\uf8ff")
@@ -149,7 +170,7 @@ class DataGetter @Inject constructor() {
      * @param callback the function to be called when the data of the appropriate user is available
      */
     fun getUserData(callback: (User) -> Unit) {
-        dbRef.addValueEventListener(object : ValueEventListener {
+        dbUserRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for (dataSnapShot in dataSnapshot.children) {
                     val dbContents = dataSnapShot.getValue<User>()
@@ -163,6 +184,45 @@ class DataGetter @Inject constructor() {
             }
             override fun onCancelled(databaseError: DatabaseError) {
                 Log.w(ContentValues.TAG, "loadUsers:onCancelled", databaseError.toException())
+            }
+        })
+    }
+
+    /**
+     * This functions that updates the users of a room
+     * @param partyRoom the new room
+     */
+    fun updateRoomUserList(partyRoom: PartyRoom) {
+        dbRoomRef.child(partyRoom.getRoomID()).child("emailList").setValue(partyRoom.getEmailList())
+    }
+
+    /**
+     * This functions fetches the data of the given user from the database
+     * @param roomName the name of the room to retrieve data from
+     * @param callback the function to be called when the data of the appropriate user is available
+     */
+
+    fun getRoomData(roomName: String, callback: (PartyRoom) -> Unit) {
+        val queryRooms = dbRoomRef
+            .orderByChild("roomName")
+            .equalTo(roomName)
+
+        queryRooms.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                for (snapshot in dataSnapshot.children) {
+                    val partyRoom: PartyRoom? = snapshot.getValue(PartyRoom::class.java)
+                    if(partyRoom != null) {
+                        val currUserEmail = authenticator.getCurrUser()?.email!!
+                        if(!partyRoom.getEmailList().contains(currUserEmail)) {
+                            partyRoom.addUserEmail(currUserEmail)
+                            updateRoomUserList(partyRoom)
+                        }
+                        callback(partyRoom)
+                    }
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {
+                Log.w(ContentValues.TAG, "getRoomData:onCancelled", error.toException())
             }
         })
     }

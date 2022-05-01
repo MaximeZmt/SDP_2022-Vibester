@@ -181,7 +181,7 @@ class ProfileActivity : AppCompatActivity() {
                     Log.e(getString(R.string.log_tag),user.image)
                     val bit = BitmapGetterApi.download("https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/45.png")
                     bit.get(10, TimeUnit.SECONDS)
-                } catch (e: Exception){
+                } catch (e: Exception) {
                     null
                 }
             }

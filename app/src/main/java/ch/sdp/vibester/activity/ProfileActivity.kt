@@ -46,40 +46,11 @@ class ProfileActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_profile)
 
-        val editUsername = findViewById<Button>(R.id.editUser)
-
-        val logoutButton = findViewById<Button>(R.id.logout)
-
-        val retToMain = findViewById<FloatingActionButton>(R.id.profile_returnToMain)
-
-        val showQrCodeBtn = findViewById<Button>(R.id.showQRCode)
-
-        val qrCodeToProfile = findViewById<FloatingActionButton>(R.id.qrCode_returnToProfile)
-
-        editUsername.setOnClickListener {
-            showGeneralDialog(R.id.username, "username")
-        }
-
-        retToMain.setOnClickListener {
-            IntentSwitcher.switchBackToWelcome(this)
-            finish()
-        }
-
-        logoutButton.setOnClickListener {
-            FirebaseAuth.getInstance().signOut()
-            IntentSwitcher.switchBackToWelcome(this)
-            finish()
-        }
-
-        showQrCodeBtn.setOnClickListener {
-            findViewById<ConstraintLayout>(R.id.profileContent).visibility = GONE
-            findViewById<ConstraintLayout>(R.id.QrCodePage).visibility = VISIBLE
-        }
-
-        qrCodeToProfile.setOnClickListener {
-            findViewById<ConstraintLayout>(R.id.QrCodePage).visibility = GONE
-            findViewById<ConstraintLayout>(R.id.profileContent).visibility = VISIBLE
-        }
+        setEditUserNameBtnListener()
+        setLogOutBtnListener()
+        setRetToMainBtnListener()
+        setShowQrCodeBtnListener()
+        setQrCodeToProfileBtnListener()
 
         // Do not enable querying database while executing unit test
         val isUnitTest: Boolean = intent.getBooleanExtra("isUnitTest", false)
@@ -95,6 +66,41 @@ class ProfileActivity : AppCompatActivity() {
             }
         }
 
+    }
+
+    private fun setEditUserNameBtnListener() {
+        findViewById<Button>(R.id.editUser).setOnClickListener {
+            showGeneralDialog(R.id.username, "username")
+        }
+    }
+
+    private fun setLogOutBtnListener() {
+        findViewById<Button>(R.id.logout).setOnClickListener {
+            FirebaseAuth.getInstance().signOut()
+            IntentSwitcher.switchBackToWelcome(this)
+            finish()
+        }
+    }
+
+    private fun setRetToMainBtnListener() {
+        findViewById<FloatingActionButton>(R.id.profile_returnToMain).setOnClickListener {
+            IntentSwitcher.switchBackToWelcome(this)
+            finish()
+        }
+    }
+
+    private fun setShowQrCodeBtnListener() {
+        findViewById<Button>(R.id.showQRCode).setOnClickListener {
+            findViewById<ConstraintLayout>(R.id.profileContent).visibility = GONE
+            findViewById<ConstraintLayout>(R.id.QrCodePage).visibility = VISIBLE
+        }
+    }
+
+    private fun setQrCodeToProfileBtnListener() {
+        findViewById<FloatingActionButton>(R.id.qrCode_returnToProfile).setOnClickListener {
+            findViewById<ConstraintLayout>(R.id.QrCodePage).visibility = GONE
+            findViewById<ConstraintLayout>(R.id.profileContent).visibility = VISIBLE
+        }
     }
 
     /**
@@ -178,6 +184,9 @@ class ProfileActivity : AppCompatActivity() {
         generateQrCode(user.uid)
     }
 
+    /**
+     * generate the qr code bitmap of the given data
+     */
     private fun generateQrCode(data: String) {
         val size = 512
         val bits = QRCodeWriter().encode(data, BarcodeFormat.QR_CODE, size, size)

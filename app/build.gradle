@@ -101,7 +101,7 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'androidx.appcompat:appcompat:1.4.1'
-    implementation 'com.google.android.gms:play-services-auth:20.1.0'
+    implementation 'com.google.android.gms:play-services-auth:20.2.0'
     implementation ('com.github.bumptech.glide:glide:4.13.0', {
         exclude group: 'com.android.support'
     })
@@ -117,8 +117,8 @@ dependencies {
     androidTestImplementation "io.mockk:mockk-android:1.12.3"
 
     implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
-    implementation 'com.google.zxing:core:3.4.0'
-
+    implementation 'com.google.zxing:core:3.4.1'
+    implementation 'com.github.kenglxn.QRGen:android:2.6.0'
 }
 
 tasks.withType(Test) {

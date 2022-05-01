@@ -1,7 +1,6 @@
 package ch.sdp.vibester.activity
 
-import android.graphics.Bitmap
-import android.graphics.Color
+import android.graphics.*
 import android.os.Bundle
 import android.text.InputType
 import android.util.Log
@@ -24,12 +23,15 @@ import ch.sdp.vibester.user.User
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.zxing.BarcodeFormat
+import com.google.zxing.EncodeHintType
 import com.google.zxing.qrcode.QRCodeWriter
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import net.glxn.qrgen.android.MatrixToImageWriter
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -189,14 +191,28 @@ class ProfileActivity : AppCompatActivity() {
      */
     private fun generateQrCode(data: String) {
         val size = 512
+        val hints = HashMap<EncodeHintType?, Any?>()
+        hints[EncodeHintType.ERROR_CORRECTION] = ErrorCorrectionLevel.H
+
         val bits = QRCodeWriter().encode(data, BarcodeFormat.QR_CODE, size, size)
-        val bmp = Bitmap.createBitmap(size, size, Bitmap.Config.RGB_565).also {
+        var bmp = MatrixToImageWriter.toBitmap(bits)
+        val qrCodeCanvas = Canvas(bmp)
+        val scaleFactor = 4 // resize the image
+        val logo = BitmapFactory.decodeStream(assets.open("logo.png"))
+        logo.density = logo.density * scaleFactor
+
+        val xLogo = (size - logo.width / scaleFactor) / 2f
+        val yLogo = (size - logo.height / scaleFactor) / 2f
+
+        qrCodeCanvas.drawBitmap(logo, xLogo, yLogo, null)
+
+        /*val bmp = Bitmap.createBitmap(size, size, Bitmap.Config.RGB_565).also {
             for (x in 0 until size) {
                 for (y in 0 until size) {
                     it.setPixel(x, y, if (bits[x, y]) Color.BLACK else Color.WHITE)
                 }
             }
-        }
+        }*/
         findViewById<ImageView>(R.id.qrCode).setImageBitmap(bmp)
     }
 }

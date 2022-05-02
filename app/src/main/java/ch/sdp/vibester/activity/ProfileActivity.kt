@@ -195,7 +195,9 @@ class ProfileActivity : AppCompatActivity() {
 
     /**
      * generate the qr code bitmap of the given data
+     * @param data Qr Code data
      */
+
     private fun generateQrCode(data: String) {
         val size = 512
         val hints = HashMap<EncodeHintType?, Any?>()

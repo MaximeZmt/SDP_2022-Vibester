@@ -119,7 +119,8 @@ class ProfileActivity : AppCompatActivity() {
     private fun queryDatabase() {
         val currentUser = authenticator.getCurrUser()
         if(currentUser != null){
-            dataGetter.getUserData(currentUser.uid,this::setupProfile)
+            dataGetter.getUserData(currentUser.uid, this::setupProfile)
+
         }
     }
 

@@ -136,7 +136,9 @@ class DataGetter @Inject constructor() {
      * @param searchInput search text inputed by user
      * @param callback function to call with found users by username
      */
-    fun searchByField(field: String, searchInput: String, callback:(ArrayList<User>) -> Unit) {
+    fun searchByField(field: String, searchInput: String, callback:(ArrayList<User>) -> Unit): ArrayList<String> {
+        val uidList: ArrayList<String> = ArrayList()
+
         val queryUsers = dbUserRef
             .orderByChild(field)
             .startAt(searchInput)
@@ -154,6 +156,7 @@ class DataGetter @Inject constructor() {
                 for (snapshot in dataSnapshot.children) {
                     val userProfile:User? = snapshot.getValue(User::class.java)
                     if (userProfile != null) {
+                        uidList.add(userProfile.uid)
                         users.add(userProfile)
                     }
                 }
@@ -163,6 +166,7 @@ class DataGetter @Inject constructor() {
                 Log.w(ContentValues.TAG, "searchByField:onCancelled", error.toException())
             }
         })
+        return uidList
     }
 
     /**

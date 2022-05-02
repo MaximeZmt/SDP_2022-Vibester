@@ -72,6 +72,10 @@ class WelcomeActivity : AppCompatActivity() {
         sendDirectIntent(DownloadActivity::class.java)
     }
 
+    fun switchToQr(view: View) {
+        sendDirectIntent(QrScanningActivity::class.java)
+    }
+
     fun switchToSearch(view: View) {
         // Disable User Search if not connected
         if(!FireBaseAuthenticator.isLoggedIn() && !TestMode.isTest()){

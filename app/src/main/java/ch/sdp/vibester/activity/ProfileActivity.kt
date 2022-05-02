@@ -31,8 +31,10 @@ import javax.inject.Inject
 class ProfileActivity : AppCompatActivity() {
     @Inject
     lateinit var dataGetter: DataGetter
+    
     @Inject
     lateinit var authenticator: FireBaseAuthenticator
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

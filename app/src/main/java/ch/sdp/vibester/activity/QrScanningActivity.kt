@@ -39,6 +39,7 @@ class QrScanningActivity : AppCompatActivity() {
     private var scannedValue = ""
     var uidList: ArrayList<String> = ArrayList()
     val usersRepo: DataGetter = DataGetter()
+    var isTest: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +52,9 @@ class QrScanningActivity : AppCompatActivity() {
         val extras = intent.extras
         if (extras != null) {
             uidList = extras.get("uidList") as ArrayList<String>
+            isTest = extras.getBoolean("isTest", false)
         }else{
+            // If no uid end of activity
             finish()
         }
 
@@ -67,6 +70,10 @@ class QrScanningActivity : AppCompatActivity() {
         val aniSlide: Animation =
             AnimationUtils.loadAnimation(this@QrScanningActivity, R.anim.qr_anim)
         binding.barcodeLine.startAnimation(aniSlide)
+
+        if(isTest){
+            solveDetection(Detector.Detections<Barcode>(null, null, true))
+        }
     }
 
 
@@ -111,28 +118,17 @@ class QrScanningActivity : AppCompatActivity() {
             }
         })
 
-
         barcodeDetector.setProcessor(object : Detector.Processor<Barcode> {
+            public fun runIt(){
+
+            }
             override fun release() {
                 Toast.makeText(applicationContext, "Scanner has been closed", Toast.LENGTH_SHORT)
                     .show()
             }
 
             override fun receiveDetections(detections: Detector.Detections<Barcode>) {
-                val barcodes = detections.detectedItems
-                if (barcodes.size() == 1) {
-                    scannedValue = barcodes.valueAt(0).rawValue
-                    runOnUiThread {
-                        camera.stop()
-                        if (scannedValue in uidList){
-                            usersRepo.updateFieldSubFieldBoolean(FireBaseAuthenticator.getCurrentUID(), true, "friends", scannedValue)
-                            Toast.makeText(this@QrScanningActivity, "Congratulations, you have a new friends", Toast.LENGTH_SHORT).show()
-                        }else{
-                            Toast.makeText(this@QrScanningActivity, "Error not an existing uid", Toast.LENGTH_SHORT).show()
-                        }
-                        finish()
-                    }
-                }
+                solveDetection(detections)
             }
         })
     }
@@ -176,6 +172,35 @@ class QrScanningActivity : AppCompatActivity() {
             } else {
                 // Camera permission not granted, come back to previous activity
                 Toast.makeText(applicationContext, "Camera Permission should be granted for that feature", Toast.LENGTH_LONG).show()
+                finish()
+            }
+        }
+    }
+
+    /*
+     * This section is related to the handler when code is detected
+     */
+
+    private fun solveDetection(detections: Detector.Detections<Barcode>) {
+        val barcodes = detections.detectedItems
+        if (isTest || barcodes.size() == 1) {
+            if (!isTest) {
+                scannedValue = barcodes.valueAt(0).rawValue
+            }
+            runOnUiThread {
+                camera.stop()
+                if (isTest || scannedValue in uidList){
+                    usersRepo.updateFieldSubFieldBoolean(FireBaseAuthenticator.getCurrentUID(), true, "friends", scannedValue)
+                    Toast.makeText(this@QrScanningActivity, "Congratulations, you have a new friends", Toast.LENGTH_SHORT).show()
+                    if(isTest){
+                        val testInt = Intent(this@QrScanningActivity, QrScanningActivity::class.java)
+                        testInt.putExtra("isSuccess", true)
+                        testInt.putExtra("uidList", uidList)
+                        startActivity(testInt)
+                    }
+                }else{
+                    Toast.makeText(this@QrScanningActivity, "Error not an existing uid", Toast.LENGTH_SHORT).show()
+                }
                 finish()
             }
         }

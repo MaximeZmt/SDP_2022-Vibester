@@ -13,6 +13,6 @@ data class User(
     var friends: Map<String, Boolean> = mapOf()
     /* Comment on friend's structure
     * There is no list structure in the firebase. The most conventional way to push and pull data with
-    * several values in one field was to use it as a map. Boolean plays a filler role here, can be anything.
+    * several values in one field was to use it as a map. String is user ID, and Boolean plays a filler role here, can be anything.
     * */
     ) : Serializable {}

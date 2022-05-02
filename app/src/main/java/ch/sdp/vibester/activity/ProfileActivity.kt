@@ -61,20 +61,7 @@ class ProfileActivity : AppCompatActivity() {
         setShowQrCodeBtnListener()
         setQrCodeToProfileBtnListener()
 
-        // Do not enable querying database while executing unit test
-        val isUnitTest: Boolean = intent.getBooleanExtra("isUnitTest", false)
-
-        if (!isUnitTest) {
-            queryDatabase()
-        } else {
-            val upTest: User? = intent.getSerializableExtra("userTestProfile") as User?
-            if (upTest == null) {
-                setupProfile(User())
-            } else {
-                setupProfile(upTest)
-            }
-        }
-
+        queryDatabase()
     }
 
     private fun setEditUserNameBtnListener() {
@@ -98,8 +85,6 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
-        queryDatabase()
-        
     private fun setShowQrCodeBtnListener() {
         findViewById<Button>(R.id.showQRCode).setOnClickListener {
             setLayoutVisibility(R.id.QrCodePage, true)

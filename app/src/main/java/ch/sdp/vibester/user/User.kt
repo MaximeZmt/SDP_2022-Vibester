@@ -10,5 +10,5 @@ data class User(
     var correctSongs: Int = 0,
     var ranking: Int = 0,
     var uid: String = "",
-    var friends: Map<String,Boolean> = mapOf()
+    var friends: Map<String, Boolean> = mapOf()
     ) : Serializable {}

@@ -80,7 +80,7 @@ class DataGetter @Inject constructor() {
     fun updateSubFieldInt(userID: String, newVal: Int, fieldName: String, subFieldName: String, method: String) {
         dbUserRef.child(userID).child(fieldName).child(subFieldName)
             .get().addOnSuccessListener { t ->
-                var finalVal  = newVal
+                var finalVal = newVal
                 if(t.value != null) {
                     val previousVal = (t.value as Long?)!!.toInt()
                     when (method) {

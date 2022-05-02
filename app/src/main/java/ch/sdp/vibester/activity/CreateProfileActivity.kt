@@ -11,7 +11,7 @@ import ch.sdp.vibester.R
 import ch.sdp.vibester.TestMode
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
-import ch.sdp.vibester.database.ImageRepo
+import ch.sdp.vibester.database.ImageGetter
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -22,7 +22,7 @@ class CreateProfileActivity : AppCompatActivity() {
     lateinit var dataGetter: DataGetter
 
     @Inject
-    lateinit var imageRepo: ImageRepo
+    lateinit var imageGetter: ImageGetter
 
     private val REQUEST_CODE = 500
 
@@ -76,7 +76,7 @@ class CreateProfileActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE){
-            imageRepo.uploadFile("profileImg/${FireBaseAuthenticator.getCurrentUID()}", data?.data!!) { updateUI() }
+            imageGetter.uploadFile("profileImg/${FireBaseAuthenticator.getCurrentUID()}", data?.data!!) { updateUI() }
         }
     }
 }

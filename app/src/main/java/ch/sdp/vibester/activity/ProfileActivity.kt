@@ -1,6 +1,7 @@
 package ch.sdp.vibester.activity
 
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.text.InputType
 import android.util.Log
@@ -15,6 +16,7 @@ import ch.sdp.vibester.R
 import ch.sdp.vibester.api.BitmapGetterApi
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
+import ch.sdp.vibester.database.ImageGetter
 import ch.sdp.vibester.helper.IntentSwitcher
 import ch.sdp.vibester.user.User
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -31,6 +33,9 @@ import javax.inject.Inject
 class ProfileActivity : AppCompatActivity() {
     @Inject
     lateinit var dataGetter: DataGetter
+
+    @Inject
+    lateinit var imageGetter: ImageGetter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -129,22 +134,11 @@ class ProfileActivity : AppCompatActivity() {
         dataGetter.getUserData(this::setupProfile)
     }
 
-
-    private fun setupProfile(user: User){
-
-        // Currently assuming that empty username means no user !
-        if (user.username != ""){
-            findViewById<TextView>(R.id.username).text =  user.username
-            findViewById<TextView>(R.id.totalGames).text = user.totalGames.toString()
-            findViewById<TextView>(R.id.correctSongs).text = user.correctSongs.toString()
-            findViewById<TextView>(R.id.bestScore).text = user.bestScore.toString()
-            findViewById<TextView>(R.id.ranking).text = user.ranking.toString()
-        }
+    private fun setImage(imageURI: Uri) {
         CoroutineScope(Dispatchers.Main).launch {
             val task = async(Dispatchers.IO) {
                 try {
-                    Log.e(getString(R.string.log_tag),user.image)
-                    val bit = BitmapGetterApi.download("https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/45.png")
+                    val bit = BitmapGetterApi.download(imageURI.toString())
                     bit.get(10, TimeUnit.SECONDS)
                 }catch (e: Exception){
                     null
@@ -157,6 +151,21 @@ class ProfileActivity : AppCompatActivity() {
                 avatar.setImageBitmap(Bitmap.createScaledBitmap(bm, 1000,1000, false))
             }
         }
+    }
+
+
+    private fun setupProfile(user: User){
+
+        // Currently assuming that empty username means no user !
+        if (user.username != ""){
+            findViewById<TextView>(R.id.username).text =  user.username
+            findViewById<TextView>(R.id.totalGames).text = user.totalGames.toString()
+            findViewById<TextView>(R.id.correctSongs).text = user.correctSongs.toString()
+            findViewById<TextView>(R.id.bestScore).text = user.bestScore.toString()
+            findViewById<TextView>(R.id.ranking).text = user.ranking.toString()
+        }
+
+        imageGetter.fetchImage("blabal", this::setImage)
 
     }
 }

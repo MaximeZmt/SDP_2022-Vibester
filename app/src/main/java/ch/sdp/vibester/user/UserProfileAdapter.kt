@@ -11,8 +11,7 @@ import ch.sdp.vibester.R
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.helper.loadImg
-import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
+
 
 /**
  * UserAdapter to set userProfile views with username and image in RecycleView. It is used to search for users.
@@ -89,8 +88,8 @@ class UserProfileAdapter constructor(val users: MutableList<User>, val authentic
         }
 
         private fun changeBtnToImage(){
-            itemView.findViewById<Button>(R.id.addFriendBtn).visibility = INVISIBLE
-            itemView.findViewById<ImageView>(R.id.addedFriendIcon).visibility = VISIBLE
+            itemView.findViewById<Button>(R.id.addFriendBtn).visibility = View.INVISIBLE
+            itemView.findViewById<ImageView>(R.id.addedFriendIcon).visibility = View.VISIBLE
         }
     }
 

@@ -84,6 +84,7 @@ class ProfileActivityTest {
 
         createMockInvocation(inputProfile)
         createMockAuthenticatorInvocation()
+
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
 
         onView(withId(R.id.username)).check(matches(withText(inputProfile.username)))
@@ -97,6 +98,7 @@ class ProfileActivityTest {
         val inputProfile = User("Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8, 29, 0)
         val ctx = ApplicationProvider.getApplicationContext() as Context
         val intent = Intent(ctx, ProfileActivity::class.java)
+
         createMockInvocation(inputProfile)
         createMockAuthenticatorInvocation()
 
@@ -108,9 +110,13 @@ class ProfileActivityTest {
 
     @Test
     fun shouldShowQrCode() {
+        val inputProfile = User("Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8, 29, 0)
+
         val ctx = ApplicationProvider.getApplicationContext() as Context
         val intent = Intent(ctx, ProfileActivity::class.java)
-        intent.putExtra("isUnitTest", true)
+
+        createMockInvocation(inputProfile)
+        createMockAuthenticatorInvocation()
 
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
 
@@ -122,9 +128,12 @@ class ProfileActivityTest {
 
     @Test
     fun clickBackToProfile() {
+        val inputProfile = User("Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8, 29, 0)
         val ctx = ApplicationProvider.getApplicationContext() as Context
         val intent = Intent(ctx, ProfileActivity::class.java)
-        intent.putExtra("isUnitTest", true)
+
+        createMockInvocation(inputProfile)
+        createMockAuthenticatorInvocation()
 
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
         onView(withId(R.id.showQRCode)).perform(click())
@@ -142,8 +151,8 @@ class ProfileActivityTest {
 
         createMockInvocation(inputProfile)
         createMockAuthenticatorInvocation()
-        val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
 
+        val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
         val newUsername = "Lalisa Bon idomesniu"
         onView(withId(R.id.editUser)).perform(click())
         onView(withId(0)).perform(
@@ -175,10 +184,9 @@ class ProfileActivityTest {
         val inputProfile = User( "Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8, 29, 0, "VvPB47tQCLdjz3YebilS6h5EXdJ3")
         val ctx = ApplicationProvider.getApplicationContext() as Context
         val intent = Intent(ctx, ProfileActivity::class.java)
-        intent.putExtra("isUnitTest", true)
-        intent.putExtra("userTestProfile", inputProfile)
 
         createMockInvocation(inputProfile)
+        createMockAuthenticatorInvocation()
 
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
         onView(withId(R.id.showQRCode)).perform(click())

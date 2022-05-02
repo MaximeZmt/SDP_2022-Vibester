@@ -62,7 +62,7 @@ class SearchUserActivityTest {
             secondArg<(User) -> Unit>().invoke(mockUser)
         }
 
-        every {mockUsersRepo.updateFieldSubFieldBoolean(any(), any(), any(), any())} answers {}
+        every {mockUsersRepo.updateSubFieldInt(any(), any(), any(), any(),any())} answers {}
     }
 
     @BindValue @JvmField

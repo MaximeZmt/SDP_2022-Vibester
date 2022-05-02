@@ -100,8 +100,12 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun setQrCodeToProfileBtnListener() {
         findViewById<FloatingActionButton>(R.id.qrCode_returnToProfile).setOnClickListener {
+        //Otherwise not able to generate qr
+        if(user.uid != ""){
             setLayoutVisibility(R.id.QrCodePage, false)
             setLayoutVisibility(R.id.profileContent, true)
+            }
+
         }
     }
 

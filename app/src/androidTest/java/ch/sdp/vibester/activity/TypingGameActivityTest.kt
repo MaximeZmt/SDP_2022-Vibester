@@ -60,10 +60,11 @@ class TypingGameActivityTest {
     val mockUsersRepo = mockk<DataGetter>()
 
     private fun createMockInvocation() {
-        every {mockUsersRepo.setSubFieldValue(any(), any(), any(),any())} answers {}
-        every {mockUsersRepo.updateFieldInt(any(), any(), any(), any())} answers {}
-        every {mockUsersRepo.setFieldValue(any(), any(), any())} answers {}
-        every {mockUsersRepo.updateSubFieldInt(any(), any(), any(), any(), any())} answers {}
+        every { mockUsersRepo.setSubFieldValue(any(), any(), any(), any()) } answers {}
+        every { mockUsersRepo.updateFieldInt(any(), any(), any(), any()) } answers {}
+        every { mockUsersRepo.setFieldValue(any(), any(), any()) } answers {}
+        every { mockUsersRepo.updateSubFieldInt(any(), any(), any(), any(), any()) } answers {}
+
     }
 
     private val expectedSize = 200

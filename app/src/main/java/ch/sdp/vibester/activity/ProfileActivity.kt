@@ -35,10 +35,17 @@ import net.glxn.qrgen.android.MatrixToImageWriter
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
+/**
+ * Display user profile's data (image, username, scores, etc.) in UI
+ */
 @AndroidEntryPoint
 class ProfileActivity : AppCompatActivity() {
     @Inject
     lateinit var dataGetter: DataGetter
+    
+    @Inject
+    lateinit var authenticator: FireBaseAuthenticator
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,20 +61,7 @@ class ProfileActivity : AppCompatActivity() {
         setShowQrCodeBtnListener()
         setQrCodeToProfileBtnListener()
 
-        // Do not enable querying database while executing unit test
-        val isUnitTest: Boolean = intent.getBooleanExtra("isUnitTest", false)
-
-        if (!isUnitTest) {
-            queryDatabase()
-        } else {
-            val upTest: User? = intent.getSerializableExtra("userTestProfile") as User?
-            if (upTest == null) {
-                setupProfile(User())
-            } else {
-                setupProfile(upTest)
-            }
-        }
-
+        queryDatabase()
     }
 
     private fun setEditUserNameBtnListener() {
@@ -151,14 +145,17 @@ class ProfileActivity : AppCompatActivity() {
 
     /**
      * A function that queries the database and fetched the correct user
-     * Hard coded for now
      */
     private fun queryDatabase() {
-        dataGetter.getUserData(this::setupProfile)
+        val currentUser = authenticator.getCurrUser()
+        if(currentUser != null){
+            dataGetter.getUserData(currentUser.uid, this::setupProfile)
+
+        }
     }
 
 
-    private fun setupProfile(user: User) {
+    private fun setupProfile(user: User){
         // Currently assuming that empty username means no user !
         if (user.username != ""){
             findViewById<TextView>(R.id.username).text =  user.username

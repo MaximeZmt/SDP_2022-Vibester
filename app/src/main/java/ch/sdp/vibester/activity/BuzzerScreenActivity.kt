@@ -59,6 +59,7 @@ class BuzzerScreenActivity : GameActivity() {
             val nPlayers = getIntent.getInt("Number of players")
 
             val answer = findViewById<LinearLayout>(R.id.answer)
+            answer.visibility=View.GONE
             val answerText = findViewById<TextView>(R.id.answerText)
             answerText.text = "The song was Demo by The Placeholders"
 

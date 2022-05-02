@@ -7,6 +7,7 @@ import java.util.concurrent.CompletableFuture
 
 class BuzzerGameManager: GameManager() {
 
+    lateinit var score: BuzzerScoreUpdater
     private lateinit var mediaPlayer: CompletableFuture<MediaPlayer>
     lateinit var scoreUpdater: BuzzerScoreUpdater
 

@@ -65,7 +65,7 @@ class ProfileActivityTest {
     val mockUsersRepo = mockk<DataGetter>()
 
     private fun createMockInvocation(mockProfile: User) {
-        every { mockUsersRepo.getUserData(any(),any()) } answers {
+        every { mockUsersRepo.getUserData(any(), any()) } answers {
             secondArg<(User) -> Unit>().invoke(mockProfile)
         }
         every { mockUsersRepo.updateFieldString(any(), any(), any()) } answers {}

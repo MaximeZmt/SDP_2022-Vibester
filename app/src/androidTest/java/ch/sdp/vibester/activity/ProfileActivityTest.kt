@@ -70,7 +70,6 @@ class ProfileActivityTest {
         }
 
         every { mockUsersRepo.setFieldValue(any(), any(), any()) } answers {}
-        every { mockUsersRepo.getUserData(any(),any())} answers {}
         every { mockUsersRepo.setFieldValue(any(), any(), any()) } answers {}
     }
 

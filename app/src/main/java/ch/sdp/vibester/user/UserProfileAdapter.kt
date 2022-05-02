@@ -74,12 +74,15 @@ class UserProfileAdapter constructor(val users: MutableList<User>, val authentic
             itemView.findViewById<ImageView>(R.id.profile_image).loadImg(user.image)
             val addFriendBtn = itemView.findViewById<Button>(R.id.addFriendBtn)
 
-            addFriendBtn.setOnClickListener{
-                val currentUser = authenticator.getCurrUser()
-                if(currentUser != null){
-                    usersRepo.setSubFieldValue(currentUser.uid, "friends", user.uid, true)
-                    addFriendBtn.visibility = View.INVISIBLE
-                    itemView.findViewById<ImageView>(R.id.addedFriendIcon).visibility = View.VISIBLE
+            if(userFriends.isNotEmpty() && user.uid in userFriends){
+                changeBtnToImage()
+            }
+            else {
+                addFriendBtn.setOnClickListener {
+                    if (currentUser != null) {
+                        usersRepo.setSubFieldValue(currentUser.uid, "friends", user.uid,true)
+                        changeBtnToImage()
+                    }
                 }
             }
         }

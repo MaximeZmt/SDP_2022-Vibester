@@ -178,7 +178,7 @@ class DataGetter @Inject constructor() {
         dbUserRef.child(userId).get().addOnSuccessListener {
             it.getValue<User>()?.let { it1 -> callback(it1) }
         }.addOnFailureListener{
-            Log.w("DataGetter", "getUserData:onCancelled", it)
+            Log.d("DataGetter", "getUserData:onCancelled", it)
         }
     }
 

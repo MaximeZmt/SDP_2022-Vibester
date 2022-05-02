@@ -23,7 +23,8 @@ class ImageGetter @Inject constructor() {
     }
 
     fun fetchImage(imageID: String, callback: (downloadUR: Uri) -> Unit) {
-        storageRef.child("profileImg/1jzr3IhJ1K").downloadUrl.addOnSuccessListener(
+        //profileImg/1jzr3IhJ1K
+        storageRef.child(imageID).downloadUrl.addOnSuccessListener(
             OnSuccessListener(callback))
     }
 

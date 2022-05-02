@@ -165,7 +165,10 @@ class ProfileActivity : AppCompatActivity() {
             findViewById<TextView>(R.id.ranking).text = user.ranking.toString()
         }
 
-        imageGetter.fetchImage("blabal", this::setImage)
+        val imageID = dataGetter.getCurrentUser()?.uid
+
+        //profileImg/1jzr3IhJ1K
+        imageGetter.fetchImage("profileImg/${imageID}", this::setImage)
 
     }
 }

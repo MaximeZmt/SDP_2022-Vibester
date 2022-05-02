@@ -6,6 +6,7 @@ import ch.sdp.vibester.TestMode
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.helper.PartyRoom
 import ch.sdp.vibester.user.User
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -194,6 +195,10 @@ class DataGetter @Inject constructor() {
      */
     fun updateRoomUserList(partyRoom: PartyRoom) {
         dbRoomRef.child(partyRoom.getRoomID()).child("emailList").setValue(partyRoom.getEmailList())
+    }
+
+    fun getCurrentUser(): FirebaseUser? {
+        return authenticator.getCurrUser()
     }
 
     /**

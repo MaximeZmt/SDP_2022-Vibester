@@ -193,7 +193,7 @@ class QrScanningActivity : AppCompatActivity() {
                     usersRepo.updateFieldSubFieldBoolean(FireBaseAuthenticator.getCurrentUID(), true, "friends", scannedValue)
                     Toast.makeText(this@QrScanningActivity, "Congratulations, you have a new friends", Toast.LENGTH_SHORT).show()
                     if(isTest){
-                        val testInt = Intent(this@QrScanningActivity, QrScanningActivity::class.java)
+                        val testInt = Intent(this@QrScanningActivity, WelcomeActivity::class.java)
                         testInt.putExtra("isSuccess", true)
                         testInt.putExtra("uidList", uidList)
                         startActivity(testInt)

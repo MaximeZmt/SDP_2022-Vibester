@@ -57,7 +57,7 @@ class QrScanningActivityTest {
         intent.putExtra("uidList", tempList)
 
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
-        Intents.intended(IntentMatchers.hasComponent(QrScanningActivity::class.java.name))
+        Intents.intended(IntentMatchers.hasComponent(WelcomeActivity::class.java.name))
         //"
         Intents.intended(IntentMatchers.hasExtra("isSuccess", true))
     }

@@ -24,7 +24,7 @@ class UserProfileAdapter constructor(val users: MutableList<User>, val authentic
     private var userFriends: Array<String> = arrayOf()
 
     init{
-        if(currentUser!=null) {usersRepo.getUserData(currentUser.uid,this::setFriends)}
+        if (currentUser != null) { usersRepo.getUserData(currentUser.uid, this::setFriends) }
     }
 
     // Callback for getUserData

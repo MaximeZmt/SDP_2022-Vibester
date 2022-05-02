@@ -101,7 +101,10 @@ class DataGetter @Inject constructor() {
      * @param uid id of the new user
      */
     fun createUser(email: String, username: String, callback: (String) -> Unit, uid: String) {
-        var newUser = User(username, "", email, 0, 0, 0, 0, uid)
+        val newUser = User()
+        newUser.email = email
+        newUser.username = username
+        newUser.uid = uid
         dbUserRef.child(uid).setValue(newUser)
             .addOnSuccessListener {
                 callback(email)
@@ -154,7 +157,8 @@ class DataGetter @Inject constructor() {
                         users.add(userProfile)
                     }
                 }
-                return callback(users)
+                callback(users)
+                queryUsers.removeEventListener(this);
             }
             override fun onCancelled(error: DatabaseError) {
                 Log.w(ContentValues.TAG, "searchByField:onCancelled", error.toException())
@@ -164,25 +168,15 @@ class DataGetter @Inject constructor() {
 
     /**
      * This functions fetches the data of the given user from the database
+     * @param userId
      * @param callback the function to be called when the data of the appropriate user is available
      */
-    fun getUserData(callback: (User) -> Unit) {
-        dbUserRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                for (dataSnapShot in dataSnapshot.children) {
-                    val dbContents = dataSnapShot.getValue<User>()
-                    if (dbContents != null) {
-                        if(FireBaseAuthenticator.isLoggedIn() && dbContents.email == FireBaseAuthenticator.getCurrentUserMail()) {
-                            callback(dbContents)
-                            break
-                        }
-                    }
-                }
-            }
-            override fun onCancelled(databaseError: DatabaseError) {
-                Log.w(ContentValues.TAG, "loadUsers:onCancelled", databaseError.toException())
-            }
-        })
+    fun getUserData(userId: String, callback: (User) -> Unit) {
+        dbUserRef.child(userId).get().addOnSuccessListener {
+            it.getValue<User>()?.let { it1 -> callback(it1) }
+        }.addOnFailureListener{
+            Log.d("DataGetter", "getUserData:onCancelled", it)
+        }
     }
 
     /**

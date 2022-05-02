@@ -193,10 +193,7 @@ class SearchUserActivityTest {
      */
     fun checkRecyclerSubViews( recyclerViewId: Int, position: Int, itemMatcher: Matcher<View?>, subViewId: Int) {
         onView(withId(recyclerViewId)).perform(
-            RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(
-                position
-            )
-        )
+            RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(position))
             .check(matches(atPositionOnView(position, itemMatcher, subViewId)))
     }
 

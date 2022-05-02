@@ -27,6 +27,9 @@ import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
+/**
+ * Display user profile's data (image, username, scores, etc.) in UI
+ */
 @AndroidEntryPoint
 class ProfileActivity : AppCompatActivity() {
     @Inject
@@ -112,10 +115,7 @@ class ProfileActivity : AppCompatActivity() {
 
     /**
      * A function that queries the database and fetched the correct user
-     * Hard coded for now
      */
-
-
     private fun queryDatabase() {
         val currentUser = authenticator.getCurrUser()
         if(currentUser != null){
@@ -126,7 +126,6 @@ class ProfileActivity : AppCompatActivity() {
 
 
     private fun setupProfile(user: User){
-
         // Currently assuming that empty username means no user !
         if (user.username != ""){
             findViewById<TextView>(R.id.username).text =  user.username

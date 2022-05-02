@@ -89,7 +89,7 @@ class UserProfileAdapter constructor(val users: MutableList<User>, val authentic
         }
 
         private fun changeBtnToImage(){
-            itemView.findViewById<Button>(R.id.addFriendBtn).visibility = View.INVISIBLE
+            itemView.findViewById<Button>(R.id.addFriendBtn).visibility = INVISIBLE
             itemView.findViewById<ImageView>(R.id.addedFriendIcon).visibility = View.VISIBLE
         }
     }

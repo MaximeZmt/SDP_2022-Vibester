@@ -25,7 +25,7 @@
         android:id="@+id/difficulty_spinner"
         android:layout_width="275dp"
         android:layout_height="48dp"
-        android:layout_marginTop="86dp"
+        android:layout_marginTop="36dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/getDifficultyText"
@@ -35,7 +35,7 @@
         android:id="@+id/difficulty_explanation"
         android:layout_width="355dp"
         android:layout_height="149dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="28dp"
         android:fontFeatureSettings="smcp"
         android:gravity="center"
         android:text="@string/difficulty_easy"
@@ -46,11 +46,36 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/difficulty_spinner" />
 
+    <TextView
+        android:id="@+id/getSizeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="404dp"
+        android:fontFeatureSettings="smcp"
+        android:text="Please choose the size of your game"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/size_spinner"
+        android:layout_width="275dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="36dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/getSizeText"
+        tools:ignore="SpeakableTextPresentCheck" />
+
     <Button
         android:id="@+id/difficulty_proceed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="216dp"
         android:onClick="proceedGame"
         android:text="@string/proceed"
         app:layout_constraintEnd_toEndOf="parent"

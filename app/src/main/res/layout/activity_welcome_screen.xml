@@ -123,11 +123,10 @@
                 android:backgroundTint="@color/cg_blue"
                 android:elevation="10dp"
                 android:enabled="true"
-                android:onClick="switchToQr"
                 android:stateListAnimator="@null"
                 android:text="@string/welcomeScreen_scanning"
                 android:translationZ="10dp"
-                android:visibility="visible"
+                android:visibility="gone"
                 app:icon="@android:drawable/ic_menu_camera" />
 
             <Space

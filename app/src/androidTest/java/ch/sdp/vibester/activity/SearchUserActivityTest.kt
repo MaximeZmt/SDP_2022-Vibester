@@ -1,5 +1,6 @@
 package ch.sdp.vibester.activity
 
+import android.content.Context
 import android.content.Intent
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
@@ -13,6 +14,7 @@ import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.intent.Intents
+import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.matcher.BoundedMatcher
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility
@@ -94,6 +96,20 @@ class SearchUserActivityTest {
     @After
     fun clean() {
         Intents.release()
+    }
+
+    @Test
+    fun goToScanQr() {
+        val ctx = ApplicationProvider.getApplicationContext() as Context
+        val intent = Intent(ctx, SearchUserActivity::class.java)
+        intent.putExtra("isTest", true)
+
+        createMockInvocation()
+        createMockAuthenticator()
+
+        val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
+        onView(withId(R.id.searchUser_scanning)).perform(click())
+        Intents.intended(IntentMatchers.hasComponent(QrScanningActivity::class.java.name))
     }
 
     @Test

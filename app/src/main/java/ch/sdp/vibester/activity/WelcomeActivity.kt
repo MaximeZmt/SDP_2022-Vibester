@@ -72,10 +72,6 @@ class WelcomeActivity : AppCompatActivity() {
         sendDirectIntent(DownloadActivity::class.java)
     }
 
-    fun switchToQr(view: View) {
-        sendDirectIntent(QrScanningActivity::class.java)
-    }
-
     fun switchToSearch(view: View) {
         sendDirectIntent(SearchUserActivity::class.java)
     }

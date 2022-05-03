@@ -62,9 +62,14 @@ class SearchUserActivity : AppCompatActivity() {
 
         val buttonScan: FloatingActionButton = findViewById(R.id.searchUser_scanning)
 
+        val extras = intent.extras
+
         buttonScan.setOnClickListener {
             val qrIntent = Intent(this, QrScanningActivity::class.java)
             qrIntent.putExtra("uidList", uidList)
+            if (extras != null) {
+                qrIntent.putExtra("isTest", extras.getBoolean("isTest", false))
+            }
             startActivity(qrIntent)
         }
 

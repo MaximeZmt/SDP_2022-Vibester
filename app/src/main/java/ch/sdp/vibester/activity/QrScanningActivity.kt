@@ -37,9 +37,9 @@ class QrScanningActivity : AppCompatActivity() {
 
     // Value
     private var scannedValue = ""
+    private var isTest: Boolean = false
     var uidList: ArrayList<String> = ArrayList()
     val usersRepo: DataGetter = DataGetter()
-    var isTest: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +55,8 @@ class QrScanningActivity : AppCompatActivity() {
             isTest = extras.getBoolean("isTest", false)
         }else{
             // If no uid end of activity
+            val returnInt = Intent(this@QrScanningActivity, SearchUserActivity::class.java)
+            startActivity(returnInt)
             finish()
         }
 
@@ -119,12 +121,8 @@ class QrScanningActivity : AppCompatActivity() {
         })
 
         barcodeDetector.setProcessor(object : Detector.Processor<Barcode> {
-            public fun runIt(){
-
-            }
             override fun release() {
-                Toast.makeText(applicationContext, "Scanner has been closed", Toast.LENGTH_SHORT)
-                    .show()
+                Toast.makeText(applicationContext, "Scanner has been closed", Toast.LENGTH_SHORT).show()
             }
 
             override fun receiveDetections(detections: Detector.Detections<Barcode>) {
@@ -172,6 +170,8 @@ class QrScanningActivity : AppCompatActivity() {
             } else {
                 // Camera permission not granted, come back to previous activity
                 Toast.makeText(applicationContext, "Camera Permission should be granted for that feature", Toast.LENGTH_LONG).show()
+                val returnInt = Intent(this@QrScanningActivity, SearchUserActivity::class.java)
+                startActivity(returnInt)
                 finish()
             }
         }
@@ -189,20 +189,17 @@ class QrScanningActivity : AppCompatActivity() {
             }
             runOnUiThread {
                 camera.stop()
+                val endInt = Intent(this@QrScanningActivity, SearchUserActivity::class.java)
                 if (isTest || scannedValue in uidList){
                     if (!isTest) {
                         usersRepo.setSubFieldValue(FireBaseAuthenticator.getCurrentUID(),"friends", scannedValue, true)
                     }
                     Toast.makeText(this@QrScanningActivity, "Congratulations, you have a new friends", Toast.LENGTH_SHORT).show()
-                    if(isTest){
-                        val testInt = Intent(this@QrScanningActivity, WelcomeActivity::class.java)
-                        testInt.putExtra("isSuccess", true)
-                        testInt.putExtra("uidList", uidList)
-                        startActivity(testInt)
-                    }
+                    endInt.putExtra("isSuccess", true)
                 }else{
                     Toast.makeText(this@QrScanningActivity, "Error not an existing uid", Toast.LENGTH_SHORT).show()
                 }
+                startActivity(endInt)
                 finish()
             }
         }

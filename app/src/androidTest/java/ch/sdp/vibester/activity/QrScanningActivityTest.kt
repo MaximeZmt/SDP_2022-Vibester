@@ -57,11 +57,19 @@ class QrScanningActivityTest {
         intent.putExtra("uidList", tempList)
 
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
-        Intents.intended(IntentMatchers.hasComponent(WelcomeActivity::class.java.name))
-        //"
+        Intents.intended(IntentMatchers.hasComponent(SearchUserActivity::class.java.name))
         Intents.intended(IntentMatchers.hasExtra("isSuccess", true))
     }
 
+
+    @Test
+    fun testNoExtra() {
+        val ctx = ApplicationProvider.getApplicationContext() as Context
+        val intent = Intent(ctx, QrScanningActivity::class.java)
+
+        val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
+        Intents.intended(IntentMatchers.hasComponent(SearchUserActivity::class.java.name))
+    }
 
 
 }

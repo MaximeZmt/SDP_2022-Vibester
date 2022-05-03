@@ -36,11 +36,12 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         supportActionBar?.hide()
         setContentView(R.layout.activity_game_setup_screen)
-        val ctx: Context = this
+        setReturnBtnListener()
+        setSpinnerListener(this)
+    }
 
-        val retButton: FloatingActionButton = findViewById(R.id.gameSetup_returnToMain)
-
-        retButton.setOnClickListener {
+    private fun setReturnBtnListener() {
+        findViewById<FloatingActionButton>(R.id.gameSetup_returnToMain).setOnClickListener {
             if (findViewById<LinearLayout>(R.id.chooseGame).visibility == VISIBLE) {
                 IntentSwitcher.switchBackToWelcome(this)
                 finish()
@@ -52,8 +53,9 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
                 findViewById<ConstraintLayout>(R.id.gameSetting).visibility = GONE
             }
         }
+    }
 
-
+    private fun setSpinnerListener(ctx: Context) {
         val spinnerDifficulty: Spinner = findViewById(R.id.difficulty_spinner)
         val adapter = ArrayAdapter.createFromResource(
             ctx, R.array.difficulties_name, android.R.layout.simple_spinner_item

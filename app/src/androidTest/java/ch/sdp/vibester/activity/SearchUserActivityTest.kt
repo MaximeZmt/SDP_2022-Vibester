@@ -62,7 +62,9 @@ class SearchUserActivityTest {
             secondArg<(User) -> Unit>().invoke(mockUser)
         }
 
-        every {mockUsersRepo.updateFieldSubFieldBoolean(any(), any(), any(), any())} answers {}
+        every {mockUsersRepo.updateSubFieldInt(any(), any(), any(), any(),any())} answers {}
+        every {mockUsersRepo.setSubFieldValue(any(), any(), any(), any())} answers {}
+
     }
 
     @BindValue @JvmField
@@ -191,13 +193,13 @@ class SearchUserActivityTest {
     /**
      * Custom functions to match the item views inside Recycle View
      */
-    fun checkRecyclerSubViews( recyclerViewId: Int, position: Int, itemMatcher: Matcher<View?>, subViewId: Int) {
+    private fun checkRecyclerSubViews( recyclerViewId: Int, position: Int, itemMatcher: Matcher<View?>, subViewId: Int) {
         onView(withId(recyclerViewId)).perform(
             RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(position))
             .check(matches(atPositionOnView(position, itemMatcher, subViewId)))
     }
 
-    fun atPositionOnView(position: Int, itemMatcher: Matcher<View?>,  targetViewId: Int): Matcher<View?> {
+    private fun atPositionOnView(position: Int, itemMatcher: Matcher<View?>, targetViewId: Int): Matcher<View?> {
         return object : BoundedMatcher<View?, RecyclerView>(RecyclerView::class.java) {
             override fun describeTo(description: Description) {
                 description.appendText("has view id $itemMatcher at position $position")

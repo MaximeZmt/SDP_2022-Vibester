@@ -17,19 +17,24 @@ import ch.sdp.vibester.helper.DisplayContents
 import ch.sdp.vibester.helper.GameManager
 import ch.sdp.vibester.helper.TypingGameManager
 import ch.sdp.vibester.model.Song
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
+import javax.inject.Inject
 
 /**
  * Class that represent a game
  */
-
+@AndroidEntryPoint
 class TypingGameActivity : GameActivity() {
     private lateinit var gameManager: TypingGameManager
     private var gameIsOn: Boolean = true // done to avoid clicks on songs after the round is over
+
+    @Inject
+    lateinit var dataGetter: DataGetter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -212,12 +217,11 @@ class TypingGameActivity : GameActivity() {
         toggleNextBtnVisibility(true)
 
         // If currently not in test and has finished the game, update the scores
-        if (isEndGame(gameManager) && !TestMode.isTest()) {
-            val dataGetter = DataGetter()
-            dataGetter.updateRelativeFieldInt(FireBaseAuthenticator.getCurrentUID(), 1, "totalGames")
-            dataGetter.updateRelativeFieldInt(FireBaseAuthenticator.getCurrentUID(), gameManager.getCorrectSongs().size, "correctSongs")
-            dataGetter.updateBestFieldInt(FireBaseAuthenticator.getCurrentUID(), gameManager.getScore(), "bestScore")
-
+        if (isEndGame(gameManager)) {
+            dataGetter.updateFieldInt(FireBaseAuthenticator.getCurrentUID(),  "totalGames", 1, method = "sum")
+            dataGetter.updateFieldInt(FireBaseAuthenticator.getCurrentUID(), "correctSongs", gameManager.getCorrectSongs().size, method = "sum")
+            dataGetter.updateFieldInt(FireBaseAuthenticator.getCurrentUID(),  "bestScore", gameManager.getScore(), method = "best")
+            dataGetter.updateSubFieldInt(FireBaseAuthenticator.getCurrentUID(), gameManager.getScore(), "scores", gameManager.gameMode, method = "best")
         }
 
     }

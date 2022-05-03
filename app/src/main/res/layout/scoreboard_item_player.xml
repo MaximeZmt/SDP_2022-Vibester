@@ -65,7 +65,7 @@
             android:layout_height="wrap_content"
             android:textSize="30sp"
             android:textStyle="bold"
-            android:textColor="@color/colorBtpn"
+            android:textColor="@color/colorBtn"
             tools:text="54" />
     </LinearLayout>
 

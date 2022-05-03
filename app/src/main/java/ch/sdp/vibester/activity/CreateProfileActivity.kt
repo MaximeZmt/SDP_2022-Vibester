@@ -42,7 +42,7 @@ class CreateProfileActivity : AppCompatActivity() {
 
         btCreateAcc.setOnClickListener {
             if (!TestMode.isTest()){
-                dataGetter.updateFieldString(FireBaseAuthenticator.getCurrentUID(), username.text.toString(), "username")
+                dataGetter.setFieldValue(FireBaseAuthenticator.getCurrentUID(), "username", username.text.toString())
             }
             startNewActivity(email)
         }

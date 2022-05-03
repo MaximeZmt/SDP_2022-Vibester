@@ -125,7 +125,8 @@ class ProfileActivity : AppCompatActivity() {
             findViewById<TextView>(textId).text = input.text.toString()
 
             if(name == "username"){
-                dataGetter.updateFieldString(FireBaseAuthenticator.getCurrentUID(), input.text.toString(), "username")
+                dataGetter.setFieldValue(FireBaseAuthenticator.getCurrentUID(), "username",  input.text.toString())
+
             }
         }
 

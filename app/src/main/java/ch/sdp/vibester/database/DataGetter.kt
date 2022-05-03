@@ -21,80 +21,77 @@ class DataGetter @Inject constructor() {
     private val dbRoomRef = Database.get().getReference("rooms")
     private val authenticator: FireBaseAuthenticator = FireBaseAuthenticator()
 
-
     /**
-     * This function updates a specific string field of a user in the database
-     * @param userID the id of the user which is being updated
-     * @param newVal (String) the new value of the field that is being updated
-     * @param fieldName the field name of the field that is being updated
+     * Set field value
+     * @param uid user identifier
+     * @param newVal new value to set
+     * @param fieldName
      */
-    fun updateFieldString(userID: String, newVal: String, fieldName: String) {
-        dbUserRef.child(userID)
+    fun setFieldValue(uid: String, fieldName: String, newVal: Any) {
+        dbUserRef.child(uid)
             .child(fieldName)
             .setValue(newVal)
     }
 
     /**
-     * This function updates a specific int field of a user in the database
-     * @param userID the id of the user which is being updated
-     * @param newVal (Int) the new value of the field that is being updated
-     * @param fieldName the field name of the field that is being updated
+     * Set subfield value
+     * @param uid user identifier
+     * @param newVal new value to set
+     * @param fieldName
+     * @param subFieldName
      */
-    fun updateFieldInt(userID: String, newVal: Int, fieldName: String) {
-        dbUserRef.child(userID)
-            .child(fieldName)
-            .setValue(newVal)
-    }
-
-
-    /**
-     * This function increments a specific int field of a user in the database
-     * @param userID the id of the user which is being updated
-     * @param newVal (Int) the increment value of the field that is being updated
-     * @param fieldName the field name of the field that is being updated
-     */
-    fun updateRelativeFieldInt(userID: String, newVal: Int, fieldName: String) {
-        if(!TestMode.isTest()) {
-            dbUserRef.child(userID).child(fieldName)
-                .get().addOnSuccessListener { t ->
-                    if(!TestMode.isTest()) {
-                        updateFieldInt(userID, (t.value as Long?)!!.toInt() + newVal, fieldName)
-                    }
-                }
-        }
-    }
-
-    /**
-     * This function sets the best between current and given in argument value
-     * @param userID the id of the user which is being updated
-     * @param newVal (Int) the new value of the field that is being compared and updated
-     * @param fieldName the field name of the field that is being updated
-     */
-    fun updateBestFieldInt(userID: String, newVal: Int, fieldName: String) {
-        if(!TestMode.isTest()) {
-            dbUserRef.child(userID).child(fieldName)
-                .get().addOnSuccessListener { t ->
-                    if(!TestMode.isTest()) {
-                        updateFieldInt(userID, maxOf((t.value as Long?)!!.toInt(), newVal), fieldName)
-                    }
-                }
-        }
-    }
-
-
-    /**
-     * Update a subfield of user's field
-     * @param userID the id of the user which is being updated
-     * @param newVal (Boolean) the new value of the field that is being updated
-     * @param fieldName the field name of the field that is being updated
-     * @param subFieldName the field name of the field that is being updated
-     */
-    fun updateFieldSubFieldBoolean(userID: String, newVal: Boolean, fieldName: String, subFieldName: String) {
-        dbUserRef.child(userID)
+    fun setSubFieldValue(uid: String, fieldName: String, subFieldName: String, newVal: Any) {
+        dbUserRef.child(uid)
             .child(fieldName)
             .child(subFieldName)
             .setValue(newVal)
     }
+
+
+    /**
+     * Update integer value in a subfield based on method sum/best
+     * @param userID
+     * @param newVal
+     * @param fieldName
+     */
+    fun updateFieldInt(uid: String, fieldName: String, newVal: Int, method:String) {
+        dbUserRef.child(uid).child(fieldName)
+            .get().addOnSuccessListener { t ->
+                var finalVal  = newVal
+                if(t.value != null) {
+                    val previousVal = (t.value as Long?)!!.toInt()
+                    when (method) {
+                        "sum" -> finalVal += previousVal
+                        "best" -> finalVal = maxOf(previousVal, newVal)
+                    }
+                }
+                setFieldValue(uid, fieldName, finalVal)
+            }
+    }
+
+
+    /**
+     * Update the integer value of subfield based on method sum/best
+     * @param userID
+     * @param newVal
+     * @param fieldName
+     * @param subFieldName
+     */
+    fun updateSubFieldInt(userID: String, newVal: Int, fieldName: String, subFieldName: String, method: String) {
+        dbUserRef.child(userID).child(fieldName).child(subFieldName)
+            .get().addOnSuccessListener { t ->
+                var finalVal = newVal
+                if(t.value != null) {
+                    val previousVal = (t.value as Long?)!!.toInt()
+                    when (method) {
+                        "sum" -> finalVal += previousVal
+                        "best" -> finalVal = maxOf(previousVal, newVal)
+                    }
+                }
+                setSubFieldValue(userID, fieldName, subFieldName, finalVal)
+            }
+    }
+
 
     /**
      * This function creates a new user account in the database

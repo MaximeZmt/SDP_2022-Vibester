@@ -46,22 +46,20 @@ class ScoreBoardActivityTest {
     @Test
     fun rockBtnShouldSetUpRecycleView() {
         onView(withId(R.id.rockButton)).perform(click())
-        onView(withId(R.id.scoreboard)).check(matches(isDisplayed()))
+        onView(withId(R.id.scoreboard_content_scrolling)).check(matches(isDisplayed()))
     }
 
-//TODO fix this test
+    @Test
+    fun rockBtnShouldEnableRecycleViewClick() {
+        onView(withId(R.id.rockButton)).perform(click())
 
-//    @Test
-//    fun rockBtnShouldEnableRecycleViewClick() {
-//        onView(withId(R.id.rockButton)).perform(click())
-//
-//        onView((withId(R.id.scoreboard)))
-//            .perform(
-//                RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-//                    2, click()
-//                )
-//            )
-//    }
+        onView((withId(R.id.recycler_view)))
+            .perform(
+                RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                    2, click()
+                )
+            )
+    }
 
     @Test
     fun topBtnClick() {

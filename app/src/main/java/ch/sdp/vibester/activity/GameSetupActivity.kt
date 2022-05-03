@@ -38,8 +38,8 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         supportActionBar?.hide()
         setContentView(R.layout.activity_game_setup_screen)
         setReturnBtnListener()
-        setDifficultySpinnerListener(this)
-        setGameSizeSpinnerListener(this)
+        setSpinnerListener(this, R.id.difficulty_spinner, R.array.difficulties_name)
+        setSpinnerListener(this, R.id.size_spinner, R.array.game_size_options)
     }
 
     private fun setReturnBtnListener() {
@@ -55,14 +55,6 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
                 findViewById<ConstraintLayout>(R.id.gameSetting).visibility = GONE
             }
         }
-    }
-
-    private fun setDifficultySpinnerListener(ctx: Context) {
-        setSpinnerListener(ctx, R.id.difficulty_spinner, R.array.difficulties_name)
-    }
-
-    private fun setGameSizeSpinnerListener(ctx: Context) {
-        setSpinnerListener(ctx, R.id.size_spinner, R.array.game_size_options)
     }
 
     private fun setSpinnerListener(ctx: Context, spinnerId: Int, resourceId: Int) {

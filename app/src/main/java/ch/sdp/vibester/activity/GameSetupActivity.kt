@@ -29,6 +29,7 @@ import retrofit2.Response
 class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     var difficulty = "Easy"
     var game = "local_buzzer"
+    var gameSize = "Five"
     lateinit var gameManager: GameManager;
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +38,8 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         supportActionBar?.hide()
         setContentView(R.layout.activity_game_setup_screen)
         setReturnBtnListener()
-        setSpinnerListener(this)
+        setDifficultySpinnerListener(this)
+        setGameSizeSpinnerListener(this)
     }
 
     private fun setReturnBtnListener() {
@@ -55,7 +57,7 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         }
     }
 
-    private fun setSpinnerListener(ctx: Context) {
+    private fun setDifficultySpinnerListener(ctx: Context) {
         val spinnerDifficulty: Spinner = findViewById(R.id.difficulty_spinner)
         val adapter = ArrayAdapter.createFromResource(
             ctx, R.array.difficulties_name, android.R.layout.simple_spinner_item
@@ -65,31 +67,58 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         spinnerDifficulty.onItemSelectedListener = this
     }
 
+    private fun setGameSizeSpinnerListener(ctx: Context) {
+        val spinnerSize: Spinner = findViewById(R.id.size_spinner)
+        val adapter = ArrayAdapter.createFromResource(
+            ctx, R.array.game_size_options, android.R.layout.simple_spinner_item
+        )
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerSize.adapter = adapter
+        spinnerSize.onItemSelectedListener = this
+    }
+
     override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-        difficulty = parent.getItemAtPosition(position).toString()
-        when(difficulty) {
-            "Easy"      -> setDifficultyText(R.string.difficulty_easy)
-            "Medium"    -> setDifficultyText(R.string.difficulty_medium)
-            "Hard"      -> setDifficultyText(R.string.difficulty_hard)
+        if (parent.id == R.id.difficulty_spinner) {
+            difficulty = parent.getItemAtPosition(position).toString()
+            when (difficulty) {
+                "Easy"      -> setDifficultyText(R.string.difficulty_easy)
+                "Medium"    -> setDifficultyText(R.string.difficulty_medium)
+                "Hard"      -> setDifficultyText(R.string.difficulty_hard)
+            }
+        } else if (parent.id == R.id.size_spinner) {
+            gameSize = parent.getItemAtPosition(position).toString()
+            when (gameSize) {
+                "One" -> gameManager.setGameSize(1)
+                "Two" -> gameManager.setGameSize(2)
+                "Three" -> gameManager.setGameSize(3)
+                "Four" -> gameManager.setGameSize(4)
+                "Five" -> gameManager.setGameSize(5)
+                "Six" -> gameManager.setGameSize(6)
+                "Seven" -> gameManager.setGameSize(7)
+                "Eight" -> gameManager.setGameSize(8)
+                "Nine" -> gameManager.setGameSize(9)
+                "Ten" -> gameManager.setGameSize(10)
+            }
         }
     }
 
-    override fun onNothingSelected(parent: AdapterView<*>) {difficulty = "Easy"}
+    override fun onNothingSelected(parent: AdapterView<*>) {
+        if (parent.id == R.id.difficulty_spinner) {
+            difficulty = "Easy"
+        } else if (parent.id == R.id.size_spinner) {
+            gameSize = "Five"
+        }
+    }
+
 
     /**
      * Start the game based on the chosen mode
      */
     fun proceedGame(view: View){
         when (this.game) {
-            "local_buzzer" -> {
-                switchToGame(BuzzerSetupActivity())
-            }
-            "local_typing" -> {
-                switchToGame(TypingGameActivity())
-            }
-            "local_lyrics" -> {
-                switchToGame(LyricsBelongGameActivity())
-            }
+            "local_buzzer" -> { switchToGame(BuzzerSetupActivity()) }
+            "local_typing" -> { switchToGame(TypingGameActivity()) }
+            "local_lyrics" -> { switchToGame(LyricsBelongGameActivity()) }
         }
     }
 

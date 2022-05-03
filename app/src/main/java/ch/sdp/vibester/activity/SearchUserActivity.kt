@@ -16,12 +16,10 @@ import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.user.User
 
 import ch.sdp.vibester.user.UserProfileAdapter
-<<<<<<< HEAD
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-=======
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
->>>>>>> main
+
 
 
 /**
@@ -42,12 +40,8 @@ class SearchUserActivity : AppCompatActivity() {
     private var recyclerView: RecyclerView? = null
     private var searchEditText: EditText? = null
 
-<<<<<<< HEAD
     private var uidList: ArrayList<String> = ArrayList()
 
-    var usersRepo = DataGetter()
-=======
->>>>>>> main
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

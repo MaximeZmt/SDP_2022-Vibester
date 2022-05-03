@@ -67,7 +67,7 @@ class GameSetupActivityTest {
         onView(withId(R.id.gameSetup_returnToMain)).perform(click())
         onView(withId(R.id.gameSetup_returnToMain)).perform(click())
         onView(withId(R.id.gameSetup_returnToMain)).perform(click())
-        Intents.intended(IntentMatchers.hasComponent(WelcomeActivity::class.java.name))
+        intended(hasComponent(WelcomeActivity::class.java.name))
     }
 
     @Test

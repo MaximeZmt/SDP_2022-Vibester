@@ -8,6 +8,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
@@ -48,7 +49,7 @@ class ScoreBoardActivity : AppCompatActivity() {
         }
 
         findViewById<ConstraintLayout>(R.id.genrePerScoreboard).visibility = GONE
-        findViewById<ConstraintLayout>(R.id.scoreboard).visibility = VISIBLE
+        findViewById<NestedScrollView>(R.id.scoreboard_content_scrolling).visibility = VISIBLE
 
         loadPlayersSortedBy(sortedBy)
     }

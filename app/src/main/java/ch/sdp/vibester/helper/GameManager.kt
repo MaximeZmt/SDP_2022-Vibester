@@ -20,6 +20,10 @@ open class GameManager : Serializable {
     private var wrongSongs = mutableListOf<Song>()
     var nextSongInd = 0
 
+    /**
+     * set the number of songs in this game
+     * @param numberOfSongs: number of songs
+     */
     @JvmName("setGameSize1")
     fun setGameSize(numberOfSongs: Int) {
         gameSize = numberOfSongs

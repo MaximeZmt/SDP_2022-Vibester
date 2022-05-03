@@ -11,7 +11,7 @@
     <color name="colorPrimaryDark">#b66119</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorText">#FF000000</color>
-    <color name="colorBtpn">#f58220</color>
+    <color name="colorBtn">#f58220</color>
     <color name="light_blue_600">#FF039BE5</color>
     <color name="light_blue_900">#FF01579B</color>
     <color name="light_blue_A200">#FF40C4FF</color>

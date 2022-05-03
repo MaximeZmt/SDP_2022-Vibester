@@ -79,7 +79,7 @@ class UserProfileAdapter constructor(val users: MutableList<User>, val authentic
             }
             else {
                 addFriendBtn.setOnClickListener {
-                    if (currentUser != null) {
+                    if (currentUser != null && currentUser.uid.isNotEmpty() && user.uid.isNotEmpty()) {
                         usersRepo.setSubFieldValue(currentUser.uid, "friends", user.uid,true)
                         changeBtnToImage()
                     }

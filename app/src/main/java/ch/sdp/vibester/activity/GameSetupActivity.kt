@@ -58,23 +58,21 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
     }
 
     private fun setDifficultySpinnerListener(ctx: Context) {
-        val spinnerDifficulty: Spinner = findViewById(R.id.difficulty_spinner)
-        val adapter = ArrayAdapter.createFromResource(
-            ctx, R.array.difficulties_name, android.R.layout.simple_spinner_item
-        )
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinnerDifficulty.adapter = adapter
-        spinnerDifficulty.onItemSelectedListener = this
+        setSpinnerListener(ctx, R.id.difficulty_spinner, R.array.difficulties_name)
     }
 
     private fun setGameSizeSpinnerListener(ctx: Context) {
-        val spinnerSize: Spinner = findViewById(R.id.size_spinner)
+        setSpinnerListener(ctx, R.id.size_spinner, R.array.game_size_options)
+    }
+
+    private fun setSpinnerListener(ctx: Context, spinnerId: Int, resourceId: Int) {
+        val spinner: Spinner = findViewById(spinnerId)
         val adapter = ArrayAdapter.createFromResource(
-            ctx, R.array.game_size_options, android.R.layout.simple_spinner_item
+            ctx, resourceId, android.R.layout.simple_spinner_item
         )
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinnerSize.adapter = adapter
-        spinnerSize.onItemSelectedListener = this
+        spinner.adapter = adapter
+        spinner.onItemSelectedListener = this
     }
 
     override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {

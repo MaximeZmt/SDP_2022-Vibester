@@ -55,7 +55,8 @@ class SearchUserActivityTest {
 
         val mockUsers = arrayListOf<User>(mockUser1, mockUser2, mockUser3)
         every {mockUsersRepo.searchByField(any(), any(), any())} answers {
-            lastArg<(ArrayList<User>) -> ArrayList<String>>().invoke(mockUsers)
+            lastArg<(ArrayList<User>) -> Unit>().invoke(mockUsers)
+            ArrayList()
         }
 
         every {mockUsersRepo.getUserData(any(), any())} answers {
@@ -143,6 +144,8 @@ class SearchUserActivityTest {
                 )
             )
         }
+
+
     }
     
     @Test

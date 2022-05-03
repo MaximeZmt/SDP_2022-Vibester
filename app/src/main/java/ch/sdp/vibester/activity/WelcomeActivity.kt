@@ -77,12 +77,6 @@ class WelcomeActivity : AppCompatActivity() {
     }
 
     fun switchToSearch(view: View) {
-        // Disable User Search if not connected
-        if(!FireBaseAuthenticator.isLoggedIn() && !TestMode.isTest()){
-            val buttonToSearchUser = findViewById<Button>(R.id.welcome_search)
-            buttonToSearchUser.isEnabled = false
-        }else{
-            sendDirectIntent(SearchUserActivity::class.java)
-        }
+        sendDirectIntent(SearchUserActivity::class.java)
     }
 }

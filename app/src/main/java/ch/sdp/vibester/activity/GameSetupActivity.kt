@@ -29,7 +29,7 @@ import retrofit2.Response
 class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     var difficulty = "Easy"
     var game = "local_buzzer"
-    var gameSize = "Five"
+    var gameSize = "One"
     lateinit var gameManager: GameManager;
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -104,10 +104,9 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         if (parent.id == R.id.difficulty_spinner) {
             difficulty = "Easy"
         } else if (parent.id == R.id.size_spinner) {
-            gameSize = "Five"
+            gameSize = "One"
         }
     }
-
 
     /**
      * Start the game based on the chosen mode

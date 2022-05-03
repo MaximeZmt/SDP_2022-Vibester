@@ -3,7 +3,6 @@ package ch.sdp.vibester.activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -48,9 +47,9 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
             } else if (findViewById<ConstraintLayout>(R.id.chooseGenre).visibility == VISIBLE) {
                 findViewById<LinearLayout>(R.id.chooseGame).visibility = VISIBLE
                 findViewById<ConstraintLayout>(R.id.chooseGenre).visibility = GONE
-            } else if (findViewById<ConstraintLayout>(R.id.chooseDifficulty).visibility == VISIBLE) {
+            } else if (findViewById<ConstraintLayout>(R.id.gameSetting).visibility == VISIBLE) {
                 findViewById<ConstraintLayout>(R.id.chooseGenre).visibility = VISIBLE
-                findViewById<ConstraintLayout>(R.id.chooseDifficulty).visibility = GONE
+                findViewById<ConstraintLayout>(R.id.gameSetting).visibility = GONE
             }
         }
 
@@ -155,7 +154,7 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         uri.tag = tag
 
         findViewById<ConstraintLayout>(R.id.chooseGenre).visibility = GONE
-        findViewById<ConstraintLayout>(R.id.chooseDifficulty).visibility = VISIBLE
+        findViewById<ConstraintLayout>(R.id.gameSetting).visibility = VISIBLE
 
         gameManager.gameMode = mode
         setGameSongList(uri)

@@ -136,7 +136,7 @@ class DataGetter @Inject constructor() {
      * @param searchInput search text inputed by user
      * @param callback function to call with found users by username
      */
-    fun searchByField(field: String, searchInput: String, callback:(ArrayList<User>) -> Unit): ArrayList<String> {
+    fun searchByField(field: String, searchInput: String, callback:(ArrayList<User>) -> Unit, callback2 :(ArrayList<String>) -> Unit) {
         val uidList: ArrayList<String> = ArrayList()
 
         val queryUsers = dbUserRef
@@ -161,13 +161,13 @@ class DataGetter @Inject constructor() {
                     }
                 }
                 callback(users)
+                callback2(uidList)
                 queryUsers.removeEventListener(this);
             }
             override fun onCancelled(error: DatabaseError) {
                 Log.w(ContentValues.TAG, "searchByField:onCancelled", error.toException())
             }
         })
-        return uidList
     }
 
     /**

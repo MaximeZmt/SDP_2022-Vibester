@@ -88,11 +88,18 @@ class SearchUserActivity : AppCompatActivity() {
     }
 
     /**
+     * Callback to update users in adapter during search
+     */
+    private fun setUserInAdapter2(users: ArrayList<String> = ArrayList()) {
+        uidList = ArrayList(users)
+    }
+
+    /**
      * Search for users by usernames in Firebase Realtime Database
      * @param inputUsername search text inputed by user
      */
     private fun searchForUsers(inputUsername:String){
-        uidList = usersRepo.searchByField("username", inputUsername, callback = ::setUserInAdapter)
+        usersRepo.searchByField("username", inputUsername, callback = ::setUserInAdapter, callback2 = ::setUserInAdapter2)
     }
 }
 

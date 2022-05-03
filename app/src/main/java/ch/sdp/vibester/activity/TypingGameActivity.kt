@@ -211,9 +211,7 @@ class TypingGameActivity : GameActivity() {
     override fun endRound(gameManager: GameManager){
         gameIsOn = false
         findViewById<EditText>(R.id.yourGuessET).isEnabled = false
-        //checkRunnable()
         super.endRound(gameManager)
-        //TODO: is it ok for the last round to go to the end game directly without waiting for the next btn?
         toggleNextBtnVisibility(true)
 
         // If currently not in test and has finished the game, update the scores

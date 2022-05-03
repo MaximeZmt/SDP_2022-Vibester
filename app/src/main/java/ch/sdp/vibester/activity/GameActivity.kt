@@ -5,6 +5,8 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Handler
 import android.view.Gravity
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -81,12 +83,7 @@ open class GameActivity : AppCompatActivity() {
     }
 
     fun toggleBtnVisibility(btnId: Int, value: Boolean){
-        val btn = findViewById<Button>(btnId)
-        if (value) {
-            btn.visibility = android.view.View.VISIBLE
-        } else {
-            btn.visibility = android.view.View.GONE
-        }
+        findViewById<Button>(btnId).visibility = if (value) VISIBLE else GONE
     }
 
     /**

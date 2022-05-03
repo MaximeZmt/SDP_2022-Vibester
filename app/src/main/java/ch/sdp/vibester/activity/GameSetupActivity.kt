@@ -30,7 +30,7 @@ import retrofit2.Response
 class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     var difficulty = "Easy"
     var game = "local_buzzer"
-     lateinit var gameManager: GameManager;
+    lateinit var gameManager: GameManager;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,13 +42,13 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         val retButton: FloatingActionButton = findViewById(R.id.gameSetup_returnToMain)
 
         retButton.setOnClickListener {
-            if(findViewById<LinearLayout>(R.id.chooseGame).visibility == VISIBLE){
+            if (findViewById<LinearLayout>(R.id.chooseGame).visibility == VISIBLE) {
                 IntentSwitcher.switchBackToWelcome(this)
                 finish()
-            }else if (findViewById<ConstraintLayout>(R.id.chooseGenre).visibility == VISIBLE){
+            } else if (findViewById<ConstraintLayout>(R.id.chooseGenre).visibility == VISIBLE) {
                 findViewById<LinearLayout>(R.id.chooseGame).visibility = VISIBLE
                 findViewById<ConstraintLayout>(R.id.chooseGenre).visibility = GONE
-            }else if (findViewById<ConstraintLayout>(R.id.chooseDifficulty).visibility == VISIBLE){
+            } else if (findViewById<ConstraintLayout>(R.id.chooseDifficulty).visibility == VISIBLE) {
                 findViewById<ConstraintLayout>(R.id.chooseGenre).visibility = VISIBLE
                 findViewById<ConstraintLayout>(R.id.chooseDifficulty).visibility = GONE
             }
@@ -57,9 +57,7 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
 
         val spinnerDifficulty: Spinner = findViewById(R.id.difficulty_spinner)
         val adapter = ArrayAdapter.createFromResource(
-            ctx,
-            R.array.difficulties_name,
-            android.R.layout.simple_spinner_item
+            ctx, R.array.difficulties_name, android.R.layout.simple_spinner_item
         )
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerDifficulty.adapter = adapter
@@ -150,7 +148,7 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
             R.id.imagDragonsButton -> {method = LastfmMethod.BY_ARTIST.method; artist = "Imagine Dragons"; mode = "Imagine Dragons"}
             R.id.rockButton-> {method = LastfmMethod.BY_TAG.method; tag = "rock"; mode = "rock" }
             R.id.topTracksButton -> {method = LastfmMethod.BY_CHART.method; mode = "top tracks"}
-            R.id.billieEilishButton -> {method =LastfmMethod.BY_ARTIST.method; artist = "Billie Eilish"; mode = "billie eilish"}
+            R.id.billieEilishButton -> {method = LastfmMethod.BY_ARTIST.method; artist = "Billie Eilish"; mode = "billie eilish"}
         }
         uri.method = method
         uri.artist = artist

@@ -101,6 +101,7 @@ class ProfileActivityTest {
 
         createMockDataGetter(inputProfile)
         createMockAuthenticatorInvocation()
+        createMockImageGetter()
 
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
 
@@ -118,6 +119,7 @@ class ProfileActivityTest {
 
         createMockDataGetter(inputProfile)
         createMockAuthenticatorInvocation()
+        createMockImageGetter()
 
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
 
@@ -134,6 +136,7 @@ class ProfileActivityTest {
 
         createMockDataGetter(inputProfile)
         createMockAuthenticatorInvocation()
+        createMockImageGetter()
 
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
 
@@ -151,6 +154,7 @@ class ProfileActivityTest {
 
         createMockDataGetter(inputProfile)
         createMockAuthenticatorInvocation()
+        createMockImageGetter()
 
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
         onView(withId(R.id.showQRCode)).perform(click())
@@ -168,6 +172,7 @@ class ProfileActivityTest {
 
         createMockDataGetter(inputProfile)
         createMockAuthenticatorInvocation()
+        createMockImageGetter()
 
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
         val newUsername = "Lalisa Bon idomesniu"
@@ -188,6 +193,7 @@ class ProfileActivityTest {
 
         createMockDataGetter(inputProfile)
         createMockAuthenticatorInvocation()
+        createMockImageGetter()
 
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
 
@@ -204,6 +210,7 @@ class ProfileActivityTest {
 
         createMockDataGetter(inputProfile)
         createMockAuthenticatorInvocation()
+        createMockImageGetter()
 
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
         onView(withId(R.id.showQRCode)).perform(click())

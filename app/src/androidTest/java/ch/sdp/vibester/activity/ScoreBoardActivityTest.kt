@@ -6,12 +6,15 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
+import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
 import org.hamcrest.CoreMatchers.not
+import org.junit.After
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -23,6 +26,16 @@ class ScoreBoardActivityTest {
     @JvmField
     val activityRule = ActivityScenarioRule(ScoreBoardActivity::class.java)
 
+    @Before
+    fun setUp() {
+        Intents.init()
+    }
+
+    @After
+    fun clean() {
+        Intents.release()
+    }
+
     @Test
     fun genreShouldDisappearAfterSelected() {
         onView(withId(R.id.genrePerScoreboard)).check(matches(isDisplayed()))
@@ -33,7 +46,7 @@ class ScoreBoardActivityTest {
     @Test
     fun rockBtnShouldSetUpRecycleView() {
         onView(withId(R.id.rockButton)).perform(click())
-        onView(withId(R.id.recycler_view)).check(matches(isDisplayed()))
+        onView(withId(R.id.scoreboard_content_scrolling)).check(matches(isDisplayed()))
     }
 
     @Test

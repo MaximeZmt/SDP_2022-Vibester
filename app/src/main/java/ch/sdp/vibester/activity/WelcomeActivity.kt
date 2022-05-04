@@ -34,17 +34,23 @@ class WelcomeActivity : AppCompatActivity() {
         supportActionBar?.hide()
         setContentView(R.layout.activity_welcome_screen)
 
+        updateUserConnectionStatus()
+
+        PersistanceSetter.setPersistance()
+        Database.get()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateUserConnectionStatus()
+    }
+
+    private fun updateUserConnectionStatus() {
         val userStatusTextValue = findViewById<TextView>(R.id.user_status)
         if(FireBaseAuthenticator.isLoggedIn() ||  testLoggedIn)
         {
             userStatusTextValue.text = "User: " + FireBaseAuthenticator.getCurrentUserMail()
         }
-
-        val startOfApp = !PersistanceSetter.getPersistance()
-
-        Log.e("INFO: Should Access", ((InternetState.hasAccessedInternetOnce(this))).toString())
-        PersistanceSetter.setPersistance()
-        Database.get()
     }
 
     private fun sendDirectIntent(arg: Class<*>?) {
@@ -73,12 +79,6 @@ class WelcomeActivity : AppCompatActivity() {
     }
 
     fun switchToSearch(view: View) {
-        // Disable User Search if not connected
-        if(!FireBaseAuthenticator.isLoggedIn() && !TestMode.isTest()){
-            val buttonToSearchUser = findViewById<Button>(R.id.welcome_search)
-            buttonToSearchUser.isEnabled = false
-        }else{
-            sendDirectIntent(SearchUserActivity::class.java)
-        }
+        sendDirectIntent(SearchUserActivity::class.java)
     }
 }

@@ -143,14 +143,15 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         var method =  ""
         var artist = ""
         var tag = ""
+        var mode = ""
         val uri = LastfmUri()
         when (view.id) {
-            R.id.btsButton -> {method = LastfmMethod.BY_ARTIST.method; artist = "BTS" }
-            R.id.kpopButton -> {method = LastfmMethod.BY_TAG.method; tag = "kpop" }
-            R.id.imagDragonsButton -> {method = LastfmMethod.BY_ARTIST.method; artist = "Imagine Dragons"}
-            R.id.rockButton-> {method = LastfmMethod.BY_TAG.method; tag = "rock" }
-            R.id.topTracksButton -> {method = LastfmMethod.BY_CHART.method}
-            R.id.billieEilishButton -> {method =LastfmMethod.BY_ARTIST.method; artist = "Billie Eilish"}
+            R.id.btsButton -> {method = LastfmMethod.BY_ARTIST.method; artist = "BTS"; mode = "BTS" }
+            R.id.kpopButton -> {method = LastfmMethod.BY_TAG.method; tag = "kpop"; mode = "kpop" }
+            R.id.imagDragonsButton -> {method = LastfmMethod.BY_ARTIST.method; artist = "Imagine Dragons"; mode = "Imagine Dragons"}
+            R.id.rockButton-> {method = LastfmMethod.BY_TAG.method; tag = "rock"; mode = "rock" }
+            R.id.topTracksButton -> {method = LastfmMethod.BY_CHART.method; mode = "top tracks"}
+            R.id.billieEilishButton -> {method =LastfmMethod.BY_ARTIST.method; artist = "Billie Eilish"; mode = "billie eilish"}
         }
         uri.method = method
         uri.artist = artist
@@ -159,6 +160,7 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         findViewById<ConstraintLayout>(R.id.chooseGenre).visibility = GONE
         findViewById<ConstraintLayout>(R.id.chooseDifficulty).visibility = VISIBLE
 
+        gameManager.gameMode = mode
         setGameSongList(uri)
     }
 

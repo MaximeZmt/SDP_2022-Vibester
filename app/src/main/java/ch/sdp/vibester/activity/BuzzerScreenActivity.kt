@@ -163,12 +163,12 @@ class BuzzerScreenActivity : GameActivity() {
         }
         endRound(gameManager)
     }
-
+/*
     /**
      * Function called in the end of each round. Displays the button "Next" and
      * sets the next songs to play.
      */
-    override fun endRound(gameManager: GameManager){
+     fun endRound(gameManager: GameManager){
         gameIsOn = false
         //findViewById<EditText>(R.id.yourGuessET).isEnabled = false
         //checkRunnable()
@@ -179,7 +179,7 @@ class BuzzerScreenActivity : GameActivity() {
             switchToEnding(gameManager)
         }*/
     }
-
+*/
     /**
      * Programmatically builds the table of scores according to the number of players
      * @param players: an array of player names

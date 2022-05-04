@@ -16,7 +16,6 @@ class ImageGetter @Inject constructor() {
 
         var uploadTask = profilePicRef.putFile(fileUri)
 
-        // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
         uploadTask.addOnSuccessListener {
             callback()
         }

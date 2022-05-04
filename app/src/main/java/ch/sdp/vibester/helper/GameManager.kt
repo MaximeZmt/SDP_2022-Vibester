@@ -11,7 +11,7 @@ import java.io.Serializable
  */
 open class GameManager : Serializable {
     private var score = 0
-    open var gameSize = 5
+    var gameSize = 5
     var numPlayedSongs = 0
     var gameMode = ""
     open lateinit var currentSong: Song
@@ -19,6 +19,15 @@ open class GameManager : Serializable {
     private val correctSongs = mutableListOf<Song>() //TODO: question: why this is a val but the next one is a var?
     private var wrongSongs = mutableListOf<Song>()
     var nextSongInd = 0
+
+    /**
+     * set the number of songs in this game
+     * @param numberOfSongs: number of songs
+     */
+    @JvmName("setGameSize1")
+    fun setGameSize(numberOfSongs: Int) {
+        gameSize = numberOfSongs
+    }
 
     /**
      * Set a shuffled songList for a game

@@ -22,20 +22,18 @@ import com.google.android.gms.vision.Detector
 import com.google.android.gms.vision.barcode.Barcode
 import com.google.android.gms.vision.barcode.BarcodeDetector
 import java.io.IOException
+import java.io.Serializable
 
 /**
  * Represent the QR scanner
  */
 class QrScanningActivity : AppCompatActivity() {
-    // Const
     private val requestCodeCameraPermission = 1001
 
-    // API
     private lateinit var camera: CameraSource
     private lateinit var barcodeDetector: BarcodeDetector
     private lateinit var binding: ActivityQrScanningBinding
 
-    // Value
     private var scannedValue = ""
     private var isTest: Boolean = false
     var uidList: ArrayList<String> = ArrayList()
@@ -53,13 +51,25 @@ class QrScanningActivity : AppCompatActivity() {
         if (extras != null) {
             uidList = extras.get("uidList") as ArrayList<String>
             isTest = extras.getBoolean("isTest", false)
-        }else{
+        } else {
             // If no uid end of activity
-            val returnInt = Intent(this@QrScanningActivity, SearchUserActivity::class.java)
-            startActivity(returnInt)
-            finish()
+            startActivityWExtra(Intent(this@QrScanningActivity, SearchUserActivity::class.java), null, null)
         }
 
+        permissionManager()
+
+        val aniSlide: Animation = AnimationUtils.loadAnimation(this@QrScanningActivity, R.anim.qr_anim)
+        binding.barcodeLine.startAnimation(aniSlide)
+
+        if (isTest) {
+            solveDetection(Detector.Detections<Barcode>(null, null, true))
+        }
+    }
+
+    /**
+     *
+     */
+    private fun permissionManager(){
         if (ContextCompat.checkSelfPermission(
                 this@QrScanningActivity, android.Manifest.permission.CAMERA
             ) != PackageManager.PERMISSION_GRANTED
@@ -68,16 +78,7 @@ class QrScanningActivity : AppCompatActivity() {
         } else {
             setupControls()
         }
-
-        val aniSlide: Animation =
-            AnimationUtils.loadAnimation(this@QrScanningActivity, R.anim.qr_anim)
-        binding.barcodeLine.startAnimation(aniSlide)
-
-        if(isTest){
-            solveDetection(Detector.Detections<Barcode>(null, null, true))
-        }
     }
-
 
     /**
      * Setup Camera & Barcode
@@ -92,22 +93,16 @@ class QrScanningActivity : AppCompatActivity() {
             .build()
 
         binding.cameraSurfaceView.getHolder().addCallback(object : SurfaceHolder.Callback {
-            @SuppressLint("MissingPermission")
             override fun surfaceCreated(holder: SurfaceHolder) {
-                try {
-                    camera.start(holder)
-                } catch (e: IOException) {
-                    Log.e(getString(R.string.log_tag), e.stackTrace.toString())
-                }
+                surfaceHandler(holder)
+            }
+
+            override fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) {
+                surfaceHandler(holder)
             }
 
             @SuppressLint("MissingPermission")
-            override fun surfaceChanged(
-                holder: SurfaceHolder,
-                format: Int,
-                width: Int,
-                height: Int
-            ) {
+            private fun surfaceHandler(holder: SurfaceHolder) {
                 try {
                     camera.start(holder)
                 } catch (e: IOException) {
@@ -122,7 +117,7 @@ class QrScanningActivity : AppCompatActivity() {
 
         barcodeDetector.setProcessor(object : Detector.Processor<Barcode> {
             override fun release() {
-                Toast.makeText(applicationContext, "Scanner has been closed", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, getString(R.string.qrScanning_scannerClosed), Toast.LENGTH_SHORT).show()
             }
 
             override fun receiveDetections(detections: Detector.Detections<Barcode>) {
@@ -138,6 +133,16 @@ class QrScanningActivity : AppCompatActivity() {
             camera.stop()
         }
     }
+
+
+    private fun startActivityWExtra(intent: Intent, name: String?, arg: Serializable?) {
+        if (name != null && arg != null) {
+            intent.putExtra(name, arg)
+        }
+        startActivity(intent)
+        finish()
+    }
+
 
     /*
      * This section is related to permission request
@@ -163,16 +168,11 @@ class QrScanningActivity : AppCompatActivity() {
         if (requestCode == requestCodeCameraPermission && grantResults.isNotEmpty()) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // If permission are granted restart the activity to make sure they are taken into account
-                val intentNew =  Intent(this, QrScanningActivity::class.java)
-                intentNew.putExtra("uidList", uidList)
-                startActivity(intentNew)
-                finish()
+                startActivityWExtra(Intent(this@QrScanningActivity, QrScanningActivity::class.java), "uidList", uidList)
             } else {
                 // Camera permission not granted, come back to previous activity
-                Toast.makeText(applicationContext, "Camera Permission should be granted for that feature", Toast.LENGTH_LONG).show()
-                val returnInt = Intent(this@QrScanningActivity, SearchUserActivity::class.java)
-                startActivity(returnInt)
-                finish()
+                Toast.makeText(applicationContext, getString(R.string.qrScanning_cameraError), Toast.LENGTH_LONG).show()
+                startActivityWExtra(Intent(this@QrScanningActivity, SearchUserActivity::class.java), null, null)
             }
         }
     }
@@ -181,6 +181,9 @@ class QrScanningActivity : AppCompatActivity() {
      * This section is related to the handler when code is detected
      */
 
+    /**
+     * Takes care of qr/barcode reading
+     */
     private fun solveDetection(detections: Detector.Detections<Barcode>) {
         val barcodes = detections.detectedItems
         if (isTest || barcodes.size() == 1) {
@@ -189,18 +192,16 @@ class QrScanningActivity : AppCompatActivity() {
             }
             runOnUiThread {
                 camera.stop()
-                val endInt = Intent(this@QrScanningActivity, SearchUserActivity::class.java)
                 if (isTest || scannedValue in uidList){
                     if (!isTest) {
                         usersRepo.setSubFieldValue(FireBaseAuthenticator.getCurrentUID(),"friends", scannedValue, true)
                     }
-                    Toast.makeText(this@QrScanningActivity, "Congratulations, you have a new friends", Toast.LENGTH_SHORT).show()
-                    endInt.putExtra("isSuccess", true)
-                }else{
-                    Toast.makeText(this@QrScanningActivity, "Error not an existing uid", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@QrScanningActivity, getString(R.string.qrScanning_newFriend), Toast.LENGTH_SHORT).show()
+                    startActivityWExtra(Intent(this@QrScanningActivity, SearchUserActivity::class.java), "isSuccess", true)
+                } else {
+                    Toast.makeText(this@QrScanningActivity, getString(R.string.qrScanning_noExistUid), Toast.LENGTH_SHORT).show()
+                    startActivityWExtra(Intent(this@QrScanningActivity, SearchUserActivity::class.java), null, null)
                 }
-                startActivity(endInt)
-                finish()
             }
         }
     }

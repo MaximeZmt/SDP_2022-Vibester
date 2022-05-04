@@ -2,7 +2,6 @@ package ch.sdp.vibester.database
 
 import android.content.ContentValues
 import android.util.Log
-import ch.sdp.vibester.TestMode
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.helper.PartyRoom
 import ch.sdp.vibester.user.User
@@ -135,8 +134,9 @@ class DataGetter @Inject constructor() {
      * @param field user fields used for a search
      * @param searchInput search text inputed by user
      * @param callback function to call with found users by username
+     * @param callbackUid function to call with found uid
      */
-    fun searchByField(field: String, searchInput: String, callback:(ArrayList<User>) -> Unit, callback2 :(ArrayList<String>) -> Unit) {
+    fun searchByField(field: String, searchInput: String, callback:(ArrayList<User>) -> Unit, callbackUid :(ArrayList<String>) -> Unit) {
         val uidList: ArrayList<String> = ArrayList()
 
         val queryUsers = dbUserRef
@@ -161,7 +161,7 @@ class DataGetter @Inject constructor() {
                     }
                 }
                 callback(users)
-                callback2(uidList)
+                callbackUid(uidList)
                 queryUsers.removeEventListener(this);
             }
             override fun onCancelled(error: DatabaseError) {

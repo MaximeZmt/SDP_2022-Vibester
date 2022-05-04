@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.Window
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
@@ -104,7 +103,7 @@ class SearchUserActivity : AppCompatActivity() {
      * @param inputUsername search text inputed by user
      */
     private fun searchForUsers(inputUsername:String){
-        usersRepo.searchByField("username", inputUsername, callback = ::setUserInAdapter, callback2 = ::setUserInAdapter2)
+        usersRepo.searchByField("username", inputUsername, callback = ::setUserInAdapter, callbackUid = ::setUserInAdapter2)
     }
 }
 

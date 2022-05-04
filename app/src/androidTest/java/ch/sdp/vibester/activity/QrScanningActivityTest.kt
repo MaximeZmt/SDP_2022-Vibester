@@ -32,10 +32,11 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 @HiltAndroidTest
 class QrScanningActivityTest {
-    @get:Rule
+    @get:Rule(order = 0)
     var hiltRule = HiltAndroidRule(this)
 
-    @get:Rule var permissionRule = GrantPermissionRule.grant(android.Manifest.permission.CAMERA)
+    @get:Rule(order = 1)
+    var permissionRule = GrantPermissionRule.grant(android.Manifest.permission.CAMERA)
 
     @Before
     fun setUp() {

@@ -75,8 +75,10 @@ class BuzzerScreenActivity : GameActivity() {
             setAnswerButton(answer, findViewById(R.id.buttonWrong), updater, buzzersToRows)
 
             // null pointer?
-            gameManager = getIntent.getSerializable("gameManager") as BuzzerGameManager
-            gameManager.scoreUpdater = updater
+            if (getIntent.getSerializable("gameManager") != null) {
+                gameManager = getIntent.getSerializable("gameManager") as BuzzerGameManager
+                gameManager.scoreUpdater = updater
+            }
 
             startFirstRound(ctx, gameManager)
         }

@@ -1,7 +1,7 @@
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/gameSetting"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/gameSetting"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:visibility="gone"
@@ -25,7 +25,7 @@
         android:id="@+id/difficulty_spinner"
         android:layout_width="275dp"
         android:layout_height="48dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/getDifficultyText"
@@ -33,8 +33,8 @@
 
     <TextView
         android:id="@+id/difficulty_explanation"
-        android:layout_width="355dp"
-        android:layout_height="149dp"
+        android:layout_width="358dp"
+        android:layout_height="101dp"
         android:layout_marginTop="28dp"
         android:fontFeatureSettings="smcp"
         android:gravity="center"
@@ -50,7 +50,7 @@
         android:id="@+id/getSizeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="404dp"
+        android:layout_marginTop="24dp"
         android:fontFeatureSettings="smcp"
         android:text="Please choose the size of your game"
         android:textAlignment="center"
@@ -59,13 +59,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/difficulty_explanation" />
 
     <Spinner
         android:id="@+id/size_spinner"
         android:layout_width="275dp"
         android:layout_height="48dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="28dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/getSizeText"
@@ -75,10 +75,10 @@
         android:id="@+id/difficulty_proceed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="216dp"
+        android:layout_marginTop="29dp"
         android:onClick="proceedGame"
         android:text="@string/proceed"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/difficulty_explanation" />
+        app:layout_constraintTop_toBottomOf="@+id/size_spinner" />
 </androidx.constraintlayout.widget.ConstraintLayout>

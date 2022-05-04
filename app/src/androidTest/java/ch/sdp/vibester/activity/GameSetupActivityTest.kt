@@ -59,12 +59,12 @@ class GameSetupActivityTest {
 
     @Test
     fun checkDefaultSelectDifficulty() {
-        onView(withId(R.id.difficulty_spinner)).check(matches(withSpinnerText("Easy")))
+        onView(withId(R.id.difficulty_spinner)).check(matches(withSpinnerText(R.string.easy)))
     }
 
     @Test
     fun checkDefaultSelectGameSize() {
-        onView(withId(R.id.size_spinner)).check(matches(withSpinnerText("One")))
+        onView(withId(R.id.size_spinner)).check(matches(withSpinnerText(R.string.one)))
     }
 
     @Test
@@ -74,7 +74,7 @@ class GameSetupActivityTest {
         onView(withId(R.id.difficulty_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(0).perform(click())
 
-        onView(withId(R.id.difficulty_spinner)).check(matches(withSpinnerText("Easy")))
+        onView(withId(R.id.difficulty_spinner)).check(matches(withSpinnerText(R.string.easy)))
     }
 
     @Test
@@ -84,7 +84,7 @@ class GameSetupActivityTest {
         onView(withId(R.id.difficulty_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(1).perform(click())
 
-        onView(withId(R.id.difficulty_spinner)).check(matches(withSpinnerText("Medium")))
+        onView(withId(R.id.difficulty_spinner)).check(matches(withSpinnerText(R.string.medium)))
     }
 
     @Test
@@ -94,7 +94,7 @@ class GameSetupActivityTest {
         onView(withId(R.id.difficulty_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(2).perform(click())
 
-        onView(withId(R.id.difficulty_spinner)).check(matches(withSpinnerText("Hard")))
+        onView(withId(R.id.difficulty_spinner)).check(matches(withSpinnerText(R.string.hard)))
     }
 
     @Test
@@ -188,7 +188,7 @@ class GameSetupActivityTest {
         onView(withId(R.id.size_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(0).perform(click())
 
-        onView(withId(R.id.size_spinner)).check(matches(withSpinnerText("One")))
+        onView(withId(R.id.size_spinner)).check(matches(withSpinnerText(R.string.one)))
     }
 
     @Test
@@ -198,7 +198,7 @@ class GameSetupActivityTest {
         onView(withId(R.id.size_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(1).perform(click())
 
-        onView(withId(R.id.size_spinner)).check(matches(withSpinnerText("Two")))
+        onView(withId(R.id.size_spinner)).check(matches(withSpinnerText(R.string.two)))
     }
 
     @Test
@@ -208,7 +208,7 @@ class GameSetupActivityTest {
         onView(withId(R.id.size_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(2).perform(click())
 
-        onView(withId(R.id.size_spinner)).check(matches(withSpinnerText("Three")))
+        onView(withId(R.id.size_spinner)).check(matches(withSpinnerText(R.string.three)))
     }
 
     @Test
@@ -218,7 +218,7 @@ class GameSetupActivityTest {
         onView(withId(R.id.size_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(3).perform(click())
 
-        onView(withId(R.id.size_spinner)).check(matches(withSpinnerText("Four")))
+        onView(withId(R.id.size_spinner)).check(matches(withSpinnerText(R.string.four)))
     }
 
     @Test
@@ -228,7 +228,7 @@ class GameSetupActivityTest {
         onView(withId(R.id.size_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(4).perform(click())
 
-        onView(withId(R.id.size_spinner)).check(matches(withSpinnerText("Five")))
+        onView(withId(R.id.size_spinner)).check(matches(withSpinnerText(R.string.five)))
     }
 
     @Test
@@ -238,7 +238,7 @@ class GameSetupActivityTest {
         onView(withId(R.id.size_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(5).perform(click())
 
-        onView(withId(R.id.size_spinner)).check(matches(withSpinnerText("Six")))
+        onView(withId(R.id.size_spinner)).check(matches(withSpinnerText(R.string.six)))
     }
 
     @Test
@@ -248,7 +248,7 @@ class GameSetupActivityTest {
         onView(withId(R.id.size_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(6).perform(click())
 
-        onView(withId(R.id.size_spinner)).check(matches(withSpinnerText("Seven")))
+        onView(withId(R.id.size_spinner)).check(matches(withSpinnerText(R.string.seven)))
     }
 
     @Test
@@ -258,7 +258,7 @@ class GameSetupActivityTest {
         onView(withId(R.id.size_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(7).perform(click())
 
-        onView(withId(R.id.size_spinner)).check(matches(withSpinnerText("Eight")))
+        onView(withId(R.id.size_spinner)).check(matches(withSpinnerText(R.string.eight)))
     }
 
 
@@ -269,7 +269,7 @@ class GameSetupActivityTest {
         onView(withId(R.id.size_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(8).perform(click())
 
-        onView(withId(R.id.size_spinner)).check(matches(withSpinnerText("Nine")))
+        onView(withId(R.id.size_spinner)).check(matches(withSpinnerText(R.string.nine)))
     }
 
     @Test
@@ -279,7 +279,7 @@ class GameSetupActivityTest {
         onView(withId(R.id.size_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(9).perform(click())
 
-        onView(withId(R.id.size_spinner)).check(matches(withSpinnerText("Ten")))
+        onView(withId(R.id.size_spinner)).check(matches(withSpinnerText(R.string.ten)))
     }
 
     @Test

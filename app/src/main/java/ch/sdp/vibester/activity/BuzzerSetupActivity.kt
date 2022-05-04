@@ -29,8 +29,8 @@ class BuzzerSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
         spinner.onItemSelectedListener = this
 
         findViewById<Button>(R.id.missingNameOk).setOnClickListener {
-            findViewById<LinearLayout>(R.id.missingNameAlert).visibility=View.INVISIBLE
-            findViewById<Button>(R.id.nb_players_selected).visibility=View.VISIBLE
+            findViewById<LinearLayout>(R.id.missingNameAlert).visibility = View.INVISIBLE
+            findViewById<Button>(R.id.nb_players_selected).visibility = View.VISIBLE
         }
     }
 

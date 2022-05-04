@@ -8,7 +8,6 @@ import androidx.test.espresso.action.ViewActions.scrollTo
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intended
-import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasExtra
 import androidx.test.espresso.matcher.ViewMatchers.withId
@@ -46,19 +45,6 @@ class GameSetupActivityTest {
         Intents.release()
     }
 
-    @Test
-    fun checkDefaultSelectDifficulty() {
-        onView(withId(R.id.difficulty_spinner)).check(matches(withSpinnerText("Easy")))
-    }
-
-    @Test
-    fun checkCustomSelectEasy() {
-        onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
-        onView(withId(R.id.btsButton)).perform(click())
-        onView(withId(R.id.difficulty_spinner)).perform(click())
-        onData(Matchers.anything()).atPosition(0).perform(click())
-        onView(withId(R.id.difficulty_spinner)).check(matches(withSpinnerText("Easy")))
-    }
 
     @Test
     fun checkReturnButton() {
@@ -67,7 +53,28 @@ class GameSetupActivityTest {
         onView(withId(R.id.gameSetup_returnToMain)).perform(click())
         onView(withId(R.id.gameSetup_returnToMain)).perform(click())
         onView(withId(R.id.gameSetup_returnToMain)).perform(click())
-        Intents.intended(IntentMatchers.hasComponent(WelcomeActivity::class.java.name))
+
+        intended(hasComponent(WelcomeActivity::class.java.name))
+    }
+
+    @Test
+    fun checkDefaultSelectDifficulty() {
+        onView(withId(R.id.difficulty_spinner)).check(matches(withSpinnerText(R.string.easy)))
+    }
+
+    @Test
+    fun checkDefaultSelectGameSize() {
+        onView(withId(R.id.size_spinner)).check(matches(withSpinnerText(R.string.one)))
+    }
+
+    @Test
+    fun checkCustomSelectEasy() {
+        onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
+        onView(withId(R.id.btsButton)).perform(click())
+        onView(withId(R.id.difficulty_spinner)).perform(click())
+        onData(Matchers.anything()).atPosition(0).perform(click())
+
+        onView(withId(R.id.difficulty_spinner)).check(matches(withSpinnerText(R.string.easy)))
     }
 
     @Test
@@ -76,7 +83,8 @@ class GameSetupActivityTest {
         onView(withId(R.id.btsButton)).perform(click())
         onView(withId(R.id.difficulty_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(1).perform(click())
-        onView(withId(R.id.difficulty_spinner)).check(matches(withSpinnerText("Medium")))
+
+        onView(withId(R.id.difficulty_spinner)).check(matches(withSpinnerText(R.string.medium)))
     }
 
     @Test
@@ -85,7 +93,8 @@ class GameSetupActivityTest {
         onView(withId(R.id.btsButton)).perform(click())
         onView(withId(R.id.difficulty_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(2).perform(click())
-        onView(withId(R.id.difficulty_spinner)).check(matches(withSpinnerText("Hard")))
+
+        onView(withId(R.id.difficulty_spinner)).check(matches(withSpinnerText(R.string.hard)))
     }
 
     @Test
@@ -95,6 +104,7 @@ class GameSetupActivityTest {
         onView(withId(R.id.difficulty_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(0).perform(click())
         onView(withId(R.id.difficulty_proceed)).perform(click())
+
         intended(hasComponent(BuzzerSetupActivity::class.java.name))
         intended(hasExtra("Difficulty", "Easy"))
     }
@@ -106,6 +116,7 @@ class GameSetupActivityTest {
         onView(withId(R.id.difficulty_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(1).perform(click())
         onView(withId(R.id.difficulty_proceed)).perform(click())
+
         intended(hasComponent(BuzzerSetupActivity::class.java.name))
         intended(hasExtra("Difficulty", "Medium"))
     }
@@ -117,6 +128,7 @@ class GameSetupActivityTest {
         onView(withId(R.id.difficulty_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(2).perform(click())
         onView(withId(R.id.difficulty_proceed)).perform(click())
+
         intended(hasComponent(BuzzerSetupActivity::class.java.name))
         intended(hasExtra("Difficulty", "Hard"))
     }
@@ -128,6 +140,7 @@ class GameSetupActivityTest {
         onView(withId(R.id.difficulty_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(2).perform(click())
         onView(withId(R.id.difficulty_proceed)).perform(click())
+
         intended(hasComponent(TypingGameActivity::class.java.name))
         intended(hasExtra("Difficulty", "Hard"))
     }
@@ -139,6 +152,7 @@ class GameSetupActivityTest {
         onView(withId(R.id.difficulty_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(1).perform(click())
         onView(withId(R.id.difficulty_proceed)).perform(click())
+
         intended(hasComponent(TypingGameActivity::class.java.name))
         intended(hasExtra("Difficulty", "Medium"))
     }
@@ -150,6 +164,7 @@ class GameSetupActivityTest {
         onView(withId(R.id.difficulty_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(0).perform(click())
         onView(withId(R.id.difficulty_proceed)).perform(click())
+
         intended(hasComponent(TypingGameActivity::class.java.name))
         intended(hasExtra("Difficulty", "Easy"))
     }
@@ -161,8 +176,110 @@ class GameSetupActivityTest {
         onView(withId(R.id.difficulty_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(2).perform(click())
         onView(withId(R.id.difficulty_proceed)).perform(click())
+
         intended(hasComponent(LyricsBelongGameActivity::class.java.name))
         intended(hasExtra("Difficulty", "Hard"))
+    }
+
+    @Test
+    fun checkCustomSelectOne() {
+        onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
+        onView(withId(R.id.btsButton)).perform(click())
+        onView(withId(R.id.size_spinner)).perform(click())
+        onData(Matchers.anything()).atPosition(0).perform(click())
+
+        onView(withId(R.id.size_spinner)).check(matches(withSpinnerText(R.string.one)))
+    }
+
+    @Test
+    fun checkCustomSelectTwo() {
+        onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
+        onView(withId(R.id.btsButton)).perform(click())
+        onView(withId(R.id.size_spinner)).perform(click())
+        onData(Matchers.anything()).atPosition(1).perform(click())
+
+        onView(withId(R.id.size_spinner)).check(matches(withSpinnerText(R.string.two)))
+    }
+
+    @Test
+    fun checkCustomSelectThree() {
+        onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
+        onView(withId(R.id.btsButton)).perform(click())
+        onView(withId(R.id.size_spinner)).perform(click())
+        onData(Matchers.anything()).atPosition(2).perform(click())
+
+        onView(withId(R.id.size_spinner)).check(matches(withSpinnerText(R.string.three)))
+    }
+
+    @Test
+    fun checkCustomSelectFour() {
+        onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
+        onView(withId(R.id.btsButton)).perform(click())
+        onView(withId(R.id.size_spinner)).perform(click())
+        onData(Matchers.anything()).atPosition(3).perform(click())
+
+        onView(withId(R.id.size_spinner)).check(matches(withSpinnerText(R.string.four)))
+    }
+
+    @Test
+    fun checkCustomSelectFive() {
+        onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
+        onView(withId(R.id.btsButton)).perform(click())
+        onView(withId(R.id.size_spinner)).perform(click())
+        onData(Matchers.anything()).atPosition(4).perform(click())
+
+        onView(withId(R.id.size_spinner)).check(matches(withSpinnerText(R.string.five)))
+    }
+
+    @Test
+    fun checkCustomSelectSix() {
+        onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
+        onView(withId(R.id.btsButton)).perform(click())
+        onView(withId(R.id.size_spinner)).perform(click())
+        onData(Matchers.anything()).atPosition(5).perform(click())
+
+        onView(withId(R.id.size_spinner)).check(matches(withSpinnerText(R.string.six)))
+    }
+
+    @Test
+    fun checkCustomSelectSeven() {
+        onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
+        onView(withId(R.id.btsButton)).perform(click())
+        onView(withId(R.id.size_spinner)).perform(click())
+        onData(Matchers.anything()).atPosition(6).perform(click())
+
+        onView(withId(R.id.size_spinner)).check(matches(withSpinnerText(R.string.seven)))
+    }
+
+    @Test
+    fun checkCustomSelectEight() {
+        onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
+        onView(withId(R.id.btsButton)).perform(click())
+        onView(withId(R.id.size_spinner)).perform(click())
+        onData(Matchers.anything()).atPosition(7).perform(click())
+
+        onView(withId(R.id.size_spinner)).check(matches(withSpinnerText(R.string.eight)))
+    }
+
+
+    @Test
+    fun checkCustomSelectNine() {
+        onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
+        onView(withId(R.id.btsButton)).perform(click())
+        onView(withId(R.id.size_spinner)).perform(click())
+        onData(Matchers.anything()).atPosition(8).perform(click())
+
+        onView(withId(R.id.size_spinner)).check(matches(withSpinnerText(R.string.nine)))
+    }
+
+    @Test
+    fun checkCustomSelectTen() {
+        onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
+        onView(withId(R.id.btsButton)).perform(click())
+        onView(withId(R.id.size_spinner)).perform(click())
+        onData(Matchers.anything()).atPosition(9).perform(click())
+
+        onView(withId(R.id.size_spinner)).check(matches(withSpinnerText(R.string.ten)))
     }
 
     @Test

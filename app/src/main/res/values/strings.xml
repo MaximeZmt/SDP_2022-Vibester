@@ -17,11 +17,18 @@
     <string name="authentication_placeholderEmptyScore">Error</string>
     <string name="authentication_noActionDoneYet">Either log in with your Google account or fill in credentials to create an account or log in</string>
 
+
     <!-- QrScanning -->
     <string name="qrScanning_scannerClosed">Scanner has been closed</string>
     <string name="qrScanning_cameraError">Camera Permission should be granted for that feature</string>
     <string name="qrScanning_noExistUid">Error not an existing uid</string>
     <string name="qrScanning_newFriend">Congratulations, you have a new friends</string>
+
+
+    <!-- GameEnding -->
+    <string name="gameEnding_unconnectedUsername">UNCONNECTED</string>
+
+    <!-- OLD String-->
 
 
     <!-- OLD String-->

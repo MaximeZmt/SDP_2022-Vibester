@@ -8,6 +8,7 @@
     android:background="@color/floral_white"
     tools:context=".activity.SearchUserActivity">
 
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/searchUser_scanning"
         android:layout_width="wrap_content"
@@ -21,14 +22,28 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+
+
+    <EditText
+        android:id="@+id/searchUserET"
+        android:layout_width="305dp"
+        android:layout_height="40dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="5dp"
+        android:autofillHints="Enter username to search"
+        android:background="@drawable/rounded_edittext"
+        android:padding="10dp"></EditText>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/searchList"
-        android:layout_width="0dp"
-        android:layout_height="662dp"
-        android:layout_marginTop="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchUserET">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/searchUserET">
 
     </androidx.recyclerview.widget.RecyclerView>
 

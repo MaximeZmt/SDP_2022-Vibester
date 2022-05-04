@@ -31,7 +31,7 @@ class GameEndingActivity : AppCompatActivity() {
         "Default value 5"
     )
     private var nbIncorrectSongs: Int = 0
-    private var playerName: String? = "Default"
+    private var playerName: String? = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,7 +41,7 @@ class GameEndingActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_game_ending_screen)
 
-        
+        playerName = getString(R.string.gameEnding_unconnectedUsername)
 
 
         if (intent.hasExtra("Winner Name")) {

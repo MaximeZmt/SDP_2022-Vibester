@@ -41,9 +41,6 @@ class TypingGameActivityTest {
     @get:Rule(order = 0)
     var hiltRule = HiltAndroidRule(this)
 
-    @get:Rule(order = 1)
-    val activityRule = ActivityScenarioRule(TypingGameActivity::class.java)
-
     @Before
     fun setUp() {
         hiltRule.inject()
@@ -64,10 +61,10 @@ class TypingGameActivityTest {
         every { mockUsersRepo.updateFieldInt(any(), any(), any(), any()) } answers {}
         every { mockUsersRepo.setFieldValue(any(), any(), any()) } answers {}
         every { mockUsersRepo.updateSubFieldInt(any(), any(), any(), any(), any()) } answers {}
-
     }
 
     private val expectedSize = 200
+
     private fun setGameManager(numSongs:Int = 1, valid: Boolean = true): TypingGameManager {
         val epilogue = "{\"tracks\":{\"track\":["
         val prologue =
@@ -103,8 +100,12 @@ class TypingGameActivityTest {
     @Test
     fun textGenTest() {
         val txtInput = "hello"
+        val intent =
+            Intent(ApplicationProvider.getApplicationContext(), TypingGameActivity::class.java)
+        val scn: ActivityScenario<TypingGameActivity> = ActivityScenario.launch(intent)
         val ctx = ApplicationProvider.getApplicationContext() as Context
         val myText = GameActivity.generateText(txtInput, ctx)
+
         assertEquals(txtInput, myText.text.toString())
         assertEquals(expectedSize, myText.minHeight)
         assertEquals(ContextCompat.getColor(ctx, R.color.black), myText.textColors.defaultColor)
@@ -122,6 +123,9 @@ class TypingGameActivityTest {
             """
 
         val mySong = Song.singleSong(inputTxt)
+        val intent =
+        Intent(ApplicationProvider.getApplicationContext(), TypingGameActivity::class.java)
+        val scn: ActivityScenario<TypingGameActivity> = ActivityScenario.launch(intent)
 
         val ctx = ApplicationProvider.getApplicationContext() as Context
         val myTest = GameActivity.generateImage(mySong, ctx)

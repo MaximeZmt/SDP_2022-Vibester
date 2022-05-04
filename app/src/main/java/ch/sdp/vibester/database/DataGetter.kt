@@ -217,7 +217,7 @@ class DataGetter @Inject constructor() {
                 for (snapshot in dataSnapshot.children) {
                     val partyRoom: PartyRoom? = snapshot.getValue(PartyRoom::class.java)
                     if(partyRoom != null) {
-                        val currUserEmail = authenticator.getCurrUser()?.email!!
+                        val currUserEmail = getCurrentUser()?.email!!
                         if(!partyRoom.getEmailList().contains(currUserEmail)) {
                             partyRoom.addUserEmail(currUserEmail)
                             updateRoomUserList(partyRoom)

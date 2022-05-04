@@ -52,6 +52,10 @@ class ProfileActivityTest {
         every { mockUsersRepo.updateFieldString(any(), any(), any()) } answers {}
 
         every { mockUsersRepo.getUserData(any())} answers {}
+
+        every { mockUsersRepo.getCurrentUser() } answers {
+            null
+        }
     }
 
     @After
@@ -78,9 +82,13 @@ class ProfileActivityTest {
 
     @Test
     fun clickBackToMain(){
+        val inputProfile = User("Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8, 29, 0)
+
         val ctx = ApplicationProvider.getApplicationContext() as Context
         val intent = Intent(ctx, ProfileActivity::class.java)
         intent.putExtra("isUnitTest", true)
+
+        createMockInvocation(inputProfile)
 
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
 

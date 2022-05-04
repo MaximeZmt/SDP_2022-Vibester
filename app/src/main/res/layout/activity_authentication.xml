@@ -20,32 +20,42 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <ImageView
+        android:id="@+id/authentication_logo"
+        android:layout_width="190dp"
+        android:layout_height="154dp"
+        android:layout_marginTop="32dp"
+        android:contentDescription="@string/app_logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo" />
+
     <TextView
-        android:id="@+id/email"
-        android:layout_width="367dp"
-        android:layout_height="211dp"
-        android:layout_marginTop="100dp"
-        android:fontFamily="monospace"
-        android:text="@string/authentication_noActionDoneYet"
+        android:id="@+id/authentication_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="Welcome to Vibester"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="25sp"
-        app:layout_constraintBottom_toTopOf="@+id/scrollView2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.636"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/authentication_logo" />
 
     <ScrollView
         android:id="@+id/scrollView2"
-        android:layout_width="409dp"
-        android:layout_height="530dp"
+        android:layout_width="407dp"
+        android:layout_height="390dp"
         android:layout_marginStart="1dp"
         android:layout_marginEnd="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email">
+        app:layout_constraintTop_toBottomOf="@+id/authentication_status">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -53,19 +63,10 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <Button
-                android:id="@+id/googleBtn"
-                android:layout_width="200dp"
-                android:layout_height="48dp"
-                android:backgroundTint="@color/cg_blue"
-                android:elevation="10dp"
-                android:stateListAnimator="@null"
-                android:text="@string/logInGoogle"
-                android:translationZ="10dp" />
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="75dp" />
+                android:layout_height="62dp" />
 
             <EditText
                 android:id="@+id/username"
@@ -92,16 +93,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="18dp" />
 
-            <Button
-                android:id="@+id/createAcc"
-                android:layout_width="200dp"
-                android:layout_height="48dp"
-                android:backgroundTint="@color/cg_blue"
-                android:elevation="10dp"
-                android:stateListAnimator="@null"
-                android:text="@string/createAcc"
-                android:translationZ="10dp" />
-
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="15dp" />
@@ -115,6 +106,26 @@
                 android:elevation="10dp"
                 android:stateListAnimator="@null"
                 android:text="@string/logIn"
+                android:translationZ="10dp" />
+
+            <Button
+                android:id="@+id/googleBtn"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/cg_blue"
+                android:elevation="10dp"
+                android:stateListAnimator="@null"
+                android:text="@string/logInGoogle"
+                android:translationZ="10dp" />
+
+            <Button
+                android:id="@+id/createAcc"
+                android:layout_width="200dp"
+                android:layout_height="48dp"
+                android:backgroundTint="@color/cg_blue"
+                android:elevation="10dp"
+                android:stateListAnimator="@null"
+                android:text="@string/createAcc"
                 android:translationZ="10dp" />
 
         </LinearLayout>

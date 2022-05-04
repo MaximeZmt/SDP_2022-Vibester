@@ -47,13 +47,5 @@
 
     </androidx.recyclerview.widget.RecyclerView>
 
-    <EditText
-        android:id="@+id/searchUserET"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:autofillHints="Enter username to search"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></EditText>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

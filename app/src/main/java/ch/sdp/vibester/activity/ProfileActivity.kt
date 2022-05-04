@@ -193,7 +193,6 @@ class ProfileActivity : AppCompatActivity() {
 
         val imageID = dataGetter.getCurrentUser()?.uid
 
-        //profileImg/1jzr3IhJ1K
         imageGetter.fetchImage("profileImg/${imageID}", this::setImage)
 
         if (user.uid != "") {

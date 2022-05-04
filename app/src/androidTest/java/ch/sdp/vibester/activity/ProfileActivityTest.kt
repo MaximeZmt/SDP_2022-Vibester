@@ -69,11 +69,10 @@ class ProfileActivityTest {
             secondArg<(User) -> Unit>().invoke(mockProfile)
         }
 
-        every { mockUsersRepo.getUserData(any())} answers {}
-
-        every { mockUsersRepo.getCurrentUser() } answers {
+        every {mockUsersRepo.getCurrentUser()} answers {
             null
         }
+
         every { mockUsersRepo.setFieldValue(any(), any(), any()) } answers {}
         every { mockUsersRepo.setFieldValue(any(), any(), any()) } answers {}
     }

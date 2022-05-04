@@ -188,6 +188,7 @@ class ProfileActivity : AppCompatActivity() {
             findViewById<TextView>(R.id.totalGames).text = user.totalGames.toString()
             findViewById<TextView>(R.id.correctSongs).text = user.correctSongs.toString()
             findViewById<TextView>(R.id.bestScore).text = user.bestScore.toString()
+            findViewById<TextView>(R.id.ranking).text = user.ranking.toString()
         }
 
         val imageID = dataGetter.getCurrentUser()?.uid

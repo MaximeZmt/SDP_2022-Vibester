@@ -9,7 +9,6 @@ import android.widget.*
 import androidx.core.content.ContextCompat.getColor
 import androidx.core.widget.addTextChangedListener
 import ch.sdp.vibester.R
-import ch.sdp.vibester.TestMode
 import ch.sdp.vibester.api.ItunesMusicApi
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
@@ -17,19 +16,24 @@ import ch.sdp.vibester.helper.DisplayContents
 import ch.sdp.vibester.helper.GameManager
 import ch.sdp.vibester.helper.TypingGameManager
 import ch.sdp.vibester.model.Song
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
+import javax.inject.Inject
 
 /**
  * Class that represent a game
  */
-
+@AndroidEntryPoint
 class TypingGameActivity : GameActivity() {
     private lateinit var gameManager: TypingGameManager
     private var gameIsOn: Boolean = true // done to avoid clicks on songs after the round is over
+
+    @Inject
+    lateinit var dataGetter: DataGetter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -203,23 +207,12 @@ class TypingGameActivity : GameActivity() {
      * Function called in the end of each round. Displays the button "Next" and
      * sets the next songs to play.
      */
-    override fun endRound(gameManager: GameManager){
+    override fun endRound(gameManager: GameManager, callback: (() -> Unit)?) {
         gameIsOn = false
         findViewById<EditText>(R.id.yourGuessET).isEnabled = false
-        //checkRunnable()
-        super.endRound(gameManager)
+        super.endRound(gameManager,this::setScores)
         //TODO: is it ok for the last round to go to the end game directly without waiting for the next btn?
         toggleNextBtnVisibility(true)
-
-        // If currently not in test and has finished the game, update the scores
-        if (!TestMode.isTest() && isEndGame(gameManager) && FireBaseAuthenticator.isLoggedIn()) {
-            val dataGetter = DataGetter()
-            dataGetter.updateRelativeFieldInt(FireBaseAuthenticator.getCurrentUID(), 1, "totalGames")
-            dataGetter.updateRelativeFieldInt(FireBaseAuthenticator.getCurrentUID(), gameManager.getCorrectSongs().size, "correctSongs")
-            dataGetter.updateBestFieldInt(FireBaseAuthenticator.getCurrentUID(), gameManager.getScore(), "bestScore")
-
-        }
-
     }
 
     /**
@@ -237,6 +230,17 @@ class TypingGameActivity : GameActivity() {
         barTimer(findViewById(R.id.progressBarTyping), ctx, gameManager)
     }
 
+    /**
+     * Function to set scores in the end of the game
+     */
+    private fun setScores() {
+        if(::gameManager.isInitialized && FireBaseAuthenticator.isLoggedIn()){
+            dataGetter.updateFieldInt(FireBaseAuthenticator.getCurrentUID(), "totalGames", 1, method = "sum")
+            dataGetter.updateFieldInt(FireBaseAuthenticator.getCurrentUID(), "correctSongs", gameManager.getCorrectSongs().size, method = "sum")
+            dataGetter.updateFieldInt(FireBaseAuthenticator.getCurrentUID(), "bestScore", gameManager.getScore(), method = "best")
+            dataGetter.updateSubFieldInt(FireBaseAuthenticator.getCurrentUID(), gameManager.getScore(), "scores", gameManager.gameMode, method = "best")
+        }
+    }
     /**
      * Functions for testing
      */

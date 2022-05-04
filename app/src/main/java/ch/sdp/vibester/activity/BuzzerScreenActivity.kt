@@ -26,7 +26,7 @@ class BuzzerScreenActivity : GameActivity() {
     private val rowsIdArray = ArrayList(buzzersToRows.values)
     private val buzIds = ArrayList(buzzersToRows.keys)
     private var winnerId = -1 // same function as the winnerId in the updater. Ugly placeholder solution for now
-    //private lateinit var gameManager: BuzzerGameManager
+    private lateinit var gameManager: BuzzerGameManager
     private var gameIsOn: Boolean = true
 
     private fun initHashmap(): HashMap<Int, Int> {
@@ -49,12 +49,13 @@ class BuzzerScreenActivity : GameActivity() {
         supportActionBar?.hide()
         setContentView(R.layout.activity_buzzer_screen)
 
-        //val ctx: Context = this
+        val ctx: Context = this
 
         val getIntent = intent.extras
         if (getIntent != null) {
 
-            //gameManager = getIntent.getSerializable("gameManager") as BuzzerGameManager
+            // null pointer?
+            gameManager = getIntent.getSerializable("gameManager") as BuzzerGameManager
 
             val nPlayers = getIntent.getInt("Number of players")
 
@@ -76,10 +77,10 @@ class BuzzerScreenActivity : GameActivity() {
             setAnswerButton(answer, findViewById(R.id.buttonCorrect), updater, buzzersToRows)
             setAnswerButton(answer, findViewById(R.id.buttonWrong), updater, buzzersToRows)
 
-            //startFirstRound(ctx, gameManager)
+            startFirstRound(ctx, gameManager)
         }
     }
-/*
+
     /**
      * Custom onDestroy to verify progressbar and media player are stopped
      */
@@ -92,7 +93,7 @@ class BuzzerScreenActivity : GameActivity() {
         }
         super.onDestroy()
     }
-*/
+
     /**
      * Function to set a song for the first round and play a game.
      */

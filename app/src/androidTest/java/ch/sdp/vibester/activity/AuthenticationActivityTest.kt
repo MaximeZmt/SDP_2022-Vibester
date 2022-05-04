@@ -104,7 +104,7 @@ class AuthenticationActivityTest {
         onView(withId(R.id.password)).perform(ViewActions.typeText(password), closeSoftKeyboard())
         onView(withId(R.id.logIn)).perform(click())
         Thread.sleep(1000)
-        onView(withId(R.id.email)).check(matches(withText("Authentication error")))
+        onView(withId(R.id.authentication_status)).check(matches(withText("Authentication error")))
     }
 
     @Test
@@ -119,19 +119,19 @@ class AuthenticationActivityTest {
         onView(withId(R.id.password)).perform(ViewActions.typeText(password), closeSoftKeyboard())
         onView(withId(R.id.createAcc)).perform(click())
 
-        onView(withId(R.id.email)).check(matches(withText("Authentication error")))
+        onView(withId(R.id.authentication_status)).check(matches(withText("Authentication error")))
     }
 
     @Test
     fun stringValidationEmptyUsername() {
         onView(withId(R.id.createAcc)).perform(click())
-        onView(withId(R.id.email)).check(matches(withText("Empty email or password")))
+        onView(withId(R.id.authentication_status)).check(matches(withText("Empty email or password")))
     }
 
     @Test
     fun stringValidationEmptyUPassword() {
         onView(withId(R.id.createAcc)).perform(click())
-        onView(withId(R.id.email)).check(matches(withText("Empty email or password")))
+        onView(withId(R.id.authentication_status)).check(matches(withText("Empty email or password")))
     }
 
     @Test
@@ -150,7 +150,7 @@ class AuthenticationActivityTest {
         onView(withId(R.id.password)).perform(ViewActions.typeText(password), closeSoftKeyboard())
         onView(withId(R.id.createAcc)).perform(click())
 
-        onView(withId(R.id.email)).check(matches(withText("Not an email")))
+        onView(withId(R.id.authentication_status)).check(matches(withText("Not an email")))
     }
 
     @Test
@@ -162,7 +162,7 @@ class AuthenticationActivityTest {
         onView(withId(R.id.password)).perform(ViewActions.typeText(password), closeSoftKeyboard())
         onView(withId(R.id.createAcc)).perform(click())
 
-        onView(withId(R.id.email)).check(matches(withText("Password has to be at least 6 symbols")))
+        onView(withId(R.id.authentication_status)).check(matches(withText("Password has to be at least 6 symbols")))
     }
 
 

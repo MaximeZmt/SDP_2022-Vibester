@@ -5,12 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/floral_white"
-    tools:context=".profile.ProfileActivity">
+    tools:context=".activity.ProfileActivity">
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/profileContent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="165dp">
 
         <ImageView
             android:id="@+id/avatar"
@@ -28,24 +31,37 @@
             app:layout_constraintWidth_max="150dp"
             tools:srcCompat="@tools:sample/avatars" />
 
-        <TextView
-            android:id="@+id/username"
-            android:layout_width="200dp"
-            android:layout_height="30dp"
-            android:layout_marginBottom="109dp"
-            android:fontFamily="monospace"
-            android:text="@string/authentication_placeholderUsername"
-            android:textAlignment="center"
-            android:textColor="#000"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/profileStatistics"
+
+        <RelativeLayout
+            android:layout_width="403dp"
+            android:layout_height="42dp"
+            android:layout_weight=".2"
+            app:layout_constraintBottom_toTopOf="@+id/showQRCode"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.284"
-            app:layout_constraintRight_toLeftOf="@+id/editUser"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/avatar"
-            app:layout_constraintVertical_bias="0.678" />
+            app:layout_constraintTop_toBottomOf="@+id/avatar">
+
+            <TextView
+                android:id="@+id/username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_weight=".4"
+                android:text="@string/authentication_placeholderUsername"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/editUser"
+                android:layout_width="30dp"
+                android:layout_height="27dp"
+                android:layout_centerInParent="true"
+                android:layout_marginStart="0dp"
+                android:layout_marginLeft="32dp"
+                android:layout_toRightOf="@+id/username"
+                android:src="@drawable/pencil" />
+
+        </RelativeLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/profile_returnToMain"
@@ -179,20 +195,6 @@
 
         </TableLayout>
 
-        <Button
-            android:id="@+id/editUser"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="36dp"
-            android:layout_marginBottom="136dp"
-            android:backgroundTint="@color/cg_blue"
-            android:elevation="10dp"
-            android:stateListAnimator="@null"
-            android:text="Edit"
-            android:translationZ="10dp"
-            app:layout_constraintBottom_toTopOf="@+id/profileStatistics"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintLeft_toRightOf="@+id/username" />
 
         <Button
             android:id="@+id/logout"
@@ -213,18 +215,15 @@
             android:id="@+id/showQRCode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="66dp"
+            android:layout_marginBottom="36dp"
             android:backgroundTint="@color/cg_blue"
             android:text="QR Code"
             app:layout_constraintBottom_toTopOf="@+id/profileStatistics"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/username" />
+            app:layout_constraintStart_toStartOf="parent" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
     <include layout="@layout/display_qr_code" />
 

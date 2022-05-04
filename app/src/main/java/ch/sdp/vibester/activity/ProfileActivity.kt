@@ -65,7 +65,7 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun setEditUserNameBtnListener() {
-        findViewById<Button>(R.id.editUser).setOnClickListener {
+        findViewById<ImageView>(R.id.editUser).setOnClickListener {
             showGeneralDialog(R.id.username, "username")
         }
     }

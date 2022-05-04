@@ -71,7 +71,7 @@ class AuthenticationActivity : AppCompatActivity() {
 
         val username = findViewById<EditText>(R.id.username)
         val password = findViewById<EditText>(R.id.password)
-        email = findViewById(R.id.email)
+        email = findViewById(R.id.authentication_status)
 
 
 

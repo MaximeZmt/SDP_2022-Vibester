@@ -85,7 +85,7 @@ class BuzzerScreenActivity : GameActivity() {
     }
 
     /**
-     * Custom onDestroy to verify progressbar and media player are stopped
+     * A custom onDestroy to verify progressbar and media player are stopped
      */
     override fun onDestroy() {
         if (runnable != null) {

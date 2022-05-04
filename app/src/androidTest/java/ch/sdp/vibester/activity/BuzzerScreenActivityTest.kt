@@ -15,6 +15,8 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
 import ch.sdp.vibester.TestMode
+import ch.sdp.vibester.api.LastfmMethod
+import ch.sdp.vibester.helper.TypingGameManager
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -37,6 +39,25 @@ class BuzzerScreenActivityTest {
     @After
     fun clean() {
         Intents.release()
+    }
+
+    private fun setGameManager(numSongs:Int = 1, valid: Boolean = true): BuzzerGameManager {
+        val epilogue = "{\"tracks\":{\"track\":["
+        val prologue =
+            "], \"@attr\":{\"tag\":\"british\",\"page\":\"1\",\"perPage\":\"1\",\"totalPages\":\"66649\",\"total\":\"66649\"}}}"
+        var middle = "{\"name\":\"Monday\",\"artist\":{\"name\":\"Imagine Dragons\"}}"
+        if(!valid) middle = "{\"name\":\"TEST_SONG_TEST\",\"artist\":{\"name\":\"TEST_ARTIST_TEST\"}}"
+        val gameManager = TypingGameManager()
+
+        var i = 0
+        var completeMiddle = middle
+        while(i < numSongs-1){
+            completeMiddle += ",$middle"
+            i++
+        }
+        gameManager.setGameSongList(epilogue + completeMiddle + prologue, LastfmMethod.BY_TAG.method)
+
+        return gameManager
     }
 
     @Test
@@ -77,7 +98,7 @@ class BuzzerScreenActivityTest {
     @Test
     fun clickingAnswerButtonsMakesAnswerInvisible() {
         val intent = Intent(ApplicationProvider.getApplicationContext(), BuzzerScreenActivity::class.java)
-
+        val gameManager = setGameManager()
         // Put mock extras inside
         val mockPlayersNumber = 2
         val mockNameArray = arrayOfNulls<String>(mockPlayersNumber)

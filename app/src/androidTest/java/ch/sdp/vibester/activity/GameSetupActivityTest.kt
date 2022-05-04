@@ -53,6 +53,7 @@ class GameSetupActivityTest {
         onView(withId(R.id.gameSetup_returnToMain)).perform(click())
         onView(withId(R.id.gameSetup_returnToMain)).perform(click())
         onView(withId(R.id.gameSetup_returnToMain)).perform(click())
+
         intended(hasComponent(WelcomeActivity::class.java.name))
     }
 
@@ -72,6 +73,7 @@ class GameSetupActivityTest {
         onView(withId(R.id.btsButton)).perform(click())
         onView(withId(R.id.difficulty_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(0).perform(click())
+
         onView(withId(R.id.difficulty_spinner)).check(matches(withSpinnerText("Easy")))
     }
 
@@ -81,6 +83,7 @@ class GameSetupActivityTest {
         onView(withId(R.id.btsButton)).perform(click())
         onView(withId(R.id.difficulty_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(1).perform(click())
+
         onView(withId(R.id.difficulty_spinner)).check(matches(withSpinnerText("Medium")))
     }
 
@@ -90,6 +93,7 @@ class GameSetupActivityTest {
         onView(withId(R.id.btsButton)).perform(click())
         onView(withId(R.id.difficulty_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(2).perform(click())
+
         onView(withId(R.id.difficulty_spinner)).check(matches(withSpinnerText("Hard")))
     }
 
@@ -100,6 +104,7 @@ class GameSetupActivityTest {
         onView(withId(R.id.difficulty_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(0).perform(click())
         onView(withId(R.id.difficulty_proceed)).perform(click())
+
         intended(hasComponent(BuzzerSetupActivity::class.java.name))
         intended(hasExtra("Difficulty", "Easy"))
     }
@@ -111,6 +116,7 @@ class GameSetupActivityTest {
         onView(withId(R.id.difficulty_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(1).perform(click())
         onView(withId(R.id.difficulty_proceed)).perform(click())
+
         intended(hasComponent(BuzzerSetupActivity::class.java.name))
         intended(hasExtra("Difficulty", "Medium"))
     }
@@ -122,6 +128,7 @@ class GameSetupActivityTest {
         onView(withId(R.id.difficulty_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(2).perform(click())
         onView(withId(R.id.difficulty_proceed)).perform(click())
+
         intended(hasComponent(BuzzerSetupActivity::class.java.name))
         intended(hasExtra("Difficulty", "Hard"))
     }
@@ -133,6 +140,7 @@ class GameSetupActivityTest {
         onView(withId(R.id.difficulty_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(2).perform(click())
         onView(withId(R.id.difficulty_proceed)).perform(click())
+
         intended(hasComponent(TypingGameActivity::class.java.name))
         intended(hasExtra("Difficulty", "Hard"))
     }
@@ -144,6 +152,7 @@ class GameSetupActivityTest {
         onView(withId(R.id.difficulty_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(1).perform(click())
         onView(withId(R.id.difficulty_proceed)).perform(click())
+
         intended(hasComponent(TypingGameActivity::class.java.name))
         intended(hasExtra("Difficulty", "Medium"))
     }
@@ -155,6 +164,7 @@ class GameSetupActivityTest {
         onView(withId(R.id.difficulty_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(0).perform(click())
         onView(withId(R.id.difficulty_proceed)).perform(click())
+
         intended(hasComponent(TypingGameActivity::class.java.name))
         intended(hasExtra("Difficulty", "Easy"))
     }
@@ -166,6 +176,7 @@ class GameSetupActivityTest {
         onView(withId(R.id.difficulty_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(2).perform(click())
         onView(withId(R.id.difficulty_proceed)).perform(click())
+
         intended(hasComponent(LyricsBelongGameActivity::class.java.name))
         intended(hasExtra("Difficulty", "Hard"))
     }
@@ -176,6 +187,7 @@ class GameSetupActivityTest {
         onView(withId(R.id.btsButton)).perform(click())
         onView(withId(R.id.size_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(0).perform(click())
+
         onView(withId(R.id.size_spinner)).check(matches(withSpinnerText("One")))
     }
 
@@ -185,6 +197,7 @@ class GameSetupActivityTest {
         onView(withId(R.id.btsButton)).perform(click())
         onView(withId(R.id.size_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(1).perform(click())
+
         onView(withId(R.id.size_spinner)).check(matches(withSpinnerText("Two")))
     }
 
@@ -194,6 +207,7 @@ class GameSetupActivityTest {
         onView(withId(R.id.btsButton)).perform(click())
         onView(withId(R.id.size_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(2).perform(click())
+
         onView(withId(R.id.size_spinner)).check(matches(withSpinnerText("Three")))
     }
 
@@ -203,6 +217,7 @@ class GameSetupActivityTest {
         onView(withId(R.id.btsButton)).perform(click())
         onView(withId(R.id.size_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(3).perform(click())
+
         onView(withId(R.id.size_spinner)).check(matches(withSpinnerText("Four")))
     }
 
@@ -212,6 +227,7 @@ class GameSetupActivityTest {
         onView(withId(R.id.btsButton)).perform(click())
         onView(withId(R.id.size_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(4).perform(click())
+
         onView(withId(R.id.size_spinner)).check(matches(withSpinnerText("Five")))
     }
 
@@ -221,6 +237,7 @@ class GameSetupActivityTest {
         onView(withId(R.id.btsButton)).perform(click())
         onView(withId(R.id.size_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(5).perform(click())
+
         onView(withId(R.id.size_spinner)).check(matches(withSpinnerText("Six")))
     }
 
@@ -230,6 +247,7 @@ class GameSetupActivityTest {
         onView(withId(R.id.btsButton)).perform(click())
         onView(withId(R.id.size_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(6).perform(click())
+
         onView(withId(R.id.size_spinner)).check(matches(withSpinnerText("Seven")))
     }
 
@@ -239,6 +257,7 @@ class GameSetupActivityTest {
         onView(withId(R.id.btsButton)).perform(click())
         onView(withId(R.id.size_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(7).perform(click())
+
         onView(withId(R.id.size_spinner)).check(matches(withSpinnerText("Eight")))
     }
 
@@ -249,6 +268,7 @@ class GameSetupActivityTest {
         onView(withId(R.id.btsButton)).perform(click())
         onView(withId(R.id.size_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(8).perform(click())
+
         onView(withId(R.id.size_spinner)).check(matches(withSpinnerText("Nine")))
     }
 
@@ -258,6 +278,7 @@ class GameSetupActivityTest {
         onView(withId(R.id.btsButton)).perform(click())
         onView(withId(R.id.size_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(9).perform(click())
+
         onView(withId(R.id.size_spinner)).check(matches(withSpinnerText("Ten")))
     }
 

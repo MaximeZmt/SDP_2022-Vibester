@@ -67,7 +67,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.AuthenticationActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.WelcomeActivity"
             android:exported="true">

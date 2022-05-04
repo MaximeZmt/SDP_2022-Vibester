@@ -46,7 +46,7 @@ class CreateProfileActivityTest {
             lastArg<(String) -> Unit>().invoke(email)
         }
 
-        every { mockUsersRepo.getUserData(any()) } answers {
+        every { mockUsersRepo.getUserData(any(), any()) } answers {
             secondArg<(User) -> Unit>().invoke(User())
         }
 

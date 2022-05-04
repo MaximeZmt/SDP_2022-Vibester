@@ -92,9 +92,10 @@ open class GameActivity : AppCompatActivity() {
     /**
      * Function called in the end of each round.
      */
-    open fun endRound(gameManager: GameManager) {
+    open fun endRound(gameManager: GameManager, callback: (()->Unit)?= null) {
         checkRunnable()
         if (isEndGame(gameManager)) {
+            callback?.invoke()
             switchToEnding(gameManager)
         }
     }

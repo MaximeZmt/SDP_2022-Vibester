@@ -12,14 +12,34 @@ import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.helper.loadImg
 
+
 /**
  * UserAdapter to set userProfile views with username and image in RecycleView. It is used to search for users.
  */
-class UserProfileAdapter constructor(val users: MutableList<User>):
+class UserProfileAdapter constructor(val users: MutableList<User>, val authenticator: FireBaseAuthenticator, val usersRepo: DataGetter):
     RecyclerView.Adapter<UserProfileAdapter.UserProfileViewHolder>() {
 
-    val authenticator: FireBaseAuthenticator = FireBaseAuthenticator()
-    val usersRepo: DataGetter = DataGetter()
+    private val currentUser = authenticator.getCurrUser()
+    private var userFriends: Array<String> = arrayOf()
+
+    init{
+        if (currentUser != null) { usersRepo.getUserData(currentUser.uid, this::setFriends) }
+    }
+
+    // Callback for getUserData
+    private fun setFriends(user:User){
+        userFriends = user.friends.keys.toTypedArray()
+    }
+
+    /**
+     * Update users in the search list
+     * @param new_users to set in search list
+     */
+    fun updateUsersList(new_users: MutableList<User>){
+        this.users.clear()
+        this.users.addAll(new_users)
+    }
+
     /**
      * Create a RecycleView layout with the userProfile view as an item
      */
@@ -40,6 +60,8 @@ class UserProfileAdapter constructor(val users: MutableList<User>):
         return users.size
     }
 
+
+
     /**
      * Customer ViewHolder class for UserProfile. Each item contains username and image.
      */
@@ -50,18 +72,25 @@ class UserProfileAdapter constructor(val users: MutableList<User>):
         fun bind(user: User) {
             itemView.findViewById<TextView>(R.id.search_user_username).text = user.username
             itemView.findViewById<ImageView>(R.id.profile_image).loadImg(user.image)
-
             val addFriendBtn = itemView.findViewById<Button>(R.id.addFriendBtn)
-            addFriendBtn.setOnClickListener{
-                val currentUser = authenticator.getCurrUser()
-                if(currentUser != null){
-                    usersRepo.updateFieldSubFieldBoolean(currentUser!!.uid, true, "friends", user.uid)
-                    addFriendBtn.visibility = View.INVISIBLE
-                    itemView.findViewById<ImageView>(R.id.addedFriendIcon).visibility = View.VISIBLE
+
+            if(userFriends.isNotEmpty() && user.uid in userFriends){
+                changeBtnToImage()
+            }
+            else {
+                addFriendBtn.setOnClickListener {
+                    if (currentUser != null) {
+                        usersRepo.setSubFieldValue(currentUser.uid, "friends", user.uid,true)
+                        changeBtnToImage()
+                    }
                 }
             }
         }
 
+        private fun changeBtnToImage(){
+            itemView.findViewById<Button>(R.id.addFriendBtn).visibility = View.INVISIBLE
+            itemView.findViewById<ImageView>(R.id.addedFriendIcon).visibility = View.VISIBLE
+        }
     }
 
 

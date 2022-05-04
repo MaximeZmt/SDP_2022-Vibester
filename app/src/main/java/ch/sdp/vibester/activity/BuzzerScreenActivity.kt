@@ -54,9 +54,6 @@ class BuzzerScreenActivity : GameActivity() {
         val getIntent = intent.extras
         if (getIntent != null) {
 
-            // null pointer?
-            gameManager = getIntent.getSerializable("gameManager") as BuzzerGameManager
-
             val nPlayers = getIntent.getInt("Number of players")
 
             val answer = findViewById<LinearLayout>(R.id.answer)
@@ -76,6 +73,10 @@ class BuzzerScreenActivity : GameActivity() {
             }
             setAnswerButton(answer, findViewById(R.id.buttonCorrect), updater, buzzersToRows)
             setAnswerButton(answer, findViewById(R.id.buttonWrong), updater, buzzersToRows)
+
+            // null pointer?
+            gameManager = getIntent.getSerializable("gameManager") as BuzzerGameManager
+            gameManager.scoreUpdater = updater
 
             startFirstRound(ctx, gameManager)
         }

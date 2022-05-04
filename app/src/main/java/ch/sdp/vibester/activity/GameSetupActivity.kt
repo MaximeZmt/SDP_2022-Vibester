@@ -71,23 +71,23 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         if (parent.id == R.id.difficulty_spinner) {
             difficulty = parent.getItemAtPosition(position).toString()
             when (difficulty) {
-                R.string.easy.toString()      -> setDifficultyText(R.string.difficulty_easy)
-                R.string.medium.toString()   -> setDifficultyText(R.string.difficulty_medium)
-                R.string.hard.toString()     -> setDifficultyText(R.string.difficulty_hard)
+                "Easy"      -> setDifficultyText(R.string.difficulty_easy)
+                "Medium"    -> setDifficultyText(R.string.difficulty_medium)
+                "Hard"      -> setDifficultyText(R.string.difficulty_hard)
             }
         } else if (parent.id == R.id.size_spinner) {
             gameSize = parent.getItemAtPosition(position).toString()
             when (gameSize) {
-                R.string.one.toString() -> gameManager.setGameSize(1)
-                R.string.two.toString() -> gameManager.setGameSize(2)
-                R.string.three.toString() -> gameManager.setGameSize(3)
-                R.string.four.toString() -> gameManager.setGameSize(4)
-                R.string.five.toString() -> gameManager.setGameSize(5)
-                R.string.six.toString() -> gameManager.setGameSize(6)
-                R.string.seven.toString() -> gameManager.setGameSize(7)
-                R.string.eight.toString() -> gameManager.setGameSize(8)
-                R.string.nine.toString() -> gameManager.setGameSize(9)
-                R.string.ten.toString() -> gameManager.setGameSize(10)
+                "One" -> gameManager.setGameSize(1)
+                "Two" -> gameManager.setGameSize(2)
+                "Three" -> gameManager.setGameSize(3)
+                "Four" -> gameManager.setGameSize(4)
+                "Five" -> gameManager.setGameSize(5)
+                "Six" -> gameManager.setGameSize(6)
+                "Seven" -> gameManager.setGameSize(7)
+                "Eight" -> gameManager.setGameSize(8)
+                "Nine" -> gameManager.setGameSize(9)
+                "Ten" -> gameManager.setGameSize(10)
             }
         }
     }

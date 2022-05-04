@@ -17,6 +17,9 @@
     <string name="authentication_placeholderEmptyScore">Error</string>
     <string name="authentication_noActionDoneYet">Either log in with your Google account or fill in credentials to create an account or log in</string>
 
+    <!-- GameEnding -->
+    <string name="gameEnding_unconnectedUsername">UNCONNECTED</string>
+
     <!-- OLD String-->
 
 

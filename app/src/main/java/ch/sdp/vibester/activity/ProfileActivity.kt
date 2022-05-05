@@ -185,6 +185,11 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
+
+    /**
+     * A function that downloads an image and sets it.
+     * @param imageURI URI of the image
+     */
     private fun setImage(imageURI: Uri) {
         CoroutineScope(Dispatchers.Main).launch {
             val task = async(Dispatchers.IO) {
@@ -242,29 +247,6 @@ class ProfileActivity : AppCompatActivity() {
 
         if (user.uid != "") {
             generateQrCode(user.uid)
-        }
-    }
-
-    /**
-     * Helper function to setupProfile to set the profile photo of a user.
-     * @param user: The user whose profile picture we are setting up.
-     */
-    private fun setupProfilePhoto(user: User) {
-        CoroutineScope(Dispatchers.Main).launch {
-            val task = async(Dispatchers.IO) {
-                try {
-                    Log.e(getString(R.string.log_tag),user.image)
-                    val bit = BitmapGetterApi.download("https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/45.png")
-                    bit.get(10, TimeUnit.SECONDS)
-                } catch (e: Exception) {
-                    null
-                }
-            }
-            val bm = task.await()
-            if (bm != null) {
-                val avatar = findViewById<ImageView>(R.id.avatar)
-                avatar.setImageBitmap(Bitmap.createScaledBitmap(bm, 1000,1000, false))
-            }
         }
     }
 

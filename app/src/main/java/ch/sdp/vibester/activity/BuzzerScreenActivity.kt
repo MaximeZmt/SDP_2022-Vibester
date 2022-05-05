@@ -71,8 +71,8 @@ class BuzzerScreenActivity : GameActivity() {
                 buildScores(players, allPoints)
                 buildBuzzers(players, answer)
             }
-            setAnswerButton(answer, findViewById(R.id.buttonCorrect), updater, buzzersToRows)
-            setAnswerButton(answer, findViewById(R.id.buttonWrong), updater, buzzersToRows)
+            setAnswerButton(ctx, answer, findViewById(R.id.buttonCorrect), updater, buzzersToRows)
+            setAnswerButton(ctx, answer, findViewById(R.id.buttonWrong), updater, buzzersToRows)
 
             // null pointer?
             if (getIntent.getSerializable("gameManager") != null) {
@@ -163,7 +163,7 @@ class BuzzerScreenActivity : GameActivity() {
         }
         endRound(gameManager)
     }
-/*
+
     /**
      * Function called in the end of each round. Displays the button "Next" and
      * sets the next songs to play.
@@ -172,14 +172,15 @@ class BuzzerScreenActivity : GameActivity() {
         gameIsOn = false
         //findViewById<EditText>(R.id.yourGuessET).isEnabled = false
         //checkRunnable()
-        super.endRound(gameManager)
+
+        super.endRound(gameManager, this::testWinner)
         //TODO: is it ok for the last round to go to the end game directly without waiting for the next btn?
-        //toggleNextBtnVisibility(true)
-        /*if (endGame(gameManager)) {
-            switchToEnding(gameManager)
-        }*/
     }
-*/
+
+    fun testWinner() {
+        gameManager.scoreUpdater.getWinnerId()
+    }
+
     /**
      * Programmatically builds the table of scores according to the number of players
      * @param players: an array of player names
@@ -254,7 +255,7 @@ class BuzzerScreenActivity : GameActivity() {
      * @param updater: the updater for the scores
      * @param map: a map from the buzzers' IDs to the IDs of each score's position in the score table layout
      */
-    private fun setAnswerButton(answer: LinearLayout, button: Button, updater: BuzzerScoreUpdater, map: Map<Int, Int>) {
+    private fun setAnswerButton(ctx: Context, answer: LinearLayout, button: Button, updater: BuzzerScoreUpdater, map: Map<Int, Int>) {
         button.setOnClickListener {
             answer.visibility = android.view.View.INVISIBLE
             if (pressedBuzzer >= 0) {
@@ -265,9 +266,14 @@ class BuzzerScreenActivity : GameActivity() {
                 val view = map[pressedBuzzer]?.let { it1 -> findViewById<TextView>(it1) }
                 if (view != null && updater.getMap().keys.contains(pressedBuzzer)) {view.text=updater.getMap()[pressedBuzzer].toString()}
             }
-
+            if (gameManager.playingMediaPlayer()) {
+                gameManager.stopMediaPlayer()
+            }
+            setPressed(NO_BUZZER_PRESSED) // reset the buzzer
+            gameManager.setNextSong()
+            startRound(ctx, gameManager)
         }
-        setPressed(NO_BUZZER_PRESSED) // reset the buzzer
+
     }
 
 
@@ -275,6 +281,9 @@ class BuzzerScreenActivity : GameActivity() {
      * Fires an intent from the Gamescreen to the Ending Screen
      */
     fun switchToEnding(view: View) {
+        if (gameManager.playingMediaPlayer()) {
+            gameManager.stopMediaPlayer()
+        }
         val mockArray = arrayListOf<String>("One", "Two", "Three", "Four", "Five")
         val intent = Intent(this, GameEndingActivity::class.java)
 

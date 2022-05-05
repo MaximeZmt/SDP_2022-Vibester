@@ -89,18 +89,22 @@ class DownloadActivity : AppCompatActivity() {
                     songView
                 )
             } else {
-                val songFuture = ItunesMusicApi.querySong(songName, OkHttpClient(), 1)
-                try {
-                    song = Song.singleSong(songFuture.get())
-                    checkPermissionsAndDownload()
-                } catch (e: IllegalArgumentException) {
-                    alert(
-                        getString(R.string.download_unable_to_find),
-                        getString(R.string.download_retry),
-                        songView
-                    )
-                }
+                getAndDownload(songView)
             }
+        }
+    }
+
+    private fun getAndDownload(songView: TextView) {
+        val songFuture = ItunesMusicApi.querySong(songName, OkHttpClient(), 1)
+        try {
+            song = Song.singleSong(songFuture.get())
+            checkPermissionsAndDownload()
+        } catch (e: IllegalArgumentException) {
+            alert(
+                getString(R.string.download_unable_to_find),
+                getString(R.string.download_retry),
+                songView
+            )
         }
     }
 

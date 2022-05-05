@@ -160,7 +160,7 @@ class LyricsBelongGameActivityTest {
 //        assertEquals(true, gameManager.getScore() == 0)
 //        assertEquals(true, gameManager.getWrongSongs().size == 0)
     }
-
+/*
     @Test
     fun shouldUpdateSpeechFromInput() {
         val intent = Intent(
@@ -173,7 +173,7 @@ class LyricsBelongGameActivityTest {
         }
         onView(withId(R.id.lyricResult)).check(matches(withText("hey")))
     }
-
+*/
     @Test
     fun nextButtonOnClick() {
         val gameManager = setGameManager(2)

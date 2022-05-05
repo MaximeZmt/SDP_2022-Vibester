@@ -23,10 +23,10 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-
+/*
 @RunWith(AndroidJUnit4::class)
 class LyricsBelongGameActivityTest {
-/*
+
     private val sleepTime: Long = 5000
     private val songName = "Thunder"
     private val artistName = "Imagine Dragons"
@@ -286,6 +286,6 @@ class LyricsBelongGameActivityTest {
     }
 
 
- */
 
-}
+
+}*/

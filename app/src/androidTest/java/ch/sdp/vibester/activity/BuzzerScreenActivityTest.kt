@@ -68,11 +68,33 @@ class BuzzerScreenActivityTest {
 
     @Test
     fun scoresLayoutIsDisplayed() {
+        val intent = Intent(ApplicationProvider.getApplicationContext(), BuzzerScreenActivity::class.java)
+
+        // Put mock extras inside
+        val mockPlayersNumber = 2
+        val mockNameArray = arrayOfNulls<String>(mockPlayersNumber)
+        mockNameArray[0] = "John"
+        mockNameArray[1] = "Bob"
+        intent.putExtra("Number of players", mockPlayersNumber)
+        intent.putExtra("Player Names", mockNameArray)
+        intent.putExtra("gameManager", setGameManager())
+        val scn: ActivityScenario<BuzzerScreenActivity> = ActivityScenario.launch(intent)
         onView(withId(R.id.scoresTable)).check(matches(isDisplayed()))
     }
 
     @Test
-    fun answerIsPresentButInvisibleOnStartup() {
+    fun answerIsPresentButGoneOnStartup() {
+        val intent = Intent(ApplicationProvider.getApplicationContext(), BuzzerScreenActivity::class.java)
+
+        // Put mock extras inside
+        val mockPlayersNumber = 2
+        val mockNameArray = arrayOfNulls<String>(mockPlayersNumber)
+        mockNameArray[0] = "John"
+        mockNameArray[1] = "Bob"
+        intent.putExtra("Number of players", mockPlayersNumber)
+        intent.putExtra("Player Names", mockNameArray)
+        intent.putExtra("gameManager", setGameManager())
+        val scn: ActivityScenario<BuzzerScreenActivity> = ActivityScenario.launch(intent)
         onView(withId(R.id.answer)).check(matches(withEffectiveVisibility(Visibility.INVISIBLE)))
     }
     

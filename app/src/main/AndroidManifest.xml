@@ -8,6 +8,11 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
 
     <application
         android:name=".VibesterApp"
@@ -20,12 +25,14 @@
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".activity.QrScanningActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.ChoosePartyRoomActivity"
             android:exported="false" />
         <activity
             android:name=".activity.PartyRoomActivity"
             android:exported="false" />
-
         <activity
             android:name=".activity.DeleteSongsActivity"
             android:exported="false" />
@@ -79,5 +86,4 @@
             </intent-filter>
         </activity>
     </application>
-
 </manifest>

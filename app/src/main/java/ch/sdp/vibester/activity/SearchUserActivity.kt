@@ -1,5 +1,6 @@
 package ch.sdp.vibester.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -14,8 +15,10 @@ import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.user.User
 
 import ch.sdp.vibester.user.UserProfileAdapter
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+
 
 
 /**
@@ -36,6 +39,8 @@ class SearchUserActivity : AppCompatActivity() {
     private var recyclerView: RecyclerView? = null
     private var searchEditText: EditText? = null
 
+    private var uidList: ArrayList<String> = ArrayList()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +58,19 @@ class SearchUserActivity : AppCompatActivity() {
 
         searchEditText = findViewById(R.id.searchUserET)
         searchForUsers("")
+
+        val buttonScan: FloatingActionButton = findViewById(R.id.searchUser_scanning)
+
+        val extras = intent.extras
+
+        buttonScan.setOnClickListener {
+            val qrIntent = Intent(this, QrScanningActivity::class.java)
+            qrIntent.putExtra("uidList", uidList)
+            if (extras != null) {
+                qrIntent.putExtra("isTest", extras.getBoolean("isTest", false))
+            }
+            startActivity(qrIntent)
+        }
 
         searchEditText!!.addTextChangedListener(object:TextWatcher{
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -74,11 +92,18 @@ class SearchUserActivity : AppCompatActivity() {
     }
 
     /**
+     * Callback to update users in adapter during search
+     */
+    private fun setUserInAdapter2(users: ArrayList<String> = ArrayList()) {
+        uidList = ArrayList(users)
+    }
+
+    /**
      * Search for users by usernames in Firebase Realtime Database
      * @param inputUsername search text inputed by user
      */
     private fun searchForUsers(inputUsername:String){
-        usersRepo.searchByField("username", inputUsername, callback = ::setUserInAdapter)
+        usersRepo.searchByField("username", inputUsername, callback = ::setUserInAdapter, callbackUid = ::setUserInAdapter2)
     }
 }
 

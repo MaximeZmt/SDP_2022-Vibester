@@ -87,19 +87,6 @@
                 app:icon="@android:drawable/stat_sys_headset" />
 
             <!-- Currently disabled because don't have true settings activity -->
-            <Button
-                android:id="@+id/welcome_settings"
-                android:layout_width="200dp"
-                android:layout_height="48dp"
-                android:layout_marginTop="10dp"
-                android:backgroundTint="@color/cg_blue"
-                android:elevation="10dp"
-                android:enabled="false"
-                android:stateListAnimator="@null"
-                android:text="@string/welcomeScreen_settings"
-                android:translationZ="10dp"
-                android:visibility="gone"
-                app:icon="@android:drawable/ic_menu_manage" />
 
             <Button
                 android:id="@+id/welcome_download"
@@ -127,6 +114,20 @@
                 android:translationZ="10dp"
                 app:icon="@android:drawable/ic_menu_search" />
 
+
+            <Button
+                android:id="@+id/welcome_scanning"
+                android:layout_width="200dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="@color/cg_blue"
+                android:elevation="10dp"
+                android:enabled="true"
+                android:stateListAnimator="@null"
+                android:text="@string/welcomeScreen_scanning"
+                android:translationZ="10dp"
+                android:visibility="gone"
+                app:icon="@android:drawable/ic_menu_camera" />
 
             <Space
                 android:layout_width="match_parent"

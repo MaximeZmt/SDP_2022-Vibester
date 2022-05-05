@@ -58,8 +58,6 @@ class BuzzerScreenActivity : GameActivity() {
 
             val answer = findViewById<LinearLayout>(R.id.answer)
             answer.visibility=View.INVISIBLE
-            //val answerText = findViewById<TextView>(R.id.answerText)
-            //answerText.text = "The song was Demo by The Placeholders"
 
             val allPoints = Array(nPlayers, { i -> 0 })
             val playersFull = getIntent.getStringArray("Player Names")
@@ -155,11 +153,8 @@ class BuzzerScreenActivity : GameActivity() {
         if (chosenSong != null && chosenSong.getTrackName() == playedSong.getTrackName() && chosenSong.getArtistName() == playedSong.getArtistName()) {
             gameManager.increaseScore()
             gameManager.addCorrectSong()
-            //TODO: replace with score handler stuff here
-            //hasWon(ctx, gameManager.getScore(), true, playedSong)
         } else {
             gameManager.addWrongSong()
-            //hasWon(ctx, gameManager.getScore(), false, playedSong)
         }
         endRound(gameManager)
     }
@@ -170,11 +165,7 @@ class BuzzerScreenActivity : GameActivity() {
      */
      fun endRound(gameManager: GameManager){
         gameIsOn = false
-        //findViewById<EditText>(R.id.yourGuessET).isEnabled = false
-        //checkRunnable()
-
         super.endRound(gameManager, this::testWinner)
-        //TODO: is it ok for the last round to go to the end game directly without waiting for the next btn?
     }
 
     fun testWinner() {

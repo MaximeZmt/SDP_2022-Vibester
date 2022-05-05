@@ -2,6 +2,9 @@ package ch.sdp.vibester.activity
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
+import android.provider.CalendarContract.CalendarCache.URI
+import android.widget.ImageView
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
@@ -13,9 +16,9 @@ import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
-import ch.sdp.vibester.TestMode
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
+import ch.sdp.vibester.database.ImageGetter
 import ch.sdp.vibester.user.User
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.testing.BindValue
@@ -64,13 +67,25 @@ class ProfileActivityTest {
     @BindValue @JvmField
     val mockUsersRepo = mockk<DataGetter>()
 
-    private fun createMockInvocation(mockProfile: User) {
+    @BindValue @JvmField
+    val mockImageGetter = mockk<ImageGetter>()
+
+    private fun createMockDataGetter(mockProfile: User) {
         every { mockUsersRepo.getUserData(any(), any()) } answers {
             secondArg<(User) -> Unit>().invoke(mockProfile)
         }
+        every {mockUsersRepo.getCurrentUser()} answers {
+            null
+        }
+        every { mockUsersRepo.setFieldValue(any(), any(), any()) } answers {}
+        every { mockUsersRepo.setFieldValue(any(), any(), any()) } answers {}
+    }
 
-        every { mockUsersRepo.setFieldValue(any(), any(), any()) } answers {}
-        every { mockUsersRepo.setFieldValue(any(), any(), any()) } answers {}
+    val mockImageURI = Uri.parse("https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/45.png")
+    private fun createMockImageGetter() {
+        every {mockImageGetter.fetchImage(any(), any())} answers {
+            secondArg<(Uri) -> Unit>().invoke(mockImageURI)
+        }
     }
 
     @After
@@ -84,8 +99,9 @@ class ProfileActivityTest {
         val ctx = ApplicationProvider.getApplicationContext() as Context
         val intent = Intent(ctx, ProfileActivity::class.java)
 
-        createMockInvocation(inputProfile)
+        createMockDataGetter(inputProfile)
         createMockAuthenticatorInvocation()
+        createMockImageGetter()
 
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
 
@@ -101,8 +117,9 @@ class ProfileActivityTest {
         val ctx = ApplicationProvider.getApplicationContext() as Context
         val intent = Intent(ctx, ProfileActivity::class.java)
 
-        createMockInvocation(inputProfile)
+        createMockDataGetter(inputProfile)
         createMockAuthenticatorInvocation()
+        createMockImageGetter()
 
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
 
@@ -117,8 +134,9 @@ class ProfileActivityTest {
         val ctx = ApplicationProvider.getApplicationContext() as Context
         val intent = Intent(ctx, ProfileActivity::class.java)
 
-        createMockInvocation(inputProfile)
+        createMockDataGetter(inputProfile)
         createMockAuthenticatorInvocation()
+        createMockImageGetter()
 
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
 
@@ -134,8 +152,9 @@ class ProfileActivityTest {
         val ctx = ApplicationProvider.getApplicationContext() as Context
         val intent = Intent(ctx, ProfileActivity::class.java)
 
-        createMockInvocation(inputProfile)
+        createMockDataGetter(inputProfile)
         createMockAuthenticatorInvocation()
+        createMockImageGetter()
 
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
         onView(withId(R.id.showQRCode)).perform(click())
@@ -151,8 +170,9 @@ class ProfileActivityTest {
         val ctx = ApplicationProvider.getApplicationContext() as Context
         val intent = Intent(ctx, ProfileActivity::class.java)
 
-        createMockInvocation(inputProfile)
+        createMockDataGetter(inputProfile)
         createMockAuthenticatorInvocation()
+        createMockImageGetter()
 
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
         val newUsername = "Lalisa Bon idomesniu"
@@ -171,8 +191,9 @@ class ProfileActivityTest {
         val ctx = ApplicationProvider.getApplicationContext() as Context
         val intent = Intent(ctx, ProfileActivity::class.java)
 
-        createMockInvocation(inputProfile)
+        createMockDataGetter(inputProfile)
         createMockAuthenticatorInvocation()
+        createMockImageGetter()
 
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
 
@@ -187,12 +208,29 @@ class ProfileActivityTest {
         val ctx = ApplicationProvider.getApplicationContext() as Context
         val intent = Intent(ctx, ProfileActivity::class.java)
 
-        createMockInvocation(inputProfile)
+        createMockDataGetter(inputProfile)
         createMockAuthenticatorInvocation()
+        createMockImageGetter()
 
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
         onView(withId(R.id.showQRCode)).perform(click())
         onView(withId(R.id.qrCode)).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun checkIfPictureIsDisplayed() {
+        val inputProfile = User( "Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8, 29, 0, "VvPB47tQCLdjz3YebilS6h5EXdJ3")
+        val ctx = ApplicationProvider.getApplicationContext() as Context
+        val intent = Intent(ctx, ProfileActivity::class.java)
+
+        createMockDataGetter(inputProfile)
+        createMockAuthenticatorInvocation()
+        createMockImageGetter()
+
+        val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
+
+        Thread.sleep(5000)
+        onView(withId(R.id.avatar)).check(matches(isDisplayed()))
     }
 
 }

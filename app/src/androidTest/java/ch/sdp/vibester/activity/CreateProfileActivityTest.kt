@@ -50,6 +50,10 @@ class CreateProfileActivityTest {
             secondArg<(User) -> Unit>().invoke(User())
         }
 
+        every { mockUsersRepo.getCurrentUser() } answers {
+            null
+        }
+
     }
 
     @After

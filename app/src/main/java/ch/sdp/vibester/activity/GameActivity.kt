@@ -21,6 +21,7 @@ import kotlinx.coroutines.launch
 
 /**
  * Common set up for all games (difficulty level, progress bar)
+ * MISSING DOCS FOR CERTAIN METHODS INSIDE THE CLASS!
  */
 open class GameActivity : AppCompatActivity() {
     open val handler = Handler()

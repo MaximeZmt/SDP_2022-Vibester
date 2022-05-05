@@ -143,7 +143,7 @@ class BuzzerSetupActivityTest {
         onData(Matchers.anything()).atPosition(3).perform(scrollTo(),click())
         onView(withId(R.id.nb_player_spinner)).check(matches(withSpinnerText("Four")))
     }
-
+/*
     @Test
     fun checkNoIntentIfMissingName() {
         val intent = Intent(ApplicationProvider.getApplicationContext(), BuzzerSetupActivity::class.java)
@@ -156,7 +156,7 @@ class BuzzerSetupActivityTest {
         onView(withId(R.id.missingNameAlert)).check(matches(ViewMatchers.withEffectiveVisibility(ViewMatchers.Visibility.INVISIBLE)))
 
     }
-
+*/
     @Test
     fun checkIntentOnProceedOne() {
         val intent = Intent(ApplicationProvider.getApplicationContext(), BuzzerSetupActivity::class.java)

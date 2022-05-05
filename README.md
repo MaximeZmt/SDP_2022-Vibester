@@ -27,6 +27,7 @@ The game will also offer a customization where the user can create a game from i
 ## Table Of Contents
 
 1. [Team](#team)
+1. [Notes for running our app](#notes)
 2. [Scrumboard & Weekly Meetings Logs](#devLogs)
 3. [Guide & Useful Link](#guideAndLink)
 
@@ -45,10 +46,19 @@ The game will also offer a customization where the user can create a game from i
 
 
 
+## Notes for running our app <a name="notes"></a>
+
+If you are building yourself the app:
+
+* [Google Sign-In authentication setup](https://github.com/MaximeZmt/SDP_2022-Vibester/wiki/Setting-up-debug-for-Firebase-Auth-with-Google-Sign-In)
+
+
+
 ## Scrumboard & Weekly Meetings Logs <a name="devLogs"></a>
 
 - [Our Scrumboard](https://github.com/MaximeZmt/SDP_2022-Vibester/projects/1)
 - [Our Weekly Meeting](https://github.com/MaximeZmt/SDP_2022-Vibester/wiki)
+- [Our Known bugs list 🐛](https://github.com/MaximeZmt/SDP_2022-Vibester/wiki/Bugs%F0%9F%90%9B)
 
 
 

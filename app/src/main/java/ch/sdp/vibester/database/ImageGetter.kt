@@ -21,7 +21,7 @@ class ImageGetter @Inject constructor() {
     fun uploadFile(filePath: String, fileUri: Uri, callback: () -> Unit) {
         val profilePicRef = storageRef.child(filePath)
 
-        var uploadTask = profilePicRef.putFile(fileUri)
+        val uploadTask = profilePicRef.putFile(fileUri)
 
         uploadTask.addOnSuccessListener { callback() }
     }

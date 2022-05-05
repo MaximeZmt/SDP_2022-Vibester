@@ -35,8 +35,12 @@ class LyricsBelongGameActivity : GameActivity() {
         val getIntent = intent.extras
         if (getIntent != null) {
             gameManager = getIntent.getSerializable("gameManager") as GameManager
-            setNextButtonListener(ctx, gameManager)
-            setCheckButtonListener(ctx)
+            findViewById<Button>(R.id.nextSongButton).setOnClickListener {
+                startRound(ctx, gameManager)
+            }
+            findViewById<Button>(R.id.lyricMatchButton).setOnClickListener {
+                getAndCheckLyrics(ctx, songName, artistName, speechInput, gameManager)
+            }
             gameManager.setNextSong()
             startRound(ctx, gameManager)
             super.setMax(intent)
@@ -63,18 +67,6 @@ class LyricsBelongGameActivity : GameActivity() {
             val res = data!!.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
             speechInput = res?.get(0) ?: "Didn't catch"
             updateSpeechResult(speechInput)
-        }
-    }
-
-    private fun setCheckButtonListener(ctx: Context){
-        findViewById<Button>(R.id.lyricMatchButton).setOnClickListener {
-            getAndCheckLyrics(ctx, songName, artistName, speechInput, gameManager)
-        }
-    }
-
-    private fun setNextButtonListener(ctx: Context, gameManager: GameManager) {
-        findViewById<Button>(R.id.nextSongButton).setOnClickListener {
-            startRound(ctx, gameManager)
         }
     }
 

@@ -155,15 +155,22 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
+    private fun setTextOfView(id: Int, text: Int) {
+        findViewById<TextView>(id).text = text.toString()
+    }
+
+    private fun setTextOfMultipleViews(user: User) {
+        setTextOfView(R.id.totalGames, user.totalGames)
+        setTextOfView(R.id.correctSongs, user.correctSongs)
+        setTextOfView(R.id.bestScore, user.bestScore)
+        setTextOfView(R.id.ranking, user.ranking)
+    }
 
     private fun setupProfile(user: User){
         // Currently assuming that empty username means no user !
         if (user.username != ""){
             findViewById<TextView>(R.id.username).text =  user.username
-            findViewById<TextView>(R.id.totalGames).text = user.totalGames.toString()
-            findViewById<TextView>(R.id.correctSongs).text = user.correctSongs.toString()
-            findViewById<TextView>(R.id.bestScore).text = user.bestScore.toString()
-            findViewById<TextView>(R.id.ranking).text = user.ranking.toString()
+            setTextOfMultipleViews(user)
         }
         setupProfilePhoto(user)
 

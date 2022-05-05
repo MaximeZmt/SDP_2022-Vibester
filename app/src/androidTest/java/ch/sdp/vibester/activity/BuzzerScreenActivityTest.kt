@@ -140,7 +140,7 @@ class BuzzerScreenActivityTest {
             onView(withId(R.id.answer)).check(matches(withEffectiveVisibility(Visibility.INVISIBLE)))
         }
     }
-
+/*
     /*
      * Currently testing with the *static* values. Change to *dynamic* once the game is correctly
      * implemented and all the data are being sent between activities.
@@ -165,4 +165,6 @@ class BuzzerScreenActivityTest {
         intended(hasExtra("str_arr_name", statNames))
         intended(hasExtra("str_arr_val", statVal))
     }
+
+ */
 }

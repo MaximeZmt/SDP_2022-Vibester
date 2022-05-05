@@ -109,6 +109,38 @@ class DownloadActivityTest {
         }
     }
 
+    @Test
+    fun downloadMultipleSongs() {
+        val intent = Intent(ApplicationProvider.getApplicationContext(), DownloadActivity::class.java)
+        val scn: ActivityScenario<DownloadActivity> = ActivityScenario.launch(intent)
+        val songName = "imagine dragons believer"
+
+        onView(withId(R.id.download_songName)).perform(typeText(songName), closeSoftKeyboard())
+        Thread.sleep(waitForButton)
+        onView(withId(R.id.download_downloadsong)).perform(click())
+
+        Thread.sleep(waitForDownload)
+
+        onView(withId(R.id.download_downloadsong)).perform(click())
+
+        onView(withId(R.id.download_songName)).check(matches(withText("")))
+        onView(withId(R.id.download_songName)).check(matches(withHint("Please retry later!")))
+
+        scn.onActivity { activity ->
+            val extract = File(activity.applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS),"extract_of_$songName")
+            assert(extract.exists())
+            if(extract.exists()) {
+                extract.delete()
+            }
+
+            val records = File(activity.applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "records.txt")
+            assert(records.exists())
+            if(records.exists()) {
+                records.delete()
+            }
+        }
+    }
+
     /*
     //Test that takes too long to execute. Uncomment towards the last sprint.
     @Test

@@ -33,6 +33,7 @@ class DownloadActivity : AppCompatActivity() {
     //Companion object to indicate when the download completes.
     companion object {
         var downloadComplete = false
+        var downloadStarted = false
     }
 
     private val STORAGE_PERMISSION_CODE = 1000
@@ -73,18 +74,32 @@ class DownloadActivity : AppCompatActivity() {
      * Function that handles deletion button pushes.
      */
     private fun downloadListener(songView: TextView) {
-        downloadComplete = false
-        songName = songView.text.toString()
-
-        if(checkExistingSong()) {
-            alert(getString(R.string.download_already_done), getString(R.string.download_try_different), songView)
+        if(downloadStarted) {
+            Toast.makeText(applicationContext, getString(R.string.download_already_downloading), Toast.LENGTH_LONG).show()
+            editTextView(getString(R.string.download_please_retry_later), songView)
         } else {
-            val songFuture = ItunesMusicApi.querySong(songName, OkHttpClient(), 1)
-            try {
-                song = Song.singleSong(songFuture.get())
-                checkPermissionsAndDownload()
-            } catch (e: IllegalArgumentException) {
-                alert(getString(R.string.download_unable_to_find), getString(R.string.download_retry), songView)
+            downloadStarted = true
+            downloadComplete = false
+            songName = songView.text.toString()
+
+            if (checkExistingSong()) {
+                alert(
+                    getString(R.string.download_already_done),
+                    getString(R.string.download_try_different),
+                    songView
+                )
+            } else {
+                val songFuture = ItunesMusicApi.querySong(songName, OkHttpClient(), 1)
+                try {
+                    song = Song.singleSong(songFuture.get())
+                    checkPermissionsAndDownload()
+                } catch (e: IllegalArgumentException) {
+                    alert(
+                        getString(R.string.download_unable_to_find),
+                        getString(R.string.download_retry),
+                        songView
+                    )
+                }
             }
         }
     }
@@ -98,6 +113,7 @@ class DownloadActivity : AppCompatActivity() {
      */
     private fun alert(toast: String, hint: String, view: TextView) {
         downloadComplete = true
+        downloadStarted = false
         Toast.makeText(applicationContext, toast, Toast.LENGTH_LONG).show()
         editTextView(hint, view)
     }

@@ -93,6 +93,8 @@
     <string name="download_unable_to_find">Unable to find song, please retry!</string>
     <string name="download_retry">Please retry!</string>
     <string name="download_permission_denied">Permission denied, cannot download!</string>
+    <string name="download_already_downloading">A song is being downloaded, please be patient!</string>
+    <string name="download_please_retry_later">Please retry later!</string>
 
     <string name="Singleplayer">Single-player</string>
     <string name="Multiplayer">Multiplayer</string>

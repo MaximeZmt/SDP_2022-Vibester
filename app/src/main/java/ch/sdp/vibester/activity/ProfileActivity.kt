@@ -46,7 +46,9 @@ class ProfileActivity : AppCompatActivity() {
     @Inject
     lateinit var authenticator: FireBaseAuthenticator
 
-
+    /**
+     * Generic onCreate method belonging to ProfileActivity.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -64,12 +66,18 @@ class ProfileActivity : AppCompatActivity() {
         queryDatabase()
     }
 
+    /**
+     * Generic listener for the edit username button.
+     */
     private fun setEditUserNameBtnListener() {
         findViewById<ImageView>(R.id.editUser).setOnClickListener {
             showGeneralDialog(R.id.username, "username")
         }
     }
 
+    /**
+     * Generic listener for the log out button.
+     */
     private fun setLogOutBtnListener() {
         findViewById<Button>(R.id.logout).setOnClickListener {
             FirebaseAuth.getInstance().signOut()
@@ -78,6 +86,9 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Generic listener for the return to main button.
+     */
     private fun setRetToMainBtnListener() {
         findViewById<FloatingActionButton>(R.id.profile_returnToMain).setOnClickListener {
             IntentSwitcher.switchBackToWelcome(this)
@@ -85,6 +96,9 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Generic listener for the show qr code button.
+     */
     private fun setShowQrCodeBtnListener() {
         findViewById<Button>(R.id.showQRCode).setOnClickListener {
             setLayoutVisibility(R.id.QrCodePage, true)
@@ -92,6 +106,9 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Generic listener for the show qr code and return to profile button.
+     */
     private fun setQrCodeToProfileBtnListener() {
         findViewById<FloatingActionButton>(R.id.qrCode_returnToProfile).setOnClickListener {
             setLayoutVisibility(R.id.QrCodePage, false)
@@ -99,6 +116,12 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Sets the given layout's visibility.
+     * @param layout: The given layout to modify.
+     * @param isVisible: The indicator of which visibility to choose.
+     * True for VISIBLE, false for GONE.
+     */
     private fun setLayoutVisibility(layout: Int, isVisible: Boolean){
         findViewById<ConstraintLayout>(layout).visibility = if (isVisible) VISIBLE else GONE
     }
@@ -135,7 +158,9 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     /**
-     * A function that displays the dialog
+     * A function that displays the dialog.
+     * @param id: The id of the user to be shown.
+     * @param name: The name of the user to be shown.
      */
     private fun showGeneralDialog(id: Int, name: String) {
         val title = "Create $name"
@@ -145,7 +170,7 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     /**
-     * A function that queries the database and fetched the correct user
+     * A function that queries the database and fetched the correct user.
      */
     private fun queryDatabase() {
         val currentUser = authenticator.getCurrUser()
@@ -155,15 +180,35 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Function that sets the text of a given TextView to the string variant of an integer.
+     * @param id: The id of the TextView to be changed.
+     * @param text: The integer to be set as the text.
+     */
+    private fun setTextOfView(id: Int, text: Int) {
+        findViewById<TextView>(id).text = text.toString()
+    }
 
+    /**
+     * Function that sets the texts of multiple TextViews.
+     * @param user: The user from which we will recover the text to set.
+     */
+    private fun setTextOfMultipleViews(user: User) {
+        setTextOfView(R.id.totalGames, user.totalGames)
+        setTextOfView(R.id.correctSongs, user.correctSongs)
+        setTextOfView(R.id.bestScore, user.bestScore)
+        setTextOfView(R.id.ranking, user.ranking)
+    }
+
+    /**
+     * Function to handle setting up the profile.
+     * @param user: The user whose profile we are setting up.
+     */
     private fun setupProfile(user: User){
         // Currently assuming that empty username means no user !
         if (user.username != ""){
             findViewById<TextView>(R.id.username).text =  user.username
-            findViewById<TextView>(R.id.totalGames).text = user.totalGames.toString()
-            findViewById<TextView>(R.id.correctSongs).text = user.correctSongs.toString()
-            findViewById<TextView>(R.id.bestScore).text = user.bestScore.toString()
-            findViewById<TextView>(R.id.ranking).text = user.ranking.toString()
+            setTextOfMultipleViews(user)
         }
         setupProfilePhoto(user)
 
@@ -172,6 +217,10 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Helper function to setupProfile to set the profile photo of a user.
+     * @param user: The user whose profile picture we are setting up.
+     */
     private fun setupProfilePhoto(user: User) {
         CoroutineScope(Dispatchers.Main).launch {
             val task = async(Dispatchers.IO) {
@@ -195,7 +244,6 @@ class ProfileActivity : AppCompatActivity() {
      * generate the qr code bitmap of the given data
      * @param data Qr Code data
      */
-
     private fun generateQrCode(data: String) {
         val size = 512
         val hints = HashMap<EncodeHintType?, Any?>()

@@ -5,6 +5,8 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Handler
 import android.view.Gravity
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -19,12 +21,16 @@ import kotlinx.coroutines.launch
 
 /**
  * Common set up for all games (difficulty level, progress bar)
+ * CHECK IF THE DOCS ARE CORRECT OR NOT!
  */
 open class GameActivity : AppCompatActivity() {
     open val handler = Handler()
     open var maxTime: Int = 30
     var runnable: Runnable? = null
 
+    /**
+     * Sets the countdown timer's maximum(initial) value.
+     */
     fun setMax(intent: Intent) {
         if(intent.hasExtra("Difficulty")) {
             when(intent.extras?.getString("Difficulty", "Easy")) {
@@ -35,14 +41,20 @@ open class GameActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Initializes the progress bar, i.e the timer to static values, mostly read from intents.
+     */
     fun initializeBarTimer(myBar: ProgressBar) {
         myBar.max = maxTime
         myBar.progress = maxTime
         myBar.progressTintList = ColorStateList.valueOf(getColor(R.color.cg_blue))
     }
 
+    /**
+     * Handles unit decrease of the timer of the progress bar, and the effects of this change.
+     */
     fun decreaseBarTimer(myBar: ProgressBar) {
-        if (myBar.progress == maxTime/2) {
+        if (myBar.progress == maxTime/2 && myBar.progress > 5) {
             myBar.progressTintList =
                 ColorStateList.valueOf(getColor(R.color.maximum_yellow_red))
         } else if (myBar.progress == 5) {
@@ -52,12 +64,19 @@ open class GameActivity : AppCompatActivity() {
         myBar.progress -= 1
     }
 
+    /**
+     * Checks the state of the runnable and removes callbacks.
+     */
     fun checkRunnable() {
         if (runnable != null) {
             handler.removeCallbacks(runnable!!)
         }
     }
 
+    /**
+     * Called upon the ending of a game. Passes gathered information during the game to the next
+     * activity through the intent.
+     */
     fun switchToEnding(gameManager: GameManager) {
         val intent = Intent(this, GameEndingActivity::class.java)
         val incArray: ArrayList<String> = ArrayList(
@@ -80,13 +99,11 @@ open class GameActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    /**
+     * Sets the visibility of the given button to VISIBLE if value is true, GONE otherwise.
+     */
     fun toggleBtnVisibility(btnId: Int, value: Boolean){
-        val btn = findViewById<Button>(btnId)
-        if (value) {
-            btn.visibility = android.view.View.VISIBLE
-        } else {
-            btn.visibility = android.view.View.GONE
-        }
+        findViewById<Button>(btnId).visibility = if (value) VISIBLE else GONE
     }
 
     /**
@@ -100,22 +117,37 @@ open class GameActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Function to check if the game has ended or not.
+     */
     fun isEndGame(gameManager: GameManager): Boolean {
         return !gameManager.checkGameStatus() || !gameManager.setNextSong()
     }
 
+    /**
+     * Function used for testing. Do not call unless it is for that specific purpose.
+     */
     fun superTestProgressBar(myBar: ProgressBar, progressTime: Int=0) {
         myBar.progress = progressTime
     }
 
+    /**
+     * Function used for testing. Do not call unless it is for that specific purpose.
+     */
     fun superTestProgressBarColor(myBar: ProgressBar): ColorStateList? {
         return myBar.progressTintList
     }
 
+    /**
+     * Shows a variable score on a toast.
+     */
     fun toastShowCorrect(ctx: Context, score: Int) {
         Toast.makeText(ctx, ctx.getString(R.string.correct_message, score), Toast.LENGTH_SHORT).show()
     }
 
+    /**
+     * Shows a given message on a toast.
+     */
     fun toastShowSimpleMsg(ctx: Context, SId: Int) {
         Toast.makeText(ctx, ctx.getString(SId), Toast.LENGTH_SHORT).show()
     }
@@ -165,6 +197,9 @@ open class GameActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Add a given song to a new layout in a particular manner, which is then returned.
+     */
     fun showSongAndImage(song: Song, ctx: Context): LinearLayout {
         val linLay = LinearLayout(ctx)
         linLay.setHorizontalGravity(1)
@@ -176,9 +211,4 @@ open class GameActivity : AppCompatActivity() {
 
         return linLay
     }
-
-
-
-
-
 }

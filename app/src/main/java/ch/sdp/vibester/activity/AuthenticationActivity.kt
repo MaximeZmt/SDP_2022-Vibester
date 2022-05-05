@@ -3,6 +3,7 @@ package ch.sdp.vibester.activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.view.Window
 import android.widget.Button
 import android.widget.EditText
@@ -45,7 +46,12 @@ class AuthenticationActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
 
     private lateinit var email: TextView
+    private lateinit var username: EditText
+    private lateinit var password: EditText
 
+    /**
+     * Generic onCreate method, automatically called upon the creation of the activity.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -63,36 +69,43 @@ class AuthenticationActivity : AppCompatActivity() {
 
         auth = Firebase.auth
 
-        val btCreateAcc = findViewById<Button>(R.id.createAcc)
-        val btLogIn = findViewById<Button>(R.id.logIn)
-        val googleSignIn = findViewById<Button>(R.id.googleBtn)
-
-        val returnToMain = findViewById<FloatingActionButton>(R.id.authentication_returnToMain)
-
-        val username = findViewById<EditText>(R.id.username)
-        val password = findViewById<EditText>(R.id.password)
+        username = findViewById(R.id.username)
+        password = findViewById(R.id.password)
         email = findViewById(R.id.authentication_status)
-
-
-
-        btCreateAcc.setOnClickListener {
-            authenticate(username.text.toString(), password.text.toString(), true)
-        }
-
-        btLogIn.setOnClickListener {
-            authenticate(username.text.toString(), password.text.toString(), false)
-        }
-
-        googleSignIn.setOnClickListener {
-            signInGoogle()
-        }
-
-        returnToMain.setOnClickListener {
-            IntentSwitcher.switchBackToWelcome(this)
-            finish()
-        }
     }
 
+    /**
+     * Listener bound to the "Create Account" button in the Authentication activity.
+     */
+    fun createAccountListener(view: View) {
+        authenticate(username.text.toString(), password.text.toString(), true)
+    }
+
+    /**
+     * Listener bound to the "Log In" button in the Authentication activity.
+     */
+    fun logInListener(view: View) {
+        authenticate(username.text.toString(), password.text.toString(), false)
+    }
+
+    /**
+     * Listener bound to the "Google Log In" button in the Authentication activity.
+     */
+    fun googleSignInListener(view: View) {
+        signInGoogle()
+    }
+
+    /**
+     * Listener bound to the red return button in the Authentication activity.
+     */
+    fun returnToMainListener(view: View) {
+        IntentSwitcher.switchBackToWelcome(this)
+        finish()
+    }
+
+    /**
+     * Generic onStart method. Direct call to super.onStart().
+     */
     public override fun onStart() {
         super.onStart()
     }
@@ -118,7 +131,10 @@ class AuthenticationActivity : AppCompatActivity() {
         }
     }
 
-
+    /**
+     * Function that authenticates the given credentials with the ones stored on the Firebase.
+     * @param idToken : String that holds the id token.
+     */
     private fun googleAuthFirebase(idToken: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         auth.signInWithCredential(credential)
@@ -196,7 +212,8 @@ class AuthenticationActivity : AppCompatActivity() {
 
     /**
      * A function changes the UI based on the authentication result
-     * @param task result
+     * @param task : The result
+     * @param createAcc : Boolean to indicate the creation of an account instead of login
      */
     private fun onCompleteAuthentication(task: Task<AuthResult>, createAcc: Boolean) {
         if (task.isSuccessful) {
@@ -217,14 +234,34 @@ class AuthenticationActivity : AppCompatActivity() {
         }
     }
 
-
-    private fun startNewActivity(email: String) {
-        val newIntent = Intent(this, CreateProfileActivity::class.java)
+    /**
+     * Function that allows the creation of a new activity, with the given text field as intent and
+     * the given class as the destination.
+     * @param email : The email to write
+     * @param arg : The activity class to start
+     */
+    private fun startNewCustomActivity(email: String, arg: Class<*>?) {
+        val newIntent = Intent(this, arg)
         newIntent.putExtra("email", email)
         startActivity(newIntent)
     }
 
+    /**
+     * Function that creates a CreateProfileActivity with the given string as the "email"
+     * intent extra.
+     * @param email : The email to write
+     */
+    private fun startNewActivity(email: String) {
+        startNewCustomActivity(email, CreateProfileActivity::class.java)
+    }
 
+    /**
+     * Function that updates the Authentication Activity's UI, mainly the textViews, according
+     * to the given string, boolean and user arguments.
+     * @param emailText : The email to write
+     * @param createAcc : Boolean indicating the creation of an account instead of login
+     * @param user      : The user
+     */
     private fun updateUI(
         emailText: String?,
         createAcc: Boolean,
@@ -232,9 +269,7 @@ class AuthenticationActivity : AppCompatActivity() {
     ) {
         if (emailText != null) {
             if('@' in emailText && !createAcc) {
-                val newIntent = Intent(this, ProfileActivity::class.java)
-                newIntent.putExtra("email", emailText)
-                startActivity(newIntent)
+                startNewCustomActivity(emailText, ProfileActivity::class.java)
             }
 
             else if('@' in emailText && createAcc && user != null) { //

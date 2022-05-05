@@ -7,14 +7,13 @@ import org.junit.Test
 class GameManagerTest {
     private fun setGameManager(valid:Boolean = true): GameManager {
         var managerTxt = ""
-        if(valid) {
+        if (valid) {
              managerTxt = """
                 {"tracks":
                 {"track":[{"name":"Monday","duration":"259",
                 "artist":{"name":"Imagine Dragons"}}],"@attr":{"tag":"british","page":"1","perPage":"1","totalPages":"66649","total":"66649"}}}
                 """
-        }
-        else{
+        } else {
              managerTxt = """
                 {"tracks":
                 {"track":[{"name":"TEST_MUSIC_TEST","duration":"259",
@@ -30,6 +29,13 @@ class GameManagerTest {
     fun getGameSongListCorrect() {
         val gameManager = setGameManager()
         assertEquals(gameManager.getSongList()[0], Pair("monday", "imagine dragons"))
+    }
+
+    @Test
+    fun setGameSizeCorrect() {
+        val gameManager = setGameManager()
+        gameManager.setGameSize(3)
+        assertEquals(gameManager.gameSize, 3)
     }
 
     @Test

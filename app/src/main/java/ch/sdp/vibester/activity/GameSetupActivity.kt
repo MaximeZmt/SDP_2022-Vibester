@@ -3,7 +3,6 @@ package ch.sdp.vibester.activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -29,69 +28,87 @@ import retrofit2.Response
  * Class to choose game mode, genre and difficulty.
  */
 class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
-    var difficulty = "Easy"
+    var difficulty = R.string.easy.toString()
     var game = "local_buzzer"
-     lateinit var gameManager: GameManager;
+    var gameSize = R.string.one.toString()
+    lateinit var gameManager: GameManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         supportActionBar?.hide()
         setContentView(R.layout.activity_game_setup_screen)
-        val ctx: Context = this
+        setReturnBtnListener()
+        setSpinnerListener(this, R.id.difficulty_spinner, R.array.difficulties_name)
+        setSpinnerListener(this, R.id.size_spinner, R.array.game_size_options)
+    }
 
-        val retButton: FloatingActionButton = findViewById(R.id.gameSetup_returnToMain)
-
-        retButton.setOnClickListener {
-            if(findViewById<LinearLayout>(R.id.chooseGame).visibility == VISIBLE){
+    private fun setReturnBtnListener() {
+        findViewById<FloatingActionButton>(R.id.gameSetup_returnToMain).setOnClickListener {
+            if (findViewById<LinearLayout>(R.id.chooseGame).visibility == VISIBLE) {
                 IntentSwitcher.switchBackToWelcome(this)
                 finish()
-            }else if (findViewById<ConstraintLayout>(R.id.chooseGenre).visibility == VISIBLE){
+            } else if (findViewById<ConstraintLayout>(R.id.chooseGenre).visibility == VISIBLE) {
                 findViewById<LinearLayout>(R.id.chooseGame).visibility = VISIBLE
                 findViewById<ConstraintLayout>(R.id.chooseGenre).visibility = GONE
-            }else if (findViewById<ConstraintLayout>(R.id.chooseDifficulty).visibility == VISIBLE){
+            } else if (findViewById<ConstraintLayout>(R.id.gameSetting).visibility == VISIBLE) {
                 findViewById<ConstraintLayout>(R.id.chooseGenre).visibility = VISIBLE
-                findViewById<ConstraintLayout>(R.id.chooseDifficulty).visibility = GONE
+                findViewById<ConstraintLayout>(R.id.gameSetting).visibility = GONE
             }
         }
+    }
 
-
-        val spinnerDifficulty: Spinner = findViewById(R.id.difficulty_spinner)
+    private fun setSpinnerListener(ctx: Context, spinnerId: Int, resourceId: Int) {
+        val spinner: Spinner = findViewById(spinnerId)
         val adapter = ArrayAdapter.createFromResource(
-            ctx,
-            R.array.difficulties_name,
-            android.R.layout.simple_spinner_item
+            ctx, resourceId, android.R.layout.simple_spinner_item
         )
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinnerDifficulty.adapter = adapter
-        spinnerDifficulty.onItemSelectedListener = this
+        spinner.adapter = adapter
+        spinner.onItemSelectedListener = this
     }
 
     override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-        difficulty = parent.getItemAtPosition(position).toString()
-        when(difficulty) {
-            "Easy"      -> setDifficultyText(R.string.difficulty_easy)
-            "Medium"    -> setDifficultyText(R.string.difficulty_medium)
-            "Hard"      -> setDifficultyText(R.string.difficulty_hard)
+        if (parent.id == R.id.difficulty_spinner) {
+            difficulty = parent.getItemAtPosition(position).toString()
+            when (difficulty) {
+                "Easy"      -> setDifficultyText(R.string.difficulty_easy)
+                "Medium"    -> setDifficultyText(R.string.difficulty_medium)
+                "Hard"      -> setDifficultyText(R.string.difficulty_hard)
+            }
+        } else if (parent.id == R.id.size_spinner) {
+            gameSize = parent.getItemAtPosition(position).toString()
+            when (gameSize) {
+                "One" -> gameManager.setGameSize(1)
+                "Two" -> gameManager.setGameSize(2)
+                "Three" -> gameManager.setGameSize(3)
+                "Four" -> gameManager.setGameSize(4)
+                "Five" -> gameManager.setGameSize(5)
+                "Six" -> gameManager.setGameSize(6)
+                "Seven" -> gameManager.setGameSize(7)
+                "Eight" -> gameManager.setGameSize(8)
+                "Nine" -> gameManager.setGameSize(9)
+                "Ten" -> gameManager.setGameSize(10)
+            }
         }
     }
 
-    override fun onNothingSelected(parent: AdapterView<*>) {difficulty = "Easy"}
+    override fun onNothingSelected(parent: AdapterView<*>) {
+        if (parent.id == R.id.difficulty_spinner) {
+            difficulty = R.string.easy.toString()
+        } else if (parent.id == R.id.size_spinner) {
+            gameSize = R.string.one.toString()
+        }
+    }
 
     /**
      * Start the game based on the chosen mode
      */
     fun proceedGame(view: View){
         when (this.game) {
-            "local_buzzer" -> {
-                switchToGame(BuzzerSetupActivity())
-            }
-            "local_typing" -> {
-                switchToGame(TypingGameActivity())
-            }
-            "local_lyrics" -> {
-                switchToGame(LyricsBelongGameActivity())
-            }
+            "local_buzzer" -> { switchToGame(BuzzerSetupActivity()) }
+            "local_typing" -> { switchToGame(TypingGameActivity()) }
+            "local_lyrics" -> { switchToGame(LyricsBelongGameActivity()) }
         }
     }
 
@@ -151,14 +168,14 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
             R.id.imagDragonsButton -> {method = LastfmMethod.BY_ARTIST.method; artist = "Imagine Dragons"; mode = "Imagine Dragons"}
             R.id.rockButton-> {method = LastfmMethod.BY_TAG.method; tag = "rock"; mode = "rock" }
             R.id.topTracksButton -> {method = LastfmMethod.BY_CHART.method; mode = "top tracks"}
-            R.id.billieEilishButton -> {method =LastfmMethod.BY_ARTIST.method; artist = "Billie Eilish"; mode = "billie eilish"}
+            R.id.billieEilishButton -> {method = LastfmMethod.BY_ARTIST.method; artist = "Billie Eilish"; mode = "billie eilish"}
         }
         uri.method = method
         uri.artist = artist
         uri.tag = tag
 
         findViewById<ConstraintLayout>(R.id.chooseGenre).visibility = GONE
-        findViewById<ConstraintLayout>(R.id.chooseDifficulty).visibility = VISIBLE
+        findViewById<ConstraintLayout>(R.id.gameSetting).visibility = VISIBLE
 
         gameManager.gameMode = mode
         setGameSongList(uri)

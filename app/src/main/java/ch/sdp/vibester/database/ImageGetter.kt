@@ -23,9 +23,7 @@ class ImageGetter @Inject constructor() {
 
         var uploadTask = profilePicRef.putFile(fileUri)
 
-        uploadTask.addOnSuccessListener {
-            callback()
-        }
+        uploadTask.addOnSuccessListener { callback() }
     }
 
     /**

@@ -16,6 +16,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
 import ch.sdp.vibester.TestMode
 import ch.sdp.vibester.api.LastfmMethod
+import ch.sdp.vibester.helper.BuzzerGameManager
 import ch.sdp.vibester.helper.TypingGameManager
 import org.junit.After
 import org.junit.Before
@@ -47,7 +48,7 @@ class BuzzerScreenActivityTest {
             "], \"@attr\":{\"tag\":\"british\",\"page\":\"1\",\"perPage\":\"1\",\"totalPages\":\"66649\",\"total\":\"66649\"}}}"
         var middle = "{\"name\":\"Monday\",\"artist\":{\"name\":\"Imagine Dragons\"}}"
         if(!valid) middle = "{\"name\":\"TEST_SONG_TEST\",\"artist\":{\"name\":\"TEST_ARTIST_TEST\"}}"
-        val gameManager = TypingGameManager()
+        val gameManager = BuzzerGameManager()
 
         var i = 0
         var completeMiddle = middle
@@ -86,6 +87,7 @@ class BuzzerScreenActivityTest {
         mockNameArray[1] = "Bob"
         intent.putExtra("Number of players", mockPlayersNumber)
         intent.putExtra("Player Names", mockNameArray)
+        intent.putExtra("gameManager", setGameManager())
         val scn: ActivityScenario<BuzzerScreenActivity> = ActivityScenario.launch(intent)
 
         onView(withId(R.id.answer)).check(matches(withEffectiveVisibility(Visibility.INVISIBLE)))
@@ -106,6 +108,7 @@ class BuzzerScreenActivityTest {
         mockNameArray[1] = "Bob"
         intent.putExtra("Number of players", mockPlayersNumber)
         intent.putExtra("Player Names", mockNameArray)
+        intent.putExtra("gameManager", setGameManager())
         val scn: ActivityScenario<BuzzerScreenActivity> = ActivityScenario.launch(intent)
 
         val buttonIdArray = arrayOf(R.id.buttonCorrect, R.id.buttonWrong)

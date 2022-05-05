@@ -15,6 +15,7 @@
         android:layout_marginBottom="16dp"
         android:backgroundTint="@color/light_coral"
         android:clickable="true"
+        android:onClick="returnToMainListener"
         android:src="@android:drawable/ic_menu_revert"
         app:borderWidth="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -104,6 +105,7 @@
 
                 android:backgroundTint="@color/cg_blue"
                 android:elevation="10dp"
+                android:onClick="logInListener"
                 android:stateListAnimator="@null"
                 android:text="@string/logIn"
                 android:translationZ="10dp" />
@@ -114,6 +116,7 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/cg_blue"
                 android:elevation="10dp"
+                android:onClick="googleSignInListener"
                 android:stateListAnimator="@null"
                 android:text="@string/logInGoogle"
                 android:translationZ="10dp" />
@@ -124,6 +127,7 @@
                 android:layout_height="48dp"
                 android:backgroundTint="@color/cg_blue"
                 android:elevation="10dp"
+                android:onClick="createAccountListener"
                 android:stateListAnimator="@null"
                 android:text="@string/createAcc"
                 android:translationZ="10dp" />

@@ -57,14 +57,14 @@ class DataGetter @Inject constructor() {
     fun updateFieldInt(uid: String, fieldName: String, newVal: Int, method:String) {
         dbUserRef.child(uid).child(fieldName)
             .get().addOnSuccessListener { t ->
-                var finalVal  = newVal
-                if(t.value != null) {
+                var finalVal  = checkValue(t, method, newVal)//newVal TO DELETE IF TESTS PASS, OTHERWISE ROLL BACK!
+                /*if(t.value != null) {
                     val previousVal = (t.value as Long?)!!.toInt()
                     when (method) {
                         "sum" -> finalVal += previousVal
                         "best" -> finalVal = maxOf(previousVal, newVal)
                     }
-                }
+                }*/
                 setFieldValue(uid, fieldName, finalVal)
             }
     }
@@ -80,16 +80,35 @@ class DataGetter @Inject constructor() {
     fun updateSubFieldInt(userID: String, newVal: Int, fieldName: String, subFieldName: String, method: String) {
         dbUserRef.child(userID).child(fieldName).child(subFieldName)
             .get().addOnSuccessListener { t ->
-                var finalVal = newVal
-                if(t.value != null) {
+                var finalVal = checkValue(t, method, newVal) //newVal: TO DELETE IF TESTS PASS, OTHERWISE ROLL BACK!
+                /*if(t.value != null) {
                     val previousVal = (t.value as Long?)!!.toInt()
                     when (method) {
                         "sum" -> finalVal += previousVal
                         "best" -> finalVal = maxOf(previousVal, newVal)
                     }
-                }
+                }*/
                 setSubFieldValue(userID, fieldName, subFieldName, finalVal)
             }
+    }
+
+    /**
+     * Depending on the value of the snapshot and the method with which we change the value,
+     * returns either the sum or the best value for the finalVal.
+     * @param t         : DataSnapshot
+     * @param method    : String, mode with which we assign finalVal
+     * @param newVal    : Int, value to compare to previousVal
+     */
+    private fun checkValue(t: DataSnapshot, method: String, newVal: Int): Int {
+        var finalVal = newVal
+        if(t.value != null) {
+            val previousVal = (t.value as Long?)!!.toInt()
+            when (method) {
+                "sum" -> finalVal += previousVal
+                "best" -> finalVal = maxOf(previousVal, newVal)
+            }
+        }
+        return finalVal
     }
 
 
@@ -130,17 +149,17 @@ class DataGetter @Inject constructor() {
     /**
      * Search for users by its any field in Firebase Realtime Database
      * @param field user fields used for a search
-     * @param searchInput search text inputed by user
+     * @param searchInput search text inputted by user
      * @param callback function to call with found users by username
      * @param callbackUid function to call with found uid
      */
     fun searchByField(field: String, searchInput: String, callback:(ArrayList<User>) -> Unit, callbackUid :(ArrayList<String>) -> Unit) {
         val uidList: ArrayList<String> = ArrayList()
 
-        val queryUsers = dbUserRef
-            .orderByChild(field)
-            .startAt(searchInput)
-            .endAt(searchInput+"\uf8ff")
+        val queryUsers = //Not very pretty, but otherwise CodeClimate complains about 26 lines
+            dbUserRef.orderByChild(field)
+            .startAt(searchInput).endAt(searchInput+"\uf8ff")
+
         /**
          * Comment about \uf8ff:
          * The \uf8ff character used in the query above is a very high code point in the Unicode range.

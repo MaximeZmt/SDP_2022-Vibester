@@ -33,7 +33,9 @@ class GameEndingActivity : AppCompatActivity() {
     private var nbIncorrectSongs: Int = 0
     private var playerName: String? = ""
 
-
+    /**
+     * Generic onCreate method for the GameEndingActivity.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -51,27 +53,18 @@ class GameEndingActivity : AppCompatActivity() {
             } else {findViewById<TextView>(R.id.winnerText).text="Nobody won this game!"}
         }
 
+        getFromIntent(intent)
+        setFromIntent()
 
-        if (intent.hasExtra("playerName")) {
-            playerName = intent.getStringExtra("playerName")
-        }
+        val playerNameView: TextView = findViewById(R.id.end_player_name)
+        val statPlayerText = "Here are the stats for the player $playerName"
+        playerNameView.text = statPlayerText
+    }
 
-        if (intent.hasExtra("nbIncorrectSong")) {
-            nbIncorrectSongs = intent.getIntExtra("nbIncorrectSong", 0)
-        }
-
-        if (intent.hasExtra("str_arr_inc")) {
-            incorrectSongs = intent.getStringArrayListExtra("str_arr_inc")
-        }
-
-        if (intent.hasExtra("str_arr_name")) {
-            statNames = intent.getStringArrayListExtra("str_arr_name")
-        }
-
-        if (intent.hasExtra("str_arr_val")) {
-            statValues = intent.getStringArrayListExtra("str_arr_val")
-        }
-
+    /**
+     * Function that handles repetitive set-up code depending on intent.
+     */
+    private fun setFromIntent() {
         val stat1: TextView = findViewById(R.id.end_stat1)
         stat1.text = statNames?.get(0)
         val stat1res: TextView = findViewById(R.id.end_stat1_res)
@@ -96,14 +89,37 @@ class GameEndingActivity : AppCompatActivity() {
         stat5.text = statNames?.get(4)
         val stat5res: TextView = findViewById(R.id.end_stat5_res)
         stat5res.text = statValues?.get(4)
-
-        val playerNameView: TextView = findViewById(R.id.end_player_name)
-        val statPlayerText = "Here are the stats for the player $playerName"
-        playerNameView.text = statPlayerText
     }
 
+    /**
+     * Function that handles repetitive preparation code with information retrieved from the intent.
+     * @param intent: The intent received by the activity, directly passed as an argument.
+     */
+    private fun getFromIntent(intent: Intent) {
+        if (intent.hasExtra("playerName")) {
+            playerName = intent.getStringExtra("playerName")
+        }
 
+        if (intent.hasExtra("nbIncorrectSong")) {
+            nbIncorrectSongs = intent.getIntExtra("nbIncorrectSong", 0)
+        }
 
+        if (intent.hasExtra("str_arr_inc")) {
+            incorrectSongs = intent.getStringArrayListExtra("str_arr_inc")
+        }
+
+        if (intent.hasExtra("str_arr_name")) {
+            statNames = intent.getStringArrayListExtra("str_arr_name")
+        }
+
+        if (intent.hasExtra("str_arr_val")) {
+            statValues = intent.getStringArrayListExtra("str_arr_val")
+        }
+    }
+
+    /**
+     * Function that starts IncorrectSongsActivity from GameEndingActivity.
+     */
     fun goToIncorrectlyGuessedSongs(view: View) {
         val intent = Intent(this, IncorrectSongsActivity::class.java)
         intent.putExtra("nb_false", nbIncorrectSongs)

@@ -27,6 +27,9 @@ class LyricsBelongGameActivity : GameActivity() {
     private lateinit var songName: String
     private lateinit var artistName: String
 
+    /**
+     * Generic onCreate method, belonging to the LyricsBelongGameActivity.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lyrics_belong_game)
@@ -35,8 +38,12 @@ class LyricsBelongGameActivity : GameActivity() {
         val getIntent = intent.extras
         if (getIntent != null) {
             gameManager = getIntent.getSerializable("gameManager") as GameManager
-            setNextButtonListener(ctx, gameManager)
-            setCheckButtonListener(ctx)
+            findViewById<Button>(R.id.nextSongButton).setOnClickListener {
+                startRound(ctx, gameManager)
+            }
+            findViewById<Button>(R.id.lyricMatchButton).setOnClickListener {
+                getAndCheckLyrics(ctx, songName, artistName, speechInput, gameManager)
+            }
             gameManager.setNextSong()
             startRound(ctx, gameManager)
             super.setMax(intent)
@@ -47,6 +54,9 @@ class LyricsBelongGameActivity : GameActivity() {
         }
     }
 
+    /**
+     * Function to claim speech input.
+     */
     private fun getSpeechInput() {
         val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
         intent.putExtra(
@@ -66,21 +76,12 @@ class LyricsBelongGameActivity : GameActivity() {
         }
     }
 
-    private fun setCheckButtonListener(ctx: Context){
-        findViewById<Button>(R.id.lyricMatchButton).setOnClickListener {
-            getAndCheckLyrics(ctx, songName, artistName, speechInput, gameManager)
-        }
-    }
-
-    private fun setNextButtonListener(ctx: Context, gameManager: GameManager) {
-        findViewById<Button>(R.id.nextSongButton).setOnClickListener {
-            startRound(ctx, gameManager)
-        }
-    }
-
     /**
      * Function to set a new round. It includes reinitializing activity elements,
-     * and setting new song for the round.
+     * and setting a new song for the round.
+     *
+     * @param ctx: Context on which the round is happening.
+     * @param gameManager: The gameManager instance that is managing the current game.
      */
     private fun startRound(ctx: Context, gameManager: GameManager) {
         toggleBtnVisibility(R.id.lyricMatchButton, false)
@@ -102,7 +103,8 @@ class LyricsBelongGameActivity : GameActivity() {
     }
 
     /**
-     * display the given String in lyricResult and show the check button
+     * Displays the given String in lyricResult TextView and renders the check button visible.
+     * @param speechInput: The string to display
      */
     private fun updateSpeechResult(speechInput: String) {
         findViewById<TextView>(R.id.lyricResult).text = speechInput
@@ -110,7 +112,12 @@ class LyricsBelongGameActivity : GameActivity() {
     }
 
     /**
-     * get the lyrics of a given song and check if the result matches
+     * Gets the lyrics of a given song and checks if the result matches.
+     * @param ctx: Context on which the game is running.
+     * @param songName: Name of the song being played.
+     * @param artistName: Name of the artist of the song being played.
+     * @param speechInput: The inputted string from the speech.
+     * @param gameManager: The gameManager instance that is managing the game.
      */
     private fun getAndCheckLyrics(ctx: Context, songName: String, artistName: String, speechInput: String, gameManager: GameManager) {
         val service = LyricsOVHApiInterface.createLyricService()
@@ -135,7 +142,11 @@ class LyricsBelongGameActivity : GameActivity() {
     }
 
     /**
-     * show the result of lyrics matching
+     * Shows the result of lyrics matching
+     * @param ctx: Context on which the game is running.
+     * @param lyricToBeCheck: The string clause that has to be compared to the actual lyrics.
+     * @param lyrics: Actual lyrics.
+     * @param gameManager: The gameManager instance that is managing the game.
      */
     private fun checkAnswer(ctx: Context, lyricToBeCheck: String, lyrics: String, gameManager: GameManager) {
          if (lyrics.contains(lyricToBeCheck, ignoreCase = true)) {
@@ -150,7 +161,10 @@ class LyricsBelongGameActivity : GameActivity() {
     }
 
     /**
-     * announce if the player won or not
+     * Announces if the player has won or not
+     * @param ctx: Context on which the game is running.
+     * @param score: The score of the player.
+     * @param hasWon: Indicator of whether the player has won the game or lost.
      */
     private fun hasWon(ctx: Context, score: Int, hasWon: Boolean) {
         if (hasWon) {
@@ -162,6 +176,8 @@ class LyricsBelongGameActivity : GameActivity() {
 
     /**
      * Custom handle of the bar progress.
+     * @param ctx: Context on which the game is running.
+     * @param myBar: The progression bar/timer.
      */
     private fun barTimer(ctx: Context, myBar: ProgressBar) {
         initializeBarTimer(myBar)

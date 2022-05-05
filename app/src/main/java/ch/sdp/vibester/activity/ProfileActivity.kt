@@ -51,6 +51,8 @@ class ProfileActivity : AppCompatActivity() {
     @Inject
     lateinit var imageGetter: ImageGetter
 
+    val imageSize = 1000
+
     /**
      * Generic onCreate method belonging to ProfileActivity.
      */
@@ -205,7 +207,7 @@ class ProfileActivity : AppCompatActivity() {
 
             if(bm != null){
                 val avatar = findViewById<ImageView>(R.id.avatar)
-                avatar.setImageBitmap(Bitmap.createScaledBitmap(bm, 1000,1000, false))
+                avatar.setImageBitmap(Bitmap.createScaledBitmap(bm, imageSize,imageSize, false))
             }
         }
     }

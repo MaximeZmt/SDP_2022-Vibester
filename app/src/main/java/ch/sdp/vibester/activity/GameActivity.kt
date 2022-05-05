@@ -44,7 +44,7 @@ open class GameActivity : AppCompatActivity() {
     }
 
     fun decreaseBarTimer(myBar: ProgressBar) {
-        if (myBar.progress == maxTime/2 + 1 && myBar.progress > 5) {
+        if (myBar.progress == maxTime/2 && myBar.progress > 5) {
             myBar.progressTintList =
                 ColorStateList.valueOf(getColor(R.color.maximum_yellow_red))
         } else if (myBar.progress == 5) {

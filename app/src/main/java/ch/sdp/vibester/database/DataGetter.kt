@@ -5,6 +5,7 @@ import android.util.Log
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.helper.PartyRoom
 import ch.sdp.vibester.user.User
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -207,6 +208,10 @@ class DataGetter @Inject constructor() {
         dbRoomRef.child(partyRoom.getRoomID()).child("emailList").setValue(partyRoom.getEmailList())
     }
 
+    fun getCurrentUser(): FirebaseUser? {
+        return authenticator.getCurrUser()
+    }
+
     /**
      * This functions fetches the data of the given user from the database
      * @param roomName the name of the room to retrieve data from
@@ -223,7 +228,7 @@ class DataGetter @Inject constructor() {
                 for (snapshot in dataSnapshot.children) {
                     val partyRoom: PartyRoom? = snapshot.getValue(PartyRoom::class.java)
                     if(partyRoom != null) {
-                        val currUserEmail = authenticator.getCurrUser()?.email!!
+                        val currUserEmail = getCurrentUser()?.email!!
                         if(!partyRoom.getEmailList().contains(currUserEmail)) {
                             partyRoom.addUserEmail(currUserEmail)
                             updateRoomUserList(partyRoom)

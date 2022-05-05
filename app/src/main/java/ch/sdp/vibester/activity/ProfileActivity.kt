@@ -1,6 +1,7 @@
 package ch.sdp.vibester.activity
 
 import android.graphics.*
+import android.net.Uri
 import android.os.Bundle
 import android.text.InputType
 import android.util.Log
@@ -18,6 +19,7 @@ import ch.sdp.vibester.R
 import ch.sdp.vibester.api.BitmapGetterApi
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
+import ch.sdp.vibester.database.ImageGetter
 import ch.sdp.vibester.helper.IntentSwitcher
 import ch.sdp.vibester.user.User
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -42,9 +44,14 @@ import javax.inject.Inject
 class ProfileActivity : AppCompatActivity() {
     @Inject
     lateinit var dataGetter: DataGetter
-    
+
     @Inject
     lateinit var authenticator: FireBaseAuthenticator
+
+    @Inject
+    lateinit var imageGetter: ImageGetter
+
+    val imageSize = 1000
 
     /**
      * Generic onCreate method belonging to ProfileActivity.
@@ -180,6 +187,32 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
+
+    /**
+     * A function that downloads an image and sets it.
+     * @param imageURI URI of the image
+     */
+    private fun setImage(imageURI: Uri) {
+        CoroutineScope(Dispatchers.Main).launch {
+            val task = async(Dispatchers.IO) {
+                try {
+                    val bit = BitmapGetterApi.download(imageURI.toString())
+                    bit.get(10, TimeUnit.SECONDS)
+                } catch (e: Exception){
+
+                    null
+                }
+            }
+            val bm = task.await()
+
+            if(bm != null){
+                val avatar = findViewById<ImageView>(R.id.avatar)
+                avatar.setImageBitmap(Bitmap.createScaledBitmap(bm, imageSize,imageSize, false))
+            }
+        }
+    }
+
+
     /**
      * Function that sets the text of a given TextView to the string variant of an integer.
      * @param id: The id of the TextView to be changed.
@@ -210,33 +243,12 @@ class ProfileActivity : AppCompatActivity() {
             findViewById<TextView>(R.id.username).text =  user.username
             setTextOfMultipleViews(user)
         }
-        setupProfilePhoto(user)
+
+        val imageID = dataGetter.getCurrentUser()?.uid
+        imageGetter.fetchImage("profileImg/${imageID}", this::setImage)
 
         if (user.uid != "") {
             generateQrCode(user.uid)
-        }
-    }
-
-    /**
-     * Helper function to setupProfile to set the profile photo of a user.
-     * @param user: The user whose profile picture we are setting up.
-     */
-    private fun setupProfilePhoto(user: User) {
-        CoroutineScope(Dispatchers.Main).launch {
-            val task = async(Dispatchers.IO) {
-                try {
-                    Log.e(getString(R.string.log_tag),user.image)
-                    val bit = BitmapGetterApi.download("https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/45.png")
-                    bit.get(10, TimeUnit.SECONDS)
-                } catch (e: Exception) {
-                    null
-                }
-            }
-            val bm = task.await()
-            if (bm != null) {
-                val avatar = findViewById<ImageView>(R.id.avatar)
-                avatar.setImageBitmap(Bitmap.createScaledBitmap(bm, 1000,1000, false))
-            }
         }
     }
 
@@ -264,4 +276,3 @@ class ProfileActivity : AppCompatActivity() {
         findViewById<ImageView>(R.id.qrCode).setImageBitmap(bmp)
     }
 }
-

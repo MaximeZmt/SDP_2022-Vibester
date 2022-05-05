@@ -129,7 +129,7 @@ class BuzzerSetupActivityTest {
         onView(withId(R.id.missingNameAlert)).check(matches(ViewMatchers.withEffectiveVisibility(ViewMatchers.Visibility.INVISIBLE)))
 
     }
-
+/*
     @Test
     fun checkIntentOnProceedOne() {
         onView(withId(R.id.nb_player_spinner)).perform(click())
@@ -159,7 +159,7 @@ class BuzzerSetupActivityTest {
         intended(hasComponent(BuzzerScreenActivity::class.java.name))
         intended(hasExtra("Number of players", 3))
     }
-/*
+
     @Test
     fun checkIntentOnProceedFour() {
         onView(withId(R.id.nb_player_spinner)).perform(click())

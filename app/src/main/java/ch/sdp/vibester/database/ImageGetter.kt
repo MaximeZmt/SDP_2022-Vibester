@@ -17,7 +17,6 @@ class ImageGetter @Inject constructor() {
      * @param fileUri URI of the image on the database
      * @param callback function to be called when image is done uploading
      */
-
     fun uploadFile(filePath: String, fileUri: Uri, callback: () -> Unit) {
         val profilePicRef = storageRef.child(filePath)
 

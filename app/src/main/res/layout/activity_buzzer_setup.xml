@@ -114,11 +114,11 @@
         android:gravity="center"
         android:orientation="vertical"
         android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/nb_players_selected"
         app:layout_constraintEnd_toEndOf="parent"
         android:background="#AAAAAA"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/getPlayerNumberText">
+        app:layout_constraintTop_toBottomOf="@+id/playerNames">
 
         <TextView
             android:id="@+id/missingNameMessage"

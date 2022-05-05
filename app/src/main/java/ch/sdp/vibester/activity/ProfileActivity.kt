@@ -167,7 +167,8 @@ class ProfileActivity : AppCompatActivity() {
                 try {
                     val bit = BitmapGetterApi.download(imageURI.toString())
                     bit.get(10, TimeUnit.SECONDS)
-                }catch (e: Exception){
+                } catch (e: Exception){
+
                     null
                 }
             }

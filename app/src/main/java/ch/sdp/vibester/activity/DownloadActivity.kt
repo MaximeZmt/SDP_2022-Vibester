@@ -38,7 +38,7 @@ class DownloadActivity : AppCompatActivity() {
 
     private val STORAGE_PERMISSION_CODE = 1000
     private lateinit var song: Song
-    private var songName: String = "imagine dragons believer"
+    private lateinit var songName: String
     private var downloadId: Long = 0
 
 

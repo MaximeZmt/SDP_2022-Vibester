@@ -23,7 +23,8 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-/*
+
+
 @RunWith(AndroidJUnit4::class)
 class LyricsBelongGameActivityTest {
 
@@ -128,12 +129,16 @@ class LyricsBelongGameActivityTest {
     fun clean() {
         Intents.release()
     }
-
+/*
     @Test
     fun elementsShouldBeDisplayedOnCreate() {
         onView(withId(R.id.btnSpeak)).check(matches(isDisplayed()))
         onView(withId(R.id.progressBarLyrics)).check(matches(isDisplayed()))
     }
+    
+ */
+
+
 
     @Test
     fun handleLyricsNoFoundCorrectly() {
@@ -288,4 +293,4 @@ class LyricsBelongGameActivityTest {
 
 
 
-}*/
+}

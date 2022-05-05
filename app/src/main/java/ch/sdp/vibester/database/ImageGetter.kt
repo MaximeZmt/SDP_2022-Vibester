@@ -31,7 +31,6 @@ class ImageGetter @Inject constructor() {
      * @param imageID ID of the image in the database
      * @param callback function to be called when image fetched
      */
-
     fun fetchImage(imageID: String, callback: (downloadUR: Uri) -> Unit) {
         storageRef.child(imageID).downloadUrl.addOnSuccessListener(
             OnSuccessListener(callback))

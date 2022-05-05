@@ -7,7 +7,6 @@ import javax.inject.Inject
 /**
  * The users class which handled all the interactions with the database that are linked to users
  */
-
 class ImageGetter @Inject constructor() {
     private val storageRef = Storage.get().reference
 

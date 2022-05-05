@@ -135,7 +135,7 @@ class LyricsBelongGameActivityTest {
         onView(withId(R.id.btnSpeak)).check(matches(isDisplayed()))
         onView(withId(R.id.progressBarLyrics)).check(matches(isDisplayed()))
     }
-    
+
  */
 
 
@@ -200,6 +200,7 @@ class LyricsBelongGameActivityTest {
         Intents.intended(IntentMatchers.hasExtra("str_arr_val", statVal))
     }
 
+    /*
     @Test
     fun btnCheckVisibilityAfterSpeak() {
         val intent = Intent(
@@ -213,6 +214,8 @@ class LyricsBelongGameActivityTest {
         }
         onView(withId(R.id.lyricMatchButton)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
     }
+    
+     */
 
     @Test
     fun getAndCheckLyricsGivesCorrectAnswerWhenMatch() {

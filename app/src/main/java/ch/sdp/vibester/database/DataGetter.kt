@@ -91,6 +91,13 @@ class DataGetter @Inject constructor() {
             }
     }
 
+    /**
+     * Depending on the value of the snapshot and the method with which we change the value,
+     * returns either the sum or the best value for the finalVal.
+     * @param t         : DataSnapshot
+     * @param method    : String, mode with which we assign finalVal
+     * @param newVal    : Int, value to compare to previousVal
+     */
     private fun checkValue(t: DataSnapshot, method: String, newVal: Int): Int {
         var finalVal = newVal
         if(t.value != null) {

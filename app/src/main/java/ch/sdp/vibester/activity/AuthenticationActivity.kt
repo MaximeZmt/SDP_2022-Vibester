@@ -103,6 +103,9 @@ class AuthenticationActivity : AppCompatActivity() {
         finish()
     }
 
+    /**
+     * Generic onStart method. Direct call to super.onStart().
+     */
     public override fun onStart() {
         super.onStart()
     }
@@ -130,6 +133,7 @@ class AuthenticationActivity : AppCompatActivity() {
 
     /**
      * Function that authenticates the given credentials with the ones stored on the Firebase.
+     * @param idToken : String that holds the id token.
      */
     private fun googleAuthFirebase(idToken: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
@@ -208,7 +212,8 @@ class AuthenticationActivity : AppCompatActivity() {
 
     /**
      * A function changes the UI based on the authentication result
-     * @param task result
+     * @param task : The result
+     * @param createAcc : Boolean to indicate the creation of an account instead of login
      */
     private fun onCompleteAuthentication(task: Task<AuthResult>, createAcc: Boolean) {
         if (task.isSuccessful) {
@@ -232,6 +237,8 @@ class AuthenticationActivity : AppCompatActivity() {
     /**
      * Function that allows the creation of a new activity, with the given text field as intent and
      * the given class as the destination.
+     * @param email : The email to write
+     * @param arg : The activity class to start
      */
     private fun startNewCustomActivity(email: String, arg: Class<*>?) {
         val newIntent = Intent(this, arg)
@@ -242,6 +249,7 @@ class AuthenticationActivity : AppCompatActivity() {
     /**
      * Function that creates a CreateProfileActivity with the given string as the "email"
      * intent extra.
+     * @param email : The email to write
      */
     private fun startNewActivity(email: String) {
         startNewCustomActivity(email, CreateProfileActivity::class.java)
@@ -250,6 +258,9 @@ class AuthenticationActivity : AppCompatActivity() {
     /**
      * Function that updates the Authentication Activity's UI, mainly the textViews, according
      * to the given string, boolean and user arguments.
+     * @param emailText : The email to write
+     * @param createAcc : Boolean indicating the creation of an account instead of login
+     * @param user      : The user
      */
     private fun updateUI(
         emailText: String?,

@@ -93,6 +93,7 @@ class GameEndingActivity : AppCompatActivity() {
 
     /**
      * Function that handles repetitive preparation code with information retrieved from the intent.
+     * @param intent: The intent received by the activity, directly passed as an argument.
      */
     private fun getFromIntent(intent: Intent) {
         if (intent.hasExtra("playerName")) {

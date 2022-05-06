@@ -1,9 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:background="@color/floral_white"
     android:layout_height="match_parent">
+
+    <ProgressBar
+        android:id="@+id/progressBarBuzzer"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="top"
+        android:max="30"
+        android:paddingLeft="25sp"
+        android:paddingRight="25sp"
+        android:progress="15"
+        android:progressTint="@color/tiffany_blue"
+        app:layout_constraintBottom_toTopOf="@id/go_to_end"
+        app:layout_constraintTop_toBottomOf="@id/scoresTable"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <Button
+        android:id="@+id/go_to_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/cg_blue"
+        android:elevation="10dp"
+        android:onClick="switchToEnding"
+        android:stateListAnimator="@null"
+        android:text="@string/go_to_end"
+        android:translationZ="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/progressBarBuzzer"
+        app:layout_constraintBottom_toTopOf="@id/buzzersLayout"/>
 
     <LinearLayout
         android:id="@+id/buzzersLayout"
@@ -11,14 +42,13 @@
         android:layout_height="0dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="16dp"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scoresTable">
+        app:layout_constraintTop_toBottomOf="@+id/go_to_end">
 
 
     </LinearLayout>
@@ -26,11 +56,11 @@
     <TableLayout
         android:id="@+id/scoresTable"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginBottom="114dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="20dp"
         android:gravity="center"
-        app:layout_constraintBottom_toTopOf="@+id/answer"
+        app:layout_constraintBottom_toTopOf="@+id/progressBarBuzzer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -43,15 +73,14 @@
         android:layout_height="0dp"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
-        android:layout_marginBottom="116dp"
         android:background="#AAAAAA"
         android:gravity="center"
         android:orientation="vertical"
         android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/buzzersLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scoresTable">
+        app:layout_constraintTop_toTopOf="@+id/buzzersLayout">
 
         <TextView
             android:id="@+id/answerText"
@@ -82,20 +111,6 @@
             android:translationZ="10dp" />
 
     </LinearLayout>
-
-    <Button
-        android:id="@+id/go_to_end"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/cg_blue"
-        android:elevation="10dp"
-        android:onClick="switchToEnding"
-        android:stateListAnimator="@null"
-        android:text="@string/go_to_end"
-        android:translationZ="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scoresTable" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

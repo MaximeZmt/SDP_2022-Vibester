@@ -8,16 +8,25 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
 import ch.sdp.vibester.R
+import ch.sdp.vibester.helper.BuzzerGameManager
 
 /**
  * Class to set up buzzer game (number of players)
  */
 class BuzzerSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     var text = "One"
+
+    lateinit var gameManager: BuzzerGameManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_buzzer_setup)
         val ctx: Context = this
+
+        val getIntent = intent.extras
+        if (getIntent != null) {
+            gameManager = getIntent.getSerializable("gameManager") as BuzzerGameManager
+        }
 
         val spinner: Spinner = findViewById(R.id.nb_player_spinner)
         val adapter = ArrayAdapter.createFromResource(
@@ -87,6 +96,7 @@ class BuzzerSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
         } else {
             intent.putExtra("Number of players", 1)
         }
+        intent.putExtra("gameManager", gameManager)
         val editTextIdArray =
             arrayOf(R.id.namePlayer1, R.id.namePlayer2, R.id.namePlayer3, R.id.namePlayer4)
         var i = 0

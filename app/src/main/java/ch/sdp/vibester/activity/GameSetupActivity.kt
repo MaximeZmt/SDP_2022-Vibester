@@ -14,6 +14,7 @@ import ch.sdp.vibester.R
 import ch.sdp.vibester.api.LastfmApiInterface
 import ch.sdp.vibester.api.LastfmMethod
 import ch.sdp.vibester.api.LastfmUri
+import ch.sdp.vibester.helper.BuzzerGameManager
 import ch.sdp.vibester.helper.GameManager
 import ch.sdp.vibester.helper.IntentSwitcher
 import ch.sdp.vibester.helper.TypingGameManager
@@ -143,7 +144,7 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
      */
     fun chooseGame(view: View){
         when (view.id) {
-            R.id.local_buzzer_game_button -> {game  = "local_buzzer"; gameManager = GameManager()}
+            R.id.local_buzzer_game_button -> {game  = "local_buzzer"; gameManager = BuzzerGameManager() }
             R.id.local_typing_game_button -> {game = "local_typing"; gameManager = TypingGameManager()}
             R.id.local_lyrics_game_button -> {game = "local_lyrics"; gameManager = GameManager()}
             R.id.online_buzzer_game_button -> {game = "online_buzzer"; gameManager = GameManager(); switchToGame(ChoosePartyRoomActivity())}

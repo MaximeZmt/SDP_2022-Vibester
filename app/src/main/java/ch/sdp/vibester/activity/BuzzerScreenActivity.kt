@@ -1,20 +1,24 @@
 package ch.sdp.vibester.activity
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
 import android.view.Window
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.TableRow
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.BuzzerScoreUpdater
 import ch.sdp.vibester.R
+import ch.sdp.vibester.helper.GameManager
+import ch.sdp.vibester.helper.BuzzerGameManager
+import ch.sdp.vibester.model.Song
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 
-class BuzzerScreenActivity : AppCompatActivity() {
+
+class BuzzerScreenActivity : GameActivity() {
 
     private val MAX_N_PLAYERS = 4
     private val NO_BUZZER_PRESSED = -1
@@ -22,6 +26,8 @@ class BuzzerScreenActivity : AppCompatActivity() {
     private val rowsIdArray = ArrayList(buzzersToRows.values)
     private val buzIds = ArrayList(buzzersToRows.keys)
     private var winnerId = -1 // same function as the winnerId in the updater. Ugly placeholder solution for now
+    private lateinit var gameManager: BuzzerGameManager
+    private var gameIsOn: Boolean = true
 
     private fun initHashmap(): HashMap<Int, Int> {
         val buzzersToRows:HashMap<Int, Int> = hashMapOf()
@@ -43,28 +49,128 @@ class BuzzerScreenActivity : AppCompatActivity() {
         supportActionBar?.hide()
         setContentView(R.layout.activity_buzzer_screen)
 
+        val ctx: Context = this
+
         val getIntent = intent.extras
-        val nPlayers = getIntent?.getInt("Number of players")
+        if (getIntent != null) {
 
-        val answer = findViewById<LinearLayout>(R.id.answer)
-        val answerText = findViewById<TextView>(R.id.answerText)
-        answerText.text = "The song was Demo by The Placeholders"
+            val nPlayers = getIntent.getInt("Number of players")
 
-        val allPoints = if (nPlayers!=null) {Array<Int>(nPlayers, { i -> 0 }) } else Array<Int>(MAX_N_PLAYERS, {i ->0})
-        val playersFull = getIntent?.getStringArray("Player Names")
-        val players = nPlayers?.let { playersFull?.copyOfRange(0, it) }
+            val answer = findViewById<LinearLayout>(R.id.answer)
+            answer.visibility=View.INVISIBLE
 
-        val updater = BuzzerScoreUpdater(buzIds, allPoints)
+            val allPoints = Array(nPlayers, { i -> 0 })
+            val playersFull = getIntent.getStringArray("Player Names")
+            val players = nPlayers.let { playersFull?.copyOfRange(0, it) }
 
-        if (players != null) {
-            buildScores(players, allPoints)
-            buildBuzzers(players, answer)
+            val updater = BuzzerScoreUpdater(buzIds, allPoints)
+
+            if (players != null) {
+                buildScores(players, allPoints)
+                buildBuzzers(players, answer)
+            }
+            setAnswerButton(ctx, answer, findViewById(R.id.buttonCorrect), updater, buzzersToRows)
+            setAnswerButton(ctx, answer, findViewById(R.id.buttonWrong), updater, buzzersToRows)
+
+            // null pointer?
+            if (getIntent.getSerializable("gameManager") != null) {
+                gameManager = getIntent.getSerializable("gameManager") as BuzzerGameManager
+                gameManager.scoreUpdater = updater
+            }
+
+            startFirstRound(ctx, gameManager)
         }
-        setAnswerButton(answer, findViewById(R.id.buttonCorrect), updater, buzzersToRows)
-        setAnswerButton(answer, findViewById(R.id.buttonWrong), updater, buzzersToRows)
     }
 
+    /**
+     * A custom onDestroy to verify progressbar and media player are stopped
+     */
+    override fun onDestroy() {
+        if (runnable != null) {
+            handler.removeCallbacks(runnable!!)
+        }
+        if (this::gameManager.isInitialized && gameManager.initializeMediaPlayer()) {
+            gameManager.stopMediaPlayer()
+        }
+        super.onDestroy()
+    }
 
+    /**
+     * Function to set a song for the first round and play a game.
+     */
+    private fun startFirstRound(ctx: Context, gameManager: BuzzerGameManager){
+        if (!isEndGame(gameManager)) {
+            startRound(ctx, gameManager)
+        }
+        else{
+            switchToEnding(gameManager)
+        }
+    }
+
+    /**
+     * Function to set a new round. It includes reinitializing activity elements,
+     * and playing new song for the round.
+     */
+    private fun startRound(ctx: Context, gameManager: BuzzerGameManager) {
+        gameIsOn = true
+        findViewById<LinearLayout>(R.id.answer).visibility=View.INVISIBLE
+
+        // fetch song and initialise answerText. We'll see later for the image
+        val title = gameManager.getCurrentSong().getTrackName()
+        findViewById<TextView>(R.id.answerText).text=title
+        gameManager.playSong()
+        checkRunnable()
+        barTimer(findViewById(R.id.progressBarBuzzer), ctx, gameManager)
+    }
+
+    /**
+     * Custom handle of the bar progress.
+     */
+    private fun barTimer(myBar: ProgressBar, ctx:Context, gameManager: BuzzerGameManager){
+        initializeBarTimer(myBar)
+        runnable = object : Runnable {
+            override fun run() {
+                if (myBar.progress > 0) {
+                    decreaseBarTimer(myBar)
+                    handler.postDelayed(this, 999) //just a bit shorter than a second for safety
+                } else if (myBar.progress == 0) {
+                    if (gameManager.playingMediaPlayer()) {
+                        gameManager.stopMediaPlayer()
+                    }
+                    checkAnswer(ctx, null, gameManager)
+                }
+            }
+        }
+        handler.post(runnable!!)
+    }
+
+    /**
+     * Generate a change of intent at the end of a game
+     */
+    fun checkAnswer(ctx: Context, chosenSong: Song?, gameManager: BuzzerGameManager) {
+        val playedSong = gameManager.getCurrentSong()
+
+        if (chosenSong != null && chosenSong.getTrackName() == playedSong.getTrackName() && chosenSong.getArtistName() == playedSong.getArtistName()) {
+            gameManager.increaseScore()
+            gameManager.addCorrectSong()
+        } else {
+            gameManager.addWrongSong()
+        }
+        endRound(gameManager)
+    }
+
+    /**
+     * Function called in the end of each round. Displays the button "Next" and
+     * sets the next songs to play.
+     */
+     fun endRound(gameManager: GameManager){
+        gameIsOn = false
+        super.endRound(gameManager, this::testWinner)
+    }
+
+    fun testWinner() {
+        gameManager.scoreUpdater.getWinnerId()
+    }
 
     /**
      * Programmatically builds the table of scores according to the number of players
@@ -140,7 +246,7 @@ class BuzzerScreenActivity : AppCompatActivity() {
      * @param updater: the updater for the scores
      * @param map: a map from the buzzers' IDs to the IDs of each score's position in the score table layout
      */
-    private fun setAnswerButton(answer: LinearLayout, button: Button, updater: BuzzerScoreUpdater, map: Map<Int, Int>) {
+    private fun setAnswerButton(ctx: Context, answer: LinearLayout, button: Button, updater: BuzzerScoreUpdater, map: Map<Int, Int>) {
         button.setOnClickListener {
             answer.visibility = android.view.View.INVISIBLE
             if (pressedBuzzer >= 0) {
@@ -151,9 +257,14 @@ class BuzzerScreenActivity : AppCompatActivity() {
                 val view = map[pressedBuzzer]?.let { it1 -> findViewById<TextView>(it1) }
                 if (view != null && updater.getMap().keys.contains(pressedBuzzer)) {view.text=updater.getMap()[pressedBuzzer].toString()}
             }
-
+            if (gameManager.playingMediaPlayer()) {
+                gameManager.stopMediaPlayer()
+            }
+            setPressed(NO_BUZZER_PRESSED) // reset the buzzer
+            gameManager.setNextSong()
+            startRound(ctx, gameManager)
         }
-        setPressed(NO_BUZZER_PRESSED) // reset the buzzer
+
     }
 
 
@@ -161,6 +272,9 @@ class BuzzerScreenActivity : AppCompatActivity() {
      * Fires an intent from the Gamescreen to the Ending Screen
      */
     fun switchToEnding(view: View) {
+        if (gameManager.playingMediaPlayer()) {
+            gameManager.stopMediaPlayer()
+        }
         val mockArray = arrayListOf<String>("One", "Two", "Three", "Four", "Five")
         val intent = Intent(this, GameEndingActivity::class.java)
 

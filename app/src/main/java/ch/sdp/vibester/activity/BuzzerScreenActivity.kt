@@ -1,5 +1,6 @@
 package ch.sdp.vibester.activity
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -7,12 +8,12 @@ import android.view.Gravity
 import android.view.View
 import android.view.Window
 import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.BuzzerScoreUpdater
 import ch.sdp.vibester.R
 import ch.sdp.vibester.helper.GameManager
 import ch.sdp.vibester.helper.BuzzerGameManager
 import ch.sdp.vibester.model.Song
+import com.bumptech.glide.Glide
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
@@ -21,6 +22,7 @@ import kotlin.collections.HashMap
 class BuzzerScreenActivity : GameActivity() {
 
     private val MAX_N_PLAYERS = 4
+    private val artwork_dim = 300
     private val NO_BUZZER_PRESSED = -1
     private val buzzersToRows:HashMap<Int, Int> = initHashmap()
     private val rowsIdArray = ArrayList(buzzersToRows.values)
@@ -111,13 +113,16 @@ class BuzzerScreenActivity : GameActivity() {
      * Function to set a new round. It includes reinitializing activity elements,
      * and playing new song for the round.
      */
+    @SuppressLint("SetTextI18n")
     private fun startRound(ctx: Context, gameManager: BuzzerGameManager) {
         gameIsOn = true
         findViewById<LinearLayout>(R.id.answer).visibility=View.INVISIBLE
 
         // fetch song and initialise answerText. We'll see later for the image
         val title = gameManager.getCurrentSong().getTrackName()
-        findViewById<TextView>(R.id.answerText).text=title
+        val artist = gameManager.getCurrentSong().getArtistName()
+        findViewById<TextView>(R.id.songTitle).text= "$title - $artist"
+        Glide.with(ctx).load(gameManager.getCurrentSong().getArtworkUrl()).override(artwork_dim, artwork_dim).into(findViewById(R.id.songArtwork))
         gameManager.playSong()
         checkRunnable()
         barTimer(findViewById(R.id.progressBarBuzzer), ctx, gameManager)

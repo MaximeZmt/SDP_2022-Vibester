@@ -7,21 +7,19 @@ import android.view.Gravity
 import android.view.View
 import android.view.Window
 import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.BuzzerScoreUpdater
 import ch.sdp.vibester.R
 import ch.sdp.vibester.helper.GameManager
 import ch.sdp.vibester.helper.BuzzerGameManager
 import ch.sdp.vibester.model.Song
+import com.bumptech.glide.Glide
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
-
-
 class BuzzerScreenActivity : GameActivity() {
 
-    private val MAX_N_PLAYERS = 4
-    private val NO_BUZZER_PRESSED = -1
+    private val artworkDim = 200
+    private val noBuzzerPressed = -1
     private val buzzersToRows:HashMap<Int, Int> = initHashmap()
     private val rowsIdArray = ArrayList(buzzersToRows.values)
     private val buzIds = ArrayList(buzzersToRows.keys)
@@ -37,7 +35,7 @@ class BuzzerScreenActivity : GameActivity() {
         buzzersToRows.put(R.id.buzzer_3, R.id.row_3)
         return buzzersToRows
     }
-    var pressedBuzzer = NO_BUZZER_PRESSED
+    var pressedBuzzer = noBuzzerPressed
 
     private fun setPressed(id: Int) {
         pressedBuzzer = id
@@ -114,10 +112,10 @@ class BuzzerScreenActivity : GameActivity() {
     private fun startRound(ctx: Context, gameManager: BuzzerGameManager) {
         gameIsOn = true
         findViewById<LinearLayout>(R.id.answer).visibility=View.INVISIBLE
-
-        // fetch song and initialise answerText. We'll see later for the image
         val title = gameManager.getCurrentSong().getTrackName()
-        findViewById<TextView>(R.id.answerText).text=title
+        val artist = gameManager.getCurrentSong().getArtistName()
+        findViewById<TextView>(R.id.songTitle).text= "$title - $artist"
+        Glide.with(ctx).load(gameManager.getCurrentSong().getArtworkUrl()).override(artworkDim, artworkDim).into(findViewById(R.id.songArtwork))
         gameManager.playSong()
         checkRunnable()
         barTimer(findViewById(R.id.progressBarBuzzer), ctx, gameManager)
@@ -260,7 +258,7 @@ class BuzzerScreenActivity : GameActivity() {
             if (gameManager.playingMediaPlayer()) {
                 gameManager.stopMediaPlayer()
             }
-            setPressed(NO_BUZZER_PRESSED) // reset the buzzer
+            setPressed(noBuzzerPressed) // reset the buzzer
             gameManager.setNextSong()
             startRound(ctx, gameManager)
         }

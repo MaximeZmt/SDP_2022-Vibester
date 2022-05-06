@@ -25,5 +25,6 @@
     <color name="maximum_yellow_red">#FFFFCB77</color>
     <color name="floral_white">#FFFEF9EF</color>
     <color name="darker_floral_white">#FFFAE4B7</color>
+    <color name="light_grey">#DDDDDD</color>
     <color name="light_coral">#FFFE6D73</color>
 </resources>

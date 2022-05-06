@@ -22,7 +22,7 @@ import kotlin.collections.HashMap
 class BuzzerScreenActivity : GameActivity() {
 
     private val MAX_N_PLAYERS = 4
-    private val artwork_dim = 300
+    private val artwork_dim = 200
     private val NO_BUZZER_PRESSED = -1
     private val buzzersToRows:HashMap<Int, Int> = initHashmap()
     private val rowsIdArray = ArrayList(buzzersToRows.values)
@@ -117,8 +117,6 @@ class BuzzerScreenActivity : GameActivity() {
     private fun startRound(ctx: Context, gameManager: BuzzerGameManager) {
         gameIsOn = true
         findViewById<LinearLayout>(R.id.answer).visibility=View.INVISIBLE
-
-        // fetch song and initialise answerText. We'll see later for the image
         val title = gameManager.getCurrentSong().getTrackName()
         val artist = gameManager.getCurrentSong().getArtistName()
         findViewById<TextView>(R.id.songTitle).text= "$title - $artist"

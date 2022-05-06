@@ -83,7 +83,7 @@ class BuzzerScreenActivityTest {
     }
 
     @Test
-    fun answerIsPresentButGoneOnStartup() {
+    fun answerIsPresentButInvisibleOnStartup() {
         val intent = Intent(ApplicationProvider.getApplicationContext(), BuzzerScreenActivity::class.java)
 
         // Put mock extras inside

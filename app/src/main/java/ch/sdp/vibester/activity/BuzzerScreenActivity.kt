@@ -1,6 +1,5 @@
 package ch.sdp.vibester.activity
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -17,13 +16,10 @@ import com.bumptech.glide.Glide
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
-
-
 class BuzzerScreenActivity : GameActivity() {
 
-    private val MAX_N_PLAYERS = 4
-    private val artwork_dim = 200
-    private val NO_BUZZER_PRESSED = -1
+    private val artworkDim = 200
+    private val noBuzzerPressed = -1
     private val buzzersToRows:HashMap<Int, Int> = initHashmap()
     private val rowsIdArray = ArrayList(buzzersToRows.values)
     private val buzIds = ArrayList(buzzersToRows.keys)
@@ -39,7 +35,7 @@ class BuzzerScreenActivity : GameActivity() {
         buzzersToRows.put(R.id.buzzer_3, R.id.row_3)
         return buzzersToRows
     }
-    var pressedBuzzer = NO_BUZZER_PRESSED
+    var pressedBuzzer = noBuzzerPressed
 
     private fun setPressed(id: Int) {
         pressedBuzzer = id
@@ -113,14 +109,13 @@ class BuzzerScreenActivity : GameActivity() {
      * Function to set a new round. It includes reinitializing activity elements,
      * and playing new song for the round.
      */
-    @SuppressLint("SetTextI18n")
     private fun startRound(ctx: Context, gameManager: BuzzerGameManager) {
         gameIsOn = true
         findViewById<LinearLayout>(R.id.answer).visibility=View.INVISIBLE
         val title = gameManager.getCurrentSong().getTrackName()
         val artist = gameManager.getCurrentSong().getArtistName()
         findViewById<TextView>(R.id.songTitle).text= "$title - $artist"
-        Glide.with(ctx).load(gameManager.getCurrentSong().getArtworkUrl()).override(artwork_dim, artwork_dim).into(findViewById(R.id.songArtwork))
+        Glide.with(ctx).load(gameManager.getCurrentSong().getArtworkUrl()).override(artworkDim, artworkDim).into(findViewById(R.id.songArtwork))
         gameManager.playSong()
         checkRunnable()
         barTimer(findViewById(R.id.progressBarBuzzer), ctx, gameManager)
@@ -263,7 +258,7 @@ class BuzzerScreenActivity : GameActivity() {
             if (gameManager.playingMediaPlayer()) {
                 gameManager.stopMediaPlayer()
             }
-            setPressed(NO_BUZZER_PRESSED) // reset the buzzer
+            setPressed(noBuzzerPressed) // reset the buzzer
             gameManager.setNextSong()
             startRound(ctx, gameManager)
         }

@@ -15,7 +15,13 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.GrantPermissionRule
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.LastfmMethod
+import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.helper.TypingGameManager
+import dagger.hilt.android.testing.BindValue
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
+import io.mockk.every
+import io.mockk.mockk
 import org.hamcrest.CoreMatchers.not
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -26,6 +32,7 @@ import org.junit.runner.RunWith
 
 
 @RunWith(AndroidJUnit4::class)
+@HiltAndroidTest
 class LyricsBelongGameActivityTest {
 
     private val sleepTime: Long = 5000
@@ -112,8 +119,10 @@ class LyricsBelongGameActivityTest {
 
         return gameManager
     }
+    @get:Rule(order = 0)
+    var hiltRule = HiltAndroidRule(this)
 
-    @get: Rule
+    @get:Rule(order = 1)
     val activityRule = ActivityScenarioRule(LyricsBelongGameActivity::class.java)
 
     @get:Rule
@@ -122,6 +131,7 @@ class LyricsBelongGameActivityTest {
 
     @Before
     fun setUp() {
+        hiltRule.inject()
         Intents.init()
     }
 
@@ -129,19 +139,27 @@ class LyricsBelongGameActivityTest {
     fun clean() {
         Intents.release()
     }
-/*
+
+    @BindValue
+    @JvmField
+    val mockUsersRepo = mockk<DataGetter>()
+
+    private fun createMockInvocation() {
+        every { mockUsersRepo.setSubFieldValue(any(), any(), any(), any()) } answers {}
+        every { mockUsersRepo.updateFieldInt(any(), any(), any(), any()) } answers {}
+        every { mockUsersRepo.setFieldValue(any(), any(), any()) } answers {}
+        every { mockUsersRepo.updateSubFieldInt(any(), any(), any(), any(), any()) } answers {}
+    }
+
     @Test
     fun elementsShouldBeDisplayedOnCreate() {
         onView(withId(R.id.btnSpeak)).check(matches(isDisplayed()))
         onView(withId(R.id.progressBarLyrics)).check(matches(isDisplayed()))
     }
 
- */
-
-
-
     @Test
     fun handleLyricsNoFoundCorrectly() {
+        createMockInvocation()
         val gameManager = setGameManager()
         val intent = Intent(
             ApplicationProvider.getApplicationContext(),
@@ -154,15 +172,16 @@ class LyricsBelongGameActivityTest {
         }
         /** FIXME: API takes a lot of time to process this request
         comment the following lines if this test fail */
-//        Thread.sleep(sleepTime)
-//        onView(withId(R.id.nextSongButton)).check(matches(isDisplayed()))
+        Thread.sleep(sleepTime)
+        onView(withId(R.id.nextSongButton)).check(matches(isDisplayed()))
         //song skipped, not consider as wrong
-//        assertEquals(true, gameManager.getScore() == 0)
-//        assertEquals(true, gameManager.getWrongSongs().size == 0)
+        assertEquals(true, gameManager.getScore() == 0)
+        assertEquals(true, gameManager.getWrongSongs().size == 0)
     }
 
     @Test
     fun shouldUpdateSpeechFromInput() {
+        createMockInvocation()
         val intent = Intent(
             ApplicationProvider.getApplicationContext(),
             LyricsBelongGameActivity::class.java
@@ -171,11 +190,13 @@ class LyricsBelongGameActivityTest {
         scn.onActivity { activity ->
             activity.testUpdateSpeechResult("hey")
         }
+
         onView(withId(R.id.lyricResult)).check(matches(withText("hey")))
     }
 
     @Test
     fun nextButtonOnClick() {
+        createMockInvocation()
         val gameManager = setGameManager(2)
         val intent = Intent(ApplicationProvider.getApplicationContext(), LyricsBelongGameActivity::class.java)
         intent.putExtra("gameManager", gameManager)
@@ -194,15 +215,16 @@ class LyricsBelongGameActivityTest {
         val statVal: ArrayList<String> = arrayListOf()
         val score = "0"
         statVal.addAll(arrayOf(score, score, score, score, score))
+
         Intents.intended(IntentMatchers.hasComponent(GameEndingActivity::class.java.name))
         Intents.intended(IntentMatchers.hasExtra("nbIncorrectSong", 2))
         Intents.intended(IntentMatchers.hasExtra("str_arr_name", statNames))
         Intents.intended(IntentMatchers.hasExtra("str_arr_val", statVal))
     }
 
-    /*
     @Test
     fun btnCheckVisibilityAfterSpeak() {
+        createMockInvocation()
         val intent = Intent(
             ApplicationProvider.getApplicationContext(),
             LyricsBelongGameActivity::class.java
@@ -212,13 +234,14 @@ class LyricsBelongGameActivityTest {
         scn.onActivity { activity ->
             activity.testUpdateSpeechResult("hey")
         }
+
         onView(withId(R.id.lyricMatchButton)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
     }
     
-     */
 
     @Test
     fun getAndCheckLyricsGivesCorrectAnswerWhenMatch() {
+        createMockInvocation()
         val gameManager = setGameManager()
         gameManager.setNextSong()
         val intent = Intent(
@@ -230,14 +253,15 @@ class LyricsBelongGameActivityTest {
         scn.onActivity { activity ->
             activity.testGetAndCheckLyrics(ctx, songName, artistName, speechInputCorrect, gameManager)
         }
-        //FIXME: API takes a lot of time to process this request
-        //comment the following lines if this test fail
-//        Thread.sleep(sleepTime)
-//        assertEquals(true, gameManager.getScore() == 1)
+        /*FIXME: API takes a lot of time to process this request
+        comment the following lines if this test fail*/
+        Thread.sleep(sleepTime)
+        assertEquals(true, gameManager.getScore() == 1)
     }
 
     @Test
     fun checkIntentOnEndingForWrongSong() {
+        createMockInvocation()
         val gameManager = setGameManager()
         gameManager.setNextSong()
         gameManager.gameSize = 1
@@ -271,6 +295,7 @@ class LyricsBelongGameActivityTest {
 
     @Test
     fun checkIntentOnNextRoundForCorrectSong() {
+        createMockInvocation()
         val gameManager = setGameManager(2)
         gameManager.setNextSong()
 
@@ -285,6 +310,7 @@ class LyricsBelongGameActivityTest {
             currentArtist = activity.getArtistName()
             currentSong = activity.getSongName()
         }
+
         onView(withId(R.id.lyricMatchButton)).check(matches(not(isDisplayed())))
         assertEquals(artistName, currentArtist)
         assertEquals("Monday", currentSong)

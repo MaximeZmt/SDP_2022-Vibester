@@ -2,12 +2,12 @@ package ch.sdp.vibester.helper
 
 import android.content.Context
 import android.content.Intent
-import ch.sdp.vibester.activity.WelcomeActivity
+import ch.sdp.vibester.activity.MainActivity
 
 class IntentSwitcher private constructor() {
     companion object {
-        fun switchBackToWelcome(ctx: Context) {
-            ctx.startActivity(Intent(ctx, WelcomeActivity::class.java))
+        fun switchBackToMain(ctx: Context) {
+            ctx.startActivity(Intent(ctx, MainActivity::class.java))
         }
     }
 }

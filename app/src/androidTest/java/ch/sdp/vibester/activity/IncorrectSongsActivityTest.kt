@@ -14,6 +14,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import ch.sdp.vibester.R
+import com.android.dx.command.Main
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -65,6 +66,6 @@ class IncorrectSongsActivityTest {
     @Test
     fun checkIntentOnGoBack() {
         onView(withId(R.id.incorrect_songs_back_to_welcome)).perform(click())
-        intended(hasComponent(WelcomeActivity::class.java.name))
+        intended(hasComponent(MainActivity::class.java.name))
     }
 }

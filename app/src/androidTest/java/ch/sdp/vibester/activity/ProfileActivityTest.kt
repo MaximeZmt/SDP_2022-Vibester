@@ -124,7 +124,7 @@ class ProfileActivityTest {
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
 
         onView(withId(R.id.profile_returnToMain)).perform(click())
-        Intents.intended(IntentMatchers.hasComponent(WelcomeActivity::class.java.name))
+        Intents.intended(IntentMatchers.hasComponent(MainActivity::class.java.name))
     }
 
     @Test

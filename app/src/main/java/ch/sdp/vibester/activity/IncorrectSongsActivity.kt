@@ -1,6 +1,5 @@
 package ch.sdp.vibester.activity
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
@@ -72,6 +71,6 @@ class IncorrectSongsActivity : AppCompatActivity() {
     }
 
     fun switchBackToWelcome(view: View) {
-        IntentSwitcher.switchBackToWelcome(this)
+        IntentSwitcher.switchBackToMain(this)
     }
 }

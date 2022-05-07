@@ -17,12 +17,10 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.R
-import ch.sdp.vibester.TestMode
 import ch.sdp.vibester.api.ItunesMusicApi
 import ch.sdp.vibester.helper.IntentSwitcher
 import ch.sdp.vibester.model.Song
 import okhttp3.OkHttpClient
-import org.w3c.dom.Text
 import java.io.File
 import java.lang.IllegalArgumentException
 
@@ -204,7 +202,7 @@ class DownloadActivity : AppCompatActivity() {
     }
 
     fun switchToWelcome(view: View) {
-        IntentSwitcher.switchBackToWelcome(this)
+        IntentSwitcher.switchBackToMain(this)
     }
 
     fun switchToDeleteSongs(view: View) {

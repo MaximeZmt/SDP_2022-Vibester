@@ -10,19 +10,15 @@ import androidx.core.content.ContextCompat.getColor
 import androidx.core.widget.addTextChangedListener
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.ItunesMusicApi
-import ch.sdp.vibester.auth.FireBaseAuthenticator
-import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.helper.DisplayContents
 import ch.sdp.vibester.helper.GameManager
 import ch.sdp.vibester.helper.TypingGameManager
 import ch.sdp.vibester.model.Song
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
-import javax.inject.Inject
 
 /**
  * Class that represent a game

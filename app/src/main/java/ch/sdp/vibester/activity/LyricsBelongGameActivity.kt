@@ -8,16 +8,12 @@ import android.view.View
 import android.widget.*
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.LyricsOVHApiInterface
-import ch.sdp.vibester.auth.FireBaseAuthenticator
-import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.helper.GameManager
 import ch.sdp.vibester.model.Lyric
-import dagger.hilt.android.AndroidEntryPoint
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
-import javax.inject.Inject
 
 /**
  * Game checks if the player say the lyrics of the given song correct

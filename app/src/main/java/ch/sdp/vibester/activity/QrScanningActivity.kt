@@ -40,8 +40,8 @@ class QrScanningActivity : AppCompatActivity() {
     val usersRepo: DataGetter = DataGetter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
+        super.onCreate(savedInstanceState)
         supportActionBar?.hide()
         binding = ActivityQrScanningBinding.inflate(layoutInflater)
         val view = binding.root

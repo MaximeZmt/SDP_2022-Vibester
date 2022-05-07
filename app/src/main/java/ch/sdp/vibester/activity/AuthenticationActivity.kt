@@ -51,8 +51,8 @@ class AuthenticationActivity : AppCompatActivity() {
      * Generic onCreate method, automatically called upon the creation of the activity.
      */
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
+        super.onCreate(savedInstanceState)
         supportActionBar?.hide()
         setContentView(R.layout.activity_authentication)
 

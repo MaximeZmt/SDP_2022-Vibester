@@ -21,9 +21,8 @@ import java.io.*
  */
 class DeleteSongsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
         requestWindowFeature(Window.FEATURE_NO_TITLE)
+        super.onCreate(savedInstanceState)
         supportActionBar?.hide()
 
         setContentView(R.layout.activity_delete_songs)

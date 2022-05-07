@@ -37,15 +37,14 @@ class ScoreBoardActivity : AppCompatActivity() {
      * TODO: replace "ranking" by appropriate label
      */
     fun selectScoreboard(view: View) {
-        var sortedBy = ""
-        val ranking = "ranking"
+        var sortedBy = "scores/"
         when (view.id) {
-            R.id.btsButton -> sortedBy = ranking
-            R.id.kpopButton -> sortedBy = ranking
-            R.id.imagDragonsButton -> sortedBy = ranking
-            R.id.billieEilishButton -> sortedBy = ranking
-            R.id.rockButton -> sortedBy = ranking
-            R.id.topTracksButton -> sortedBy = ranking
+            R.id.btsButton -> sortedBy += R.string.bts
+            R.id.kpopButton -> sortedBy += R.string.kpop
+            R.id.imagDragonsButton -> sortedBy += R.string.imagine_dragons
+            R.id.billieEilishButton -> sortedBy += R.string.billie_eilish
+            R.id.rockButton -> sortedBy += R.string.rock
+            R.id.topTracksButton -> sortedBy += R.string.top_tracks
         }
 
         findViewById<ConstraintLayout>(R.id.genrePerScoreboard).visibility = GONE
@@ -62,8 +61,8 @@ class ScoreBoardActivity : AppCompatActivity() {
         }
     }
 
-    private fun loadPlayersSortedBy(order: String) {
-        dbRef.orderByChild(order)
+    private fun loadPlayersSortedBy(genre: String) {
+        dbRef.orderByChild(genre)
             .addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshots: DataSnapshot) {
                 for (snapshot in snapshots.children) {

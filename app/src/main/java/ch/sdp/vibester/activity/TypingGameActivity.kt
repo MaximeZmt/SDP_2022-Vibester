@@ -210,7 +210,7 @@ class TypingGameActivity : GameActivity() {
     override fun endRound(gameManager: GameManager, callback: (() -> Unit)?) {
         gameIsOn = false
         findViewById<EditText>(R.id.yourGuessET).isEnabled = false
-        super.endRound(gameManager,this::setScores)
+        super.endRound(gameManager, this::setScores)
         toggleNextBtnVisibility(true)
     }
 
@@ -240,6 +240,7 @@ class TypingGameActivity : GameActivity() {
             dataGetter.updateSubFieldInt(FireBaseAuthenticator.getCurrentUID(), gameManager.getScore(), "scores", gameManager.gameMode, method = "best")
         }
     }
+
     /**
      * Functions for testing
      */

@@ -8,16 +8,21 @@ import android.view.View
 import android.widget.*
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.LyricsOVHApiInterface
+import ch.sdp.vibester.auth.FireBaseAuthenticator
+import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.helper.GameManager
 import ch.sdp.vibester.model.Lyric
+import dagger.hilt.android.AndroidEntryPoint
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
+import javax.inject.Inject
 
 /**
  * Game checks if the player say the lyrics of the given song correct
  */
+@AndroidEntryPoint
 class LyricsBelongGameActivity : GameActivity() {
     private lateinit var gameManager: GameManager
 
@@ -26,6 +31,9 @@ class LyricsBelongGameActivity : GameActivity() {
     private lateinit var lyrics: String
     private lateinit var songName: String
     private lateinit var artistName: String
+
+    @Inject
+    lateinit var dataGetter: DataGetter
 
     /**
      * Generic onCreate method, belonging to the LyricsBelongGameActivity.
@@ -98,7 +106,7 @@ class LyricsBelongGameActivity : GameActivity() {
     }
 
     override fun endRound(gameManager: GameManager, callback: (() -> Unit)?) {
-        super.endRound(gameManager, null)
+        super.endRound(gameManager, this::setScores)
         toggleBtnVisibility(R.id.nextSongButton, true)
     }
 
@@ -199,6 +207,18 @@ class LyricsBelongGameActivity : GameActivity() {
             }
         }
         handler.post(runnable!!)
+    }
+
+    /**
+     * Function to set scores in the end of the game
+     */
+    private fun setScores() {
+        if(::gameManager.isInitialized && FireBaseAuthenticator.isLoggedIn()){
+            dataGetter.updateFieldInt(FireBaseAuthenticator.getCurrentUID(), "totalGames", 1, method = "sum")
+            dataGetter.updateFieldInt(FireBaseAuthenticator.getCurrentUID(), "correctSongs", gameManager.getCorrectSongs().size, method = "sum")
+            dataGetter.updateFieldInt(FireBaseAuthenticator.getCurrentUID(), "bestScore", gameManager.getScore(), method = "best")
+            dataGetter.updateSubFieldInt(FireBaseAuthenticator.getCurrentUID(), gameManager.getScore(), "scores", gameManager.gameMode, method = "best")
+        }
     }
 
     /** helper functions to test private functions */

@@ -224,7 +224,7 @@ class TypingGameActivity : GameActivity() {
         findViewById<EditText>(R.id.yourGuessET).text.clear()
         findViewById<EditText>(R.id.yourGuessET).isEnabled = true
         val score = gameManager.getCorrectSongs().size
-        findViewById<TextView>(R.id.playerScore).text = "Your score: $score"
+        findViewById<TextView>(R.id.playerScore).text = "@string/your_score_dot_dot $score"
         toggleNextBtnVisibility(false)
         gameManager.playSong()
         checkRunnable()

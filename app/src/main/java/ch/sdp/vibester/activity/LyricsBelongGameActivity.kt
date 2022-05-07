@@ -210,7 +210,9 @@ class LyricsBelongGameActivity : GameActivity() {
         }
     }
 
-    /** helper functions to test private functions */
+    /*
+     * The following functions are helper for testing
+     */
     fun testCheckLyrics(ctx: Context, lyricToBeCheck: String, lyrics: String, gameManager: GameManager) {
         checkAnswer(ctx, lyricToBeCheck, lyrics, gameManager)
     }

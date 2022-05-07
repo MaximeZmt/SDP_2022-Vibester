@@ -230,8 +230,8 @@ class TypingGameActivity : GameActivity() {
         }
     }
 
-    /**
-     * Functions for testing
+    /*
+     * The following functions are helper for testing
      */
     fun testProgressBar(progressTime:Int = 0) {
         superTestProgressBar(findViewById(R.id.progressBarTyping), progressTime)

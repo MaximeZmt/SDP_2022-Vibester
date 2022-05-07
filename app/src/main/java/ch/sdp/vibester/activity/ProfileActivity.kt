@@ -155,7 +155,6 @@ class ProfileActivity : AppCompatActivity() {
 
             if(name == "username"){
                 dataGetter.setFieldValue(FireBaseAuthenticator.getCurrentUID(), "username",  input.text.toString())
-
             }
         }
 

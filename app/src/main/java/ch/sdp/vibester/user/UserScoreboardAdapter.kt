@@ -9,10 +9,11 @@ import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
 import ch.sdp.vibester.helper.loadImg
 
-class UserScoreboardAdapter(playersInit: List<User>) :
+class UserScoreboardAdapter(playersInit: List<User>, genre: String) :
     RecyclerView.Adapter<UserScoreboardAdapter.PlayerViewHolder>() {
 
     var players: MutableList<User> = playersInit.toMutableList()
+    //private var playerScores: Array<String> = arrayOf()
 
     override fun getItemCount(): Int = players.size
 
@@ -35,6 +36,10 @@ class UserScoreboardAdapter(playersInit: List<User>) :
         }
         notifyDataSetChanged()
     }
+
+    /*private fun setScorePerGenre(player: User) {
+        playerScores = player.scores.keys.toTypedArray()
+    }*/
 
     /**
      * Customer ViewHolder class for PlayerAdapter

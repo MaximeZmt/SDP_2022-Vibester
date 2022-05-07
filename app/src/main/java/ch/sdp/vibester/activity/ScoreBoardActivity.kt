@@ -24,6 +24,7 @@ class ScoreBoardActivity : AppCompatActivity() {
     private val dbRef: DatabaseReference = Database.get().getReference("users")
     private var players: List<User>? = null
     private var userScoreboardAdapter: UserScoreboardAdapter? = null
+    private var genre: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,12 +37,12 @@ class ScoreBoardActivity : AppCompatActivity() {
     fun selectScoreboard(view: View) {
         var sortedBy = "scores/"
         when (view.id) {
-            R.id.btsButton -> sortedBy += R.string.bts
-            R.id.kpopButton -> sortedBy += R.string.kpop
-            R.id.imagDragonsButton -> sortedBy += R.string.imagine_dragons
-            R.id.billieEilishButton -> sortedBy += R.string.billie_eilish
-            R.id.rockButton -> sortedBy += R.string.rock
-            R.id.topTracksButton -> sortedBy += R.string.top_tracks
+            R.id.btsButton -> {sortedBy += R.string.bts; genre = R.string.bts.toString()}
+            R.id.kpopButton -> {sortedBy += R.string.kpop; genre = R.string.kpop.toString()}
+            R.id.imagDragonsButton -> {sortedBy += R.string.imagine_dragons; genre = R.string.imagine_dragons.toString()}
+            R.id.billieEilishButton -> {sortedBy += R.string.billie_eilish; genre = R.string.billie_eilish.toString()}
+            R.id.rockButton -> {sortedBy += R.string.rock; genre = R.string.rock.toString()}
+            R.id.topTracksButton -> {sortedBy += R.string.top_tracks; genre = R.string.top_tracks.toString()}
         }
 
         findViewById<ConstraintLayout>(R.id.genrePerScoreboard).visibility = GONE
@@ -53,7 +54,7 @@ class ScoreBoardActivity : AppCompatActivity() {
     private fun setupRecycleView() {
         findViewById<RecyclerView>(R.id.recycler_view).apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = players?.let { UserScoreboardAdapter(it) }
+            adapter = players?.let { UserScoreboardAdapter(it, genre) }
             setHasFixedSize(true)
         }
     }
@@ -77,7 +78,7 @@ class ScoreBoardActivity : AppCompatActivity() {
     }
 
     private fun showPlayersPosition(players: List<User>?) {
-        userScoreboardAdapter = UserScoreboardAdapter(players!!)
+        userScoreboardAdapter = UserScoreboardAdapter(players!!, genre)
         findViewById<RecyclerView>(R.id.recycler_view)!!.adapter = userScoreboardAdapter
     }
 }

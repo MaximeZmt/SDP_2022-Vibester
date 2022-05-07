@@ -225,12 +225,6 @@ class TypingGameActivity : GameActivity() {
      * Function to set scores in the end of the game
      */
     private fun setScores() {
-        /*if(::gameManager.isInitialized && FireBaseAuthenticator.isLoggedIn()){
-            dataGetter.updateFieldInt(FireBaseAuthenticator.getCurrentUID(), "totalGames", 1, method = "sum")
-            dataGetter.updateFieldInt(FireBaseAuthenticator.getCurrentUID(), "correctSongs", gameManager.getCorrectSongs().size, method = "sum")
-            dataGetter.updateFieldInt(FireBaseAuthenticator.getCurrentUID(), "bestScore", gameManager.getScore(), method = "best")
-            dataGetter.updateSubFieldInt(FireBaseAuthenticator.getCurrentUID(), gameManager.getScore(), "scores", gameManager.gameMode, method = "best")
-        }*/
         if (::gameManager.isInitialized) {
             super.setScores(gameManager)
         }

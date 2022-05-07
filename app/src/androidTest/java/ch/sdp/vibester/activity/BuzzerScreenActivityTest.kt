@@ -16,8 +16,14 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
 import ch.sdp.vibester.TestMode
 import ch.sdp.vibester.api.LastfmMethod
+import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.helper.BuzzerGameManager
 import ch.sdp.vibester.helper.TypingGameManager
+import dagger.hilt.android.testing.BindValue
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
+import io.mockk.every
+import io.mockk.mockk
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -25,15 +31,20 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
+@HiltAndroidTest
 class BuzzerScreenActivityTest {
 
-    @get:Rule
+    @get:Rule(order = 0)
+    var hiltRule = HiltAndroidRule(this)
+
+    @get:Rule(order = 1)
     val testRule = ActivityScenarioRule(
         BuzzerScreenActivity::class.java
     )
 
     @Before
     fun setUp() {
+        hiltRule.inject()
         Intents.init()
     }
 

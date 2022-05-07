@@ -36,13 +36,14 @@ class ScoreBoardActivity : AppCompatActivity() {
 
     fun selectScoreboard(view: View) {
         var sortedBy = "scores/"
+        // R.string doesn't work for genre (getOrDefault in setScore in UserScoreboardAdapter)
         when (view.id) {
-            R.id.btsButton -> {sortedBy += R.string.bts; genre = R.string.bts.toString()}
-            R.id.kpopButton -> {sortedBy += R.string.kpop; genre = R.string.kpop.toString()}
-            R.id.imagDragonsButton -> {sortedBy += R.string.imagine_dragons; genre = R.string.imagine_dragons.toString()}
-            R.id.billieEilishButton -> {sortedBy += R.string.billie_eilish; genre = R.string.billie_eilish.toString()}
-            R.id.rockButton -> {sortedBy += R.string.rock; genre = R.string.rock.toString()}
-            R.id.topTracksButton -> {sortedBy += R.string.top_tracks; genre = R.string.top_tracks.toString()}
+            R.id.btsButton -> {sortedBy += R.string.bts; genre = "BTS"}
+            R.id.kpopButton -> {sortedBy += R.string.kpop; genre = "kpop"}
+            R.id.imagDragonsButton -> {sortedBy += R.string.imagine_dragons; genre = "Imagine Dragons"}
+            R.id.billieEilishButton -> {sortedBy += R.string.billie_eilish; genre = "Bellie Eilish"}
+            R.id.rockButton -> {sortedBy += R.string.rock; genre = "rock"}
+            R.id.topTracksButton -> {sortedBy += R.string.top_tracks; genre = "top tracks"}
         }
 
         findViewById<ConstraintLayout>(R.id.genrePerScoreboard).visibility = GONE

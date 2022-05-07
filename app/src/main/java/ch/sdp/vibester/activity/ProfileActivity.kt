@@ -4,7 +4,6 @@ import android.graphics.*
 import android.net.Uri
 import android.os.Bundle
 import android.text.InputType
-import android.util.Log
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.Window
@@ -88,7 +87,7 @@ class ProfileActivity : AppCompatActivity() {
     private fun setLogOutBtnListener() {
         findViewById<Button>(R.id.logout).setOnClickListener {
             FirebaseAuth.getInstance().signOut()
-            IntentSwitcher.switchBackToWelcome(this)
+            IntentSwitcher.switchBackToMain(this)
             finish()
         }
     }
@@ -98,7 +97,7 @@ class ProfileActivity : AppCompatActivity() {
      */
     private fun setRetToMainBtnListener() {
         findViewById<FloatingActionButton>(R.id.profile_returnToMain).setOnClickListener {
-            IntentSwitcher.switchBackToWelcome(this)
+            IntentSwitcher.switchBackToMain(this)
             finish()
         }
     }

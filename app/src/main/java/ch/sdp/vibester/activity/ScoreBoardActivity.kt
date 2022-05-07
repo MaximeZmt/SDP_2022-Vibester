@@ -33,9 +33,6 @@ class ScoreBoardActivity : AppCompatActivity() {
         players = ArrayList()
     }
 
-    /**
-     * TODO: replace "ranking" by appropriate label
-     */
     fun selectScoreboard(view: View) {
         var sortedBy = "scores/"
         when (view.id) {

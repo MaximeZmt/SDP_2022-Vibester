@@ -174,14 +174,14 @@ class LyricsBelongGameActivityTest {
         }
         /** FIXME: API takes a lot of time to process this request
         comment the following lines if this test fail */
-        Thread.sleep(sleepTime)
+    //   Thread.sleep(sleepTime)
     //    onView(withId(R.id.nextSongButton)).check(matches(isDisplayed()))
         //song skipped, not consider as wrong
     //    assertEquals(true, gameManager.getScore() == 0)
     //    assertEquals(true, gameManager.getWrongSongs().size == 0)
     }
 
- /*   @Test
+    @Test
     fun shouldUpdateSpeechFromInput() {
         createMockInvocation()
         val intent = Intent(
@@ -194,7 +194,7 @@ class LyricsBelongGameActivityTest {
         }
 
         onView(withId(R.id.lyricResult)).check(matches(withText("hey")))
-    }*/
+    }
 
     @Test
     fun nextButtonOnClick() {

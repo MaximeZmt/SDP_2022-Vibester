@@ -119,6 +119,7 @@ class LyricsBelongGameActivityTest {
 
         return gameManager
     }
+
     @get:Rule(order = 0)
     var hiltRule = HiltAndroidRule(this)
 

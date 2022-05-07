@@ -10,30 +10,22 @@ import androidx.core.content.ContextCompat.getColor
 import androidx.core.widget.addTextChangedListener
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.ItunesMusicApi
-import ch.sdp.vibester.auth.FireBaseAuthenticator
-import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.helper.DisplayContents
 import ch.sdp.vibester.helper.GameManager
 import ch.sdp.vibester.helper.TypingGameManager
 import ch.sdp.vibester.model.Song
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
-import javax.inject.Inject
 
 /**
  * Class that represent a game
  */
-@AndroidEntryPoint
 class TypingGameActivity : GameActivity() {
     private lateinit var gameManager: TypingGameManager
     private var gameIsOn: Boolean = true // done to avoid clicks on songs after the round is over
-
-    @Inject
-    lateinit var dataGetter: DataGetter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -175,7 +167,7 @@ class TypingGameActivity : GameActivity() {
 
         //Create the Listener that is executed if we click on the frame layer
         frameLay.setOnClickListener {
-            if(gameIsOn){
+            if (gameIsOn) {
                 frameLay.setBackgroundColor(getColor(ctx, R.color.tiffany_blue))
                 guessLayout.removeAllViews()
                 guessLayout.addView(frameLay)
@@ -210,7 +202,7 @@ class TypingGameActivity : GameActivity() {
     override fun endRound(gameManager: GameManager, callback: (() -> Unit)?) {
         gameIsOn = false
         findViewById<EditText>(R.id.yourGuessET).isEnabled = false
-        super.endRound(gameManager,this::setScores)
+        super.endRound(gameManager, this::setScores)
         toggleNextBtnVisibility(true)
     }
 
@@ -233,15 +225,13 @@ class TypingGameActivity : GameActivity() {
      * Function to set scores in the end of the game
      */
     private fun setScores() {
-        if(::gameManager.isInitialized && FireBaseAuthenticator.isLoggedIn()){
-            dataGetter.updateFieldInt(FireBaseAuthenticator.getCurrentUID(), "totalGames", 1, method = "sum")
-            dataGetter.updateFieldInt(FireBaseAuthenticator.getCurrentUID(), "correctSongs", gameManager.getCorrectSongs().size, method = "sum")
-            dataGetter.updateFieldInt(FireBaseAuthenticator.getCurrentUID(), "bestScore", gameManager.getScore(), method = "best")
-            dataGetter.updateSubFieldInt(FireBaseAuthenticator.getCurrentUID(), gameManager.getScore(), "scores", gameManager.gameMode, method = "best")
+        if (::gameManager.isInitialized) {
+            super.setScores(gameManager)
         }
     }
-    /**
-     * Functions for testing
+
+    /*
+     * The following functions are helper for testing
      */
     fun testProgressBar(progressTime:Int = 0) {
         superTestProgressBar(findViewById(R.id.progressBarTyping), progressTime)

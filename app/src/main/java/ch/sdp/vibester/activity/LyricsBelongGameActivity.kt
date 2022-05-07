@@ -98,7 +98,7 @@ class LyricsBelongGameActivity : GameActivity() {
     }
 
     override fun endRound(gameManager: GameManager, callback: (() -> Unit)?) {
-        super.endRound(gameManager, null)
+        super.endRound(gameManager, this::setScores)
         toggleBtnVisibility(R.id.nextSongButton, true)
     }
 
@@ -201,10 +201,22 @@ class LyricsBelongGameActivity : GameActivity() {
         handler.post(runnable!!)
     }
 
-    /** helper functions to test private functions */
+    /**
+     * Function to set scores in the end of the game
+     */
+    private fun setScores() {
+        if(::gameManager.isInitialized) {
+            super.setScores(gameManager)
+        }
+    }
+
+    /*
+     * The following functions are helper for testing
+     */
     fun testCheckLyrics(ctx: Context, lyricToBeCheck: String, lyrics: String, gameManager: GameManager) {
         checkAnswer(ctx, lyricToBeCheck, lyrics, gameManager)
     }
+
     fun testUpdateSpeechResult(speechInput: String) {
         updateSpeechResult(speechInput)
     }

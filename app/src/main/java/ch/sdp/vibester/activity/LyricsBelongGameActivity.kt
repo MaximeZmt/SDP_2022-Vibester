@@ -22,7 +22,6 @@ import javax.inject.Inject
 /**
  * Game checks if the player say the lyrics of the given song correct
  */
-@AndroidEntryPoint
 class LyricsBelongGameActivity : GameActivity() {
     private lateinit var gameManager: GameManager
 
@@ -31,9 +30,6 @@ class LyricsBelongGameActivity : GameActivity() {
     private lateinit var lyrics: String
     private lateinit var songName: String
     private lateinit var artistName: String
-
-    @Inject
-    lateinit var dataGetter: DataGetter
 
     /**
      * Generic onCreate method, belonging to the LyricsBelongGameActivity.
@@ -213,11 +209,14 @@ class LyricsBelongGameActivity : GameActivity() {
      * Function to set scores in the end of the game
      */
     private fun setScores() {
-        if(::gameManager.isInitialized && FireBaseAuthenticator.isLoggedIn()){
+        /*if(::gameManager.isInitialized && FireBaseAuthenticator.isLoggedIn()){
             dataGetter.updateFieldInt(FireBaseAuthenticator.getCurrentUID(), "totalGames", 1, method = "sum")
             dataGetter.updateFieldInt(FireBaseAuthenticator.getCurrentUID(), "correctSongs", gameManager.getCorrectSongs().size, method = "sum")
             dataGetter.updateFieldInt(FireBaseAuthenticator.getCurrentUID(), "bestScore", gameManager.getScore(), method = "best")
             dataGetter.updateSubFieldInt(FireBaseAuthenticator.getCurrentUID(), gameManager.getScore(), "scores", gameManager.gameMode, method = "best")
+        }*/
+        if(::gameManager.isInitialized) {
+            super.setScores(gameManager)
         }
     }
 

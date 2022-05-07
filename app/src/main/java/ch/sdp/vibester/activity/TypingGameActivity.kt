@@ -27,13 +27,9 @@ import javax.inject.Inject
 /**
  * Class that represent a game
  */
-@AndroidEntryPoint
 class TypingGameActivity : GameActivity() {
     private lateinit var gameManager: TypingGameManager
     private var gameIsOn: Boolean = true // done to avoid clicks on songs after the round is over
-
-    @Inject
-    lateinit var dataGetter: DataGetter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -233,11 +229,14 @@ class TypingGameActivity : GameActivity() {
      * Function to set scores in the end of the game
      */
     private fun setScores() {
-        if(::gameManager.isInitialized && FireBaseAuthenticator.isLoggedIn()){
+        /*if(::gameManager.isInitialized && FireBaseAuthenticator.isLoggedIn()){
             dataGetter.updateFieldInt(FireBaseAuthenticator.getCurrentUID(), "totalGames", 1, method = "sum")
             dataGetter.updateFieldInt(FireBaseAuthenticator.getCurrentUID(), "correctSongs", gameManager.getCorrectSongs().size, method = "sum")
             dataGetter.updateFieldInt(FireBaseAuthenticator.getCurrentUID(), "bestScore", gameManager.getScore(), method = "best")
             dataGetter.updateSubFieldInt(FireBaseAuthenticator.getCurrentUID(), gameManager.getScore(), "scores", gameManager.gameMode, method = "best")
+        }*/
+        if (::gameManager.isInitialized) {
+            super.setScores(gameManager)
         }
     }
 

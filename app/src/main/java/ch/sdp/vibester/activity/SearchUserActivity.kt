@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.Window
+import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,7 +16,6 @@ import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.user.User
 
 import ch.sdp.vibester.user.UserProfileAdapter
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -59,7 +59,7 @@ class SearchUserActivity : AppCompatActivity() {
         searchEditText = findViewById(R.id.searchUserET)
         searchForUsers("")
 
-        val buttonScan: FloatingActionButton = findViewById(R.id.searchUser_scanning)
+        val buttonScan: Button = findViewById(R.id.searchUser_scanning)
 
         val extras = intent.extras
 

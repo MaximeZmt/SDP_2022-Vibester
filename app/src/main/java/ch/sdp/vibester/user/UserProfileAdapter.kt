@@ -1,5 +1,6 @@
 package ch.sdp.vibester.user
 
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,20 +11,26 @@ import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
+import ch.sdp.vibester.database.ImageGetter
 import ch.sdp.vibester.helper.loadImg
 
 
 /**
  * UserAdapter to set userProfile views with username and image in RecycleView. It is used to search for users.
  */
-class UserProfileAdapter constructor(val users: MutableList<User>, val authenticator: FireBaseAuthenticator, val usersRepo: DataGetter):
+class UserProfileAdapter constructor(
+    val users: MutableList<User>,
+    val authenticator: FireBaseAuthenticator,
+    val dataGetter: DataGetter,
+    val imageGetter: ImageGetter
+    ):
     RecyclerView.Adapter<UserProfileAdapter.UserProfileViewHolder>() {
 
     private val currentUser = authenticator.getCurrUser()
     private var userFriends: Array<String> = arrayOf()
 
     init{
-        if (currentUser != null) { usersRepo.getUserData(currentUser.uid, this::setFriends) }
+        if (currentUser != null) { dataGetter.getUserData(currentUser.uid, this::setFriends) }
     }
 
     // Callback for getUserData
@@ -71,7 +78,8 @@ class UserProfileAdapter constructor(val users: MutableList<User>, val authentic
          */
         fun bind(user: User) {
             itemView.findViewById<TextView>(R.id.search_user_username).text = user.username
-            itemView.findViewById<ImageView>(R.id.profile_image).loadImg(user.image)
+            imageGetter.fetchImage(user.uid, this::loadImage)
+//            itemView.findViewById<ImageView>(R.id.profile_image).loadImg(user.image)
             val addFriendBtn = itemView.findViewById<Button>(R.id.addFriendBtn)
 
             if(userFriends.isNotEmpty() && user.uid in userFriends){
@@ -80,7 +88,7 @@ class UserProfileAdapter constructor(val users: MutableList<User>, val authentic
             else {
                 addFriendBtn.setOnClickListener {
                     if (currentUser != null) {
-                        usersRepo.setSubFieldValue(currentUser.uid, "friends", user.uid,true)
+                        dataGetter.setSubFieldValue(currentUser.uid, "friends", user.uid,true)
                         changeBtnToImage()
                     }
                 }
@@ -90,6 +98,10 @@ class UserProfileAdapter constructor(val users: MutableList<User>, val authentic
         private fun changeBtnToImage(){
             itemView.findViewById<Button>(R.id.addFriendBtn).visibility = View.INVISIBLE
             itemView.findViewById<ImageView>(R.id.addedFriendIcon).visibility = View.VISIBLE
+        }
+
+        private fun loadImage(imageURI: Uri) {
+            itemView.findViewById<ImageView>(R.id.profile_image).loadImg(imageURI.toString())
         }
     }
 

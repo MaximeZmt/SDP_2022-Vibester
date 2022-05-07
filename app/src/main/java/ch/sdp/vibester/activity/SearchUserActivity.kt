@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
+import ch.sdp.vibester.database.ImageGetter
 import ch.sdp.vibester.user.User
 
 import ch.sdp.vibester.user.UserProfileAdapter
@@ -29,6 +30,9 @@ class SearchUserActivity : AppCompatActivity() {
 
     @Inject
     lateinit var usersRepo: DataGetter
+
+    @Inject
+    lateinit var imageGetter: ImageGetter
 
     @Inject
     lateinit var authenticator: FireBaseAuthenticator
@@ -52,7 +56,7 @@ class SearchUserActivity : AppCompatActivity() {
         recyclerView!!.setHasFixedSize(true)
         recyclerView!!.layoutManager = LinearLayoutManager(this)
 
-        userProfileAdapter = UserProfileAdapter(this.users, authenticator, usersRepo)
+        userProfileAdapter = UserProfileAdapter(this.users, authenticator, usersRepo, imageGetter)
 
         recyclerView!!.adapter = userProfileAdapter
 

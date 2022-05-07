@@ -1,5 +1,7 @@
 package ch.sdp.vibester.activity
 
+import android.app.Activity
+import android.content.Intent
 import android.graphics.*
 import android.net.Uri
 import android.os.Bundle
@@ -69,6 +71,7 @@ class ProfileActivity : AppCompatActivity() {
         setRetToMainBtnListener()
         setShowQrCodeBtnListener()
         setQrCodeToProfileBtnListener()
+        setChangeImageBtnListener()
 
         queryDatabase()
     }
@@ -79,6 +82,51 @@ class ProfileActivity : AppCompatActivity() {
     private fun setEditUserNameBtnListener() {
         findViewById<ImageView>(R.id.editUser).setOnClickListener {
             showGeneralDialog(R.id.username, "username")
+        }
+    }
+
+    private fun setChangeImageBtnListener() {
+        findViewById<ImageView>(R.id.avatar).setOnClickListener {
+            showImageChangeDialog()
+        }
+    }
+
+    private fun showImageChangeDialog() {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        builder.setTitle("Do you want to change your profile picture?")
+
+        builder.setPositiveButton("Yes") { _, _ ->
+            dataGetter.getCurrentUser()?.let { updateImage(it.uid) }
+        }
+
+        builder.setNegativeButton("No") { dialog, _ -> dialog.cancel() }
+        builder.show()
+    }
+
+    private fun updateImage(id: String) {
+        deleteImage(id)
+        uploadImage()
+    }
+
+    private fun deleteImage(id: String) {
+        imageGetter.deleteImage("profileImg/${id}")
+    }
+
+    private fun uploadImage() {
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        startActivityForResult(intent, 100)
+    }
+
+//    private fun()
+
+    //check the UID here not sure
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK && requestCode == 100){
+            imageGetter.uploadFile("profileImg/${FireBaseAuthenticator.getCurrentUID()}", data?.data!!) {
+                imageGetter.fetchImage("profileImg/${FireBaseAuthenticator.getCurrentUID()}", this::setImage)
+            }
         }
     }
 
@@ -156,7 +204,6 @@ class ProfileActivity : AppCompatActivity() {
 
             if(name == "username"){
                 dataGetter.setFieldValue(FireBaseAuthenticator.getCurrentUID(), "username",  input.text.toString())
-
             }
         }
 
@@ -199,7 +246,6 @@ class ProfileActivity : AppCompatActivity() {
                     val bit = BitmapGetterApi.download(imageURI.toString())
                     bit.get(10, TimeUnit.SECONDS)
                 } catch (e: Exception){
-
                     null
                 }
             }

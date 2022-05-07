@@ -1,5 +1,6 @@
 package ch.sdp.vibester.user
 
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -52,5 +53,6 @@ class UserScoreboardAdapter(playersInit: List<User>) :
             itemView.findViewById<TextView>(R.id.tv_score).text = player.ranking.toString()
             itemView.findViewById<ImageView>(R.id.iv_photo).loadImg(player.image)
         }
+
     }
 }

@@ -175,7 +175,7 @@ class TypingGameActivity : GameActivity() {
 
         //Create the Listener that is executed if we click on the frame layer
         frameLay.setOnClickListener {
-            if(gameIsOn){
+            if (gameIsOn) {
                 frameLay.setBackgroundColor(getColor(ctx, R.color.tiffany_blue))
                 guessLayout.removeAllViews()
                 guessLayout.addView(frameLay)

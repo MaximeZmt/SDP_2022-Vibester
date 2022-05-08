@@ -49,8 +49,8 @@ class GameEndingActivity : AppCompatActivity() {
         if (intent.hasExtra("Winner Name")) {
             val winner = intent.getStringExtra("Winner Name")
             if (winner!=null) {
-                findViewById<TextView>(R.id.winnerText).text="And the winner is... $winner!"
-            } else {findViewById<TextView>(R.id.winnerText).text="Nobody won this game!"}
+                findViewById<TextView>(R.id.winnerText).text=winner
+            }
         }
 
         getFromIntent(intent)

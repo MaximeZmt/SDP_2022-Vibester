@@ -29,6 +29,11 @@
     <string name="TypingGame_yourScore0">Your score: 0</string>
     <string name="TypingGame_yourScore">\Your score:\ </string>
 
+    <!-- BuzzerScreen -->
+    <string name="BuzzerScreen_noWinner">Nobody won this game!</string>
+    <string name="BuzzerScreen_oneWinner">And the winner is...\ </string>
+    <string name="BuzzerScreen_moreThanOneWinner">And the winners are...\</string>
+
     <!-- GameEnding -->
     <string name="gameEnding_unconnectedUsername">UNCONNECTED</string>
 

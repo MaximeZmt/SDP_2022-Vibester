@@ -22,7 +22,6 @@ class BuzzerScreenActivity : GameActivity() {
     private val buzzersToRows:HashMap<Int, Int> = initHashmap()
     private val rowsIdArray = ArrayList(buzzersToRows.values)
     private val buzIds = ArrayList(buzzersToRows.keys)
-    private var winnerId = -1 // same function as the winnerId in the updater. Ugly placeholder solution for now
     private lateinit var gameManager: GameManager
     private lateinit var scoreUpdater: BuzzerScoreUpdater
     private var gameIsOn: Boolean = true
@@ -100,8 +99,9 @@ class BuzzerScreenActivity : GameActivity() {
         Glide.with(ctx).load(gameManager.getCurrentSong().getArtworkUrl()).override(artworkDim, artworkDim).into(findViewById(R.id.songArtwork))
         gameManager.playSong()
         checkRunnable()
-        super.barTimer(findViewById(R.id.progressBarBuzzer), ctx, gameManager, R.id.nextSongBuzzer)
+        super.barTimer(findViewById(R.id.progressBarBuzzer), ctx, gameManager, ::checkAnswer)
     }
+
     /**
      * Generate a change of intent at the end of a game
      */
@@ -125,7 +125,7 @@ class BuzzerScreenActivity : GameActivity() {
     }
 
     fun testWinner() {
-        scoreUpdater.getWinnerId()
+        scoreUpdater.computeWinner()
     }
 
     /**
@@ -187,7 +187,7 @@ class BuzzerScreenActivity : GameActivity() {
             button.height = 0
             buttons.set(i, button)
             button.setOnClickListener {
-                if (findViewById<ProgressBar>(R.id.progressBarBuzzer).progress>0) {
+                if (findViewById<ProgressBar>(R.id.progressBarBuzzer).progress>0 && findViewById<Button>(R.id.nextSongBuzzer).visibility==View.GONE) {
                     answer.visibility = android.view.View.VISIBLE
                     setPressed(button.id)
                 }
@@ -211,7 +211,6 @@ class BuzzerScreenActivity : GameActivity() {
             if (pressedBuzzer >= 0) {
                 if(button.id==R.id.buttonCorrect)  {
                     scoreUpdater.updateScoresArray(pressedBuzzer, 1)
-                    winnerId = scoreUpdater.getWinnerId()
                 } else {scoreUpdater.updateScoresArray(pressedBuzzer, -1)}
                 val view = map[pressedBuzzer]?.let { it1 -> findViewById<TextView>(it1) }
                 if (view != null && scoreUpdater.getMap().keys.contains(pressedBuzzer)) {view.text=scoreUpdater.getMap()[pressedBuzzer].toString()}
@@ -233,6 +232,26 @@ class BuzzerScreenActivity : GameActivity() {
         }
     }
 
+    fun prepareWinnerAnnouncement(scoreUpdater: BuzzerScoreUpdater): String {
+        val winner: ArrayList<Int> = scoreUpdater.computeWinner()
+        val winnerAnnouncement: String
+        when (winner.size) {
+            0 -> winnerAnnouncement = getString(R.string.BuzzerScreen_noWinner)
+            1 -> winnerAnnouncement = getString(R.string.BuzzerScreen_oneWinner) + findViewById<Button>(winner.get(0)).text
+            else -> {
+                var winnersAnd = ""
+                for (id in winner) {
+                    winnersAnd = winnersAnd.plus(findViewById<Button>(id).text)
+                    if (id!=winner.get(winner.size-1)) {
+                        winnersAnd = winnersAnd.plus( " and ")
+                    }
+                }
+                winnerAnnouncement = getString(R.string.BuzzerScreen_moreThanOneWinner) + winnersAnd
+            }
+        }
+        return winnerAnnouncement
+    }
+
     /**
      * Fires an intent from the Gamescreen to the Ending Screen
      */
@@ -250,7 +269,7 @@ class BuzzerScreenActivity : GameActivity() {
         intent.putExtra("playerName", "Arda")
         intent.putExtra("nbIncorrectSong", 3)
 
-        intent.putExtra("Winner Name", if (winnerId>0) {findViewById<Button>(winnerId).text} else {null})
+        intent.putExtra("Winner Name", prepareWinnerAnnouncement(scoreUpdater))
 
         intent.putStringArrayListExtra("str_arr_inc", incArray)
         intent.putStringArrayListExtra("str_arr_name", statNames)

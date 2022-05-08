@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/floral_white">
+    android:background="@color/floral_white"
+    android:id="@+id/fragment_welcome_screen">
 
     <ImageView
         android:id="@+id/vibester_welcome_logo"

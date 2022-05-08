@@ -32,10 +32,7 @@ class TypingGameActivity : GameActivity() {
         supportActionBar?.hide()
         setContentView(R.layout.activity_typing_game)
 
-        val guessLayout = findViewById<LinearLayout>(R.id.displayGuess)
-        val inputTxt = findViewById<EditText>(R.id.yourGuessET)
         val ctx: Context = this
-
         val getIntent = intent.extras
         if (getIntent != null) {
             super.setMax(intent)
@@ -43,6 +40,9 @@ class TypingGameActivity : GameActivity() {
             setNextButtonListener(ctx, gameManager)
             super.startFirstRound(ctx, gameManager, ::startRoundTyping)
         }
+
+        val guessLayout = findViewById<LinearLayout>(R.id.displayGuess)
+        val inputTxt = findViewById<EditText>(R.id.yourGuessET)
         setGuessLayoutListener(inputTxt, guessLayout)
     }
 
@@ -104,7 +104,7 @@ class TypingGameActivity : GameActivity() {
     /**
      * announce if the player won or not
      */
-    private fun hasWon(ctx: Context, hasWon: Boolean, itWas: Song) {
+    private fun hasWon(ctx: Context, hasWon: Boolean, itWas: Song, gameManager: GameManager) {
         if (hasWon) {
             toastShowCorrect(ctx, gameManager.getCorrectSongs().size)
         } else {
@@ -119,10 +119,10 @@ class TypingGameActivity : GameActivity() {
         val playedSong = gameManager.getCurrentSong()
         if (checkSong(chosenSong, playedSong)) {
             gameManager.addCorrectSong()
-            hasWon(ctx, true, playedSong)
+            hasWon(ctx, true, playedSong, gameManager)
         } else {
             gameManager.addWrongSong()
-            hasWon(ctx, false, playedSong)
+            hasWon(ctx, false, playedSong, gameManager)
         }
         endRound(gameManager)
     }

@@ -152,7 +152,7 @@ class TypingGameActivityTest {
 
         val intent =
             Intent(ApplicationProvider.getApplicationContext(), TypingGameActivity::class.java)
-        // Do not put gameManager as an extra
+        // Do not put gameManager as an extra: it causes a RuntimeException
         val scn: ActivityScenario<TypingGameActivity> = ActivityScenario.launch(intent)
         val ctx = ApplicationProvider.getApplicationContext() as Context
 
@@ -162,7 +162,7 @@ class TypingGameActivityTest {
         }
         assertEquals(songTest.getArtistName(), gameManager.getCurrentSong().getArtistName())
         assertEquals(songTest.getTrackName(), gameManager.getCurrentSong().getTrackName())
-        assertEquals(gameManager.getScore(), 1)
+        assertEquals(gameManager.getCorrectSongs().size, 1)
     }
 
     @Test
@@ -184,14 +184,14 @@ class TypingGameActivityTest {
         val intent =
             Intent(ApplicationProvider.getApplicationContext(), TypingGameActivity::class.java)
 
-        // Do not put gameManager as an extra
+        intent.putExtra("gameManager", gameManager)
         val scn: ActivityScenario<TypingGameActivity> = ActivityScenario.launch(intent)
         val ctx = ApplicationProvider.getApplicationContext() as Context
         createMockInvocation()
         scn.onActivity { activity ->
             activity.checkAnswer(ctx, songTest, gameManager)
         }
-        assertEquals(true, gameManager.getScore() == 1)
+        assertEquals(true, gameManager.getCorrectSongs().size == 1)
     }
 
     @Test
@@ -217,7 +217,7 @@ class TypingGameActivityTest {
         scn.onActivity { activity ->
             activity.checkAnswer(ctx, songTest, gameManager)
         }
-        assertEquals(true, gameManager.getScore() == 0)
+        assertEquals(true, gameManager.getCorrectSongs().size == 0)
     }
 
 
@@ -257,7 +257,7 @@ class TypingGameActivityTest {
         statNames.addAll(arrayOf(statName, statName, statName, statName, statName))
 
         val statVal: ArrayList<String> = arrayListOf()
-        val score = gameManager.getScore().toString()
+        val score = gameManager.getCorrectSongs().size.toString()
         statVal.addAll(arrayOf(score, score, score, score, score))
 
         Intents.intended(IntentMatchers.hasComponent(GameEndingActivity::class.java.name))
@@ -291,7 +291,7 @@ class TypingGameActivityTest {
         statNames.addAll(arrayOf(statName, statName, statName, statName, statName))
 
         val statVal: ArrayList<String> = arrayListOf()
-        val score = gameManager.getScore().toString()
+        val score = gameManager.getCorrectSongs().size.toString()
         statVal.addAll(arrayOf(score, score, score, score, score))
 
         Intents.intended(IntentMatchers.hasComponent(GameEndingActivity::class.java.name))

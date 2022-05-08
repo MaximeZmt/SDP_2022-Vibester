@@ -125,15 +125,15 @@
         android:id="@+id/nextSongBuzzer"
         android:layout_width="140dp"
         android:layout_height="40dp"
-        android:text="@string/next"
-        android:visibility="gone"
         android:background="@drawable/squared_button"
         android:backgroundTint="@color/cg_blue"
+        android:text="@string/next"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.73" />
+        app:layout_constraintVertical_bias="0.9" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

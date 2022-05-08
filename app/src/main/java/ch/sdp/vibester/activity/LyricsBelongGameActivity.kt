@@ -210,6 +210,13 @@ class LyricsBelongGameActivity : GameActivity() {
         }
     }
 
+    override fun onDestroy() {
+        if (runnable != null) {
+            handler.removeCallbacks(runnable!!)
+        }
+        super.onDestroy()
+    }
+
     /*
      * The following functions are helper for testing
      */

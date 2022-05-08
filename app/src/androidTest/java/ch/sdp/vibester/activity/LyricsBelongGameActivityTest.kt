@@ -180,7 +180,8 @@ class LyricsBelongGameActivityTest {
     //    assertEquals(true, gameManager.getScore() == 0)
     //    assertEquals(true, gameManager.getWrongSongs().size == 0)
     }
-
+    
+    // TODO fix the test
 //    @Test
 //    fun shouldUpdateSpeechFromInput() {
 //        createMockInvocation()

@@ -16,7 +16,7 @@ import androidx.test.rule.GrantPermissionRule
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.LastfmMethod
 import ch.sdp.vibester.database.DataGetter
-import ch.sdp.vibester.helper.TypingGameManager
+import ch.sdp.vibester.helper.GameManager
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -101,13 +101,13 @@ class LyricsBelongGameActivityTest {
             "Thunder, thun-, thunder\n" +
             "Thun-thun-thunder, thunder"
 
-    private fun setGameManager(numSongs:Int = 1, valid: Boolean = true): TypingGameManager {
+    private fun setGameManager(numSongs:Int = 1, valid: Boolean = true): GameManager {
         val epilogue = "{\"tracks\":{\"track\":["
         val prologue =
             "], \"@attr\":{\"tag\":\"british\",\"page\":\"1\",\"perPage\":\"1\",\"totalPages\":\"66649\",\"total\":\"66649\"}}}"
         var middle = "{\"name\":\"Monday\",\"artist\":{\"name\":\"Imagine Dragons\"}}"
         if(!valid) middle = "{\"name\":\"TEST_SONG_TEST\",\"artist\":{\"name\":\"TEST_ARTIST_TEST\"}}"
-        val gameManager = TypingGameManager()
+        val gameManager = GameManager()
 
         var i = 0
         var completeMiddle = middle

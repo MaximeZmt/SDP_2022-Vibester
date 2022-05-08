@@ -1,16 +1,19 @@
 package ch.sdp.vibester.helper
 
+import android.media.MediaPlayer
+import ch.sdp.vibester.api.AudioPlayer
 import ch.sdp.vibester.api.ItunesMusicApi
 import ch.sdp.vibester.model.Song
 import ch.sdp.vibester.model.SongList
 import okhttp3.OkHttpClient
 import java.io.Serializable
+import java.util.concurrent.CompletableFuture
 
 /**
- * Game Manager to set up a solo game for a chosen mode.
+ * Game Manager to set up a local game for a chosen mode.
  */
 open class GameManager : Serializable {
-    private var score = 0
+    private var score = 0 // we can yeet this and use the size of the correct song list instead
     var gameSize = 5
     var numPlayedSongs = 0
     var gameMode = ""
@@ -19,6 +22,8 @@ open class GameManager : Serializable {
     private val correctSongs = mutableListOf<Song>() //TODO: question: why this is a val but the next one is a var?
     private var wrongSongs = mutableListOf<Song>()
     var nextSongInd = 0
+
+    private lateinit var mediaPlayer: CompletableFuture<MediaPlayer>
 
     /**
      * set the number of songs in this game
@@ -135,5 +140,35 @@ open class GameManager : Serializable {
             return true
         }
         return false
+    }
+
+    /**
+     * Check if mediaPlayer is initialized
+     */
+    fun initializeMediaPlayer(): Boolean {
+        return this::mediaPlayer.isInitialized
+    }
+
+    /**
+     * Play current song with media player.
+     */
+    fun playSong() {
+        mediaPlayer = AudioPlayer.playAudio(currentSong.getPreviewUrl())
+    }
+
+    /**
+     * Check if media player is playing
+     * @return: true if media player is playing
+     *          false otherwise
+     */
+    fun playingMediaPlayer(): Boolean {
+        return mediaPlayer.get().isPlaying
+    }
+
+    /**
+     * Stop media player
+     */
+    fun stopMediaPlayer() {
+        mediaPlayer.get().stop()
     }
 }

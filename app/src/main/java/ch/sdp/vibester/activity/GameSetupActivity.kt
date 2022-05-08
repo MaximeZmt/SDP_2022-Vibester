@@ -17,7 +17,6 @@ import ch.sdp.vibester.api.LastfmUri
 import ch.sdp.vibester.helper.BuzzerGameManager
 import ch.sdp.vibester.helper.GameManager
 import ch.sdp.vibester.helper.IntentSwitcher
-import ch.sdp.vibester.helper.TypingGameManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.gson.Gson
 import retrofit2.Call
@@ -138,14 +137,17 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
             }
         })
     }
-
+/*
+    private val ids = arrayListOf<Int>(R.id.buzzer_0, R.id.buzzer_1, R.id.buzzer_2, R.id.buzzer_3)
+    private val scores = arrayOf<Int>(0, 0, 0, 0)
+*/
     /**
      * Choose game mode. Set appropriate GameManager.
      */
     fun chooseGame(view: View){
         when (view.id) {
-            R.id.local_buzzer_game_button -> {game  = "local_buzzer"; gameManager = BuzzerGameManager() }
-            R.id.local_typing_game_button -> {game = "local_typing"; gameManager = TypingGameManager()}
+            R.id.local_buzzer_game_button -> {game  = "local_buzzer"; gameManager = GameManager() }
+            R.id.local_typing_game_button -> {game = "local_typing"; gameManager = GameManager()}
             R.id.local_lyrics_game_button -> {game = "local_lyrics"; gameManager = GameManager()}
             R.id.online_buzzer_game_button -> {game = "online_buzzer"; gameManager = GameManager(); switchToGame(ChoosePartyRoomActivity())}
         }

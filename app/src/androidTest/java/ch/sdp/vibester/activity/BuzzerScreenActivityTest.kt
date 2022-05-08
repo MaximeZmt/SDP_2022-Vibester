@@ -18,7 +18,6 @@ import ch.sdp.vibester.TestMode
 import ch.sdp.vibester.api.LastfmMethod
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.helper.BuzzerGameManager
-import ch.sdp.vibester.helper.TypingGameManager
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest

@@ -16,6 +16,7 @@ import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.user.User
 
 import ch.sdp.vibester.user.UserProfileAdapter
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -59,7 +60,7 @@ class SearchUserActivity : AppCompatActivity() {
         searchEditText = findViewById(R.id.searchUserET)
         searchForUsers("")
 
-        val buttonScan: Button = findViewById(R.id.searchUser_scanning)
+        val buttonScan: FloatingActionButton = findViewById(R.id.searchUser_scanning)
 
         val extras = intent.extras
 

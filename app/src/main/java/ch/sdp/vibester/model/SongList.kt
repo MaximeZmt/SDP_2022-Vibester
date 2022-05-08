@@ -1,6 +1,5 @@
 package ch.sdp.vibester.model
 
-//import ch.sdp.vibester.api.LastfmHelper
 import ch.sdp.vibester.api.LastfmMethod
 import org.json.JSONArray
 import org.json.JSONObject

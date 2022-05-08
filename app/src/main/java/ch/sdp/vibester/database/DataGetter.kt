@@ -45,7 +45,7 @@ class DataGetter @Inject constructor() {
 
     /**
      * Update integer value in a subfield based on method sum/best
-     * @param userID
+     * @param uid User ID
      * @param newVal
      * @param fieldName
      */

@@ -24,6 +24,10 @@
     <string name="qrScanning_noExistUid">Error not an existing uid</string>
     <string name="qrScanning_newFriend">Congratulations, you have a new friend</string>
 
+    <!-- TypingGame -->
+    <string name="TypingGame_currentRound">Round\ </string>
+    <string name="TypingGame_yourScore0">Your score: 0</string>
+    <string name="TypingGame_yourScore">\Your score:\ </string>
 
     <!-- GameEnding -->
     <string name="gameEnding_unconnectedUsername">UNCONNECTED</string>
@@ -116,6 +120,7 @@
 
     <string name="game_typing">Local Typing</string>
     <string name="game_setup_ask_difficulty">Please choose the difficulty of your game</string>
+
 
     <string-array name="nb_players">
         <item>One</item>

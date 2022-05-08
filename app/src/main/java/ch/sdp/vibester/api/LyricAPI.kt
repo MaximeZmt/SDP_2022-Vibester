@@ -8,7 +8,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object LyricAPI {
+class LyricAPI {
     private fun lyricBaseUrl() = "https://api.lyrics.ovh/"
 
     @Provides

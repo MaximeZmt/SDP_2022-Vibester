@@ -70,11 +70,7 @@ class ScoreBoardActivity : AppCompatActivity() {
                         (players as? ArrayList<User>)?.add(player)
                     }
                 }
-                //players = players?.sortedByDescending { it.scores.toSortedMap()[genre] }
-                /*players = players?.sortedWith(Comparator{ p1, p2 ->
-                    if (p1.scores.getOrDefault(genre, -1) > p2.scores.getOrDefault(genre, -1)) -1 else 1})*/
-                //players = players?.sortedByDescending { (_, v) -> v }
-                players?.forEach{player -> player.ranking = player.scores.getOrDefault(genre, 0)}
+                players = players?.let { replaceRankingByScore(it) }
                 players = players?.sortedByDescending { it.ranking } as MutableList<User>?
                 showPlayersPosition(players)
             }
@@ -84,13 +80,15 @@ class ScoreBoardActivity : AppCompatActivity() {
         })
     }
 
-    /*private fun replaceRankingByScore(list: MutableList<User>): MutableList<User> {
+    private fun replaceRankingByScore(list: MutableList<User>): MutableList<User> {
         val iterator = list.listIterator()
         while(iterator.hasNext()) {
-            val value = iterator.next()
-            iterator.set()
+            val player = iterator.next()
+            player.ranking = player.scores.getOrDefault(genre, 0)
+            iterator.set(player)
         }
-    }*/
+        return list
+    }
 
     private fun showPlayersPosition(players: MutableList<User>?) {
         userScoreboardAdapter = UserScoreboardAdapter(players!!, genre)

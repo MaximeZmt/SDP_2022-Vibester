@@ -160,6 +160,13 @@ class LyricsBelongGameActivity : GameActivity() {
         endRound(gameManager)
     }
 
+    override fun onDestroy() {
+        if (runnable != null) {
+            handler.removeCallbacks(runnable!!)
+        }
+        super.onDestroy()
+    }
+
     /**
      * Announces if the player has won or not
      * @param ctx: Context on which the game is running.

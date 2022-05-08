@@ -69,7 +69,7 @@ class BuzzerScreenActivity : GameActivity() {
             }
             setAnswerButton(ctx, findViewById(R.id.buttonCorrect), buzzersToRows)
             setAnswerButton(ctx, findViewById(R.id.buttonWrong), buzzersToRows)
-
+            setNextButton(ctx, gameManager)
             super.startFirstRound(ctx, gameManager, ::startRoundBuzzer)
         }
     }
@@ -100,7 +100,7 @@ class BuzzerScreenActivity : GameActivity() {
         Glide.with(ctx).load(gameManager.getCurrentSong().getArtworkUrl()).override(artworkDim, artworkDim).into(findViewById(R.id.songArtwork))
         gameManager.playSong()
         checkRunnable()
-        super.barTimer(findViewById(R.id.progressBarBuzzer), ctx, gameManager)
+        super.barTimer(findViewById(R.id.progressBarBuzzer), ctx, gameManager, R.id.nextSongBuzzer)
     }
     /**
      * Generate a change of intent at the end of a game
@@ -187,8 +187,10 @@ class BuzzerScreenActivity : GameActivity() {
             button.height = 0
             buttons.set(i, button)
             button.setOnClickListener {
-                answer.visibility = android.view.View.VISIBLE
-                setPressed(button.id)
+                if (findViewById<ProgressBar>(R.id.progressBarBuzzer).progress>0) {
+                    answer.visibility = android.view.View.VISIBLE
+                    setPressed(button.id)
+                }
             }
             buzzers.addView(button)
             i = i + 1
@@ -219,11 +221,17 @@ class BuzzerScreenActivity : GameActivity() {
             }
             setPressed(noBuzzerPressed) // reset the buzzer
             gameManager.setNextSong()
-            startRoundBuzzer(ctx, gameManager)
+            toggleBtnVisibility(R.id.nextSongBuzzer, true)
         }
 
     }
 
+    private fun setNextButton(ctx: Context, gameManager: GameManager) {
+        findViewById<Button>(R.id.nextSongBuzzer).setOnClickListener {
+            toggleBtnVisibility(R.id.nextSongBuzzer, false)
+            startRoundBuzzer(ctx, gameManager)
+        }
+    }
 
     /**
      * Fires an intent from the Gamescreen to the Ending Screen

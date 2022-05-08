@@ -85,23 +85,18 @@ class TypingGameActivity : GameActivity() {
         }
     }
 
-    override fun barTimer(myBar: ProgressBar, ctx:Context, gameManager: GameManager) {
-        super.barTimer(myBar, ctx, gameManager)
-        toggleNextBtnVisibility(true)
-    }
-
     /**
      * Set and remove nextBtn during the game
      */
     private fun toggleNextBtnVisibility(value: Boolean){
-        toggleBtnVisibility(R.id.nextSong, value)
+        toggleBtnVisibility(R.id.nextSongTyping, value)
     }
 
     /**
      * Set listener for nextButton. When pressed, new round will start.
      */
     private fun setNextButtonListener(ctx: Context, gameManager: GameManager){
-        findViewById<Button>(R.id.nextSong).setOnClickListener {
+        findViewById<Button>(R.id.nextSongTyping).setOnClickListener {
             startRoundTyping(ctx, gameManager)
         }
     }
@@ -185,7 +180,7 @@ class TypingGameActivity : GameActivity() {
         toggleNextBtnVisibility(false)
         gameManager.playSong()
         checkRunnable()
-        barTimer(findViewById(R.id.progressBarTyping), ctx, gameManager)
+        super.barTimer(findViewById(R.id.progressBarTyping), ctx, gameManager, R.id.nextSongTyping)
     }
 
     /**

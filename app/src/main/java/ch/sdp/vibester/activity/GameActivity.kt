@@ -75,7 +75,7 @@ open class GameActivity : AppCompatActivity() {
     /**
      * Custom handle of the bar progress.
      */
-    open fun barTimer(myBar: ProgressBar, ctx:Context, gameManager: GameManager){
+    fun barTimer(myBar: ProgressBar, ctx:Context, gameManager: GameManager, btnId: Int){
         initializeBarTimer(myBar)
         runnable = object : Runnable {
             override fun run() {
@@ -89,6 +89,7 @@ open class GameActivity : AppCompatActivity() {
                     gameManager.addWrongSong()
                     val itWas = gameManager.getCurrentSong()
                     toastShowWrong(ctx, itWas)
+                    toggleBtnVisibility(btnId, true)
                 }
             }
         }

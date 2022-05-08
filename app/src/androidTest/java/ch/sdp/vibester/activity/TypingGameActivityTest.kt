@@ -15,7 +15,6 @@ import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.LastfmMethod
@@ -316,7 +315,7 @@ class TypingGameActivityTest {
         }
         Thread.sleep(1000)
 
-        onView(withId(R.id.nextSong)).check(matches(isDisplayed())).perform(click())
+        onView(withId(R.id.nextSongTyping)).check(matches(isDisplayed())).perform(click())
         scn.onActivity { activity ->
             activity.testProgressBar()
         }

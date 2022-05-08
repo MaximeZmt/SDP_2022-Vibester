@@ -180,7 +180,7 @@ class TypingGameActivity : GameActivity() {
         toggleNextBtnVisibility(false)
         gameManager.playSong()
         checkRunnable()
-        super.barTimer(findViewById(R.id.progressBarTyping), ctx, gameManager, R.id.nextSongTyping)
+        super.barTimer(findViewById(R.id.progressBarTyping), ctx, gameManager, ::checkAnswer)
     }
 
     /**

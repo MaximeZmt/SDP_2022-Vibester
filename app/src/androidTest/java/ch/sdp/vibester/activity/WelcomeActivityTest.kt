@@ -38,47 +38,4 @@
 //        Intents.release()
 //    }
 //
-//    @Test
-//    fun checkIntentOnPlay() {
-//        onView(withId(R.id.welcome_play)).perform(click())
-//        intended(hasComponent(GameSetupActivity::class.java.name))
-//    }
-//
-//    @Test
-//    fun checkIntentOnMyAccountLoggedOut() {
-//        FirebaseAuth.getInstance().signOut()
-//        onView(withId(R.id.welcome_profile)).perform(click())
-//        intended(hasComponent(AuthenticationActivity::class.java.name))
-//    }
-//
-//    @Test
-//    fun checkIntentOnMyAccountLoggedIn() {
-//        WelcomeActivity.setLoggedIn()
-//        onView(withId(R.id.welcome_profile)).perform(click())
-//        intended(hasComponent(ProfileActivity::class.java.name))
-//    }
-//
-//    @Test
-//    fun checkIntentOnScoreboard() {
-//        onView(withId(R.id.welcome_scoreboard)).perform(click())
-//        intended(hasComponent(ScoreBoardActivity::class.java.name))
-//    }
-//
-//    @Test
-//    fun checkIntentOnDownload() {
-//        onView(withId(R.id.welcome_download)).perform(click())
-//        intended(hasComponent(DownloadActivity::class.java.name))
-//    }
-//
-//    @Test
-//    fun checkIntentOnSearch() {
-//        TestMode.setTest()
-//        onView(withId(R.id.welcome_search)).perform(click())
-//        intended(hasComponent(SearchUserActivity::class.java.name))
-//    }
-//
-//    @Test
-//    fun checkIntentOnSearchWithoutTestMode() {
-//        onView(withId(R.id.welcome_search)).perform(click())
-//    }
 //}

@@ -14,7 +14,6 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import ch.sdp.vibester.R
-import com.android.dx.command.Main
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule

@@ -9,10 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
 import ch.sdp.vibester.helper.loadImg
 
-class UserScoreboardAdapter(playersInit: List<User>, private val genre: String) :
+class UserScoreboardAdapter(playersInit: MutableList<User>, private val genre: String) :
     RecyclerView.Adapter<UserScoreboardAdapter.PlayerViewHolder>() {
 
-    var players: MutableList<User> = playersInit.toMutableList()
+    var players: MutableList<User> = playersInit
 
     override fun getItemCount(): Int = players.size
 

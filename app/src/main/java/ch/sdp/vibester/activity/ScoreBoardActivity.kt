@@ -22,7 +22,7 @@ import com.google.firebase.database.ValueEventListener
 
 class ScoreBoardActivity : AppCompatActivity() {
     private val dbRef: DatabaseReference = Database.get().getReference("users")
-    private var players: List<User>? = null
+    private var players: MutableList<User>? = null
     private var userScoreboardAdapter: UserScoreboardAdapter? = null
     private var genre: String = ""
 
@@ -70,9 +70,12 @@ class ScoreBoardActivity : AppCompatActivity() {
                         (players as? ArrayList<User>)?.add(player)
                     }
                 }
-                //players = players?.sortedByDescending { it.scores.getOrDefault(genre, 0) }
+                //players = players?.sortedByDescending { it.scores.toSortedMap()[genre] }
                 /*players = players?.sortedWith(Comparator{ p1, p2 ->
                     if (p1.scores.getOrDefault(genre, -1) > p2.scores.getOrDefault(genre, -1)) -1 else 1})*/
+                //players = players?.sortedByDescending { (_, v) -> v }
+                players?.forEach{player -> player.ranking = player.scores.getOrDefault(genre, 0)}
+                players = players?.sortedByDescending { it.ranking } as MutableList<User>?
                 showPlayersPosition(players)
             }
 
@@ -81,7 +84,15 @@ class ScoreBoardActivity : AppCompatActivity() {
         })
     }
 
-    private fun showPlayersPosition(players: List<User>?) {
+    /*private fun replaceRankingByScore(list: MutableList<User>): MutableList<User> {
+        val iterator = list.listIterator()
+        while(iterator.hasNext()) {
+            val value = iterator.next()
+            iterator.set()
+        }
+    }*/
+
+    private fun showPlayersPosition(players: MutableList<User>?) {
         userScoreboardAdapter = UserScoreboardAdapter(players!!, genre)
         findViewById<RecyclerView>(R.id.recycler_view)!!.adapter = userScoreboardAdapter
     }

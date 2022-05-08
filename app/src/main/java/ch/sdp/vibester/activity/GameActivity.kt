@@ -75,7 +75,7 @@ open class GameActivity : AppCompatActivity() {
     /**
      * Custom handle of the bar progress.
      */
-    fun barTimer(myBar: ProgressBar, ctx:Context, gameManager: GameManager){
+    open fun barTimer(myBar: ProgressBar, ctx:Context, gameManager: GameManager){
         initializeBarTimer(myBar)
         runnable = object : Runnable {
             override fun run() {

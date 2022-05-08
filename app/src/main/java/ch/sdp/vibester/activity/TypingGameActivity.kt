@@ -85,6 +85,11 @@ class TypingGameActivity : GameActivity() {
         }
     }
 
+    override fun barTimer(myBar: ProgressBar, ctx:Context, gameManager: GameManager) {
+        super.barTimer(myBar, ctx, gameManager)
+        toggleNextBtnVisibility(true)
+    }
+
     /**
      * Set and remove nextBtn during the game
      */
@@ -180,7 +185,7 @@ class TypingGameActivity : GameActivity() {
         toggleNextBtnVisibility(false)
         gameManager.playSong()
         checkRunnable()
-        super.barTimer(findViewById(R.id.progressBarTyping), ctx, gameManager)
+        barTimer(findViewById(R.id.progressBarTyping), ctx, gameManager)
     }
 
     /**

@@ -134,8 +134,8 @@ class BuzzerScreenActivityTest {
         onView(withId(R.id.buzzer_0)).perform(click())
         onView(withId(R.id.answer)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
     }
-
-
+*/
+/*
     @Test
     fun clickingAnswerButtonsMakesAnswerInvisible() {
         val intent = Intent(ApplicationProvider.getApplicationContext(), BuzzerScreenActivity::class.java)
@@ -157,8 +157,7 @@ class BuzzerScreenActivityTest {
             onView(withId(R.id.answer)).check(matches(withEffectiveVisibility(Visibility.INVISIBLE)))
         }
     }
-
-     */
+*/
 /*
     /*
      * Currently testing with the *static* values. Change to *dynamic* once the game is correctly

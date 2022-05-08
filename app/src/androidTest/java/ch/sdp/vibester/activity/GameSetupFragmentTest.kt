@@ -1,18 +1,15 @@
 package ch.sdp.vibester.activity
 
 import androidx.fragment.app.testing.launchFragmentInContainer
-import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onData
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.scrollTo
-import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasExtra
-import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withSpinnerText
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -49,14 +46,14 @@ class GameSetupFragmentTest {
 
     @Test
     fun checkDefaultSelectDifficulty() {
-        Espresso.onView(ViewMatchers.withId(R.id.difficulty_spinner))
-            .check(ViewAssertions.matches(ViewMatchers.withSpinnerText(R.string.easy)))
+        onView(withId(R.id.difficulty_spinner))
+            .check(matches(withSpinnerText(R.string.easy)))
     }
 
     @Test
     fun checkDefaultSelectGameSize() {
-        Espresso.onView(ViewMatchers.withId(R.id.size_spinner))
-            .check(ViewAssertions.matches(ViewMatchers.withSpinnerText(R.string.one)))
+        onView(withId(R.id.size_spinner))
+            .check(matches(withSpinnerText(R.string.one)))
     }
 
 

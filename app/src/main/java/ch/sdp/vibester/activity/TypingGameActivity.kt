@@ -117,7 +117,7 @@ class TypingGameActivity : GameActivity() {
      */
     fun checkAnswer(ctx: Context, chosenSong: Song?, gameManager: GameManager) {
         val playedSong = gameManager.getCurrentSong()
-        if (chosenSong != null && chosenSong.getTrackName() == playedSong.getTrackName() && chosenSong.getArtistName() == playedSong.getArtistName()) {
+        if (checkSong(chosenSong, playedSong)) {
             gameManager.addCorrectSong()
             hasWon(ctx, true, playedSong)
         } else {

@@ -36,12 +36,12 @@ class ScoreBoardActivity : AppCompatActivity() {
 
     fun selectScoreboard(view: View) {
         var sortedBy = "scores/"
-        // R.string doesn't work for genre (getOrDefault in setScore in UserScoreboardAdapter)
+        // can't use R.string for genre (getOrDefault in setScore in UserScoreboardAdapter)
         when (view.id) {
             R.id.btsButton -> {sortedBy += R.string.bts; genre = "BTS"}
             R.id.kpopButton -> {sortedBy += R.string.kpop; genre = "kpop"}
             R.id.imagDragonsButton -> {sortedBy += R.string.imagine_dragons; genre = "Imagine Dragons"}
-            R.id.billieEilishButton -> {sortedBy += R.string.billie_eilish; genre = "Bellie Eilish"}
+            R.id.billieEilishButton -> {sortedBy += R.string.billie_eilish; genre = "Billie Eilish"}
             R.id.rockButton -> {sortedBy += R.string.rock; genre = "rock"}
             R.id.topTracksButton -> {sortedBy += R.string.top_tracks; genre = "top tracks"}
         }
@@ -70,6 +70,9 @@ class ScoreBoardActivity : AppCompatActivity() {
                         (players as? ArrayList<User>)?.add(player)
                     }
                 }
+                //players = players?.sortedByDescending { it.scores.getOrDefault(genre, 0) }
+                /*players = players?.sortedWith(Comparator{ p1, p2 ->
+                    if (p1.scores.getOrDefault(genre, -1) > p2.scores.getOrDefault(genre, -1)) -1 else 1})*/
                 showPlayersPosition(players)
             }
 

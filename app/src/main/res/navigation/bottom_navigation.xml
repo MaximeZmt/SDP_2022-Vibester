@@ -6,6 +6,6 @@
 
     <fragment android:id="@+id/homeFragment" android:name="ch.sdp.vibester.activity.HomeFragment"
         android:label="fragment_home" tools:layout="@layout/activity_welcome_screen"/>
-    <fragment android:id="@+id/settingsFragment" android:name="ch.sdp.vibester.activity.PlayGameFragment"
+    <fragment android:id="@+id/settingsFragment" android:name="ch.sdp.vibester.activity.GameSetupFragment"
         android:label="fragment_settings" tools:layout="@layout/fragment_game_setup_screen"/>
 </navigation>

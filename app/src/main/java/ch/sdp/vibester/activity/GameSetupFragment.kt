@@ -16,7 +16,6 @@ import ch.sdp.vibester.api.LastfmMethod
 import ch.sdp.vibester.api.LastfmUri
 import ch.sdp.vibester.helper.BuzzerGameManager
 import ch.sdp.vibester.helper.GameManager
-import ch.sdp.vibester.helper.IntentSwitcher
 import ch.sdp.vibester.helper.TypingGameManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.gson.Gson
@@ -24,7 +23,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class PlayGameFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSelectedListener{
+class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSelectedListener{
     var difficulty = R.string.easy.toString()
     var game = "local_buzzer"
     var gameSize = R.string.one.toString()

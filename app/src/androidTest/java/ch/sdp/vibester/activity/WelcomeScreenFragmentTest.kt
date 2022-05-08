@@ -21,7 +21,7 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 @HiltAndroidTest
-class HomeFragmentTest {
+class WelcomeScreenFragmentTest {
     @get:Rule(order = 0)
     var hiltRule = HiltAndroidRule(this)
 
@@ -34,7 +34,7 @@ class HomeFragmentTest {
     fun setup() {
         hiltRule.inject()
         Intents.init()
-        launchFragmentInContainer<HomeFragment>(
+        launchFragmentInContainer<WelcomeScreenFragment>(
             themeResId = R.style.AppTheme
         )
     }

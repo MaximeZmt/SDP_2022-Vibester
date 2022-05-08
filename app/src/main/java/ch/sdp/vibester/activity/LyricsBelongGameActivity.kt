@@ -7,6 +7,7 @@ import android.speech.RecognizerIntent
 import android.view.View
 import android.widget.*
 import ch.sdp.vibester.R
+import ch.sdp.vibester.api.LyricAPI
 import ch.sdp.vibester.api.LyricsOVHApiInterface
 import ch.sdp.vibester.helper.GameManager
 import ch.sdp.vibester.model.Lyric
@@ -120,7 +121,8 @@ class LyricsBelongGameActivity : GameActivity() {
      * @param gameManager: The gameManager instance that is managing the game.
      */
     private fun getAndCheckLyrics(ctx: Context, songName: String, artistName: String, speechInput: String, gameManager: GameManager) {
-        val service = LyricsOVHApiInterface.createLyricService()
+        //val service = LyricsOVHApiInterface.createLyricService()
+        val service = LyricAPI.createLyricService()
         val call = service.getLyrics(artistName, songName)
         call.enqueue(object : Callback<Lyric> {
             override fun onFailure(call: Call<Lyric>?, t: Throwable?) {}

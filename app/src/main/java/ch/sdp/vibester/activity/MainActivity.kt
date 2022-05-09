@@ -35,10 +35,4 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         return NavigationUI.navigateUp(navController, null)
     }
-
-    fun setFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-            .add(R.id.fragment, fragment, "TEST")
-            .commit()
-    }
 }

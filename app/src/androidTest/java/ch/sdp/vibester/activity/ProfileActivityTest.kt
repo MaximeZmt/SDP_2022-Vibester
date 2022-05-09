@@ -3,8 +3,6 @@ package ch.sdp.vibester.activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.provider.CalendarContract.CalendarCache.URI
-import android.widget.ImageView
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
@@ -50,9 +48,10 @@ class ProfileActivityTest {
     @BindValue @JvmField
     val mockAuthenticatior = mockk<FireBaseAuthenticator>()
 
-    private fun createMockAuthenticatorInvocation() {
+    private fun createMockAuthenticator() {
         val mockUser = createMockUser()
         every { mockAuthenticatior.getCurrUser() } returns mockUser
+        every { mockAuthenticatior.isLoggedIn() } returns false
     }
 
     private fun createMockUser(): FirebaseUser {
@@ -100,7 +99,7 @@ class ProfileActivityTest {
         val intent = Intent(ctx, ProfileActivity::class.java)
 
         createMockDataGetter(inputProfile)
-        createMockAuthenticatorInvocation()
+        createMockAuthenticator()
         createMockImageGetter()
 
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
@@ -118,7 +117,7 @@ class ProfileActivityTest {
         val intent = Intent(ctx, ProfileActivity::class.java)
 
         createMockDataGetter(inputProfile)
-        createMockAuthenticatorInvocation()
+        createMockAuthenticator()
         createMockImageGetter()
 
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
@@ -135,7 +134,7 @@ class ProfileActivityTest {
         val intent = Intent(ctx, ProfileActivity::class.java)
 
         createMockDataGetter(inputProfile)
-        createMockAuthenticatorInvocation()
+        createMockAuthenticator()
         createMockImageGetter()
 
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
@@ -153,7 +152,7 @@ class ProfileActivityTest {
         val intent = Intent(ctx, ProfileActivity::class.java)
 
         createMockDataGetter(inputProfile)
-        createMockAuthenticatorInvocation()
+        createMockAuthenticator()
         createMockImageGetter()
 
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
@@ -171,7 +170,7 @@ class ProfileActivityTest {
         val intent = Intent(ctx, ProfileActivity::class.java)
 
         createMockDataGetter(inputProfile)
-        createMockAuthenticatorInvocation()
+        createMockAuthenticator()
         createMockImageGetter()
 
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
@@ -192,7 +191,7 @@ class ProfileActivityTest {
         val intent = Intent(ctx, ProfileActivity::class.java)
 
         createMockDataGetter(inputProfile)
-        createMockAuthenticatorInvocation()
+        createMockAuthenticator()
         createMockImageGetter()
 
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
@@ -209,7 +208,7 @@ class ProfileActivityTest {
         val intent = Intent(ctx, ProfileActivity::class.java)
 
         createMockDataGetter(inputProfile)
-        createMockAuthenticatorInvocation()
+        createMockAuthenticator()
         createMockImageGetter()
 
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
@@ -224,7 +223,7 @@ class ProfileActivityTest {
         val intent = Intent(ctx, ProfileActivity::class.java)
 
         createMockDataGetter(inputProfile)
-        createMockAuthenticatorInvocation()
+        createMockAuthenticator()
         createMockImageGetter()
 
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)

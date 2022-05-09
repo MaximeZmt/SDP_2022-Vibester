@@ -81,13 +81,13 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="monospace"
                     android:padding="18dip"
-                    android:text="@string/ranking"
+                    android:text="@string/top_tracks"
                     android:textAlignment="viewStart"
                     android:textColor="#000"
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/ranking"
+                    android:id="@+id/profile_top_tracks"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fontFamily="monospace"
@@ -106,13 +106,117 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="18dip"
-                    android:text="@string/total_games"
+                    android:text="@string/kpop"
                     android:textColor="#000"
                     android:textSize="16sp"
                     android:typeface="monospace" />
 
                 <TextView
-                    android:id="@+id/totalGames"
+                    android:id="@+id/profile_kpop"
+                    android:layout_width="147dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
+                    android:padding="18dip"
+                    android:text="@string/authentication_placeholderEmptyScore"
+                    android:textAlignment="viewEnd"
+                    android:textColor="#000"
+                    android:textSize="16sp"
+                    tools:text="@string/authentication_placeholderEmptyScore" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="18dip"
+                    android:text="@string/rock"
+                    android:textColor="#000"
+                    android:textSize="16sp"
+                    android:typeface="monospace" />
+
+                <TextView
+                    android:id="@+id/profile_rock"
+                    android:layout_width="147dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
+                    android:padding="18dip"
+                    android:text="@string/authentication_placeholderEmptyScore"
+                    android:textAlignment="viewEnd"
+                    android:textColor="#000"
+                    android:textSize="16sp"
+                    tools:text="@string/authentication_placeholderEmptyScore" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="18dip"
+                    android:text="@string/bts"
+                    android:textColor="#000"
+                    android:textSize="16sp"
+                    android:typeface="monospace" />
+
+                <TextView
+                    android:id="@+id/profile_bts"
+                    android:layout_width="147dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
+                    android:padding="18dip"
+                    android:text="@string/authentication_placeholderEmptyScore"
+                    android:textAlignment="viewEnd"
+                    android:textColor="#000"
+                    android:textSize="16sp"
+                    tools:text="@string/authentication_placeholderEmptyScore" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="18dip"
+                    android:text="@string/imagine_dragons"
+                    android:textColor="#000"
+                    android:textSize="16sp"
+                    android:typeface="monospace" />
+
+                <TextView
+                    android:id="@+id/profile_imagine_dragons"
+                    android:layout_width="147dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
+                    android:padding="18dip"
+                    android:text="@string/authentication_placeholderEmptyScore"
+                    android:textAlignment="viewEnd"
+                    android:textColor="#000"
+                    android:textSize="16sp"
+                    tools:text="@string/authentication_placeholderEmptyScore" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="18dip"
+                    android:text="@string/billie_eilish"
+                    android:textColor="#000"
+                    android:textSize="16sp"
+                    android:typeface="monospace" />
+
+                <TextView
+                    android:id="@+id/profile_billie_eilish"
                     android:layout_width="147dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="monospace"
@@ -170,7 +274,7 @@
             <ImageView
                 android:id="@+id/avatar"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="99dp"
                 android:adjustViewBounds="true"
                 android:foregroundGravity="left"
                 tools:srcCompat="@tools:sample/avatars" />

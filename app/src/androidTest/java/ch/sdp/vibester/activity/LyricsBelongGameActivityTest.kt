@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
@@ -15,13 +16,18 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.GrantPermissionRule
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.LastfmMethod
+import ch.sdp.vibester.api.LyricAPI
+import ch.sdp.vibester.api.LyricsOVHApiInterface
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.helper.TypingGameManager
+import ch.sdp.vibester.model.Lyric
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.mockkClass
+import okhttp3.mockwebserver.MockWebServer
 import org.hamcrest.CoreMatchers.not
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -29,12 +35,12 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import retrofit2.Retrofit
 
 
 @RunWith(AndroidJUnit4::class)
 @HiltAndroidTest
 class LyricsBelongGameActivityTest {
-
     private val sleepTime: Long = 5000
     private val songName = "Thunder"
     private val artistName = "Imagine Dragons"
@@ -126,19 +132,25 @@ class LyricsBelongGameActivityTest {
     @get:Rule(order = 1)
     val activityRule = ActivityScenarioRule(LyricsBelongGameActivity::class.java)
 
-    @get:Rule
+    @get:Rule(order = 2)
     var permissionRule: GrantPermissionRule =
         GrantPermissionRule.grant(android.Manifest.permission.RECORD_AUDIO)
+
+
+    private val mockWebServer = MockWebServer()
 
     @Before
     fun setUp() {
         hiltRule.inject()
         Intents.init()
+        mockWebServer.start(8080)
+
     }
 
     @After
     fun clean() {
         Intents.release()
+        mockWebServer.shutdown()
     }
 
     @BindValue
@@ -151,6 +163,18 @@ class LyricsBelongGameActivityTest {
         every { mockUsersRepo.setFieldValue(any(), any(), any()) } answers {}
         every { mockUsersRepo.updateSubFieldInt(any(), any(), any(), any(), any()) } answers {}
     }
+
+    /*@BindValue
+    @JvmField
+    val mockLyricApi = mockk<LyricsOVHApiInterface>()
+    val mockLyrics = mockkClass(Lyric::class)
+    private fun createMockLyricInvocation() {
+        every { mockLyrics.lyrics } returns lyrics
+    }
+
+    private fun createMockApiInvocation() {
+        every { mockLyricApi.getLyrics(any(), any()) }
+    }*/
 
     // FIXME: this test fails after implement QR code reader for no reason
     /*@Test
@@ -174,7 +198,7 @@ class LyricsBelongGameActivityTest {
         }
         /** FIXME: API takes a lot of time to process this request
         comment the following lines if this test fail */
-       Thread.sleep(sleepTime)
+        Thread.sleep(sleepTime)
         onView(withId(R.id.nextSongButton)).check(matches(isDisplayed()))
         //song skipped, not consider as wrong
         assertEquals(true, gameManager.getScore() == 0)

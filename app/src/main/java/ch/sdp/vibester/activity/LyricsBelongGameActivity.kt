@@ -125,6 +125,7 @@ class LyricsBelongGameActivity : GameActivity() {
         //val service = LyricsOVHApiInterface.createLyricService()
         val service = createLyricService(LyricAPI())
         val call = service.getLyrics(artistName, songName)
+
         call.enqueue(object : Callback<Lyric> {
             override fun onFailure(call: Call<Lyric>?, t: Throwable?) {}
 

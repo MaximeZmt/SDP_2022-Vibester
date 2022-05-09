@@ -12,6 +12,6 @@ import dagger.hilt.testing.TestInstallIn
 class MockLyricAPI: LyricAPI() {
 
     override fun lyricBaseUrl(): String {
-        return "http://localhost/"
+        return "http://127.0.0.1:8080"
     }
 }

@@ -137,7 +137,7 @@ class DeleteSongsActivity : AppCompatActivity() {
         layout.addView(noDownloadsText)
     }
 
-    fun switchToWelcome(view: View) {
-        IntentSwitcher.switchBackToWelcome(this)
+    private fun switchToWelcome() {
+        IntentSwitcher.switch(this, WelcomeActivity::class.java, null)
     }
 }

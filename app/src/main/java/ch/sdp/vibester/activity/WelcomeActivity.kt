@@ -14,6 +14,7 @@ import ch.sdp.vibester.api.InternetState
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.Database
 import ch.sdp.vibester.database.PersistanceSetter
+import ch.sdp.vibester.helper.IntentSwitcher
 
 
 class WelcomeActivity : AppCompatActivity() {
@@ -53,32 +54,27 @@ class WelcomeActivity : AppCompatActivity() {
         }
     }
 
-    private fun sendDirectIntent(arg: Class<*>?) {
-        val intent = Intent(this, arg)
-        startActivity(intent)
-    }
-
     fun switchToPlay(view: View) {
-        sendDirectIntent(GameSetupActivity::class.java)
+        IntentSwitcher.switch(this, GameSetupActivity::class.java, null)
     }
 
     fun switchToProfile(view: View) {
         if (FireBaseAuthenticator.isLoggedIn() || testLoggedIn){
-            sendDirectIntent(ProfileActivity::class.java)
+            IntentSwitcher.switch(this, ProfileActivity::class.java, null)
         }else{
-            sendDirectIntent(AuthenticationActivity::class.java)
+            IntentSwitcher.switch(this, AuthenticationActivity::class.java, null)
         }
     }
 
     fun switchToScoreboard(view: View) {
-        sendDirectIntent(ScoreBoardActivity::class.java)
+        IntentSwitcher.switch(this, ScoreBoardActivity::class.java, null)
     }
 
     fun switchToDownload(view: View) {
-        sendDirectIntent(DownloadActivity::class.java)
+        IntentSwitcher.switch(this, DownloadActivity::class.java, null)
     }
 
     fun switchToSearch(view: View) {
-        sendDirectIntent(SearchUserActivity::class.java)
+        IntentSwitcher.switch(this, SearchUserActivity::class.java, null)
     }
 }

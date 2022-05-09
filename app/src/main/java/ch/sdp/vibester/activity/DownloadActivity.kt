@@ -203,8 +203,8 @@ class DownloadActivity : AppCompatActivity() {
         records.appendText("$songName\n")
     }
 
-    fun switchToWelcome(view: View) {
-        IntentSwitcher.switchBackToWelcome(this)
+    private fun switchToWelcome() {
+        IntentSwitcher.switch(this, WelcomeActivity::class.java, null)
     }
 
     fun switchToDeleteSongs(view: View) {

@@ -210,8 +210,8 @@ class BuzzerScreenActivity : GameActivity() {
             answer.visibility = android.view.View.INVISIBLE
             if (pressedBuzzer >= 0) {
                 if(button.id==R.id.buttonCorrect)  {
-                    scoreUpdater.updateScoresArray(pressedBuzzer, 1)
-                } else {scoreUpdater.updateScoresArray(pressedBuzzer, -1)}
+                    scoreUpdater.updateScoresArray(pressedBuzzer, true)
+                } else {scoreUpdater.updateScoresArray(pressedBuzzer, false)}
                 val view = map[pressedBuzzer]?.let { it1 -> findViewById<TextView>(it1) }
                 if (view != null && scoreUpdater.getMap().keys.contains(pressedBuzzer)) {view.text=scoreUpdater.getMap()[pressedBuzzer].toString()}
             }

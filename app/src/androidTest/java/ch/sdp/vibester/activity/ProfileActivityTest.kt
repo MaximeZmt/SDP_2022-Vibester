@@ -3,8 +3,6 @@ package ch.sdp.vibester.activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.provider.CalendarContract.CalendarCache.URI
-import android.widget.ImageView
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
@@ -48,11 +46,11 @@ class ProfileActivityTest {
     }
 
     @BindValue @JvmField
-    val mockAuthenticatior = mockk<FireBaseAuthenticator>()
+    val mockAuthenticator = mockk<FireBaseAuthenticator>()
 
     private fun createMockAuthenticatorInvocation() {
         val mockUser = createMockUser()
-        every { mockAuthenticatior.getCurrUser() } returns mockUser
+        every { mockAuthenticator.getCurrUser() } returns mockUser
     }
 
     private fun createMockUser(): FirebaseUser {
@@ -95,7 +93,7 @@ class ProfileActivityTest {
 
     @Test
     fun checkProfileData() {
-        val inputProfile = User("Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8, 29, 0)
+        val inputProfile = User("Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8)
         val ctx = ApplicationProvider.getApplicationContext() as Context
         val intent = Intent(ctx, ProfileActivity::class.java)
 
@@ -106,14 +104,14 @@ class ProfileActivityTest {
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
 
         onView(withId(R.id.username)).check(matches(withText(inputProfile.username)))
-        onView(withId(R.id.correctSongs)).check(matches(withText(inputProfile.correctSongs.toString())))
+        //onView(withId(R.id.correctSongs)).check(matches(withText(inputProfile.correctSongs.toString())))
         onView(withId(R.id.totalGames)).check(matches(withText(inputProfile.totalGames.toString())))
         onView(withId(R.id.ranking)).check(matches(withText(inputProfile.ranking.toString())))
     }
 
     @Test
     fun clickBackToMain(){
-        val inputProfile = User("Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8, 29, 0)
+        val inputProfile = User("Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8)
         val ctx = ApplicationProvider.getApplicationContext() as Context
         val intent = Intent(ctx, ProfileActivity::class.java)
 
@@ -129,7 +127,7 @@ class ProfileActivityTest {
 
     @Test
     fun shouldShowQrCode() {
-        val inputProfile = User("Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8, 29, 0)
+        val inputProfile = User("Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8)
 
         val ctx = ApplicationProvider.getApplicationContext() as Context
         val intent = Intent(ctx, ProfileActivity::class.java)
@@ -148,7 +146,7 @@ class ProfileActivityTest {
 
     @Test
     fun clickBackToProfile() {
-        val inputProfile = User("Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8, 29, 0)
+        val inputProfile = User("Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8)
         val ctx = ApplicationProvider.getApplicationContext() as Context
         val intent = Intent(ctx, ProfileActivity::class.java)
 
@@ -166,7 +164,7 @@ class ProfileActivityTest {
 
     @Test
     fun checkEditProfile() {
-        val inputProfile = User("Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8, 29, 0)
+        val inputProfile = User("Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8)
         val ctx = ApplicationProvider.getApplicationContext() as Context
         val intent = Intent(ctx, ProfileActivity::class.java)
 
@@ -187,7 +185,7 @@ class ProfileActivityTest {
 
     @Test
     fun checkEditProfileClickCancel() {
-        val inputProfile = User( "Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8, 29, 0)
+        val inputProfile = User( "Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8)
         val ctx = ApplicationProvider.getApplicationContext() as Context
         val intent = Intent(ctx, ProfileActivity::class.java)
 
@@ -204,7 +202,7 @@ class ProfileActivityTest {
 
     @Test
     fun checkQrCodeGenerator() {
-        val inputProfile = User( "Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8, 29, 0, "VvPB47tQCLdjz3YebilS6h5EXdJ3")
+        val inputProfile = User( "Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8,"VvPB47tQCLdjz3YebilS6h5EXdJ3")
         val ctx = ApplicationProvider.getApplicationContext() as Context
         val intent = Intent(ctx, ProfileActivity::class.java)
 
@@ -219,7 +217,7 @@ class ProfileActivityTest {
 
     @Test
     fun checkIfPictureIsDisplayed() {
-        val inputProfile = User( "Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8, 29, 0, "VvPB47tQCLdjz3YebilS6h5EXdJ3")
+        val inputProfile = User( "Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8,"VvPB47tQCLdjz3YebilS6h5EXdJ3")
         val ctx = ApplicationProvider.getApplicationContext() as Context
         val intent = Intent(ctx, ProfileActivity::class.java)
 

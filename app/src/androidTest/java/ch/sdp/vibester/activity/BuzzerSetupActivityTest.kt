@@ -37,7 +37,7 @@ class BuzzerSetupActivityTest {
     @get:Rule(order = 1)
     val activityRule = ActivityScenarioRule(BuzzerSetupActivity::class.java)
 
-    val mockArray = arrayOf("Player1", "Player2", "Player3", "Player4")
+    val mockArray = arrayOf("1", "2", "3", "4")
     val editTextIdArray = arrayOf(R.id.namePlayer1, R.id.namePlayer2, R.id.namePlayer3, R.id.namePlayer4)
 
     /**

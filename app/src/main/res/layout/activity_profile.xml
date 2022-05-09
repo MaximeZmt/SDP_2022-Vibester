@@ -124,58 +124,6 @@
                     tools:text="@string/authentication_placeholderEmptyScore" />
             </TableRow>
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="18dip"
-                    android:text="@string/best_score"
-                    android:textColor="#000"
-                    android:textSize="16sp"
-                    android:typeface='monospace' />
-
-                <TextView
-                    android:id="@+id/bestScore"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="monospace"
-                    android:padding="18dip"
-                    android:text="@string/authentication_placeholderEmptyScore"
-                    android:textAlignment="viewEnd"
-                    android:textColor="#000"
-                    android:textSize="16sp"
-                    tools:text="@string/authentication_placeholderEmptyScore" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="monospace"
-                    android:padding="18dip"
-                    android:text="@string/correct_songs"
-                    android:textColor="#000"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/correctSongs"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="monospace"
-                    android:padding="18dip"
-                    android:text="@string/authentication_placeholderEmptyScore"
-                    android:textAlignment="viewEnd"
-                    android:textColor="#000"
-                    android:textSize="16sp"
-                    tools:text="@string/authentication_placeholderEmptyScore" />
-
-            </TableRow>
 
         </TableLayout>
 

@@ -227,8 +227,6 @@ class ProfileActivity : AppCompatActivity() {
      */
     private fun setTextOfMultipleViews(user: User) {
         setTextOfView(R.id.totalGames, user.totalGames)
-        //setTextOfView(R.id.correctSongs, user.correctSongs)
-        //setTextOfView(R.id.bestScore, user.bestScore)
         setTextOfView(R.id.ranking, user.ranking)
     }
 

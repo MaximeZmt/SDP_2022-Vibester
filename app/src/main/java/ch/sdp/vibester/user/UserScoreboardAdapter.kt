@@ -9,10 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
 import ch.sdp.vibester.helper.loadImg
 
-class UserScoreboardAdapter(playersInit: List<User>) :
+class UserScoreboardAdapter(playersInit: MutableList<User>, private val genre: String) :
     RecyclerView.Adapter<UserScoreboardAdapter.PlayerViewHolder>() {
 
-    var players: MutableList<User> = playersInit.toMutableList()
+    var players: MutableList<User> = playersInit
 
     override fun getItemCount(): Int = players.size
 
@@ -36,6 +36,10 @@ class UserScoreboardAdapter(playersInit: List<User>) :
         notifyDataSetChanged()
     }
 
+    private fun setScore(player: User): Int {
+        return player.scores.getOrDefault(genre, 0)
+    }
+
     /**
      * Customer ViewHolder class for PlayerAdapter
      */
@@ -49,7 +53,7 @@ class UserScoreboardAdapter(playersInit: List<User>) :
             val newPosition = position + 1
             itemView.findViewById<TextView>(R.id.tv_position).text = (newPosition).toString()
             itemView.findViewById<TextView>(R.id.tv_name).text = player.username
-            itemView.findViewById<TextView>(R.id.tv_score).text = player.ranking.toString()
+            itemView.findViewById<TextView>(R.id.tv_score).text = setScore(player).toString()
             itemView.findViewById<ImageView>(R.id.iv_photo).loadImg(player.image)
         }
     }

@@ -22,8 +22,9 @@ import com.google.firebase.database.ValueEventListener
 
 class ScoreBoardActivity : AppCompatActivity() {
     private val dbRef: DatabaseReference = Database.get().getReference("users")
-    private var players: List<User>? = null
+    private var players: MutableList<User>? = null
     private var userScoreboardAdapter: UserScoreboardAdapter? = null
+    private var genre: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,19 +34,16 @@ class ScoreBoardActivity : AppCompatActivity() {
         players = ArrayList()
     }
 
-    /**
-     * TODO: replace "ranking" by appropriate label
-     */
     fun selectScoreboard(view: View) {
-        var sortedBy = ""
-        val ranking = "ranking"
+        var sortedBy = "scores/"
+        // can't use R.string for genre (getOrDefault in setScore in UserScoreboardAdapter)
         when (view.id) {
-            R.id.btsButton -> sortedBy = ranking
-            R.id.kpopButton -> sortedBy = ranking
-            R.id.imagDragonsButton -> sortedBy = ranking
-            R.id.billieEilishButton -> sortedBy = ranking
-            R.id.rockButton -> sortedBy = ranking
-            R.id.topTracksButton -> sortedBy = ranking
+            R.id.btsButton -> {sortedBy += R.string.bts; genre = "BTS"}
+            R.id.kpopButton -> {sortedBy += R.string.kpop; genre = "kpop"}
+            R.id.imagDragonsButton -> {sortedBy += R.string.imagine_dragons; genre = "Imagine Dragons"}
+            R.id.billieEilishButton -> {sortedBy += R.string.billie_eilish; genre = "Billie Eilish"}
+            R.id.rockButton -> {sortedBy += R.string.rock; genre = "rock"}
+            R.id.topTracksButton -> {sortedBy += R.string.top_tracks; genre = "top tracks"}
         }
 
         findViewById<ConstraintLayout>(R.id.genrePerScoreboard).visibility = GONE
@@ -57,13 +55,13 @@ class ScoreBoardActivity : AppCompatActivity() {
     private fun setupRecycleView() {
         findViewById<RecyclerView>(R.id.recycler_view).apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = players?.let { UserScoreboardAdapter(it) }
+            adapter = players?.let { UserScoreboardAdapter(it, genre) }
             setHasFixedSize(true)
         }
     }
 
-    private fun loadPlayersSortedBy(order: String) {
-        dbRef.orderByChild(order)
+    private fun loadPlayersSortedBy(genre: String) {
+        dbRef.orderByChild(genre)
             .addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshots: DataSnapshot) {
                 for (snapshot in snapshots.children) {
@@ -72,6 +70,8 @@ class ScoreBoardActivity : AppCompatActivity() {
                         (players as? ArrayList<User>)?.add(player)
                     }
                 }
+                players = players?.let { replaceRankingByScore(it) }
+                players = players?.sortedByDescending { it.ranking } as MutableList<User>?
                 showPlayersPosition(players)
             }
 
@@ -80,8 +80,18 @@ class ScoreBoardActivity : AppCompatActivity() {
         })
     }
 
-    private fun showPlayersPosition(players: List<User>?) {
-        userScoreboardAdapter = UserScoreboardAdapter(players!!)
+    private fun replaceRankingByScore(list: MutableList<User>): MutableList<User> {
+        val iterator = list.listIterator()
+        while(iterator.hasNext()) {
+            val player = iterator.next()
+            player.ranking = player.scores.getOrDefault(genre, 0)
+            iterator.set(player)
+        }
+        return list
+    }
+
+    private fun showPlayersPosition(players: MutableList<User>?) {
+        userScoreboardAdapter = UserScoreboardAdapter(players!!, genre)
         findViewById<RecyclerView>(R.id.recycler_view)!!.adapter = userScoreboardAdapter
     }
 }

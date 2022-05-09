@@ -12,8 +12,10 @@
         android:id="@+id/profileContent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="165dp">
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
 
         <RelativeLayout
@@ -99,10 +101,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/table_shape"
-            app:layout_constraintTop_toBottomOf="@+id/profile_relativeLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.495"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profile_relativeLayout">
 
             <TableRow
                 android:layout_width="match_parent"
@@ -132,176 +134,190 @@
 
         </TableLayout>
 
-        <TableLayout
-            android:id="@+id/profileStatistics"
+        <ScrollView
+            android:id="@+id/profile_scroll_stat"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/table_shape"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_height="300dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="50dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.495"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.82">
+            app:layout_constraintTop_toBottomOf="@+id/profile_total_games">
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+            <TableLayout
+                android:id="@+id/profileStatistics"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/table_shape"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.495"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.82">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="monospace"
-                    android:padding="18dip"
-                    android:text="@string/top_tracks"
-                    android:textAlignment="viewStart"
-                    android:textColor="#000"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/profile_top_tracks"
+                <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:fontFamily="monospace"
-                    android:padding="18dip"
-                    android:text="@string/authentication_placeholderEmptyScore"
-                    android:textAlignment="viewEnd"
-                    android:textColor="#000"
-                    android:textSize="16sp" />
-            </TableRow>
+                    android:layout_height="match_parent">
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="monospace"
+                        android:padding="18dip"
+                        android:text="@string/top_tracks"
+                        android:textAlignment="viewStart"
+                        android:textColor="#000"
+                        android:textSize="16sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="18dip"
-                    android:text="@string/kpop"
-                    android:textColor="#000"
-                    android:textSize="16sp"
-                    android:typeface="monospace" />
+                    <TextView
+                        android:id="@+id/profile_top_tracks"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="monospace"
+                        android:padding="18dip"
+                        android:text="@string/authentication_placeholderEmptyScore"
+                        android:textAlignment="viewEnd"
+                        android:textColor="#000"
+                        android:textSize="16sp" />
+                </TableRow>
 
-                <TextView
-                    android:id="@+id/profile_kpop"
-                    android:layout_width="147dp"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="monospace"
-                    android:padding="18dip"
-                    android:text="@string/authentication_placeholderEmptyScore"
-                    android:textAlignment="viewEnd"
-                    android:textColor="#000"
-                    android:textSize="16sp"
-                    tools:text="@string/authentication_placeholderEmptyScore" />
-            </TableRow>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="18dip"
+                        android:text="@string/kpop"
+                        android:textColor="#000"
+                        android:textSize="16sp"
+                        android:typeface="monospace" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="18dip"
-                    android:text="@string/rock"
-                    android:textColor="#000"
-                    android:textSize="16sp"
-                    android:typeface="monospace" />
+                    <TextView
+                        android:id="@+id/profile_kpop"
+                        android:layout_width="147dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="monospace"
+                        android:padding="18dip"
+                        android:text="@string/authentication_placeholderEmptyScore"
+                        android:textAlignment="viewEnd"
+                        android:textColor="#000"
+                        android:textSize="16sp"
+                        tools:text="@string/authentication_placeholderEmptyScore" />
+                </TableRow>
 
-                <TextView
-                    android:id="@+id/profile_rock"
-                    android:layout_width="147dp"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="monospace"
-                    android:padding="18dip"
-                    android:text="@string/authentication_placeholderEmptyScore"
-                    android:textAlignment="viewEnd"
-                    android:textColor="#000"
-                    android:textSize="16sp"
-                    tools:text="@string/authentication_placeholderEmptyScore" />
-            </TableRow>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="18dip"
+                        android:text="@string/rock"
+                        android:textColor="#000"
+                        android:textSize="16sp"
+                        android:typeface="monospace" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="18dip"
-                    android:text="@string/bts"
-                    android:textColor="#000"
-                    android:textSize="16sp"
-                    android:typeface="monospace" />
+                    <TextView
+                        android:id="@+id/profile_rock"
+                        android:layout_width="147dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="monospace"
+                        android:padding="18dip"
+                        android:text="@string/authentication_placeholderEmptyScore"
+                        android:textAlignment="viewEnd"
+                        android:textColor="#000"
+                        android:textSize="16sp"
+                        tools:text="@string/authentication_placeholderEmptyScore" />
+                </TableRow>
 
-                <TextView
-                    android:id="@+id/profile_bts"
-                    android:layout_width="147dp"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="monospace"
-                    android:padding="18dip"
-                    android:text="@string/authentication_placeholderEmptyScore"
-                    android:textAlignment="viewEnd"
-                    android:textColor="#000"
-                    android:textSize="16sp"
-                    tools:text="@string/authentication_placeholderEmptyScore" />
-            </TableRow>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="18dip"
+                        android:text="@string/bts"
+                        android:textColor="#000"
+                        android:textSize="16sp"
+                        android:typeface="monospace" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="18dip"
-                    android:text="@string/imagine_dragons"
-                    android:textColor="#000"
-                    android:textSize="16sp"
-                    android:typeface="monospace" />
+                    <TextView
+                        android:id="@+id/profile_bts"
+                        android:layout_width="147dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="monospace"
+                        android:padding="18dip"
+                        android:text="@string/authentication_placeholderEmptyScore"
+                        android:textAlignment="viewEnd"
+                        android:textColor="#000"
+                        android:textSize="16sp"
+                        tools:text="@string/authentication_placeholderEmptyScore" />
+                </TableRow>
 
-                <TextView
-                    android:id="@+id/profile_imagine_dragons"
-                    android:layout_width="147dp"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="monospace"
-                    android:padding="18dip"
-                    android:text="@string/authentication_placeholderEmptyScore"
-                    android:textAlignment="viewEnd"
-                    android:textColor="#000"
-                    android:textSize="16sp"
-                    tools:text="@string/authentication_placeholderEmptyScore" />
-            </TableRow>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="18dip"
+                        android:text="@string/imagine_dragons"
+                        android:textColor="#000"
+                        android:textSize="16sp"
+                        android:typeface="monospace" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="18dip"
-                    android:text="@string/billie_eilish"
-                    android:textColor="#000"
-                    android:textSize="16sp"
-                    android:typeface="monospace" />
+                    <TextView
+                        android:id="@+id/profile_imagine_dragons"
+                        android:layout_width="147dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="monospace"
+                        android:padding="18dip"
+                        android:text="@string/authentication_placeholderEmptyScore"
+                        android:textAlignment="viewEnd"
+                        android:textColor="#000"
+                        android:textSize="16sp"
+                        tools:text="@string/authentication_placeholderEmptyScore" />
+                </TableRow>
 
-                <TextView
-                    android:id="@+id/profile_billie_eilish"
-                    android:layout_width="147dp"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="monospace"
-                    android:padding="18dip"
-                    android:text="@string/authentication_placeholderEmptyScore"
-                    android:textAlignment="viewEnd"
-                    android:textColor="#000"
-                    android:textSize="16sp"
-                    tools:text="@string/authentication_placeholderEmptyScore" />
-            </TableRow>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="18dip"
+                        android:text="@string/billie_eilish"
+                        android:textColor="#000"
+                        android:textSize="16sp"
+                        android:typeface="monospace" />
+
+                    <TextView
+                        android:id="@+id/profile_billie_eilish"
+                        android:layout_width="147dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="monospace"
+                        android:padding="18dip"
+                        android:text="@string/authentication_placeholderEmptyScore"
+                        android:textAlignment="viewEnd"
+                        android:textColor="#000"
+                        android:textSize="16sp"
+                        tools:text="@string/authentication_placeholderEmptyScore" />
+                </TableRow>
 
 
-        </TableLayout>
+            </TableLayout>
+
+
+        </ScrollView>
 
 
         <Button

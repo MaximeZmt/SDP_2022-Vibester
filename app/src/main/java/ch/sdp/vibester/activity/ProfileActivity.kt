@@ -19,6 +19,7 @@ import ch.sdp.vibester.database.ImageGetter
 import ch.sdp.vibester.helper.IntentSwitcher
 import ch.sdp.vibester.user.User
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.tabs.TabLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.EncodeHintType
@@ -125,7 +126,7 @@ class ProfileActivity : AppCompatActivity() {
      */
     private fun setScoreBtnListener() {
         findViewById<Button>(R.id.profile_scores).setOnClickListener {
-            toggleVisibility(R.id.profile_scroll_stat)
+            toggleVisibility(R.id.profileStatistics)
         }
     }
 
@@ -134,8 +135,8 @@ class ProfileActivity : AppCompatActivity() {
      * @param layout: The given ScrollView id to modify
      */
     private fun toggleVisibility(layout: Int) {
-        if (findViewById<ScrollView>(layout).visibility == VISIBLE) findViewById<ScrollView>(layout).visibility = GONE
-        else if (findViewById<ScrollView>(layout).visibility == GONE) findViewById<ScrollView>(layout).visibility = VISIBLE
+        if (findViewById<TableLayout>(layout).visibility == VISIBLE) findViewById<TableLayout>(layout).visibility = GONE
+        else if (findViewById<TableLayout>(layout).visibility == GONE) findViewById<TableLayout>(layout).visibility = VISIBLE
     }
 
     /**

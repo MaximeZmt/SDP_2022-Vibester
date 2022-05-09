@@ -123,16 +123,11 @@ class AuthenticationActivityTest {
     }
 
     @Test
-    fun stringValidationEmptyUsername() {
+    fun stringValidationEmptyFields() {
         onView(withId(R.id.createAcc)).perform(click())
         onView(withId(R.id.authentication_status)).check(matches(withText("Empty email or password")))
     }
 
-    @Test
-    fun stringValidationEmptyUPassword() {
-        onView(withId(R.id.createAcc)).perform(click())
-        onView(withId(R.id.authentication_status)).check(matches(withText("Empty email or password")))
-    }
 
     @Test
     fun returnToMain() {
@@ -143,8 +138,8 @@ class AuthenticationActivityTest {
 
     @Test
     fun stringValidationWrongEmail() {
-        val username = "john"
-        val password = "password"
+        val username = "j"
+        val password = "passwo"
 
         onView(withId(R.id.username)).perform(ViewActions.typeText(username), closeSoftKeyboard())
         onView(withId(R.id.password)).perform(ViewActions.typeText(password), closeSoftKeyboard())
@@ -155,8 +150,8 @@ class AuthenticationActivityTest {
 
     @Test
     fun stringValidationShorPassword() {
-        val username = "john@test.com"
-        val password = "12345"
+        val username = "u@u.c"
+        val password = "1"
 
         onView(withId(R.id.username)).perform(ViewActions.typeText(username), closeSoftKeyboard())
         onView(withId(R.id.password)).perform(ViewActions.typeText(password), closeSoftKeyboard())
@@ -168,8 +163,8 @@ class AuthenticationActivityTest {
 
     @Test
     fun logInCorrect() {
-        val username = "mockUsername@test.com"
-        val password = "password"
+        val username = "u@u.c"
+        val password = "passwo"
 
         val mockTask = createMockTask(true)
         val mockUser = createMockUser(username)
@@ -186,8 +181,8 @@ class AuthenticationActivityTest {
 
     @Test
     fun createAccountCorrect() {
-        val username = "user@user.com"
-        val password = "password"
+        val username = "u@u.c"
+        val password = "passwo"
 
         TestMode.setTest()
 

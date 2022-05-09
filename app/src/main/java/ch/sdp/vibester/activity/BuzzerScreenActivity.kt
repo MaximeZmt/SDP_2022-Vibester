@@ -40,6 +40,10 @@ class BuzzerScreenActivity : GameActivity() {
         pressedBuzzer = id
     }
 
+    fun getGameManager(): GameManager {
+        return gameManager
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -90,7 +94,7 @@ class BuzzerScreenActivity : GameActivity() {
      * Function to set a new round. It includes reinitializing activity elements,
      * and playing new song for the round.
      */
-    private fun startRoundBuzzer(ctx: Context, gameManager: GameManager) {
+    fun startRoundBuzzer(ctx: Context, gameManager: GameManager) {
         gameIsOn = true
         findViewById<LinearLayout>(R.id.answer).visibility=View.INVISIBLE
         val title = gameManager.getCurrentSong().getTrackName()

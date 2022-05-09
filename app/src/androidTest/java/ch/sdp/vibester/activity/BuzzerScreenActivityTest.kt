@@ -72,7 +72,6 @@ class BuzzerScreenActivityTest {
             epilogue + completeMiddle + prologue,
             LastfmMethod.BY_TAG.method
         )
-
         return gameManager
     }
 
@@ -99,7 +98,7 @@ class BuzzerScreenActivityTest {
     }
 
     @Test
-    fun answerIsPresentButInvisibleOnStartup() {
+    fun answerAndNextArePresentButInvisibleOnStartup() {
         val intent =
             Intent(ApplicationProvider.getApplicationContext(), BuzzerScreenActivity::class.java)
 
@@ -113,5 +112,31 @@ class BuzzerScreenActivityTest {
         intent.putExtra("gameManager", setGameManager())
         val scn: ActivityScenario<BuzzerScreenActivity> = ActivityScenario.launch(intent)
         onView(withId(R.id.answer)).check(matches(withEffectiveVisibility(Visibility.INVISIBLE)))
+        onView(withId(R.id.nextSongBuzzer)).check(matches(withEffectiveVisibility(Visibility.GONE)))
+    }
+
+    @Test
+    fun pressingBuzzerDuringRoundMakesAnswerVisible() {
+        val intent =
+            Intent(ApplicationProvider.getApplicationContext(), BuzzerScreenActivity::class.java)
+
+        // Put mock extras inside
+        val mockPlayersNumber = 2
+        val mockNameArray = arrayOfNulls<String>(mockPlayersNumber)
+        mockNameArray[0] = "John"
+        mockNameArray[1] = "Bob"
+        intent.putExtra("Number of players", mockPlayersNumber)
+        intent.putExtra("Player Names", mockNameArray)
+        val gameManager = setGameManager()
+        gameManager.setNextSong()
+        intent.putExtra("gameManager", gameManager)
+        val scn: ActivityScenario<BuzzerScreenActivity> = ActivityScenario.launch(intent)
+        // Did the round start?
+        val ctx = ApplicationProvider.getApplicationContext() as Context
+        scn.onActivity { activity ->
+            activity.startRoundBuzzer(ctx, gameManager)
+        }
+        onView(withId(R.id.buzzer_0)).check(matches(withEffectiveVisibility(Visibility.VISIBLE))).perform(click())
+        onView(withId(R.id.answer)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
     }
 }

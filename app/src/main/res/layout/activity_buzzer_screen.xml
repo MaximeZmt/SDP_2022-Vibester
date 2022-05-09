@@ -128,7 +128,7 @@
         android:background="@drawable/squared_button"
         android:backgroundTint="@color/cg_blue"
         android:text="@string/next"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.8"

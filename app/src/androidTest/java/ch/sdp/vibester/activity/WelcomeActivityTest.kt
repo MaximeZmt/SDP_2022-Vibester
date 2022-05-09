@@ -38,7 +38,7 @@ class WelcomeActivityTest {
     private fun createMockAuthenticatorLoggedOut() {
         val mockUser = createMockUser()
         every { mockAuthenticator.getCurrUser() } returns mockUser
-        every {mockAuthenticator.isLoggedIn()} returns false
+        every { mockAuthenticator.isLoggedIn() } returns false
     }
 
     private fun createMockAuthenticatorLoggedIn() {

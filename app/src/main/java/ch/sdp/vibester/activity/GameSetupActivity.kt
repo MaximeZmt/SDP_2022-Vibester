@@ -14,7 +14,6 @@ import ch.sdp.vibester.R
 import ch.sdp.vibester.api.LastfmApiInterface
 import ch.sdp.vibester.api.LastfmMethod
 import ch.sdp.vibester.api.LastfmUri
-import ch.sdp.vibester.helper.BuzzerGameManager
 import ch.sdp.vibester.helper.GameManager
 import ch.sdp.vibester.helper.IntentSwitcher
 import com.google.android.material.floatingactionbutton.FloatingActionButton

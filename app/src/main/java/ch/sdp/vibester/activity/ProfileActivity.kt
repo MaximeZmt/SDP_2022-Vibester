@@ -226,6 +226,7 @@ class ProfileActivity : AppCompatActivity() {
      * @param user: The user from which we will recover the text to set.
      */
     private fun setTextOfMultipleViews(user: User) {
+        setTextOfView(R.id.profile_total_games_stat, user.totalGames)
         setTextOfView(R.id.profile_top_tracks, user.scores.getOrDefault("top tracks", 0))
         setTextOfView(R.id.profile_kpop, user.scores.getOrDefault("kpop", 0))
         setTextOfView(R.id.profile_rock, user.scores.getOrDefault("rock", 0))

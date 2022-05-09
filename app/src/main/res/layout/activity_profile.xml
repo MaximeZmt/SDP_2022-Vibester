@@ -19,7 +19,7 @@
         <RelativeLayout
             android:id="@+id/profile_relativeLayout"
             android:layout_width="403dp"
-            android:layout_height="100dp"
+            android:layout_height="120dp"
             android:layout_marginTop="60dp"
             android:layout_weight=".2"
             app:layout_constraintEnd_toEndOf="parent"
@@ -93,6 +93,44 @@
             app:borderWidth="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
+
+        <TableLayout
+            android:id="@+id/profile_total_games"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/table_shape"
+            app:layout_constraintTop_toBottomOf="@+id/profile_relativeLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
+                    android:padding="18dip"
+                    android:text="@string/total_games"
+                    android:textAlignment="viewStart"
+                    android:textColor="#000"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/profile_total_games_stat"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="monospace"
+                    android:padding="18dip"
+                    android:text="@string/authentication_placeholderEmptyScore"
+                    android:textAlignment="viewEnd"
+                    android:textColor="#000"
+                    android:textSize="16sp" />
+            </TableRow>
+
+        </TableLayout>
 
         <TableLayout
             android:id="@+id/profileStatistics"
@@ -280,9 +318,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent" />
-
-
-
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -84,6 +84,17 @@ class FireBaseAuthenticator @Inject constructor() {
         return Firebase.auth.currentUser
     }
 
+    /**
+     * Getter for the current user ID
+     */
+    fun getCurrUID(): String {
+        var uid = ""
+        if (isLoggedIn()) {
+            uid = FirebaseAuth.getInstance().currentUser!!.uid
+        }
+        return uid
+    }
+
 
     /**
      * A function to log in with email and password

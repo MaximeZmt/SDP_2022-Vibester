@@ -116,7 +116,7 @@ class BuzzerScreenActivityTest {
     }
 
     @Test
-    fun pressingBuzzerDuringRoundMakesAnswerVisible() {
+    fun testDisplayOfBuzzersWithNames() {
         val intent =
             Intent(ApplicationProvider.getApplicationContext(), BuzzerScreenActivity::class.java)
 
@@ -136,6 +136,28 @@ class BuzzerScreenActivityTest {
         scn.onActivity { activity ->
             activity.startRoundBuzzer(ctx, gameManager)
         }
+        onView(withId(R.id.buzzer_0)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+        onView(withId(R.id.answer)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+    }
+
+    @Test
+    fun pressingBuzzerDuringRoundMakesAnswerVisible() {
+        val intent =
+            Intent(ApplicationProvider.getApplicationContext(), BuzzerScreenActivity::class.java)
+
+        // Put mock extras inside
+        val mockPlayersNumber = 2
+        val mockNameArray = arrayOfNulls<String>(mockPlayersNumber)
+        mockNameArray[0] = "John"
+        mockNameArray[1] = "Bob"
+        intent.putExtra("Number of players", mockPlayersNumber)
+        intent.putExtra("Player Names", mockNameArray)
+        val gameManager = setGameManager()
+        gameManager.setNextSong()
+        intent.putExtra("gameManager", gameManager)
+        val scn: ActivityScenario<BuzzerScreenActivity> = ActivityScenario.launch(intent)
+        // Did the round start?
+        val ctx = ApplicationProvider.getApplicationContext() as Context
         onView(withId(R.id.buzzer_0)).check(matches(withEffectiveVisibility(Visibility.VISIBLE))).perform(click())
         onView(withId(R.id.answer)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
     }

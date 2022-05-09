@@ -37,7 +37,6 @@ class TypingGameActivity : GameActivity() {
         if (getIntent != null) {
             super.setMax(intent)
             gameManager = getIntent.getSerializable("gameManager") as GameManager
-            gameManager.setNextSong()
             setNextButtonListener(ctx, gameManager)
             super.startFirstRound(ctx, gameManager, ::startRoundTyping)
         }

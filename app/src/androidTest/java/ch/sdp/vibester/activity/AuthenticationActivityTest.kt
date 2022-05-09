@@ -131,6 +131,7 @@ class AuthenticationActivityTest {
 
     @Test
     fun returnToMain() {
+        every { mockAuthenticator.isLoggedIn() } returns false
         onView(withId(R.id.authentication_returnToMain)).perform(click())
         Intents.intended(IntentMatchers.hasComponent(WelcomeActivity::class.java.name))
     }

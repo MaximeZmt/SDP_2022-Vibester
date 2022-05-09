@@ -4,14 +4,10 @@ import android.graphics.*
 import android.net.Uri
 import android.os.Bundle
 import android.text.InputType
-import android.util.Log
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.Window
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -69,6 +65,7 @@ class ProfileActivity : AppCompatActivity() {
         setRetToMainBtnListener()
         setShowQrCodeBtnListener()
         setQrCodeToProfileBtnListener()
+        setScoreBtnListener()
 
         queryDatabase()
     }
@@ -123,9 +120,20 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
+    private fun setScoreBtnListener() {
+        findViewById<Button>(R.id.profile_scores).setOnClickListener {
+            toggleVisibility(R.id.profile_scroll_stat)
+        }
+    }
+
+    private fun toggleVisibility(layout: Int) {
+        if (findViewById<ScrollView>(layout).visibility == VISIBLE) findViewById<ScrollView>(layout).visibility = GONE
+        else if (findViewById<ScrollView>(layout).visibility == GONE) findViewById<ScrollView>(layout).visibility = VISIBLE
+    }
+
     /**
      * Sets the given layout's visibility.
-     * @param layout: The given layout to modify.
+     * @param layout: The given constraint layout to modify.
      * @param isVisible: The indicator of which visibility to choose.
      * True for VISIBLE, false for GONE.
      */

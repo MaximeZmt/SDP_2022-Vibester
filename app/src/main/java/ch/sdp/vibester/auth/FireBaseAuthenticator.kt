@@ -15,53 +15,6 @@ import com.google.firebase.ktx.Firebase
 import javax.inject.Inject
 
 class FireBaseAuthenticator @Inject constructor() {
-    companion object{
-        private val AUTHENTICATION_PERMISSION_CODE = 1000
-
-        /**
-         * API: return true if firebase authentication is logged in
-         */
-        fun isLoggedIn(): Boolean {
-            return !(FirebaseAuth.getInstance().currentUser == null)
-        }
-
-        /**
-         * API: return the uid of the user if logged in otherwise empty string
-         */
-        fun getCurrentUID(): String {
-            var uid = ""
-            if (isLoggedIn()) {
-                uid = FirebaseAuth.getInstance().currentUser!!.uid
-            }
-            return uid
-        }
-
-
-        /**
-         * A function to return the result of google sign in
-         * @param requestCode a request code
-         * @param resultCode a result code
-         * @param data intent returned from google sign in
-         * @param ctx current app context
-         */
-        fun googleActivityResult(requestCode: Int, resultCode: Int, data: Intent?, ctx: Context): String? {
-            if (requestCode == AUTHENTICATION_PERMISSION_CODE) {
-                try {
-                    val account = GoogleSignIn.getSignedInAccountFromIntent(data).result
-                    val client = Identity.getSignInClient(ctx)
-                    val idToken = client.getSignInCredentialFromIntent(data).googleIdToken
-                    val credential = GoogleAuthProvider.getCredential(idToken, null)
-                    FirebaseAuth.getInstance().signInWithCredential(credential)
-                    return account.email
-                } catch (e: Exception) {
-                    return "Authentication error"
-                }
-            } else {
-                return "Authentication error"
-            }
-        }
-
-    }
 
     private val auth: FirebaseAuth = Firebase.auth
 

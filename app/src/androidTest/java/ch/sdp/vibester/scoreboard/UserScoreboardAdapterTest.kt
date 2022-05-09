@@ -18,7 +18,7 @@ class UserScoreboardAdapterTest {
         val players: MutableList<User> = arrayListOf()
         players.addAll(listOf(user1, user2))
         val userScoreboardViewHolder: RecyclerView.Adapter<UserScoreboardAdapter.PlayerViewHolder> =
-            UserScoreboardAdapter(players)
+            UserScoreboardAdapter(players, "rock")
         assertThat(userScoreboardViewHolder.itemCount, equalTo(2))
     }
 
@@ -29,7 +29,7 @@ class UserScoreboardAdapterTest {
         val players: MutableList<User> = arrayListOf()
         players.addAll(listOf(user1, user2))
         val userScoreboardViewHolder: RecyclerView.Adapter<UserScoreboardAdapter.PlayerViewHolder> =
-            UserScoreboardAdapter(players)
+            UserScoreboardAdapter(players, "BTS")
         val defaultType = 0
         assertThat(userScoreboardViewHolder.getItemViewType(0), equalTo(defaultType))
     }
@@ -43,7 +43,7 @@ class UserScoreboardAdapterTest {
         val recyclerView = RecyclerView(ApplicationProvider.getApplicationContext())
         recyclerView.layoutManager =
             LinearLayoutManager(ApplicationProvider.getApplicationContext())
-        val playerAdapter = UserScoreboardAdapter(players)
+        val playerAdapter = UserScoreboardAdapter(players, "Imagine Dragons")
         recyclerView.adapter = playerAdapter
         val newPlayers: MutableList<User> = arrayListOf()
         newPlayers.add(User("test3","https://images.app.goo.gl/YkBi16zwyjB7ejj96", "test3@gmail.com"))
@@ -60,7 +60,7 @@ class UserScoreboardAdapterTest {
         val recyclerView = RecyclerView(ApplicationProvider.getApplicationContext())
         recyclerView.layoutManager =
             LinearLayoutManager(ApplicationProvider.getApplicationContext())
-        val playerAdapter = UserScoreboardAdapter(players)
+        val playerAdapter = UserScoreboardAdapter(players, "Billie Eilish")
         val player3 = User("test3","https://images.app.goo.gl/YkBi16zwyjB7ejj96", "test3@gmail.com")
         val updatedList = arrayListOf(player3)
         playerAdapter.addPlayers(updatedList)

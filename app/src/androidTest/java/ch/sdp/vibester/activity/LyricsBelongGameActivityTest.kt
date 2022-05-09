@@ -159,43 +159,48 @@ class LyricsBelongGameActivityTest {
         onView(withId(R.id.progressBarLyrics)).check(matches(isDisplayed()))
     }*/
 
-//    @Test
-//    fun handleLyricsNoFoundCorrectly() {
-//        createMockInvocation()
-//        val gameManager = setGameManager()
-//        val intent = Intent(
-//            ApplicationProvider.getApplicationContext(),
-//            LyricsBelongGameActivity::class.java
-//        )
-//        val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
-//        val ctx = ApplicationProvider.getApplicationContext() as Context
-//        scn.onActivity { activity ->
-//            activity.testGetAndCheckLyrics(ctx, "the best song in the world", "Mr.Mystery", "", gameManager)
-//        }
-//        /** FIXME: API takes a lot of time to process this request
-//        comment the following lines if this test fail */
-//    //   Thread.sleep(sleepTime)
-//    //    onView(withId(R.id.nextSongButton)).check(matches(isDisplayed()))
-//        //song skipped, not consider as wrong
-//    //    assertEquals(true, gameManager.getScore() == 0)
-//    //    assertEquals(true, gameManager.getWrongSongs().size == 0)
-//    }
-    
-    // TODO fix the test
-//    @Test
-//    fun shouldUpdateSpeechFromInput() {
-//        createMockInvocation()
-//        val intent = Intent(
-//            ApplicationProvider.getApplicationContext(),
-//            LyricsBelongGameActivity::class.java
-//        )
-//        val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
-//        scn.onActivity { activity ->
-//            activity.testUpdateSpeechResult("hey")
-//        }
-//
-//        onView(withId(R.id.lyricResult)).check(matches(withText("hey")))
-//    }
+    //FIXME fix the test
+    /*
+    @Test
+    fun handleLyricsNoFoundCorrectly() {
+        createMockInvocation()
+        val gameManager = setGameManager()
+        val intent = Intent(
+            ApplicationProvider.getApplicationContext(),
+            LyricsBelongGameActivity::class.java
+        )
+        val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
+        val ctx = ApplicationProvider.getApplicationContext() as Context
+        scn.onActivity { activity ->
+            activity.testGetAndCheckLyrics(ctx, "the best song in the world", "Mr.Mystery", "", gameManager)
+        }
+        /** FIXME: API takes a lot of time to process this request
+        comment the following lines if this test fail */
+    //   Thread.sleep(sleepTime)
+    //    onView(withId(R.id.nextSongButton)).check(matches(isDisplayed()))
+        //song skipped, not consider as wrong
+    //    assertEquals(true, gameManager.getScore() == 0)
+    //    assertEquals(true, gameManager.getWrongSongs().size == 0)
+    }
+    */
+
+    // FIXME fix the test
+    /*
+    @Test
+    fun shouldUpdateSpeechFromInput() {
+        createMockInvocation()
+        val intent = Intent(
+            ApplicationProvider.getApplicationContext(),
+            LyricsBelongGameActivity::class.java
+        )
+        val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
+        scn.onActivity { activity ->
+            activity.testUpdateSpeechResult("hey")
+        }
+
+        onView(withId(R.id.lyricResult)).check(matches(withText("hey")))
+    }
+    */
 
     @Test
     fun nextButtonOnClick() {

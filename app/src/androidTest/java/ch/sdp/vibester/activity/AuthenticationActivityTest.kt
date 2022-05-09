@@ -134,11 +134,11 @@ class AuthenticationActivityTest {
         onView(withId(R.id.authentication_status)).check(matches(withText("Empty email or password")))
     }
 
-//    @Test
-//    fun returnToMain() {
-//        onView(withId(R.id.authentication_returnToMain)).perform(click())
-//        Intents.intended(IntentMatchers.hasComponent(WelcomeActivity::class.java.name))
-//    }
+    @Test
+    fun returnToMain() {
+        onView(withId(R.id.authentication_returnToMain)).perform(click())
+        Intents.intended(IntentMatchers.hasComponent(MainActivity::class.java.name))
+    }
 
 
     @Test

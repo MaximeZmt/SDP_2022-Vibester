@@ -2,7 +2,6 @@ package ch.sdp.vibester.helper
 
 import android.content.Context
 import android.content.Intent
-import ch.sdp.vibester.activity.WelcomeActivity
 import java.io.Serializable
 
 class IntentSwitcher private constructor() {
@@ -15,11 +14,6 @@ class IntentSwitcher private constructor() {
                 }
             }
             ctx.startActivity(intent)
-        }
-
-
-        fun switchBackToWelcome(ctx: Context) {
-            ctx.startActivity(Intent(ctx, WelcomeActivity::class.java))
         }
     }
 }

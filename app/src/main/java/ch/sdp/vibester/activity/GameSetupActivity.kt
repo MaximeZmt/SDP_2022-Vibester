@@ -46,7 +46,7 @@ class GameSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
     private fun setReturnBtnListener() {
         findViewById<FloatingActionButton>(R.id.gameSetup_returnToMain).setOnClickListener {
             if (findViewById<LinearLayout>(R.id.chooseGame).visibility == VISIBLE) {
-                IntentSwitcher.switchBackToWelcome(this)
+                IntentSwitcher.switch(this, WelcomeActivity::class.java, null)
                 finish()
             } else if (findViewById<ConstraintLayout>(R.id.chooseGenre).visibility == VISIBLE) {
                 findViewById<LinearLayout>(R.id.chooseGame).visibility = VISIBLE

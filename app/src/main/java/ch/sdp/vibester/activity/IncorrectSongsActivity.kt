@@ -31,7 +31,8 @@ class IncorrectSongsActivity : AppCompatActivity() {
 
         val layout: LinearLayout = findViewById(R.id.incorrect_songs_linear)
 
-        findViewById<Button>(R.id.incorrect_songs_back_to_welcome).setOnClickListener {
+        findViewById<Button>(R.id.incorrect_songs_back_to_welcome)
+            .setOnClickListener {
             IntentSwitcher.switch(this, WelcomeActivity::class.java, null)
         }
 

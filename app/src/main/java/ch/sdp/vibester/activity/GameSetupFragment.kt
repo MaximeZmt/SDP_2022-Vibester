@@ -172,12 +172,12 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
         var mode = ""
         val uri = LastfmUri()
         when (view.id) {
-            R.id.btsButton -> {method = LastfmMethod.BY_ARTIST.method; artist = "BTS"; mode = "BTS" }
-            R.id.kpopButton -> {method = LastfmMethod.BY_TAG.method; tag = "kpop"; mode = "kpop" }
-            R.id.imagDragonsButton -> {method = LastfmMethod.BY_ARTIST.method; artist = "Imagine Dragons"; mode = "Imagine Dragons"}
-            R.id.rockButton-> {method = LastfmMethod.BY_TAG.method; tag = "rock"; mode = "rock" }
-            R.id.topTracksButton -> {method = LastfmMethod.BY_CHART.method; mode = "top tracks"}
-            R.id.billieEilishButton -> {method = LastfmMethod.BY_ARTIST.method; artist = "Billie Eilish"; mode = "billie eilish"}
+            R.id.btsButton -> {method = LastfmMethod.BY_ARTIST.method; artist = "BTS"; mode = R.string.bts.toString() }
+            R.id.kpopButton -> {method = LastfmMethod.BY_TAG.method; tag = "kpop"; mode = R.string.kpop.toString() }
+            R.id.imagDragonsButton -> {method = LastfmMethod.BY_ARTIST.method; artist = "Imagine Dragons"; mode = R.string.imagine_dragons.toString()}
+            R.id.rockButton-> {method = LastfmMethod.BY_TAG.method; tag = "rock"; mode = R.string.rock.toString() }
+            R.id.topTracksButton -> {method = LastfmMethod.BY_CHART.method; mode = R.string.top_tracks.toString()}
+            R.id.billieEilishButton -> {method = LastfmMethod.BY_ARTIST.method; artist = "Billie Eilish"; mode = R.string.billie_eilish.toString()}
         }
         uri.method = method
         uri.artist = artist

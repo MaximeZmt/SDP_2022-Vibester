@@ -15,13 +15,14 @@ import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.LastfmMethod
+import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.helper.TypingGameManager
 import ch.sdp.vibester.model.Song
+import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -56,11 +57,31 @@ class TypingGameActivityTest {
     @JvmField
     val mockUsersRepo = mockk<DataGetter>()
 
-    private fun createMockInvocation() {
+    private fun createMockDataGetter() {
         every { mockUsersRepo.setSubFieldValue(any(), any(), any(), any()) } answers {}
         every { mockUsersRepo.updateFieldInt(any(), any(), any(), any()) } answers {}
         every { mockUsersRepo.setFieldValue(any(), any(), any()) } answers {}
         every { mockUsersRepo.updateSubFieldInt(any(), any(), any(), any(), any()) } answers {}
+    }
+
+    @BindValue @JvmField
+    val mockAuthenticator = mockk<FireBaseAuthenticator>()
+
+    private fun createMockAuthenticator() {
+        val mockUser = createMockUser()
+        every { mockAuthenticator.getCurrUser() } returns mockUser
+        every { mockAuthenticator.getCurrUID() } returns mockUser.uid
+        every { mockAuthenticator.isLoggedIn() } returns true
+
+    }
+
+    private fun createMockUser(): FirebaseUser {
+        val email = "u@u.c"
+        val uid = "uid"
+        val mockUser = mockk<FirebaseUser>()
+        every { mockUser.email } returns email
+        every { mockUser.uid } returns uid
+        return mockUser
     }
 
     private val expectedSize = 200
@@ -133,38 +154,39 @@ class TypingGameActivityTest {
         assertEquals(expectedSize, myTest.minimumWidth)
     }
 
-//    @Test
-//    fun guessLayoutTest() {
-//        createMockInvocation()
-//        val inputTxt = """
-//            {
-//                "resultCount":1,
-//                "results": [
-//                {"wrapperType":"track", "kind":"song", "artistId":358714030, "collectionId":1574210519, "trackId":1574210894, "artistName":"Imagine Dragons", "collectionName":"Mercury - Act 1", "trackName":"Monday", "collectionCensoredName":"Mercury - Act 1", "trackCensoredName":"Monday", "artistViewUrl":"https://music.apple.com/us/artist/imagine-dragons/358714030?uo=4", "collectionViewUrl":"https://music.apple.com/us/album/monday/1574210519?i=1574210894&uo=4", "trackViewUrl":"https://music.apple.com/us/album/monday/1574210519?i=1574210894&uo=4",
-//                    "previewUrl":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/bc/71/fc/bc71fca4-e0bb-609b-5b6e-92296df7b4b6/mzaf_8907306752631175088.plus.aac.p.m4a", "artworkUrl30":"https://is3-ssl.mzstatic.com/image/thumb/Music115/v4/3e/04/c4/3e04c4e7-1863-34cb-e8f3-f168ae5b213e/source/30x30bb.jpg", "artworkUrl60":"https://is3-ssl.mzstatic.com/image/thumb/Music115/v4/3e/04/c4/3e04c4e7-1863-34cb-e8f3-f168ae5b213e/source/60x60bb.jpg", "artworkUrl100":"https://is3-ssl.mzstatic.com/image/thumb/Music115/v4/3e/04/c4/3e04c4e7-1863-34cb-e8f3-f168ae5b213e/source/100x100bb.jpg", "releaseDate":"2021-09-03T12:00:00Z", "collectionExplicitness":"notExplicit", "trackExplicitness":"notExplicit", "discCount":1, "discNumber":1, "trackCount":13, "trackNumber":4, "trackTimeMillis":187896, "country":"USA", "currency":"USD", "primaryGenreName":"Alternative", "isStreamable":true}]
-//            }
-//            """
-//        val songTest = Song.singleSong(inputTxt)
-//        val gameManager = setGameManager()
-//
-//        gameManager.setNextSong()
-//        gameManager.playSong()
-//        lateinit var frameLay: FrameLayout
-//
-//        val intent =
-//            Intent(ApplicationProvider.getApplicationContext(), TypingGameActivity::class.java)
-//        // Do not put gameManager as an extra
-//        val scn: ActivityScenario<TypingGameActivity> = ActivityScenario.launch(intent)
-//        val ctx = ApplicationProvider.getApplicationContext() as Context
-//
-//        scn.onActivity { activity ->
-//            frameLay = activity.guess(songTest, LinearLayout(ctx), ctx, gameManager)
-//            frameLay.performClick()
-//        }
-//        assertEquals(songTest.getArtistName(), gameManager.getCurrentSong().getArtistName())
-//        assertEquals(songTest.getTrackName(), gameManager.getCurrentSong().getTrackName())
-//        assertEquals(gameManager.getScore(), 1)
-//    }
+    @Test
+    fun guessLayoutTest() {
+        createMockDataGetter()
+        createMockAuthenticator()
+        val inputTxt = """
+            {
+                "resultCount":1,
+                "results": [
+                {"wrapperType":"track", "kind":"song", "artistId":358714030, "collectionId":1574210519, "trackId":1574210894, "artistName":"Imagine Dragons", "collectionName":"Mercury - Act 1", "trackName":"Monday", "collectionCensoredName":"Mercury - Act 1", "trackCensoredName":"Monday", "artistViewUrl":"https://music.apple.com/us/artist/imagine-dragons/358714030?uo=4", "collectionViewUrl":"https://music.apple.com/us/album/monday/1574210519?i=1574210894&uo=4", "trackViewUrl":"https://music.apple.com/us/album/monday/1574210519?i=1574210894&uo=4",
+                    "previewUrl":"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/bc/71/fc/bc71fca4-e0bb-609b-5b6e-92296df7b4b6/mzaf_8907306752631175088.plus.aac.p.m4a", "artworkUrl30":"https://is3-ssl.mzstatic.com/image/thumb/Music115/v4/3e/04/c4/3e04c4e7-1863-34cb-e8f3-f168ae5b213e/source/30x30bb.jpg", "artworkUrl60":"https://is3-ssl.mzstatic.com/image/thumb/Music115/v4/3e/04/c4/3e04c4e7-1863-34cb-e8f3-f168ae5b213e/source/60x60bb.jpg", "artworkUrl100":"https://is3-ssl.mzstatic.com/image/thumb/Music115/v4/3e/04/c4/3e04c4e7-1863-34cb-e8f3-f168ae5b213e/source/100x100bb.jpg", "releaseDate":"2021-09-03T12:00:00Z", "collectionExplicitness":"notExplicit", "trackExplicitness":"notExplicit", "discCount":1, "discNumber":1, "trackCount":13, "trackNumber":4, "trackTimeMillis":187896, "country":"USA", "currency":"USD", "primaryGenreName":"Alternative", "isStreamable":true}]
+            }
+            """
+        val songTest = Song.singleSong(inputTxt)
+        val gameManager = setGameManager()
+
+        gameManager.setNextSong()
+        gameManager.playSong()
+        lateinit var frameLay: FrameLayout
+
+        val intent =
+            Intent(ApplicationProvider.getApplicationContext(), TypingGameActivity::class.java)
+        // Do not put gameManager as an extra
+        val scn: ActivityScenario<TypingGameActivity> = ActivityScenario.launch(intent)
+        val ctx = ApplicationProvider.getApplicationContext() as Context
+
+        scn.onActivity { activity ->
+            frameLay = activity.guess(songTest, LinearLayout(ctx), ctx, gameManager)
+            frameLay.performClick()
+        }
+        assertEquals(songTest.getArtistName(), gameManager.getCurrentSong().getArtistName())
+        assertEquals(songTest.getTrackName(), gameManager.getCurrentSong().getTrackName())
+        assertEquals(gameManager.getScore(), 1)
+    }
 
     @Test
     fun checkAnswerCorrectTest() {
@@ -188,7 +210,8 @@ class TypingGameActivityTest {
         // Do not put gameManager as an extra
         val scn: ActivityScenario<TypingGameActivity> = ActivityScenario.launch(intent)
         val ctx = ApplicationProvider.getApplicationContext() as Context
-        createMockInvocation()
+        createMockDataGetter()
+        createMockAuthenticator()
         scn.onActivity { activity ->
             activity.checkAnswer(ctx, songTest, gameManager)
         }
@@ -214,7 +237,8 @@ class TypingGameActivityTest {
             Intent(ApplicationProvider.getApplicationContext(), TypingGameActivity::class.java)
         val scn: ActivityScenario<TypingGameActivity> = ActivityScenario.launch(intent)
         val ctx = ApplicationProvider.getApplicationContext() as Context
-        createMockInvocation()
+        createMockDataGetter()
+        createMockAuthenticator()
         scn.onActivity { activity ->
             activity.checkAnswer(ctx, songTest, gameManager)
         }
@@ -228,7 +252,8 @@ class TypingGameActivityTest {
     */
     @Test
     fun checkIntentOnEnding() {
-        createMockInvocation()
+        createMockDataGetter()
+        createMockAuthenticator()
         val inputTxt = """
             {
                 "resultCount":1,
@@ -276,7 +301,8 @@ class TypingGameActivityTest {
         val intent = Intent(ApplicationProvider.getApplicationContext(), TypingGameActivity::class.java)
         val scn: ActivityScenario<TypingGameActivity> = ActivityScenario.launch(intent)
         val ctx = ApplicationProvider.getApplicationContext() as Context
-        createMockInvocation()
+        createMockDataGetter()
+        createMockAuthenticator()
         scn.onActivity { activity ->
             activity.testFirstRound(ctx, gameManager)
             activity.testProgressBar()
@@ -304,7 +330,8 @@ class TypingGameActivityTest {
 
     @Test
     fun nextButtonOnClick(){
-        createMockInvocation()
+        createMockDataGetter()
+        createMockAuthenticator()
         val gameManager = setGameManager(2)
         assertEquals(gameManager.getSongList().size, 2)
 

@@ -17,6 +17,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class WelcomeScreenFragment : Fragment(),View.OnClickListener {
+
     @Inject
     lateinit var authenticator: FireBaseAuthenticator
 
@@ -34,17 +35,17 @@ class WelcomeScreenFragment : Fragment(),View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        updateUserConnectionStatus()
+        updateUserConnectionStatus(view)
 
         PersistanceSetter.setPersistance()
         Database.get()
     }
 
-    private fun updateUserConnectionStatus() {
-        val userStatusTextValue = requireView().findViewById<TextView>(R.id.user_status)
-        if(FireBaseAuthenticator.isLoggedIn())
+    private fun updateUserConnectionStatus(view: View) {
+        val userStatusTextValue = view.findViewById<TextView>(R.id.user_status)
+        if(authenticator.isLoggedIn())
         {
-            userStatusTextValue.text = "User: " + authenticator.getCurrentUserMail()
+            userStatusTextValue.text = "User: " + authenticator.getCurrUserMail()
         }
     }
 
@@ -53,8 +54,9 @@ class WelcomeScreenFragment : Fragment(),View.OnClickListener {
         startActivity(intent)
     }
 
+
     fun switchToProfile() {
-        if (FireBaseAuthenticator.isLoggedIn()){
+        if (authenticator.isLoggedIn()){
             sendDirectIntent(ProfileActivity::class.java)
         }else{
             sendDirectIntent(AuthenticationActivity::class.java)

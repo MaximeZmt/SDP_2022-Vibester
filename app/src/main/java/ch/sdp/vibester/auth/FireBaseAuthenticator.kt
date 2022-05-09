@@ -26,17 +26,6 @@ class FireBaseAuthenticator @Inject constructor() {
         }
 
         /**
-         * API: return the mail of the user if logged in otherwise empty string
-         */
-        fun getCurrentUserMail(): String {
-            var mail = ""
-            if (isLoggedIn()) {
-                mail = FirebaseAuth.getInstance().currentUser!!.email.toString()
-            }
-            return mail
-        }
-
-        /**
          * API: return the uid of the user if logged in otherwise empty string
          */
         fun getCurrentUID(): String {
@@ -82,6 +71,37 @@ class FireBaseAuthenticator @Inject constructor() {
      */
     fun getCurrUser(): FirebaseUser? {
         return Firebase.auth.currentUser
+    }
+
+    /**
+     * Getter for the current user ID
+     */
+    fun getCurrUID(): String {
+        var uid = ""
+        if (isLoggedIn()) {
+            uid = FirebaseAuth.getInstance().currentUser!!.uid
+        }
+        return uid
+    }
+
+
+    /**
+     * API: return true if firebase authentication is logged in
+     */
+    fun isLoggedIn(): Boolean {
+        return FirebaseAuth.getInstance().currentUser != null
+    }
+
+
+    /**
+     * API: return the mail of the user if logged in otherwise empty string
+     */
+    fun getCurrUserMail(): String {
+        var mail = ""
+        if (isLoggedIn()) {
+            mail = FirebaseAuth.getInstance().currentUser!!.email.toString()
+        }
+        return mail
     }
 
 

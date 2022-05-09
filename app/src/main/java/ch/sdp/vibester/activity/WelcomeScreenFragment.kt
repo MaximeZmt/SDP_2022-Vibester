@@ -58,7 +58,7 @@ class WelcomeScreenFragment : Fragment(),View.OnClickListener {
     }
 
 
-    fun switchToProfile() {
+    private fun switchToProfile() {
         if (authenticator.isLoggedIn()){
             sendDirectIntent(ProfileActivity::class.java)
         }else{
@@ -66,15 +66,15 @@ class WelcomeScreenFragment : Fragment(),View.OnClickListener {
         }
     }
 
-    fun switchToScoreboard() {
+    private fun switchToScoreboard() {
         sendDirectIntent(ScoreBoardActivity::class.java)
     }
 
-    fun switchToDownload() {
+    private fun switchToDownload() {
         sendDirectIntent(DownloadActivity::class.java)
     }
 
-    fun switchToSearch() {
+    private fun switchToSearch() {
         sendDirectIntent(SearchUserActivity::class.java)
     }
 

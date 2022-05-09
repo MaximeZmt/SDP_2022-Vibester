@@ -98,7 +98,7 @@ class FireBaseAuthenticator @Inject constructor() {
     /**
      * A function to create an account with email and password
      * @param email email
-     * @param password passwprd
+     * @param password password
      * @return Task of the result
      */
     fun createAccount(email: String, password: String): Task<AuthResult> {

@@ -30,9 +30,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:layout_weight=".4"
                 android:text="@string/authentication_placeholderUsername"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <ImageView
@@ -41,8 +40,7 @@
                 android:layout_height="27dp"
                 android:layout_centerInParent="true"
                 android:layout_marginStart="0dp"
-                android:layout_marginLeft="32dp"
-                android:layout_toRightOf="@+id/username"
+                android:layout_toEndOf="@+id/username"
                 android:src="@drawable/pencil" />
 
         </RelativeLayout>

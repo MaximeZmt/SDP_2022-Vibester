@@ -55,8 +55,8 @@ class ProfileActivityTest {
     }
 
     private fun createMockUser(): FirebaseUser {
-        val email = "mockuser@gmail.com"
-        val uid = "mockuseruid"
+        val email = "u@u.c"
+        val uid = "uid"
         val mockUser = mockk<FirebaseUser>()
         every { mockUser.email } returns email
         every { mockUser.uid } returns uid

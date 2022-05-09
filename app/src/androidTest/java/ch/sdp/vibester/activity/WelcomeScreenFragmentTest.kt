@@ -1,7 +1,9 @@
 package ch.sdp.vibester.activity
 
+import android.content.ComponentName
 import androidx.fragment.app.testing.launchFragmentInContainer
 import android.content.Intent
+import android.os.Build
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
@@ -13,10 +15,12 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
 import ch.sdp.vibester.auth.FireBaseAuthenticator
+import com.example.android.architecture.blueprints.todoapp.HiltTestActivity
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import dagger.hilt.android.testing.HiltTestApplication
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.After
@@ -26,6 +30,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
+@Config(application = HiltTestApplication::class, maxSdk = Build.VERSION_CODES.P)
 @HiltAndroidTest
 class WelcomeScreenFragmentTest {
 
@@ -67,17 +72,14 @@ class WelcomeScreenFragmentTest {
     fun setup() {
         hiltRule.inject()
         Intents.init()
-        launchFragmentInContainer<WelcomeScreenFragment>(
-            themeResId = R.style.AppTheme
-        )
     }
 
 
     @Test
     fun checkIntentOnMyAccountLoggedOut() {
-        val intent = Intent(ApplicationProvider.getApplicationContext(), WelcomeActivity::class.java)
+        val intent = Intent(ApplicationProvider.getApplicationContext(), MainActivity::class.java)
         createMockAuthenticatorLoggedOut()
-        val scn: ActivityScenario<WelcomeActivity> = ActivityScenario.launch(intent)
+        val scn: ActivityScenario<MainActivity> = ActivityScenario.launch(intent)
 
         onView(withId(R.id.welcome_profile)).perform(click())
         intended(hasComponent(AuthenticationActivity::class.java.name))
@@ -85,9 +87,9 @@ class WelcomeScreenFragmentTest {
 
     @Test
     fun checkIntentOnMyAccountLoggedIn() {
-        val intent = Intent(ApplicationProvider.getApplicationContext(), WelcomeActivity::class.java)
+        val intent = Intent(ApplicationProvider.getApplicationContext(), MainActivity::class.java)
         createMockAuthenticatorLoggedIn()
-        val scn: ActivityScenario<WelcomeActivity> = ActivityScenario.launch(intent)
+        val scn: ActivityScenario<MainActivity> = ActivityScenario.launch(intent)
 
         onView(withId(R.id.welcome_profile)).perform(click())
         intended(hasComponent(ProfileActivity::class.java.name))
@@ -95,19 +97,28 @@ class WelcomeScreenFragmentTest {
 
     @Test
     fun checkIntentOnScoreboard() {
-        val intent = Intent(ApplicationProvider.getApplicationContext(), WelcomeActivity::class.java)
-        createMockAuthenticatorLoggedOut()
-        val scn: ActivityScenario<WelcomeActivity> = ActivityScenario.launch(intent)
+        val intent = Intent.makeMainActivity(
+            ComponentName(
+                ApplicationProvider.getApplicationContext(),
+                HiltTestActivity::class.java
+            )
+        )
+        val scn: ActivityScenario<MainActivity> = ActivityScenario.launch(intent)
 
+
+        createMockAuthenticatorLoggedOut()
+        launchFragmentInContainer<WelcomeScreenFragment>(
+            themeResId = R.style.AppTheme
+        )
         onView(withId(R.id.welcome_scoreboard)).perform(click())
         intended(hasComponent(ScoreBoardActivity::class.java.name))
     }
 
     @Test
     fun checkIntentOnDownload() {
-        val intent = Intent(ApplicationProvider.getApplicationContext(), WelcomeActivity::class.java)
+        val intent = Intent(ApplicationProvider.getApplicationContext(), MainActivity::class.java)
         createMockAuthenticatorLoggedOut()
-        val scn: ActivityScenario<WelcomeActivity> = ActivityScenario.launch(intent)
+        val scn: ActivityScenario<MainActivity> = ActivityScenario.launch(intent)
 
         onView(withId(R.id.welcome_download)).perform(click())
         intended(hasComponent(DownloadActivity::class.java.name))
@@ -115,9 +126,9 @@ class WelcomeScreenFragmentTest {
 
     @Test
     fun checkIntentOnSearch() {
-        val intent = Intent(ApplicationProvider.getApplicationContext(), WelcomeActivity::class.java)
+        val intent = Intent(ApplicationProvider.getApplicationContext(), MainActivity::class.java)
         createMockAuthenticatorLoggedOut()
-        val scn: ActivityScenario<WelcomeActivity> = ActivityScenario.launch(intent)
+        val scn: ActivityScenario<MainActivity> = ActivityScenario.launch(intent)
 
         onView(withId(R.id.welcome_search)).perform(click())
         intended(hasComponent(SearchUserActivity::class.java.name))
@@ -125,10 +136,11 @@ class WelcomeScreenFragmentTest {
 
     @Test
     fun checkIntentOnSearchWithoutTestMode() {
-        val intent = Intent(ApplicationProvider.getApplicationContext(), WelcomeActivity::class.java)
+        val intent = Intent(ApplicationProvider.getApplicationContext(), MainActivity::class.java)
         createMockAuthenticatorLoggedOut()
-        val scn: ActivityScenario<WelcomeActivity> = ActivityScenario.launch(intent)
+        val scn: ActivityScenario<MainActivity> = ActivityScenario.launch(intent)
 
         onView(withId(R.id.welcome_search)).perform(click())
     }
 }
+

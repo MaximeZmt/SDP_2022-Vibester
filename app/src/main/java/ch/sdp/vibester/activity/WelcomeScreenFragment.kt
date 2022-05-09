@@ -24,12 +24,15 @@ class WelcomeScreenFragment : Fragment(),View.OnClickListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+        ): View? {
+
         val view = inflater.inflate(R.layout.fragment_welcome_screen, container, false)
+
         view.findViewById<Button>(R.id.welcome_profile).setOnClickListener(this)
         view.findViewById<Button>(R.id.welcome_download).setOnClickListener(this)
         view.findViewById<Button>(R.id.welcome_scoreboard).setOnClickListener(this)
         view.findViewById<Button>(R.id.welcome_search).setOnClickListener(this)
+
         return view
     }
 

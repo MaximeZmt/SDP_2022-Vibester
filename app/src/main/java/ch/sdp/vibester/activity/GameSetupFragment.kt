@@ -19,10 +19,12 @@ import ch.sdp.vibester.helper.GameManager
 import ch.sdp.vibester.helper.TypingGameManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.gson.Gson
+import dagger.hilt.android.AndroidEntryPoint
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+@AndroidEntryPoint
 class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSelectedListener{
     var difficulty = R.string.easy.toString()
     var game = "local_buzzer"

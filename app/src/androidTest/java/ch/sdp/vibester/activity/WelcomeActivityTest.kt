@@ -45,7 +45,7 @@ class WelcomeActivityTest {
         val mockUser = createMockUser()
         every { mockAuthenticator.getCurrUser() } returns mockUser
         every { mockAuthenticator.getCurrUserMail() } returns mockUser.email.toString()
-        every {mockAuthenticator.isLoggedIn()} returns true
+        every { mockAuthenticator.isLoggedIn() } returns true
     }
 
     private fun createMockUser(): FirebaseUser {

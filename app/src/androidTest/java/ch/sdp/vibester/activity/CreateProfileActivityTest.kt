@@ -50,8 +50,8 @@ class CreateProfileActivityTest {
     }
 
     private fun createMockUser(): FirebaseUser {
-        val email = "mockuser@gmail.com"
-        val uid = "mockuseruid"
+        val email = "u@u.c"
+        val uid = "uid"
         val mockUser = mockk<FirebaseUser>()
         every { mockUser.email } returns email
         every { mockUser.uid } returns uid
@@ -81,8 +81,8 @@ class CreateProfileActivityTest {
     @Test
     fun createAccCorrect() {
         TestMode.setTest()
-        var username = "mockUsername"
-        var mockEmail = "mockEmail@test.com"
+        var username = "u"
+        var mockEmail = "u@u.c"
 
         val intent = Intent(ApplicationProvider.getApplicationContext(), CreateProfileActivity::class.java)
         intent.putExtra("email", mockEmail)

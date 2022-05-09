@@ -149,8 +149,8 @@ class ProfileActivityTest {
         createMockImageGetter()
 
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
-
         onView(withId(R.id.profile_returnToMain)).perform(click())
+
         Intents.intended(IntentMatchers.hasComponent(WelcomeActivity::class.java.name))
     }
 
@@ -166,8 +166,8 @@ class ProfileActivityTest {
         createMockImageGetter()
 
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
-
         onView(withId(R.id.showQRCode)).perform(click())
+
         onView(withId(R.id.QrCodePage)).check(matches(isDisplayed()))
         onView(withId(R.id.profileContent)).check(matches(not(isDisplayed())))
         onView(withId(R.id.qrCode)).check(matches(isDisplayed()))
@@ -186,6 +186,7 @@ class ProfileActivityTest {
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
         onView(withId(R.id.showQRCode)).perform(click())
         onView(withId(R.id.qrCode_returnToProfile)).perform(click())
+
         onView(withId(R.id.QrCodePage)).check(matches(not(isDisplayed())))
         onView(withId(R.id.profileContent)).check(matches(isDisplayed()))
     }
@@ -203,12 +204,14 @@ class ProfileActivityTest {
 
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
         val newUsername = "Lalisa Bon idomesniu"
+
         onView(withId(R.id.editUser)).perform(click())
         onView(withId(0)).perform(
             ViewActions.typeText(newUsername),
             ViewActions.closeSoftKeyboard()
         )
         onView(withText("OK")).perform(click())
+
         onView(withId(R.id.username)).check(matches(withText(newUsername)))
     }
 
@@ -223,9 +226,9 @@ class ProfileActivityTest {
         createMockImageGetter()
 
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
-
         onView(withId(R.id.editUser)).perform(click())
         onView(withText("Cancel")).perform(click())
+
         onView(withId(R.id.username)).check(matches(withText("Lalisa Bon")))
     }
 
@@ -241,6 +244,7 @@ class ProfileActivityTest {
 
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
         onView(withId(R.id.showQRCode)).perform(click())
+
         onView(withId(R.id.qrCode)).check(matches(isDisplayed()))
     }
 

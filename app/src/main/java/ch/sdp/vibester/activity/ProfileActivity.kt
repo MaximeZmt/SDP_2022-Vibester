@@ -104,7 +104,7 @@ class ProfileActivity : AppCompatActivity() {
      * Generic listener for the show qr code button.
      */
     private fun setShowQrCodeBtnListener() {
-        findViewById<Button>(R.id.showQRCode).setOnClickListener {
+        findViewById<ImageView>(R.id.showQRCode).setOnClickListener {
             setLayoutVisibility(R.id.QrCodePage, true)
             setLayoutVisibility(R.id.profileContent, false)
         }

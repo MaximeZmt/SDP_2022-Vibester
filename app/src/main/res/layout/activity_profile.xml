@@ -62,24 +62,23 @@
             <ImageView
                 android:id="@+id/editUser"
                 android:layout_width="30dp"
-                android:layout_height="27dp"
+                android:layout_height="20dp"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="25dp"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="23dp"
                 android:layout_toEndOf="@+id/username"
                 android:src="@drawable/pencil" />
 
-            <Button
+            <ImageView
                 android:id="@+id/showQRCode"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/username"
-                android:layout_marginStart="35dp"
+                android:layout_width="30dp"
+                android:layout_height="27dp"
+                android:layout_below="@+id/editUser"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
-                android:layout_toEndOf="@+id/myCardView"
-                android:backgroundTint="@color/cg_blue"
-                android:text="QR Code" />
+                android:layout_toEndOf="@+id/username"
+                android:src="@drawable/qr_code" />
 
         </RelativeLayout>
 

@@ -104,8 +104,38 @@ class ProfileActivityTest {
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
 
         onView(withId(R.id.username)).check(matches(withText(inputProfile.username)))
-        //onView(withId(R.id.totalGames)).check(matches(withText(inputProfile.totalGames.toString())))
-        //onView(withId(R.id.ranking)).check(matches(withText(inputProfile.ranking.toString())))
+        onView(withId(R.id.profile_total_games_stat)).check(matches(withText(inputProfile.totalGames.toString())))
+    }
+
+    @Test
+    fun clickScoresShowScores() {
+        val scorePerGenre: Map<String, Int> = mapOf(
+            "top tracks" to 1,
+            "kpop" to 2,
+            "rock" to 3,
+            "BTS" to 4,
+            "Imagine Dragons" to 5,
+            "Billie Eilish" to 6)
+        val inputProfile = User("Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",
+            12, scores = scorePerGenre)
+        val ctx = ApplicationProvider.getApplicationContext() as Context
+        val intent = Intent(ctx, ProfileActivity::class.java)
+
+        createMockDataGetter(inputProfile)
+        createMockAuthenticatorInvocation()
+        createMockImageGetter()
+
+        val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
+        onView(withId(R.id.profile_scores)).perform(click())
+
+        onView(withId(R.id.profile_scroll_stat)).check(matches(isDisplayed()))
+
+        onView(withId(R.id.profile_top_tracks)).check(matches(withText(inputProfile.scores.getOrDefault("top tracks", 0).toString())))
+        onView(withId(R.id.profile_kpop)).check(matches(withText(inputProfile.scores.getOrDefault("kpop", 0).toString())))
+        onView(withId(R.id.profile_rock)).check(matches(withText(inputProfile.scores.getOrDefault("rock", 0).toString())))
+        onView(withId(R.id.profile_bts)).check(matches(withText(inputProfile.scores.getOrDefault("BTS", 0).toString())))
+        onView(withId(R.id.profile_imagine_dragons)).check(matches(withText(inputProfile.scores.getOrDefault("Imagine Dragons", 0).toString())))
+        onView(withId(R.id.profile_billie_eilish)).check(matches(withText(inputProfile.scores.getOrDefault("Billie Eilish", 0).toString())))
     }
 
     @Test

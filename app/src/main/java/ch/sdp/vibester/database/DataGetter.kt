@@ -28,9 +28,7 @@ class DataGetter @Inject constructor() {
      * @param fieldName
      */
     fun setFieldValue(uid: String, fieldName: String, newVal: Any) {
-        dbUserRef.child(uid)
-            .child(fieldName)
-            .setValue(newVal)
+        dbUserRef.child(uid).child(fieldName).setValue(newVal)
     }
 
     /**
@@ -41,10 +39,7 @@ class DataGetter @Inject constructor() {
      * @param subFieldName
      */
     fun setSubFieldValue(uid: String, fieldName: String, subFieldName: String, newVal: Any) {
-        dbUserRef.child(uid)
-            .child(fieldName)
-            .child(subFieldName)
-            .setValue(newVal)
+        dbUserRef.child(uid).child(fieldName).child(subFieldName).setValue(newVal)
     }
 
 
@@ -58,13 +53,6 @@ class DataGetter @Inject constructor() {
         dbUserRef.child(uid).child(fieldName)
             .get().addOnSuccessListener { t ->
                 var finalVal  = checkValue(t, method, newVal)//newVal TO DELETE IF TESTS PASS, OTHERWISE ROLL BACK!
-                /*if(t.value != null) {
-                    val previousVal = (t.value as Long?)!!.toInt()
-                    when (method) {
-                        "sum" -> finalVal += previousVal
-                        "best" -> finalVal = maxOf(previousVal, newVal)
-                    }
-                }*/
                 setFieldValue(uid, fieldName, finalVal)
             }
     }
@@ -81,13 +69,6 @@ class DataGetter @Inject constructor() {
         dbUserRef.child(userID).child(fieldName).child(subFieldName)
             .get().addOnSuccessListener { t ->
                 var finalVal = checkValue(t, method, newVal) //newVal: TO DELETE IF TESTS PASS, OTHERWISE ROLL BACK!
-                /*if(t.value != null) {
-                    val previousVal = (t.value as Long?)!!.toInt()
-                    when (method) {
-                        "sum" -> finalVal += previousVal
-                        "best" -> finalVal = maxOf(previousVal, newVal)
-                    }
-                }*/
                 setSubFieldValue(userID, fieldName, subFieldName, finalVal)
             }
     }

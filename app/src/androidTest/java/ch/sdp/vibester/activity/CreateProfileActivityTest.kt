@@ -100,7 +100,6 @@ class CreateProfileActivityTest {
 
        Intents.intended(IntentMatchers.hasComponent(ProfileActivity::class.java.name))
        Intents.intended(IntentMatchers.hasExtra("email", mockEmail))
-       Intents.intended(IntentMatchers.hasExtra("isUnitTest", true))
     }
 
 }

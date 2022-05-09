@@ -15,12 +15,10 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
 import ch.sdp.vibester.auth.FireBaseAuthenticator
-import com.example.android.architecture.blueprints.todoapp.HiltTestActivity
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import dagger.hilt.android.testing.HiltTestApplication
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.After
@@ -30,7 +28,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-@Config(application = HiltTestApplication::class, maxSdk = Build.VERSION_CODES.P)
 @HiltAndroidTest
 class WelcomeScreenFragmentTest {
 
@@ -97,19 +94,12 @@ class WelcomeScreenFragmentTest {
 
     @Test
     fun checkIntentOnScoreboard() {
-        val intent = Intent.makeMainActivity(
-            ComponentName(
-                ApplicationProvider.getApplicationContext(),
-                HiltTestActivity::class.java
-            )
-        )
+        val intent = Intent(ApplicationProvider.getApplicationContext(), MainActivity::class.java)
+        createMockAuthenticatorLoggedOut()
+
         val scn: ActivityScenario<MainActivity> = ActivityScenario.launch(intent)
 
 
-        createMockAuthenticatorLoggedOut()
-        launchFragmentInContainer<WelcomeScreenFragment>(
-            themeResId = R.style.AppTheme
-        )
         onView(withId(R.id.welcome_scoreboard)).perform(click())
         intended(hasComponent(ScoreBoardActivity::class.java.name))
     }

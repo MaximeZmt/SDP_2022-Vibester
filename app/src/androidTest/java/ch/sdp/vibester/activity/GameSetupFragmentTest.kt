@@ -14,6 +14,8 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withSpinnerText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
+import ch.sdp.vibester.launchFragmentInHiltContainer
+//import ch.sdp.vibester.launchFragmentInHiltContainer
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import org.hamcrest.Matchers
@@ -39,13 +41,14 @@ class GameSetupFragmentTest {
     fun setup() {
         hiltRule.inject()
         Intents.init()
-        launchFragmentInContainer<GameSetupFragment>(
+        launchFragmentInHiltContainer<GameSetupFragment>(
             themeResId = R.style.AppTheme
         )
     }
 
     @Test
     fun checkDefaultSelectDifficulty() {
+
         onView(withId(R.id.difficulty_spinner))
             .check(matches(withSpinnerText(R.string.easy)))
     }

@@ -120,12 +120,19 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Generic listener for the score button, show the score per genre statistic on click
+     */
     private fun setScoreBtnListener() {
         findViewById<Button>(R.id.profile_scores).setOnClickListener {
             toggleVisibility(R.id.profile_scroll_stat)
         }
     }
 
+    /**
+     * toggle the given layout's visibility
+     * @param layout: The given ScrollView id to modify
+     */
     private fun toggleVisibility(layout: Int) {
         if (findViewById<ScrollView>(layout).visibility == VISIBLE) findViewById<ScrollView>(layout).visibility = GONE
         else if (findViewById<ScrollView>(layout).visibility == GONE) findViewById<ScrollView>(layout).visibility = VISIBLE

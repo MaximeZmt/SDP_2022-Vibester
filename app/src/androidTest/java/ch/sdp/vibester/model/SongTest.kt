@@ -86,4 +86,19 @@ class SongTest {
         println(test.get(0).getTrackName())
     }
 
+    @Test
+    fun songBuilderTest() {
+        val songName = "test"
+        val songArtist = "Singer"
+        val artworkUrl = "https://none.com"
+        val previewUrl = "https://none.com"
+
+        val mySong = Song.songBuilder(previewUrl, artworkUrl, songName, songArtist)
+
+        assertEquals(songName, mySong.getTrackName())
+        assertEquals(songArtist, mySong.getArtistName())
+        assertEquals(artworkUrl, mySong.getArtworkUrl())
+        assertEquals(previewUrl, mySong.getPreviewUrl())
+    }
+
 }

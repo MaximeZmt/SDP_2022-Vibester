@@ -1,5 +1,6 @@
 package ch.sdp.vibester.helper
 
+import android.util.Log
 import ch.sdp.vibester.api.ItunesMusicApi
 import ch.sdp.vibester.model.Song
 import ch.sdp.vibester.model.SongList
@@ -18,6 +19,8 @@ open class GameManager : Serializable {
     var gameSongList: MutableList<Pair<String, String>> = mutableListOf()
     private val correctSongs = mutableListOf<Song>() //TODO: question: why this is a val but the next one is a var?
     private var wrongSongs = mutableListOf<Song>()
+    private var artistName = ""
+    private var songName = ""
     var nextSongInd = 0
 
     /**
@@ -78,7 +81,11 @@ open class GameManager : Serializable {
      */
     @JvmName("getCurrentSong1")
     fun getCurrentSong(): Song {
-        return currentSong
+        if(this::currentSong.isInitialized) {
+            return currentSong
+        } else {
+            return Song.songBuilder("http://example.com", "http://example.com", songName, artistName)
+        }
     }
 
     /**
@@ -122,6 +129,8 @@ open class GameManager : Serializable {
     fun setNextSong(): Boolean {
         if (nextSongInd < gameSongList.size) {
             val songPair = gameSongList[nextSongInd]
+            songName = songPair.first
+            artistName = songPair.second
             val songName = songPair.first + " " + songPair.second
             try {
                 currentSong =

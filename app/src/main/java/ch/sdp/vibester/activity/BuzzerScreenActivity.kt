@@ -54,11 +54,10 @@ class BuzzerScreenActivity : GameActivity() {
 
         val intentExtras = intent.extras
         if (intentExtras != null) {
-
+            super.setMax(intent)
             val nPlayers = intentExtras.getInt("Number of players")
             val allPoints = Array(nPlayers, { i -> 0 })
-            val playersFull = intentExtras.getStringArray("Player Names")
-            val players = nPlayers.let { playersFull?.copyOfRange(0, it) }
+            val players = nPlayers.let { intentExtras.getStringArray("Player Names")?.copyOfRange(0, it) }
 
             if (intentExtras.getSerializable("gameManager") != null) {
                 gameManager = intentExtras.getSerializable("gameManager") as GameManager

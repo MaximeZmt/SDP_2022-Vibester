@@ -211,6 +211,7 @@ class TypingGameActivityTest {
 
         val intent =
             Intent(ApplicationProvider.getApplicationContext(), TypingGameActivity::class.java)
+        intent.putExtra("gameManager", gameManager)
         val scn: ActivityScenario<TypingGameActivity> = ActivityScenario.launch(intent)
         val ctx = ApplicationProvider.getApplicationContext() as Context
         createMockInvocation()

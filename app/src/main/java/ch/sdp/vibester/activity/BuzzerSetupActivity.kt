@@ -17,15 +17,17 @@ class BuzzerSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
     var text = "One"
 
     lateinit var gameManager: GameManager
+    var difficulty: String = "Easy"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_buzzer_setup)
         val ctx: Context = this
 
-        val getIntent = intent.extras
-        if (getIntent != null) {
-            gameManager = getIntent.getSerializable("gameManager") as GameManager
+        val intentExtras = intent.extras
+        if (intentExtras != null) {
+            gameManager = intentExtras.getSerializable("gameManager") as GameManager
+            difficulty = intentExtras.getString("Difficulty").toString()
         }
 
         val spinner: Spinner = findViewById(R.id.nb_player_spinner)
@@ -97,6 +99,7 @@ class BuzzerSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
             intent.putExtra("Number of players", 1)
         }
         intent.putExtra("gameManager", gameManager)
+        intent.putExtra("Difficulty", difficulty)
         val editTextIdArray =
             arrayOf(R.id.namePlayer1, R.id.namePlayer2, R.id.namePlayer3, R.id.namePlayer4)
         var i = 0

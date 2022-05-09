@@ -12,9 +12,13 @@ import ch.sdp.vibester.R
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.Database
 import ch.sdp.vibester.database.PersistanceSetter
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class WelcomeScreenFragment : Fragment(),View.OnClickListener {
+    @Inject
+    lateinit var authenticator: FireBaseAuthenticator
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,7 +44,7 @@ class WelcomeScreenFragment : Fragment(),View.OnClickListener {
         val userStatusTextValue = requireView().findViewById<TextView>(R.id.user_status)
         if(FireBaseAuthenticator.isLoggedIn())
         {
-            userStatusTextValue.text = "User: " + FireBaseAuthenticator.getCurrentUserMail()
+            userStatusTextValue.text = "User: " + authenticator.getCurrentUserMail()
         }
     }
 

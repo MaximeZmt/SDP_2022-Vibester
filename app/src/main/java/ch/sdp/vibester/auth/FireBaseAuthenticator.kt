@@ -26,17 +26,6 @@ class FireBaseAuthenticator @Inject constructor() {
         }
 
         /**
-         * API: return the mail of the user if logged in otherwise empty string
-         */
-        fun getCurrentUserMail(): String {
-            var mail = ""
-            if (isLoggedIn()) {
-                mail = FirebaseAuth.getInstance().currentUser!!.email.toString()
-            }
-            return mail
-        }
-
-        /**
          * API: return the uid of the user if logged in otherwise empty string
          */
         fun getCurrentUID(): String {
@@ -84,6 +73,13 @@ class FireBaseAuthenticator @Inject constructor() {
         return Firebase.auth.currentUser
     }
 
+    fun getCurrentUserMail(): String {
+        var mail = ""
+        if (isLoggedIn()) {
+            mail = FirebaseAuth.getInstance().currentUser!!.email.toString()
+        }
+        return mail
+    }
 
     /**
      * A function to log in with email and password

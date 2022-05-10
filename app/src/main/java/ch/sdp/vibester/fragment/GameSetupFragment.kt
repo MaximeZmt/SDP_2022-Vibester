@@ -192,13 +192,15 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
             R.id.local_typing_game_button -> chooseGame("local_typing", TypingGameManager())
             R.id.local_lyrics_game_button -> chooseGame("local_lyrics", GameManager())
             R.id.online_buzzer_game_button -> switchToGameNoParameters(ChoosePartyRoomActivity())
-            R.id.difficulty_proceed -> proceedGame()
+
             R.id.btsButton -> chooseGenre(method = LastfmMethod.BY_ARTIST.method, artist = "BTS", mode = R.string.bts.toString())
             R.id.kpopButton -> chooseGenre(method = LastfmMethod.BY_TAG.method, tag = "kpop", mode = R.string.kpop.toString())
             R.id.imagDragonsButton -> chooseGenre(method = LastfmMethod.BY_ARTIST.method, artist = "Imagine Dragons", mode = R.string.imagine_dragons.toString())
             R.id.rockButton-> chooseGenre(method = LastfmMethod.BY_TAG.method, tag = "rock", mode = R.string.rock.toString())
             R.id.topTracksButton -> chooseGenre(method = LastfmMethod.BY_CHART.method, mode = R.string.top_tracks.toString())
             R.id.billieEilishButton -> chooseGenre(method = LastfmMethod.BY_ARTIST.method, artist = "Billie Eilish", mode = R.string.billie_eilish.toString())
+
+            R.id.difficulty_proceed -> proceedGame()
         }
     }
 

@@ -69,8 +69,8 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
             if (view.findViewById<ConstraintLayout>(R.id.chooseGenre).visibility == View.VISIBLE) {
                 toggleViewsVisibility(goneView = view.findViewById<ConstraintLayout>(R.id.chooseGenre),
                     visibleView = view.findViewById<LinearLayout>(R.id.chooseGame))
-            } else if (view.findViewById<ConstraintLayout>(R.id.gameSetting).visibility == View.VISIBLE) {
-                toggleViewsVisibility(goneView =view.findViewById<ConstraintLayout>(R.id.gameSetting),
+            } else if (view.findViewById<RelativeLayout>(R.id.chooseSetting).visibility == View.VISIBLE) {
+                toggleViewsVisibility(goneView =view.findViewById<RelativeLayout>(R.id.chooseSetting),
                     visibleView = view.findViewById<ConstraintLayout>(R.id.chooseGenre))
             }
         }
@@ -180,7 +180,7 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
         uri.tag = tag
 
         toggleViewsVisibility(goneView = requireView().findViewById<ConstraintLayout>(R.id.chooseGenre),
-            visibleView = requireView().findViewById<ConstraintLayout>(R.id.gameSetting))
+            visibleView = requireView().findViewById<ConstraintLayout>(R.id.chooseSetting))
 
         gameManager.gameMode = mode
         setGameSongList(uri)

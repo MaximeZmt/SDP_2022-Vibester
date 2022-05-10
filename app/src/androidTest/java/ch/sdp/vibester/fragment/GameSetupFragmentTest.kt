@@ -54,7 +54,6 @@ class GameSetupFragmentTest {
 
     @Test
     fun checkDefaultSelectDifficulty() {
-
         onView(withId(R.id.difficulty_spinner))
             .check(matches(withSpinnerText(R.string.easy)))
     }
@@ -65,6 +64,28 @@ class GameSetupFragmentTest {
             .check(matches(withSpinnerText(R.string.one)))
     }
 
+    @Test
+    fun returnFromGenreToGame(){
+        onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
+        onView(withId(R.id.chooseGame)).check(matches(withEffectiveVisibility(Visibility.GONE)))
+        onView(withId(R.id.chooseGenre)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)));
+
+        onView(withId(R.id.gameSetup_returnToMain)).perform(click())
+        onView(withId(R.id.chooseGenre)).check(matches(withEffectiveVisibility(Visibility.GONE)))
+        onView(withId(R.id.chooseGame)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+    }
+
+    @Test
+    fun returnFromSettingToGenre(){
+        onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
+        onView(withId(R.id.btsButton)).perform(click())
+        onView(withId(R.id.chooseGenre)).check(matches(withEffectiveVisibility(Visibility.GONE)))
+        onView(withId(R.id.chooseSetting)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)));
+
+        onView(withId(R.id.gameSetup_returnToMain)).perform(click())
+        onView(withId(R.id.chooseSetting)).check(matches(withEffectiveVisibility(Visibility.GONE)))
+        onView(withId(R.id.chooseGenre)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+    }
 
     @Test
     fun checkCustomSelectEasy() {

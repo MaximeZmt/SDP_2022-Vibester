@@ -76,7 +76,7 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
         }
     }
 
-    private fun toggleViewsVisibility(goneView: View, visibleView:View){
+    private fun toggleViewsVisibility(goneView: View, visibleView:View) {
         goneView.visibility = View.GONE
         visibleView.visibility = View.VISIBLE
     }

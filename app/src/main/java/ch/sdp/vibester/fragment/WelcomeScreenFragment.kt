@@ -16,7 +16,7 @@ import ch.sdp.vibester.database.PersistanceSetter
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-/*
+/**
 * WelcomeScreen Fragment with a button in the bottom navigation.
 */
 @AndroidEntryPoint

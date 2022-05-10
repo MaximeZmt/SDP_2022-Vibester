@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools" android:id="@+id/bottom_navigation"
     app:startDestination="@id/welcomeScreenBtn">
 
-    <fragment android:id="@+id/welcomeScreenBtn" android:name="ch.sdp.vibester.activity.WelcomeScreenFragment"
+    <fragment android:id="@+id/welcomeScreenBtn" android:name="ch.sdp.vibester.fragment.WelcomeScreenFragment"
         android:label="fragment_home" tools:layout="@layout/fragment_welcome_screen"/>
-    <fragment android:id="@+id/gameSetupBtn" android:name="ch.sdp.vibester.activity.GameSetupFragment"
+    <fragment android:id="@+id/gameSetupBtn" android:name="ch.sdp.vibester.fragment.GameSetupFragment"
         android:label="fragment_settings" tools:layout="@layout/fragment_game_setup"/>
 </navigation>

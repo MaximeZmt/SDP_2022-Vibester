@@ -53,30 +53,34 @@
 
         <Button
             android:id="@+id/buzzer_0"
-            android:layout_width="100dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="invisible"
+            android:backgroundTint="@color/cg_blue"
             android:text="Button" />
 
         <Button
             android:id="@+id/buzzer_1"
-            android:layout_width="100dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone"
+            android:backgroundTint="@color/cg_blue"
             android:text="Button" />
 
         <Button
             android:id="@+id/buzzer_2"
-            android:layout_width="100dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone"
+            android:backgroundTint="@color/cg_blue"
             android:text="Button" />
 
         <Button
             android:id="@+id/buzzer_3"
-            android:layout_width="100dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone"
+            android:backgroundTint="@color/cg_blue"
             android:text="Button" />
     </LinearLayout>
 

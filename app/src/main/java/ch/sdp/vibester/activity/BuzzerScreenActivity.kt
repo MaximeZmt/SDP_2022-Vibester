@@ -20,8 +20,12 @@ class BuzzerScreenActivity : GameActivity() {
     private val artworkDim = 200
     private val noBuzzerPressed = -1
     private val buzzersToRows:HashMap<Int, Int> = initHashmap()
-    private val rowsIdArray = ArrayList(buzzersToRows.values)
-    private val buzIds = ArrayList(buzzersToRows.keys)
+
+    /* the array must be declared explicitly (and not with buzzersToRows.keys)
+    else the buzzers may not be ordered properly
+     */
+    private val buzIds = arrayListOf(R.id.buzzer_0, R.id.buzzer_1, R.id.buzzer_2, R.id.buzzer_3)
+
     private lateinit var gameManager: GameManager
     private lateinit var scoreUpdater: BuzzerScoreUpdater
     private var gameIsOn: Boolean = true
@@ -159,7 +163,7 @@ class BuzzerScreenActivity : GameActivity() {
             points.height = 75
             points.width = 150
             points.gravity = Gravity.RIGHT
-            points.id=rowsIdArray[i]
+            points.id= buzzersToRows[buzIds[i]]!!
 
             score.addView(nameView)
             score.addView(points)

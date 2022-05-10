@@ -28,7 +28,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-/*
+/**
 * Game Setup fragment with a button in the bottom navigation.
 */
 @AndroidEntryPoint

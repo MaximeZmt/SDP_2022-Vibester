@@ -32,7 +32,7 @@ import retrofit2.Response
 * Game Setup fragment with a button in the bottom navigation.
 */
 @AndroidEntryPoint
-class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSelectedListener{
+class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSelectedListener {
     var difficulty = R.string.easy.toString()
     var game = "local_buzzer"
     var gameSize = R.string.one.toString()

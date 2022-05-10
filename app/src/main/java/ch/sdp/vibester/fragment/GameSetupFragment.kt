@@ -70,7 +70,7 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
                 toggleViewsVisibility(goneView = view.findViewById<ConstraintLayout>(R.id.chooseGenre),
                     visibleView = view.findViewById<LinearLayout>(R.id.chooseGame))
             } else if (view.findViewById<RelativeLayout>(R.id.chooseSetting).visibility == View.VISIBLE) {
-                toggleViewsVisibility(goneView =view.findViewById<RelativeLayout>(R.id.chooseSetting),
+                toggleViewsVisibility(goneView = view.findViewById<RelativeLayout>(R.id.chooseSetting),
                     visibleView = view.findViewById<ConstraintLayout>(R.id.chooseGenre))
             }
         }

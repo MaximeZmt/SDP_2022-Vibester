@@ -1,6 +1,5 @@
 package ch.sdp.vibester.activity
 
-import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.espresso.Espresso.onData
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
@@ -14,6 +13,10 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withSpinnerText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
+import ch.sdp.vibester.activity.BuzzerSetupActivity
+import ch.sdp.vibester.activity.ChoosePartyRoomActivity
+import ch.sdp.vibester.activity.LyricsBelongGameActivity
+import ch.sdp.vibester.activity.TypingGameActivity
 import ch.sdp.vibester.launchFragmentInHiltContainer
 //import ch.sdp.vibester.launchFragmentInHiltContainer
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -89,90 +92,48 @@ class GameSetupFragmentTest {
 
         onView(withId(R.id.difficulty_spinner)).check(matches(withSpinnerText(R.string.hard)))
     }
-//
-//    @Test
-//    fun checkIntentOnProceedEasy() {
-//        onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
-//        onView(withId(R.id.btsButton)).perform(click())
-//        onView(withId(R.id.difficulty_spinner)).perform(click())
-//        onData(Matchers.anything()).atPosition(0).perform(click())
-//        onView(withId(R.id.difficulty_proceed)).perform(click())
-//
-//        intended(hasComponent(BuzzerSetupActivity::class.java.name))
-//        intended(hasExtra("Difficulty", "Easy"))
-//    }
-//
-//    @Test
-//    fun checkIntentOnProceedMedium() {
-//        onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
-//        onView(withId(R.id.btsButton)).perform(click())
-//        onView(withId(R.id.difficulty_spinner)).perform(click())
-//        onData(Matchers.anything()).atPosition(1).perform(click())
-//        onView(withId(R.id.difficulty_proceed)).perform(click())
-//
-//        intended(hasComponent(BuzzerSetupActivity::class.java.name))
-//        intended(hasExtra("Difficulty", "Medium"))
-//    }
-//
-//    @Test
-//    fun checkIntentOnProceedHard() {
-//        onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
-//        onView(withId(R.id.btsButton)).perform(click())
-//        onView(withId(R.id.difficulty_spinner)).perform(click())
-//        onData(Matchers.anything()).atPosition(2).perform(click())
-//        onView(withId(R.id.difficulty_proceed)).perform(click())
-//
-//        intended(hasComponent(BuzzerSetupActivity::class.java.name))
-//        intended(hasExtra("Difficulty", "Hard"))
-//    }
-//
-//    @Test
-//    fun localTypingOnClickHard(){
-//        onView(withId(R.id.local_typing_game_button)).perform(scrollTo(), click())
-//        onView(withId(R.id.btsButton)).perform(click())
-//        onView(withId(R.id.difficulty_spinner)).perform(click())
-//        onData(Matchers.anything()).atPosition(2).perform(click())
-//        onView(withId(R.id.difficulty_proceed)).perform(click())
-//
-//        intended(hasComponent(TypingGameActivity::class.java.name))
-//        intended(hasExtra("Difficulty", "Hard"))
-//    }
-//
-//    @Test
-//    fun localTypingOnClickMedium(){
-//        onView(withId(R.id.local_typing_game_button)).perform(scrollTo(), click())
-//        onView(withId(R.id.btsButton)).perform(click())
-//        onView(withId(R.id.difficulty_spinner)).perform(click())
-//        onData(Matchers.anything()).atPosition(1).perform(click())
-//        onView(withId(R.id.difficulty_proceed)).perform(click())
-//
-//        intended(hasComponent(TypingGameActivity::class.java.name))
-//        intended(hasExtra("Difficulty", "Medium"))
-//    }
-//
-//    @Test
-//    fun localTypingOnClickEasy(){
-//        onView(withId(R.id.local_typing_game_button)).perform(scrollTo(), click())
-//        onView(withId(R.id.btsButton)).perform(click())
-//        onView(withId(R.id.difficulty_spinner)).perform(click())
-//        onData(Matchers.anything()).atPosition(0).perform(click())
-//        onView(withId(R.id.difficulty_proceed)).perform(click())
-//
-//        intended(hasComponent(TypingGameActivity::class.java.name))
-//        intended(hasExtra("Difficulty", "Easy"))
-//    }
-//
-//    @Test
-//    fun localLyricsOnClickHard(){
-//        onView(withId(R.id.local_lyrics_game_button)).perform(scrollTo(), click())
-//        onView(withId(R.id.btsButton)).perform(click())
-//        onView(withId(R.id.difficulty_spinner)).perform(click())
-//        onData(Matchers.anything()).atPosition(2).perform(click())
-//        onView(withId(R.id.difficulty_proceed)).perform(click())
-//
-//        intended(hasComponent(LyricsBelongGameActivity::class.java.name))
-//        intended(hasExtra("Difficulty", "Hard"))
-//    }
+
+    @Test
+    fun checkBTSBuzzerEasyProceed() {
+        onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
+        onView(withId(R.id.btsButton)).perform(click())
+        onView(withId(R.id.difficulty_spinner)).perform(click())
+        onData(Matchers.anything()).atPosition(0).perform(click())
+        onView(withId(R.id.difficulty_proceed)).perform(click())
+
+        intended(hasComponent(BuzzerSetupActivity::class.java.name))
+        intended(hasExtra("Difficulty", "Easy"))
+    }
+
+    @Test
+    fun checkBTSTypingEasyProceed() {
+        onView(withId(R.id.local_typing_game_button)).perform(scrollTo(), click())
+        onView(withId(R.id.btsButton)).perform(click())
+        onView(withId(R.id.difficulty_spinner)).perform(click())
+        onData(Matchers.anything()).atPosition(0).perform(click())
+        onView(withId(R.id.difficulty_proceed)).perform(click())
+
+        intended(hasComponent(TypingGameActivity::class.java.name))
+        intended(hasExtra("Difficulty", "Easy"))
+    }
+
+    @Test
+    fun checkBTSLyricsEasyProceed() {
+        onView(withId(R.id.local_lyrics_game_button)).perform(scrollTo(), click())
+        onView(withId(R.id.btsButton)).perform(click())
+        onView(withId(R.id.difficulty_spinner)).perform(click())
+        onData(Matchers.anything()).atPosition(0).perform(click())
+        onView(withId(R.id.difficulty_proceed)).perform(click())
+
+        intended(hasComponent(LyricsBelongGameActivity::class.java.name))
+        intended(hasExtra("Difficulty", "Easy"))
+    }
+
+    @Test
+    fun checkBTSOnlineEasyProceed(){
+        onView(withId(R.id.online_buzzer_game_button)).perform(scrollTo(), click())
+        intended(hasComponent(ChoosePartyRoomActivity::class.java.name))
+    }
 
     @Test
     fun checkCustomSelectOne() {

@@ -31,7 +31,6 @@ class MainActivity : AppCompatActivity() {
 
         //Set up the action bar
         NavigationUI.setupActionBarWithNavController(this, navController)
-
     }
 
     //Set up the back button

@@ -130,11 +130,17 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
         }
     }
 
+    /**
+     * Switch to an activity without any extras in intent.
+     */
     private fun switchToGameNoParameters(nextActivity: AppCompatActivity) {
         val newIntent = Intent(activity, nextActivity::class.java)
         startActivity(newIntent)
     }
 
+    /**
+     * Switch to an activity with extras in intent.
+     */
     private fun switchToGameWithParameters(nextActivity: AppCompatActivity) {
         val newIntent = Intent(activity, nextActivity::class.java)
         newIntent.putExtra("gameManager", gameManager)

@@ -272,39 +272,42 @@ class LyricsBelongGameActivityTest {
         //assertEquals(true, gameManager.getScore() == 1)
     }
 
-//    @Test
-//    fun checkIntentOnEndingForWrongSong() {
-//        createMockInvocation()
-//        val gameManager = setGameManager()
-//        gameManager.setNextSong()
-//        gameManager.gameSize = 1
-//
-//        val intent =
-//            Intent(ApplicationProvider.getApplicationContext(), LyricsBelongGameActivity::class.java)
-//        val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
-//        val ctx = ApplicationProvider.getApplicationContext() as Context
-//        scn.onActivity { activity ->
-//            activity.testCheckLyrics(ctx, speechInputWrong, lyrics, gameManager)
-//        }
-//        val incArray: ArrayList<String> = ArrayList(
-//            gameManager.getWrongSongs().map { it.getTrackName() + " - " + it.getArtistName() })
-//
-//        val statNames: ArrayList<String> = arrayListOf()
-//        val statName = "Total Score"
-//        statNames.addAll(arrayOf(statName, statName, statName, statName, statName))
-//
-//        val statVal: ArrayList<String> = arrayListOf()
-//        val score = gameManager.getScore().toString()
-//        statVal.addAll(arrayOf(score, score, score, score, score))
-//
-//        Intents.intended(IntentMatchers.hasComponent(GameEndingActivity::class.java.name))
-//
-//        Intents.intended(IntentMatchers.hasExtra("nbIncorrectSong", 1))
-//
-//        Intents.intended(IntentMatchers.hasExtra("str_arr_inc", incArray))
-//        Intents.intended(IntentMatchers.hasExtra("str_arr_name", statNames))
-//        Intents.intended(IntentMatchers.hasExtra("str_arr_val", statVal))
-//    }
+    //FIXME the test fails due to double GameEndingActivity intent
+    /*
+    @Test
+    fun checkIntentOnEndingForWrongSong() {
+        createMockInvocation()
+        val gameManager = setGameManager()
+        gameManager.setNextSong()
+        gameManager.gameSize = 1
+
+        val intent =
+            Intent(ApplicationProvider.getApplicationContext(), LyricsBelongGameActivity::class.java)
+        val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
+        val ctx = ApplicationProvider.getApplicationContext() as Context
+        scn.onActivity { activity ->
+            activity.testCheckLyrics(ctx, speechInputWrong, lyrics, gameManager)
+        }
+        val incArray: ArrayList<String> = ArrayList(
+            gameManager.getWrongSongs().map { it.getTrackName() + " - " + it.getArtistName() })
+
+        val statNames: ArrayList<String> = arrayListOf()
+        val statName = "Total Score"
+        statNames.addAll(arrayOf(statName, statName, statName, statName, statName))
+
+        val statVal: ArrayList<String> = arrayListOf()
+        val score = gameManager.getScore().toString()
+        statVal.addAll(arrayOf(score, score, score, score, score))
+
+        Intents.intended(IntentMatchers.hasComponent(GameEndingActivity::class.java.name))
+
+        Intents.intended(IntentMatchers.hasExtra("nbIncorrectSong", 1))
+
+        Intents.intended(IntentMatchers.hasExtra("str_arr_inc", incArray))
+        Intents.intended(IntentMatchers.hasExtra("str_arr_name", statNames))
+        Intents.intended(IntentMatchers.hasExtra("str_arr_val", statVal))
+    }
+     */
 
     @Test
     fun checkIntentOnNextRoundForCorrectSong() {

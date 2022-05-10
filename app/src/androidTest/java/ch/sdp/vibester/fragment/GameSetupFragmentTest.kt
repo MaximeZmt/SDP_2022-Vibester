@@ -43,7 +43,7 @@ class GameSetupFragmentTest {
     }
 
     @Before
-    fun setup() {
+    fun setUp() {
         hiltRule.inject()
         Intents.init()
         launchFragmentInHiltContainer<GameSetupFragment>(

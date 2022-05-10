@@ -58,17 +58,16 @@ class WelcomeScreenFragmentTest {
         return mockUser
     }
 
-    @After
-    fun clean() {
-        Intents.release()
-    }
-
     @Before
-    fun setup() {
+    fun setUp() {
         hiltRule.inject()
         Intents.init()
     }
 
+    @After
+    fun clean() {
+        Intents.release()
+    }
 
     @Test
     fun checkIntentOnMyAccountLoggedOut() {

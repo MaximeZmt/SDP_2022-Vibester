@@ -12,65 +12,86 @@
         android:id="@+id/profileContent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="165dp">
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
 
         <RelativeLayout
-            android:id="@+id/relativeLayout"
+            android:id="@+id/profile_relativeLayout"
             android:layout_width="403dp"
-            android:layout_height="42dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="60dp"
             android:layout_weight=".2"
-            app:layout_constraintBottom_toTopOf="@+id/showQRCode"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/myCardView"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginStart="30dp"
+                app:cardCornerRadius="50dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <ImageView
+                    android:id="@+id/avatar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="99dp"
+                    android:adjustViewBounds="true"
+                    android:foregroundGravity="left"
+                    tools:srcCompat="@tools:sample/avatars" />
+            </androidx.cardview.widget.CardView>
 
             <TextView
                 android:id="@+id/username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_weight=".4"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_toEndOf="@id/myCardView"
                 android:text="@string/authentication_placeholderUsername"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <ImageView
                 android:id="@+id/editUser"
                 android:layout_width="30dp"
-                android:layout_height="27dp"
-                android:layout_centerInParent="true"
-                android:layout_marginStart="0dp"
-                android:layout_marginLeft="32dp"
-                android:layout_toRightOf="@+id/username"
+                android:layout_height="20dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="23dp"
+                android:layout_toEndOf="@+id/username"
                 android:src="@drawable/pencil" />
+
+            <ImageView
+                android:id="@+id/showQRCode"
+                android:layout_width="30dp"
+                android:layout_height="27dp"
+                android:layout_below="@+id/editUser"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@+id/username"
+                android:src="@drawable/qr_code" />
 
         </RelativeLayout>
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/profile_returnToMain"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:backgroundTint="@color/light_coral"
-            android:clickable="true"
-            android:src="@android:drawable/ic_menu_revert"
-            app:borderWidth="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
 
         <TableLayout
-            android:id="@+id/profileStatistics"
+            android:id="@+id/profile_total_games"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/table_shape"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.495"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.82">
+            app:layout_constraintTop_toBottomOf="@+id/profile_relativeLayout">
 
             <TableRow
                 android:layout_width="match_parent"
@@ -81,13 +102,13 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="monospace"
                     android:padding="18dip"
-                    android:text="@string/ranking"
+                    android:text="@string/total_games"
                     android:textAlignment="viewStart"
                     android:textColor="#000"
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/ranking"
+                    android:id="@+id/profile_total_games_stat"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fontFamily="monospace"
@@ -98,86 +119,192 @@
                     android:textSize="16sp" />
             </TableRow>
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="18dip"
-                    android:text="@string/total_games"
-                    android:textColor="#000"
-                    android:textSize="16sp"
-                    android:typeface="monospace" />
-
-                <TextView
-                    android:id="@+id/totalGames"
-                    android:layout_width="147dp"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="monospace"
-                    android:padding="18dip"
-                    android:text="@string/authentication_placeholderEmptyScore"
-                    android:textAlignment="viewEnd"
-                    android:textColor="#000"
-                    android:textSize="16sp"
-                    tools:text="@string/authentication_placeholderEmptyScore" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="18dip"
-                    android:text="@string/best_score"
-                    android:textColor="#000"
-                    android:textSize="16sp"
-                    android:typeface='monospace' />
-
-                <TextView
-                    android:id="@+id/bestScore"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="monospace"
-                    android:padding="18dip"
-                    android:text="@string/authentication_placeholderEmptyScore"
-                    android:textAlignment="viewEnd"
-                    android:textColor="#000"
-                    android:textSize="16sp"
-                    tools:text="@string/authentication_placeholderEmptyScore" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="monospace"
-                    android:padding="18dip"
-                    android:text="@string/correct_songs"
-                    android:textColor="#000"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/correctSongs"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="monospace"
-                    android:padding="18dip"
-                    android:text="@string/authentication_placeholderEmptyScore"
-                    android:textAlignment="viewEnd"
-                    android:textColor="#000"
-                    android:textSize="16sp"
-                    tools:text="@string/authentication_placeholderEmptyScore" />
-
-            </TableRow>
-
         </TableLayout>
+
+        <ScrollView
+            android:id="@+id/profile_scroll_stat"
+            android:layout_width="wrap_content"
+            android:layout_height="300dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginBottom="40dp"
+            app:layout_constraintBottom_toTopOf="@+id/profile_returnToMain"
+            app:layout_constraintTop_toBottomOf="@+id/profile_scores"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TableLayout
+                android:id="@+id/profileStatistics"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/table_shape"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.495"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.82">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="monospace"
+                        android:padding="18dip"
+                        android:text="@string/top_tracks"
+                        android:textAlignment="viewStart"
+                        android:textColor="#000"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/profile_top_tracks"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="monospace"
+                        android:padding="18dip"
+                        android:text="@string/authentication_placeholderEmptyScore"
+                        android:textAlignment="viewEnd"
+                        android:textColor="#000"
+                        android:textSize="16sp" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="18dip"
+                        android:text="@string/kpop"
+                        android:textColor="#000"
+                        android:textSize="16sp"
+                        android:typeface="monospace" />
+
+                    <TextView
+                        android:id="@+id/profile_kpop"
+                        android:layout_width="147dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="monospace"
+                        android:padding="18dip"
+                        android:text="@string/authentication_placeholderEmptyScore"
+                        android:textAlignment="viewEnd"
+                        android:textColor="#000"
+                        android:textSize="16sp"
+                        tools:text="@string/authentication_placeholderEmptyScore" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="18dip"
+                        android:text="@string/rock"
+                        android:textColor="#000"
+                        android:textSize="16sp"
+                        android:typeface="monospace" />
+
+                    <TextView
+                        android:id="@+id/profile_rock"
+                        android:layout_width="147dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="monospace"
+                        android:padding="18dip"
+                        android:text="@string/authentication_placeholderEmptyScore"
+                        android:textAlignment="viewEnd"
+                        android:textColor="#000"
+                        android:textSize="16sp"
+                        tools:text="@string/authentication_placeholderEmptyScore" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="18dip"
+                        android:text="@string/bts"
+                        android:textColor="#000"
+                        android:textSize="16sp"
+                        android:typeface="monospace" />
+
+                    <TextView
+                        android:id="@+id/profile_bts"
+                        android:layout_width="147dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="monospace"
+                        android:padding="18dip"
+                        android:text="@string/authentication_placeholderEmptyScore"
+                        android:textAlignment="viewEnd"
+                        android:textColor="#000"
+                        android:textSize="16sp"
+                        tools:text="@string/authentication_placeholderEmptyScore" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="18dip"
+                        android:text="@string/imagine_dragons"
+                        android:textColor="#000"
+                        android:textSize="16sp"
+                        android:typeface="monospace" />
+
+                    <TextView
+                        android:id="@+id/profile_imagine_dragons"
+                        android:layout_width="147dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="monospace"
+                        android:padding="18dip"
+                        android:text="@string/authentication_placeholderEmptyScore"
+                        android:textAlignment="viewEnd"
+                        android:textColor="#000"
+                        android:textSize="16sp"
+                        tools:text="@string/authentication_placeholderEmptyScore" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="18dip"
+                        android:text="@string/billie_eilish"
+                        android:textColor="#000"
+                        android:textSize="16sp"
+                        android:typeface="monospace" />
+
+                    <TextView
+                        android:id="@+id/profile_billie_eilish"
+                        android:layout_width="147dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="monospace"
+                        android:padding="18dip"
+                        android:text="@string/authentication_placeholderEmptyScore"
+                        android:textAlignment="viewEnd"
+                        android:textColor="#000"
+                        android:textSize="16sp"
+                        tools:text="@string/authentication_placeholderEmptyScore" />
+                </TableRow>
+
+            </TableLayout>
+
+        </ScrollView>
 
 
         <Button
@@ -190,43 +317,48 @@
             android:stateListAnimator="@null"
             android:text="logout"
             android:translationZ="10dp"
+            app:layout_constraintRight_toLeftOf="@+id/profile_returnToMain"
+            app:layout_constraintTop_toBottomOf="@+id/profile_scroll_stat"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
-            android:id="@+id/showQRCode"
+            android:id="@+id/profile_scores"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="36dp"
+            android:layout_marginStart="52dp"
+            android:layout_marginTop="16dp"
             android:backgroundTint="@color/cg_blue"
-            android:text="QR Code"
-            app:layout_constraintBottom_toTopOf="@+id/profileStatistics"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:text="Scores"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profile_total_games" />
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/myCardView"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginStart="50dp"
-            android:layout_marginEnd="50dp"
-            android:layout_marginBottom="56dp"
-            app:cardCornerRadius="50dp"
-            app:layout_constraintBottom_toTopOf="@+id/relativeLayout"
+        <Button
+            android:id="@+id/profile_friends"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="72dp"
+            android:backgroundTint="@color/cg_blue"
+            android:text="Friends"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/profile_total_games" />
 
-            <ImageView
-                android:id="@+id/avatar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:foregroundGravity="left"
-                tools:srcCompat="@tools:sample/avatars" />
-        </androidx.cardview.widget.CardView>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/profile_returnToMain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="@color/light_coral"
+            android:clickable="true"
+            android:src="@android:drawable/ic_menu_revert"
+            app:borderWidth="0dp"
+            app:layout_constraintLeft_toRightOf="@+id/logout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

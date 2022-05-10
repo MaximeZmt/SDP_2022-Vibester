@@ -18,9 +18,11 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.LastfmMethod
+import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.helper.GameManager
 import ch.sdp.vibester.model.Song
+import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -55,11 +57,31 @@ class TypingGameActivityTest {
     @JvmField
     val mockUsersRepo = mockk<DataGetter>()
 
-    private fun createMockInvocation() {
+    private fun createMockDataGetter() {
         every { mockUsersRepo.setSubFieldValue(any(), any(), any(), any()) } answers {}
         every { mockUsersRepo.updateFieldInt(any(), any(), any(), any()) } answers {}
         every { mockUsersRepo.setFieldValue(any(), any(), any()) } answers {}
         every { mockUsersRepo.updateSubFieldInt(any(), any(), any(), any(), any()) } answers {}
+    }
+
+    @BindValue @JvmField
+    val mockAuthenticator = mockk<FireBaseAuthenticator>()
+
+    private fun createMockAuthenticator() {
+        val mockUser = createMockUser()
+        every { mockAuthenticator.getCurrUser() } returns mockUser
+        every { mockAuthenticator.getCurrUID() } returns mockUser.uid
+        every { mockAuthenticator.isLoggedIn() } returns true
+
+    }
+
+    private fun createMockUser(): FirebaseUser {
+        val email = "u@u.c"
+        val uid = "uid"
+        val mockUser = mockk<FirebaseUser>()
+        every { mockUser.email } returns email
+        every { mockUser.uid } returns uid
+        return mockUser
     }
 
     private val expectedSize = 200
@@ -134,7 +156,8 @@ class TypingGameActivityTest {
 
     @Test
     fun guessLayoutTest() {
-        createMockInvocation()
+        createMockDataGetter()
+        createMockAuthenticator()
         val inputTxt = """
             {
                 "resultCount":1,
@@ -187,7 +210,8 @@ class TypingGameActivityTest {
         intent.putExtra("gameManager", gameManager)
         val scn: ActivityScenario<TypingGameActivity> = ActivityScenario.launch(intent)
         val ctx = ApplicationProvider.getApplicationContext() as Context
-        createMockInvocation()
+        createMockDataGetter()
+        createMockAuthenticator()
         scn.onActivity { activity ->
             activity.checkAnswer(ctx, songTest, gameManager)
         }
@@ -214,7 +238,8 @@ class TypingGameActivityTest {
         intent.putExtra("gameManager", gameManager)
         val scn: ActivityScenario<TypingGameActivity> = ActivityScenario.launch(intent)
         val ctx = ApplicationProvider.getApplicationContext() as Context
-        createMockInvocation()
+        createMockDataGetter()
+        createMockAuthenticator()
         scn.onActivity { activity ->
             activity.checkAnswer(ctx, songTest, gameManager)
         }
@@ -228,7 +253,8 @@ class TypingGameActivityTest {
     */
     @Test
     fun checkIntentOnEnding() {
-        createMockInvocation()
+        createMockDataGetter()
+        createMockAuthenticator()
         val inputTxt = """
             {
                 "resultCount":1,
@@ -276,7 +302,8 @@ class TypingGameActivityTest {
         val intent = Intent(ApplicationProvider.getApplicationContext(), TypingGameActivity::class.java)
         val scn: ActivityScenario<TypingGameActivity> = ActivityScenario.launch(intent)
         val ctx = ApplicationProvider.getApplicationContext() as Context
-        createMockInvocation()
+        createMockDataGetter()
+        createMockAuthenticator()
         scn.onActivity { activity ->
             activity.testFirstRound(ctx, gameManager)
             activity.testProgressBar()
@@ -304,7 +331,8 @@ class TypingGameActivityTest {
 
     @Test
     fun nextButtonOnClick(){
-        createMockInvocation()
+        createMockDataGetter()
+        createMockAuthenticator()
         val gameManager = setGameManager(2)
         assertEquals(gameManager.getSongList().size, 2)
 

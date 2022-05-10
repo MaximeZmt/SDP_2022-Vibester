@@ -122,7 +122,7 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
     /**
      * Start the game based on the chosen mode
      */
-    private fun proceedGame(){
+    private fun proceedGame() {
         when (this.game) {
             "local_buzzer" -> { switchToGameWithParameters(BuzzerSetupActivity()) }
             "local_typing" -> { switchToGameWithParameters(TypingGameActivity()) }

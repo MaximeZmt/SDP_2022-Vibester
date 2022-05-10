@@ -48,14 +48,15 @@ class ProfileActivityTest {
     @BindValue @JvmField
     val mockAuthenticator = mockk<FireBaseAuthenticator>()
 
-    private fun createMockAuthenticatorInvocation() {
+    private fun createMockAuthenticator() {
         val mockUser = createMockUser()
         every { mockAuthenticator.getCurrUser() } returns mockUser
+        every { mockAuthenticator.isLoggedIn() } returns false
     }
 
     private fun createMockUser(): FirebaseUser {
-        val email = "mockuser@gmail.com"
-        val uid = "mockuseruid"
+        val email = "u@u.c"
+        val uid = "uid"
         val mockUser = mockk<FirebaseUser>()
         every { mockUser.email } returns email
         every { mockUser.uid } returns uid
@@ -98,7 +99,7 @@ class ProfileActivityTest {
         val intent = Intent(ctx, ProfileActivity::class.java)
 
         createMockDataGetter(inputProfile)
-        createMockAuthenticatorInvocation()
+        createMockAuthenticator()
         createMockImageGetter()
 
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
@@ -122,13 +123,13 @@ class ProfileActivityTest {
         val intent = Intent(ctx, ProfileActivity::class.java)
 
         createMockDataGetter(inputProfile)
-        createMockAuthenticatorInvocation()
+        createMockAuthenticator()
         createMockImageGetter()
 
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
         onView(withId(R.id.profile_scores)).perform(click())
 
-        onView(withId(R.id.profile_scroll_stat)).check(matches(isDisplayed()))
+        onView(withId(R.id.profileStatistics)).check(matches(isDisplayed()))
 
         onView(withId(R.id.profile_top_tracks)).check(matches(withText(inputProfile.scores.getOrDefault("top tracks", 0).toString())))
         onView(withId(R.id.profile_kpop)).check(matches(withText(inputProfile.scores.getOrDefault("kpop", 0).toString())))
@@ -145,7 +146,7 @@ class ProfileActivityTest {
         val intent = Intent(ctx, ProfileActivity::class.java)
 
         createMockDataGetter(inputProfile)
-        createMockAuthenticatorInvocation()
+        createMockAuthenticator()
         createMockImageGetter()
 
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
@@ -162,7 +163,7 @@ class ProfileActivityTest {
         val intent = Intent(ctx, ProfileActivity::class.java)
 
         createMockDataGetter(inputProfile)
-        createMockAuthenticatorInvocation()
+        createMockAuthenticator()
         createMockImageGetter()
 
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
@@ -180,7 +181,7 @@ class ProfileActivityTest {
         val intent = Intent(ctx, ProfileActivity::class.java)
 
         createMockDataGetter(inputProfile)
-        createMockAuthenticatorInvocation()
+        createMockAuthenticator()
         createMockImageGetter()
 
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
@@ -199,7 +200,7 @@ class ProfileActivityTest {
         val intent = Intent(ctx, ProfileActivity::class.java)
 
         createMockDataGetter(inputProfile)
-        createMockAuthenticatorInvocation()
+        createMockAuthenticator()
         createMockImageGetter()
 
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
@@ -222,7 +223,7 @@ class ProfileActivityTest {
         val intent = Intent(ctx, ProfileActivity::class.java)
 
         createMockDataGetter(inputProfile)
-        createMockAuthenticatorInvocation()
+        createMockAuthenticator()
         createMockImageGetter()
 
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
@@ -239,7 +240,7 @@ class ProfileActivityTest {
         val intent = Intent(ctx, ProfileActivity::class.java)
 
         createMockDataGetter(inputProfile)
-        createMockAuthenticatorInvocation()
+        createMockAuthenticator()
         createMockImageGetter()
 
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
@@ -255,7 +256,7 @@ class ProfileActivityTest {
         val intent = Intent(ctx, ProfileActivity::class.java)
 
         createMockDataGetter(inputProfile)
-        createMockAuthenticatorInvocation()
+        createMockAuthenticator()
         createMockImageGetter()
 
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)

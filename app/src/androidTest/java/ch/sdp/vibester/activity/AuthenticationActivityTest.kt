@@ -57,8 +57,8 @@ class AuthenticationActivityTest {
     private fun createMockTask(successful: Boolean): Task<AuthResult> {
         val taskResult = mockk<Task<AuthResult>>()
 
-        every {taskResult.isSuccessful} returns successful
-        every {taskResult.addOnCompleteListener(any<Activity>(), any<OnCompleteListener<AuthResult>>())} answers {
+        every { taskResult.isSuccessful } returns successful
+        every { taskResult.addOnCompleteListener(any<Activity>(), any<OnCompleteListener<AuthResult>>()) } answers {
             secondArg<OnCompleteListener<AuthResult>>().onComplete(taskResult)
             taskResult
         }
@@ -94,7 +94,7 @@ class AuthenticationActivityTest {
 
     @Test
     fun logInIncorrect() {
-        val username = "johnyyy@test.com"
+        val username = "u@u.c"
         val password = "password"
 
         val mockTask = createMockTask(false)
@@ -109,7 +109,7 @@ class AuthenticationActivityTest {
 
     @Test
     fun createAccountIncorrect() {
-        val username = "john@test.com"
+        val username = "u@u.c"
         val password = "password"
 
         val mockTask = createMockTask(false)
@@ -131,6 +131,7 @@ class AuthenticationActivityTest {
 
     @Test
     fun returnToMain() {
+        every { mockAuthenticator.isLoggedIn() } returns false
         onView(withId(R.id.authentication_returnToMain)).perform(click())
         Intents.intended(IntentMatchers.hasComponent(WelcomeActivity::class.java.name))
     }

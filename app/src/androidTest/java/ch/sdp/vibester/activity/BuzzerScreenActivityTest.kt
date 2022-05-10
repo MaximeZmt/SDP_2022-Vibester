@@ -153,7 +153,6 @@ class BuzzerScreenActivityTest {
         intent.putExtra("Number of players", mockPlayersNumber)
         intent.putExtra("Player Names", mockNameArray)
         val gameManager = setGameManager()
-        gameManager.setNextSong()
         intent.putExtra("gameManager", gameManager)
         val scn: ActivityScenario<BuzzerScreenActivity> = ActivityScenario.launch(intent)
         // Did the round start?

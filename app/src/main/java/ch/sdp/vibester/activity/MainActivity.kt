@@ -11,6 +11,9 @@ import ch.sdp.vibester.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
+/**
+ * Activity to maintain bottom navigation with fragments.
+ */
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 

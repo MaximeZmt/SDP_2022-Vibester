@@ -129,14 +129,19 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
      */
     private fun proceedGame(){
         when (this.game) {
-            "local_buzzer" -> { switchToGame(BuzzerSetupActivity()) }
-            "local_typing" -> { switchToGame(TypingGameActivity()) }
-            "local_lyrics" -> { switchToGame(LyricsBelongGameActivity()) }
+            "local_buzzer" -> { switchToGameWithParameters(BuzzerSetupActivity()) }
+            "local_typing" -> { switchToGameWithParameters(TypingGameActivity()) }
+            "local_lyrics" -> { switchToGameWithParameters(LyricsBelongGameActivity()) }
         }
     }
 
-    private fun switchToGame(nextActivity: AppCompatActivity){
-        val newIntent = Intent(getActivity(), nextActivity::class.java)
+    private fun switchToGameNoParameters(nextActivity: AppCompatActivity){
+        val newIntent = Intent(activity, nextActivity::class.java)
+        startActivity(newIntent)
+    }
+
+    private fun switchToGameWithParameters(nextActivity: AppCompatActivity){
+        val newIntent = Intent(activity, nextActivity::class.java)
         newIntent.putExtra("gameManager", gameManager)
         newIntent.putExtra("Difficulty", difficulty)
         startActivity(newIntent)
@@ -194,7 +199,7 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
             R.id.local_buzzer_game_button -> chooseGame("local_buzzer", BuzzerGameManager())
             R.id.local_typing_game_button -> chooseGame("local_typing", TypingGameManager())
             R.id.local_lyrics_game_button -> chooseGame("local_lyrics", GameManager())
-            R.id.online_buzzer_game_button -> switchToGame(ChoosePartyRoomActivity())
+            R.id.online_buzzer_game_button -> switchToGameNoParameters(ChoosePartyRoomActivity())
             R.id.difficulty_proceed -> proceedGame()
             R.id.btsButton -> chooseGenre(method = LastfmMethod.BY_ARTIST.method, artist = "BTS", mode = R.string.bts.toString())
             R.id.kpopButton -> chooseGenre(method = LastfmMethod.BY_TAG.method, tag = "kpop", mode = R.string.kpop.toString())

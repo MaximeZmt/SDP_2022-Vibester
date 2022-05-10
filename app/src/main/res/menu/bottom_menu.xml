@@ -4,14 +4,14 @@
     <item
         android:id="@+id/welcomeScreenBtn"
         android:title="Home"
-        android:icon="@drawable/logo"
+        android:icon="@drawable/home"
         />
 
 
     <item
         android:id="@+id/gameSetupBtn"
-        android:title="Settings"
-        android:icon="@drawable/logo"
+        android:title="Play"
+        android:icon="@drawable/play"
         />
 
 

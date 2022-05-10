@@ -177,17 +177,14 @@ class BuzzerScreenActivity : GameActivity() {
      */
     private fun buildBuzzers(players: Array<String>, answer: LinearLayout) {
 
-        val buzzers = findViewById<LinearLayout>(R.id.buzzersLayout)
         val buttons = arrayOfNulls<Button>(players.size)
 
         var i = 0
 
         for (pName in players) {
-            val button = Button(this)
-            button.id = buzIds[i]
+            val button = findViewById<Button>(buzIds[i])
             button.text = pName
-            button.width = 100
-            button.height = 0
+            button.visibility=View.VISIBLE
             buttons.set(i, button)
             button.setOnClickListener {
                 if (findViewById<ProgressBar>(R.id.progressBarBuzzer).progress>0 && findViewById<Button>(R.id.nextSongBuzzer).visibility==View.GONE) {
@@ -195,7 +192,6 @@ class BuzzerScreenActivity : GameActivity() {
                     setPressed(button.id)
                 }
             }
-            buzzers.addView(button)
             i = i + 1
         }
     }

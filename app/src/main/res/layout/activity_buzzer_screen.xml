@@ -39,7 +39,7 @@
     <LinearLayout
         android:id="@+id/buzzersLayout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:gravity="center"
@@ -51,6 +51,33 @@
         app:layout_constraintTop_toBottomOf="@+id/go_to_end">
 
 
+        <Button
+            android:id="@+id/buzzer_0"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:text="Button" />
+
+        <Button
+            android:id="@+id/buzzer_1"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:text="Button" />
+
+        <Button
+            android:id="@+id/buzzer_2"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:text="Button" />
+
+        <Button
+            android:id="@+id/buzzer_3"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:text="Button" />
     </LinearLayout>
 
     <TableLayout

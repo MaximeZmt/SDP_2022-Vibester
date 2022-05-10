@@ -128,16 +128,14 @@ class BuzzerScreenActivityTest {
         intent.putExtra("Number of players", mockPlayersNumber)
         intent.putExtra("Player Names", mockNameArray)
         val gameManager = setGameManager()
-        gameManager.setNextSong()
         intent.putExtra("gameManager", gameManager)
         val scn: ActivityScenario<BuzzerScreenActivity> = ActivityScenario.launch(intent)
         // Did the round start?
         val ctx = ApplicationProvider.getApplicationContext() as Context
-        scn.onActivity { activity ->
-            activity.startRoundBuzzer(ctx, gameManager)
-        }
         onView(withId(R.id.buzzer_0)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
-        onView(withId(R.id.answer)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+        onView(withId(R.id.buzzer_1)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+        onView(withId(R.id.buzzer_2)).check(matches(withEffectiveVisibility(Visibility.GONE)))
+        onView(withId(R.id.buzzer_3)).check(matches(withEffectiveVisibility(Visibility.GONE)))
     }
 
     @Test

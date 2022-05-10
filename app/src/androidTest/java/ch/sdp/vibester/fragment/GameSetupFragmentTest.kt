@@ -1,4 +1,4 @@
-package ch.sdp.vibester.activity
+package ch.sdp.vibester.fragment
 
 import androidx.test.espresso.Espresso.onData
 import androidx.test.espresso.Espresso.onView

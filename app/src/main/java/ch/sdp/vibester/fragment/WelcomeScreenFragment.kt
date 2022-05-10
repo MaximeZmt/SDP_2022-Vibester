@@ -1,4 +1,4 @@
-package ch.sdp.vibester.activity
+package ch.sdp.vibester.fragment
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,12 +9,16 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import ch.sdp.vibester.R
+import ch.sdp.vibester.activity.*
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.Database
 import ch.sdp.vibester.database.PersistanceSetter
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+/*
+* WelcomeScreen Fragment with a button in the bottom navigation.
+*/
 @AndroidEntryPoint
 class WelcomeScreenFragment : Fragment(),View.OnClickListener {
 

@@ -1,9 +1,6 @@
-package ch.sdp.vibester.activity
+package ch.sdp.vibester.fragment
 
-import android.content.ComponentName
-import androidx.fragment.app.testing.launchFragmentInContainer
 import android.content.Intent
-import android.os.Build
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
@@ -14,6 +11,7 @@ import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
+import ch.sdp.vibester.activity.*
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.testing.BindValue

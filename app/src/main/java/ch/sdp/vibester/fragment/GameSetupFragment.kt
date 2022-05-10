@@ -135,7 +135,7 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
         startActivity(newIntent)
     }
 
-    private fun switchToGameWithParameters(nextActivity: AppCompatActivity){
+    private fun switchToGameWithParameters(nextActivity: AppCompatActivity) {
         val newIntent = Intent(activity, nextActivity::class.java)
         newIntent.putExtra("gameManager", gameManager)
         newIntent.putExtra("Difficulty", difficulty)

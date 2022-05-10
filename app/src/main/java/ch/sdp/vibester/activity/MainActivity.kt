@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         bottomNav.setupWithNavController(navController)
 
 
-        //Setting up the action bar
+        //Set up the action bar
         NavigationUI.setupActionBarWithNavController(this, navController)
 
     }

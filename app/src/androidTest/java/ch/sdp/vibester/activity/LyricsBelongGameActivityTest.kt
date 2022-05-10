@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
@@ -15,6 +16,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.GrantPermissionRule
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.LastfmMethod
+import ch.sdp.vibester.api.LyricAPI
+import ch.sdp.vibester.api.LyricsOVHApiInterface
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.helper.TypingGameManager
 import dagger.hilt.android.testing.BindValue
@@ -22,6 +25,11 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import io.mockk.every
 import io.mockk.mockk
+import kotlinx.coroutines.runBlocking
+import okhttp3.mockwebserver.MockWebServer
+import okhttp3.mockwebserver.MockResponse
+import okio.buffer
+import okio.source
 import org.hamcrest.CoreMatchers.not
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -29,12 +37,13 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 
 @RunWith(AndroidJUnit4::class)
 @HiltAndroidTest
 class LyricsBelongGameActivityTest {
-
     private val sleepTime: Long = 5000
     private val songName = "Thunder"
     private val artistName = "Imagine Dragons"
@@ -126,19 +135,52 @@ class LyricsBelongGameActivityTest {
     @get:Rule(order = 1)
     val activityRule = ActivityScenarioRule(LyricsBelongGameActivity::class.java)
 
-    @get:Rule
+    @get:Rule(order = 2)
     var permissionRule: GrantPermissionRule =
         GrantPermissionRule.grant(android.Manifest.permission.RECORD_AUDIO)
+
+
+    private val mockWebServer = MockWebServer()
+    private lateinit var service: LyricsOVHApiInterface
 
     @Before
     fun setUp() {
         hiltRule.inject()
         Intents.init()
+        service = Retrofit.Builder()
+            .baseUrl(mockWebServer.url(""))
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(LyricsOVHApiInterface::class.java)
+    }
+
+    private fun enqueueMockResponse(res: String) {
+        javaClass.classLoader?.let {
+            val inputString = it.getResourceAsStream(res)
+            val source = inputString.source().buffer()
+            val mockResponse = MockResponse()
+            mockResponse.setBody(source.readString(Charsets.UTF_8))
+            mockWebServer.enqueue(mockResponse)
+        }
+
+    }
+
+    @Test
+    fun testMockService() {
+        runBlocking {
+            enqueueMockResponse("Lyric_Thunder.json")
+            val responseBody = service.getLyrics("Imagine Dragons", "Bones").execute().body()
+            val obtainLyric = responseBody.lyrics
+            if (obtainLyric != null) {
+                assertEquals(true, obtainLyric.contains(speechInputCorrect, ignoreCase = true))
+            }
+        }
     }
 
     @After
     fun clean() {
         Intents.release()
+        mockWebServer.shutdown()
     }
 
     @BindValue
@@ -176,11 +218,11 @@ class LyricsBelongGameActivityTest {
         }
         /** FIXME: API takes a lot of time to process this request
         comment the following lines if this test fail */
-    //   Thread.sleep(sleepTime)
-    //    onView(withId(R.id.nextSongButton)).check(matches(isDisplayed()))
+        Thread.sleep(sleepTime)
+        onView(withId(R.id.nextSongButton)).check(matches(isDisplayed()))
         //song skipped, not consider as wrong
-    //    assertEquals(true, gameManager.getScore() == 0)
-    //    assertEquals(true, gameManager.getWrongSongs().size == 0)
+        assertEquals(true, gameManager.getScore() == 0)
+        assertEquals(true, gameManager.getWrongSongs().size == 0)
     }
     */
 

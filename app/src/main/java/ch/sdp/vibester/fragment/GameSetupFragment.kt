@@ -161,7 +161,7 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
     /**
      * Set game mode. Set appropriate GameManager.
      */
-    private fun chooseGame(gameMode:String, gameManager: GameManager){
+    private fun chooseGame(gameMode: String, gameManager: GameManager){
         this.game = gameMode
         this.gameManager = gameManager
 

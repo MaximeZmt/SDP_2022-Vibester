@@ -19,6 +19,9 @@ import javax.inject.Inject
 class CreateProfileActivity : AppCompatActivity() {
 
     @Inject
+    lateinit var authenticator: FireBaseAuthenticator
+
+    @Inject
     lateinit var dataGetter: DataGetter
 
     @Inject
@@ -26,13 +29,9 @@ class CreateProfileActivity : AppCompatActivity() {
 
     private val REQUEST_CODE = 500
 
-    var isUnitTest: Boolean = false
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_profile)
-
-        isUnitTest = intent.getBooleanExtra("isUnitTest", false)
 
         val email = intent.getStringExtra("email").toString()
         val username = findViewById<EditText>(R.id.accountUsername)
@@ -41,9 +40,7 @@ class CreateProfileActivity : AppCompatActivity() {
         val btnUploadImg = findViewById<Button>(R.id.uploadImg)
 
         btCreateAcc.setOnClickListener {
-            if (!TestMode.isTest()){
-                dataGetter.setFieldValue(FireBaseAuthenticator.getCurrentUID(), "username", username.text.toString())
-            }
+            dataGetter.setFieldValue(authenticator.getCurrUID(), "username", username.text.toString())
             startNewActivity(email)
         }
 
@@ -55,7 +52,6 @@ class CreateProfileActivity : AppCompatActivity() {
     private fun startNewActivity(email: String) {
         val newIntent = Intent(this, ProfileActivity::class.java)
         newIntent.putExtra("email", email)
-        newIntent.putExtra("isUnitTest", isUnitTest)
 
         startActivity(newIntent)
     }
@@ -76,7 +72,7 @@ class CreateProfileActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE){
-            imageGetter.uploadFile("profileImg/${FireBaseAuthenticator.getCurrentUID()}", data?.data!!) { updateUI() }
+            imageGetter.uploadFile("profileImg/${authenticator.getCurrUID()}", data?.data!!) { updateUI() }
         }
     }
 }

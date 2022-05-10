@@ -14,19 +14,14 @@ import ch.sdp.vibester.api.InternetState
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.Database
 import ch.sdp.vibester.database.PersistanceSetter
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class WelcomeActivity : AppCompatActivity() {
 
-    // For test purpose
-    companion object{
-        var testLoggedIn: Boolean = false
-
-        fun setLoggedIn(){
-            testLoggedIn = true
-        }
-
-    }
+    @Inject
+    lateinit var authenticator: FireBaseAuthenticator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,9 +42,9 @@ class WelcomeActivity : AppCompatActivity() {
 
     private fun updateUserConnectionStatus() {
         val userStatusTextValue = findViewById<TextView>(R.id.user_status)
-        if(FireBaseAuthenticator.isLoggedIn() ||  testLoggedIn)
+        if(authenticator.isLoggedIn())
         {
-            userStatusTextValue.text = "User: " + FireBaseAuthenticator.getCurrentUserMail()
+            userStatusTextValue.text = "User: " + authenticator.getCurrUserMail()
         }
     }
 
@@ -63,7 +58,7 @@ class WelcomeActivity : AppCompatActivity() {
     }
 
     fun switchToProfile(view: View) {
-        if (FireBaseAuthenticator.isLoggedIn() || testLoggedIn){
+        if (authenticator.isLoggedIn()){
             sendDirectIntent(ProfileActivity::class.java)
         }else{
             sendDirectIntent(AuthenticationActivity::class.java)

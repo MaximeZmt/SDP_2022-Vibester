@@ -36,6 +36,9 @@ open class GameActivity : AppCompatActivity() {
     @Inject
     lateinit var dataGetter: DataGetter
 
+    @Inject
+    lateinit var authenticator: FireBaseAuthenticator
+
     /**
      * Sets the countdown timer's maximum(initial) value.
      */
@@ -136,11 +139,11 @@ open class GameActivity : AppCompatActivity() {
      * Function to set scores in the end of the game
      */
     fun setScores(gameManager: GameManager) {
-        if(FireBaseAuthenticator.isLoggedIn()){
-            dataGetter.updateFieldInt(FireBaseAuthenticator.getCurrentUID(), "totalGames", 1, method = "sum")
-            dataGetter.updateFieldInt(FireBaseAuthenticator.getCurrentUID(), "correctSongs", gameManager.getCorrectSongs().size, method = "sum")
-            dataGetter.updateFieldInt(FireBaseAuthenticator.getCurrentUID(), "bestScore", gameManager.getScore(), method = "best")
-            dataGetter.updateSubFieldInt(FireBaseAuthenticator.getCurrentUID(), gameManager.getScore(), "scores", gameManager.gameMode, method = "best")
+        if(authenticator.isLoggedIn()){
+            dataGetter.updateFieldInt(authenticator.getCurrUID(), "totalGames", 1, method = "sum")
+            dataGetter.updateFieldInt(authenticator.getCurrUID(), "correctSongs", gameManager.getCorrectSongs().size, method = "sum")
+            dataGetter.updateFieldInt(authenticator.getCurrUID(), "bestScore", gameManager.getScore(), method = "best")
+            dataGetter.updateSubFieldInt(authenticator.getCurrUID(), gameManager.getScore(), "scores", gameManager.gameMode, method = "best")
         }
     }
 

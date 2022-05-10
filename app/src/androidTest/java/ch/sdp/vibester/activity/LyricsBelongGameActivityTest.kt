@@ -20,14 +20,16 @@ import ch.sdp.vibester.api.LyricAPI
 import ch.sdp.vibester.api.LyricsOVHApiInterface
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.helper.TypingGameManager
-import ch.sdp.vibester.model.Lyric
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.mockkClass
+import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.MockWebServer
+import okhttp3.mockwebserver.MockResponse
+import okio.buffer
+import okio.source
 import org.hamcrest.CoreMatchers.not
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -36,6 +38,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 
 @RunWith(AndroidJUnit4::class)
@@ -138,13 +141,40 @@ class LyricsBelongGameActivityTest {
 
 
     private val mockWebServer = MockWebServer()
+    private lateinit var service: LyricsOVHApiInterface
 
     @Before
     fun setUp() {
         hiltRule.inject()
         Intents.init()
-        mockWebServer.start(8080)
+        service = Retrofit.Builder()
+            .baseUrl(mockWebServer.url(""))
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(LyricsOVHApiInterface::class.java)
+    }
 
+    private fun enqueueMockResponse(res: String) {
+        javaClass.classLoader?.let {
+            val inputString = it.getResourceAsStream(res)
+            val source = inputString.source().buffer()
+            val mockResponse = MockResponse()
+            mockResponse.setBody(source.readString(Charsets.UTF_8))
+            mockWebServer.enqueue(mockResponse)
+        }
+
+    }
+
+    @Test
+    fun testMockService() {
+        runBlocking {
+            enqueueMockResponse("Lyric_Thunder.json")
+            val responseBody = service.getLyrics("Imagine Dragons", "Bones").execute().body()
+            val obtainLyric = responseBody.lyrics
+            if (obtainLyric != null) {
+                assertEquals(true, obtainLyric.contains(speechInputCorrect, ignoreCase = true))
+            }
+        }
     }
 
     @After
@@ -163,18 +193,6 @@ class LyricsBelongGameActivityTest {
         every { mockUsersRepo.setFieldValue(any(), any(), any()) } answers {}
         every { mockUsersRepo.updateSubFieldInt(any(), any(), any(), any(), any()) } answers {}
     }
-
-    /*@BindValue
-    @JvmField
-    val mockLyricApi = mockk<LyricsOVHApiInterface>()
-    val mockLyrics = mockkClass(Lyric::class)
-    private fun createMockLyricInvocation() {
-        every { mockLyrics.lyrics } returns lyrics
-    }
-
-    private fun createMockApiInvocation() {
-        every { mockLyricApi.getLyrics(any(), any()) }
-    }*/
 
     // FIXME: this test fails after implement QR code reader for no reason
     /*@Test

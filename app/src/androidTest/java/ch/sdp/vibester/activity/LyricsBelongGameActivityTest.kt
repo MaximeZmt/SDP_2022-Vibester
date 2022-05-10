@@ -202,33 +202,37 @@ class LyricsBelongGameActivityTest {
     }
     */
 
-//    @Test
-//    fun nextButtonOnClick() {
-//        createMockInvocation()
-//        val gameManager = setGameManager(2)
-//        val intent = Intent(ApplicationProvider.getApplicationContext(), LyricsBelongGameActivity::class.java)
-//        intent.putExtra("gameManager", gameManager)
-//        val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
-//        scn.onActivity { activityRule -> activityRule.testProgressBar() }
-//        Thread.sleep(1000)
-//
-//        onView(withId(R.id.nextSongButton)).check(matches(isDisplayed())).perform(click())
-//        scn.onActivity { activityRule -> activityRule.testProgressBar() }
-//        Thread.sleep(1000)
-//
-//        val statNames: ArrayList<String> = arrayListOf()
-//        val statName = "Total Score"
-//        statNames.addAll(arrayOf(statName, statName, statName, statName, statName))
-//
-//        val statVal: ArrayList<String> = arrayListOf()
-//        val score = "0"
-//        statVal.addAll(arrayOf(score, score, score, score, score))
-//
-//        Intents.intended(IntentMatchers.hasComponent(GameEndingActivity::class.java.name))
-//        Intents.intended(IntentMatchers.hasExtra("nbIncorrectSong", 2))
-//        Intents.intended(IntentMatchers.hasExtra("str_arr_name", statNames))
-//        Intents.intended(IntentMatchers.hasExtra("str_arr_val", statVal))
-//    }
+
+    //FIXME the intent GameEndingActivity is fired twice
+    /*
+    @Test
+    fun nextButtonOnClick() {
+        createMockInvocation()
+        val gameManager = setGameManager(2)
+        val intent = Intent(ApplicationProvider.getApplicationContext(), LyricsBelongGameActivity::class.java)
+        intent.putExtra("gameManager", gameManager)
+        val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
+        scn.onActivity { activityRule -> activityRule.testProgressBar() }
+        Thread.sleep(1000)
+
+        onView(withId(R.id.nextSongButton)).check(matches(isDisplayed())).perform(click())
+        scn.onActivity { activityRule -> activityRule.testProgressBar() }
+        Thread.sleep(1000)
+
+        val statNames: ArrayList<String> = arrayListOf()
+        val statName = "Total Score"
+        statNames.addAll(arrayOf(statName, statName, statName, statName, statName))
+
+        val statVal: ArrayList<String> = arrayListOf()
+        val score = "0"
+        statVal.addAll(arrayOf(score, score, score, score, score))
+
+        Intents.intended(IntentMatchers.hasComponent(GameEndingActivity::class.java.name))
+        Intents.intended(IntentMatchers.hasExtra("nbIncorrectSong", 2))
+        Intents.intended(IntentMatchers.hasExtra("str_arr_name", statNames))
+        Intents.intended(IntentMatchers.hasExtra("str_arr_val", statVal))
+    }
+     */
 
     // FIXME: this test fails after implement QR code reader for no reason
 /*    @Test

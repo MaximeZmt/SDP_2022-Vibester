@@ -94,11 +94,6 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
     override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
         if (parent.id == R.id.difficulty_spinner) {
             difficulty = parent.getItemAtPosition(position).toString()
-            when (difficulty) {
-                "Easy"      -> setDifficultyText(R.string.difficulty_easy)
-                "Medium"    -> setDifficultyText(R.string.difficulty_medium)
-                "Hard"      -> setDifficultyText(R.string.difficulty_hard)
-            }
         } else if (parent.id == R.id.size_spinner) {
             gameSize = parent.getItemAtPosition(position).toString()
             when (gameSize) {
@@ -147,9 +142,6 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
         startActivity(newIntent)
     }
 
-    private fun setDifficultyText(mode: Int) {
-        requireView().findViewById<TextView>(R.id.difficulty_explanation).setText(mode)
-    }
 
     /**
      * Fetch data from Lastfm and set song list in a GameManager

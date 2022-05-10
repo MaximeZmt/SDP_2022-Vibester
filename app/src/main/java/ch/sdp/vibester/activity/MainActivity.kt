@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    //Setting Up the back button
+    //Set up the back button
     override fun onSupportNavigateUp(): Boolean {
         return NavigationUI.navigateUp(navController, null)
     }

@@ -316,6 +316,8 @@
             android:stateListAnimator="@null"
             android:text="logout"
             android:translationZ="10dp"
+            app:layout_constraintRight_toLeftOf="@+id/profile_returnToMain"
+            app:layout_constraintTop_toBottomOf="@+id/profile_scroll_stat"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
@@ -353,6 +355,7 @@
             android:clickable="true"
             android:src="@android:drawable/ic_menu_revert"
             app:borderWidth="0dp"
+            app:layout_constraintLeft_toRightOf="@+id/logout"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 

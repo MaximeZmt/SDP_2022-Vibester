@@ -66,6 +66,7 @@
             android:exported="false" />
         <activity
             android:name=".activity.ProfileActivity"
+            android:windowSoftInputMode="adjustPan"
             android:exported="false" />
         <activity
             android:name=".activity.GameSetupActivity"

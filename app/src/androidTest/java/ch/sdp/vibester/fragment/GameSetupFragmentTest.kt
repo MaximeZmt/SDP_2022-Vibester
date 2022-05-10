@@ -99,7 +99,7 @@ class GameSetupFragmentTest {
         onView(withId(R.id.btsButton)).perform(click())
         onView(withId(R.id.difficulty_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(0).perform(click())
-        onView(withId(R.id.difficulty_proceed)).perform(click())
+        onView(withId(R.id.difficulty_proceed)).perform(scrollTo(),click())
 
         intended(hasComponent(BuzzerSetupActivity::class.java.name))
         intended(hasExtra("Difficulty", "Easy"))
@@ -111,7 +111,7 @@ class GameSetupFragmentTest {
         onView(withId(R.id.btsButton)).perform(click())
         onView(withId(R.id.difficulty_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(0).perform(click())
-        onView(withId(R.id.difficulty_proceed)).perform(click())
+        onView(withId(R.id.difficulty_proceed)).perform(scrollTo(),click())
 
         intended(hasComponent(TypingGameActivity::class.java.name))
         intended(hasExtra("Difficulty", "Easy"))
@@ -123,7 +123,7 @@ class GameSetupFragmentTest {
         onView(withId(R.id.btsButton)).perform(click())
         onView(withId(R.id.difficulty_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(0).perform(click())
-        onView(withId(R.id.difficulty_proceed)).perform(click())
+        onView(withId(R.id.difficulty_proceed)).perform(scrollTo(),click())
 
         intended(hasComponent(LyricsBelongGameActivity::class.java.name))
         intended(hasExtra("Difficulty", "Easy"))

@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
 
         //Get the Navigation Controller
         navController = Navigation.findNavController(this, R.id.fragment)
+        //Set the navigation controller to Bottom Nav
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
         //Setting the navigation controller to Bottom Nav
         bottomNav.setupWithNavController(navController)

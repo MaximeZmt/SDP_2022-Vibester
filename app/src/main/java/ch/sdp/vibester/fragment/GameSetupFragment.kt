@@ -130,7 +130,7 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
         }
     }
 
-    private fun switchToGameNoParameters(nextActivity: AppCompatActivity){
+    private fun switchToGameNoParameters(nextActivity: AppCompatActivity) {
         val newIntent = Intent(activity, nextActivity::class.java)
         startActivity(newIntent)
     }

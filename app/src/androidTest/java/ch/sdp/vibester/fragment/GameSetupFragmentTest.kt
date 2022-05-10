@@ -19,7 +19,6 @@ import ch.sdp.vibester.activity.ChoosePartyRoomActivity
 import ch.sdp.vibester.activity.LyricsBelongGameActivity
 import ch.sdp.vibester.activity.TypingGameActivity
 import ch.sdp.vibester.launchFragmentInHiltContainer
-//import ch.sdp.vibester.launchFragmentInHiltContainer
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import org.hamcrest.Matcher

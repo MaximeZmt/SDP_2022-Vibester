@@ -13,7 +13,7 @@ import java.util.concurrent.CompletableFuture
  * Game Manager to set up a local game for a chosen mode.
  */
 open class GameManager : Serializable {
-    private var score = 0 // we can yeet this and use the size of the correct song list instead
+    private var score = 0 // we can delete this (in a next refactor) and use the size of the correct song list instead
     var gameSize = 5
     var numPlayedSongs = 0
     var gameMode = ""

@@ -48,8 +48,8 @@ class GameEndingActivity : AppCompatActivity() {
 
         if (intent.hasExtra("Winner Name")) {
             val winner = intent.getStringExtra("Winner Name")
-            if (winner!=null) {
-                findViewById<TextView>(R.id.winnerText).text=winner
+            if (winner != null) {
+                findViewById<TextView>(R.id.winnerText).text = winner
             }
         }
 

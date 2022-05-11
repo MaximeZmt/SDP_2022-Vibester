@@ -89,6 +89,7 @@ open class GameActivity : AppCompatActivity() {
                     if (gameManager.playingMediaPlayer()) {
                         gameManager.stopMediaPlayer()
                     }
+                    // chosen song is null because no answer has been given before the progress bar times out
                     checkAnswer(ctx, null, gameManager)
                 }
             }

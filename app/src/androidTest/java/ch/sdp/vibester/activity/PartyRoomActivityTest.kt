@@ -75,9 +75,9 @@ class PartyRoomActivityTest {
         Espresso.onView(ViewMatchers.withId(R.id.emails))
             .check(ViewAssertions.matches(ViewMatchers.withText(mockUserEmailList.toString())))
     }
-    
- */
 
+ */
+/*
     @Test
     fun correctJoin() {
         var mockRoomName = "mockName"
@@ -97,4 +97,6 @@ class PartyRoomActivityTest {
         Espresso.onView(ViewMatchers.withId(R.id.emails))
             .check(ViewAssertions.matches(ViewMatchers.withText(mockUserEmailList.toString())))
     }
+    
+ */
 }

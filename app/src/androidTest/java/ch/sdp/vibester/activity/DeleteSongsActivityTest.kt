@@ -49,11 +49,10 @@ class DeleteSongsActivityTest {
         Intents.release()
     }
 
-
     @Test
     fun checkIntentOnGoBack() {
         onView(withId(R.id.delete_returnToMain)).perform(click())
-        intended(hasComponent(WelcomeActivity::class.java.name))
+        intended(hasComponent(MainActivity::class.java.name))
     }
 
     @Test

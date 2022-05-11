@@ -242,7 +242,7 @@ class LyricsBelongGameActivityTest {
 
         onView(withId(R.id.lyricMatchButton)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
     }*/
-    
+
 
     @Test
     fun getAndCheckLyricsGivesCorrectAnswerWhenMatch() {

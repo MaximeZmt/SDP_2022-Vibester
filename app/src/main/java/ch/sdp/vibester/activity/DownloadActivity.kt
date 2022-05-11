@@ -17,13 +17,11 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.R
-import ch.sdp.vibester.TestMode
 import ch.sdp.vibester.api.ItunesMusicApi
 import ch.sdp.vibester.helper.IntentSwitcher
 import ch.sdp.vibester.model.Song
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import okhttp3.OkHttpClient
-import org.w3c.dom.Text
 import java.io.File
 import java.lang.IllegalArgumentException
 
@@ -57,7 +55,7 @@ class DownloadActivity : AppCompatActivity() {
         }
 
         findViewById<FloatingActionButton>(R.id.download_returnToMain).setOnClickListener {
-            IntentSwitcher.switch(this, WelcomeActivity::class.java)
+            IntentSwitcher.switch(this, MainActivity::class.java)
         }
 
         var broadcast = object:BroadcastReceiver() {
@@ -208,9 +206,9 @@ class DownloadActivity : AppCompatActivity() {
         records.appendText("$songName\n")
     }
 
+
     fun switchToDeleteSongs(view: View) {
         val intent = Intent(this, DeleteSongsActivity::class.java)
         startActivity(intent)
     }
-
 }

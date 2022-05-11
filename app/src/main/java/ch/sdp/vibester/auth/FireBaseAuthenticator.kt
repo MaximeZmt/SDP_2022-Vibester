@@ -15,9 +15,7 @@ import com.google.firebase.ktx.Firebase
 import javax.inject.Inject
 
 class FireBaseAuthenticator @Inject constructor() {
-
     private val auth: FirebaseAuth = Firebase.auth
-
 
     /**
      * Getter for the current user

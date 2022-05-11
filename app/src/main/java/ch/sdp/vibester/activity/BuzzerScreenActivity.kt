@@ -185,6 +185,7 @@ class BuzzerScreenActivity : GameActivity() {
             button.setOnClickListener {
                 if (findViewById<ProgressBar>(R.id.progressBarBuzzer).progress>0 && findViewById<Button>(R.id.nextSongBuzzer).visibility==View.GONE) {
                     answer.visibility = android.view.View.VISIBLE
+                    findViewById<Button>(R.id.go_to_end).visibility=View.INVISIBLE
                     setPressed(button.id)
                 }
             }
@@ -213,6 +214,7 @@ class BuzzerScreenActivity : GameActivity() {
             if (gameManager.playingMediaPlayer()) {
                 gameManager.stopMediaPlayer()
             }
+            toggleBtnVisibility(R.id.go_to_end, true)
             setPressed(noBuzzerPressed) // reset the buzzer
             gameManager.setNextSong()
             endRound(gameManager)

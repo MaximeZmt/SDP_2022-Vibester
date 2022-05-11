@@ -5,8 +5,6 @@ import android.content.Intent
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.IdlingRegistry
-import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.matcher.IntentMatchers
@@ -16,7 +14,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.GrantPermissionRule
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.LastfmMethod
-import ch.sdp.vibester.api.LyricAPI
 import ch.sdp.vibester.api.LyricsOVHApiInterface
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.helper.TypingGameManager
@@ -166,14 +163,26 @@ class LyricsBelongGameActivityTest {
     }
 
     @Test
-    fun testMockService() {
+    fun testServiceResponse() {
         runBlocking {
             enqueueMockResponse("Lyric_Thunder.json")
-            val responseBody = service.getLyrics("Imagine Dragons", "Bones").execute().body()
+            val responseBody = service.getLyrics("Imagine Dragons", "Thunder").execute().body()
             val obtainLyric = responseBody.lyrics
             if (obtainLyric != null) {
                 assertEquals(true, obtainLyric.contains(speechInputCorrect, ignoreCase = true))
             }
+            val request = mockWebServer.takeRequest()
+            assertEquals("/v1/Imagine%20Dragons/Thunder", request.path)
+        }
+    }
+
+    @Test
+    fun testServiceRequest() {
+        runBlocking {
+            enqueueMockResponse("Lyric_Thunder.json")
+            service.getLyrics("Imagine Dragons", "Thunder").execute().body()
+            val request = mockWebServer.takeRequest()
+            assertEquals("/v1/Imagine%20Dragons/Thunder", request.path)
         }
     }
 
@@ -187,7 +196,7 @@ class LyricsBelongGameActivityTest {
     @JvmField
     val mockUsersRepo = mockk<DataGetter>()
 
-    private fun createMockInvocation() {
+    private fun createMockUserRepoInvocation() {
         every { mockUsersRepo.setSubFieldValue(any(), any(), any(), any()) } answers {}
         every { mockUsersRepo.updateFieldInt(any(), any(), any(), any()) } answers {}
         every { mockUsersRepo.setFieldValue(any(), any(), any()) } answers {}
@@ -295,7 +304,7 @@ class LyricsBelongGameActivityTest {
 
     @Test
     fun getAndCheckLyricsGivesCorrectAnswerWhenMatch() {
-        createMockInvocation()
+        createMockUserRepoInvocation()
         val gameManager = setGameManager()
         gameManager.setNextSong()
         val intent = Intent(
@@ -315,7 +324,7 @@ class LyricsBelongGameActivityTest {
 
     @Test
     fun checkIntentOnEndingForWrongSong() {
-        createMockInvocation()
+        createMockUserRepoInvocation()
         val gameManager = setGameManager()
         gameManager.setNextSong()
         gameManager.gameSize = 1
@@ -349,7 +358,7 @@ class LyricsBelongGameActivityTest {
 
     @Test
     fun checkIntentOnNextRoundForCorrectSong() {
-        createMockInvocation()
+        createMockUserRepoInvocation()
         val gameManager = setGameManager(2)
         gameManager.setNextSong()
 

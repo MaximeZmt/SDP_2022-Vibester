@@ -203,6 +203,28 @@ class ProfileActivityTest {
     }
 
     @Test
+    fun checkChangePhotoCancel() {
+        val inputProfile = User( "Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8, 29, 0)
+        val ctx = ApplicationProvider.getApplicationContext() as Context
+        val intent = Intent(ctx, ProfileActivity::class.java)
+
+        createMockDataGetter(inputProfile)
+        createMockAuthenticatorInvocation()
+        createMockImageGetter()
+
+
+
+        val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
+
+        //This thread sleep is added for the mock image to load, might be a better way to test it but for now I'll leave it like that
+        Thread.sleep(1000)
+
+        onView(withId(R.id.avatar)).perform(click())
+        onView(withText("No")).perform(click())
+        onView(withId(R.id.avatar)).check(matches(isDisplayed()))
+    }
+
+    @Test
     fun checkQrCodeGenerator() {
         val inputProfile = User( "Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8, 29, 0, "VvPB47tQCLdjz3YebilS6h5EXdJ3")
         val ctx = ApplicationProvider.getApplicationContext() as Context

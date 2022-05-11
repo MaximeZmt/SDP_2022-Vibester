@@ -44,6 +44,13 @@ class BuzzerScreenActivity : GameActivity() {
         pressedBuzzer = id
     }
 
+    /**
+     * Returns the gameIsOn variable. Used only for testing.
+     */
+    fun testGetGameIsOn(): Boolean {
+        return gameIsOn
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -102,19 +109,14 @@ class BuzzerScreenActivity : GameActivity() {
         Glide.with(ctx).load(gameManager.getCurrentSong().getArtworkUrl()).override(artworkDim, artworkDim).into(findViewById(R.id.songArtwork))
         gameManager.playSong()
         checkRunnable()
-        super.barTimer(findViewById(R.id.progressBarBuzzer), ctx, gameManager, ::checkAnswer)
+        super.barTimer(findViewById(R.id.progressBarBuzzer), ctx, gameManager, ::timeoutAnswer)
     }
 
     /**
      * Generate a change of intent at the end of a game
      */
-    private fun checkAnswer(ctx: Context, chosenSong: Song?, gameManager: GameManager) {
-        val playedSong = gameManager.getCurrentSong()
-        if (checkSong(chosenSong, playedSong)) {
-            gameManager.addCorrectSong()
-        } else {
-            gameManager.addWrongSong()
-        }
+    private fun timeoutAnswer(ctx: Context, chosenSong: Song?, gameManager: GameManager) {
+        toastShowWrong(ctx, gameManager.getCurrentSong())
         endRound(gameManager)
     }
 
@@ -124,6 +126,7 @@ class BuzzerScreenActivity : GameActivity() {
      */
      fun endRound(gameManager: GameManager){
         gameIsOn = false
+        toggleBtnVisibility(R.id.nextSongBuzzer, true)
         super.endRound(gameManager, this::testWinner)
     }
 
@@ -171,7 +174,7 @@ class BuzzerScreenActivity : GameActivity() {
     }
 
     /**
-     * Programmatically builds the buzzers according to the number and names of players.
+     * Sets visibility and text of needed buzzers according to the number and names of players.
      * @param players: an array of player names
      * @param answer: the answer layout
      */
@@ -219,7 +222,7 @@ class BuzzerScreenActivity : GameActivity() {
             }
             setPressed(noBuzzerPressed) // reset the buzzer
             gameManager.setNextSong()
-            toggleBtnVisibility(R.id.nextSongBuzzer, true)
+            endRound(gameManager)
         }
 
     }
@@ -275,5 +278,12 @@ class BuzzerScreenActivity : GameActivity() {
         intent.putStringArrayListExtra("str_arr_val", statVal)
 
         startActivity(intent)
+    }
+
+    /**
+     * Helper for testing
+     */
+    fun testProgressBar(progressTime:Int = 0) {
+        superTestProgressBar(findViewById(R.id.progressBarBuzzer), progressTime)
     }
 }

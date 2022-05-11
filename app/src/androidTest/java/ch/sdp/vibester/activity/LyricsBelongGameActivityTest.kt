@@ -164,26 +164,20 @@ class LyricsBelongGameActivityTest {
 
     @Test
     fun testServiceResponse() {
-        runBlocking {
-            enqueueMockResponse("Lyric_Thunder.json")
-            val responseBody = service.getLyrics("Imagine Dragons", "Thunder").execute().body()
-            val obtainLyric = responseBody.lyrics
-            if (obtainLyric != null) {
-                assertEquals(true, obtainLyric.contains(speechInputCorrect, ignoreCase = true))
-            }
-            val request = mockWebServer.takeRequest()
-            assertEquals("/v1/Imagine%20Dragons/Thunder", request.path)
+        enqueueMockResponse("Lyric_Thunder.json")
+        val responseBody = service.getLyrics("Imagine Dragons", "Thunder").execute().body()
+        val obtainLyric = responseBody.lyrics
+        if (obtainLyric != null) {
+            assertEquals(true, obtainLyric.contains(speechInputCorrect, ignoreCase = true))
         }
     }
 
     @Test
     fun testServiceRequest() {
-        runBlocking {
-            enqueueMockResponse("Lyric_Thunder.json")
-            service.getLyrics("Imagine Dragons", "Thunder").execute().body()
-            val request = mockWebServer.takeRequest()
-            assertEquals("/v1/Imagine%20Dragons/Thunder", request.path)
-        }
+        enqueueMockResponse("Lyric_Thunder.json")
+        service.getLyrics("Imagine Dragons", "Thunder").execute().body()
+        val request = mockWebServer.takeRequest()
+        assertEquals("/v1/Imagine%20Dragons/Thunder", request.path)
     }
 
     @After
@@ -313,13 +307,17 @@ class LyricsBelongGameActivityTest {
         )
         val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
         val ctx = ApplicationProvider.getApplicationContext() as Context
+
+        enqueueMockResponse("Lyric_Thunder.json")
+
         scn.onActivity { activity ->
+            activity.setUpService(service)
             activity.getAndCheckLyrics(ctx, songName, artistName, speechInputCorrect, gameManager)
         }
         /*FIXME: API takes a lot of time to process this request
         comment the following lines if this test fail*/
         //Thread.sleep(sleepTime)
-        //assertEquals(true, gameManager.getScore() == 1)
+        assertEquals(true, gameManager.getScore() == 1)
     }
 
     @Test

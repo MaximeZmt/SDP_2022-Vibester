@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.*
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.LyricAPI
+import ch.sdp.vibester.api.LyricsOVHApiInterface
 import ch.sdp.vibester.helper.GameManager
 import ch.sdp.vibester.model.Lyric
 import retrofit2.Call
@@ -26,6 +27,7 @@ class LyricsBelongGameActivity : GameActivity() {
     private lateinit var lyrics: String
     private lateinit var songName: String
     private lateinit var artistName: String
+    private lateinit var service: LyricsOVHApiInterface
 
     /**
      * Generic onCreate method, belonging to the LyricsBelongGameActivity.
@@ -41,6 +43,7 @@ class LyricsBelongGameActivity : GameActivity() {
             findViewById<Button>(R.id.nextSongButton).setOnClickListener {
                 startRound(ctx, gameManager)
             }
+            setUpService(LyricAPI().createLyricService())
             findViewById<Button>(R.id.lyricMatchButton).setOnClickListener {
                 getAndCheckLyrics(ctx, songName, artistName, speechInput, gameManager)
             }
@@ -52,6 +55,10 @@ class LyricsBelongGameActivity : GameActivity() {
         findViewById<ImageView>(R.id.btnSpeak).setOnClickListener {
             getSpeechInput()
         }
+    }
+
+    fun setUpService(service: LyricsOVHApiInterface) {
+        this.service = service
     }
 
     /**
@@ -120,14 +127,13 @@ class LyricsBelongGameActivity : GameActivity() {
      * @param gameManager: The gameManager instance that is managing the game.
      */
     fun getAndCheckLyrics(ctx: Context, songName: String, artistName: String, speechInput: String, gameManager: GameManager) {
-        val service = LyricAPI().createLyricService()
+        //val service = LyricAPI().createLyricService()
         val call = service.getLyrics(artistName, songName)
 
         call.enqueue(object : Callback<Lyric> {
             override fun onFailure(call: Call<Lyric>?, t: Throwable?) {}
 
             override fun onResponse(call: Call<Lyric>?, response: Response<Lyric>?) {
-
                 if (response != null) {
                     val result = response.body()
                     if (response.isSuccessful && result != null) {

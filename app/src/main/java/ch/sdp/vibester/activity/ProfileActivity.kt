@@ -81,12 +81,18 @@ class ProfileActivity : AppCompatActivity() {
             showGeneralDialog( "username", true)
         }
     }
-
+    /**
+     * Generic listener for the change profile picture.
+     */
     private fun setChangeImageBtnListener() {
         findViewById<ImageView>(R.id.avatar).setOnClickListener {
             showGeneralDialog( "Do you want to change your profile picture?", false)
         }
     }
+    /**
+     * A function that updates the image in the database.
+     * @param id ID of the image int the database
+     */
 
     private fun updateImage(id: String) {
         deleteImage(id)
@@ -96,6 +102,11 @@ class ProfileActivity : AppCompatActivity() {
         startActivityForResult(intent, imageRequestCode)
     }
 
+
+    /**
+     * A function that deletes an image from the database.
+     * @param id ID of the image int the database
+     */
     private fun deleteImage(id: String) {
         imageGetter.deleteImage("profileImg/${id}")
     }
@@ -209,6 +220,11 @@ class ProfileActivity : AppCompatActivity() {
         builder.show()
     }
 
+    /**
+     * A function shows an image change dialog.
+     * @param title title of the dialog
+     */
+
     private fun showImageChangeDialog(title: String) {
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
         builder.setTitle(title)
@@ -220,6 +236,12 @@ class ProfileActivity : AppCompatActivity() {
         builder.setNegativeButton("No") { dialog, _ -> dialog.cancel() }
         builder.show()
     }
+
+    /**
+     * A function shows a dialog.
+     * @param name name of the dialog
+     * @param textDialog boolean to check the type of dialog
+     */
 
     private fun showGeneralDialog(name: String, textDialog: Boolean) {
         if(textDialog) {

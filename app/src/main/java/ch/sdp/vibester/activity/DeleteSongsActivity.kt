@@ -15,6 +15,7 @@ import android.widget.TextView
 import android.widget.Toast
 import ch.sdp.vibester.R
 import ch.sdp.vibester.helper.IntentSwitcher
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.io.*
 /**
  * Class that handles deleting files, more specifically songs in the scope of this project.
@@ -26,6 +27,10 @@ class DeleteSongsActivity : AppCompatActivity() {
         supportActionBar?.hide()
 
         setContentView(R.layout.activity_delete_songs)
+
+        findViewById<FloatingActionButton>(R.id.delete_returnToMain).setOnClickListener {
+            IntentSwitcher.switch(this, MainActivity::class.java)
+        }
 
         val layout: LinearLayout = findViewById(R.id.delete_songs_linear)
         generateButtons(layout)
@@ -130,9 +135,5 @@ class DeleteSongsActivity : AppCompatActivity() {
         noDownloadsText.gravity = Gravity.CENTER
         noDownloadsText.layoutParams = LinearLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT)
         layout.addView(noDownloadsText)
-    }
-
-    fun switchToWelcome(view: View) {
-        IntentSwitcher.switchBackToMain(this)
     }
 }

@@ -84,7 +84,7 @@ class ProfileActivity : AppCompatActivity() {
     private fun setLogOutBtnListener() {
         findViewById<Button>(R.id.logout).setOnClickListener {
             FirebaseAuth.getInstance().signOut()
-            IntentSwitcher.switchBackToMain(this)
+            IntentSwitcher.switch(this, MainActivity::class.java)
             finish()
         }
     }
@@ -94,7 +94,7 @@ class ProfileActivity : AppCompatActivity() {
      */
     private fun setRetToMainBtnListener() {
         findViewById<FloatingActionButton>(R.id.profile_returnToMain).setOnClickListener {
-            IntentSwitcher.switchBackToMain(this)
+            IntentSwitcher.switch(this, MainActivity::class.java)
             finish()
         }
     }

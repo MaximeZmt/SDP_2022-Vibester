@@ -23,14 +23,16 @@
             android:orientation="vertical" />
     </ScrollView>
 
-    <Button
-        android:id="@+id/delete_to_welcome"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/delete_returnToMain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:onClick="switchToWelcome"
-        android:text="@string/inc_go_back"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/delete_scrollview" />
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/light_coral"
+        android:clickable="true"
+        android:src="@android:drawable/ic_menu_revert"
+        app:borderWidth="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

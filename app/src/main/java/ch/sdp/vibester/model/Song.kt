@@ -59,6 +59,11 @@ class Song(jsonO: JSONObject) : Serializable {
     }
 
     companion object {
+        /**
+         * Build a song given a json string
+         * @param str the json string
+         * @return A Song object
+         */
         fun singleSong(str: String): Song {
             try {
                 val jsonObj = JSONObject(str)
@@ -70,6 +75,35 @@ class Song(jsonO: JSONObject) : Serializable {
             }
         }
 
+        /**
+         * Build a song object giving manually argument
+         * @param previewUrl the preview url of the song
+         * @param artworkUrl the artwork url of the song
+         * @param trackName the name of the song
+         * @param artistName the name of the singer
+         * @return a Song object
+         */
+        fun songBuilder(previewUrl: String = "", artworkUrl: String = "", trackName: String = "", artistName: String = ""): Song {
+            val inputTxt = """
+            {
+                "resultCount":1,
+                "results": [
+                {"artistName":"$artistName", 
+                "trackName":"$trackName",
+                "previewUrl":"$previewUrl",
+                "artworkUrl100":"$artworkUrl"
+                }]
+            }
+            """
+
+            return Song.singleSong(inputTxt)
+        }
+
+        /**
+         * Build a song list given a json string
+         * @param str the json string
+         * @return A Song arraylist object
+         */
         fun listSong(str: String): ArrayList<Song> {
             try {
                 val myList = ArrayList<Song>()

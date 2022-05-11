@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.Gravity
 import android.view.View
 import android.view.Window
+import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.LinearLayout.LayoutParams
 import android.widget.TextView
@@ -27,6 +28,11 @@ class IncorrectSongsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_incorrect_songs_screen)
 
         val layout: LinearLayout = findViewById(R.id.incorrect_songs_linear)
+
+        findViewById<Button>(R.id.incorrect_songs_back_to_welcome)
+            .setOnClickListener {
+            IntentSwitcher.switch(this, MainActivity::class.java)
+        }
 
         if (intent.hasExtra("str_arr_inc")) {
             incorrectSongs = intent.getStringArrayListExtra("str_arr_inc")
@@ -67,9 +73,5 @@ class IncorrectSongsActivity : AppCompatActivity() {
                 LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
             layout.addView(textView)
         }
-    }
-
-    fun switchBackToWelcome(view: View) {
-        IntentSwitcher.switchBackToMain(this)
     }
 }

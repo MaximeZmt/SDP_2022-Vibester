@@ -97,7 +97,7 @@ class AuthenticationActivity : AppCompatActivity() {
      * Listener bound to the red return button in the Authentication activity.
      */
     fun returnToMainListener(view: View) {
-        IntentSwitcher.switchBackToMain(this)
+        IntentSwitcher.switch(this, MainActivity::class.java)
         finish()
     }
 

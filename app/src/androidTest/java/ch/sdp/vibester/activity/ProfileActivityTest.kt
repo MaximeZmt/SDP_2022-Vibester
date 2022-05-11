@@ -242,8 +242,6 @@ class ProfileActivityTest {
         createMockAuthenticator()
         createMockImageGetter()
 
-
-
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
 
         //This thread sleep is added for the mock image to load, might be a better way to test it but for now I'll leave it like that

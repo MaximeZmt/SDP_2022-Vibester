@@ -32,7 +32,8 @@
                 android:id="@+id/myCardView"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_marginStart="30dp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginStart="20dp"
                 app:cardCornerRadius="50dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent">

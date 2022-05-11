@@ -23,8 +23,11 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
+import okhttp3.mockwebserver.Dispatcher
 import okhttp3.mockwebserver.MockWebServer
 import okhttp3.mockwebserver.MockResponse
+import okhttp3.mockwebserver.RecordedRequest
+import okio.BufferedSource
 import okio.buffer
 import okio.source
 import org.hamcrest.CoreMatchers.not
@@ -159,7 +162,14 @@ class LyricsBelongGameActivityTest {
             mockResponse.setBody(source.readString(Charsets.UTF_8))
             mockWebServer.enqueue(mockResponse)
         }
+    }
 
+    private fun createResponseBody(fileName: String): BufferedSource? {
+        javaClass.classLoader?.let {
+            val inputString = it.getResourceAsStream(fileName)
+            return inputString.source().buffer()
+        }
+        return null
     }
 
     @Test
@@ -178,6 +188,18 @@ class LyricsBelongGameActivityTest {
         service.getLyrics("Imagine Dragons", "Thunder").execute().body()
         val request = mockWebServer.takeRequest()
         assertEquals("/v1/Imagine%20Dragons/Thunder", request.path)
+    }
+
+    @Test
+    fun testSuccessfulResponse() {
+        mockWebServer.dispatcher = object : Dispatcher() {
+            override fun dispatch(request: RecordedRequest): MockResponse {
+                return createResponseBody("Lyric_Thunder.json")?.let {
+                    MockResponse().setResponseCode(200).setBody(
+                        it.readString(Charsets.UTF_8))
+                }
+            }
+        }
     }
 
     @After

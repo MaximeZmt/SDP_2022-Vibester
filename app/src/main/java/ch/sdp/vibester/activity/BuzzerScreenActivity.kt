@@ -44,13 +44,6 @@ class BuzzerScreenActivity : GameActivity() {
         pressedBuzzer = id
     }
 
-    /**
-     * Returns the gameIsOn variable. Used only for testing.
-     */
-    fun testGetGameIsOn(): Boolean {
-        return gameIsOn
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -113,9 +106,9 @@ class BuzzerScreenActivity : GameActivity() {
     }
 
     /**
-     * Generate a change of intent at the end of a game
+     * Ends the round when no ones answer before the time limit
      */
-    private fun timeoutAnswer(ctx: Context, chosenSong: Song?, gameManager: GameManager) {
+    fun timeoutAnswer(ctx: Context, chosenSong: Song?=null, gameManager: GameManager) {
         toastShowWrong(ctx, gameManager.getCurrentSong())
         endRound(gameManager)
     }
@@ -281,9 +274,21 @@ class BuzzerScreenActivity : GameActivity() {
     }
 
     /**
-     * Helper for testing
+     * Helpers for testing
      */
     fun testProgressBar(progressTime:Int = 0) {
         superTestProgressBar(findViewById(R.id.progressBarBuzzer), progressTime)
+    }
+
+    fun testGetScoreUpdater(): BuzzerScoreUpdater {
+        return scoreUpdater
+    }
+
+    fun testGetGameIsOn(): Boolean {
+        return gameIsOn
+    }
+
+    fun getPressed(): Int {
+        return pressedBuzzer
     }
 }

@@ -130,8 +130,8 @@
 
         <Button
             android:id="@+id/buttonCorrect"
-            android:layout_width="125dp"
-            android:layout_height="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:backgroundTint="@color/cg_blue"
             android:elevation="10dp"
             android:gravity="center"
@@ -141,8 +141,8 @@
 
         <Button
             android:id="@+id/buttonWrong"
-            android:layout_width="125dp"
-            android:layout_height="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:backgroundTint="@color/cg_blue"
             android:elevation="10dp"
             android:gravity="center"

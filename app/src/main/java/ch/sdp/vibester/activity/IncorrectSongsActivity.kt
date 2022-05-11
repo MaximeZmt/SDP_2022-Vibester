@@ -33,7 +33,7 @@ class IncorrectSongsActivity : AppCompatActivity() {
 
         findViewById<Button>(R.id.incorrect_songs_back_to_welcome)
             .setOnClickListener {
-            IntentSwitcher.switch(this, WelcomeActivity::class.java, null)
+            IntentSwitcher.switch(this, WelcomeActivity::class.java)
         }
 
         if (intent.hasExtra("str_arr_inc")) {

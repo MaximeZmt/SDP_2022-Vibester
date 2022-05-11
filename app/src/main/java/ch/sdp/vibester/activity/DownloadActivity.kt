@@ -57,7 +57,7 @@ class DownloadActivity : AppCompatActivity() {
         }
 
         findViewById<FloatingActionButton>(R.id.download_returnToMain).setOnClickListener {
-            IntentSwitcher.switch(this, WelcomeActivity::class.java, null)
+            IntentSwitcher.switch(this, WelcomeActivity::class.java)
         }
 
         var broadcast = object:BroadcastReceiver() {

@@ -34,7 +34,7 @@ class DeleteSongsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_delete_songs)
 
         findViewById<FloatingActionButton>(R.id.delete_returnToMain).setOnClickListener {
-            IntentSwitcher.switch(this, WelcomeActivity::class.java, null)
+            IntentSwitcher.switch(this, WelcomeActivity::class.java)
         }
 
         val layout: LinearLayout = findViewById(R.id.delete_songs_linear)

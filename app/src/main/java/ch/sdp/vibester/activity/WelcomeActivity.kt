@@ -51,26 +51,26 @@ class WelcomeActivity : AppCompatActivity() {
     }
 
     fun switchToPlay(view: View) {
-        IntentSwitcher.switch(this, GameSetupActivity::class.java, null)
+        IntentSwitcher.switch(this, GameSetupActivity::class.java)
     }
 
     fun switchToProfile(view: View) {
         if (authenticator.isLoggedIn()){
-            IntentSwitcher.switch(this, ProfileActivity::class.java, null)
+            IntentSwitcher.switch(this, ProfileActivity::class.java)
         }else{
-            IntentSwitcher.switch(this, AuthenticationActivity::class.java, null)
+            IntentSwitcher.switch(this, AuthenticationActivity::class.java)
         }
     }
 
     fun switchToScoreboard(view: View) {
-        IntentSwitcher.switch(this, ScoreBoardActivity::class.java, null)
+        IntentSwitcher.switch(this, ScoreBoardActivity::class.java)
     }
 
     fun switchToDownload(view: View) {
-        IntentSwitcher.switch(this, DownloadActivity::class.java, null)
+        IntentSwitcher.switch(this, DownloadActivity::class.java)
     }
 
     fun switchToSearch(view: View) {
-        IntentSwitcher.switch(this, SearchUserActivity::class.java, null)
+        IntentSwitcher.switch(this, SearchUserActivity::class.java)
     }
 }

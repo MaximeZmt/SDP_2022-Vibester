@@ -228,10 +228,6 @@ class LyricsBelongGameActivity : GameActivity() {
         getAndCheckLyrics(ctx, song, speechInput, gameManager)
     }
 
-    fun getSong(): Song {
-        return song
-    }
-
     fun testProgressBar(progressTime:Int = 0) {
         superTestProgressBar(findViewById(R.id.progressBarLyrics), progressTime)
     }

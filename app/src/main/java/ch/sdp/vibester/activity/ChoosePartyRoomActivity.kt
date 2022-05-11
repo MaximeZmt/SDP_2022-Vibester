@@ -3,12 +3,14 @@ package ch.sdp.vibester.activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Window
 import android.widget.Button
 import android.widget.EditText
 import ch.sdp.vibester.R
 
 class ChoosePartyRoomActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        requestWindowFeature(Window.FEATURE_NO_TITLE)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_choose_party_room)
 

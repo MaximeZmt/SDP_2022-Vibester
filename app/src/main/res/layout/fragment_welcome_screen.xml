@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/floral_white"
-    tools:context=".activity.WelcomeActivity">
+    android:id="@+id/fragment_welcome_screen">
 
     <ImageView
         android:id="@+id/vibester_welcome_logo"
@@ -34,18 +33,6 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <Button
-                android:id="@+id/welcome_play"
-                android:layout_width="200dp"
-                android:layout_height="48dp"
-                android:layout_marginTop="10dp"
-                android:backgroundTint="@color/cg_blue"
-                android:elevation="10dp"
-                android:onClick="switchToPlay"
-                android:stateListAnimator="@null"
-                android:text="@string/welcomeScreen_playAGame"
-                android:translationZ="10dp"
-                app:icon="@android:drawable/ic_media_play" />
 
             <Button
                 android:id="@+id/welcome_scoreboard"
@@ -54,7 +41,6 @@
                 android:layout_marginTop="10dp"
                 android:backgroundTint="@color/cg_blue"
                 android:elevation="10dp"
-                android:onClick="switchToScoreboard"
                 android:stateListAnimator="@null"
                 android:text="@string/welcomeScreen_scoreboard"
                 android:translationZ="10dp"
@@ -67,26 +53,10 @@
                 android:layout_marginTop="10dp"
                 android:backgroundTint="@color/cg_blue"
                 android:elevation="10dp"
-                android:onClick="switchToProfile"
                 android:stateListAnimator="@null"
                 android:text="@string/welcomeScreen_myAccount"
                 android:translationZ="10dp"
                 app:icon="@android:drawable/ic_menu_edit" />
-
-            <Button
-                android:id="@+id/welcome_listen"
-                android:layout_width="200dp"
-                android:layout_height="48dp"
-                android:layout_marginTop="10dp"
-                android:backgroundTint="@color/cg_blue"
-                android:elevation="10dp"
-                android:stateListAnimator="@null"
-                android:text="@string/listen_to_music"
-                android:translationZ="10dp"
-                android:visibility="gone"
-                app:icon="@android:drawable/stat_sys_headset" />
-
-            <!-- Currently disabled because don't have true settings activity -->
 
             <Button
                 android:id="@+id/welcome_download"
@@ -95,7 +65,6 @@
                 android:layout_marginTop="10dp"
                 android:backgroundTint="@color/cg_blue"
                 android:elevation="10dp"
-                android:onClick="switchToDownload"
                 android:stateListAnimator="@null"
                 android:text="@string/welcomeScreen_download"
                 android:translationZ="10dp"
@@ -108,26 +77,11 @@
                 android:layout_marginTop="10dp"
                 android:backgroundTint="@color/cg_blue"
                 android:elevation="10dp"
-                android:onClick="switchToSearch"
                 android:stateListAnimator="@null"
                 android:text="@string/search_users"
                 android:translationZ="10dp"
                 app:icon="@android:drawable/ic_menu_search" />
 
-
-            <Button
-                android:id="@+id/welcome_scanning"
-                android:layout_width="200dp"
-                android:layout_height="48dp"
-                android:layout_marginTop="10dp"
-                android:backgroundTint="@color/cg_blue"
-                android:elevation="10dp"
-                android:enabled="true"
-                android:stateListAnimator="@null"
-                android:text="@string/welcomeScreen_scanning"
-                android:translationZ="10dp"
-                android:visibility="gone"
-                app:icon="@android:drawable/ic_menu_camera" />
 
             <Space
                 android:layout_width="match_parent"

@@ -1,6 +1,5 @@
 package ch.sdp.vibester.activity
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
@@ -21,9 +20,8 @@ class IncorrectSongsActivity : AppCompatActivity() {
     private var nbIncorrect: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
         requestWindowFeature(Window.FEATURE_NO_TITLE)
+        super.onCreate(savedInstanceState)
         supportActionBar?.hide()
 
         setContentView(R.layout.activity_incorrect_songs_screen)
@@ -72,6 +70,6 @@ class IncorrectSongsActivity : AppCompatActivity() {
     }
 
     fun switchBackToWelcome(view: View) {
-        IntentSwitcher.switchBackToWelcome(this)
+        IntentSwitcher.switchBackToMain(this)
     }
 }

@@ -1,10 +1,8 @@
 package ch.sdp.vibester.activity
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup.LayoutParams
@@ -12,22 +10,19 @@ import android.view.Window
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.LinearLayout.LayoutParams.MATCH_PARENT
-import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.TextView
 import android.widget.Toast
 import ch.sdp.vibester.R
 import ch.sdp.vibester.helper.IntentSwitcher
-import org.w3c.dom.Text
 import java.io.*
 /**
  * Class that handles deleting files, more specifically songs in the scope of this project.
  */
 class DeleteSongsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
         requestWindowFeature(Window.FEATURE_NO_TITLE)
+        super.onCreate(savedInstanceState)
         supportActionBar?.hide()
 
         setContentView(R.layout.activity_delete_songs)
@@ -138,6 +133,6 @@ class DeleteSongsActivity : AppCompatActivity() {
     }
 
     fun switchToWelcome(view: View) {
-        IntentSwitcher.switchBackToWelcome(this)
+        IntentSwitcher.switchBackToMain(this)
     }
 }

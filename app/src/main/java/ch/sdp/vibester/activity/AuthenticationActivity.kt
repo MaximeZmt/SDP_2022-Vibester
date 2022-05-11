@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.Window
-import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
@@ -20,7 +19,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -53,8 +51,8 @@ class AuthenticationActivity : AppCompatActivity() {
      * Generic onCreate method, automatically called upon the creation of the activity.
      */
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
+        super.onCreate(savedInstanceState)
         supportActionBar?.hide()
         setContentView(R.layout.activity_authentication)
 
@@ -99,7 +97,7 @@ class AuthenticationActivity : AppCompatActivity() {
      * Listener bound to the red return button in the Authentication activity.
      */
     fun returnToMainListener(view: View) {
-        IntentSwitcher.switchBackToWelcome(this)
+        IntentSwitcher.switchBackToMain(this)
         finish()
     }
 

@@ -54,11 +54,9 @@ class ProfileActivity : AppCompatActivity() {
      * Generic onCreate method belonging to ProfileActivity.
      */
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
         requestWindowFeature(Window.FEATURE_NO_TITLE)
+        super.onCreate(savedInstanceState)
         supportActionBar?.hide()
-
         setContentView(R.layout.activity_profile)
 
         setEditUserNameBtnListener()
@@ -86,7 +84,7 @@ class ProfileActivity : AppCompatActivity() {
     private fun setLogOutBtnListener() {
         findViewById<Button>(R.id.logout).setOnClickListener {
             FirebaseAuth.getInstance().signOut()
-            IntentSwitcher.switchBackToWelcome(this)
+            IntentSwitcher.switchBackToMain(this)
             finish()
         }
     }
@@ -96,7 +94,7 @@ class ProfileActivity : AppCompatActivity() {
      */
     private fun setRetToMainBtnListener() {
         findViewById<FloatingActionButton>(R.id.profile_returnToMain).setOnClickListener {
-            IntentSwitcher.switchBackToWelcome(this)
+            IntentSwitcher.switchBackToMain(this)
             finish()
         }
     }

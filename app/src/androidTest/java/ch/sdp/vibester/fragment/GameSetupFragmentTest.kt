@@ -1,6 +1,6 @@
-package ch.sdp.vibester.activity
+package ch.sdp.vibester.fragment
 
-
+import android.view.View
 import androidx.test.espresso.Espresso.onData
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
@@ -10,14 +10,20 @@ import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasExtra
-import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withSpinnerText
-import androidx.test.ext.junit.rules.ActivityScenarioRule
+import androidx.test.espresso.matcher.ViewMatchers
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
+import ch.sdp.vibester.activity.BuzzerSetupActivity
+import ch.sdp.vibester.activity.ChoosePartyRoomActivity
+import ch.sdp.vibester.activity.LyricsBelongGameActivity
+import ch.sdp.vibester.activity.TypingGameActivity
+import ch.sdp.vibester.launchFragmentInHiltContainer
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import org.hamcrest.Matcher
 import org.hamcrest.Matchers
+import org.hamcrest.Matchers.allOf
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -26,45 +32,58 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 @HiltAndroidTest
-class GameSetupActivityTest {
+class GameSetupFragmentTest {
 
     @get:Rule(order = 0)
     var hiltRule = HiltAndroidRule(this)
-
-    @get: Rule(order = 1)
-    val activityRule = ActivityScenarioRule(GameSetupActivity::class.java)
-
-    @Before
-    fun setUp() {
-        hiltRule.inject()
-        Intents.init()
-    }
 
     @After
     fun clean() {
         Intents.release()
     }
 
-
-    @Test
-    fun checkReturnButton() {
-        onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
-        onView(withId(R.id.btsButton)).perform(click())
-        onView(withId(R.id.gameSetup_returnToMain)).perform(click())
-        onView(withId(R.id.gameSetup_returnToMain)).perform(click())
-        onView(withId(R.id.gameSetup_returnToMain)).perform(click())
-
-        intended(hasComponent(WelcomeActivity::class.java.name))
+    @Before
+    fun setUp() {
+        hiltRule.inject()
+        Intents.init()
+        launchFragmentInHiltContainer<GameSetupFragment>(
+            themeResId = R.style.AppTheme
+        )
     }
 
     @Test
     fun checkDefaultSelectDifficulty() {
-        onView(withId(R.id.difficulty_spinner)).check(matches(withSpinnerText(R.string.easy)))
+        onView(withId(R.id.difficulty_spinner))
+            .check(matches(withSpinnerText(R.string.easy)))
     }
 
     @Test
     fun checkDefaultSelectGameSize() {
-        onView(withId(R.id.size_spinner)).check(matches(withSpinnerText(R.string.one)))
+        onView(withId(R.id.size_spinner))
+            .check(matches(withSpinnerText(R.string.one)))
+    }
+
+    @Test
+    fun returnFromGenreToGame(){
+        onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
+        onView(withId(R.id.chooseGame)).check(matches(withEffectiveVisibility(Visibility.GONE)))
+        onView(withId(R.id.chooseGenre)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)));
+
+        onView(withId(R.id.gameSetup_returnToMain)).perform(click())
+        onView(withId(R.id.chooseGenre)).check(matches(withEffectiveVisibility(Visibility.GONE)))
+        onView(withId(R.id.chooseGame)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+    }
+
+    @Test
+    fun returnFromSettingToGenre(){
+        onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
+        onView(withId(R.id.btsButton)).perform(click())
+        onView(withId(R.id.chooseGenre)).check(matches(withEffectiveVisibility(Visibility.GONE)))
+        onView(withId(R.id.chooseSetting)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)));
+
+        onView(withId(R.id.gameSetup_returnToMain)).perform(click())
+        onView(withId(R.id.chooseSetting)).check(matches(withEffectiveVisibility(Visibility.GONE)))
+        onView(withId(R.id.chooseGenre)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
     }
 
     @Test
@@ -98,7 +117,7 @@ class GameSetupActivityTest {
     }
 
     @Test
-    fun checkIntentOnProceedEasy() {
+    fun checkBTSBuzzerEasyProceed() {
         onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
         onView(withId(R.id.btsButton)).perform(click())
         onView(withId(R.id.difficulty_spinner)).perform(click())
@@ -110,55 +129,7 @@ class GameSetupActivityTest {
     }
 
     @Test
-    fun checkIntentOnProceedMedium() {
-        onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
-        onView(withId(R.id.btsButton)).perform(click())
-        onView(withId(R.id.difficulty_spinner)).perform(click())
-        onData(Matchers.anything()).atPosition(1).perform(click())
-        onView(withId(R.id.difficulty_proceed)).perform(click())
-
-        intended(hasComponent(BuzzerSetupActivity::class.java.name))
-        intended(hasExtra("Difficulty", "Medium"))
-    }
-
-    @Test
-    fun checkIntentOnProceedHard() {
-        onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
-        onView(withId(R.id.btsButton)).perform(click())
-        onView(withId(R.id.difficulty_spinner)).perform(click())
-        onData(Matchers.anything()).atPosition(2).perform(click())
-        onView(withId(R.id.difficulty_proceed)).perform(click())
-
-        intended(hasComponent(BuzzerSetupActivity::class.java.name))
-        intended(hasExtra("Difficulty", "Hard"))
-    }
-
-    @Test
-    fun localTypingOnClickHard(){
-        onView(withId(R.id.local_typing_game_button)).perform(scrollTo(), click())
-        onView(withId(R.id.btsButton)).perform(click())
-        onView(withId(R.id.difficulty_spinner)).perform(click())
-        onData(Matchers.anything()).atPosition(2).perform(click())
-        onView(withId(R.id.difficulty_proceed)).perform(click())
-
-        intended(hasComponent(TypingGameActivity::class.java.name))
-        intended(hasExtra("Difficulty", "Hard"))
-    }
-
-    @Test
-    fun localTypingOnClickMedium(){
-        onView(withId(R.id.local_typing_game_button)).perform(scrollTo(), click())
-        onView(withId(R.id.btsButton)).perform(click())
-        onView(withId(R.id.difficulty_spinner)).perform(click())
-        onData(Matchers.anything()).atPosition(1).perform(click())
-        onView(withId(R.id.difficulty_proceed)).perform(click())
-
-        intended(hasComponent(TypingGameActivity::class.java.name))
-        intended(hasExtra("Difficulty", "Medium"))
-    }
-
-    @Test
-    fun localTypingOnClickEasy(){
+    fun checkBTSTypingEasyProceed() {
         onView(withId(R.id.local_typing_game_button)).perform(scrollTo(), click())
         onView(withId(R.id.btsButton)).perform(click())
         onView(withId(R.id.difficulty_spinner)).perform(click())
@@ -170,15 +141,21 @@ class GameSetupActivityTest {
     }
 
     @Test
-    fun localLyricsOnClickHard(){
+    fun checkBTSLyricsEasyProceed() {
         onView(withId(R.id.local_lyrics_game_button)).perform(scrollTo(), click())
         onView(withId(R.id.btsButton)).perform(click())
         onView(withId(R.id.difficulty_spinner)).perform(click())
-        onData(Matchers.anything()).atPosition(2).perform(click())
+        onData(Matchers.anything()).atPosition(0).perform(click())
         onView(withId(R.id.difficulty_proceed)).perform(click())
 
         intended(hasComponent(LyricsBelongGameActivity::class.java.name))
-        intended(hasExtra("Difficulty", "Hard"))
+        intended(hasExtra("Difficulty", "Easy"))
+    }
+
+    @Test
+    fun checkBTSOnlineEasyProceed(){
+        onView(withId(R.id.online_buzzer_game_button)).perform(scrollTo(), click())
+        intended(hasComponent(ChoosePartyRoomActivity::class.java.name))
     }
 
     @Test
@@ -317,4 +294,6 @@ class GameSetupActivityTest {
         onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
         onView(withId(R.id.btsButton)).perform(click())
     }
+
+
 }

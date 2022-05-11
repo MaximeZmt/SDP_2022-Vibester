@@ -12,6 +12,8 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
 import org.hamcrest.CoreMatchers.not
 import org.junit.After
 import org.junit.Before
@@ -20,14 +22,18 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
+@HiltAndroidTest
 class ScoreBoardActivityTest {
 
-    @Rule
-    @JvmField
+    @get:Rule(order=0)
+    var hiltRule = HiltAndroidRule(this)
+
+    @get:Rule(order=1)
     val activityRule = ActivityScenarioRule(ScoreBoardActivity::class.java)
 
     @Before
     fun setUp() {
+        hiltRule.inject()
         Intents.init()
     }
 

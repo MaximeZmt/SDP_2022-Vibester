@@ -234,12 +234,12 @@ class ProfileActivityTest {
 
     @Test
     fun checkChangePhotoCancel() {
-        val inputProfile = User( "Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8, 29, 0)
+        val inputProfile = User( "Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8, "VvPB47tQCLdjz3YebilS6h5EXdJ3")
         val ctx = ApplicationProvider.getApplicationContext() as Context
         val intent = Intent(ctx, ProfileActivity::class.java)
 
         createMockDataGetter(inputProfile)
-        createMockAuthenticatorInvocation()
+        createMockAuthenticator()
         createMockImageGetter()
 
 

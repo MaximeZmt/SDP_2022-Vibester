@@ -223,7 +223,7 @@ class LyricsBelongGameActivityTest {
         val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
         val ctx = ApplicationProvider.getApplicationContext() as Context
         scn.onActivity { activity ->
-            activity.testGetAndCheckLyrics(ctx, "the best song in the world", "Mr.Mystery", "", gameManager)
+            activity.getAndCheckLyrics(ctx, "the best song in the world", "Mr.Mystery", "", gameManager)
         }
         /** FIXME: API takes a lot of time to process this request
         comment the following lines if this test fail */
@@ -246,7 +246,7 @@ class LyricsBelongGameActivityTest {
         )
         val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
         scn.onActivity { activity ->
-            activity.testUpdateSpeechResult("hey")
+            activity.updateSpeechResult("hey")
         }
 
         onView(withId(R.id.lyricResult)).check(matches(withText("hey")))
@@ -285,9 +285,9 @@ class LyricsBelongGameActivityTest {
      */
 
     // FIXME: this test fails after implement QR code reader for no reason
-/*    @Test
+    @Test
     fun btnCheckVisibilityAfterSpeak() {
-        createMockInvocation()
+        createMockUserRepoInvocation()
         val intent = Intent(
             ApplicationProvider.getApplicationContext(),
             LyricsBelongGameActivity::class.java
@@ -295,11 +295,11 @@ class LyricsBelongGameActivityTest {
         val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
         onView(withId(R.id.lyricMatchButton)).check(matches(not(isDisplayed())))
         scn.onActivity { activity ->
-            activity.testUpdateSpeechResult("hey")
+            activity.updateSpeechResult("hey")
         }
 
         onView(withId(R.id.lyricMatchButton)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
-    }*/
+    }
     
 
     @Test
@@ -314,7 +314,7 @@ class LyricsBelongGameActivityTest {
         val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
         val ctx = ApplicationProvider.getApplicationContext() as Context
         scn.onActivity { activity ->
-            activity.testGetAndCheckLyrics(ctx, songName, artistName, speechInputCorrect, gameManager)
+            activity.getAndCheckLyrics(ctx, songName, artistName, speechInputCorrect, gameManager)
         }
         /*FIXME: API takes a lot of time to process this request
         comment the following lines if this test fail*/
@@ -334,7 +334,7 @@ class LyricsBelongGameActivityTest {
         val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
         val ctx = ApplicationProvider.getApplicationContext() as Context
         scn.onActivity { activity ->
-            activity.testCheckLyrics(ctx, speechInputWrong, lyrics, gameManager)
+            activity.checkAnswer(ctx, speechInputWrong, lyrics, gameManager)
         }
         val incArray: ArrayList<String> = ArrayList(
             gameManager.getWrongSongs().map { it.getTrackName() + " - " + it.getArtistName() })
@@ -369,7 +369,7 @@ class LyricsBelongGameActivityTest {
         val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
         val ctx = ApplicationProvider.getApplicationContext() as Context
         scn.onActivity { activity ->
-            activity.testStartRound(ctx, gameManager)
+            activity.startRound(ctx, gameManager)
             currentArtist = activity.getArtistName()
             currentSong = activity.getSongName()
         }

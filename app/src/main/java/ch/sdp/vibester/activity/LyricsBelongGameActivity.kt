@@ -83,7 +83,7 @@ class LyricsBelongGameActivity : GameActivity() {
      * @param ctx: Context on which the round is happening.
      * @param gameManager: The gameManager instance that is managing the current game.
      */
-    private fun startRound(ctx: Context, gameManager: GameManager) {
+    fun startRound(ctx: Context, gameManager: GameManager) {
         toggleBtnVisibility(R.id.lyricMatchButton, false)
         toggleBtnVisibility(R.id.nextSongButton, false)
         songName = gameManager.currentSong.getTrackName()
@@ -106,7 +106,7 @@ class LyricsBelongGameActivity : GameActivity() {
      * Displays the given String in lyricResult TextView and renders the check button visible.
      * @param speechInput: The string to display
      */
-    private fun updateSpeechResult(speechInput: String) {
+    fun updateSpeechResult(speechInput: String) {
         findViewById<TextView>(R.id.lyricResult).text = speechInput
         findViewById<Button>(R.id.lyricMatchButton).visibility = View.VISIBLE
     }
@@ -119,7 +119,7 @@ class LyricsBelongGameActivity : GameActivity() {
      * @param speechInput: The inputted string from the speech.
      * @param gameManager: The gameManager instance that is managing the game.
      */
-    private fun getAndCheckLyrics(ctx: Context, songName: String, artistName: String, speechInput: String, gameManager: GameManager) {
+    fun getAndCheckLyrics(ctx: Context, songName: String, artistName: String, speechInput: String, gameManager: GameManager) {
         val service = LyricAPI().createLyricService()
         val call = service.getLyrics(artistName, songName)
 
@@ -149,7 +149,7 @@ class LyricsBelongGameActivity : GameActivity() {
      * @param lyrics: Actual lyrics.
      * @param gameManager: The gameManager instance that is managing the game.
      */
-    private fun checkAnswer(ctx: Context, lyricToBeCheck: String, lyrics: String, gameManager: GameManager) {
+    fun checkAnswer(ctx: Context, lyricToBeCheck: String, lyrics: String, gameManager: GameManager) {
          if (lyrics.contains(lyricToBeCheck, ignoreCase = true)) {
              gameManager.increaseScore()
              gameManager.addCorrectSong()
@@ -221,18 +221,6 @@ class LyricsBelongGameActivity : GameActivity() {
     /*
      * The following functions are helper for testing
      */
-    fun testCheckLyrics(ctx: Context, lyricToBeCheck: String, lyrics: String, gameManager: GameManager) {
-        checkAnswer(ctx, lyricToBeCheck, lyrics, gameManager)
-    }
-
-    fun testUpdateSpeechResult(speechInput: String) {
-        updateSpeechResult(speechInput)
-    }
-
-    fun testGetAndCheckLyrics(ctx: Context, songName: String, artistName: String, speechInput: String, gameManager: GameManager) {
-        getAndCheckLyrics(ctx, songName, artistName, speechInput, gameManager)
-    }
-
     fun getSongName(): String {
         return songName
     }
@@ -245,8 +233,5 @@ class LyricsBelongGameActivity : GameActivity() {
         superTestProgressBar(findViewById(R.id.progressBarLyrics), progressTime)
     }
 
-    fun testStartRound(ctx: Context, gameManager: GameManager) {
-        startRound(ctx, gameManager)
-    }
 
 }

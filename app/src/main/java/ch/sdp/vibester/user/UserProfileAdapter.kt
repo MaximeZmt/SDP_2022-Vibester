@@ -1,5 +1,6 @@
 package ch.sdp.vibester.user
 
+import android.graphics.Bitmap
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
@@ -9,10 +10,16 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
+import ch.sdp.vibester.api.BitmapGetterApi
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.database.ImageGetter
 import ch.sdp.vibester.helper.loadImg
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+import java.util.concurrent.TimeUnit
 
 
 /**
@@ -20,9 +27,8 @@ import ch.sdp.vibester.helper.loadImg
  */
 class UserProfileAdapter constructor(
     val users: MutableList<User>,
-    val authenticator: FireBaseAuthenticator,
+    private val authenticator: FireBaseAuthenticator,
     val dataGetter: DataGetter,
-    val imageGetter: ImageGetter
     ):
     RecyclerView.Adapter<UserProfileAdapter.UserProfileViewHolder>() {
 
@@ -78,8 +84,7 @@ class UserProfileAdapter constructor(
          */
         fun bind(user: User) {
             itemView.findViewById<TextView>(R.id.search_user_username).text = user.username
-            imageGetter.fetchImage(user.uid, this::loadImage)
-//            itemView.findViewById<ImageView>(R.id.profile_image).loadImg(user.image)
+            itemView.findViewById<ImageView>(R.id.profile_image).loadImg(user.image)
             val addFriendBtn = itemView.findViewById<Button>(R.id.addFriendBtn)
 
             if(userFriends.isNotEmpty() && user.uid in userFriends){
@@ -100,9 +105,6 @@ class UserProfileAdapter constructor(
             itemView.findViewById<ImageView>(R.id.addedFriendIcon).visibility = View.VISIBLE
         }
 
-        private fun loadImage(imageURI: Uri) {
-            itemView.findViewById<ImageView>(R.id.profile_image).loadImg(imageURI.toString())
-        }
     }
 
 

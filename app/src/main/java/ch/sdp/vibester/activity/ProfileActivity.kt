@@ -6,7 +6,6 @@ import android.graphics.*
 import android.net.Uri
 import android.os.Bundle
 import android.text.InputType
-import android.util.Log
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.Window
@@ -53,7 +52,8 @@ class ProfileActivity : AppCompatActivity() {
     @Inject
     lateinit var imageGetter: ImageGetter
 
-    val imageSize = 1000
+    private val imageSize = 1000
+    private val imageRequestCode = 100
 
     /**
      * Generic onCreate method belonging to ProfileActivity.
@@ -81,44 +81,27 @@ class ProfileActivity : AppCompatActivity() {
      */
     private fun setEditUserNameBtnListener() {
         findViewById<ImageView>(R.id.editUser).setOnClickListener {
-            showGeneralDialog(R.id.username, "username")
+            showGeneralDialog( "username", true)
         }
     }
 
     private fun setChangeImageBtnListener() {
         findViewById<ImageView>(R.id.avatar).setOnClickListener {
-            showImageChangeDialog()
+            showGeneralDialog( "Do you want to change your profile picture?", false)
         }
-    }
-
-    private fun showImageChangeDialog() {
-        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-        builder.setTitle("Do you want to change your profile picture?")
-
-        builder.setPositiveButton("Yes") { _, _ ->
-            dataGetter.getCurrentUser()?.let { updateImage(it.uid) }
-        }
-
-        builder.setNegativeButton("No") { dialog, _ -> dialog.cancel() }
-        builder.show()
     }
 
     private fun updateImage(id: String) {
         deleteImage(id)
-        uploadImage()
+
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        startActivityForResult(intent, imageRequestCode)
     }
 
     private fun deleteImage(id: String) {
         imageGetter.deleteImage("profileImg/${id}")
     }
-
-    private fun uploadImage() {
-        val intent = Intent(Intent.ACTION_PICK)
-        intent.type = "image/*"
-        startActivityForResult(intent, 100)
-    }
-
-//    private fun()
 
     //check the UID here not sure
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -189,7 +172,7 @@ class ProfileActivity : AppCompatActivity() {
      * @param textId id of the text in the dialog
      * @param name of the dialog
      */
-    private fun showDialog(title: String, hint: String, id: Int, textId: Int, name: String) {
+    private fun showTextDialog(title: String, hint: String, id: Int, textId: Int, name: String) {
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
         builder.setTitle(title)
 
@@ -211,16 +194,28 @@ class ProfileActivity : AppCompatActivity() {
         builder.show()
     }
 
-    /**
-     * A function that displays the dialog.
-     * @param id: The id of the user to be shown.
-     * @param name: The name of the user to be shown.
-     */
-    private fun showGeneralDialog(id: Int, name: String) {
-        val title = "Create $name"
-        val hint = "Enter new $name"
+    private fun showImageChangeDialog(title: String) {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        builder.setTitle(title)
 
-        showDialog(title, hint, 0, id, name)
+        builder.setPositiveButton("Yes") { _, _ ->
+            dataGetter.getCurrentUser()?.let { updateImage(it.uid) }
+        }
+
+        builder.setNegativeButton("No") { dialog, _ -> dialog.cancel() }
+        builder.show()
+    }
+
+    private fun showGeneralDialog(name: String, textDialog: Boolean) {
+        if(textDialog) {
+            val title = "Create $name"
+            val hint = "Enter new $name"
+
+            showTextDialog(title, hint, 0, R.id.username, name)
+        }
+        else {
+            showImageChangeDialog(name)
+        }
     }
 
     /**

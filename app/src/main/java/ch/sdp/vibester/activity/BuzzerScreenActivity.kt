@@ -44,10 +44,6 @@ class BuzzerScreenActivity : GameActivity() {
         pressedBuzzer = id
     }
 
-    fun getGameManager(): GameManager {
-        return gameManager
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)

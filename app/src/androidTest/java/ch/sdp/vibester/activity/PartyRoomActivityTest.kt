@@ -1,5 +1,6 @@
 package ch.sdp.vibester.activity
 
+/*
 import android.content.Intent
 import android.provider.Telephony
 import androidx.test.core.app.ActivityScenario
@@ -97,6 +98,8 @@ class PartyRoomActivityTest {
         Espresso.onView(ViewMatchers.withId(R.id.emails))
             .check(ViewAssertions.matches(ViewMatchers.withText(mockUserEmailList.toString())))
     }
-    
+
  */
 }
+
+ */

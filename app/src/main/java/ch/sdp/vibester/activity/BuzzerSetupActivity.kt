@@ -81,6 +81,7 @@ class BuzzerSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
             R.id.namePlayer4 -> 4
             else -> 0
         }
+        if (i == 0) {return}
         findViewById<EditText>(id).visibility =
             if (n >= i) View.VISIBLE else View.INVISIBLE
     }

@@ -10,8 +10,7 @@ import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasExtra
-import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withSpinnerText
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
@@ -177,4 +176,34 @@ class BuzzerSetupActivityTest {
         intended(hasExtra("Number of players", 4))
     }
 
+    @Test
+    fun playerNameVisibilityWithInvalidId() {
+        val intent = Intent(ApplicationProvider.getApplicationContext(), BuzzerSetupActivity::class.java)
+        val scn: ActivityScenario<BuzzerSetupActivity> = ActivityScenario.launch(intent)
+        val invalidId = -1
+        scn.onActivity { activity ->
+            activity.updatePlayerNameVisibility(0, invalidId)
+        }
+        onView(withId(R.id.namePlayer1)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+        onView(withId(R.id.namePlayer2)).check(matches(withEffectiveVisibility(Visibility.INVISIBLE)))
+        onView(withId(R.id.namePlayer3)).check(matches(withEffectiveVisibility(Visibility.INVISIBLE)))
+        onView(withId(R.id.namePlayer4)).check(matches(withEffectiveVisibility(Visibility.INVISIBLE)))
+    }
+
+    @Test
+    fun checkDisplayOfMissingNameAlert() {
+        val intent = Intent(ApplicationProvider.getApplicationContext(), BuzzerSetupActivity::class.java)
+        intent.putExtra("gameManager", setGameManager())
+        val scn: ActivityScenario<BuzzerSetupActivity> = ActivityScenario.launch(intent)
+
+        // click on next button without entering names => check next button disappears and alert appears
+        onView(withId(R.id.nb_players_selected)).check(matches(withEffectiveVisibility(Visibility.VISIBLE))).perform(click())
+        onView(withId(R.id.nb_players_selected)).check(matches(withEffectiveVisibility(Visibility.INVISIBLE)))
+        onView(withId(R.id.missingNameAlert)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+
+        // click on "OK" button in alert => check alert disappears and next button reappears
+        onView(withId(R.id.missingNameOk)).check(matches(withEffectiveVisibility(Visibility.VISIBLE))).perform(click())
+        onView(withId(R.id.missingNameAlert)).check(matches(withEffectiveVisibility(Visibility.INVISIBLE)))
+        onView(withId(R.id.nb_players_selected)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+    }
 }

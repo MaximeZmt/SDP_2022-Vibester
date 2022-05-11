@@ -21,6 +21,7 @@ import ch.sdp.vibester.TestMode
 import ch.sdp.vibester.api.ItunesMusicApi
 import ch.sdp.vibester.helper.IntentSwitcher
 import ch.sdp.vibester.model.Song
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import okhttp3.OkHttpClient
 import org.w3c.dom.Text
 import java.io.File
@@ -55,6 +56,10 @@ class DownloadActivity : AppCompatActivity() {
             downloadListener(songNameView)
         }
 
+        findViewById<FloatingActionButton>(R.id.download_returnToMain).setOnClickListener {
+            IntentSwitcher.switch(this, WelcomeActivity::class.java, null)
+        }
+
         var broadcast = object:BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
                 var id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
@@ -67,8 +72,8 @@ class DownloadActivity : AppCompatActivity() {
                 }
             }
         }
-            registerReceiver(broadcast, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
-        }
+        registerReceiver(broadcast, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
+    }
 
     /**
      * Function that handles deletion button pushes.
@@ -201,10 +206,6 @@ class DownloadActivity : AppCompatActivity() {
             records.createNewFile()
         }
         records.appendText("$songName\n")
-    }
-
-    private fun switchToWelcome() {
-        IntentSwitcher.switch(this, WelcomeActivity::class.java, null)
     }
 
     fun switchToDeleteSongs(view: View) {

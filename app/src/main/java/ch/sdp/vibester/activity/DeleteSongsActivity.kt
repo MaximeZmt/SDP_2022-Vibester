@@ -18,6 +18,7 @@ import android.widget.TextView
 import android.widget.Toast
 import ch.sdp.vibester.R
 import ch.sdp.vibester.helper.IntentSwitcher
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import org.w3c.dom.Text
 import java.io.*
 /**
@@ -31,6 +32,10 @@ class DeleteSongsActivity : AppCompatActivity() {
         supportActionBar?.hide()
 
         setContentView(R.layout.activity_delete_songs)
+
+        findViewById<FloatingActionButton>(R.id.delete_returnToMain).setOnClickListener {
+            IntentSwitcher.switch(this, WelcomeActivity::class.java, null)
+        }
 
         val layout: LinearLayout = findViewById(R.id.delete_songs_linear)
         generateButtons(layout)
@@ -135,9 +140,5 @@ class DeleteSongsActivity : AppCompatActivity() {
         noDownloadsText.gravity = Gravity.CENTER
         noDownloadsText.layoutParams = LinearLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT)
         layout.addView(noDownloadsText)
-    }
-
-    private fun switchToWelcome() {
-        IntentSwitcher.switch(this, WelcomeActivity::class.java, null)
     }
 }

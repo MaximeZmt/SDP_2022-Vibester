@@ -6,6 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".activity.DownloadActivity">
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/download_returnToMain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/light_coral"
+        android:clickable="true"
+        android:onClick="returnToMainListener"
+        android:src="@android:drawable/ic_menu_revert"
+        app:borderWidth="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <EditText
         android:id="@+id/download_songName"
         android:layout_width="253dp"
@@ -43,16 +57,5 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/download_downloadsong" />
-
-    <Button
-        android:id="@+id/download_to_welcome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="21dp"
-        android:onClick="switchToWelcome"
-        android:text="@string/inc_go_back"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/download_to_delete" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

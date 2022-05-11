@@ -200,7 +200,7 @@ class LyricsBelongGameActivityTest {
 //    }
 
     @Test
-    fun nextButtonOnClick() {
+    fun aNextButtonOnClick() {
         createMockInvocation()
         val gameManager = setGameManager(2)
         val intent = Intent(ApplicationProvider.getApplicationContext(), LyricsBelongGameActivity::class.java)
@@ -226,7 +226,6 @@ class LyricsBelongGameActivityTest {
         Intents.intended(IntentMatchers.hasExtra("str_arr_name", statNames))
         Intents.intended(IntentMatchers.hasExtra("str_arr_val", statVal))
     }
-
     // FIXME: this test fails after implement QR code reader for no reason
 /*    @Test
     fun btnCheckVisibilityAfterSpeak() {
@@ -267,7 +266,7 @@ class LyricsBelongGameActivityTest {
     }
 
     @Test
-    fun checkIntentOnEndingForWrongSong() {
+    fun bCheckIntentOnEndingForWrongSong() {
         createMockInvocation()
         val gameManager = setGameManager()
         gameManager.setNextSong()

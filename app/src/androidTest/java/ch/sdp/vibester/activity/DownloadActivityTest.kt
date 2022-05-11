@@ -155,7 +155,7 @@ class DownloadActivityTest {
 
     @Test
     fun checkIntentOnGoBack() {
-        onView(withId(R.id.download_to_welcome)).perform(click())
+        onView(withId(R.id.download_returnToMain)).perform(click())
         Intents.intended(IntentMatchers.hasComponent(WelcomeActivity::class.java.name))
     }
 

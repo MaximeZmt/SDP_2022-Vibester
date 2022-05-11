@@ -24,6 +24,10 @@
     <string name="qrScanning_noExistUid">Error not an existing uid</string>
     <string name="qrScanning_newFriend">Congratulations, you have a new friend</string>
 
+    <!-- TypingGame -->
+    <string name="TypingGame_currentRound">Round\ </string>
+    <string name="TypingGame_yourScore0">Your score: 0</string>
+    <string name="TypingGame_yourScore">\Your score:\ </string>
 
     <!-- GameEnding -->
     <string name="gameEnding_unconnectedUsername">UNCONNECTED</string>
@@ -117,6 +121,7 @@
     <string name="game_typing">Local Typing</string>
     <string name="game_setup_ask_difficulty">Please choose the difficulty of your game</string>
 
+
     <string-array name="nb_players">
         <item>One</item>
         <item>Two</item>
@@ -163,15 +168,6 @@
     <string name="winner">And the winner is… </string>
     <string name="noWinner">Nobody won this game!</string>
 
-    <string name="difficulty_easy">The difficulty setting recommended for when you want to have a chill time.
-            You have 30 seconds to guess each song!</string>
-    <string name="difficulty_medium">The difficulty setting recommended for when you want to both savor the song, and see
-            if your song knowledge is as good as you think.
-            You have 15 seconds to guess each song!</string>
-    <string name="difficulty_hard">The difficulty setting recommended for when you want a challenge.
-            You have 5 seconds to guess each song!</string>
-
-
     <string name="title_activity_fullscreen">FullscreenActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
@@ -187,10 +183,16 @@
     <string name="wrong_message">Sadly you\'re wrong</string>
     <string name="wrong_message_with_answer">Sadly you\'re wrong, it was %1$s by %2$s</string>
     <string name="user_add_friend">Add</string>
+
     <string name="billie_eilish">Billie Eilish</string>
     <string name="imagine_dragons">Imagine Dragons</string>
     <string name="bts">BTS</string>
     <string name="r_o_c_k">R O C K</string>
     <string name="k_p_o_p">K P O P</string>
     <string name="t_o_p_t_r_a_c_k_s">T O P T R A C K S</string>
+    <string name="rock">rock</string>
+    <string name="kpop">kpop</string>
+    <string name="top_tracks">Top Tracks</string>
+
+    <string name="test_profile_image">bit.ly/3IUnyAF</string>
 </resources>

@@ -18,6 +18,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.LastfmMethod
 import ch.sdp.vibester.helper.BuzzerGameManager
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
 import org.hamcrest.Matchers
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -27,14 +29,19 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
+@HiltAndroidTest
 class BuzzerSetupActivityTest {
-    @get: Rule
+    @get:Rule(order = 0)
+    var hiltRule = HiltAndroidRule(this)
+
+    @get:Rule(order = 1)
     val activityRule = ActivityScenarioRule(BuzzerSetupActivity::class.java)
 
-    val mockArray = arrayOf("Player1", "Player2", "Player3", "Player4")
+    val mockArray = arrayOf("1", "2", "3", "4")
     val editTextIdArray = arrayOf(R.id.namePlayer1, R.id.namePlayer2, R.id.namePlayer3, R.id.namePlayer4)
 
-    /** helper function used in tests
+    /**
+     * helper function used in tests
      * @param n: number of names to enter
      */
     private fun enterNames(n: Int) {
@@ -47,6 +54,7 @@ class BuzzerSetupActivityTest {
 
     @Before
     fun setUp() {
+        hiltRule.inject()
         Intents.init()
     }
 
@@ -77,16 +85,17 @@ class BuzzerSetupActivityTest {
         return gameManager
     }
 
-    @Test
-    fun checkDefaultSelect() {
-        onView(withId(R.id.nb_player_spinner)).check(matches(withSpinnerText("One")))
-    }
 
     @Test
-    fun textToNumberWrong(){
+    fun variousDefaultStateTest(){
         var res:Int = 0
         val intent = Intent(ApplicationProvider.getApplicationContext(), BuzzerSetupActivity::class.java)
         val scn: ActivityScenario<BuzzerSetupActivity> = ActivityScenario.launch(intent)
+
+        //Check default selection
+        onView(withId(R.id.nb_player_spinner)).check(matches(withSpinnerText("One")))
+
+        //Wrong Text to Number
         scn.onActivity { activity ->
             res = activity.textToNumber("Test")
         }
@@ -116,47 +125,7 @@ class BuzzerSetupActivityTest {
         assertEquals(4, res)
     }
 
-    @Test
-    fun checkCustomSelectOne() {
-        onView(withId(R.id.nb_player_spinner)).perform(click())
-        onData(Matchers.anything()).atPosition(0).perform(scrollTo(),click())
-        onView(withId(R.id.nb_player_spinner)).check(matches(withSpinnerText("One")))
-    }
 
-    @Test
-    fun checkCustomSelectTwo() {
-        onView(withId(R.id.nb_player_spinner)).perform(click())
-        onData(Matchers.anything()).atPosition(1).perform(scrollTo(),click())
-        onView(withId(R.id.nb_player_spinner)).check(matches(withSpinnerText("Two")))
-    }
-
-    @Test
-    fun checkCustomSelectThree() {
-        onView(withId(R.id.nb_player_spinner)).perform(click())
-        onData(Matchers.anything()).atPosition(2).perform(scrollTo(),click())
-        onView(withId(R.id.nb_player_spinner)).check(matches(withSpinnerText("Three")))
-    }
-
-    @Test
-    fun checkCustomSelectFour() {
-        onView(withId(R.id.nb_player_spinner)).perform(click())
-        onData(Matchers.anything()).atPosition(3).perform(scrollTo(),click())
-        onView(withId(R.id.nb_player_spinner)).check(matches(withSpinnerText("Four")))
-    }
-/*
-    @Test
-    fun checkNoIntentIfMissingName() {
-        val intent = Intent(ApplicationProvider.getApplicationContext(), BuzzerSetupActivity::class.java)
-        intent.putExtra("gameManager", setGameManager())
-        val scn: ActivityScenario<BuzzerSetupActivity> = ActivityScenario.launch(intent)
-        onView(withId(R.id.missingNameAlert)).check(matches(ViewMatchers.withEffectiveVisibility(ViewMatchers.Visibility.INVISIBLE)))
-        onView(withId(R.id.nb_players_selected)).perform(click())
-        onView(withId(R.id.missingNameAlert)).check(matches(ViewMatchers.withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)))
-        onView(withId(R.id.missingNameOk)).perform(click())
-        onView(withId(R.id.missingNameAlert)).check(matches(ViewMatchers.withEffectiveVisibility(ViewMatchers.Visibility.INVISIBLE)))
-
-    }
-*/
     @Test
     fun checkIntentOnProceedOne() {
         val intent = Intent(ApplicationProvider.getApplicationContext(), BuzzerSetupActivity::class.java)

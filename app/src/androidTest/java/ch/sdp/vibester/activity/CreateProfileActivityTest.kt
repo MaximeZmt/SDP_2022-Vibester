@@ -11,8 +11,10 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
 import ch.sdp.vibester.TestMode
+import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.user.User
+import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -39,21 +41,36 @@ class CreateProfileActivityTest {
     }
 
     @BindValue @JvmField
-    val mockUsersRepo = mockk<DataGetter>()
+    val mockAuthenticator = mockk<FireBaseAuthenticator>()
 
-    private fun createMockInvocation(email: String) {
-        every {mockUsersRepo.createUser(any(), any(), any(), any())} answers {
+    private fun createMockAuthenticator() {
+        val mockUser = createMockUser()
+        every { mockAuthenticator.getCurrUser() } returns mockUser
+        every { mockAuthenticator.getCurrUID() } returns mockUser.uid
+    }
+
+    private fun createMockUser(): FirebaseUser {
+        val email = "u@u.c"
+        val uid = "uid"
+        val mockUser = mockk<FirebaseUser>()
+        every { mockUser.email } returns email
+        every { mockUser.uid } returns uid
+        return mockUser
+    }
+
+    @BindValue @JvmField
+    val mockDataGetter = mockk<DataGetter>()
+
+    private fun createMockDataGetter(email: String) {
+        every {mockDataGetter.createUser(any(), any(), any(), any())} answers {
             lastArg<(String) -> Unit>().invoke(email)
         }
-
-        every { mockUsersRepo.getUserData(any(), any()) } answers {
-            secondArg<(User) -> Unit>().invoke(User())
-        }
-
-        every { mockUsersRepo.getCurrentUser() } answers {
-            null
-        }
-
+        every { mockDataGetter.getUserData(any(), any()) } answers {secondArg<(User) -> Unit>().invoke(User())}
+        every { mockDataGetter.getCurrentUser() } answers {null }
+        every { mockDataGetter.setSubFieldValue(any(), any(), any(), any()) } answers {}
+        every { mockDataGetter.updateFieldInt(any(), any(), any(), any()) } answers {}
+        every { mockDataGetter.setFieldValue(any(), any(), any()) } answers {}
+        every { mockDataGetter.updateSubFieldInt(any(), any(), any(), any(), any()) } answers {}
     }
 
     @After
@@ -64,14 +81,14 @@ class CreateProfileActivityTest {
     @Test
     fun createAccCorrect() {
         TestMode.setTest()
-        var username = "mockUsername"
-        var mockEmail = "mockEmail@test.com"
+        var username = "u"
+        var mockEmail = "u@u.c"
 
         val intent = Intent(ApplicationProvider.getApplicationContext(), CreateProfileActivity::class.java)
         intent.putExtra("email", mockEmail)
-        intent.putExtra("isUnitTest", true)
 
-        createMockInvocation(mockEmail)
+        createMockDataGetter(mockEmail)
+        createMockAuthenticator()
 
         val scn: ActivityScenario<CreateProfileActivity> = ActivityScenario.launch(intent)
 
@@ -83,7 +100,6 @@ class CreateProfileActivityTest {
 
        Intents.intended(IntentMatchers.hasComponent(ProfileActivity::class.java.name))
        Intents.intended(IntentMatchers.hasExtra("email", mockEmail))
-       Intents.intended(IntentMatchers.hasExtra("isUnitTest", true))
     }
 
 }

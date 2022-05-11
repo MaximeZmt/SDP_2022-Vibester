@@ -40,8 +40,8 @@ class QrScanningActivity : AppCompatActivity() {
     val usersRepo: DataGetter = DataGetter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
+        super.onCreate(savedInstanceState)
         supportActionBar?.hide()
         binding = ActivityQrScanningBinding.inflate(layoutInflater)
         val view = binding.root
@@ -194,7 +194,7 @@ class QrScanningActivity : AppCompatActivity() {
                 camera.stop()
                 if (isTest || scannedValue in uidList){
                     if (!isTest) {
-                        usersRepo.setSubFieldValue(FireBaseAuthenticator.getCurrentUID(),"friends", scannedValue, true)
+                        usersRepo.setSubFieldValue(FireBaseAuthenticator().getCurrUID(),"friends", scannedValue, true)
                     }
                     Toast.makeText(this@QrScanningActivity, getString(R.string.qrScanning_newFriend), Toast.LENGTH_SHORT).show()
                     startActivityWExtra(Intent(this@QrScanningActivity, SearchUserActivity::class.java), "isSuccess", true)

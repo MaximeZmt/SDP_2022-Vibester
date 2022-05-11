@@ -21,20 +21,26 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.platform.app.InstrumentationRegistry
 import ch.sdp.vibester.R
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import java.io.File
 
+@HiltAndroidTest
 class DeleteSongsActivityTest {
 
-    @Rule
-    @JvmField
+    @get:Rule(order = 0)
+    var hiltRule = HiltAndroidRule(this)
+
+    @get:Rule(order = 1)
     val activityRule = ActivityScenarioRule(DeleteSongsActivity::class.java)
 
     @Before
     fun setUp() {
+        hiltRule.inject()
         Intents.init()
     }
 
@@ -43,11 +49,10 @@ class DeleteSongsActivityTest {
         Intents.release()
     }
 
-
     @Test
     fun checkIntentOnGoBack() {
-        onView(withId(R.id.delete_to_welcome)).perform(click())
-        intended(hasComponent(WelcomeActivity::class.java.name))
+        onView(withId(R.id.delete_returnToMain)).perform(click())
+        intended(hasComponent(MainActivity::class.java.name))
     }
 
     @Test

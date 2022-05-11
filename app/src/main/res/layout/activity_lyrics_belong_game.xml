@@ -73,12 +73,12 @@
 
     <Button
         android:id="@+id/nextSongButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="113dp"
+        android:layout_height="64dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="184dp"
-        android:visibility="gone"
-        android:text="@string/next" />
+        android:text="@string/next"
+        android:visibility="gone" />
 
 </RelativeLayout>

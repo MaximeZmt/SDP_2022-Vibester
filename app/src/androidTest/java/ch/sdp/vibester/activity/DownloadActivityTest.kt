@@ -12,6 +12,8 @@ import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import ch.sdp.vibester.R
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -20,14 +22,18 @@ import org.junit.Test
 import java.io.File
 import java.io.FileInputStream
 
+@HiltAndroidTest
 class DownloadActivityTest {
 
-    @Rule
-    @JvmField
+    @get:Rule(order = 0)
+    var hiltRule = HiltAndroidRule(this)
+
+    @get:Rule(order = 1)
     val activityRule = ActivityScenarioRule(DownloadActivity::class.java)
 
     @Before
     fun setUp() {
+        hiltRule.inject()
         Intents.init()
     }
 
@@ -155,8 +161,8 @@ class DownloadActivityTest {
 
     @Test
     fun checkIntentOnGoBack() {
-        onView(withId(R.id.download_to_welcome)).perform(click())
-        Intents.intended(IntentMatchers.hasComponent(WelcomeActivity::class.java.name))
+        onView(withId(R.id.download_returnToMain)).perform(click())
+        Intents.intended(IntentMatchers.hasComponent(MainActivity::class.java.name))
     }
 
     @Test

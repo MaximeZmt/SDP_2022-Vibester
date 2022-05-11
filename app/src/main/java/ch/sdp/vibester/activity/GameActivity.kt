@@ -12,21 +12,32 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.BitmapGetterApi
+import ch.sdp.vibester.auth.FireBaseAuthenticator
+import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.helper.GameManager
 import ch.sdp.vibester.model.Song
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * Common set up for all games (difficulty level, progress bar)
  * CHECK IF THE DOCS ARE CORRECT OR NOT!
  */
+@AndroidEntryPoint
 open class GameActivity : AppCompatActivity() {
     open val handler = Handler()
     open var maxTime: Int = 30
     var runnable: Runnable? = null
+
+    @Inject
+    lateinit var dataGetter: DataGetter
+
+    @Inject
+    lateinit var authenticator: FireBaseAuthenticator
 
     /**
      * Sets the countdown timer's maximum(initial) value.
@@ -122,6 +133,18 @@ open class GameActivity : AppCompatActivity() {
      */
     fun isEndGame(gameManager: GameManager): Boolean {
         return !gameManager.checkGameStatus() || !gameManager.setNextSong()
+    }
+
+    /**
+     * Function to set scores in the end of the game
+     */
+    fun setScores(gameManager: GameManager) {
+        if(authenticator.isLoggedIn()){
+            dataGetter.updateFieldInt(authenticator.getCurrUID(), "totalGames", 1, method = "sum")
+            dataGetter.updateFieldInt(authenticator.getCurrUID(), "correctSongs", gameManager.getCorrectSongs().size, method = "sum")
+            dataGetter.updateFieldInt(authenticator.getCurrUID(), "bestScore", gameManager.getScore(), method = "best")
+            dataGetter.updateSubFieldInt(authenticator.getCurrUID(), gameManager.getScore(), "scores", gameManager.gameMode, method = "best")
+        }
     }
 
     /**

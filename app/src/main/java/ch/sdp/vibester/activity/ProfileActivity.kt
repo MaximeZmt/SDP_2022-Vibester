@@ -9,10 +9,7 @@ import android.text.InputType
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.Window
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -24,6 +21,7 @@ import ch.sdp.vibester.database.ImageGetter
 import ch.sdp.vibester.helper.IntentSwitcher
 import ch.sdp.vibester.user.User
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.tabs.TabLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.EncodeHintType
@@ -59,11 +57,9 @@ class ProfileActivity : AppCompatActivity() {
      * Generic onCreate method belonging to ProfileActivity.
      */
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
         requestWindowFeature(Window.FEATURE_NO_TITLE)
+        super.onCreate(savedInstanceState)
         supportActionBar?.hide()
-
         setContentView(R.layout.activity_profile)
 
         setEditUserNameBtnListener()
@@ -72,6 +68,7 @@ class ProfileActivity : AppCompatActivity() {
         setShowQrCodeBtnListener()
         setQrCodeToProfileBtnListener()
         setChangeImageBtnListener()
+        setScoreBtnListener()
 
         queryDatabase()
     }
@@ -107,8 +104,8 @@ class ProfileActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == 100){
-            imageGetter.uploadFile("profileImg/${FireBaseAuthenticator.getCurrentUID()}", data?.data!!) {
-                imageGetter.fetchImage("profileImg/${FireBaseAuthenticator.getCurrentUID()}", this::setImage)
+            imageGetter.uploadFile("profileImg/${dataGetter.getCurrentUser()?.uid}", data?.data!!) {
+                imageGetter.fetchImage("profileImg/${dataGetter.getCurrentUser()?.uid}", this::setImage)
             }
         }
     }
@@ -119,7 +116,7 @@ class ProfileActivity : AppCompatActivity() {
     private fun setLogOutBtnListener() {
         findViewById<Button>(R.id.logout).setOnClickListener {
             FirebaseAuth.getInstance().signOut()
-            IntentSwitcher.switchBackToWelcome(this)
+            IntentSwitcher.switch(this, MainActivity::class.java)
             finish()
         }
     }
@@ -129,7 +126,7 @@ class ProfileActivity : AppCompatActivity() {
      */
     private fun setRetToMainBtnListener() {
         findViewById<FloatingActionButton>(R.id.profile_returnToMain).setOnClickListener {
-            IntentSwitcher.switchBackToWelcome(this)
+            IntentSwitcher.switch(this, MainActivity::class.java)
             finish()
         }
     }
@@ -138,7 +135,7 @@ class ProfileActivity : AppCompatActivity() {
      * Generic listener for the show qr code button.
      */
     private fun setShowQrCodeBtnListener() {
-        findViewById<Button>(R.id.showQRCode).setOnClickListener {
+        findViewById<ImageView>(R.id.showQRCode).setOnClickListener {
             setLayoutVisibility(R.id.QrCodePage, true)
             setLayoutVisibility(R.id.profileContent, false)
         }
@@ -155,8 +152,26 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     /**
+     * Generic listener for the score button, show the score per genre statistic on click
+     */
+    private fun setScoreBtnListener() {
+        findViewById<Button>(R.id.profile_scores).setOnClickListener {
+            toggleVisibility(R.id.profileStatistics)
+        }
+    }
+
+    /**
+     * toggle the given layout's visibility
+     * @param layout: The given ScrollView id to modify
+     */
+    private fun toggleVisibility(layout: Int) {
+        if (findViewById<TableLayout>(layout).visibility == VISIBLE) findViewById<TableLayout>(layout).visibility = GONE
+        else if (findViewById<TableLayout>(layout).visibility == GONE) findViewById<TableLayout>(layout).visibility = VISIBLE
+    }
+
+    /**
      * Sets the given layout's visibility.
-     * @param layout: The given layout to modify.
+     * @param layout: The given constraint layout to modify.
      * @param isVisible: The indicator of which visibility to choose.
      * True for VISIBLE, false for GONE.
      */
@@ -186,7 +201,7 @@ class ProfileActivity : AppCompatActivity() {
             findViewById<TextView>(textId).text = input.text.toString()
 
             if(name == "username"){
-                dataGetter.setFieldValue(FireBaseAuthenticator.getCurrentUID(), "username",  input.text.toString())
+                dataGetter.setFieldValue(FireBaseAuthenticator().getCurrUID(), "username",  input.text.toString())
             }
         }
 
@@ -268,10 +283,13 @@ class ProfileActivity : AppCompatActivity() {
      * @param user: The user from which we will recover the text to set.
      */
     private fun setTextOfMultipleViews(user: User) {
-        setTextOfView(R.id.totalGames, user.totalGames)
-        setTextOfView(R.id.correctSongs, user.correctSongs)
-        setTextOfView(R.id.bestScore, user.bestScore)
-        setTextOfView(R.id.ranking, user.ranking)
+        setTextOfView(R.id.profile_total_games_stat, user.totalGames)
+        setTextOfView(R.id.profile_top_tracks, user.scores.getOrDefault("top tracks", 0))
+        setTextOfView(R.id.profile_kpop, user.scores.getOrDefault("kpop", 0))
+        setTextOfView(R.id.profile_rock, user.scores.getOrDefault("rock", 0))
+        setTextOfView(R.id.profile_bts, user.scores.getOrDefault("BTS", 0))
+        setTextOfView(R.id.profile_imagine_dragons, user.scores.getOrDefault("Imagine Dragons", 0))
+        setTextOfView(R.id.profile_billie_eilish, user.scores.getOrDefault("Billie Eilish", 0))
     }
 
     /**

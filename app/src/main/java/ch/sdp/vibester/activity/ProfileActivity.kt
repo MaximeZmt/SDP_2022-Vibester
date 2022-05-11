@@ -215,7 +215,6 @@ class ProfileActivity : AppCompatActivity() {
                 dataGetter.setFieldValue(FireBaseAuthenticator().getCurrUID(), "username",  input.text.toString())
             }
         }
-
         builder.setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }
         builder.show()
     }

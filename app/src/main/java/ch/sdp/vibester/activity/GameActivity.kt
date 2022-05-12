@@ -76,6 +76,28 @@ open class GameActivity : AppCompatActivity() {
     }
 
     /**
+     * Custom handle of the bar progress.
+     */
+    fun barTimer(myBar: ProgressBar, ctx:Context, gameManager: GameManager, checkAnswer: (ctx: Context, chosenSong: Song?, gameManager: GameManager) -> Unit){
+        initializeBarTimer(myBar)
+        runnable = object : Runnable {
+            override fun run() {
+                if (myBar.progress > 0) {
+                    decreaseBarTimer(myBar)
+                    handler.postDelayed(this, 999) //just a bit shorter than a second for safety
+                } else if (myBar.progress == 0) {
+                    if (gameManager.playingMediaPlayer()) {
+                        gameManager.stopMediaPlayer()
+                    }
+                    // chosen song is null because no answer has been given before the progress bar times out
+                    checkAnswer(ctx, null, gameManager)
+                }
+            }
+        }
+        handler.post(runnable!!)
+    }
+
+    /**
      * Checks the state of the runnable and removes callbacks.
      */
     fun checkRunnable() {
@@ -108,6 +130,18 @@ open class GameActivity : AppCompatActivity() {
         intent.putStringArrayListExtra("str_arr_val", statVal)
 
         startActivity(intent)
+    }
+
+    /**
+     * Function to set a song for the first round and play a game.
+     */
+    fun startFirstRound(ctx: Context, gameManager: GameManager, startRound: (ctx: Context, gameManager: GameManager) -> Unit){
+        if (!isEndGame(gameManager)) {
+            startRound(ctx, gameManager)
+        }
+        else{
+            switchToEnding(gameManager)
+        }
     }
 
     /**
@@ -148,6 +182,13 @@ open class GameActivity : AppCompatActivity() {
     }
 
     /**
+     * Checks if a song chosen by the player matches the played song
+     */
+    fun checkSong(chosen: Song?, played: Song): Boolean {
+        return chosen != null && chosen.getTrackName() == played.getTrackName() && chosen.getArtistName() == played.getArtistName()
+    }
+
+    /**
      * Function used for testing. Do not call unless it is for that specific purpose.
      */
     fun superTestProgressBar(myBar: ProgressBar, progressTime: Int=0) {
@@ -166,6 +207,17 @@ open class GameActivity : AppCompatActivity() {
      */
     fun toastShowCorrect(ctx: Context, score: Int) {
         Toast.makeText(ctx, ctx.getString(R.string.correct_message, score), Toast.LENGTH_SHORT).show()
+    }
+
+    /**
+     * Shows the correct answer on a toast.
+     */
+    fun toastShowWrong(ctx: Context, itWas: Song) {
+        Toast.makeText(
+            ctx,
+            ctx.getString(R.string.wrong_message_with_answer, itWas.getTrackName(), itWas.getArtistName()),
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
     /**

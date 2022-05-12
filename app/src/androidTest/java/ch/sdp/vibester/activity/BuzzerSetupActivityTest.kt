@@ -10,14 +10,12 @@ import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasExtra
-import androidx.test.espresso.matcher.ViewMatchers
-import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withSpinnerText
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.LastfmMethod
-import ch.sdp.vibester.helper.BuzzerGameManager
+import ch.sdp.vibester.helper.GameManager
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import org.hamcrest.Matchers
@@ -66,13 +64,13 @@ class BuzzerSetupActivityTest {
     /**
      * Helper used in tests
      */
-    private fun setGameManager(numSongs:Int = 1, valid: Boolean = true): BuzzerGameManager {
+    private fun setGameManager(numSongs:Int = 1, valid: Boolean = true): GameManager {
         val epilogue = "{\"tracks\":{\"track\":["
         val prologue =
             "], \"@attr\":{\"tag\":\"british\",\"page\":\"1\",\"perPage\":\"1\",\"totalPages\":\"66649\",\"total\":\"66649\"}}}"
         var middle = "{\"name\":\"Monday\",\"artist\":{\"name\":\"Imagine Dragons\"}}"
         if(!valid) middle = "{\"name\":\"TEST_SONG_TEST\",\"artist\":{\"name\":\"TEST_ARTIST_TEST\"}}"
-        val gameManager = BuzzerGameManager()
+        val gameManager = GameManager()
 
         var i = 0
         var completeMiddle = middle
@@ -178,4 +176,34 @@ class BuzzerSetupActivityTest {
         intended(hasExtra("Number of players", 4))
     }
 
+    @Test
+    fun playerNameVisibilityWithInvalidId() {
+        val intent = Intent(ApplicationProvider.getApplicationContext(), BuzzerSetupActivity::class.java)
+        val scn: ActivityScenario<BuzzerSetupActivity> = ActivityScenario.launch(intent)
+        val invalidId = -1
+        scn.onActivity { activity ->
+            activity.updatePlayerNameVisibility(0, invalidId)
+        }
+        onView(withId(R.id.namePlayer1)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+        onView(withId(R.id.namePlayer2)).check(matches(withEffectiveVisibility(Visibility.INVISIBLE)))
+        onView(withId(R.id.namePlayer3)).check(matches(withEffectiveVisibility(Visibility.INVISIBLE)))
+        onView(withId(R.id.namePlayer4)).check(matches(withEffectiveVisibility(Visibility.INVISIBLE)))
+    }
+
+    @Test
+    fun checkDisplayOfMissingNameAlert() {
+        val intent = Intent(ApplicationProvider.getApplicationContext(), BuzzerSetupActivity::class.java)
+        intent.putExtra("gameManager", setGameManager())
+        val scn: ActivityScenario<BuzzerSetupActivity> = ActivityScenario.launch(intent)
+
+        // click on next button without entering names => check next button disappears and alert appears
+        onView(withId(R.id.nb_players_selected)).check(matches(withEffectiveVisibility(Visibility.VISIBLE))).perform(click())
+        onView(withId(R.id.nb_players_selected)).check(matches(withEffectiveVisibility(Visibility.INVISIBLE)))
+        onView(withId(R.id.missingNameAlert)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+
+        // click on "OK" button in alert => check alert disappears and next button reappears
+        onView(withId(R.id.missingNameOk)).check(matches(withEffectiveVisibility(Visibility.VISIBLE))).perform(click())
+        onView(withId(R.id.missingNameAlert)).check(matches(withEffectiveVisibility(Visibility.INVISIBLE)))
+        onView(withId(R.id.nb_players_selected)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+    }
 }

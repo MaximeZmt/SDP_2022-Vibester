@@ -39,7 +39,7 @@
     <LinearLayout
         android:id="@+id/buzzersLayout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:gravity="center"
@@ -51,6 +51,37 @@
         app:layout_constraintTop_toBottomOf="@+id/go_to_end">
 
 
+        <Button
+            android:id="@+id/buzzer_0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:backgroundTint="@color/cg_blue"
+            android:text="Button" />
+
+        <Button
+            android:id="@+id/buzzer_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:backgroundTint="@color/cg_blue"
+            android:text="Button" />
+
+        <Button
+            android:id="@+id/buzzer_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:backgroundTint="@color/cg_blue"
+            android:text="Button" />
+
+        <Button
+            android:id="@+id/buzzer_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:backgroundTint="@color/cg_blue"
+            android:text="Button" />
     </LinearLayout>
 
     <TableLayout
@@ -80,7 +111,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/buzzersLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/buzzersLayout">
+        app:layout_constraintTop_toBottomOf="@+id/progressBarBuzzer">
 
         <TextView
             android:id="@+id/songTitle"
@@ -99,8 +130,8 @@
 
         <Button
             android:id="@+id/buttonCorrect"
-            android:layout_width="125dp"
-            android:layout_height="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:backgroundTint="@color/cg_blue"
             android:elevation="10dp"
             android:gravity="center"
@@ -110,8 +141,8 @@
 
         <Button
             android:id="@+id/buttonWrong"
-            android:layout_width="125dp"
-            android:layout_height="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:backgroundTint="@color/cg_blue"
             android:elevation="10dp"
             android:gravity="center"
@@ -121,5 +152,19 @@
 
     </LinearLayout>
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/nextSongBuzzer"
+        android:layout_width="140dp"
+        android:layout_height="40dp"
+        android:background="@drawable/squared_button"
+        android:backgroundTint="@color/cg_blue"
+        android:text="@string/next"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.9" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

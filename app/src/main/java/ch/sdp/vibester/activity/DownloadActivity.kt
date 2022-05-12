@@ -77,7 +77,7 @@ class DownloadActivity : AppCompatActivity() {
      * Function that handles deletion button pushes.
      */
     private fun downloadListener(songView: TextView) {
-        if(downloadStarted) {
+        if (downloadStarted) {
             Toast.makeText(applicationContext, getString(R.string.download_already_downloading), Toast.LENGTH_LONG).show()
             editTextView(getString(R.string.download_please_retry_later), songView)
         } else {
@@ -138,8 +138,8 @@ class DownloadActivity : AppCompatActivity() {
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if(requestCode == STORAGE_PERMISSION_CODE) {
-            if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        if (requestCode == STORAGE_PERMISSION_CODE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 downloadId = startDownload()
             }
         } else {
@@ -151,9 +151,9 @@ class DownloadActivity : AppCompatActivity() {
      * Checks if the required app permissions are already given. If not, request those permissions.
      */
     private fun checkPermissionsAndDownload() {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
             Build.VERSION.SDK_INT <  Build.VERSION_CODES.Q) {
-            if(checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+            if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
                 requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), STORAGE_PERMISSION_CODE)
             } else {
                 downloadId = startDownload()
@@ -200,7 +200,7 @@ class DownloadActivity : AppCompatActivity() {
     private fun record() {
         var records = File(applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "records.txt")
 
-        if(!records.exists()) {
+        if (!records.exists()) {
             records.createNewFile()
         }
         records.appendText("$songName\n")
@@ -217,7 +217,7 @@ class DownloadActivity : AppCompatActivity() {
     private fun recordProperties() {
         var properties = File(applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "properties.txt")
 
-        if(!properties.exists()) {
+        if (!properties.exists()) {
             properties.createNewFile()
         }
 

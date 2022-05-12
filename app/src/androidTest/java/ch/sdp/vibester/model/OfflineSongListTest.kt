@@ -10,7 +10,7 @@ class OfflineSongListTest {
     @Test
     fun noSongsAvailableInitialization() {
         val context = InstrumentationRegistry.getInstrumentation().targetContext.applicationContext
-        val mySongsList = OfflineSongList(context, LastfmMethod.BY_TAG.method)
+        val mySongsList = OfflineSongList(context)
 
         val inputSongsList = mutableListOf<Pair<String, String>>()
         val page = "1"

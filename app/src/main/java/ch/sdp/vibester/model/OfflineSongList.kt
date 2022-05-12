@@ -13,28 +13,19 @@ import java.io.FileReader
  * @param ctx: Context of the caller, to fetch the downloaded folder
  * @param method: Chosen playlist type
  */
-class OfflineSongList(ctx: Context, method: String) {
+class OfflineSongList(ctx: Context) {
     private var songList = mutableListOf<Pair<String, String>>()
-    private var page = ""
-    private var songsPerPage = ""
-    private var totalPages = ""
-    private var totalSongs = ""
+    private val page = "1"
+    private val songsPerPage = "100"
+    private val totalPages = "20"
+    private val totalSongs = "2000"
     private var context = ctx
     private var emptySongs: Boolean = false
 
     init {
         try {
-            var tracksField = "tracks"
-            if (method == LastfmMethod.BY_ARTIST.method) {
-                tracksField = "toptracks"
-            }
 
             fillList()
-
-            page = "1"
-            songsPerPage = "100"
-            totalPages = "20"
-            totalSongs = "2000"
 
         } catch (e: Exception) {
             throw IllegalArgumentException("OfflineSongList constructor, failed reading from file or empty file!")
@@ -49,18 +40,18 @@ class OfflineSongList(ctx: Context, method: String) {
         var records = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "records.txt")
 
 
-        if(!records.exists() || records.length() == 0L) {
+        if (!records.exists() || records.length() == 0L) {
             //There are no downloaded songs, keep the song list empty
             emptySongs = true
         } else {
             var reader = BufferedReader(FileReader(records))
             var currentLine = reader.readLine()
 
-            while(currentLine != null) {
+            while (currentLine != null) {
                 var trimmed = currentLine.trim()
-                if(trimmed.isNotEmpty()) {
+                if (trimmed.isNotEmpty()) {
                     val split = trimmed.split("-")
-                    if(split.size == 2) {
+                    if (split.size == 2) {
                         songList.add(Pair(split[0], split[1]))
                     }
                 }
@@ -83,7 +74,7 @@ class OfflineSongList(ctx: Context, method: String) {
      * Getter that return shuffled song list
      * @return MutableList<Pair<String,String>> of type Pair("$songName", "$artistName")
      */
-    fun getShuffledSongList(): MutableList<Pair<String, String>> {
+    fun getShuffledDownloadedSongList(): MutableList<Pair<String, String>> {
         return songList.asSequence().shuffled().toMutableList()
     }
 

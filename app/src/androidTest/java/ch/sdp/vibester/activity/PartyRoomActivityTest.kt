@@ -72,6 +72,8 @@ class PartyRoomActivityTest {
 
         val scn: ActivityScenario<CreateProfileActivity> = ActivityScenario.launch(intent)
 
+        Thread.sleep(1000)
+
         Espresso.onView(ViewMatchers.withId(R.id.emails))
             .check(ViewAssertions.matches(ViewMatchers.withText(mockUserEmailList.toString())))
     }

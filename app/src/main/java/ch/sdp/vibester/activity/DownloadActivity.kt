@@ -204,8 +204,26 @@ class DownloadActivity : AppCompatActivity() {
             records.createNewFile()
         }
         records.appendText("$songName\n")
+        recordProperties()
     }
 
+    /**
+     * Records the properties of a song.
+     * Order of storage: Track name - artist name - artwork URL - preview URL.
+     */
+    private fun recordProperties() {
+        var properties = File(applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "properties.txt")
+
+        if(!properties.exists()) {
+            properties.createNewFile()
+        }
+
+        val trackName = song.getTrackName()
+        val artistName = song.getArtistName()
+        val artworkURL = song.getArtworkUrl()
+        val previewURL = song.getPreviewUrl()
+        properties.appendText("$trackName - $artistName - $artworkURL - $previewURL\n")
+    }
 
     fun switchToDeleteSongs(view: View) {
         val intent = Intent(this, DeleteSongsActivity::class.java)

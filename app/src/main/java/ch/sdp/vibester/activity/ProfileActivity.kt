@@ -1,5 +1,7 @@
 package ch.sdp.vibester.activity
 
+import android.app.Activity
+import android.content.Intent
 import android.graphics.*
 import android.net.Uri
 import android.os.Bundle
@@ -49,7 +51,8 @@ class ProfileActivity : AppCompatActivity() {
     @Inject
     lateinit var imageGetter: ImageGetter
 
-    val imageSize = 1000
+    private val imageSize = 1000
+    private val imageRequestCode = 100
 
     /**
      * Generic onCreate method belonging to ProfileActivity.
@@ -65,6 +68,7 @@ class ProfileActivity : AppCompatActivity() {
         setRetToMainBtnListener()
         setShowQrCodeBtnListener()
         setQrCodeToProfileBtnListener()
+        setChangeImageBtnListener()
         setScoreBtnListener()
 
         queryDatabase()
@@ -75,7 +79,46 @@ class ProfileActivity : AppCompatActivity() {
      */
     private fun setEditUserNameBtnListener() {
         findViewById<ImageView>(R.id.editUser).setOnClickListener {
-            showGeneralDialog(R.id.username, "username")
+            showGeneralDialog( "username", true)
+        }
+    }
+    /**
+     * Generic listener for the change profile picture.
+     */
+    private fun setChangeImageBtnListener() {
+        findViewById<ImageView>(R.id.avatar).setOnClickListener {
+            showGeneralDialog( "Do you want to change your profile picture?", false)
+        }
+    }
+    /**
+     * A function that updates the image in the database.
+     * @param id ID of the image int the database
+     */
+
+    private fun updateImage(id: String) {
+        deleteImage(id)
+
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        startActivityForResult(intent, imageRequestCode)
+    }
+
+
+    /**
+     * A function that deletes an image from the database.
+     * @param id ID of the image int the database
+     */
+    private fun deleteImage(id: String) {
+        imageGetter.deleteImage("profileImg/${id}")
+    }
+
+    //check the UID here not sure
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK && requestCode == imageRequestCode) {
+            imageGetter.uploadFile("profileImg/${dataGetter.getCurrentUser()?.uid}", data?.data!!) {
+                imageGetter.fetchImage("profileImg/${dataGetter.getCurrentUser()?.uid}", this::setImage)
+            }
         }
     }
 
@@ -156,7 +199,7 @@ class ProfileActivity : AppCompatActivity() {
      * @param textId id of the text in the dialog
      * @param name of the dialog
      */
-    private fun showDialog(title: String, hint: String, id: Int, textId: Int, name: String) {
+    private fun showTextDialog(title: String, hint: String, id: Int, textId: Int, name: String) {
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
         builder.setTitle(title)
 
@@ -169,25 +212,47 @@ class ProfileActivity : AppCompatActivity() {
         builder.setPositiveButton("OK") { _, _ ->
             findViewById<TextView>(textId).text = input.text.toString()
 
-            if(name == "username"){
+            if (name == "username"){
                 dataGetter.setFieldValue(FireBaseAuthenticator().getCurrUID(), "username",  input.text.toString())
             }
         }
-
         builder.setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }
         builder.show()
     }
 
     /**
-     * A function that displays the dialog.
-     * @param id: The id of the user to be shown.
-     * @param name: The name of the user to be shown.
+     * A function shows an image change dialog.
+     * @param title title of the dialog
      */
-    private fun showGeneralDialog(id: Int, name: String) {
-        val title = "Create $name"
-        val hint = "Enter new $name"
 
-        showDialog(title, hint, 0, id, name)
+    private fun showImageChangeDialog(title: String) {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        builder.setTitle(title)
+
+        builder.setPositiveButton("Yes") { _, _ ->
+            dataGetter.getCurrentUser()?.let { updateImage(it.uid) }
+        }
+
+        builder.setNegativeButton("No") { dialog, _ -> dialog.cancel() }
+        builder.show()
+    }
+
+    /**
+     * A function shows a dialog.
+     * @param name name of the dialog
+     * @param textDialog boolean to check the type of dialog
+     */
+
+    private fun showGeneralDialog(name: String, textDialog: Boolean) {
+        if (textDialog) {
+            val title = "Create $name"
+            val hint = "Enter new $name"
+
+            showTextDialog(title, hint, 0, R.id.username, name)
+        }
+        else {
+            showImageChangeDialog(name)
+        }
     }
 
     /**
@@ -218,7 +283,7 @@ class ProfileActivity : AppCompatActivity() {
             }
             val bm = task.await()
 
-            if(bm != null){
+            if (bm != null) {
                 val avatar = findViewById<ImageView>(R.id.avatar)
                 avatar.setImageBitmap(Bitmap.createScaledBitmap(bm, imageSize,imageSize, false))
             }
@@ -255,7 +320,7 @@ class ProfileActivity : AppCompatActivity() {
      */
     private fun setupProfile(user: User){
         // Currently assuming that empty username means no user !
-        if (user.username != ""){
+        if (user.username != "") {
             findViewById<TextView>(R.id.username).text =  user.username
             setTextOfMultipleViews(user)
         }

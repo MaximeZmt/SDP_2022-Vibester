@@ -1,5 +1,6 @@
 package ch.sdp.vibester
 
+import junit.framework.Assert.assertEquals
 import junit.framework.Assert.assertTrue
 import org.junit.Test
 
@@ -36,7 +37,7 @@ public class BuzzerScoreUpdaterTest {
         val testUpdater = BuzzerScoreUpdater(idArray, scoreArray)
         testUpdater.updateScoresArray(-1, true)
         for (id in idArray) {
-            assertTrue(testUpdater.getMap()[id] == 0)
+            assertEquals(0, testUpdater.getMap()[id])
         }
     }
 
@@ -47,7 +48,7 @@ public class BuzzerScoreUpdaterTest {
         val testUpdater = BuzzerScoreUpdater(idArray, scoreArray)
         for (id in idArray) {
             testUpdater.updateScoresArray(id, false)
-            assertTrue(testUpdater.getMap()[id] == 0)
+            assertEquals(0, testUpdater.getMap()[id])
         }
     }
 
@@ -57,7 +58,7 @@ public class BuzzerScoreUpdaterTest {
         val scoreArray = arrayOf(0, 0, 0, 0)
         val testUpdater = BuzzerScoreUpdater(idArray, scoreArray)
         val testWinner = testUpdater.computeWinner()
-        assertTrue(testWinner.size == 0)
+        assertEquals(0, testWinner.size)
     }
 
     @Test
@@ -66,8 +67,8 @@ public class BuzzerScoreUpdaterTest {
         val scoreArray = arrayOf(1, 0, 2, 0)
         val testUpdater = BuzzerScoreUpdater(idArray, scoreArray)
         val testWinner = testUpdater.computeWinner()
-        assertTrue(testWinner.size == 1)
-        assertTrue(testWinner.get(0) == R.id.buzzer_2)
+        assertEquals(1, testWinner.size)
+        assertEquals(R.id.buzzer_2, testWinner.get(0))
     }
 
     @Test
@@ -76,7 +77,7 @@ public class BuzzerScoreUpdaterTest {
         val scoreArray = arrayOf(2, 1, 2, 0)
         val testUpdater = BuzzerScoreUpdater(idArray, scoreArray)
         val testWinner = testUpdater.computeWinner()
-        assertTrue(testWinner.size == 2)
+        assertEquals(2, testWinner.size)
         assertTrue(testWinner.contains(R.id.buzzer_0) && testWinner.contains(R.id.buzzer_2))
     }
 }

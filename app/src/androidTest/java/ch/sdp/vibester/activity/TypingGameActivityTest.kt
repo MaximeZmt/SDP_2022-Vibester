@@ -243,7 +243,7 @@ class TypingGameActivityTest {
         scn.onActivity { activity ->
             activity.checkAnswer(ctx, songTest, gameManager)
         }
-        assertEquals(true, gameManager.getCorrectSongs().size == 0)
+        assertEquals(0, gameManager.getCorrectSongs().size)
     }
 
 

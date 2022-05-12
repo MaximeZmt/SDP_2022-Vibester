@@ -180,12 +180,12 @@ class BuzzerScreenActivity : GameActivity() {
         for (pName in players) {
             val button = findViewById<Button>(buzIds[i])
             button.text = pName
-            button.visibility=View.VISIBLE
+            button.visibility = View.VISIBLE
             buttons.set(i, button)
             button.setOnClickListener {
                 if (findViewById<ProgressBar>(R.id.progressBarBuzzer).progress>0 && findViewById<Button>(R.id.nextSongBuzzer).visibility==View.GONE) {
                     answer.visibility = android.view.View.VISIBLE
-                    findViewById<Button>(R.id.go_to_end).visibility=View.INVISIBLE
+                    findViewById<Button>(R.id.go_to_end).visibility = View.INVISIBLE
                     setPressed(button.id)
                 }
             }
@@ -209,7 +209,9 @@ class BuzzerScreenActivity : GameActivity() {
                     scoreUpdater.updateScoresArray(pressedBuzzer, true)
                 } else {scoreUpdater.updateScoresArray(pressedBuzzer, false)}
                 val view = map[pressedBuzzer]?.let { it1 -> findViewById<TextView>(it1) }
-                if (view != null && scoreUpdater.getMap().keys.contains(pressedBuzzer)) {view.text=scoreUpdater.getMap()[pressedBuzzer].toString()}
+                if (view != null && scoreUpdater.getMap().keys.contains(pressedBuzzer)) {
+                    view.text=scoreUpdater.getMap()[pressedBuzzer].toString()
+                }
             }
             if (gameManager.playingMediaPlayer()) {
                 gameManager.stopMediaPlayer()

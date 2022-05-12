@@ -154,6 +154,7 @@ class TypingGameActivityTest {
         assertEquals(expectedSize, myTest.minimumWidth)
     }
 
+    /*
     @Test
     fun guessLayoutTest() {
         createMockDataGetter()
@@ -187,6 +188,7 @@ class TypingGameActivityTest {
         assertEquals(songTest.getTrackName(), gameManager.getCurrentSong().getTrackName())
         assertEquals(gameManager.getCorrectSongs().size, 1)
     }
+     */
 
     @Test
     fun checkAnswerCorrectTest() {

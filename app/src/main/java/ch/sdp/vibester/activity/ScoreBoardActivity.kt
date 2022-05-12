@@ -19,7 +19,9 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ScoreBoardActivity : AppCompatActivity() {
     private val dbRef: DatabaseReference = Database.get().getReference("users")
     private var players: MutableList<User>? = null

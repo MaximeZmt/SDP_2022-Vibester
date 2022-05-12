@@ -4,6 +4,7 @@ import android.graphics.*
 import android.net.Uri
 import android.os.Bundle
 import android.text.InputType
+import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.Window
@@ -104,8 +105,8 @@ class ProfileActivity : AppCompatActivity() {
      */
     private fun setShowQrCodeBtnListener() {
         findViewById<ImageView>(R.id.showQRCode).setOnClickListener {
-            setLayoutVisibility(R.id.QrCodePage, true)
-            setLayoutVisibility(R.id.profileContent, false)
+            setLayoutVisibility(findViewById<ConstraintLayout>(R.id.QrCodePage), true)
+            setLayoutVisibility(findViewById<RelativeLayout>(R.id.profileContent), false)
         }
     }
 
@@ -114,8 +115,8 @@ class ProfileActivity : AppCompatActivity() {
      */
     private fun setQrCodeToProfileBtnListener() {
         findViewById<FloatingActionButton>(R.id.qrCode_returnToProfile).setOnClickListener {
-            setLayoutVisibility(R.id.QrCodePage, false)
-            setLayoutVisibility(R.id.profileContent, true)
+            setLayoutVisibility(findViewById<ConstraintLayout>(R.id.QrCodePage), false)
+            setLayoutVisibility(findViewById<RelativeLayout>(R.id.profileContent), true)
         }
     }
 
@@ -143,8 +144,8 @@ class ProfileActivity : AppCompatActivity() {
      * @param isVisible: The indicator of which visibility to choose.
      * True for VISIBLE, false for GONE.
      */
-    private fun setLayoutVisibility(layout: Int, isVisible: Boolean){
-        findViewById<ConstraintLayout>(layout).visibility = if (isVisible) VISIBLE else GONE
+    private fun setLayoutVisibility(view: View, isVisible: Boolean){
+        view.visibility = if (isVisible) VISIBLE else GONE
     }
 
     /**
@@ -212,7 +213,6 @@ class ProfileActivity : AppCompatActivity() {
                     val bit = BitmapGetterApi.download(imageURI.toString())
                     bit.get(10, TimeUnit.SECONDS)
                 } catch (e: Exception){
-
                     null
                 }
             }

@@ -1,7 +1,5 @@
 package ch.sdp.vibester.activity
 
-// FIXME: weird error on CI "java.lang.AssertionError: Activity never becomes requested state "[RESUMED, DESTROYED, CREATED, STARTED]" (last lifecycle transition = "PRE_ON_CREATE")"
-/*
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -47,6 +45,11 @@ class ProfileActivityTest {
         Intents.init()
     }
 
+    @After
+    fun clean() {
+        Intents.release()
+    }
+
     @BindValue @JvmField
     val mockAuthenticator = mockk<FireBaseAuthenticator>()
 
@@ -84,15 +87,9 @@ class ProfileActivityTest {
 
     val mockImageURI = Uri.parse("https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/45.png")
     private fun createMockImageGetter() {
-        every {mockImageGetter.fetchImage(any(), any())} answers {
-            secondArg<(Uri) -> Unit>().invoke(mockImageURI)
-        }
+        every {mockImageGetter.fetchImage(any(), any())} answers {}
     }
 
-    @After
-    fun clean() {
-        Intents.release()
-    }
 
     @Test
     fun checkProfileData() {
@@ -249,25 +246,21 @@ class ProfileActivityTest {
 
         onView(withId(R.id.qrCode)).check(matches(isDisplayed()))
     }
+  // FIXME
 
-    // FIXME: CI never finds the view with ID "avatar"
-
-    @Test
-    fun checkIfPictureIsDisplayed() {
-        val inputProfile = User( "Lalisa Bon", R.string.test_profile_image.toString(), "lisa@test.com",  12, 8,"VvPB47tQCLdjz3YebilS6h5EXdJ3")
-        val ctx = ApplicationProvider.getApplicationContext() as Context
-        val intent = Intent(ctx, ProfileActivity::class.java)
-
-        createMockDataGetter(inputProfile)
-        createMockAuthenticator()
-        createMockImageGetter()
-
-        val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
-
-        Thread.sleep(5000)
-        onView(withId(R.id.avatar)).check(matches(isDisplayed()))
-    }
+//    @Test
+//    fun checkIfPictureIsDisplayed() {
+//        val inputProfile = User( "Lalisa Bon", R.string.test_profile_image.toString(), "lisa@test.com",  12, 8,"VvPB47tQCLdjz3YebilS6h5EXdJ3")
+//        val ctx = ApplicationProvider.getApplicationContext() as Context
+//        val intent = Intent(ctx, ProfileActivity::class.java)
+//
+//        createMockDataGetter(inputProfile)
+//        createMockAuthenticator()
+//        createMockImageGetter()
+//
+//        val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
+//        onView(withId(R.id.avatar)).check(matches(isDisplayed()))
+//    }
 
 }
 
-     */

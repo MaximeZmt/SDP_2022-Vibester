@@ -36,7 +36,6 @@ class ImageGetter @Inject constructor() {
 
     fun deleteImage(imageID: String) {
         storageRef.child(imageID).delete().addOnSuccessListener {}
-
     }
 
 }

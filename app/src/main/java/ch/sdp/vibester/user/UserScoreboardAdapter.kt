@@ -57,6 +57,5 @@ class UserScoreboardAdapter(playersInit: MutableList<User>, private val genre: S
             itemView.findViewById<TextView>(R.id.tv_score).text = setScore(player).toString()
             itemView.findViewById<ImageView>(R.id.iv_photo).loadImg(player.image)
         }
-
     }
 }

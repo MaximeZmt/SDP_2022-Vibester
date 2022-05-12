@@ -52,7 +52,7 @@ class OfflineSongList(ctx: Context) {
                 if (trimmed.isNotEmpty()) {
                     val split = trimmed.split("-")
                     if (split.size == 2) {
-                        songList.add(Pair(split[0], split[1]))
+                        songList.add(Pair(split[0].trim(), split[1].trim()))
                     }
                 }
                 currentLine = reader.readLine()

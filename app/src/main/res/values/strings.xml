@@ -114,6 +114,7 @@
     <string name="download_permission_denied">Permission denied, cannot download!</string>
     <string name="download_already_downloading">A song is being downloaded, please be patient!</string>
     <string name="download_please_retry_later">Please retry later!</string>
+    <string name="download_indicator">Please write the name of the song you desire to download in the following format:\n Song Name - Artist Name</string>
 
     <string name="Singleplayer">Single-player</string>
     <string name="Multiplayer">Multiplayer</string>

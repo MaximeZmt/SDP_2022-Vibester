@@ -35,6 +35,9 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
     var game = "local_buzzer"
     var gameSize = R.string.one.toString()
     lateinit var gameManager: GameManager
+    /* TODO: OFFLINE
+    private var hasInternet: Boolean = true
+     */
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -157,6 +160,10 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
         call.enqueue(object : Callback<Any> {
             override fun onFailure(call: Call<Any>, t: Throwable?) {}
             override fun onResponse(call: Call<Any>, response: Response<Any>) {
+                /* TODO: OFFLINE
+                gameManager.setInternet()
+                gameManager.setContext(context)
+                 */
                 gameManager.setGameSongList(Gson().toJson(response.body()), uri.method)
             }
         })

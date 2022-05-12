@@ -10,7 +10,7 @@ class AudioPlayer private constructor() {
     companion object {
         /**
          * A function that given an audio stream url will play it
-         * @param audioUrl Url in String pointing towards the audio stream
+         * @param audioUrl Url in String pointing towards the audio stream OR the path to the file to be listened to
          * @return CompletableFuture<MediaPlayer> that contains the current playing mediaPlayer
          */
         fun playAudio(audioUrl: String): CompletableFuture<MediaPlayer> {

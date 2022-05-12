@@ -10,7 +10,6 @@ import org.json.JSONObject
  * @param jsonMeta: Lastfm fetched data
  */
 class SongList(jsonMeta: String, method: String) {
-    private var GAME_SIZE = 100
     private var songList = mutableListOf<Pair<String, String>>()
     private var page = ""
     private var songsPerPage = ""

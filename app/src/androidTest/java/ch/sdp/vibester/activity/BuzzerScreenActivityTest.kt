@@ -1,5 +1,6 @@
 package ch.sdp.vibester.activity
 
+import android.content.Context
 import android.content.Intent
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
@@ -13,21 +14,19 @@ import androidx.test.espresso.intent.matcher.IntentMatchers.hasExtra
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import ch.sdp.vibester.BuzzerScoreUpdater
 import ch.sdp.vibester.R
 import ch.sdp.vibester.TestMode
 import ch.sdp.vibester.api.LastfmMethod
 import ch.sdp.vibester.database.DataGetter
-import ch.sdp.vibester.helper.BuzzerGameManager
-import ch.sdp.vibester.helper.TypingGameManager
+import ch.sdp.vibester.helper.GameManager
+import ch.sdp.vibester.model.Song
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import io.mockk.every
 import io.mockk.mockk
-import org.junit.After
-import org.junit.Before
-import org.junit.Rule
-import org.junit.Test
+import org.junit.*
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
@@ -53,22 +52,25 @@ class BuzzerScreenActivityTest {
         Intents.release()
     }
 
-    private fun setGameManager(numSongs:Int = 1, valid: Boolean = true): BuzzerGameManager {
+    private fun setGameManager(numSongs: Int = 1, valid: Boolean = true): GameManager {
         val epilogue = "{\"tracks\":{\"track\":["
         val prologue =
             "], \"@attr\":{\"tag\":\"british\",\"page\":\"1\",\"perPage\":\"1\",\"totalPages\":\"66649\",\"total\":\"66649\"}}}"
         var middle = "{\"name\":\"Monday\",\"artist\":{\"name\":\"Imagine Dragons\"}}"
-        if(!valid) middle = "{\"name\":\"TEST_SONG_TEST\",\"artist\":{\"name\":\"TEST_ARTIST_TEST\"}}"
-        val gameManager = BuzzerGameManager()
+        if (!valid) middle =
+            "{\"name\":\"TEST_SONG_TEST\",\"artist\":{\"name\":\"TEST_ARTIST_TEST\"}}"
+        val gameManager = GameManager()
 
         var i = 0
         var completeMiddle = middle
-        while(i < numSongs-1){
+        while (i < numSongs - 1) {
             completeMiddle += ",$middle"
             i++
         }
-        gameManager.setGameSongList(epilogue + completeMiddle + prologue, LastfmMethod.BY_TAG.method)
-
+        gameManager.setGameSongList(
+            epilogue + completeMiddle + prologue,
+            LastfmMethod.BY_TAG.method
+        )
         return gameManager
     }
 
@@ -79,7 +81,8 @@ class BuzzerScreenActivityTest {
 
     @Test
     fun scoresLayoutIsDisplayed() {
-        val intent = Intent(ApplicationProvider.getApplicationContext(), BuzzerScreenActivity::class.java)
+        val intent =
+            Intent(ApplicationProvider.getApplicationContext(), BuzzerScreenActivity::class.java)
 
         // Put mock extras inside
         val mockPlayersNumber = 2
@@ -94,8 +97,9 @@ class BuzzerScreenActivityTest {
     }
 
     @Test
-    fun answerIsPresentButInvisibleOnStartup() {
-        val intent = Intent(ApplicationProvider.getApplicationContext(), BuzzerScreenActivity::class.java)
+    fun answerAndNextArePresentButInvisibleOnStartup() {
+        val intent =
+            Intent(ApplicationProvider.getApplicationContext(), BuzzerScreenActivity::class.java)
 
         // Put mock extras inside
         val mockPlayersNumber = 2
@@ -107,11 +111,13 @@ class BuzzerScreenActivityTest {
         intent.putExtra("gameManager", setGameManager())
         val scn: ActivityScenario<BuzzerScreenActivity> = ActivityScenario.launch(intent)
         onView(withId(R.id.answer)).check(matches(withEffectiveVisibility(Visibility.INVISIBLE)))
+        onView(withId(R.id.nextSongBuzzer)).check(matches(withEffectiveVisibility(Visibility.GONE)))
     }
-    
+
     @Test
-    fun clickingBuzzerMakesAnswerVisible() {
-        val intent = Intent(ApplicationProvider.getApplicationContext(), BuzzerScreenActivity::class.java)
+    fun testDisplayOfBuzzersWithNames() {
+        val intent =
+            Intent(ApplicationProvider.getApplicationContext(), BuzzerScreenActivity::class.java)
 
         // Put mock extras inside
         val mockPlayersNumber = 2
@@ -120,20 +126,22 @@ class BuzzerScreenActivityTest {
         mockNameArray[1] = "Bob"
         intent.putExtra("Number of players", mockPlayersNumber)
         intent.putExtra("Player Names", mockNameArray)
-        intent.putExtra("gameManager", setGameManager())
-        val scn: ActivityScenario<BuzzerScreenActivity> = ActivityScenario.launch(intent)
-
-        onView(withId(R.id.answer)).check(matches(withEffectiveVisibility(Visibility.INVISIBLE)))
-        onView(withId(R.id.buzzer_0)).perform(click())
-        onView(withId(R.id.answer)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
-        onView(withId(R.id.buttonWrong)).perform(click())
-    }
-
-
-    @Test
-    fun clickingAnswerButtonsMakesAnswerInvisible() {
-        val intent = Intent(ApplicationProvider.getApplicationContext(), BuzzerScreenActivity::class.java)
         val gameManager = setGameManager()
+        intent.putExtra("gameManager", gameManager)
+        val scn: ActivityScenario<BuzzerScreenActivity> = ActivityScenario.launch(intent)
+        // Did the round start?
+        val ctx = ApplicationProvider.getApplicationContext() as Context
+        onView(withId(R.id.buzzer_0)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+        onView(withId(R.id.buzzer_1)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+        onView(withId(R.id.buzzer_2)).check(matches(withEffectiveVisibility(Visibility.GONE)))
+        onView(withId(R.id.buzzer_3)).check(matches(withEffectiveVisibility(Visibility.GONE)))
+    }
+
+    @Test
+    fun pressingBuzzerDuringRoundMakesAnswerVisible() {
+        val intent =
+            Intent(ApplicationProvider.getApplicationContext(), BuzzerScreenActivity::class.java)
+
         // Put mock extras inside
         val mockPlayersNumber = 2
         val mockNameArray = arrayOfNulls<String>(mockPlayersNumber)
@@ -141,41 +149,232 @@ class BuzzerScreenActivityTest {
         mockNameArray[1] = "Bob"
         intent.putExtra("Number of players", mockPlayersNumber)
         intent.putExtra("Player Names", mockNameArray)
-        intent.putExtra("gameManager", setGameManager())
+        val gameManager = setGameManager()
+        intent.putExtra("gameManager", gameManager)
         val scn: ActivityScenario<BuzzerScreenActivity> = ActivityScenario.launch(intent)
+        val ctx = ApplicationProvider.getApplicationContext() as Context
+        onView(withId(R.id.buzzer_0)).check(matches(withEffectiveVisibility(Visibility.VISIBLE))).perform(click())
+        onView(withId(R.id.answer)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+    }
 
-        val buttonIdArray = arrayOf(R.id.buttonCorrect, R.id.buttonWrong)
-        for (butId in buttonIdArray) {
-            onView(withId(R.id.buzzer_0)).perform(click()) // make answer visible first
-            onView(withId(butId)).perform(click())
-            onView(withId(R.id.answer)).check(matches(withEffectiveVisibility(Visibility.INVISIBLE)))
+    @Test
+    fun timeoutAnswerTest() {
+        val intent =
+            Intent(ApplicationProvider.getApplicationContext(), BuzzerScreenActivity::class.java)
+
+        // Put mock extras inside
+        val mockPlayersNumber = 2
+        val mockNameArray = arrayOfNulls<String>(mockPlayersNumber)
+        mockNameArray[0] = "John"
+        mockNameArray[1] = "Bob"
+        intent.putExtra("Number of players", mockPlayersNumber)
+        intent.putExtra("Player Names", mockNameArray)
+        val gameManager = setGameManager()
+        gameManager.setNextSong()
+        intent.putExtra("gameManager", gameManager)
+        val scn: ActivityScenario<BuzzerScreenActivity> = ActivityScenario.launch(intent)
+        val ctx = ApplicationProvider.getApplicationContext() as Context
+        Thread.sleep(1000)
+        scn.onActivity { activity ->
+            activity.timeoutAnswer(ctx, null, gameManager)
+            Assert.assertEquals(false, activity.testGetGameIsOn())
         }
     }
-/*
-    /*
-     * Currently testing with the *static* values. Change to *dynamic* once the game is correctly
-     * implemented and all the data are being sent between activities.
-     */
+
+    @Test
+    fun setAnswerButtonCorrectTest() {
+        val intent =
+            Intent(ApplicationProvider.getApplicationContext(), BuzzerScreenActivity::class.java)
+
+        // Put mock extras inside
+        val mockPlayersNumber = 2
+        val mockNameArray = arrayOfNulls<String>(mockPlayersNumber)
+        mockNameArray[0] = "John"
+        mockNameArray[1] = "Bob"
+        intent.putExtra("Number of players", mockPlayersNumber)
+        intent.putExtra("Player Names", mockNameArray)
+        val gameManager = setGameManager()
+        intent.putExtra("gameManager", gameManager)
+        val scn: ActivityScenario<BuzzerScreenActivity> = ActivityScenario.launch(intent)
+        val ctx = ApplicationProvider.getApplicationContext() as Context
+
+        onView(withId(R.id.buzzer_0)).check(matches(withEffectiveVisibility(Visibility.VISIBLE))).perform(click())
+        onView(withId(R.id.buttonCorrect)).check(matches(withEffectiveVisibility(Visibility.VISIBLE))).perform(click())
+        scn.onActivity { activity ->
+            Assert.assertEquals(1, activity.testGetScoreUpdater().getMap()[R.id.buzzer_0])
+            Assert.assertEquals(-1, activity.getPressed())
+            Assert.assertEquals(false, activity.testGetGameIsOn())
+        }
+    }
+
+    @Test
+    fun setAnswerButtonWrongTest() {
+        val intent =
+            Intent(ApplicationProvider.getApplicationContext(), BuzzerScreenActivity::class.java)
+
+        // Put mock extras inside
+        val mockPlayersNumber = 2
+        val mockNameArray = arrayOfNulls<String>(mockPlayersNumber)
+        mockNameArray[0] = "John"
+        mockNameArray[1] = "Bob"
+        intent.putExtra("Number of players", mockPlayersNumber)
+        intent.putExtra("Player Names", mockNameArray)
+        val gameManager = setGameManager()
+        intent.putExtra("gameManager", gameManager)
+        val scn: ActivityScenario<BuzzerScreenActivity> = ActivityScenario.launch(intent)
+        val ctx = ApplicationProvider.getApplicationContext() as Context
+
+        onView(withId(R.id.buzzer_0)).check(matches(withEffectiveVisibility(Visibility.VISIBLE))).perform(click())
+        onView(withId(R.id.buttonWrong)).check(matches(withEffectiveVisibility(Visibility.VISIBLE))).perform(click())
+        scn.onActivity { activity ->
+            Assert.assertEquals(0, activity.testGetScoreUpdater().getMap()[R.id.buzzer_0])
+            Assert.assertEquals(-1, activity.getPressed())
+            Assert.assertEquals(false, activity.testGetGameIsOn())
+        }
+    }
+
+    @Test
+    fun buttonNextOnClickTest() {
+        val gameManager = setGameManager(2)
+        Assert.assertEquals(gameManager.getSongList().size, 2)
+
+        val intent = Intent(ApplicationProvider.getApplicationContext(), BuzzerScreenActivity::class.java)
+        intent.putExtra("gameManager", gameManager)
+        val scn: ActivityScenario<BuzzerScreenActivity> = ActivityScenario.launch(intent)
+        scn.onActivity { activity ->
+            activity.testProgressBar()
+        }
+        Thread.sleep(1000)
+        scn.onActivity {   activity ->
+            Assert.assertEquals(false, activity.testGetGameIsOn())
+        }
+        onView(withId(R.id.nextSongBuzzer)).check(matches(isDisplayed())).perform(click())
+        onView(withId(R.id.nextSongBuzzer)).check(matches(withEffectiveVisibility(Visibility.GONE)))
+        scn.onActivity {   activity ->
+            Assert.assertEquals(true, activity.testGetGameIsOn())
+        }
+    }
+
+    @Test
+    fun prepareWinnerAnnouncementTestNoWinner() {
+        val intent =
+            Intent(ApplicationProvider.getApplicationContext(), BuzzerScreenActivity::class.java)
+
+        // Put mock extras inside
+        val mockPlayersNumber = 4
+        val mockNameArray = arrayOfNulls<String>(mockPlayersNumber)
+        mockNameArray[0] = "John"
+        mockNameArray[1] = "Bob"
+        mockNameArray[2] = "Doug"
+        mockNameArray[3] = "Mike"
+        intent.putExtra("Number of players", mockPlayersNumber)
+        intent.putExtra("Player Names", mockNameArray)
+        val gameManager = setGameManager()
+        intent.putExtra("gameManager", gameManager)
+        val scn: ActivityScenario<BuzzerScreenActivity> = ActivityScenario.launch(intent)
+        val ctx = ApplicationProvider.getApplicationContext() as Context
+        val idArray = arrayListOf(R.id.buzzer_0, R.id.buzzer_1, R.id.buzzer_2, R.id.buzzer_3)
+        val scoreArray = arrayOf(0, 0, 0, 0)
+        val testUpdater = BuzzerScoreUpdater(idArray, scoreArray)
+
+        val expectedAnnouncement: String = ctx.getString(R.string.BuzzerScreen_noWinner)
+        var testAnnouncement: String = "a"
+        scn.onActivity {   activity ->
+            testAnnouncement = activity.prepareWinnerAnnouncement(testUpdater)
+        }
+        Assert.assertEquals(expectedAnnouncement, testAnnouncement)
+    }
+
+    @Test
+    fun prepareWinnerAnnouncementTestOneWinner() {
+        val intent =
+            Intent(ApplicationProvider.getApplicationContext(), BuzzerScreenActivity::class.java)
+
+        // Put mock extras inside
+        val mockPlayersNumber = 4
+        val mockNameArray = arrayOfNulls<String>(mockPlayersNumber)
+        mockNameArray[0] = "John"
+        mockNameArray[1] = "Bob"
+        mockNameArray[2] = "Doug"
+        mockNameArray[3] = "Mike"
+        intent.putExtra("Number of players", mockPlayersNumber)
+        intent.putExtra("Player Names", mockNameArray)
+        val gameManager = setGameManager()
+        intent.putExtra("gameManager", gameManager)
+        val scn: ActivityScenario<BuzzerScreenActivity> = ActivityScenario.launch(intent)
+        val ctx = ApplicationProvider.getApplicationContext() as Context
+        val idArray = arrayListOf(R.id.buzzer_0, R.id.buzzer_1, R.id.buzzer_2, R.id.buzzer_3)
+        val scoreArray = arrayOf(0, 1, 0, 0)
+        val testUpdater = BuzzerScoreUpdater(idArray, scoreArray)
+
+        val expectedAnnouncement: String = ctx.getString(R.string.BuzzerScreen_oneWinner) + "Bob"
+        var testAnnouncement: String = "a"
+        scn.onActivity {   activity ->
+            testAnnouncement = activity.prepareWinnerAnnouncement(testUpdater)
+        }
+        Assert.assertEquals(expectedAnnouncement, testAnnouncement)
+    }
+
+    @Test
+    fun prepareWinnerAnnouncementTestMoreThanOneWinner() {
+        val intent =
+            Intent(ApplicationProvider.getApplicationContext(), BuzzerScreenActivity::class.java)
+
+        // Put mock extras inside
+        val mockPlayersNumber = 4
+        val mockNameArray = arrayOfNulls<String>(mockPlayersNumber)
+        mockNameArray[0] = "John"
+        mockNameArray[1] = "Bob"
+        mockNameArray[2] = "Doug"
+        mockNameArray[3] = "Mike"
+        intent.putExtra("Number of players", mockPlayersNumber)
+        intent.putExtra("Player Names", mockNameArray)
+        val gameManager = setGameManager()
+        intent.putExtra("gameManager", gameManager)
+        val scn: ActivityScenario<BuzzerScreenActivity> = ActivityScenario.launch(intent)
+        val ctx = ApplicationProvider.getApplicationContext() as Context
+        val idArray = arrayListOf(R.id.buzzer_0, R.id.buzzer_1, R.id.buzzer_2, R.id.buzzer_3)
+        val scoreArray = arrayOf(2, 2, 1, 2)
+        val testUpdater = BuzzerScoreUpdater(idArray, scoreArray)
+
+        val expectedAnnouncement: String = ctx.getString(R.string.BuzzerScreen_moreThanOneWinner) + "John and Bob and Mike"
+        var testAnnouncement: String = "a"
+        scn.onActivity {   activity ->
+            testAnnouncement = activity.prepareWinnerAnnouncement(testUpdater)
+        }
+        Assert.assertEquals(expectedAnnouncement, testAnnouncement)
+    }
+
     @Test
     fun checkIntentOnEnding() {
+        val intent =
+            Intent(ApplicationProvider.getApplicationContext(), BuzzerScreenActivity::class.java)
+
+        // Put mock extras inside
+        val mockPlayersNumber = 4
+        val mockNameArray = arrayOfNulls<String>(mockPlayersNumber)
+        mockNameArray[0] = "John"
+        mockNameArray[1] = "Bob"
+        mockNameArray[2] = "Doug"
+        mockNameArray[3] = "Mike"
+        intent.putExtra("Number of players", mockPlayersNumber)
+        intent.putExtra("Player Names", mockNameArray)
+        val gameManager = setGameManager()
+        intent.putExtra("gameManager", gameManager)
+        val scn: ActivityScenario<BuzzerScreenActivity> = ActivityScenario.launch(intent)
+        val ctx = ApplicationProvider.getApplicationContext() as Context
+
         val mockArray = arrayListOf<String>("One", "Two", "Three", "Four", "Five")
-
         val incArray: ArrayList<String> = mockArray
-
         val statNames: ArrayList<String> = mockArray
-
         val statVal: ArrayList<String> = mockArray
 
-        onView(withId(R.id.go_to_end)).perform(click())
+        onView(withId(R.id.go_to_end)).check(matches(isDisplayed())).perform(click())
         intended(hasComponent(GameEndingActivity::class.java.name))
-
         intended(hasExtra("playerName", "Arda"))
-        intended(hasExtra("nbIncorrectSong", 3))
-
         intended(hasExtra("str_arr_inc", incArray))
         intended(hasExtra("str_arr_name", statNames))
         intended(hasExtra("str_arr_val", statVal))
+        intended(hasExtra("Winner Name", ctx.getString(R.string.BuzzerScreen_noWinner)))
     }
-
- */
 }

@@ -8,7 +8,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
 import ch.sdp.vibester.R
-import ch.sdp.vibester.helper.BuzzerGameManager
+import ch.sdp.vibester.helper.GameManager
 
 /**
  * Class to set up buzzer game (number of players)
@@ -16,16 +16,18 @@ import ch.sdp.vibester.helper.BuzzerGameManager
 class BuzzerSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     var text = "One"
 
-    lateinit var gameManager: BuzzerGameManager
+    lateinit var gameManager: GameManager
+    var difficulty: String = "Easy"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_buzzer_setup)
         val ctx: Context = this
 
-        val getIntent = intent.extras
-        if (getIntent != null) {
-            gameManager = getIntent.getSerializable("gameManager") as BuzzerGameManager
+        val intentExtras = intent.extras
+        if (intentExtras != null) {
+            gameManager = intentExtras.getSerializable("gameManager") as GameManager
+            difficulty = intentExtras.getString("Difficulty").toString()
         }
 
         val spinner: Spinner = findViewById(R.id.nb_player_spinner)
@@ -79,6 +81,7 @@ class BuzzerSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
             R.id.namePlayer4 -> 4
             else -> 0
         }
+        if (i == 0) {return}
         findViewById<EditText>(id).visibility =
             if (n >= i) View.VISIBLE else View.INVISIBLE
     }
@@ -97,6 +100,7 @@ class BuzzerSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
             intent.putExtra("Number of players", 1)
         }
         intent.putExtra("gameManager", gameManager)
+        intent.putExtra("Difficulty", difficulty)
         val editTextIdArray =
             arrayOf(R.id.namePlayer1, R.id.namePlayer2, R.id.namePlayer3, R.id.namePlayer4)
         var i = 0

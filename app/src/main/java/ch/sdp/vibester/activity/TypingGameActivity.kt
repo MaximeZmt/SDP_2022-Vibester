@@ -12,7 +12,6 @@ import ch.sdp.vibester.R
 import ch.sdp.vibester.api.ItunesMusicApi
 import ch.sdp.vibester.helper.DisplayContents
 import ch.sdp.vibester.helper.GameManager
-import ch.sdp.vibester.helper.TypingGameManager
 import ch.sdp.vibester.model.Song
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -24,7 +23,7 @@ import okhttp3.OkHttpClient
  * Class that represent a game
  */
 class TypingGameActivity : GameActivity() {
-    private lateinit var gameManager: TypingGameManager
+    private lateinit var gameManager: GameManager
     private var gameIsOn: Boolean = true // done to avoid clicks on songs after the round is over
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,17 +32,17 @@ class TypingGameActivity : GameActivity() {
         supportActionBar?.hide()
         setContentView(R.layout.activity_typing_game)
 
-        val guessLayout = findViewById<LinearLayout>(R.id.displayGuess)
-        val inputTxt = findViewById<EditText>(R.id.yourGuessET)
         val ctx: Context = this
-
         val getIntent = intent.extras
         if (getIntent != null) {
             super.setMax(intent)
-            gameManager = getIntent.getSerializable("gameManager") as TypingGameManager
+            gameManager = getIntent.getSerializable("gameManager") as GameManager
             setNextButtonListener(ctx, gameManager)
-            startFirstRound(ctx, gameManager)
+            super.startFirstRound(ctx, gameManager, ::startRoundTyping)
         }
+
+        val guessLayout = findViewById<LinearLayout>(R.id.displayGuess)
+        val inputTxt = findViewById<EditText>(R.id.yourGuessET)
         setGuessLayoutListener(inputTxt, guessLayout)
     }
 
@@ -90,67 +89,40 @@ class TypingGameActivity : GameActivity() {
      * Set and remove nextBtn during the game
      */
     private fun toggleNextBtnVisibility(value: Boolean){
-        toggleBtnVisibility(R.id.nextSong, value)
+        toggleBtnVisibility(R.id.nextSongTyping, value)
     }
 
     /**
      * Set listener for nextButton. When pressed, new round will start.
      */
-    private fun setNextButtonListener(ctx: Context, gameManager: TypingGameManager){
-        findViewById<Button>(R.id.nextSong).setOnClickListener {
-            startRound(ctx, gameManager)
+    private fun setNextButtonListener(ctx: Context, gameManager: GameManager){
+        findViewById<Button>(R.id.nextSongTyping).setOnClickListener {
+            startRoundTyping(ctx, gameManager)
         }
-    }
-
-    /**
-     * Custom handle of the bar progress.
-     */
-    private fun barTimer(myBar: ProgressBar, ctx:Context, gameManager: TypingGameManager){
-        initializeBarTimer(myBar)
-        runnable = object : Runnable {
-            override fun run() {
-                if (myBar.progress > 0) {
-                    decreaseBarTimer(myBar)
-                    handler.postDelayed(this, 999) //just a bit shorter than a second for safety
-                } else if (myBar.progress == 0) {
-                    if (gameManager.playingMediaPlayer()) {
-                        gameManager.stopMediaPlayer()
-                    }
-                    checkAnswer(ctx, null, gameManager)
-                }
-            }
-        }
-        handler.post(runnable!!)
     }
 
     /**
      * announce if the player won or not
      */
-    private fun hasWon(ctx: Context, score: Int, hasWon: Boolean, itWas: Song) {
+    private fun hasWon(ctx: Context, hasWon: Boolean, itWas: Song, gameManager: GameManager) {
         if (hasWon) {
-            toastShowCorrect(ctx, score)
+            toastShowCorrect(ctx, gameManager.getCorrectSongs().size)
         } else {
-            Toast.makeText(
-                ctx,
-                ctx.getString(R.string.wrong_message_with_answer, itWas.getTrackName(), itWas.getArtistName()),
-                Toast.LENGTH_SHORT
-            ).show()
+            toastShowWrong(ctx, itWas)
         }
     }
 
     /**
      * Generate a change of intent at the end of a game
      */
-    fun checkAnswer(ctx: Context, chosenSong: Song?, gameManager: TypingGameManager) {
+    fun checkAnswer(ctx: Context, chosenSong: Song?, gameManager: GameManager) {
         val playedSong = gameManager.getCurrentSong()
-
-        if (chosenSong != null && chosenSong.getTrackName() == playedSong.getTrackName() && chosenSong.getArtistName() == playedSong.getArtistName()) {
-            gameManager.increaseScore()
+        if (checkSong(chosenSong, playedSong)) {
             gameManager.addCorrectSong()
-            hasWon(ctx, gameManager.getScore(), true, playedSong)
+            hasWon(ctx, true, playedSong, gameManager)
         } else {
             gameManager.addWrongSong()
-            hasWon(ctx, gameManager.getScore(), false, playedSong)
+            hasWon(ctx, false, playedSong, gameManager)
         }
         endRound(gameManager)
     }
@@ -158,7 +130,7 @@ class TypingGameActivity : GameActivity() {
     /**
      * Create the frame layout and its logic of the suggestion when user is typing
      */
-    fun guess(song: Song, guessLayout: LinearLayout, ctx: Context, gameManager: TypingGameManager): FrameLayout {
+    fun guess(song: Song, guessLayout: LinearLayout, ctx: Context, gameManager: GameManager): FrameLayout {
         val frameLay = FrameLayout(ctx)
         frameLay.background = DisplayContents.borderGen(ctx, R.color.maximum_yellow_red)
 
@@ -182,19 +154,6 @@ class TypingGameActivity : GameActivity() {
         return frameLay
     }
 
-
-    /**
-     * Function to set a song for the first round and play a game.
-     */
-    private fun startFirstRound(ctx: Context, gameManager: TypingGameManager){
-        if (!isEndGame(gameManager)) {
-            startRound(ctx, gameManager)
-        }
-        else{
-            switchToEnding(gameManager)
-        }
-    }
-
     /**
      * Function called in the end of each round. Displays the button "Next" and
      * sets the next songs to play.
@@ -210,7 +169,7 @@ class TypingGameActivity : GameActivity() {
      * Function to set a new round. It includes reinitializing activity elements,
      * and playing new song for the round.
      */
-    private fun startRound(ctx: Context, gameManager: TypingGameManager) {
+    private fun startRoundTyping(ctx: Context, gameManager: GameManager) {
         gameIsOn = true
         findViewById<LinearLayout>(R.id.displayGuess).removeAllViews()
         findViewById<EditText>(R.id.yourGuessET).text.clear()
@@ -221,7 +180,7 @@ class TypingGameActivity : GameActivity() {
         toggleNextBtnVisibility(false)
         gameManager.playSong()
         checkRunnable()
-        barTimer(findViewById(R.id.progressBarTyping), ctx, gameManager)
+        super.barTimer(findViewById(R.id.progressBarTyping), ctx, gameManager, ::checkAnswer)
     }
 
     /**
@@ -240,8 +199,8 @@ class TypingGameActivity : GameActivity() {
         superTestProgressBar(findViewById(R.id.progressBarTyping), progressTime)
     }
 
-    fun testFirstRound(ctx: Context, gameManager: TypingGameManager){
-        startFirstRound(ctx, gameManager)
+    fun testFirstRound(ctx: Context, gameManager: GameManager){
+        startFirstRound(ctx, gameManager, ::startRoundTyping)
     }
 
     fun testProgressBarColor(): ColorStateList? {

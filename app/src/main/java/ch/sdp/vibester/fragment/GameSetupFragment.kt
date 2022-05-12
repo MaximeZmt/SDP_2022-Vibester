@@ -18,9 +18,7 @@ import ch.sdp.vibester.activity.TypingGameActivity
 import ch.sdp.vibester.api.LastfmApiInterface
 import ch.sdp.vibester.api.LastfmMethod
 import ch.sdp.vibester.api.LastfmUri
-import ch.sdp.vibester.helper.BuzzerGameManager
 import ch.sdp.vibester.helper.GameManager
-import ch.sdp.vibester.helper.TypingGameManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
@@ -194,8 +192,8 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
 
     override fun onClick(v: View?) {
         when(v!!.getId()) {
-            R.id.local_buzzer_game_button -> chooseGame("local_buzzer", BuzzerGameManager())
-            R.id.local_typing_game_button -> chooseGame("local_typing", TypingGameManager())
+            R.id.local_buzzer_game_button -> chooseGame("local_buzzer", GameManager())
+            R.id.local_typing_game_button -> chooseGame("local_typing", GameManager())
             R.id.local_lyrics_game_button -> chooseGame("local_lyrics", GameManager())
             R.id.online_buzzer_game_button -> switchToGameNoParameters(ChoosePartyRoomActivity())
 

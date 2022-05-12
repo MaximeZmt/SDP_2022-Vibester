@@ -46,4 +46,12 @@ class PartyRoomActivity : AppCompatActivity() {
     private fun createRoom(roomName: String) {
         dataGetter.createRoom(roomName, this::updateUI)
     }
+
+    private fun fetchCurrentSong() {
+
+    }
+
+    private fun playCurrentSong() {
+
+    }
 }

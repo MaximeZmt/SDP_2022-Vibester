@@ -17,6 +17,7 @@ import ch.sdp.vibester.R
 import ch.sdp.vibester.api.LastfmMethod
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.helper.GameManager
+import ch.sdp.vibester.model.Song
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest

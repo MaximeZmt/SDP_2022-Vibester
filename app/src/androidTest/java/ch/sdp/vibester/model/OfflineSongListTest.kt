@@ -52,5 +52,7 @@ class OfflineSongListTest {
         Assert.assertEquals(totalPages, mySongsList.getTotalPages())
         Assert.assertEquals(totalSongs, mySongsList.getTotalSongs())
         Assert.assertTrue(!mySongsList.getEmptySongs())
+
+        records.delete()
     }
 }

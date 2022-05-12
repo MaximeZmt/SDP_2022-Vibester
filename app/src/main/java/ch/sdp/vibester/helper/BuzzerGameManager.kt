@@ -10,6 +10,7 @@ class BuzzerGameManager: GameManager() {
     lateinit var score: BuzzerScoreUpdater
     private lateinit var mediaPlayer: CompletableFuture<MediaPlayer>
     lateinit var scoreUpdater: BuzzerScoreUpdater
+    private var hasInternet: Boolean = true
 
     /**
      * Check if mediaPlayer is initialized
@@ -22,7 +23,15 @@ class BuzzerGameManager: GameManager() {
      * Play current song with media player.
      */
     fun playSong() {
-        mediaPlayer = AudioPlayer.playAudio(currentSong.getPreviewUrl())
+        if(hasInternet) {
+            mediaPlayer = AudioPlayer.playAudio(currentSong.getPreviewUrl())
+        } else {
+            mediaPlayer = AudioPlayer.playAudio(currentSong.getPreviewUrl())
+            /* TODO: OFFLINE
+            var media = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "extract_of_$currentSong.getTrackName()")
+            mediaPlayer = AudioPlayer.playAudio(media.absolutePath)
+             */
+        }
     }
 
     /**

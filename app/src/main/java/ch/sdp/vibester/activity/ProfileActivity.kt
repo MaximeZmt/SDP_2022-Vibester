@@ -114,7 +114,7 @@ class ProfileActivity : AppCompatActivity() {
     //check the UID here not sure
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK && requestCode == imageRequestCode){
+        if (resultCode == Activity.RESULT_OK && requestCode == imageRequestCode) {
             imageGetter.uploadFile("profileImg/${dataGetter.getCurrentUser()?.uid}", data?.data!!) {
                 imageGetter.fetchImage("profileImg/${dataGetter.getCurrentUser()?.uid}", this::setImage)
             }
@@ -211,7 +211,7 @@ class ProfileActivity : AppCompatActivity() {
         builder.setPositiveButton("OK") { _, _ ->
             findViewById<TextView>(textId).text = input.text.toString()
 
-            if(name == "username"){
+            if (name == "username"){
                 dataGetter.setFieldValue(FireBaseAuthenticator().getCurrUID(), "username",  input.text.toString())
             }
         }
@@ -243,7 +243,7 @@ class ProfileActivity : AppCompatActivity() {
      */
 
     private fun showGeneralDialog(name: String, textDialog: Boolean) {
-        if(textDialog) {
+        if (textDialog) {
             val title = "Create $name"
             val hint = "Enter new $name"
 
@@ -282,7 +282,7 @@ class ProfileActivity : AppCompatActivity() {
             }
             val bm = task.await()
 
-            if(bm != null){
+            if (bm != null) {
                 val avatar = findViewById<ImageView>(R.id.avatar)
                 avatar.setImageBitmap(Bitmap.createScaledBitmap(bm, imageSize,imageSize, false))
             }
@@ -319,7 +319,7 @@ class ProfileActivity : AppCompatActivity() {
      */
     private fun setupProfile(user: User){
         // Currently assuming that empty username means no user !
-        if (user.username != ""){
+        if (user.username != "") {
             findViewById<TextView>(R.id.username).text =  user.username
             setTextOfMultipleViews(user)
         }

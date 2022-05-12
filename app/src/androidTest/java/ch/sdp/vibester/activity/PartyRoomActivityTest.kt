@@ -1,6 +1,5 @@
 package ch.sdp.vibester.activity
 
-/*
 import android.content.Intent
 import android.provider.Telephony
 import androidx.test.core.app.ActivityScenario
@@ -56,7 +55,7 @@ class PartyRoomActivityTest {
     fun clean() {
         Intents.release()
     }
-/*
+
     @Test
     fun correctCreation() {
         var mockRoomName = "mockName"
@@ -77,8 +76,8 @@ class PartyRoomActivityTest {
             .check(ViewAssertions.matches(ViewMatchers.withText(mockUserEmailList.toString())))
     }
 
- */
-/*
+
+
     @Test
     fun correctJoin() {
         var mockRoomName = "mockName"
@@ -99,7 +98,5 @@ class PartyRoomActivityTest {
             .check(ViewAssertions.matches(ViewMatchers.withText(mockUserEmailList.toString())))
     }
 
- */
 }
 
- */

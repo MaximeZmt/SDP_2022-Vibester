@@ -20,7 +20,6 @@ class OfflineSongListTest {
         val totalPages = "20"
         val totalSongs = "2000"
 
-
         Assert.assertEquals(inputSongsList, mySongsList.getSongList())
         Assert.assertEquals(page, mySongsList.getPage())
         Assert.assertEquals(songsPerPage, mySongsList.getSongsPerPage())

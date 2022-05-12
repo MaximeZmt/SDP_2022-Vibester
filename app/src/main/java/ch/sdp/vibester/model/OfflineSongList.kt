@@ -23,13 +23,7 @@ class OfflineSongList(ctx: Context) {
     private var emptySongs: Boolean = false
 
     init {
-        try {
-
-            fillList()
-
-        } catch (e: Exception) {
-            throw IllegalArgumentException("OfflineSongList constructor, failed reading from file or empty file!")
-        }
+        fillList()
     }
 
     /**

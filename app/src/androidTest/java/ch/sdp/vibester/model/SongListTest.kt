@@ -34,6 +34,8 @@ class SongListTest {
         val totalPages = "66649"
         val totalSongs = "66649"
 
+        assertEquals(songName, mySongsList.getShuffledSongList().get(0).first)
+
 
         assertEquals(inputSongsList, mySongsList.getSongList())
         assertEquals(page, mySongsList.getPage())

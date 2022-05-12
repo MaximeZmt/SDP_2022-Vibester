@@ -49,6 +49,7 @@ class DownloadActivityTest {
     fun downloadIncorrectSong() {
         val intent = Intent(ApplicationProvider.getApplicationContext(), DownloadActivity::class.java)
         val scn: ActivityScenario<DownloadActivity> = ActivityScenario.launch(intent)
+        assertEquals(false, DownloadActivity.downloadStarted)
         val songName = "adsfasdgyasdfa"
 
         onView(withId(R.id.download_songName)).perform(typeText(songName), closeSoftKeyboard())

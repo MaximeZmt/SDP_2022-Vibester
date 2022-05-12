@@ -1,7 +1,9 @@
 package ch.sdp.vibester.model
 
 
+import org.json.JSONObject
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertThrows
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.ExpectedException
@@ -94,11 +96,23 @@ class SongTest {
         val previewUrl = "https://none.com"
 
         val mySong = Song.songBuilder(previewUrl, artworkUrl, songName, songArtist)
+        val mySong2 = Song.songBuilder()
 
         assertEquals(songName, mySong.getTrackName())
         assertEquals(songArtist, mySong.getArtistName())
         assertEquals(artworkUrl, mySong.getArtworkUrl())
         assertEquals(previewUrl, mySong.getPreviewUrl())
+
+        assertEquals("", mySong2.getTrackName())
+        assertEquals("", mySong2.getArtistName())
+        assertEquals("", mySong2.getArtworkUrl())
+        assertEquals("", mySong2.getPreviewUrl())
+    }
+
+    @Test
+    fun testBadArgument() {
+        assertThrows(IllegalArgumentException::class.java, {Song(JSONObject("{}"))})
+        assertThrows(IllegalArgumentException::class.java, {Song.listSong("{}")})
     }
 
 }

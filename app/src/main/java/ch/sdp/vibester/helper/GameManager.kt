@@ -24,6 +24,7 @@ open class GameManager : Serializable {
     private var artistName = ""
     private var songName = ""
     var nextSongInd = 0
+    private var hasInternet: Boolean = true
 
     private lateinit var mediaPlayer: CompletableFuture<MediaPlayer>
 
@@ -161,7 +162,15 @@ open class GameManager : Serializable {
      * Play current song with media player.
      */
     fun playSong() {
-        mediaPlayer = AudioPlayer.playAudio(currentSong.getPreviewUrl())
+        if(hasInternet) {
+            mediaPlayer = AudioPlayer.playAudio(currentSong.getPreviewUrl())
+        } else {
+            mediaPlayer = AudioPlayer.playAudio(currentSong.getPreviewUrl())
+            /* TODO: OFFLINE
+            var media = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "extract_of_$currentSong.getTrackName()")
+            mediaPlayer = AudioPlayer.playAudio(media.absolutePath)
+             */
+        }
     }
 
     /**

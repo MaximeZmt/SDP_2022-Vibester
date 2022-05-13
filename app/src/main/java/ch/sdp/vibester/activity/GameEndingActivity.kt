@@ -7,6 +7,7 @@ import android.view.Window
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.R
+import ch.sdp.vibester.auth.FireBaseAuthenticator
 
 /**
  * A class representing the activity which appears upon
@@ -44,6 +45,11 @@ class GameEndingActivity : AppCompatActivity() {
         setContentView(R.layout.activity_game_ending_screen)
 
         playerName = getString(R.string.gameEnding_unconnectedUsername)
+        val userMail = FireBaseAuthenticator().getCurrUserMail()
+        if (userMail != "") {
+            playerName = userMail
+        }
+
 
 
         if (intent.hasExtra("Winner Name")) {
@@ -57,7 +63,7 @@ class GameEndingActivity : AppCompatActivity() {
         setFromIntent()
 
         val playerNameView: TextView = findViewById(R.id.end_player_name)
-        val statPlayerText = "Here are the stats for the player $playerName"
+        val statPlayerText = getString(R.string.gameEnding_messageStats) + playerName
         playerNameView.text = statPlayerText
     }
 

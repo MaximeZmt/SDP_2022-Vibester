@@ -3,6 +3,7 @@ package ch.sdp.vibester.fragment
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +19,7 @@ import ch.sdp.vibester.activity.TypingGameActivity
 import ch.sdp.vibester.api.LastfmApiInterface
 import ch.sdp.vibester.api.LastfmMethod
 import ch.sdp.vibester.api.LastfmUri
+import ch.sdp.vibester.database.AppPreferences
 import ch.sdp.vibester.helper.GameManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.gson.Gson
@@ -124,6 +126,7 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
      * Start the game based on the chosen mode
      */
     private fun proceedGame() {
+        AppPreferences.gameMode = this.game
         when (this.game) {
             "local_buzzer" -> { switchToGameWithParameters(BuzzerSetupActivity()) }
             "local_typing" -> { switchToGameWithParameters(TypingGameActivity()) }

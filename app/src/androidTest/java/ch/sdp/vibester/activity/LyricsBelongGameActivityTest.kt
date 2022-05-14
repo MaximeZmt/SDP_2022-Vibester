@@ -15,6 +15,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.GrantPermissionRule
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.LastfmMethod
+import ch.sdp.vibester.database.AppPreferences
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.helper.GameManager
 import ch.sdp.vibester.model.Song
@@ -201,6 +202,11 @@ class LyricsBelongGameActivityTest {
 
     @Test
     fun aNextButtonOnClick() {
+        val ctx: Context = ApplicationProvider.getApplicationContext()
+        AppPreferences.init(ctx)
+        AppPreferences.gameGenre = "BTS"
+        AppPreferences.gameMode  = "local_typing"
+
         createMockInvocation()
         val gameManager = setGameManager(2)
         val intent = Intent(ApplicationProvider.getApplicationContext(), LyricsBelongGameActivity::class.java)
@@ -214,17 +220,16 @@ class LyricsBelongGameActivityTest {
         Thread.sleep(1000)
 
         val statNames: ArrayList<String> = arrayListOf()
-        val statName = "Total Score"
-        statNames.addAll(arrayOf(statName, statName, statName, statName, statName))
+        val statName = "Score"
+        statNames.addAll(arrayOf(statName))
 
         val statVal: ArrayList<String> = arrayListOf()
         val score = "0"
-        statVal.addAll(arrayOf(score, score, score, score, score))
+        statVal.addAll(arrayOf(score))
 
         Intents.intended(IntentMatchers.hasComponent(GameEndingActivity::class.java.name))
-        Intents.intended(IntentMatchers.hasExtra("nbIncorrectSong", 2))
-        Intents.intended(IntentMatchers.hasExtra("str_arr_name", statNames))
-        Intents.intended(IntentMatchers.hasExtra("str_arr_val", statVal))
+        Intents.intended(IntentMatchers.hasExtra("statNames", statNames))
+        Intents.intended(IntentMatchers.hasExtra("statValues", statVal))
     }
     // FIXME: this test fails after implement QR code reader for no reason
 /*    @Test

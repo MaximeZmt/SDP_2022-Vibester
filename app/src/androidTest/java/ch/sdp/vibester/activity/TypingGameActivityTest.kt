@@ -19,6 +19,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.LastfmMethod
 import ch.sdp.vibester.auth.FireBaseAuthenticator
+import ch.sdp.vibester.database.AppPreferences
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.helper.GameManager
 import ch.sdp.vibester.model.Song
@@ -255,6 +256,11 @@ class TypingGameActivityTest {
     */
     @Test
     fun checkIntentOnEnding() {
+        val ctx: Context = ApplicationProvider.getApplicationContext()
+        AppPreferences.init(ctx)
+        AppPreferences.gameGenre = "BTS"
+        AppPreferences.gameMode  = "local_typing"
+
         createMockDataGetter()
         createMockAuthenticator()
         val inputTxt = """
@@ -271,41 +277,42 @@ class TypingGameActivityTest {
         gameManager.setNextSong()
         gameManager.gameSize = 1
 
-        val intent =
-            Intent(ApplicationProvider.getApplicationContext(), TypingGameActivity::class.java)
+        val intent = Intent(ctx, TypingGameActivity::class.java)
         val scn: ActivityScenario<TypingGameActivity> = ActivityScenario.launch(intent)
-        val ctx = ApplicationProvider.getApplicationContext() as Context
+
         scn.onActivity { activity ->
             activity.checkAnswer(ctx, songTest, gameManager)
         }
         val incArray: ArrayList<String> = ArrayList(
             gameManager.getWrongSongs().map { it.getTrackName() + " - " + it.getArtistName() })
 
-        val statNames: ArrayList<String> = arrayListOf()
-        val statName = "Total Score"
-        statNames.addAll(arrayOf(statName, statName, statName, statName, statName))
+        val statNames: ArrayList<String> = arrayListOf("Score")
 
-        val statVal: ArrayList<String> = arrayListOf()
-        val score = gameManager.getCorrectSongs().size.toString()
-        statVal.addAll(arrayOf(score, score, score, score, score))
+        val statVal: ArrayList<String> = arrayListOf(gameManager.getCorrectSongs().size.toString())
 
         Intents.intended(IntentMatchers.hasComponent(GameEndingActivity::class.java.name))
-        Intents.intended(IntentMatchers.hasExtra("nbIncorrectSong", 1))
-        Intents.intended(IntentMatchers.hasExtra("str_arr_inc", incArray))
-        Intents.intended(IntentMatchers.hasExtra("str_arr_name", statNames))
-        Intents.intended(IntentMatchers.hasExtra("str_arr_val", statVal))
+        Intents.intended(IntentMatchers.hasExtra("statNames", statNames))
+        Intents.intended(IntentMatchers.hasExtra("statValues", statVal))
+        Intents.intended(IntentMatchers.hasExtra("incorrectSongList", incArray))
+
     }
 
     @Test
     fun testProgressBarOnZero() {
+        val ctx: Context = ApplicationProvider.getApplicationContext()
+        AppPreferences.init(ctx)
+        AppPreferences.gameGenre = "BTS"
+        AppPreferences.gameMode  = "local_typing"
+        createMockDataGetter()
+        createMockAuthenticator()
+
         val gameManager = setGameManager()
         assertEquals(gameManager.getSongList().size, 1)
 
         val intent = Intent(ApplicationProvider.getApplicationContext(), TypingGameActivity::class.java)
         val scn: ActivityScenario<TypingGameActivity> = ActivityScenario.launch(intent)
-        val ctx = ApplicationProvider.getApplicationContext() as Context
-        createMockDataGetter()
-        createMockAuthenticator()
+
+
         scn.onActivity { activity ->
             activity.testFirstRound(ctx, gameManager)
             activity.testProgressBar()
@@ -316,29 +323,28 @@ class TypingGameActivityTest {
         val incArray: ArrayList<String> = ArrayList(
             gameManager.getWrongSongs().map { it.getTrackName() + " - " + it.getArtistName() })
 
-        val statNames: ArrayList<String> = arrayListOf()
-        val statName = "Total Score"
-        statNames.addAll(arrayOf(statName, statName, statName, statName, statName))
-
-        val statVal: ArrayList<String> = arrayListOf()
-        val score = gameManager.getCorrectSongs().size.toString()
-        statVal.addAll(arrayOf(score, score, score, score, score))
+        val statNames: ArrayList<String> = arrayListOf("Score")
+        val statVal: ArrayList<String> = arrayListOf(gameManager.getCorrectSongs().size.toString())
 
         Intents.intended(IntentMatchers.hasComponent(GameEndingActivity::class.java.name))
-        Intents.intended(IntentMatchers.hasExtra("nbIncorrectSong", 1))
-        Intents.intended(IntentMatchers.hasExtra("str_arr_inc", incArray))
-        Intents.intended(IntentMatchers.hasExtra("str_arr_name", statNames))
-        Intents.intended(IntentMatchers.hasExtra("str_arr_val", statVal))
+        Intents.intended(IntentMatchers.hasExtra("statNames", statNames))
+        Intents.intended(IntentMatchers.hasExtra("statValues", statVal))
+        Intents.intended(IntentMatchers.hasExtra("incorrectSongList", incArray))
     }
 
     @Test
     fun nextButtonOnClick(){
+        val ctx: Context = ApplicationProvider.getApplicationContext()
+        AppPreferences.init(ctx)
+        AppPreferences.gameGenre = "BTS"
+        AppPreferences.gameMode  = "local_typing"
+
         createMockDataGetter()
         createMockAuthenticator()
         val gameManager = setGameManager(2)
         assertEquals(gameManager.getSongList().size, 2)
 
-        val intent = Intent(ApplicationProvider.getApplicationContext(), TypingGameActivity::class.java)
+        val intent = Intent(ctx, TypingGameActivity::class.java)
         intent.putExtra("gameManager", gameManager)
         val scn: ActivityScenario<TypingGameActivity> = ActivityScenario.launch(intent)
         scn.onActivity { activity ->
@@ -352,36 +358,32 @@ class TypingGameActivityTest {
         }
         Thread.sleep(1000)
 
-        val statNames: ArrayList<String> = arrayListOf()
-        val statName = "Total Score"
-        statNames.addAll(arrayOf(statName, statName, statName, statName, statName))
+        val statNames: ArrayList<String> = arrayListOf("Score")
+        val statVal: ArrayList<String> = arrayListOf(gameManager.getCorrectSongs().size.toString())
 
-        val statVal: ArrayList<String> = arrayListOf()
-        val score = "0"
-        statVal.addAll(arrayOf(score, score, score, score, score))
         Intents.intended(IntentMatchers.hasComponent(GameEndingActivity::class.java.name))
-        Intents.intended(IntentMatchers.hasExtra("nbIncorrectSong", 2))
-        Intents.intended(IntentMatchers.hasExtra("str_arr_name", statNames))
-        Intents.intended(IntentMatchers.hasExtra("str_arr_val", statVal))
+        Intents.intended(IntentMatchers.hasExtra("statNames", statNames))
+        Intents.intended(IntentMatchers.hasExtra("statValues", statVal))
     }
 
     @Test
     fun firstRoundFail(){
+        val ctx: Context = ApplicationProvider.getApplicationContext()
+        AppPreferences.init(ctx)
+        AppPreferences.gameGenre = "BTS"
+        AppPreferences.gameMode  = "local_typing"
+
         val gameManager = setGameManager(valid = false)
-        val intent = Intent(ApplicationProvider.getApplicationContext(), TypingGameActivity::class.java)
+        val intent = Intent(ctx, TypingGameActivity::class.java)
         intent.putExtra("gameManager", gameManager)
         val scn: ActivityScenario<TypingGameActivity> = ActivityScenario.launch(intent)
 
-        val statNames: ArrayList<String> = arrayListOf()
-        val statName = "Total Score"
-        statNames.addAll(arrayOf(statName, statName, statName, statName, statName))
-        val statVal: ArrayList<String> = arrayListOf()
-        val score = "0"
-        statVal.addAll(arrayOf(score, score, score, score, score))
+        val statNames: ArrayList<String> = arrayListOf("Score")
+        val statVal: ArrayList<String> = arrayListOf(gameManager.getCorrectSongs().size.toString())
+
         Intents.intended(IntentMatchers.hasComponent(GameEndingActivity::class.java.name))
-        Intents.intended(IntentMatchers.hasExtra("nbIncorrectSong", 0))
-        Intents.intended(IntentMatchers.hasExtra("str_arr_name", statNames))
-        Intents.intended(IntentMatchers.hasExtra("str_arr_val", statVal))
+        Intents.intended(IntentMatchers.hasExtra("statNames", statNames))
+        Intents.intended(IntentMatchers.hasExtra("statValues", statVal))
     }
 
     @Test

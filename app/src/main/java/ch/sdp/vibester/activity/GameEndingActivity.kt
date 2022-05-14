@@ -14,8 +14,7 @@ import ch.sdp.vibester.model.SongListAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 /**
- * A class representing the activity which appears upon
- * completion of a game. Shows various stats.
+ * Game ending activity with game stats and list of songs quessed correctly/wrong
  */
 class GameEndingActivity : AppCompatActivity() {
 
@@ -51,7 +50,7 @@ class GameEndingActivity : AppCompatActivity() {
         songListAdapter = SongListAdapter(incorrectSongList, correctSongList)
         recyclerView!!.adapter = songListAdapter
 
-        findViewById<FloatingActionButton>(R.id.end_back_to_welcome)
+        findViewById<FloatingActionButton>(R.id.end_returnToMain)
             .setOnClickListener {
                 IntentSwitcher.switch(this, MainActivity::class.java)
             }

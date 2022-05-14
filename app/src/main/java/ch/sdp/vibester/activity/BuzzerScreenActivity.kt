@@ -265,14 +265,12 @@ class BuzzerScreenActivity : GameActivity() {
         val statNames: ArrayList<String> = mockArray
         val statVal: ArrayList<String> = mockArray
 
-        intent.putExtra("playerName", "Arda")
-        intent.putExtra("nbIncorrectSong", 3)
-
         intent.putExtra("Winner Name", prepareWinnerAnnouncement(scoreUpdater))
 
-        intent.putStringArrayListExtra("str_arr_inc", incArray)
-        intent.putStringArrayListExtra("str_arr_name", statNames)
-        intent.putStringArrayListExtra("str_arr_val", statVal)
+        //FIXME this extras are not processed yet by the GameEndingActivity
+//        intent.putStringArrayListExtra("str_arr_inc", incArray)
+//        intent.putStringArrayListExtra("str_arr_name", statNames)
+//        intent.putStringArrayListExtra("str_arr_val", statVal)
 
         startActivity(intent)
     }

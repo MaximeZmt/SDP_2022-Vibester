@@ -2,11 +2,16 @@ package ch.sdp.vibester.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.view.Window
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
+import ch.sdp.vibester.database.AppPreferences
+import ch.sdp.vibester.helper.IntentSwitcher
+import ch.sdp.vibester.model.SongListAdapter
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 /**
  * A class representing the activity which appears upon
@@ -14,118 +19,84 @@ import ch.sdp.vibester.R
  */
 class GameEndingActivity : AppCompatActivity() {
 
+    private var incorrectSongList: ArrayList<String> = arrayListOf()
+    private var correctSongList: ArrayList<String> = arrayListOf()
+    private var statNames: ArrayList<String> = arrayListOf()
+    private var statValues: ArrayList<String> = arrayListOf()
 
-    private var incorrectSongs: ArrayList<String>? = arrayListOf("Default song")
-    private var statNames: ArrayList<String>? = arrayListOf(
-        "Default name 1",
-        "Default name 2",
-        "Default name 3",
-        "Default name 4",
-        "Default name 5"
-    )
-    private var statValues: ArrayList<String>? = arrayListOf(
-        "Default value 1",
-        "Default value 2",
-        "Default value 3",
-        "Default value 4",
-        "Default value 5"
-    )
-    private var nbIncorrectSongs: Int = 0
-    private var playerName: String? = ""
+    lateinit var songListAdapter: SongListAdapter
+    private var recyclerView: RecyclerView? = null
 
-    /**
-     * Generic onCreate method for the GameEndingActivity.
-     */
+
     override fun onCreate(savedInstanceState: Bundle?) {
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
 
-        setContentView(R.layout.activity_game_ending_screen)
+        if (AppPreferences.gameMode == "local_typing" || AppPreferences.gameMode == "local_lyrics") {
+            setContentView(R.layout.activity_end_solo)
+            getFromIntentSolo(intent)
+        }
+        else{
+            setContentView(R.layout.activity_end_multiple)
+            getFromIntentMultiple(intent)
+        }
 
-        playerName = getString(R.string.gameEnding_unconnectedUsername)
+        setGameMode()
 
+        recyclerView = findViewById(R.id.end_song_list)
+        recyclerView!!.setHasFixedSize(true)
+        recyclerView!!.layoutManager = LinearLayoutManager(this)
 
+        songListAdapter = SongListAdapter(incorrectSongList, correctSongList)
+        recyclerView!!.adapter = songListAdapter
+
+        findViewById<FloatingActionButton>(R.id.end_back_to_welcome)
+            .setOnClickListener {
+                IntentSwitcher.switch(this, MainActivity::class.java)
+            }
+    }
+
+    /**
+     * Set text for game mode
+     */
+    private fun setGameMode(){
+        val gameMode = AppPreferences.gameMode?.replace("_", " ")?.replaceFirstChar { it.uppercase() }
+        val gameGenre = AppPreferences.gameGenre
+        findViewById<TextView>(R.id.end_game_mode).text = gameMode + " - " + gameGenre
+    }
+
+    /**
+     * Set statistics for Solo Game
+     */
+    private fun setSoloStats() {
+        val stat1: TextView = findViewById(R.id.end_stat1)
+        stat1.text = statNames.get(0)
+        val stat1res: TextView = findViewById(R.id.end_stat1_res)
+        stat1res.text = statValues.get(0)
+    }
+
+    /**
+     * Handle intent values for solo game
+     * @param intent: intent received by the activity
+     */
+    private fun getFromIntentSolo(intent: Intent) {
+        incorrectSongList = intent.getStringArrayListExtra("incorrectSongList") as ArrayList<String>
+        correctSongList = intent.getStringArrayListExtra("correctSongList") as ArrayList<String>
+
+        statNames = intent.getStringArrayListExtra("statNames") as ArrayList<String>
+        statValues = intent.getStringArrayListExtra("statValues") as ArrayList<String>
+        setSoloStats()
+    }
+
+    /**
+     * Handle intent values for multiple players game
+     * @param intent: intent received by the activity
+     */
+    private fun getFromIntentMultiple(intent: Intent) {
         if (intent.hasExtra("Winner Name")) {
             val winner = intent.getStringExtra("Winner Name")
-            if (winner != null) {
-                findViewById<TextView>(R.id.winnerText).text = winner
-            }
-        }
-
-        getFromIntent(intent)
-        setFromIntent()
-
-        val playerNameView: TextView = findViewById(R.id.end_player_name)
-        val statPlayerText = "Here are the stats for the player $playerName"
-        playerNameView.text = statPlayerText
-    }
-
-    /**
-     * Function that handles repetitive set-up code depending on intent.
-     */
-    private fun setFromIntent() {
-        val stat1: TextView = findViewById(R.id.end_stat1)
-        stat1.text = statNames?.get(0)
-        val stat1res: TextView = findViewById(R.id.end_stat1_res)
-        stat1res.text = statValues?.get(0)
-
-        val stat2: TextView = findViewById(R.id.end_stat2)
-        stat2.text = statNames?.get(1)
-        val stat2res: TextView = findViewById(R.id.end_stat2_res)
-        stat2res.text = statValues?.get(1)
-
-        val stat3: TextView = findViewById(R.id.end_stat3)
-        stat3.text = statNames?.get(2)
-        val stat3res: TextView = findViewById(R.id.end_stat3_res)
-        stat3res.text = statValues?.get(2)
-
-        val stat4: TextView = findViewById(R.id.end_stat4)
-        stat4.text = statNames?.get(3)
-        val stat4res: TextView = findViewById(R.id.end_stat4_res)
-        stat4res.text = statValues?.get(3)
-
-        val stat5: TextView = findViewById(R.id.end_stat5)
-        stat5.text = statNames?.get(4)
-        val stat5res: TextView = findViewById(R.id.end_stat5_res)
-        stat5res.text = statValues?.get(4)
-    }
-
-    /**
-     * Function that handles repetitive preparation code with information retrieved from the intent.
-     * @param intent: The intent received by the activity, directly passed as an argument.
-     */
-    private fun getFromIntent(intent: Intent) {
-        if (intent.hasExtra("playerName")) {
-            playerName = intent.getStringExtra("playerName")
-        }
-
-        if (intent.hasExtra("nbIncorrectSong")) {
-            nbIncorrectSongs = intent.getIntExtra("nbIncorrectSong", 0)
-        }
-
-        if (intent.hasExtra("str_arr_inc")) {
-            incorrectSongs = intent.getStringArrayListExtra("str_arr_inc")
-        }
-
-        if (intent.hasExtra("str_arr_name")) {
-            statNames = intent.getStringArrayListExtra("str_arr_name")
-        }
-
-        if (intent.hasExtra("str_arr_val")) {
-            statValues = intent.getStringArrayListExtra("str_arr_val")
+            findViewById<TextView>(R.id.winnerText).text = winner
         }
     }
-
-    /**
-     * Function that starts IncorrectSongsActivity from GameEndingActivity.
-     */
-    fun goToIncorrectlyGuessedSongs(view: View) {
-        val intent = Intent(this, IncorrectSongsActivity::class.java)
-        intent.putExtra("nb_false", nbIncorrectSongs)
-        intent.putStringArrayListExtra("str_arr_inc", incorrectSongs)
-        startActivity(intent)
-    }
-
-
 }

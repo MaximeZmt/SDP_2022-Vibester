@@ -77,18 +77,9 @@ class GameEndingActivityTest {
         intent.putStringArrayListExtra("str_arr_name", statNames)
         intent.putStringArrayListExtra("str_arr_val", statRes)
 
-        val scn: ActivityScenario<IncorrectSongsActivity> = ActivityScenario.launch(intent)
 
         onView(withId(R.id.end_stat1)).check(matches(withText(statNames[0])))
         onView(withId(R.id.end_stat1_res)).check(matches(withText(statRes[0])))
-        onView(withId(R.id.end_stat2)).check(matches(withText(statNames[1])))
-        onView(withId(R.id.end_stat2_res)).check(matches(withText(statRes[1])))
-        onView(withId(R.id.end_stat3)).check(matches(withText(statNames[2])))
-        onView(withId(R.id.end_stat3_res)).check(matches(withText(statRes[2])))
-        onView(withId(R.id.end_stat4)).check(matches(withText(statNames[3])))
-        onView(withId(R.id.end_stat4_res)).check(matches(withText(statRes[3])))
-        onView(withId(R.id.end_stat5)).check(matches(withText(statNames[4])))
-        onView(withId(R.id.end_stat5_res)).check(matches(withText(statRes[4])))
         onView(withId(R.id.end_player_name)).check(matches(withText("Here are the stats for the player $name")))
     }
 
@@ -125,11 +116,8 @@ class GameEndingActivityTest {
 
         val scn: ActivityScenario<GameEndingActivity> = ActivityScenario.launch(intent)
 
-        onView(withId(R.id.end_go_to_inc)).perform(click())
         intended(hasExtra("nb_false", nbInc))
         intended(hasExtra("str_arr_inc", incArray))
-
-        intended(hasComponent(IncorrectSongsActivity::class.java.name))
     }
 
     @Test

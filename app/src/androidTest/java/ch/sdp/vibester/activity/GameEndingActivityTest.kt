@@ -48,7 +48,7 @@ class GameEndingActivityTest {
         val ctx: Context = ApplicationProvider.getApplicationContext()
         AppPreferences.init(ctx)
         AppPreferences.gameGenre = "BTS"
-        AppPreferences.gameMode  = "local_typing"
+        AppPreferences.gameMode  = "local_lyrics"
 
         val incorrectSongList: ArrayList<String> = arrayListOf("Mock 1", "Mock 2")
         val correctSongList: ArrayList<String> = arrayListOf("Mock 3", "Mock 4")
@@ -66,7 +66,7 @@ class GameEndingActivityTest {
 
         onView(withId(R.id.end_stat1)).check(matches(withText(statNames[0])))
         onView(withId(R.id.end_stat1_res)).check(matches(withText(statValues[0])))
-        onView(withId(R.id.end_game_mode)).check(matches(withText("Local typing - BTS")))
+        onView(withId(R.id.end_game_mode)).check(matches(withText("Local lyrics - BTS")))
     }
 
     @Test

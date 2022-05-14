@@ -183,7 +183,7 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
     /**
      * Set game genre. Fetch the data from Lastfm.
      */
-    private fun chooseGenre(method: String = "", artist: String = "", tag: String = "", mode: String = "") {
+    private fun chooseGenre(method: String = "", artist: String = "", tag: String = "", mode: Int = 0) {
         val uri = LastfmUri()
 
         uri.method = method
@@ -193,7 +193,9 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
         toggleViewsVisibility(goneView = requireView().findViewById<ConstraintLayout>(R.id.chooseGenre),
             visibleView = requireView().findViewById<ConstraintLayout>(R.id.chooseSetting))
 
-        gameManager.gameMode = mode
+        gameManager.gameMode = resources.getString(mode)
+        AppPreferences.gameGenre = resources.getString(mode)
+
         setGameSongList(uri)
     }
 
@@ -204,12 +206,12 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
             R.id.local_lyrics_game_button -> chooseGame("local_lyrics", GameManager())
             R.id.online_buzzer_game_button -> switchToGameNoParameters(ChoosePartyRoomActivity())
 
-            R.id.btsButton -> chooseGenre(method = LastfmMethod.BY_ARTIST.method, artist = "BTS", mode = R.string.bts.toString())
-            R.id.kpopButton -> chooseGenre(method = LastfmMethod.BY_TAG.method, tag = "kpop", mode = R.string.kpop.toString())
-            R.id.imagDragonsButton -> chooseGenre(method = LastfmMethod.BY_ARTIST.method, artist = "Imagine Dragons", mode = R.string.imagine_dragons.toString())
-            R.id.rockButton-> chooseGenre(method = LastfmMethod.BY_TAG.method, tag = "rock", mode = R.string.rock.toString())
-            R.id.topTracksButton -> chooseGenre(method = LastfmMethod.BY_CHART.method, mode = R.string.top_tracks.toString())
-            R.id.billieEilishButton -> chooseGenre(method = LastfmMethod.BY_ARTIST.method, artist = "Billie Eilish", mode = R.string.billie_eilish.toString())
+            R.id.btsButton -> chooseGenre(method = LastfmMethod.BY_ARTIST.method, artist = "BTS", mode = R.string.bts)
+            R.id.kpopButton -> chooseGenre(method = LastfmMethod.BY_TAG.method, tag = "kpop", mode = R.string.kpop)
+            R.id.imagDragonsButton -> chooseGenre(method = LastfmMethod.BY_ARTIST.method, artist = "Imagine Dragons", mode = R.string.imagine_dragons)
+            R.id.rockButton-> chooseGenre(method = LastfmMethod.BY_TAG.method, tag = "rock", mode = R.string.rock)
+            R.id.topTracksButton -> chooseGenre(method = LastfmMethod.BY_CHART.method, mode = R.string.top_tracks)
+            R.id.billieEilishButton -> chooseGenre(method = LastfmMethod.BY_ARTIST.method, artist = "Billie Eilish", mode = R.string.billie_eilish)
 
             R.id.difficulty_proceed -> proceedGame()
         }

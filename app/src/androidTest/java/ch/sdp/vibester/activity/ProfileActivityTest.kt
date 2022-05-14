@@ -92,7 +92,7 @@ class ProfileActivityTest {
         }
     }
 
-
+/*
     @Test
     fun checkProfileData() {
         val inputProfile = User("Lalisa Bon", R.string.test_profile_image.toString(), "lisa@test.com",  12, 8)
@@ -108,6 +108,8 @@ class ProfileActivityTest {
         onView(withId(R.id.username)).check(matches(withText(inputProfile.username)))
         onView(withId(R.id.profile_total_games_stat)).check(matches(withText(inputProfile.totalGames.toString())))
     }
+    
+ */
 
     @Test
     fun clickScoresShowScores() {

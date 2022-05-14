@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/floral_white"
+    tools:context=".activity.GameEndingActivity">
+
+
+    <TextView
+        android:id="@+id/end_game_mode"
+        android:layout_width="250dp"
+        android:layout_height="60dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="75dp"
+        android:fontFamily="monospace"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TableLayout
+        android:id="@+id/end_stat_table"
+        android:layout_width="350dp"
+        android:layout_height="70dp"
+        android:layout_below="@+id/winnerText"
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="25dp"
+        android:background="@drawable/table_shape"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/end_game_mode">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/end_stat1"
+                android:layout_width="175dp"
+                android:layout_height="70dp"
+                android:fontFamily="monospace"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="@string/game_end__stat_1"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/end_stat1_res"
+                android:layout_width="175dp"
+                android:layout_height="70dp"
+                android:fontFamily="monospace"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="@string/game_end__stat_1_result"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+        </TableRow>
+
+    </TableLayout>
+
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/end_songs"
+        android:layout_width="350dp"
+        android:layout_height="300dp"
+        android:layout_below="@+id/end_stat_table"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:background="@color/floral_white"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/end_song_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:nestedScrollingEnabled="false"
+            android:scrollbars="none"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/end_back_to_welcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/end_songs"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="21dp"
+        android:backgroundTint="@color/light_coral"
+        android:clickable="true"
+        android:elevation="10dp"
+        android:src="@android:drawable/ic_menu_revert"
+        android:stateListAnimator="@null"
+        android:translationZ="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/winnerText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/end_game_mode"
+        android:layout_alignStart="@+id/end_game_mode"
+        android:layout_alignEnd="@+id/end_game_mode"
+        android:layout_marginTop="10dp"
+        android:fontFamily="monospace"
+        android:gravity="center"
+        android:text="@string/winner"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+</RelativeLayout>

@@ -11,7 +11,8 @@ import ch.sdp.vibester.helper.loadImg
 
 class UserScoreboardAdapter(
     playersInit: MutableList<User>, private val genre: String,
-    private val listener: OnItemClickListener) :
+    private val listener: OnItemClickListener?
+) :
     RecyclerView.Adapter<UserScoreboardAdapter.PlayerViewHolder>() {
 
     var players: MutableList<User> = playersInit
@@ -67,7 +68,7 @@ class UserScoreboardAdapter(
             val position = adapterPosition
             //check the item is not deleted between time
             if (position != RecyclerView.NO_POSITION) {
-                listener.onItemClick(position)
+                listener?.onItemClick(position)
             }
         }
     }

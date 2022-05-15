@@ -1,10 +1,8 @@
-package ch.sdp.vibester.scoreboard
+package ch.sdp.vibester.user
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ApplicationProvider
-import ch.sdp.vibester.user.User
-import ch.sdp.vibester.user.UserScoreboardAdapter
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test

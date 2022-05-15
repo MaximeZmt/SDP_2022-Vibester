@@ -1,4 +1,4 @@
-package ch.sdp.vibester.activity
+package ch.sdp.vibester.activity.profile
 
 import android.content.Intent
 import androidx.test.core.app.ActivityScenario
@@ -11,8 +11,6 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
 import ch.sdp.vibester.TestMode
-import ch.sdp.vibester.activity.profile.CreateProfileActivity
-import ch.sdp.vibester.activity.profile.ProfileActivity
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.user.User

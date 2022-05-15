@@ -1,10 +1,8 @@
-package ch.sdp.vibester.profile
+package ch.sdp.vibester.user
 
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
-import ch.sdp.vibester.user.User
-import ch.sdp.vibester.user.UserProfileAdapter
 import org.hamcrest.CoreMatchers
 import org.hamcrest.MatcherAssert
 import org.junit.Test

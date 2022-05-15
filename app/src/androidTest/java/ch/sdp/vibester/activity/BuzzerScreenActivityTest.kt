@@ -159,8 +159,8 @@ class BuzzerScreenActivityTest {
     fun timeoutAnswerTest() {
         val ctx: Context = ApplicationProvider.getApplicationContext()
         AppPreferences.init(ctx)
-        AppPreferences.gameGenre = "BTS"
-        AppPreferences.gameMode  = "local_buzzer"
+        AppPreferences.setStr(ctx.getString(R.string.preferences_game_mode), "local_buzzer")
+        AppPreferences.setStr(ctx.getString(R.string.preferences_game_genre), "BTS")
 
         val intent = Intent(ctx, BuzzerScreenActivity::class.java)
 
@@ -340,8 +340,8 @@ class BuzzerScreenActivityTest {
     fun checkIntentOnEnding() {
         val ctx: Context = ApplicationProvider.getApplicationContext()
         AppPreferences.init(ctx)
-        AppPreferences.gameGenre = "BTS"
-        AppPreferences.gameMode  = "local_buzzer"
+        AppPreferences.setStr(ctx.getString(R.string.preferences_game_mode), "local_buzzer")
+        AppPreferences.setStr(ctx.getString(R.string.preferences_game_genre), "BTS")
 
         val intent = Intent(ctx, BuzzerScreenActivity::class.java)
 

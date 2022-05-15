@@ -126,7 +126,8 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
      * Start the game based on the chosen mode
      */
     private fun proceedGame() {
-        AppPreferences.gameMode = this.game
+        AppPreferences.setStr(getString(R.string.preferences_game_mode), this.game)
+
         when (this.game) {
             "local_buzzer" -> { switchToGameWithParameters(BuzzerSetupActivity()) }
             "local_typing" -> { switchToGameWithParameters(TypingGameActivity()) }
@@ -200,8 +201,8 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
         toggleViewsVisibility(goneView = requireView().findViewById<ConstraintLayout>(R.id.chooseGenre),
             visibleView = requireView().findViewById<ConstraintLayout>(R.id.chooseSetting))
 
-        gameManager.gameMode = resources.getString(mode)
-        AppPreferences.gameGenre = resources.getString(mode)
+        gameManager.gameMode = getString(mode)
+        AppPreferences.setStr(getString(R.string.preferences_game_genre), getString(mode))
 
         setGameSongList(uri)
     }

@@ -56,8 +56,8 @@ class GameEndingActivityTest {
     fun checkSoloGameOnCall() {
         val ctx: Context = ApplicationProvider.getApplicationContext()
         AppPreferences.init(ctx)
-        AppPreferences.gameGenre = "BTS"
-        AppPreferences.gameMode  = "local_lyrics"
+        AppPreferences.setStr(ctx.getString(R.string.preferences_game_mode), "local_lyrics")
+        AppPreferences.setStr(ctx.getString(R.string.preferences_game_genre), "BTS")
 
         val incorrectSongList: ArrayList<String> = arrayListOf("Mock 1", "Mock 2")
         val correctSongList: ArrayList<String> = arrayListOf("Mock 3", "Mock 4")
@@ -82,8 +82,8 @@ class GameEndingActivityTest {
     fun checkMultiplePlayerGameOnCall() {
         val ctx: Context = ApplicationProvider.getApplicationContext()
         AppPreferences.init(ctx)
-        AppPreferences.gameGenre = "BTS"
-        AppPreferences.gameMode  = "local_buzzer"
+        AppPreferences.setStr(ctx.getString(R.string.preferences_game_mode), "local_buzzer")
+        AppPreferences.setStr(ctx.getString(R.string.preferences_game_genre), "BTS")
 
         val intent = Intent(ctx, GameEndingActivity::class.java)
         val scn: ActivityScenario<GameEndingActivity> = ActivityScenario.launch(intent)
@@ -94,8 +94,8 @@ class GameEndingActivityTest {
     fun checkReturnToMain() {
         val ctx: Context = ApplicationProvider.getApplicationContext()
         AppPreferences.init(ctx)
-        AppPreferences.gameGenre = "BTS"
-        AppPreferences.gameMode  = "local_buzzer"
+        AppPreferences.setStr(ctx.getString(R.string.preferences_game_mode), "local_buzzer")
+        AppPreferences.setStr(ctx.getString(R.string.preferences_game_genre), "BTS")
 
         val intent = Intent(ctx, GameEndingActivity::class.java)
         val scn: ActivityScenario<GameEndingActivity> = ActivityScenario.launch(intent)
@@ -108,8 +108,8 @@ class GameEndingActivityTest {
     fun checkSongListAdapterClick() {
         val ctx: Context = ApplicationProvider.getApplicationContext()
         AppPreferences.init(ctx)
-        AppPreferences.gameGenre = "BTS"
-        AppPreferences.gameMode  = "local_lyrics"
+        AppPreferences.setStr(ctx.getString(R.string.preferences_game_mode), "local_lyrics")
+        AppPreferences.setStr(ctx.getString(R.string.preferences_game_genre), "BTS")
 
         val incorrectSongList: ArrayList<String> = arrayListOf("Mock 1", "Mock 2")
         val correctSongList: ArrayList<String> = arrayListOf("Mock 3", "Mock 4")

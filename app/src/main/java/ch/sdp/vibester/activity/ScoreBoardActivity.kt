@@ -1,12 +1,12 @@
 package ch.sdp.vibester.activity
 
 import android.content.ContentValues
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.NestedScrollView
@@ -99,6 +99,8 @@ class ScoreBoardActivity : AppCompatActivity(), UserScoreboardAdapter.OnItemClic
     }
 
     override fun onItemClick(position: Int) {
-        Toast.makeText(this, "Item $position clicked", Toast.LENGTH_SHORT).show()
+        val intent = Intent(this, PublicProfileActivity::class.java)
+        intent.putExtra("UserId", players?.get(position)?.uid)
+        startActivity(intent)
     }
 }

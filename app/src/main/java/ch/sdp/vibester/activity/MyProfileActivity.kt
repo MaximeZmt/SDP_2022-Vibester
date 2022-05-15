@@ -29,6 +29,13 @@ class MyProfileActivity : ProfileActivity() {
         setQrCodeToProfileBtnListener()
     }
 
+    override fun queryDatabase() {
+        val currentUser = authenticator.getCurrUser()
+        if (currentUser != null) {
+            dataGetter.getUserData(currentUser.uid, this::setupProfile)
+        }
+    }
+
 
     /**
      * Generic listener for the edit username button.

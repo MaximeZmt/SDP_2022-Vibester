@@ -108,12 +108,7 @@ open class ProfileActivity : AppCompatActivity() {
     /**
      * A function that queries the database and fetched the correct user.
      */
-    private fun queryDatabase() {
-        val currentUser = authenticator.getCurrUser()
-        if(currentUser != null){
-            dataGetter.getUserData(currentUser.uid, this::setupProfile)
-
-        }
+    open fun queryDatabase() {
     }
 
 
@@ -168,7 +163,7 @@ open class ProfileActivity : AppCompatActivity() {
      * Function to handle setting up the profile.
      * @param user: The user whose profile we are setting up.
      */
-    private fun setupProfile(user: User){
+    fun setupProfile(user: User){
         // Currently assuming that empty username means no user !
         if (user.username != "") {
             findViewById<TextView>(R.id.username).text =  user.username

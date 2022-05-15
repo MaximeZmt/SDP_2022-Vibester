@@ -12,8 +12,8 @@ object AppPreferences {
     private lateinit var preferences: SharedPreferences
 
     // list of app specific preferences
-    private val GAME_MODE = ""
-    private val GAME_GENRE = ""
+    private const val GAME_MODE = "game_mode"
+    private const val GAME_GENRE = "game_genre"
 
     fun init(context: Context) {
         preferences = context.getSharedPreferences(NAME, MODE)

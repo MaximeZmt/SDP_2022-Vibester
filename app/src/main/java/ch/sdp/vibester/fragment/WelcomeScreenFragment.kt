@@ -64,7 +64,7 @@ class WelcomeScreenFragment : Fragment(),View.OnClickListener {
 
     private fun switchToProfile() {
         if (authenticator.isLoggedIn()){
-            sendDirectIntent(ProfileActivity::class.java)
+            sendDirectIntent(MyProfileActivity::class.java)
         } else {
             sendDirectIntent(AuthenticationActivity::class.java)
         }

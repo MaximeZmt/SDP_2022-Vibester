@@ -94,9 +94,7 @@ class WelcomeScreenFragmentTest {
     fun checkIntentOnScoreboard() {
         val intent = Intent(ApplicationProvider.getApplicationContext(), MainActivity::class.java)
         createMockAuthenticatorLoggedOut()
-
         val scn: ActivityScenario<MainActivity> = ActivityScenario.launch(intent)
-
 
         onView(withId(R.id.welcome_scoreboard)).perform(click())
         intended(hasComponent(ScoreBoardActivity::class.java.name))

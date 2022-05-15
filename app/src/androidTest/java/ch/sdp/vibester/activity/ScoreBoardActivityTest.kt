@@ -56,7 +56,7 @@ class ScoreBoardActivityTest {
     }
 
     @Test
-    fun clickOnItemShouldGoesToProfile() {
+    fun clickOnItemShouldGoesToProfileAndDisplaysScores() {
         onView(withId(R.id.rockButton)).perform(click())
 
         onView((withId(R.id.recycler_view)))
@@ -67,6 +67,7 @@ class ScoreBoardActivityTest {
             )
 
         onView(withId(R.id.profileContent)).check(matches(isDisplayed()))
+        onView(withId(R.id.profileStatistics)).check(matches(isDisplayed()))
     }
 
     @Test

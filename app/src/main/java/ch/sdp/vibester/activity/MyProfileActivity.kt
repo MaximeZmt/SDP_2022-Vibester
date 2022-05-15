@@ -18,6 +18,10 @@ class MyProfileActivity : ProfileActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        setViewVisibility(findViewById(R.id.editUser), true)
+        setViewVisibility(findViewById(R.id.showQRCode), true)
+        setViewVisibility(findViewById(R.id.logout), true)
+
         setEditUserNameBtnListener()
         setChangeImageBtnListener()
         setLogOutBtnListener()
@@ -80,8 +84,8 @@ class MyProfileActivity : ProfileActivity() {
      */
     private fun setShowQrCodeBtnListener() {
         findViewById<ImageView>(R.id.showQRCode).setOnClickListener {
-            setLayoutVisibility(findViewById<ConstraintLayout>(R.id.QrCodePage), true)
-            setLayoutVisibility(findViewById<RelativeLayout>(R.id.profileContent), false)
+            setViewVisibility(findViewById<ConstraintLayout>(R.id.QrCodePage), true)
+            setViewVisibility(findViewById<RelativeLayout>(R.id.profileContent), false)
         }
     }
 
@@ -90,19 +94,19 @@ class MyProfileActivity : ProfileActivity() {
      */
     private fun setQrCodeToProfileBtnListener() {
         findViewById<FloatingActionButton>(R.id.qrCode_returnToProfile).setOnClickListener {
-            setLayoutVisibility(findViewById<ConstraintLayout>(R.id.QrCodePage), false)
-            setLayoutVisibility(findViewById<RelativeLayout>(R.id.profileContent), true)
+            setViewVisibility(findViewById<ConstraintLayout>(R.id.QrCodePage), false)
+            setViewVisibility(findViewById<RelativeLayout>(R.id.profileContent), true)
         }
     }
 
 
     /**
-     * Sets the given layout's visibility.
-     * @param layout: The given constraint layout to modify.
+     * Sets the given view's visibility.
+     * @param view: The given view to modify.
      * @param isVisible: The indicator of which visibility to choose.
      * True for VISIBLE, false for GONE.
      */
-    private fun setLayoutVisibility(view: View, isVisible: Boolean){
+    private fun setViewVisibility(view: View, isVisible: Boolean){
         view.visibility = if (isVisible) View.VISIBLE else View.GONE
     }
 

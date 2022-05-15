@@ -162,8 +162,7 @@ class BuzzerScreenActivityTest {
         AppPreferences.gameGenre = "BTS"
         AppPreferences.gameMode  = "local_buzzer"
 
-        val intent =
-            Intent(ctx, BuzzerScreenActivity::class.java)
+        val intent = Intent(ctx, BuzzerScreenActivity::class.java)
 
         // Put mock extras inside
         val mockPlayersNumber = 2

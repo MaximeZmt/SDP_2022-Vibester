@@ -3,14 +3,17 @@ package ch.sdp.vibester.database
 import android.content.Context
 import android.content.SharedPreferences
 
+/**
+ * Share some values across the whole application
+ */
 object AppPreferences {
     private const val NAME = "Vibester"
     private const val MODE = Context.MODE_PRIVATE
     private lateinit var preferences: SharedPreferences
 
     // list of app specific preferences
-    private val GAME_MODE = "local_typing"
-    private val GAME_GENRE = "BTS"
+    private val GAME_MODE = ""
+    private val GAME_GENRE = ""
 
     fun init(context: Context) {
         preferences = context.getSharedPreferences(NAME, MODE)
@@ -26,14 +29,15 @@ object AppPreferences {
         editor.apply()
     }
 
+
     var gameMode: String?
-        get() = preferences.getString(GAME_MODE, "local_lyrics")
+        get() = preferences.getString(GAME_MODE, "")
         set(value) = preferences.edit {
             it.putString(GAME_MODE, value)
         }
 
     var gameGenre: String?
-        get() = preferences.getString(GAME_GENRE, "BTS")
+        get() = preferences.getString(GAME_GENRE, "")
         set(value) = preferences.edit {
             it.putString(GAME_GENRE, value)
         }

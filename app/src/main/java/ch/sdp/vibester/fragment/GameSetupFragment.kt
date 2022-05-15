@@ -185,6 +185,10 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
 
     /**
      * Set game genre. Fetch the data from Lastfm.
+     * @param method: lastfm method to fetch songs: BY_ARTIST, BY_TAG
+     * @param artist: artist to fetch songs from; used in BY_ARTIST method
+     * @param tag: tag (genre) to fetch songs from: used in BY_TAG method
+     * @param mode: official game mode name
      */
     private fun chooseGenre(method: String = "", artist: String = "", tag: String = "", mode: Int = 0) {
         val uri = LastfmUri()

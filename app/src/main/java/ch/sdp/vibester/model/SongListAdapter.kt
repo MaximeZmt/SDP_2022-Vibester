@@ -50,7 +50,6 @@ class SongListAdapter constructor( private val incorrectSongList: ArrayList<Stri
     inner class SongListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(songName: String) {
             itemView.findViewById<TextView>(R.id.song_name).text = songName
-//            itemView.findViewById<ImageView>(R.id.profile_image).loadImg(user.image)
             val downloadSongBtn = itemView.findViewById<Button>(R.id.song_download)
 
             downloadSongBtn.setOnClickListener {

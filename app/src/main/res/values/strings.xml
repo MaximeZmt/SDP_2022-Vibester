@@ -37,6 +37,9 @@
     <!-- GameEnding -->
     <string name="gameEnding_unconnectedUsername">UNCONNECTED</string>
 
+    <!-- GameGenre -->
+    <string name="gameGenre_validate">Validate</string>
+    
     <!-- OLD String-->
 
 

@@ -69,12 +69,12 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
 
     private fun setReturnBtnListener(view:View) {
         view.findViewById<FloatingActionButton>(R.id.gameSetup_returnToMain).setOnClickListener {
-            if (view.findViewById<ConstraintLayout>(R.id.chooseGenre).visibility == View.VISIBLE) {
-                toggleViewsVisibility(goneView = view.findViewById<ConstraintLayout>(R.id.chooseGenre),
+            if (view.findViewById<LinearLayout>(R.id.chooseGenre).visibility == View.VISIBLE) {
+                toggleViewsVisibility(goneView = view.findViewById<LinearLayout>(R.id.chooseGenre),
                     visibleView = view.findViewById<LinearLayout>(R.id.chooseGame))
             } else if (view.findViewById<RelativeLayout>(R.id.chooseSetting).visibility == View.VISIBLE) {
                 toggleViewsVisibility(goneView = view.findViewById<RelativeLayout>(R.id.chooseSetting),
-                    visibleView = view.findViewById<ConstraintLayout>(R.id.chooseGenre))
+                    visibleView = view.findViewById<LinearLayout>(R.id.chooseGenre))
             }
         }
     }
@@ -193,7 +193,7 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
         uri.artist = artist
         uri.tag = tag
 
-        toggleViewsVisibility(goneView = requireView().findViewById<ConstraintLayout>(R.id.chooseGenre),
+        toggleViewsVisibility(goneView = requireView().findViewById<LinearLayout>(R.id.chooseGenre),
             visibleView = requireView().findViewById<ConstraintLayout>(R.id.chooseSetting))
 
         gameManager.gameMode = resources.getString(mode)

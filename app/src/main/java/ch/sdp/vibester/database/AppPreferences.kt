@@ -11,10 +11,6 @@ object AppPreferences {
     private const val MODE = Context.MODE_PRIVATE
     private lateinit var preferences: SharedPreferences
 
-    // list of app specific preferences
-    private const val GAME_MODE = "game_mode"
-    private const val GAME_GENRE = "game_genre"
-
     fun init(context: Context) {
         preferences = context.getSharedPreferences(NAME, MODE)
     }
@@ -29,16 +25,13 @@ object AppPreferences {
         editor.apply()
     }
 
+    fun getStr(key: String): String? {
+       return preferences.getString(key, "")
+    }
 
-    var gameMode: String?
-        get() = preferences.getString(GAME_MODE, "")
-        set(value) = preferences.edit {
-            it.putString(GAME_MODE, value)
+    fun setStr(key: String, value: String){
+        preferences.edit {
+            it.putString(key, value)
         }
-
-    var gameGenre: String?
-        get() = preferences.getString(GAME_GENRE, "")
-        set(value) = preferences.edit {
-            it.putString(GAME_GENRE, value)
-        }
+    }
 }

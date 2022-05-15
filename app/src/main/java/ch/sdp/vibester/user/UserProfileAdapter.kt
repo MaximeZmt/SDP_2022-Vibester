@@ -26,16 +26,17 @@ import java.util.concurrent.TimeUnit
  * UserAdapter to set userProfile views with username and image in RecycleView. It is used to search for users.
  */
 class UserProfileAdapter constructor(
-    val users: MutableList<User>,
-    private val authenticator: FireBaseAuthenticator,
+    private val users: MutableList<User>,
+    authenticator: FireBaseAuthenticator,
     val dataGetter: DataGetter,
+    private val listener: OnItemClickListener?
     ):
     RecyclerView.Adapter<UserProfileAdapter.UserProfileViewHolder>() {
 
     private val currentUser = authenticator.getCurrUser()
     private var userFriends: Array<String> = arrayOf()
 
-    init{
+    init {
         if (currentUser != null) { dataGetter.getUserData(currentUser.uid, this::setFriends) }
     }
 
@@ -48,7 +49,7 @@ class UserProfileAdapter constructor(
      * Update users in the search list
      * @param new_users to set in search list
      */
-    fun updateUsersList(new_users: MutableList<User>){
+    fun updateUsersList(new_users: MutableList<User>) {
         this.users.clear()
         this.users.addAll(new_users)
     }
@@ -78,7 +79,7 @@ class UserProfileAdapter constructor(
     /**
      * Customer ViewHolder class for UserProfile. Each item contains username and image.
      */
-    inner class UserProfileViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class UserProfileViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         /**
          * @param user with all the parameters
          */
@@ -87,7 +88,7 @@ class UserProfileAdapter constructor(
             itemView.findViewById<ImageView>(R.id.profile_image).loadImg(user.image)
             val addFriendBtn = itemView.findViewById<Button>(R.id.addFriendBtn)
 
-            if(userFriends.isNotEmpty() && user.uid in userFriends){
+            if (userFriends.isNotEmpty() && user.uid in userFriends) {
                 changeBtnToImage()
             }
             else {
@@ -100,9 +101,21 @@ class UserProfileAdapter constructor(
             }
         }
 
-        private fun changeBtnToImage(){
+        private fun changeBtnToImage() {
             itemView.findViewById<Button>(R.id.addFriendBtn).visibility = View.INVISIBLE
             itemView.findViewById<ImageView>(R.id.addedFriendIcon).visibility = View.VISIBLE
+        }
+
+        init {
+            itemView.setOnClickListener(this)
+        }
+
+        override fun onClick(v: View?) {
+            val position = adapterPosition
+            //check the item is not deleted between time
+            if (position != RecyclerView.NO_POSITION) {
+                listener?.onItemClick(position)
+            }
         }
 
     }

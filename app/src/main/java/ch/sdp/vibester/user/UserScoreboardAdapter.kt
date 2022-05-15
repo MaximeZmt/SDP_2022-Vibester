@@ -72,8 +72,4 @@ class UserScoreboardAdapter(
             }
         }
     }
-
-    interface OnItemClickListener {
-        fun onItemClick(position: Int)
-    }
 }

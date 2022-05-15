@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
 import ch.sdp.vibester.activity.profile.PublicProfileActivity
 import ch.sdp.vibester.database.Database
+import ch.sdp.vibester.user.OnItemClickListener
 import ch.sdp.vibester.user.User
 import ch.sdp.vibester.user.UserScoreboardAdapter
 import com.google.firebase.database.DataSnapshot
@@ -24,7 +25,7 @@ import com.google.firebase.database.ValueEventListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ScoreBoardActivity : AppCompatActivity(), UserScoreboardAdapter.OnItemClickListener {
+class ScoreBoardActivity : AppCompatActivity(), OnItemClickListener {
     private val dbRef: DatabaseReference = Database.get().getReference("users")
     private var players: MutableList<User>? = null
     private var userScoreboardAdapter: UserScoreboardAdapter? = null

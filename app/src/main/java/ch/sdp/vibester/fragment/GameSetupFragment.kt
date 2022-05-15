@@ -3,7 +3,7 @@ package ch.sdp.vibester.fragment
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,6 +36,7 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
     var difficulty = R.string.easy.toString()
     var game = "local_buzzer"
     var gameSize = R.string.one.toString()
+    var searchArtistEditable: Editable? = null
     lateinit var gameManager: GameManager
     /* TODO: OFFLINE
     private var hasInternet: Boolean = true
@@ -60,6 +61,9 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
         view.findViewById<Button>(R.id.billieEilishButton).setOnClickListener(this)
         view.findViewById<Button>(R.id.difficulty_proceed).setOnClickListener(this)
 
+        searchArtistEditable = view.findViewById<EditText>(R.id.searchArtist).text
+        view.findViewById<Button>(R.id.validateSearch).setOnClickListener(this)
+
         setReturnBtnListener(view)
         setSpinnerListener(view, ctx, R.id.difficulty_spinner, R.array.difficulties_name)
         setSpinnerListener(view, ctx, R.id.size_spinner, R.array.game_size_options)
@@ -69,12 +73,12 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
 
     private fun setReturnBtnListener(view:View) {
         view.findViewById<FloatingActionButton>(R.id.gameSetup_returnToMain).setOnClickListener {
-            if (view.findViewById<LinearLayout>(R.id.chooseGenre).visibility == View.VISIBLE) {
-                toggleViewsVisibility(goneView = view.findViewById<LinearLayout>(R.id.chooseGenre),
+            if (view.findViewById<LinearLayout>(R.id.genrePerScoreboard).visibility == View.VISIBLE) {
+                toggleViewsVisibility(goneView = view.findViewById<LinearLayout>(R.id.genrePerScoreboard),
                     visibleView = view.findViewById<LinearLayout>(R.id.chooseGame))
             } else if (view.findViewById<RelativeLayout>(R.id.chooseSetting).visibility == View.VISIBLE) {
                 toggleViewsVisibility(goneView = view.findViewById<RelativeLayout>(R.id.chooseSetting),
-                    visibleView = view.findViewById<LinearLayout>(R.id.chooseGenre))
+                    visibleView = view.findViewById<LinearLayout>(R.id.genrePerScoreboard))
             }
         }
     }
@@ -180,26 +184,30 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
         this.gameManager = gameManager
 
         toggleViewsVisibility(goneView = requireView().findViewById<LinearLayout>(R.id.chooseGame),
-            visibleView = requireView().findViewById<ConstraintLayout>(R.id.chooseGenre))
+            visibleView = requireView().findViewById<ConstraintLayout>(R.id.genrePerScoreboard))
     }
 
     /**
      * Set game genre. Fetch the data from Lastfm.
      */
     private fun chooseGenre(method: String = "", artist: String = "", tag: String = "", mode: Int = 0) {
-        val uri = LastfmUri()
+        if (artist != "") {
+            val uri = LastfmUri()
 
-        uri.method = method
-        uri.artist = artist
-        uri.tag = tag
+            uri.method = method
+            uri.artist = artist
+            uri.tag = tag
 
-        toggleViewsVisibility(goneView = requireView().findViewById<LinearLayout>(R.id.chooseGenre),
-            visibleView = requireView().findViewById<ConstraintLayout>(R.id.chooseSetting))
+            toggleViewsVisibility(
+                goneView = requireView().findViewById<LinearLayout>(R.id.genrePerScoreboard),
+                visibleView = requireView().findViewById<ConstraintLayout>(R.id.chooseSetting)
+            )
 
-        gameManager.gameMode = resources.getString(mode)
-        AppPreferences.gameGenre = resources.getString(mode)
+            gameManager.gameMode = resources.getString(mode)
+            AppPreferences.gameGenre = resources.getString(mode)
 
-        setGameSongList(uri)
+            setGameSongList(uri)
+        }
     }
 
     override fun onClick(v: View?) {
@@ -215,6 +223,8 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
             R.id.rockButton-> chooseGenre(method = LastfmMethod.BY_TAG.method, tag = "rock", mode = R.string.rock)
             R.id.topTracksButton -> chooseGenre(method = LastfmMethod.BY_CHART.method, mode = R.string.top_tracks)
             R.id.billieEilishButton -> chooseGenre(method = LastfmMethod.BY_ARTIST.method, artist = "Billie Eilish", mode = R.string.billie_eilish)
+
+            R.id.validateSearch -> chooseGenre(method = LastfmMethod.BY_ARTIST.method, artist = searchArtistEditable.toString(), mode = R.string.byArtistSearch)
 
             R.id.difficulty_proceed -> proceedGame()
         }

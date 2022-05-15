@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.NestedScrollView
@@ -22,7 +23,7 @@ import com.google.firebase.database.ValueEventListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ScoreBoardActivity : AppCompatActivity() {
+class ScoreBoardActivity : AppCompatActivity(), UserScoreboardAdapter.OnItemClickListener {
     private val dbRef: DatabaseReference = Database.get().getReference("users")
     private var players: MutableList<User>? = null
     private var userScoreboardAdapter: UserScoreboardAdapter? = null
@@ -57,7 +58,7 @@ class ScoreBoardActivity : AppCompatActivity() {
     private fun setupRecycleView() {
         findViewById<RecyclerView>(R.id.recycler_view).apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = players?.let { UserScoreboardAdapter(it, genre) }
+            adapter = players?.let { UserScoreboardAdapter(it, genre, this@ScoreBoardActivity) }
             setHasFixedSize(true)
         }
     }
@@ -93,7 +94,11 @@ class ScoreBoardActivity : AppCompatActivity() {
     }
 
     private fun showPlayersPosition(players: MutableList<User>?) {
-        userScoreboardAdapter = UserScoreboardAdapter(players!!, genre)
+        userScoreboardAdapter = UserScoreboardAdapter(players!!, genre, this)
         findViewById<RecyclerView>(R.id.recycler_view)!!.adapter = userScoreboardAdapter
+    }
+
+    override fun onItemClick(position: Int) {
+        Toast.makeText(this, "Item $position clicked", Toast.LENGTH_SHORT).show()
     }
 }

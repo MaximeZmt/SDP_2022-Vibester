@@ -56,7 +56,7 @@ class ScoreBoardActivityTest {
     }
 
     @Test
-    fun rockBtnShouldEnableRecycleViewClick() {
+    fun clickOnItemShouldGoesToProfile() {
         onView(withId(R.id.rockButton)).perform(click())
 
         onView((withId(R.id.recycler_view)))
@@ -65,6 +65,8 @@ class ScoreBoardActivityTest {
                     2, click()
                 )
             )
+
+        onView(withId(R.id.profileContent)).check(matches(isDisplayed()))
     }
 
     @Test

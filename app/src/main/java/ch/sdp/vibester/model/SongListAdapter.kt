@@ -11,7 +11,7 @@ import ch.sdp.vibester.R
 
 
 /**
- * UserAdapter to set userProfile views with username and image in RecycleView. It is used to search for users.
+ * SongListAdapter to set correct/wrong guessed songs in the game.
  */
 class SongListAdapter constructor( private val incorrectSongList: ArrayList<String>,
                                    private val correctSongList: ArrayList<String> ):
@@ -45,12 +45,9 @@ class SongListAdapter constructor( private val incorrectSongList: ArrayList<Stri
 
 
     /**
-     * Customer ViewHolder class for UserProfile. Each item contains username and image.
+     * Customer ViewHolder class for SongList. Each item contains songname and a button.
      */
     inner class SongListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        /**
-         * @param user with all the parameters
-         */
         fun bind(songName: String) {
             itemView.findViewById<TextView>(R.id.song_name).text = songName
 //            itemView.findViewById<ImageView>(R.id.profile_image).loadImg(user.image)
@@ -60,6 +57,7 @@ class SongListAdapter constructor( private val incorrectSongList: ArrayList<Stri
                 changeBtnToImage()
             }
 
+            // Make background red if song is guessed incorrectly
             if(songName in incorrectSongList ){
                 itemView.setBackgroundResource(R.color.light_coral);
             }

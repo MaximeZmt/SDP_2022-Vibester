@@ -28,6 +28,7 @@ class BuzzerScreenActivity : GameActivity() {
 
     private lateinit var gameManager: GameManager
     private lateinit var scoreUpdater: BuzzerScoreUpdater
+    private lateinit var players: Array<String>
     private var gameIsOn: Boolean = true
 
     private fun initHashmap(): HashMap<Int, Int> {
@@ -55,20 +56,19 @@ class BuzzerScreenActivity : GameActivity() {
         val intentExtras = intent.extras
         if (intentExtras != null) {
             super.setMax(intent)
-            val nPlayers = intentExtras.getInt("Number of players")
-            val allPoints = Array(nPlayers, { i -> 0 })
-            val players = nPlayers.let { intentExtras.getStringArray("Player Names")?.copyOfRange(0, it) }
+            val getPlayers = intentExtras.getInt("Number of players").let { intentExtras.getStringArray("Player Names")?.copyOfRange(0, it) }
+            val allPoints = Array(getPlayers!!.size, { i -> 0 })
 
             if (intentExtras.getSerializable("gameManager") != null) {
                 gameManager = intentExtras.getSerializable("gameManager") as GameManager
             }
-
             scoreUpdater = BuzzerScoreUpdater(buzIds, allPoints)
 
-            if (players != null) {
-                buildScores(players, allPoints)
-                buildBuzzers(players, findViewById(R.id.answer))
-            }
+            // players is already non-null-asserted
+            players = getPlayers
+            buildScores(getPlayers, allPoints)
+            buildBuzzers(getPlayers, findViewById(R.id.answer))
+
             setAnswerButton(ctx, findViewById(R.id.buttonCorrect), buzzersToRows)
             setAnswerButton(ctx, findViewById(R.id.buttonWrong), buzzersToRows)
             setNextButton(ctx, gameManager)

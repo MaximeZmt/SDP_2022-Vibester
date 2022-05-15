@@ -51,15 +51,6 @@ class GameManagerTest {
     }
 
     @Test
-    fun increaseScoreCorrect() {
-        val gameManager = setGameManager()
-        gameManager.increaseScore()
-        assertEquals(gameManager.getScore(), 1)
-        gameManager.increaseScore()
-        assertEquals(gameManager.getScore(), 2)
-    }
-
-    @Test
     fun getPlayedSongsCorrect() {
         val gameManager = setGameManager()
         assertEquals(gameManager.getPlayedSongsCount(), 0)

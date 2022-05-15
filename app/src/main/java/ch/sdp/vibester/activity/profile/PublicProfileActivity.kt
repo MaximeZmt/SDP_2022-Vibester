@@ -1,4 +1,5 @@
-package ch.sdp.vibester.activity
+package ch.sdp.vibester.activity.profile
+
 
 class PublicProfileActivity : ProfileActivity() {
 

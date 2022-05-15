@@ -13,6 +13,7 @@ import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
+import ch.sdp.vibester.activity.profile.PublicProfileActivity
 import ch.sdp.vibester.database.Database
 import ch.sdp.vibester.user.User
 import ch.sdp.vibester.user.UserScoreboardAdapter

@@ -1,4 +1,4 @@
-package ch.sdp.vibester.activity
+package ch.sdp.vibester.activity.profile
 
 import android.app.Activity
 import android.content.Intent
@@ -8,7 +8,6 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.R
-import ch.sdp.vibester.TestMode
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.database.ImageGetter

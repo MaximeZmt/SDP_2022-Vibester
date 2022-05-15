@@ -11,6 +11,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.R
 import ch.sdp.vibester.TestMode
+import ch.sdp.vibester.activity.profile.CreateProfileActivity
+import ch.sdp.vibester.activity.profile.ProfileActivity
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.helper.IntentSwitcher

@@ -2,7 +2,6 @@ package ch.sdp.vibester.activity
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
@@ -14,6 +13,7 @@ import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
+import ch.sdp.vibester.activity.profile.ProfileActivity
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.database.ImageGetter

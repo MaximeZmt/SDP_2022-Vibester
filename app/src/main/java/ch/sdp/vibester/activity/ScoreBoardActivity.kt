@@ -99,6 +99,10 @@ class ScoreBoardActivity : AppCompatActivity(), UserScoreboardAdapter.OnItemClic
         findViewById<RecyclerView>(R.id.recycler_view)!!.adapter = userScoreboardAdapter
     }
 
+    /**
+     * @param position index of the item on click
+     * go to the profile of the player at index position
+     */
     override fun onItemClick(position: Int) {
         val intent = Intent(this, PublicProfileActivity::class.java)
         intent.putExtra("UserId", players?.get(position)?.uid)

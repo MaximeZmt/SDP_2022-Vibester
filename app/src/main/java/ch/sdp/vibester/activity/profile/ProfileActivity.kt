@@ -109,8 +109,7 @@ open class ProfileActivity : AppCompatActivity() {
     /**
      * A function that queries the database and fetched the correct user.
      */
-    open fun queryDatabase() {
-    }
+    open fun queryDatabase() {}
 
 
     /**

@@ -65,6 +65,7 @@ class UserScoreboardAdapter(
 
         override fun onClick(v: View?) {
             val position = adapterPosition
+            //check the item is not deleted between time
             if (position != RecyclerView.NO_POSITION) {
                 listener.onItemClick(position)
             }

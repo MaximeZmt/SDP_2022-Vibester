@@ -14,6 +14,7 @@ import ch.sdp.vibester.helper.IntentSwitcher
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 
+/** profile page of the current user with editable information */
 class MyProfileActivity : ProfileActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,6 +47,7 @@ class MyProfileActivity : ProfileActivity() {
             showGeneralDialog( "username", true)
         }
     }
+
     /**
      * Generic listener for the change profile picture.
      */
@@ -54,11 +56,11 @@ class MyProfileActivity : ProfileActivity() {
             showGeneralDialog( "Do you want to change your profile picture?", false)
         }
     }
+
     /**
      * A function that updates the image in the database.
      * @param id ID of the image int the database
      */
-
     private fun updateImage(id: String) {
         deleteImage(id)
 

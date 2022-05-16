@@ -155,7 +155,7 @@ class ProfileActivityTest {
         createMockImageGetter()
 
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
-        onView(withId(R.id.profile_returnToMain)).perform(click())
+        onView(withId(R.id.profile_returnToMain)).perform(scrollTo(), click())
         Intents.intended(IntentMatchers.hasComponent(MainActivity::class.java.name))
     }
 // FIXME failing test

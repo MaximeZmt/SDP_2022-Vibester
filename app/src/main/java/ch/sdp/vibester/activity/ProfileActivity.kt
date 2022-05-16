@@ -202,4 +202,3 @@ open class ProfileActivity : AppCompatActivity() {
     }
 }
 
- 

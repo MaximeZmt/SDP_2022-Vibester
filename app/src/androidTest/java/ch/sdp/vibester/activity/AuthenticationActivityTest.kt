@@ -176,7 +176,7 @@ class AuthenticationActivityTest {
         onView(withId(R.id.password)).perform(ViewActions.typeText(password), closeSoftKeyboard())
         onView(withId(R.id.logIn)).perform(click())
 
-        Intents.intended(IntentMatchers.hasComponent(ProfileActivity::class.java.name))
+        Intents.intended(IntentMatchers.hasComponent(MyProfileActivity::class.java.name))
         Intents.intended(IntentMatchers.hasExtra("email", username))
     }
 

@@ -2,8 +2,11 @@ package ch.sdp.vibester.activity
 
 import android.content.Context
 import android.content.Intent
+<<<<<<< HEAD:app/src/androidTest/java/ch/sdp/vibester/activity/ProfileActivityTest.kt
 import android.net.Uri
 import androidx.core.widget.ImageViewCompat
+=======
+>>>>>>> main:app/src/androidTest/java/ch/sdp/vibester/activity/MyProfileActivityTest.kt
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
@@ -37,7 +40,7 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 @HiltAndroidTest
-class ProfileActivityTest {
+class MyProfileActivityTest {
 
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
@@ -81,18 +84,13 @@ class ProfileActivityTest {
         every { mockUsersRepo.getUserData(any(), any()) } answers {
             secondArg<(User) -> Unit>().invoke(mockProfile)
         }
-        every {mockUsersRepo.getCurrentUser()} answers {
-            null
-        }
+        every { mockUsersRepo.getCurrentUser() } answers { null }
         every { mockUsersRepo.setFieldValue(any(), any(), any()) } answers {}
         every { mockUsersRepo.setFieldValue(any(), any(), any()) } answers {}
     }
 
-//    val mockImageURI = Uri.parse("https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/45.png")
     private fun createMockImageGetter() {
-        every {mockImageGetter.fetchImage(any(), any())} answers {
-//            secondArg<(Uri) -> Unit>().invoke(mockImageURI)
-        }
+        every { mockImageGetter.fetchImage(any(), any())} answers {}
     }
 
     // FIXME failing test
@@ -101,7 +99,7 @@ class ProfileActivityTest {
     fun checkProfileData() {
         val inputProfile = User("Lalisa Bon", R.string.test_profile_image.toString(), "lisa@test.com",  12, 8)
         val ctx = ApplicationProvider.getApplicationContext() as Context
-        val intent = Intent(ctx, ProfileActivity::class.java)
+        val intent = Intent(ctx, MyProfileActivity::class.java)
 
         createMockDataGetter(inputProfile)
         createMockAuthenticator()
@@ -127,7 +125,7 @@ class ProfileActivityTest {
         val inputProfile = User("Lalisa Bon",R.string.test_profile_image.toString(), "lisa@test.com",
             12, scores = scorePerGenre)
         val ctx = ApplicationProvider.getApplicationContext() as Context
-        val intent = Intent(ctx, ProfileActivity::class.java)
+        val intent = Intent(ctx, MyProfileActivity::class.java)
 
         createMockDataGetter(inputProfile)
         createMockAuthenticator()
@@ -150,7 +148,7 @@ class ProfileActivityTest {
     fun clickBackToMain(){
         val inputProfile = User("Lalisa Bon",R.string.test_profile_image.toString(), "lisa@test.com",  12, 8)
         val ctx = ApplicationProvider.getApplicationContext() as Context
-        val intent = Intent(ctx, ProfileActivity::class.java)
+        val intent = Intent(ctx, MyProfileActivity::class.java)
 
         createMockDataGetter(inputProfile)
         createMockAuthenticator()
@@ -167,7 +165,7 @@ class ProfileActivityTest {
         val inputProfile = User("Lalisa Bon",R.string.test_profile_image.toString(), "lisa@test.com",  12, 8)
 
         val ctx = ApplicationProvider.getApplicationContext() as Context
-        val intent = Intent(ctx, ProfileActivity::class.java)
+        val intent = Intent(ctx, MyProfileActivity::class.java)
 
         createMockDataGetter(inputProfile)
         createMockAuthenticator()
@@ -189,7 +187,7 @@ class ProfileActivityTest {
     fun clickBackToProfile() {
         val inputProfile = User("Lalisa Bon", R.string.test_profile_image.toString(), "lisa@test.com",  12, 8)
         val ctx = ApplicationProvider.getApplicationContext() as Context
-        val intent = Intent(ctx, ProfileActivity::class.java)
+        val intent = Intent(ctx, MyProfileActivity::class.java)
 
         createMockDataGetter(inputProfile)
         createMockAuthenticator()
@@ -210,7 +208,7 @@ class ProfileActivityTest {
     fun checkEditProfile() {
         val inputProfile = User("Lalisa Bon",R.string.test_profile_image.toString(), "lisa@test.com",  12, 8)
         val ctx = ApplicationProvider.getApplicationContext() as Context
-        val intent = Intent(ctx, ProfileActivity::class.java)
+        val intent = Intent(ctx, MyProfileActivity::class.java)
 
         createMockDataGetter(inputProfile)
         createMockAuthenticator()
@@ -233,7 +231,7 @@ class ProfileActivityTest {
     fun checkEditProfileClickCancel() {
         val inputProfile = User( "Lalisa Bon", R.string.test_profile_image.toString(), "lisa@test.com",  12, 8)
         val ctx = ApplicationProvider.getApplicationContext() as Context
-        val intent = Intent(ctx, ProfileActivity::class.java)
+        val intent = Intent(ctx, MyProfileActivity::class.java)
 
         createMockDataGetter(inputProfile)
         createMockAuthenticator()
@@ -250,7 +248,7 @@ class ProfileActivityTest {
 //    fun checkChangePhotoCancel() {
 //        val inputProfile = User( "Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8, "VvPB47tQCLdjz3YebilS6h5EXdJ3")
 //        val ctx = ApplicationProvider.getApplicationContext() as Context
-//        val intent = Intent(ctx, ProfileActivity::class.java)
+//        val intent = Intent(ctx, MyProfileActivity::class.java)
 //
 //        createMockDataGetter(inputProfile)
 //        createMockAuthenticator()
@@ -272,7 +270,7 @@ class ProfileActivityTest {
     fun checkQrCodeGenerator() {
         val inputProfile = User( "Lalisa Bon", R.string.test_profile_image.toString(), "lisa@test.com",  12, 8,"VvPB47tQCLdjz3YebilS6h5EXdJ3")
         val ctx = ApplicationProvider.getApplicationContext() as Context
-        val intent = Intent(ctx, ProfileActivity::class.java)
+        val intent = Intent(ctx, MyProfileActivity::class.java)
 
         createMockDataGetter(inputProfile)
         createMockAuthenticator()
@@ -312,7 +310,7 @@ class ProfileActivityTest {
 //    fun checkIfPictureIsDisplayed() {
 //        val inputProfile = User( "Lalisa Bon", R.string.test_profile_image.toString(), "lisa@test.com",  12, 8,"VvPB47tQCLdjz3YebilS6h5EXdJ3")
 //        val ctx = ApplicationProvider.getApplicationContext() as Context
-//        val intent = Intent(ctx, ProfileActivity::class.java)
+//        val intent = Intent(ctx, MyProfileActivity::class.java)
 //
 //        createMockDataGetter(inputProfile)
 //        createMockAuthenticator()

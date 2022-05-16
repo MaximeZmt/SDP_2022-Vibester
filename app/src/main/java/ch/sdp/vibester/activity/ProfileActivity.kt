@@ -5,16 +5,11 @@ import android.content.Intent
 import android.graphics.*
 import android.net.Uri
 import android.os.Bundle
-import android.text.InputType
-import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.Window
 import android.widget.*
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.cardview.widget.CardView
-import androidx.constraintlayout.widget.ConstraintLayout
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.BitmapGetterApi
 import ch.sdp.vibester.auth.FireBaseAuthenticator
@@ -23,8 +18,6 @@ import ch.sdp.vibester.database.ImageGetter
 import ch.sdp.vibester.helper.IntentSwitcher
 import ch.sdp.vibester.user.User
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.tabs.TabLayout
-import com.google.firebase.auth.FirebaseAuth
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.EncodeHintType
 import com.google.zxing.qrcode.QRCodeWriter
@@ -42,7 +35,7 @@ import javax.inject.Inject
  * Display user profile's data (image, username, scores, etc.) in UI
  */
 @AndroidEntryPoint
-class ProfileActivity : AppCompatActivity() {
+open class ProfileActivity : AppCompatActivity() {
     @Inject
     lateinit var dataGetter: DataGetter
 
@@ -53,7 +46,7 @@ class ProfileActivity : AppCompatActivity() {
     lateinit var imageGetter: ImageGetter
 
     private val imageSize = 1000
-    private val imageRequestCode = 100
+    val imageRequestCode = 100
 
     /**
      * Generic onCreate method belonging to ProfileActivity.
@@ -64,57 +57,12 @@ class ProfileActivity : AppCompatActivity() {
         supportActionBar?.hide()
         setContentView(R.layout.activity_profile)
 
-        setEditUserNameBtnListener()
-        setLogOutBtnListener()
         setRetToMainBtnListener()
-        setShowQrCodeBtnListener()
-        setQrCodeToProfileBtnListener()
-        setChangeImageBtnListener()
         setScoreBtnListener()
 
         queryDatabase()
     }
 
-    /**
-     * Generic listener for the edit username button.
-     */
-    private fun setEditUserNameBtnListener() {
-        findViewById<ImageView>(R.id.editUser).setOnClickListener {
-            showGeneralDialog( "username", true)
-        }
-    }
-    /**
-     * Generic listener for the change profile picture.
-     */
-    private fun setChangeImageBtnListener() {
-        findViewById<ImageView>(R.id.avatar).setOnClickListener {
-            showGeneralDialog( "Do you want to change your profile picture?", false)
-        }
-        findViewById<CardView>(R.id.myCardView).setOnClickListener {
-            showGeneralDialog( "Do you want to change your profile picture?", false)
-        }
-    }
-    /**
-     * A function that updates the image in the database.
-     * @param id ID of the image int the database
-     */
-
-    private fun updateImage(id: String) {
-        deleteImage(id)
-
-        val intent = Intent(Intent.ACTION_PICK)
-        intent.type = "image/*"
-        startActivityForResult(intent, imageRequestCode)
-    }
-
-
-    /**
-     * A function that deletes an image from the database.
-     * @param id ID of the image int the database
-     */
-    private fun deleteImage(id: String) {
-        imageGetter.deleteImage("profileImg/${id}")
-    }
 
     //check the UID here not sure
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -126,16 +74,6 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
-    /**
-     * Generic listener for the log out button.
-     */
-    private fun setLogOutBtnListener() {
-        findViewById<Button>(R.id.logout).setOnClickListener {
-            FirebaseAuth.getInstance().signOut()
-            IntentSwitcher.switch(this, MainActivity::class.java)
-            finish()
-        }
-    }
 
     /**
      * Generic listener for the return to main button.
@@ -147,27 +85,6 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
-    /**
-     * Generic listener for the show qr code button.
-     */
-    private fun setShowQrCodeBtnListener() {
-        findViewById<ImageView>(R.id.showQRCode).setOnClickListener {
-            setLayoutVisibility(findViewById<ConstraintLayout>(R.id.QrCodePage), true)
-            setLayoutVisibility(findViewById<ScrollView>(R.id.profileContent), false)
-            setLayoutVisibility(findViewById<FloatingActionButton>(R.id.profile_returnToMain), false)
-        }
-    }
-
-    /**
-     * Generic listener for the show qr code and return to profile button.
-     */
-    private fun setQrCodeToProfileBtnListener() {
-        findViewById<FloatingActionButton>(R.id.qrCode_returnToProfile).setOnClickListener {
-            setLayoutVisibility(findViewById<ConstraintLayout>(R.id.QrCodePage), false)
-            setLayoutVisibility(findViewById<ScrollView>(R.id.profileContent), true)
-            setLayoutVisibility(findViewById<FloatingActionButton>(R.id.profile_returnToMain), true)
-        }
-    }
 
     /**
      * Generic listener for the score button, show the score per genre statistic on click
@@ -187,97 +104,18 @@ class ProfileActivity : AppCompatActivity() {
         else if (findViewById<TableLayout>(layout).visibility == GONE) findViewById<TableLayout>(layout).visibility = VISIBLE
     }
 
-    /**
-     * Sets the given layout's visibility.
-     * @param layout: The given constraint layout to modify.
-     * @param isVisible: The indicator of which visibility to choose.
-     * True for VISIBLE, false for GONE.
-     */
-    private fun setLayoutVisibility(view: View, isVisible: Boolean){
-        view.visibility = if (isVisible) VISIBLE else GONE
-    }
-
-    /**
-     * A function that displays the dialog
-     * @param title title of the dialog
-     * @param hint hint of the text in the dialog
-     * @param id id of the dialog
-     * @param textId id of the text in the dialog
-     * @param name of the dialog
-     */
-    private fun showTextDialog(title: String, hint: String, id: Int, textId: Int, name: String) {
-        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-        builder.setTitle(title)
-
-        val input = EditText(this)
-        input.hint = hint
-        input.inputType = InputType.TYPE_CLASS_TEXT
-        input.id = id
-
-        builder.setView(input)
-        builder.setPositiveButton("OK") { _, _ ->
-            findViewById<TextView>(textId).text = input.text.toString()
-
-            if (name == "username"){
-                dataGetter.setFieldValue(FireBaseAuthenticator().getCurrUID(), "username",  input.text.toString())
-            }
-        }
-        builder.setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }
-        builder.show()
-    }
-
-    /**
-     * A function shows an image change dialog.
-     * @param title title of the dialog
-     */
-
-    private fun showImageChangeDialog(title: String) {
-        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-        builder.setTitle(title)
-
-        builder.setPositiveButton("Yes") { _, _ ->
-            dataGetter.getCurrentUser()?.let { updateImage(it.uid) }
-        }
-
-        builder.setNegativeButton("No") { dialog, _ -> dialog.cancel() }
-        builder.show()
-    }
-
-    /**
-     * A function shows a dialog.
-     * @param name name of the dialog
-     * @param textDialog boolean to check the type of dialog
-     */
-
-    private fun showGeneralDialog(name: String, textDialog: Boolean) {
-        if (textDialog) {
-            val title = "Create $name"
-            val hint = "Enter new $name"
-
-            showTextDialog(title, hint, 0, R.id.username, name)
-        }
-        else {
-            showImageChangeDialog(name)
-        }
-    }
 
     /**
      * A function that queries the database and fetched the correct user.
      */
-    private fun queryDatabase() {
-        val currentUser = authenticator.getCurrUser()
-        if(currentUser != null){
-            dataGetter.getUserData(currentUser.uid, this::setupProfile)
-
-        }
-    }
+    open fun queryDatabase() {}
 
 
     /**
      * A function that downloads an image and sets it.
      * @param imageURI URI of the image
      */
-    fun setImage(imageURI: Uri) {
+    private fun setImage(imageURI: Uri) {
         CoroutineScope(Dispatchers.Main).launch {
             val task = async(Dispatchers.IO) {
                 try {
@@ -324,7 +162,7 @@ class ProfileActivity : AppCompatActivity() {
      * Function to handle setting up the profile.
      * @param user: The user whose profile we are setting up.
      */
-    private fun setupProfile(user: User){
+    fun setupProfile(user: User){
         // Currently assuming that empty username means no user !
         if (user.username != "") {
             findViewById<TextView>(R.id.username).text =  user.username

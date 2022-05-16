@@ -13,13 +13,12 @@ import java.util.concurrent.CompletableFuture
  * Game Manager to set up a local game for a chosen mode.
  */
 open class GameManager : Serializable {
-    private var score = 0 // we can delete this (in a next refactor) and use the size of the correct song list instead
     var gameSize = 5
     var numPlayedSongs = 0
     var gameMode = ""
     open lateinit var currentSong: Song
     var gameSongList: MutableList<Pair<String, String>> = mutableListOf()
-    private val correctSongs = mutableListOf<Song>() //TODO: question: why this is a val but the next one is a var?
+    private var correctSongs = mutableListOf<Song>()
     private var wrongSongs = mutableListOf<Song>()
     private var artistName = ""
     private var songName = ""
@@ -47,13 +46,6 @@ open class GameManager : Serializable {
     }
 
     /**
-     * Increase a score if the game was correct
-     */
-    fun increaseScore() {
-        score++
-    }
-
-    /**
      * Get current number of played songs in a game
      */
     fun getPlayedSongsCount(): Int {
@@ -78,7 +70,7 @@ open class GameManager : Serializable {
      * Get a score for a game (current and total)
      */
     fun getScore(): Int {
-        return score
+        return correctSongs.size
     }
 
     /**

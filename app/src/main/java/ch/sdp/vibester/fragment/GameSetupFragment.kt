@@ -3,6 +3,7 @@ package ch.sdp.vibester.fragment
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +19,7 @@ import ch.sdp.vibester.activity.TypingGameActivity
 import ch.sdp.vibester.api.LastfmApiInterface
 import ch.sdp.vibester.api.LastfmMethod
 import ch.sdp.vibester.api.LastfmUri
+import ch.sdp.vibester.database.AppPreferences
 import ch.sdp.vibester.helper.GameManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.gson.Gson
@@ -124,6 +126,8 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
      * Start the game based on the chosen mode
      */
     private fun proceedGame() {
+        AppPreferences.setStr(getString(R.string.preferences_game_mode), this.game)
+
         when (this.game) {
             "local_buzzer" -> { switchToGameWithParameters(BuzzerSetupActivity()) }
             "local_typing" -> { switchToGameWithParameters(TypingGameActivity()) }
@@ -182,8 +186,12 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
 
     /**
      * Set game genre. Fetch the data from Lastfm.
+     * @param method: lastfm method to fetch songs: BY_ARTIST, BY_TAG
+     * @param artist: artist to fetch songs from; used in BY_ARTIST method
+     * @param tag: tag (genre) to fetch songs from: used in BY_TAG method
+     * @param mode: official game mode name
      */
-    private fun chooseGenre(method: String = "", artist: String = "", tag: String = "", mode: String = "") {
+    private fun chooseGenre(method: String = "", artist: String = "", tag: String = "", mode: Int = 0) {
         val uri = LastfmUri()
 
         uri.method = method
@@ -193,7 +201,9 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
         toggleViewsVisibility(goneView = requireView().findViewById<ConstraintLayout>(R.id.chooseGenre),
             visibleView = requireView().findViewById<ConstraintLayout>(R.id.chooseSetting))
 
-        gameManager.gameMode = mode
+        gameManager.gameMode = getString(mode)
+        AppPreferences.setStr(getString(R.string.preferences_game_genre), getString(mode))
+
         setGameSongList(uri)
     }
 
@@ -204,12 +214,12 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
             R.id.local_lyrics_game_button -> chooseGame("local_lyrics", GameManager())
             R.id.online_buzzer_game_button -> switchToGameNoParameters(ChoosePartyRoomActivity())
 
-            R.id.btsButton -> chooseGenre(method = LastfmMethod.BY_ARTIST.method, artist = "BTS", mode = R.string.bts.toString())
-            R.id.kpopButton -> chooseGenre(method = LastfmMethod.BY_TAG.method, tag = "kpop", mode = R.string.kpop.toString())
-            R.id.imagDragonsButton -> chooseGenre(method = LastfmMethod.BY_ARTIST.method, artist = "Imagine Dragons", mode = R.string.imagine_dragons.toString())
-            R.id.rockButton-> chooseGenre(method = LastfmMethod.BY_TAG.method, tag = "rock", mode = R.string.rock.toString())
-            R.id.topTracksButton -> chooseGenre(method = LastfmMethod.BY_CHART.method, mode = R.string.top_tracks.toString())
-            R.id.billieEilishButton -> chooseGenre(method = LastfmMethod.BY_ARTIST.method, artist = "Billie Eilish", mode = R.string.billie_eilish.toString())
+            R.id.btsButton -> chooseGenre(method = LastfmMethod.BY_ARTIST.method, artist = "BTS", mode = R.string.bts)
+            R.id.kpopButton -> chooseGenre(method = LastfmMethod.BY_TAG.method, tag = "kpop", mode = R.string.kpop)
+            R.id.imagDragonsButton -> chooseGenre(method = LastfmMethod.BY_ARTIST.method, artist = "Imagine Dragons", mode = R.string.imagine_dragons)
+            R.id.rockButton-> chooseGenre(method = LastfmMethod.BY_TAG.method, tag = "rock", mode = R.string.rock)
+            R.id.topTracksButton -> chooseGenre(method = LastfmMethod.BY_CHART.method, mode = R.string.top_tracks)
+            R.id.billieEilishButton -> chooseGenre(method = LastfmMethod.BY_ARTIST.method, artist = "Billie Eilish", mode = R.string.billie_eilish)
 
             R.id.difficulty_proceed -> proceedGame()
         }

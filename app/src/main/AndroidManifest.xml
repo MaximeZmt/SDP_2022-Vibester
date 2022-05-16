@@ -50,9 +50,6 @@
             android:name=".activity.BuzzerSetupActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.IncorrectSongsActivity"
-            android:exported="false" />
-        <activity
             android:name=".activity.LyricsBelongGameActivity"
             android:exported="false" />
         <activity

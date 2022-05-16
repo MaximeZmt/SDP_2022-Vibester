@@ -32,7 +32,8 @@ class GameEndingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
 
-        if (AppPreferences.gameMode == "local_typing" || AppPreferences.gameMode == "local_lyrics") {
+        val game_mode = AppPreferences.getStr(getString(R.string.preferences_game_mode))
+        if (game_mode == "local_typing" || game_mode == "local_lyrics") {
             setContentView(R.layout.activity_end_solo)
             getFromIntentSolo(intent)
         }
@@ -60,8 +61,8 @@ class GameEndingActivity : AppCompatActivity() {
      * Set text for game mode
      */
     private fun setGameMode(){
-        val gameMode = AppPreferences.gameMode?.replace("_", " ")?.replaceFirstChar { it.uppercase() }
-        val gameGenre = AppPreferences.gameGenre
+        val gameMode = AppPreferences.getStr(getString(R.string.preferences_game_mode))?.replace("_", " ")?.replaceFirstChar { it.uppercase() }
+        val gameGenre = AppPreferences.getStr(getString(R.string.preferences_game_genre))
         findViewById<TextView>(R.id.end_game_mode).text = gameMode + " - " + gameGenre
     }
 

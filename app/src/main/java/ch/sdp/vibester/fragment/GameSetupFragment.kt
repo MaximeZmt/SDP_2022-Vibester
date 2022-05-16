@@ -130,7 +130,8 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
      * Start the game based on the chosen mode
      */
     private fun proceedGame() {
-        AppPreferences.gameMode = this.game
+        AppPreferences.setStr(getString(R.string.preferences_game_mode), this.game)
+
         when (this.game) {
             "local_buzzer" -> { switchToGameWithParameters(BuzzerSetupActivity()) }
             "local_typing" -> { switchToGameWithParameters(TypingGameActivity()) }
@@ -189,6 +190,10 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
 
     /**
      * Set game genre. Fetch the data from Lastfm.
+     * @param method: lastfm method to fetch songs: BY_ARTIST, BY_TAG
+     * @param artist: artist to fetch songs from; used in BY_ARTIST method
+     * @param tag: tag (genre) to fetch songs from: used in BY_TAG method
+     * @param mode: official game mode name
      */
     private fun chooseGenre(method: String = "", artist: String = "", tag: String = "", mode: Int = 0) {
         if (artist != "") {
@@ -203,9 +208,8 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
                 visibleView = requireView().findViewById<ConstraintLayout>(R.id.chooseSetting)
             )
 
-            gameManager.gameMode = resources.getString(mode)
-            AppPreferences.gameGenre = resources.getString(mode)
-
+            gameManager.gameMode = getString(mode)
+            AppPreferences.setStr(getString(R.string.preferences_game_genre), getString(mode))
             setGameSongList(uri)
         }
     }

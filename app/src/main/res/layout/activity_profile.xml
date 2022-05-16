@@ -10,33 +10,6 @@
 
     <include layout="@layout/display_qr_code" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/profile_returnToMain"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="15dp"
-        android:backgroundTint="@color/light_coral"
-        android:clickable="true"
-        android:src="@android:drawable/ic_menu_revert"
-        app:borderWidth="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <Button
-        android:id="@+id/logout"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:layout_marginBottom="15dp"
-        android:backgroundTint="@color/cg_blue"
-        android:text="logout"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <ScrollView
         android:id="@+id/profileContent"
         android:layout_width="match_parent"
@@ -92,12 +65,12 @@
 
                 <TextView
                     android:id="@+id/username"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="131dp"
+                    android:layout_height="82dp"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
                     android:layout_marginStart="13dp"
-                    android:layout_marginTop="22dp"
+                    android:layout_marginTop="20dp"
                     android:layout_toEndOf="@id/myCardView"
                     android:text="@string/authentication_placeholderUsername"
                     android:textSize="20sp"
@@ -221,7 +194,8 @@
                 android:layout_height="346dp"
                 android:layout_weight=".2"
                 android:baselineAligned="false"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="visible">
 
                 <ScrollView
                     android:id="@+id/profile_scroll_stat"
@@ -235,6 +209,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="20dp"
                     android:layout_marginBottom="40dp"
+                    android:visibility="visible"
                     app:layout_constraintBottom_toTopOf="@+id/profile_returnToMain"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -412,6 +387,51 @@
                     </TableLayout>
 
                 </ScrollView>
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="26dp"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:layout_weight=".2"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:id="@+id/logout"
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="@color/cg_blue"
+                    android:text="logout"
+                    android:textColor="@color/white" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/profile_returnToMain"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/light_coral"
+                    android:clickable="true"
+                    android:src="@android:drawable/ic_menu_revert"
+                    app:borderWidth="0dp" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
             </LinearLayout>
 
         </LinearLayout>

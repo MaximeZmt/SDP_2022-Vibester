@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
+import ch.sdp.vibester.helper.AdapterHelper
 import ch.sdp.vibester.helper.loadImg
 
 class UserScoreboardAdapter(
@@ -65,10 +66,8 @@ class UserScoreboardAdapter(
         }
 
         override fun onClick(v: View?) {
-            val position = adapterPosition
-            //check the item is not deleted between time
-            if (position != RecyclerView.NO_POSITION) {
-                listener?.onItemClick(position)
+            if (listener != null) {
+                AdapterHelper().onClickHelper(listener, adapterPosition)
             }
         }
     }

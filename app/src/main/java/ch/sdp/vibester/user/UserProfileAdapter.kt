@@ -14,6 +14,7 @@ import ch.sdp.vibester.api.BitmapGetterApi
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.database.ImageGetter
+import ch.sdp.vibester.helper.AdapterHelper
 import ch.sdp.vibester.helper.loadImg
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -111,10 +112,8 @@ class UserProfileAdapter constructor(
         }
 
         override fun onClick(v: View?) {
-            val position = adapterPosition
-            //check the item is not deleted between time
-            if (position != RecyclerView.NO_POSITION) {
-                listener?.onItemClick(position)
+            if (listener != null) {
+                AdapterHelper().onClickHelper(listener, adapterPosition)
             }
         }
 

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/floral_white"
-    tools:context=".activity.profile.CreateProfileActivity">
+    tools:context=".activity.CreateProfileActivity">
 
     <EditText
         android:id="@+id/accountUsername"

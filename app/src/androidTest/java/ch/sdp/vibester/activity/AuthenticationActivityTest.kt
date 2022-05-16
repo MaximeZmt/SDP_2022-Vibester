@@ -15,8 +15,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import ch.sdp.vibester.R
 import ch.sdp.vibester.TestMode
-import ch.sdp.vibester.activity.profile.CreateProfileActivity
-import ch.sdp.vibester.activity.profile.ProfileActivity
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task

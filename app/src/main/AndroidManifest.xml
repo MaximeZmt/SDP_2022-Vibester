@@ -44,7 +44,7 @@
             android:name=".activity.DownloadActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.profile.CreateProfileActivity"
+            android:name=".activity.CreateProfileActivity"
             android:exported="false" />
         <activity
             android:name=".activity.BuzzerSetupActivity"
@@ -62,15 +62,15 @@
             android:name=".activity.BuzzerScreenActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.profile.ProfileActivity"
+            android:name=".activity.ProfileActivity"
             android:windowSoftInputMode="adjustPan"
             android:exported="false" />
         <activity
-            android:name=".activity.profile.MyProfileActivity"
+            android:name=".activity.MyProfileActivity"
             android:windowSoftInputMode="adjustPan"
             android:exported="false" />
         <activity
-            android:name=".activity.profile.PublicProfileActivity"
+            android:name=".activity.PublicProfileActivity"
             android:windowSoftInputMode="adjustPan"
             android:exported="false" />
         <activity

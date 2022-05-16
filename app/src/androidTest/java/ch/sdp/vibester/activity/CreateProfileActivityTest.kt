@@ -1,4 +1,4 @@
-package ch.sdp.vibester.activity.profile
+package ch.sdp.vibester.activity
 
 import android.content.Intent
 import androidx.test.core.app.ActivityScenario

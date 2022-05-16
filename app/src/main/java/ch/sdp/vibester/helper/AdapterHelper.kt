@@ -10,10 +10,10 @@ import android.widget.ImageView
 
 class AdapterHelper {
 
-    fun onClickHelper(listener: OnItemClickListener, position: Int) {
+    fun onClickHelper(position: Int, listener: OnItemClickListener?) {
         //check the item is not deleted between time
         if (position != RecyclerView.NO_POSITION) {
-            listener.onItemClick(position)
+            listener?.onItemClick(position)
         }
     }
 

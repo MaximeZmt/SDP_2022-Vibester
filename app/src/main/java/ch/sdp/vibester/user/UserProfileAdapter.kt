@@ -110,9 +110,7 @@ class UserProfileAdapter constructor(
         }
 
         override fun onClick(v: View?) {
-            if (listener != null) {
-                AdapterHelper().onClickHelper(listener, adapterPosition)
-            }
+            AdapterHelper().onClickHelper(adapterPosition, listener)
         }
 
     }

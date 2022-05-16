@@ -16,7 +16,7 @@ import ch.sdp.vibester.helper.AdapterHelper
  * SongListAdapter to set correct/wrong guessed songs in the game.
  */
 class SongListAdapter constructor( private val incorrectSongList: ArrayList<String>,
-                                   private val correctSongList: ArrayList<String> ):
+                                   correctSongList: ArrayList<String> ):
     RecyclerView.Adapter<SongListAdapter.SongListViewHolder>() {
     private val songList: ArrayList<String> = arrayListOf()
 
@@ -29,8 +29,9 @@ class SongListAdapter constructor( private val incorrectSongList: ArrayList<Stri
      * Create a RecycleView layout with the Song view as an item
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SongListViewHolder {
-        val view = AdapterHelper().createViewForViewHolder(parent, R.layout.song_item_layout)
-        return SongListViewHolder(view)
+        return SongListViewHolder(
+            AdapterHelper().createViewForViewHolder(parent, R.layout.song_item_layout)
+        )
     }
 
     override fun onBindViewHolder(holder: SongListViewHolder, position: Int) {
@@ -59,7 +60,7 @@ class SongListAdapter constructor( private val incorrectSongList: ArrayList<Stri
 
             // Make background red if song is guessed incorrectly
             if(songName in incorrectSongList) {
-                itemView.setBackgroundResource(R.color.light_coral);
+                itemView.setBackgroundResource(R.color.light_coral)
             }
         }
 

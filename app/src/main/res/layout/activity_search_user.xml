@@ -22,7 +22,7 @@
             android:layout_marginTop="42dp"
             android:autofillHints="Enter username to search"
             android:background="@drawable/rounded_edittext"
-            android:padding="10dp"></EditText>
+            android:padding="10dp" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/searchUser_scanning"

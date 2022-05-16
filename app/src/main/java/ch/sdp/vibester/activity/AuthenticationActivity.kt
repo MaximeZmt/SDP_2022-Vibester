@@ -10,7 +10,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.R
-import ch.sdp.vibester.TestMode
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.helper.IntentSwitcher
@@ -21,7 +20,6 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -43,9 +41,11 @@ class AuthenticationActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
 
-    private lateinit var email: TextView
+    private lateinit var authentication_status: TextView
     private lateinit var username: EditText
     private lateinit var password: EditText
+
+    private var createAcc = false
 
     /**
      * Generic onCreate method, automatically called upon the creation of the activity.
@@ -69,21 +69,22 @@ class AuthenticationActivity : AppCompatActivity() {
 
         username = findViewById(R.id.username)
         password = findViewById(R.id.password)
-        email = findViewById(R.id.authentication_status)
+        authentication_status = findViewById(R.id.authentication_status)
     }
 
     /**
      * Listener bound to the "Create Account" button in the Authentication activity.
      */
     fun createAccountListener(view: View) {
-        authenticate(username.text.toString(), password.text.toString(), true)
+        this.createAcc = true
+        authenticate(username.text.toString(), password.text.toString())
     }
 
     /**
      * Listener bound to the "Log In" button in the Authentication activity.
      */
     fun logInListener(view: View) {
-        authenticate(username.text.toString(), password.text.toString(), false)
+        authenticate(username.text.toString(), password.text.toString())
     }
 
     /**
@@ -108,8 +109,9 @@ class AuthenticationActivity : AppCompatActivity() {
         super.onStart()
     }
 
+
     /**
-     * A function that is called on google sign in result
+     * GoogleSignIn result
      * @param requestCode a request code
      * @param resultCode a result code
      * @param data intent returned from google sign in
@@ -123,10 +125,17 @@ class AuthenticationActivity : AppCompatActivity() {
                 Log.d(getString(R.string.log_tag), "firebaseAuthWithGoogle:" + account.id)
                 googleAuthFirebase(account.idToken!!)
             } catch (e: ApiException) {
-                Log.d(getString(R.string.log_tag), "Google sign in failed", e)
-                updateUI("Authentication Error", false, null)
+                updateOnFail()
             }
         }
+    }
+
+    /**
+     * Launch GoogleSingIn activity
+     */
+    private fun signInGoogle() {
+        val intent = googleSignInClient.signInIntent
+        startActivityForResult(intent, AUTHENTICATION_PERMISSION_CODE)
     }
 
     /**
@@ -138,22 +147,17 @@ class AuthenticationActivity : AppCompatActivity() {
         auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
                     Log.d(getString(R.string.log_tag), "signInWithCredential:success")
-                    var createAcc: Boolean = false
-                    if (task.getResult().additionalUserInfo != null) {
+                    if(task.getResult().additionalUserInfo != null){
                         createAcc = task.getResult().additionalUserInfo!!.isNewUser
                     }
-                    val user = auth.currentUser
-                    if (user != null) {
-                        updateUI(user.email.toString(), createAcc, user)
-                    }
+                    if (createAcc)createAccount()
+                    updateOnSuccess()
                 } else {
-                    // fail
                     Log.d(getString(R.string.log_tag), "signInWithCredential:failure", task.exception)
-                    updateUI("Authentication Error", false, null)
+                    updateOnFail()
                 }
-            }
+        }
     }
 
 
@@ -163,23 +167,24 @@ class AuthenticationActivity : AppCompatActivity() {
      * @param password passwprd
      * @return validity of email and password
      */
-    private fun stringValidation(username: String, password: String): Boolean {
+    private fun credentialsValidation(username: String, password: String): Boolean {
         if (username.isEmpty() || password.isEmpty()) {
-            email.setText(R.string.emptyField)
+            authentication_status.setText(R.string.emptyField)
             return false
         }
 
         if (!username.contains('@')) {
-            email.setText(R.string.notAnEmail)
+            authentication_status.setText(R.string.notAnEmail)
             return false
         }
 
         if (password.length < 6) {
-            email.setText(R.string.shortPassword)
+            authentication_status.setText(R.string.shortPassword)
             return false
         }
         return true
     }
+
 
     /**
      * A function that authenticates the user
@@ -187,50 +192,25 @@ class AuthenticationActivity : AppCompatActivity() {
      * @param password password of the user
      * @param createAcc boolean to check if the authentication is a login or account creation
      */
-    private fun authenticate(email: String, password: String, createAcc: Boolean) {
-        if (stringValidation(email, password)) {
-            var auth: Task<AuthResult> = if (createAcc) {
+    private fun authenticate(email: String, password: String) {
+        if (credentialsValidation(email, password)) {
+            val auth: Task<AuthResult> = if (createAcc) {
                 authenticator.createAccount(email, password)
             }else {
                 authenticator.signIn(email, password)
             }
+
             auth.addOnCompleteListener(this) { task ->
-                onCompleteAuthentication(task, createAcc)
+                if (task.isSuccessful) {
+                    if(createAcc)createAccount()
+                    updateOnSuccess()
+                } else {
+                    updateOnFail()
+                }
             }
         }
     }
 
-    /**
-     * A function that launches google sing in activity
-     */
-    private fun signInGoogle() {
-        val intent = googleSignInClient.signInIntent
-        startActivityForResult(intent, AUTHENTICATION_PERMISSION_CODE)
-    }
-
-    /**
-     * A function changes the UI based on the authentication result
-     * @param task : The result
-     * @param createAcc : Boolean to indicate the creation of an account instead of login
-     */
-    private fun onCompleteAuthentication(task: Task<AuthResult>, createAcc: Boolean) {
-        if (task.isSuccessful) {
-            Toast.makeText(
-                baseContext, "You have logged in successfully",
-                Toast.LENGTH_SHORT
-            ).show()
-            val user = authenticator.getCurrUser()
-            if (user != null) {
-                updateUI(user.email, createAcc, user)
-            }
-        } else {
-            Toast.makeText(
-                baseContext, "Authentication failed.",
-                Toast.LENGTH_SHORT
-            ).show()
-            updateUI("Authentication error", false, null)
-        }
-    }
 
     /**
      * Function that allows the creation of a new activity, with the given text field as intent and
@@ -238,49 +218,22 @@ class AuthenticationActivity : AppCompatActivity() {
      * @param email : The email to write
      * @param arg : The activity class to start
      */
-    private fun startNewCustomActivity(email: String, arg: Class<*>?) {
-        val newIntent = Intent(this, arg)
-        newIntent.putExtra("email", email)
+    private fun startNewCustomActivity() {
+        val newIntent = Intent(this,ProfileActivity::class.java)
         startActivity(newIntent)
     }
 
-    /**
-     * Function that creates a CreateProfileActivity with the given string as the "email"
-     * intent extra.
-     * @param email : The email to write
-     */
-    private fun startNewActivity(email: String) {
-        startNewCustomActivity(email, CreateProfileActivity::class.java)
+    private fun createAccount(){
+        dataGetter.createUser(authenticator.getCurrUserMail(), "fake", this::startNewCustomActivity, authenticator.getCurrUID())
     }
 
-    /**
-     * Function that updates the Authentication Activity's UI, mainly the textViews, according
-     * to the given string, boolean and user arguments.
-     * @param emailText : The email to write
-     * @param createAcc : Boolean indicating the creation of an account instead of login
-     * @param user      : The user
-     */
-    private fun updateUI(
-        emailText: String?,
-        createAcc: Boolean,
-        user: FirebaseUser?
-    ) {
-        if (emailText != null) {
-            if('@' in emailText && !createAcc) {
-                startNewCustomActivity(emailText, ProfileActivity::class.java)
-            }
-
-            else if('@' in emailText && createAcc && user != null) { //
-                if (TestMode.isTest()) {
-                    startNewActivity(emailText)
-                }else{
-                    dataGetter.createUser(emailText, user.uid, this::startNewActivity, user.uid)
-                }
-            }
-
-            else {
-                email.text = emailText
-            }
-        }
+    private fun updateOnSuccess(){
+        Toast.makeText(baseContext, "You have logged in successfully", Toast.LENGTH_SHORT).show()
+        startNewCustomActivity()
     }
+
+    private fun updateOnFail(){
+        Toast.makeText(baseContext, "Authentication failed", Toast.LENGTH_SHORT).show()
+    }
+    
 }

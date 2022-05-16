@@ -8,6 +8,7 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.action.ViewActions.scrollTo
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.matcher.IntentMatchers
@@ -237,8 +238,8 @@ class ProfileActivityTest {
         createMockImageGetter()
 
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
-        onView(withId(R.id.editUser)).perform(click())
-        onView(withText("Cancel")).perform(click())
+        onView(withId(R.id.editUser)).perform(scrollTo(), click())
+        onView(withText("Cancel")).perform(scrollTo(), click())
 
         onView(withId(R.id.username)).check(matches(withText("Lalisa Bon")))
     }

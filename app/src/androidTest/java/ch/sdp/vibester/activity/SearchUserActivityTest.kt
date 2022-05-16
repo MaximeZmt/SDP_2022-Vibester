@@ -53,12 +53,13 @@ class SearchUserActivityTest {
 
         val mockUIDs = arrayListOf<String>("mockUser1uid","mockUser2uid","mockUser3uid")
         val mockUsers = arrayListOf<User>(mockUser1, mockUser2, mockUser3)
-        every {mockUsersRepo.searchByField(any(), any(), any(), any())} answers  {
+
+        every { mockUsersRepo.searchByField(any(), any(), any(), any()) } answers  {
             thirdArg<(ArrayList<User>) -> Unit>().invoke(mockUsers)
             lastArg<(ArrayList<String>) -> Unit>().invoke(mockUIDs)
         }
 
-        every {mockUsersRepo.getUserData(any(), any())} answers {
+        every { mockUsersRepo.getUserData(any(), any()) } answers {
             secondArg<(User) -> Unit>().invoke(mockUser)
         }
 
@@ -74,7 +75,7 @@ class SearchUserActivityTest {
 
     private fun createMockAuthenticator(){
         val mockUser = createMockUser()
-        every {mockAuthenticator.getCurrUser()} returns mockUser
+        every { mockAuthenticator.getCurrUser() } returns mockUser
     }
 
     private fun createMockUser(email: String = "mockEmail@gmail.com", uid: String = "mockUseruid"): FirebaseUser {

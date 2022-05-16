@@ -54,16 +54,13 @@ class PublicProfileActivityTest {
         every { mockUsersRepo.getUserData(any(), any()) } answers {
             secondArg<(User) -> Unit>().invoke(mockProfile)
         }
-        every {mockUsersRepo.getCurrentUser()} answers {
-            null
-        }
+        every { mockUsersRepo.getCurrentUser() } answers { null }
         every { mockUsersRepo.setFieldValue(any(), any(), any()) } answers {}
         every { mockUsersRepo.setFieldValue(any(), any(), any()) } answers {}
     }
 
     private fun createMockImageGetter() {
-        every {mockImageGetter.fetchImage(any(), any())} answers {
-        }
+        every { mockImageGetter.fetchImage(any(), any()) } answers {}
     }
 
     @Test

@@ -76,18 +76,13 @@ class MyProfileActivityTest {
         every { mockUsersRepo.getUserData(any(), any()) } answers {
             secondArg<(User) -> Unit>().invoke(mockProfile)
         }
-        every {mockUsersRepo.getCurrentUser()} answers {
-            null
-        }
+        every { mockUsersRepo.getCurrentUser() } answers { null }
         every { mockUsersRepo.setFieldValue(any(), any(), any()) } answers {}
         every { mockUsersRepo.setFieldValue(any(), any(), any()) } answers {}
     }
 
-//    val mockImageURI = Uri.parse("https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/45.png")
     private fun createMockImageGetter() {
-        every {mockImageGetter.fetchImage(any(), any())} answers {
-//            secondArg<(Uri) -> Unit>().invoke(mockImageURI)
-        }
+        every { mockImageGetter.fetchImage(any(), any())} answers {}
     }
 
     // FIXME failing test

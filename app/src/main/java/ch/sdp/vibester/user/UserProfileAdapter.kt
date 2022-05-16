@@ -59,8 +59,7 @@ class UserProfileAdapter constructor(
      * Create a RecycleView layout with the userProfile view as an item
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserProfileViewHolder {
-        val view: View = LayoutInflater.from(parent.context)
-            .inflate(R.layout.user_search_item_layout, parent, false)
+        val view = AdapterHelper().createViewForViewHolder(parent, R.layout.user_search_item_layout)
         return UserProfileViewHolder(view)
     }
 

@@ -29,8 +29,7 @@ class SongListAdapter constructor( private val incorrectSongList: ArrayList<Stri
      * Create a RecycleView layout with the Song view as an item
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SongListViewHolder {
-        val view: View = LayoutInflater.from(parent.context)
-            .inflate(R.layout.song_item_layout, parent, false)
+        val view = AdapterHelper().createViewForViewHolder(parent, R.layout.song_item_layout)
         return SongListViewHolder(view)
     }
 
@@ -59,7 +58,7 @@ class SongListAdapter constructor( private val incorrectSongList: ArrayList<Stri
             }
 
             // Make background red if song is guessed incorrectly
-            if(songName in incorrectSongList){
+            if(songName in incorrectSongList) {
                 itemView.setBackgroundResource(R.color.light_coral);
             }
         }

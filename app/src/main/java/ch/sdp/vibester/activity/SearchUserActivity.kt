@@ -57,7 +57,7 @@ class SearchUserActivity : AppCompatActivity(), OnItemClickListener {
         recyclerView!!.setHasFixedSize(true)
         recyclerView!!.layoutManager = LinearLayoutManager(this)
 
-        userProfileAdapter = UserProfileAdapter(this.users, authenticator, usersRepo, this)
+        userProfileAdapter = UserProfileAdapter(this.users, authenticator, usersRepo, imageGetter, this)
 
         recyclerView!!.adapter = userProfileAdapter
 

@@ -6,6 +6,7 @@ import android.text.InputType
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
+import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import ch.sdp.vibester.R
 import ch.sdp.vibester.auth.FireBaseAuthenticator
@@ -52,6 +53,9 @@ class MyProfileActivity : ProfileActivity() {
      */
     private fun setChangeImageBtnListener() {
         findViewById<ImageView>(R.id.avatar).setOnClickListener {
+            showGeneralDialog( "Do you want to change your profile picture?", false)
+        }
+        findViewById<CardView>(R.id.myCardView).setOnClickListener {
             showGeneralDialog( "Do you want to change your profile picture?", false)
         }
     }

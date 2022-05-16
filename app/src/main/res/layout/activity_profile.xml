@@ -25,6 +25,18 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <Button
+        android:id="@+id/logout"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="15dp"
+        android:backgroundTint="@color/cg_blue"
+        android:text="logout"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <ScrollView
         android:id="@+id/profileContent"
         android:layout_width="match_parent"
@@ -42,11 +54,6 @@
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="26dp"
-                android:layout_weight=".2" />
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:layout_weight=".2" />
 
             <RelativeLayout
@@ -131,6 +138,20 @@
                     android:layout_weight="1" />
 
                 <Button
+                    android:id="@+id/profile_scores"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_below="@+id/profile_total_games"
+                    android:layout_alignParentStart="true"
+                    android:backgroundTint="@color/cg_blue"
+                    android:text="Scores" />
+
+                <Space
+                    android:layout_width="100dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1" />
+
+                <Button
                     android:id="@+id/profile_friends"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
@@ -139,20 +160,6 @@
                     android:layout_toEndOf="@+id/profile_scores"
                     android:backgroundTint="@color/cg_blue"
                     android:text="Friends" />
-
-                <Space
-                    android:layout_width="100dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1" />
-
-                <Button
-                    android:id="@+id/profile_scores"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:layout_below="@+id/profile_total_games"
-                    android:layout_alignParentStart="true"
-                    android:backgroundTint="@color/cg_blue"
-                    android:text="Scores" />
 
                 <Space
                     android:layout_width="wrap_content"
@@ -211,14 +218,15 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="346dp"
                 android:layout_weight=".2"
+                android:baselineAligned="false"
                 android:orientation="horizontal">
 
                 <ScrollView
                     android:id="@+id/profile_scroll_stat"
-                    android:layout_width="wrap_content"
-                    android:layout_height="175dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="318dp"
                     android:layout_above="@+id/logout"
                     android:layout_below="@+id/profile_scores"
                     android:layout_alignParentStart="true"
@@ -405,30 +413,6 @@
 
                 </ScrollView>
             </LinearLayout>
-
-            <Button
-                android:id="@+id/logout"
-                android:layout_width="200dp"
-                android:layout_height="50dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginStart="40dp"
-                android:layout_marginEnd="80dp"
-                android:layout_marginBottom="20dp"
-                android:layout_toStartOf="@+id/profile_returnToMain"
-                android:backgroundTint="@color/cg_blue"
-                android:elevation="0dp"
-                android:stateListAnimator="@null"
-                android:text="logout"
-                android:textColor="#F9FBE7"
-                android:translationZ="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0"
-                app:layout_constraintRight_toLeftOf="@+id/profile_returnToMain"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/profile_scroll_stat"
-                app:layout_constraintVertical_bias="0" />
 
         </LinearLayout>
     </ScrollView>

@@ -150,7 +150,6 @@ class LyricsBelongGameActivity : GameActivity() {
      */
     private fun checkAnswer(ctx: Context, lyricToBeCheck: String, lyrics: String, gameManager: GameManager) {
          if (lyrics.contains(lyricToBeCheck, ignoreCase = true)) {
-             gameManager.increaseScore()
              gameManager.addCorrectSong()
              hasWon(ctx, gameManager.getScore(), true)
          } else {

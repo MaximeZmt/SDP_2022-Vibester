@@ -112,22 +112,28 @@ open class GameActivity : AppCompatActivity() {
      */
     fun switchToEnding(gameManager: GameManager) {
         val intent = Intent(this, GameEndingActivity::class.java)
-        val incArray: ArrayList<String> = ArrayList(
-            gameManager.getWrongSongs().map { it.getTrackName() + " - " + it.getArtistName() })
 
+        //Set list of incorrect songs
+        val incorrectSongList: ArrayList<String> = ArrayList(
+            gameManager.getWrongSongs().map { it.getTrackName() + " - " + it.getArtistName() })
+        intent.putStringArrayListExtra("incorrectSongList", incorrectSongList)
+
+        //Set list of correct songs
+        val correctSongList: ArrayList<String> = ArrayList(
+            gameManager.getCorrectSongs().map { it.getTrackName() + " - " + it.getArtistName() })
+        intent.putStringArrayListExtra("correctSongList", correctSongList)
+
+        // Set statistics
         val statNames: ArrayList<String> = arrayListOf()
-        val statName = "Total Score"
-        statNames.addAll(arrayOf(statName, statName, statName, statName, statName))
+        val statName = "Score"
+        statNames.addAll(arrayOf(statName))
 
         val statVal: ArrayList<String> = arrayListOf()
         val score = gameManager.getScore().toString()
-        statVal.addAll(arrayOf(score, score, score, score, score))
+        statVal.addAll(arrayOf(score))
 
-        intent.putExtra("nbIncorrectSong", gameManager.getWrongSongs().size)
-
-        intent.putStringArrayListExtra("str_arr_inc", incArray)
-        intent.putStringArrayListExtra("str_arr_name", statNames)
-        intent.putStringArrayListExtra("str_arr_val", statVal)
+        intent.putStringArrayListExtra("statNames", statNames)
+        intent.putStringArrayListExtra("statValues", statVal)
 
         startActivity(intent)
     }

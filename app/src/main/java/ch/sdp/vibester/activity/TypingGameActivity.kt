@@ -174,8 +174,8 @@ class TypingGameActivity : GameActivity() {
         findViewById<LinearLayout>(R.id.displayGuess).removeAllViews()
         findViewById<EditText>(R.id.yourGuessET).text.clear()
         findViewById<EditText>(R.id.yourGuessET).isEnabled = true
-        val roundText = ctx.getString(R.string.TypingGame_currentRound) + gameManager.getPlayedSongsCount().toString()
-        val scoreText = ctx.getString(R.string.TypingGame_yourScore) + gameManager.getCorrectSongs().size.toString()
+        val roundText = ctx.getString(R.string.TypingGame_currentRound) + gameManager.getPlayedSongsCount().toString() + " / " + gameManager.gameSize.toString()
+        val scoreText = ctx.getString(R.string.TypingGame_yourScore) + gameManager.getScore().toString()
         findViewById<TextView>(R.id.playerScore).text = roundText + "\n" + scoreText
         toggleNextBtnVisibility(false)
         gameManager.playSong()

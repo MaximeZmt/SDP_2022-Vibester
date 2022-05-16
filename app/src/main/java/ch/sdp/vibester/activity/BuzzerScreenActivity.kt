@@ -258,22 +258,10 @@ class BuzzerScreenActivity : GameActivity() {
         if (gameManager.playingMediaPlayer()) {
             gameManager.stopMediaPlayer()
         }
-        val mockArray = arrayListOf<String>("One", "Two", "Three", "Four", "Five")
         val intent = Intent(this, GameEndingActivity::class.java)
 
-        val incArray: ArrayList<String> = mockArray
-        val statNames: ArrayList<String> = mockArray
-        val statVal: ArrayList<String> = mockArray
-
-        intent.putExtra("playerName", "Arda")
-        intent.putExtra("nbIncorrectSong", 3)
-
+        //TODO put extras to display in GameEndingActivity
         intent.putExtra("Winner Name", prepareWinnerAnnouncement(scoreUpdater))
-
-        intent.putStringArrayListExtra("str_arr_inc", incArray)
-        intent.putStringArrayListExtra("str_arr_name", statNames)
-        intent.putStringArrayListExtra("str_arr_val", statVal)
-
         startActivity(intent)
     }
 

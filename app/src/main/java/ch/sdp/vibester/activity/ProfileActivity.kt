@@ -10,12 +10,16 @@ import android.view.View.VISIBLE
 import android.view.Window
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.BitmapGetterApi
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.database.ImageGetter
 import ch.sdp.vibester.helper.IntentSwitcher
+import ch.sdp.vibester.user.OnItemClickListener
+import ch.sdp.vibester.user.ProfileFriendsAdapter
 import ch.sdp.vibester.user.User
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.zxing.BarcodeFormat
@@ -35,7 +39,7 @@ import javax.inject.Inject
  * Display user profile's data (image, username, scores, etc.) in UI
  */
 @AndroidEntryPoint
-open class ProfileActivity : AppCompatActivity() {
+open class ProfileActivity : AppCompatActivity(), OnItemClickListener {
     @Inject
     lateinit var dataGetter: DataGetter
 
@@ -48,6 +52,8 @@ open class ProfileActivity : AppCompatActivity() {
     private val imageSize = 1000
     val imageRequestCode = 100
 
+    private var friends: MutableList<User> ? = null
+
     /**
      * Generic onCreate method belonging to ProfileActivity.
      */
@@ -57,10 +63,25 @@ open class ProfileActivity : AppCompatActivity() {
         supportActionBar?.hide()
         setContentView(R.layout.activity_profile)
 
+        setupRecycleViewForFriends()
+        friends = ArrayList()
+
         setRetToMainBtnListener()
         setScoreBtnListener()
 
         queryDatabase()
+    }
+
+    private fun loadFriends() {
+        //TODO
+    }
+
+    private fun setupRecycleViewForFriends() {
+        findViewById<RecyclerView>(R.id.profile_friendsList).apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = friends?.let { ProfileFriendsAdapter(it, this@ProfileActivity) }
+            setHasFixedSize(true)
+        }
     }
 
 
@@ -175,6 +196,7 @@ open class ProfileActivity : AppCompatActivity() {
         if (user.uid != "") {
             generateQrCode(user.uid)
         }
+
     }
 
     /**
@@ -199,5 +221,9 @@ open class ProfileActivity : AppCompatActivity() {
         qrCodeCanvas.drawBitmap(logo, xLogo, yLogo, null)
 
         findViewById<ImageView>(R.id.qrCode).setImageBitmap(bmp)
+    }
+
+    override fun onItemClick(position: Int) {
+        TODO("Not yet implemented")
     }
 }

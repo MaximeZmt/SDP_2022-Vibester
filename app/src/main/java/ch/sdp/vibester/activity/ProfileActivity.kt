@@ -13,6 +13,7 @@ import android.view.Window
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.BitmapGetterApi
@@ -87,6 +88,9 @@ class ProfileActivity : AppCompatActivity() {
      */
     private fun setChangeImageBtnListener() {
         findViewById<ImageView>(R.id.avatar).setOnClickListener {
+            showGeneralDialog( "Do you want to change your profile picture?", false)
+        }
+        findViewById<CardView>(R.id.myCardView).setOnClickListener {
             showGeneralDialog( "Do you want to change your profile picture?", false)
         }
     }

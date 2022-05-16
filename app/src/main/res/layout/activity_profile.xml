@@ -197,7 +197,7 @@
                 android:orientation="horizontal"
                 android:visibility="visible">
 
-                <ScrollView
+                <androidx.core.widget.NestedScrollView
                     android:id="@+id/profile_scroll_stat"
                     android:layout_width="match_parent"
                     android:layout_height="318dp"
@@ -386,7 +386,7 @@
 
                     </TableLayout>
 
-                </ScrollView>
+                </androidx.core.widget.NestedScrollView>
             </LinearLayout>
 
             <Space

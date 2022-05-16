@@ -2,11 +2,8 @@ package ch.sdp.vibester.activity
 
 import android.content.Context
 import android.content.Intent
-<<<<<<< HEAD:app/src/androidTest/java/ch/sdp/vibester/activity/ProfileActivityTest.kt
 import android.net.Uri
 import androidx.core.widget.ImageViewCompat
-=======
->>>>>>> main:app/src/androidTest/java/ch/sdp/vibester/activity/MyProfileActivityTest.kt
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView

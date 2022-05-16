@@ -128,7 +128,7 @@ class MyProfileActivityTest {
         createMockAuthenticator()
         createMockImageGetter()
 
-        val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
+        val scn: ActivityScenario<MyProfileActivity> = ActivityScenario.launch(intent)
         onView(withId(R.id.profile_scores)).perform(click())
 
         onView(withId(R.id.profileStatistics)).check(matches(isDisplayed()))
@@ -151,7 +151,7 @@ class MyProfileActivityTest {
         createMockAuthenticator()
         createMockImageGetter()
 
-        val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
+        val scn: ActivityScenario<MyProfileActivity> = ActivityScenario.launch(intent)
         onView(withId(R.id.profile_returnToMain)).perform(scrollTo(), click())
         Intents.intended(IntentMatchers.hasComponent(MainActivity::class.java.name))
     }
@@ -211,7 +211,7 @@ class MyProfileActivityTest {
         createMockAuthenticator()
         createMockImageGetter()
 
-        val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
+        val scn: ActivityScenario<MyProfileActivity> = ActivityScenario.launch(intent)
         val newUsername = "Lalisa Bon idomesniu"
 
         onView(withId(R.id.editUser)).perform(click())
@@ -234,7 +234,7 @@ class MyProfileActivityTest {
         createMockAuthenticator()
         createMockImageGetter()
 
-        val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
+        val scn: ActivityScenario<MyProfileActivity> = ActivityScenario.launch(intent)
         onView(withId(R.id.editUser)).perform(scrollTo(), click())
         onView(withText("Cancel")).perform(scrollTo(), click())
 
@@ -273,7 +273,7 @@ class MyProfileActivityTest {
         createMockAuthenticator()
         createMockImageGetter()
 
-        val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
+        val scn: ActivityScenario<MyProfileActivity> = ActivityScenario.launch(intent)
 
         onView(withId(R.id.showQRCode)).perform(click())
         onView(withId(R.id.qrCode)).check(matches(isDisplayed()))
@@ -289,13 +289,13 @@ class MyProfileActivityTest {
     fun checkChangeImage() {
         val inputProfile = User( "Lalisa Bon", R.string.test_profile_image.toString(), "lisa@test.com",  12, 8,"VvPB47tQCLdjz3YebilS6h5EXdJ3")
         val ctx = ApplicationProvider.getApplicationContext() as Context
-        val intent = Intent(ctx, ProfileActivity::class.java)
+        val intent = Intent(ctx, MyProfileActivity::class.java)
 
         createMockDataGetter(inputProfile)
         createMockAuthenticator()
         createMockImageGetter()
 
-        val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
+        val scn: ActivityScenario<MyProfileActivity> = ActivityScenario.launch(intent)
 
         onView(withId(R.id.myCardView)).perform(click())
         onView(withText("NO")).perform(click())

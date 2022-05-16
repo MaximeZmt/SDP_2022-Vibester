@@ -201,3 +201,5 @@ open class ProfileActivity : AppCompatActivity() {
         findViewById<ImageView>(R.id.qrCode).setImageBitmap(bmp)
     }
 }
+
+ 

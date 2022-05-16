@@ -103,8 +103,7 @@ class UserProfileAdapter constructor(
         }
 
         private fun changeBtnToImage() {
-            itemView.findViewById<Button>(R.id.addFriendBtn).visibility = View.INVISIBLE
-            itemView.findViewById<ImageView>(R.id.addedFriendIcon).visibility = View.VISIBLE
+            AdapterHelper().changeBtnToImageHelper(R.id.addFriendBtn, R.id.addedFriendIcon, itemView)
         }
 
         init {

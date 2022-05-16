@@ -3,11 +3,13 @@ package ch.sdp.vibester.model
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Adapter
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
+import ch.sdp.vibester.helper.AdapterHelper
 
 
 /**
@@ -53,18 +55,13 @@ class SongListAdapter constructor( private val incorrectSongList: ArrayList<Stri
             val downloadSongBtn = itemView.findViewById<Button>(R.id.song_download)
 
             downloadSongBtn.setOnClickListener {
-                changeBtnToImage()
+                AdapterHelper().changeBtnToImageHelper(R.id.song_download, R.id.song_download_done, itemView)
             }
 
             // Make background red if song is guessed incorrectly
-            if(songName in incorrectSongList ){
+            if(songName in incorrectSongList){
                 itemView.setBackgroundResource(R.color.light_coral);
             }
-        }
-
-        private fun changeBtnToImage(){
-            itemView.findViewById<Button>(R.id.song_download).visibility = View.INVISIBLE
-            itemView.findViewById<ImageView>(R.id.song_download_done).visibility = View.VISIBLE
         }
 
     }

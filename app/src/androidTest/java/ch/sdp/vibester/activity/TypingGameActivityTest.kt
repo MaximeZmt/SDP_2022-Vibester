@@ -258,8 +258,8 @@ class TypingGameActivityTest {
     fun checkIntentOnEnding() {
         val ctx: Context = ApplicationProvider.getApplicationContext()
         AppPreferences.init(ctx)
-        AppPreferences.gameGenre = "BTS"
-        AppPreferences.gameMode  = "local_typing"
+        AppPreferences.setStr(ctx.getString(R.string.preferences_game_mode), "local_typing")
+        AppPreferences.setStr(ctx.getString(R.string.preferences_game_genre), "BTS")
 
         createMockDataGetter()
         createMockAuthenticator()
@@ -301,8 +301,8 @@ class TypingGameActivityTest {
     fun testProgressBarOnZero() {
         val ctx: Context = ApplicationProvider.getApplicationContext()
         AppPreferences.init(ctx)
-        AppPreferences.gameGenre = "BTS"
-        AppPreferences.gameMode  = "local_typing"
+        AppPreferences.setStr(ctx.getString(R.string.preferences_game_mode), "local_typing")
+        AppPreferences.setStr(ctx.getString(R.string.preferences_game_genre), "BTS")
         createMockDataGetter()
         createMockAuthenticator()
 
@@ -336,8 +336,8 @@ class TypingGameActivityTest {
     fun nextButtonOnClick(){
         val ctx: Context = ApplicationProvider.getApplicationContext()
         AppPreferences.init(ctx)
-        AppPreferences.gameGenre = "BTS"
-        AppPreferences.gameMode  = "local_typing"
+        AppPreferences.setStr(ctx.getString(R.string.preferences_game_mode), "local_typing")
+        AppPreferences.setStr(ctx.getString(R.string.preferences_game_genre), "BTS")
 
         createMockDataGetter()
         createMockAuthenticator()
@@ -370,8 +370,8 @@ class TypingGameActivityTest {
     fun firstRoundFail(){
         val ctx: Context = ApplicationProvider.getApplicationContext()
         AppPreferences.init(ctx)
-        AppPreferences.gameGenre = "BTS"
-        AppPreferences.gameMode  = "local_typing"
+        AppPreferences.setStr(ctx.getString(R.string.preferences_game_mode), "local_typing")
+        AppPreferences.setStr(ctx.getString(R.string.preferences_game_genre), "BTS")
 
         val gameManager = setGameManager(valid = false)
         val intent = Intent(ctx, TypingGameActivity::class.java)

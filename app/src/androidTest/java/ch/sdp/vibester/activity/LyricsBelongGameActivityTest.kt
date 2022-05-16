@@ -204,8 +204,8 @@ class LyricsBelongGameActivityTest {
     fun aNextButtonOnClick() {
         val ctx: Context = ApplicationProvider.getApplicationContext()
         AppPreferences.init(ctx)
-        AppPreferences.gameGenre = "BTS"
-        AppPreferences.gameMode  = "local_typing"
+        AppPreferences.setStr(ctx.getString(R.string.preferences_game_mode), "local_typing")
+        AppPreferences.setStr(ctx.getString(R.string.preferences_game_genre), "BTS")
 
         createMockInvocation()
         val gameManager = setGameManager(2)

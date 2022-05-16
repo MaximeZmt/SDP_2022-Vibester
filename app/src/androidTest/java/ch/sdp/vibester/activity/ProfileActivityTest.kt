@@ -3,6 +3,7 @@ package ch.sdp.vibester.activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import androidx.core.widget.ImageViewCompat
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
@@ -25,6 +26,7 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import io.mockk.every
 import io.mockk.mockk
+import net.glxn.qrgen.core.scheme.Url
 import org.hamcrest.CoreMatchers.not
 import org.junit.After
 import org.junit.Before
@@ -277,9 +279,32 @@ class ProfileActivityTest {
         createMockImageGetter()
 
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
-        onView(withId(R.id.showQRCode)).perform(click())
 
+        onView(withId(R.id.showQRCode)).perform(click())
         onView(withId(R.id.qrCode)).check(matches(isDisplayed()))
+
+        onView(withId(R.id.qrCode_returnToProfile)).perform(click())
+        onView(withId(R.id.myCardView)).check(matches(isDisplayed()))
+
+        onView(withId(R.id.logout)).perform(scrollTo(), click())
+        onView(withId(R.id.fragment)).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun checkChangeImage() {
+        val inputProfile = User( "Lalisa Bon", R.string.test_profile_image.toString(), "lisa@test.com",  12, 8,"VvPB47tQCLdjz3YebilS6h5EXdJ3")
+        val ctx = ApplicationProvider.getApplicationContext() as Context
+        val intent = Intent(ctx, ProfileActivity::class.java)
+
+        createMockDataGetter(inputProfile)
+        createMockAuthenticator()
+        createMockImageGetter()
+
+        val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
+
+        onView(withId(R.id.myCardView)).perform(click())
+        onView(withText("NO")).perform(click())
+        onView(withId(R.id.myCardView)).check(matches(isDisplayed()))
     }
 // FIXME failing test
 

@@ -277,7 +277,7 @@ class ProfileActivity : AppCompatActivity() {
      * A function that downloads an image and sets it.
      * @param imageURI URI of the image
      */
-    private fun setImage(imageURI: Uri) {
+    fun setImage(imageURI: Uri) {
         CoroutineScope(Dispatchers.Main).launch {
             val task = async(Dispatchers.IO) {
                 try {

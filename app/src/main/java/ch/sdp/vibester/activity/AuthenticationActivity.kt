@@ -125,6 +125,7 @@ class AuthenticationActivity : AppCompatActivity() {
                 Log.d(getString(R.string.log_tag), "firebaseAuthWithGoogle:" + account.id)
                 googleAuthFirebase(account.idToken!!)
             } catch (e: ApiException) {
+                Log.d(getString(R.string.log_tag), "Google sign in failed", e)
                 updateOnFail()
             }
         }
@@ -147,19 +148,20 @@ class AuthenticationActivity : AppCompatActivity() {
         auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
                     Log.d(getString(R.string.log_tag), "signInWithCredential:success")
-                    if(task.getResult().additionalUserInfo != null){
+                    if (task.getResult().additionalUserInfo != null) {
                         createAcc = task.getResult().additionalUserInfo!!.isNewUser
+                        createAccount()
                     }
-                    if (createAcc)createAccount()
                     updateOnSuccess()
                 } else {
+                    // fail
                     Log.d(getString(R.string.log_tag), "signInWithCredential:failure", task.exception)
                     updateOnFail()
                 }
-        }
+            }
     }
-
 
     /**
      * A function validates email and password

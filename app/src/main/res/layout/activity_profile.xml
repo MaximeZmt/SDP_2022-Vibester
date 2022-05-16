@@ -26,7 +26,6 @@
             android:layout_height="120dp"
             android:layout_alignParentTop="true"
             android:layout_marginTop="60dp"
-            android:layout_weight=".2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -35,13 +34,12 @@
                 android:id="@+id/myCardView"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_alignParentLeft="true"
-                android:layout_marginStart="20dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginTop="0dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginStart="60dp"
+                android:layout_marginTop="1dp"
+                android:layout_marginBottom="19dp"
                 app:cardCornerRadius="50dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent">
@@ -60,8 +58,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginStart="13dp"
+                android:layout_marginStart="40dp"
                 android:layout_marginTop="22dp"
                 android:layout_toEndOf="@id/myCardView"
                 android:text="@string/authentication_placeholderUsername"
@@ -73,11 +70,11 @@
                 android:layout_width="30dp"
                 android:layout_height="20dp"
                 android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
                 android:layout_marginStart="18dp"
                 android:layout_marginTop="23dp"
                 android:layout_toEndOf="@+id/username"
-                android:src="@drawable/pencil" />
+                android:src="@drawable/pencil"
+                android:visibility="gone" />
 
             <ImageView
                 android:id="@+id/showQRCode"
@@ -87,7 +84,8 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_toEndOf="@+id/username"
-                android:src="@drawable/qr_code" />
+                android:src="@drawable/qr_code"
+                android:visibility="gone" />
 
         </RelativeLayout>
 
@@ -332,16 +330,17 @@
             android:layout_height="50dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="40dp"
-            android:layout_marginEnd="80dp"
+            android:layout_marginStart="60dp"
+            android:layout_marginEnd="60dp"
             android:layout_marginBottom="20dp"
             android:layout_toStartOf="@+id/profile_returnToMain"
             android:backgroundTint="@color/cg_blue"
             android:elevation="0dp"
             android:stateListAnimator="@null"
-            android:text="logout"
+            android:text="@string/logout"
             android:textColor="#F9FBE7"
             android:translationZ="0dp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0"
@@ -359,22 +358,20 @@
             android:layout_marginStart="60dp"
             android:layout_marginTop="10dp"
             android:backgroundTint="@color/cg_blue"
-            android:text="Scores"
+            android:text="@string/scores"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/profile_total_games" />
 
         <Button
             android:id="@+id/profile_friends"
-            android:layout_width="100dp"
+            android:layout_width="120dp"
             android:layout_height="50dp"
             android:layout_below="@+id/profile_total_games"
             android:layout_alignParentEnd="true"
-            android:layout_marginStart="83dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="60dp"
-            android:layout_toEndOf="@+id/profile_scores"
             android:backgroundTint="@color/cg_blue"
-            android:text="Friends"
+            android:text="@string/friends"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/profile_total_games" />
 
@@ -388,6 +385,7 @@
             android:layout_marginBottom="20dp"
             android:backgroundTint="@color/light_coral"
             android:clickable="true"
+            android:focusable="true"
             android:src="@android:drawable/ic_menu_revert"
             app:borderWidth="0dp"
             app:layout_constraintBottom_toBottomOf="parent"

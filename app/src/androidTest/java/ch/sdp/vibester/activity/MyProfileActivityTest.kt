@@ -108,7 +108,7 @@ class MyProfileActivityTest {
  */
 
     @Test
-    fun showScoresByDefaultClickScoresCloseIt() {
+    fun showScoresByDefault() {
         val scorePerGenre: Map<String, Int> = mapOf(
             "top tracks" to 1,
             "kpop" to 2,
@@ -133,9 +133,6 @@ class MyProfileActivityTest {
         onView(withId(R.id.profile_bts)).check(matches(withText(inputProfile.scores.getOrDefault("BTS", 0).toString())))
         onView(withId(R.id.profile_imagine_dragons)).check(matches(withText(inputProfile.scores.getOrDefault("Imagine Dragons", 0).toString())))
         onView(withId(R.id.profile_billie_eilish)).check(matches(withText(inputProfile.scores.getOrDefault("Billie Eilish", 0).toString())))
-
-        onView(withId(R.id.profile_scores)).perform(click())
-        onView(withId(R.id.profileStatistics)).check(matches(not(isDisplayed())))
 
     }
 

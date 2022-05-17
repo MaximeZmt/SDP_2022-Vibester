@@ -114,6 +114,7 @@ class SearchUserActivity : AppCompatActivity(), OnItemClickListener {
     override fun onItemClick(position: Int) {
         val intent = Intent(this, PublicProfileActivity::class.java)
         intent.putExtra("UserId", users[position].uid)
+        intent.putExtra("ScoresOrFriends", "Friends")
         startActivity(intent)
     }
 }

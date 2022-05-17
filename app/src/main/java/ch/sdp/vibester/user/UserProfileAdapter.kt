@@ -9,16 +9,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
-import ch.sdp.vibester.api.BitmapGetterApi
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.database.ImageGetter
 import ch.sdp.vibester.helper.AdapterHelper
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
-import java.util.concurrent.TimeUnit
+import ch.sdp.vibester.helper.ImageHelper
 
 
 /**
@@ -102,22 +97,9 @@ class UserProfileAdapter constructor(
         }
 
         private fun setImage(imageURI: Uri) {
-            CoroutineScope(Dispatchers.Main).launch {
-                val task = async(Dispatchers.IO) {
-                    try {
-                        val bit = BitmapGetterApi.download(imageURI.toString())
-                        bit.get(10, TimeUnit.SECONDS)
-                    } catch (e: Exception){
-                        null
-                    }
-                }
-                val bm = task.await()
+            val avatar = itemView.findViewById<ImageView>(R.id.search_user_profile_image)
 
-                if (bm != null) {
-                    val avatar = itemView.findViewById<ImageView>(R.id.search_user_profile_image)
-                    avatar.setImageBitmap(Bitmap.createScaledBitmap(bm, imageSize, imageSize, false))
-                }
-            }
+            ImageHelper().setImage(imageURI, avatar, imageSize)
         }
 
 

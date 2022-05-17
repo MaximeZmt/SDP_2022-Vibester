@@ -14,10 +14,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
 import ch.sdp.vibester.activity.MainActivity
-import ch.sdp.vibester.api.BitmapGetterApi
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.database.ImageGetter
+import ch.sdp.vibester.helper.ImageHelper
 import ch.sdp.vibester.helper.IntentSwitcher
 import ch.sdp.vibester.user.OnItemClickListener
 import ch.sdp.vibester.user.ProfileFriendsAdapter
@@ -28,12 +28,7 @@ import com.google.zxing.EncodeHintType
 import com.google.zxing.qrcode.QRCodeWriter
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
 import net.glxn.qrgen.android.MatrixToImageWriter
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 /**
@@ -137,22 +132,9 @@ open class ProfileActivity : AppCompatActivity(), OnItemClickListener {
      * @param imageURI URI of the image
      */
     private fun setImage(imageURI: Uri) {
-        CoroutineScope(Dispatchers.Main).launch {
-            val task = async(Dispatchers.IO) {
-                try {
-                    val bit = BitmapGetterApi.download(imageURI.toString())
-                    bit.get(10, TimeUnit.SECONDS)
-                } catch (e: Exception){
-                    null
-                }
-            }
-            val bm = task.await()
+        val avatar = findViewById<ImageView>(R.id.avatar)
 
-            if (bm != null) {
-                val avatar = findViewById<ImageView>(R.id.avatar)
-                avatar.setImageBitmap(Bitmap.createScaledBitmap(bm, imageSize,imageSize, false))
-            }
-        }
+        ImageHelper().setImage(imageURI, avatar, imageSize)
     }
 
 

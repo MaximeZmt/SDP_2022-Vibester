@@ -1,28 +1,22 @@
 package ch.sdp.vibester.activity
 
-import android.app.Activity
-import android.content.Intent
+import android.content.Context
 import android.graphics.*
 import android.net.Uri
-import android.os.Bundle
+import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.view.Window
 import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.BitmapGetterApi
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.database.ImageGetter
-import ch.sdp.vibester.helper.IntentSwitcher
 import ch.sdp.vibester.user.User
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.EncodeHintType
 import com.google.zxing.qrcode.QRCodeWriter
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -34,64 +28,20 @@ import javax.inject.Inject
 /**
  * Display user profile's data (image, username, scores, etc.) in UI
  */
-@AndroidEntryPoint
-open class ProfileActivity : AppCompatActivity() {
-    @Inject
-    lateinit var dataGetter: DataGetter
-
-    @Inject
-    lateinit var authenticator: FireBaseAuthenticator
-
-    @Inject
-    lateinit var imageGetter: ImageGetter
+open class ProfileActivity @Inject constructor(val ctx: Context,
+                                               val view: View,
+                                               val imageGetter: ImageGetter,
+                                               val dataGetter: DataGetter,
+                                               val authenticator: FireBaseAuthenticator) {
 
     private val imageSize = 1000
-    val imageRequestCode = 100
-
-    /**
-     * Generic onCreate method belonging to ProfileActivity.
-     */
-    override fun onCreate(savedInstanceState: Bundle?) {
-        requestWindowFeature(Window.FEATURE_NO_TITLE)
-        super.onCreate(savedInstanceState)
-        supportActionBar?.hide()
-        setContentView(R.layout.activity_profile)
-
-        setRetToMainBtnListener()
-        setScoreBtnListener()
-
-        queryDatabase()
-    }
-
-
-    //check the UID here not sure
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK && requestCode == imageRequestCode) {
-            imageGetter.uploadFile("profileImg/${dataGetter.getCurrentUser()?.uid}", data?.data!!) {
-                imageGetter.fetchImage("profileImg/${dataGetter.getCurrentUser()?.uid}", this::setImage)
-            }
-        }
-    }
-
-
-    /**
-     * Generic listener for the return to main button.
-     */
-    private fun setRetToMainBtnListener() {
-        findViewById<FloatingActionButton>(R.id.profile_returnToMain).setOnClickListener {
-            IntentSwitcher.switch(this, MainActivity::class.java)
-            finish()
-        }
-    }
-
 
     /**
      * Generic listener for the score button, show the score per genre statistic on click
      */
-    private fun setScoreBtnListener() {
-        findViewById<Button>(R.id.profile_scores).setOnClickListener {
-            toggleVisibility(R.id.profileStatistics)
+     fun setScoreBtnListener() {
+        view.findViewById<Button>(R.id.profile_scores).setOnClickListener {
+            toggleVisibility(R.id.profile_statistics)
         }
     }
 
@@ -100,22 +50,16 @@ open class ProfileActivity : AppCompatActivity() {
      * @param layout: The given ScrollView id to modify
      */
     private fun toggleVisibility(layout: Int) {
-        if (findViewById<TableLayout>(layout).visibility == VISIBLE) findViewById<TableLayout>(layout).visibility = GONE
-        else if (findViewById<TableLayout>(layout).visibility == GONE) findViewById<TableLayout>(layout).visibility = VISIBLE
+        if (view.findViewById<TableLayout>(layout).visibility == VISIBLE) view.findViewById<TableLayout>(layout).visibility = GONE
+        else if (view.findViewById<TableLayout>(layout).visibility == GONE) view.findViewById<TableLayout>(layout).visibility = VISIBLE
     }
-
-
-    /**
-     * A function that queries the database and fetched the correct user.
-     */
-    open fun queryDatabase() {}
 
 
     /**
      * A function that downloads an image and sets it.
      * @param imageURI URI of the image
      */
-    private fun setImage(imageURI: Uri) {
+     fun setImage(imageURI: Uri) {
         CoroutineScope(Dispatchers.Main).launch {
             val task = async(Dispatchers.IO) {
                 try {
@@ -128,7 +72,7 @@ open class ProfileActivity : AppCompatActivity() {
             val bm = task.await()
 
             if (bm != null) {
-                val avatar = findViewById<ImageView>(R.id.avatar)
+                val avatar = view.findViewById<ImageView>(R.id.avatar)
                 avatar.setImageBitmap(Bitmap.createScaledBitmap(bm, imageSize,imageSize, false))
             }
         }
@@ -141,7 +85,7 @@ open class ProfileActivity : AppCompatActivity() {
      * @param text: The integer to be set as the text.
      */
     private fun setTextOfView(id: Int, text: Int) {
-        findViewById<TextView>(id).text = text.toString()
+        view.findViewById<TextView>(id).text = text.toString()
     }
 
     /**
@@ -165,7 +109,7 @@ open class ProfileActivity : AppCompatActivity() {
     fun setupProfile(user: User){
         // Currently assuming that empty username means no user !
         if (user.username != "") {
-            findViewById<TextView>(R.id.username).text =  user.username
+            view. findViewById<TextView>(R.id.username).text =  user.username
             setTextOfMultipleViews(user)
         }
 
@@ -191,14 +135,18 @@ open class ProfileActivity : AppCompatActivity() {
         val qrCodeCanvas = Canvas(bmp)
 
         val scaleFactor = 4 // resize the image
-        val logo = BitmapFactory.decodeStream(assets.open("logo.png"))
+        val logo = BitmapFactory.decodeStream(ctx.assets.open("logo.png"))
         logo.density = logo.density * scaleFactor
         val xLogo = (size - logo.width / scaleFactor) / 2f
         val yLogo = (size - logo.height / scaleFactor) / 2f
 
         qrCodeCanvas.drawBitmap(logo, xLogo, yLogo, null)
 
-        findViewById<ImageView>(R.id.qrCode).setImageBitmap(bmp)
+        view.findViewById<ImageView>(R.id.qrCode).setImageBitmap(bmp)
+    }
+
+    fun queryDatabase(uid: String = authenticator.getCurrUID()) {
+         if(uid.isNotEmpty()) dataGetter.getUserData(uid, this::setupProfile)
     }
 }
 

@@ -10,6 +10,7 @@ import android.view.View.VISIBLE
 import android.view.Window
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
@@ -53,6 +54,7 @@ open class ProfileActivity : AppCompatActivity(), OnItemClickListener {
     val imageRequestCode = 100
 
     private var friends: MutableList<User> ? = null
+    private var profileFriendsAdapter: ProfileFriendsAdapter?= null
 
     /**
      * Generic onCreate method belonging to ProfileActivity.
@@ -68,12 +70,9 @@ open class ProfileActivity : AppCompatActivity(), OnItemClickListener {
 
         setRetToMainBtnListener()
         setScoreBtnListener()
+        setFriendsBtnListener()
 
         queryDatabase()
-    }
-
-    private fun loadFriends() {
-        //TODO
     }
 
     private fun setupRecycleViewForFriends() {
@@ -82,6 +81,11 @@ open class ProfileActivity : AppCompatActivity(), OnItemClickListener {
             adapter = friends?.let { ProfileFriendsAdapter(it, this@ProfileActivity) }
             setHasFixedSize(true)
         }
+    }
+
+    private fun showFriendsPosition(friends: MutableList<User>?) {
+        profileFriendsAdapter = ProfileFriendsAdapter(friends!!, this)
+        findViewById<RecyclerView>(R.id.profile_friendsList)!!.adapter = profileFriendsAdapter
     }
 
 
@@ -108,11 +112,22 @@ open class ProfileActivity : AppCompatActivity(), OnItemClickListener {
 
 
     /**
-     * Generic listener for the score button, show the score per genre statistic on click
+     * Generic listener for the scores button, show the score per genre statistic on click
      */
     private fun setScoreBtnListener() {
         findViewById<Button>(R.id.profile_scores).setOnClickListener {
-            toggleVisibility(R.id.profileStatistics)
+            toggleVisibility(R.id.profile_scroll_stat)
+            toggleVisibility(R.id.profile_scroll_friends)
+        }
+    }
+
+    /**
+     * Generic listener for the friends button, show the friends of the current user
+     */
+    private fun setFriendsBtnListener() {
+        findViewById<Button>(R.id.profile_friends).setOnClickListener {
+            toggleVisibility(R.id.profile_scroll_friends)
+            toggleVisibility(R.id.profile_scroll_stat)
         }
     }
 
@@ -121,8 +136,8 @@ open class ProfileActivity : AppCompatActivity(), OnItemClickListener {
      * @param layout: The given ScrollView id to modify
      */
     private fun toggleVisibility(layout: Int) {
-        if (findViewById<TableLayout>(layout).visibility == VISIBLE) findViewById<TableLayout>(layout).visibility = GONE
-        else if (findViewById<TableLayout>(layout).visibility == GONE) findViewById<TableLayout>(layout).visibility = VISIBLE
+        if (findViewById<NestedScrollView>(layout).visibility == VISIBLE) findViewById<NestedScrollView>(layout).visibility = GONE
+        else if (findViewById<NestedScrollView>(layout).visibility == GONE) findViewById<NestedScrollView>(layout).visibility = VISIBLE
     }
 
 
@@ -197,6 +212,19 @@ open class ProfileActivity : AppCompatActivity(), OnItemClickListener {
             generateQrCode(user.uid)
         }
 
+        if (user.friends.isNotEmpty()) {
+            loadFriends(user.friends)
+        }
+
+    }
+
+    private fun loadFriends(friendsMap: Map<String, Boolean>) {
+        friendsMap.forEach { (userId, _) ->  dataGetter.getUserData(userId, this::addFriend)}
+        showFriendsPosition(friends)
+    }
+
+    private fun addFriend(friend: User) {
+        friends?.add(friend)
     }
 
     /**

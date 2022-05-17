@@ -9,6 +9,9 @@ import ch.sdp.vibester.R
 import ch.sdp.vibester.helper.AdapterHelper
 import ch.sdp.vibester.helper.loadImg
 
+/**
+ * set friends in userProfile with profile photo and username in RecycleView.
+ */
 class ProfileFriendsAdapter constructor(
     private val friends: MutableList<User>,
     private val listener: OnItemClickListener?
@@ -29,6 +32,9 @@ class ProfileFriendsAdapter constructor(
 
     inner class ProfileFriendsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
+        /**
+         * @param user with all the parameters
+         */
         fun bind(user: User) {
             itemView.findViewById<TextView>(R.id.profile_friends_username).text = user.username
             itemView.findViewById<ImageView>(R.id.profile_friends_profile_image).loadImg(user.image)

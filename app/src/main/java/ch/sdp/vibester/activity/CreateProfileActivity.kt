@@ -49,7 +49,7 @@ class CreateProfileActivity : AppCompatActivity() {
     }
 
     private fun startNewActivity(email: String) {
-        val newIntent = Intent(this, ProfileActivity::class.java)
+        val newIntent = Intent(this, MyProfileActivity::class.java)
         newIntent.putExtra("email", email)
 
         startActivity(newIntent)

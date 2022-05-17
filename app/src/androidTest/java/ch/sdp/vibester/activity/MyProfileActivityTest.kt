@@ -7,6 +7,7 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.action.ViewActions.scrollTo
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.matcher.IntentMatchers
@@ -124,7 +125,7 @@ class MyProfileActivityTest {
         createMockAuthenticator()
         createMockImageGetter()
 
-        val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
+        val scn: ActivityScenario<MyProfileActivity> = ActivityScenario.launch(intent)
 
         onView(withId(R.id.profile_top_tracks)).check(matches(withText(inputProfile.scores.getOrDefault("top tracks", 0).toString())))
         onView(withId(R.id.profile_kpop)).check(matches(withText(inputProfile.scores.getOrDefault("kpop", 0).toString())))
@@ -148,8 +149,8 @@ class MyProfileActivityTest {
         createMockAuthenticator()
         createMockImageGetter()
 
-        val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
-        onView(withId(R.id.profile_returnToMain)).perform(click())
+        val scn: ActivityScenario<MyProfileActivity> = ActivityScenario.launch(intent)
+        onView(withId(R.id.profile_returnToMain)).perform(scrollTo(), click())
         Intents.intended(IntentMatchers.hasComponent(MainActivity::class.java.name))
     }
 // FIXME failing test
@@ -208,7 +209,7 @@ class MyProfileActivityTest {
         createMockAuthenticator()
         createMockImageGetter()
 
-        val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
+        val scn: ActivityScenario<MyProfileActivity> = ActivityScenario.launch(intent)
         val newUsername = "Lalisa Bon idomesniu"
 
         onView(withId(R.id.editUser)).perform(click())
@@ -231,9 +232,9 @@ class MyProfileActivityTest {
         createMockAuthenticator()
         createMockImageGetter()
 
-        val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
-        onView(withId(R.id.editUser)).perform(click())
-        onView(withText("Cancel")).perform(click())
+        val scn: ActivityScenario<MyProfileActivity> = ActivityScenario.launch(intent)
+        onView(withId(R.id.editUser)).perform(scrollTo(), click())
+        onView(withText("Cancel")).perform(scrollTo(), click())
 
         onView(withId(R.id.username)).check(matches(withText("Lalisa Bon")))
     }
@@ -270,10 +271,33 @@ class MyProfileActivityTest {
         createMockAuthenticator()
         createMockImageGetter()
 
-        val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
-        onView(withId(R.id.showQRCode)).perform(click())
+        val scn: ActivityScenario<MyProfileActivity> = ActivityScenario.launch(intent)
 
+        onView(withId(R.id.showQRCode)).perform(click())
         onView(withId(R.id.qrCode)).check(matches(isDisplayed()))
+
+        onView(withId(R.id.qrCode_returnToProfile)).perform(click())
+        onView(withId(R.id.myCardView)).check(matches(isDisplayed()))
+
+        onView(withId(R.id.logout)).perform(scrollTo(), click())
+        onView(withId(R.id.fragment)).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun checkChangeImage() {
+        val inputProfile = User( "Lalisa Bon", R.string.test_profile_image.toString(), "lisa@test.com",  12, 8,"VvPB47tQCLdjz3YebilS6h5EXdJ3")
+        val ctx = ApplicationProvider.getApplicationContext() as Context
+        val intent = Intent(ctx, MyProfileActivity::class.java)
+
+        createMockDataGetter(inputProfile)
+        createMockAuthenticator()
+        createMockImageGetter()
+
+        val scn: ActivityScenario<MyProfileActivity> = ActivityScenario.launch(intent)
+
+        onView(withId(R.id.myCardView)).perform(click())
+        onView(withText("NO")).perform(click())
+        onView(withId(R.id.myCardView)).check(matches(isDisplayed()))
     }
 // FIXME failing test
 

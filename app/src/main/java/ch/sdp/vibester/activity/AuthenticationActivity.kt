@@ -267,7 +267,7 @@ class AuthenticationActivity : AppCompatActivity() {
     ) {
         if (emailText != null) {
             if('@' in emailText && !createAcc) {
-                startNewCustomActivity(emailText, ProfileActivity::class.java)
+                startNewCustomActivity(emailText, MyProfileActivity::class.java)
             }
 
             else if('@' in emailText && createAcc && user != null) { //

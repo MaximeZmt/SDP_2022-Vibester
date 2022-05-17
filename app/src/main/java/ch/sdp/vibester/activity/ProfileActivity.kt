@@ -135,7 +135,7 @@ open class ProfileActivity : AppCompatActivity(), OnItemClickListener {
      */
     fun showAHideB(a: Int, b: Int) {
         findViewById<NestedScrollView>(a).visibility = VISIBLE
-        findViewById<NestedScrollView>(b).visibility = INVISIBLE
+        findViewById<NestedScrollView>(b).visibility = GONE
     }
 
 

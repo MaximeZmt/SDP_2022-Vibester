@@ -5,8 +5,8 @@ import android.content.Intent
 import android.graphics.*
 import android.net.Uri
 import android.os.Bundle
-import android.view.View.GONE
-import android.view.View.VISIBLE
+import android.view.View
+import android.view.View.*
 import android.view.Window
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -116,7 +116,7 @@ open class ProfileActivity : AppCompatActivity(), OnItemClickListener {
      */
     private fun setScoreBtnListener() {
         findViewById<Button>(R.id.profile_scores).setOnClickListener {
-            switchBetweenTwoView(R.id.profile_scroll_stat, R.id.profile_scroll_friends)
+            showAHideB(R.id.profile_scroll_stat, R.id.profile_scroll_friends)
         }
     }
 
@@ -125,26 +125,17 @@ open class ProfileActivity : AppCompatActivity(), OnItemClickListener {
      */
     private fun setFriendsBtnListener() {
         findViewById<Button>(R.id.profile_friends).setOnClickListener {
-            switchBetweenTwoView(R.id.profile_scroll_friends, R.id.profile_scroll_stat)
+            showAHideB(R.id.profile_scroll_friends, R.id.profile_scroll_stat)
         }
     }
 
     /**
-     * @param show id of the view to show
-     * @param hide id of the view to hide
+     * @param a id of the view to show
+     * @param b id of the view to hide
      */
-    private fun switchBetweenTwoView(show: Int, hide: Int) {
-        toggleVisibility(show)
-        toggleVisibility(hide)
-    }
-
-    /**
-     * toggle the given layout's visibility
-     * @param layout: The given NestedScrollView id to modify
-     */
-    private fun toggleVisibility(layout: Int) {
-        if (findViewById<NestedScrollView>(layout).visibility == VISIBLE) findViewById<NestedScrollView>(layout).visibility = GONE
-        else if (findViewById<NestedScrollView>(layout).visibility == GONE) findViewById<NestedScrollView>(layout).visibility = VISIBLE
+    fun showAHideB(a: Int, b: Int) {
+        findViewById<NestedScrollView>(a).visibility = VISIBLE
+        findViewById<NestedScrollView>(b).visibility = INVISIBLE
     }
 
 

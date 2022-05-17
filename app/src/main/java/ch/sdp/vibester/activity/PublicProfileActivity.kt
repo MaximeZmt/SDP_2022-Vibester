@@ -15,13 +15,12 @@ class PublicProfileActivity : ProfileActivity() {
         userId = intent.getStringExtra("UserId").toString()
         super.onCreate(savedInstanceState)
         if (intent.getStringExtra("ScoresOrFriends") == "Scores") {
-            findViewById<NestedScrollView>(R.id.profile_scroll_stat).visibility = VISIBLE
-            findViewById<NestedScrollView>(R.id.profile_scroll_friends).visibility = INVISIBLE
+            showAHideB(R.id.profile_scroll_stat, R.id.profile_scroll_friends)
         } else if (intent.getStringExtra("ScoresOrFriends") == "Friends") {
-            findViewById<NestedScrollView>(R.id.profile_scroll_friends).visibility = VISIBLE
-            findViewById<NestedScrollView>(R.id.profile_scroll_stat).visibility = INVISIBLE
+            showAHideB(R.id.profile_scroll_friends, R.id.profile_scroll_stat)
         }
     }
+
 
     override fun queryDatabase() {
         dataGetter.getUserData(userId, this::setupProfile)

@@ -40,6 +40,10 @@
     <string name="preferences_game_mode">game_mode</string>
     <string name="preferences_game_genre">game_genre</string>
 
+    <!-- PublicProfileActivity -->
+    <dimen name="profile_width">350dp</dimen>
+    <dimen name="profile_height">500dp</dimen>
+
     <!-- OLD String-->
 
 

@@ -5,7 +5,6 @@ import android.content.Intent
 import android.graphics.*
 import android.net.Uri
 import android.os.Bundle
-import android.view.View
 import android.view.View.*
 import android.view.Window
 import android.widget.*
@@ -69,8 +68,8 @@ open class ProfileActivity : AppCompatActivity(), OnItemClickListener {
         friends = ArrayList()
 
         setRetToMainBtnListener()
-        setScoreBtnListener()
-        setFriendsBtnListener()
+        setFriendsScoresBtnListener(R.id.profile_scores, R.id.profile_scroll_stat, R.id.profile_scroll_friends)
+        setFriendsScoresBtnListener(R.id.profile_friends, R.id.profile_scroll_friends, R.id.profile_scroll_stat)
 
         queryDatabase()
     }
@@ -110,22 +109,9 @@ open class ProfileActivity : AppCompatActivity(), OnItemClickListener {
         }
     }
 
-
-    /**
-     * Generic listener for the scores button, show the score per genre statistic on click
-     */
-    private fun setScoreBtnListener() {
-        findViewById<Button>(R.id.profile_scores).setOnClickListener {
-            showAHideB(R.id.profile_scroll_stat, R.id.profile_scroll_friends)
-        }
-    }
-
-    /**
-     * Generic listener for the friends button, show the friends of the current user
-     */
-    private fun setFriendsBtnListener() {
-        findViewById<Button>(R.id.profile_friends).setOnClickListener {
-            showAHideB(R.id.profile_scroll_friends, R.id.profile_scroll_stat)
+    private fun setFriendsScoresBtnListener(btnId: Int, show: Int, hide: Int) {
+        findViewById<Button>(btnId).setOnClickListener {
+            showAHideB(show, hide)
         }
     }
 

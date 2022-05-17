@@ -30,7 +30,7 @@ import javax.inject.Inject
 class SearchUserActivity : AppCompatActivity(), OnItemClickListener {
 
     @Inject
-    lateinit var usersRepo: DataGetter
+    lateinit var dataGetter: DataGetter
 
     @Inject
     lateinit var imageGetter: ImageGetter
@@ -57,7 +57,7 @@ class SearchUserActivity : AppCompatActivity(), OnItemClickListener {
         recyclerView!!.setHasFixedSize(true)
         recyclerView!!.layoutManager = LinearLayoutManager(this)
 
-        userProfileAdapter = UserProfileAdapter(this.users, authenticator, usersRepo, imageGetter, this)
+        userProfileAdapter = UserProfileAdapter(this.users, authenticator, dataGetter, imageGetter, this)
 
         recyclerView!!.adapter = userProfileAdapter
 
@@ -97,9 +97,9 @@ class SearchUserActivity : AppCompatActivity(), OnItemClickListener {
     }
 
     /**
-     * Callback to update users in adapter during search
+     * Callback to update list of users ids during search
      */
-    private fun setUserInAdapter2(users: ArrayList<String> = ArrayList()) {
+    private fun setUids(users: ArrayList<String> = ArrayList()) {
         uidList = ArrayList(users)
     }
 
@@ -108,13 +108,12 @@ class SearchUserActivity : AppCompatActivity(), OnItemClickListener {
      * @param inputUsername search text inputed by user
      */
     private fun searchForUsers(inputUsername:String){
-        usersRepo.searchByField("username", inputUsername, callback = ::setUserInAdapter, callbackUid = ::setUserInAdapter2)
+        dataGetter.searchByField("username", inputUsername, callback = ::setUserInAdapter, callbackUid = ::setUids)
     }
 
     override fun onItemClick(position: Int) {
-        val intent = Intent(this, PublicProfileActivity::class.java)
-        intent.putExtra("UserId", users[position].uid)
-        startActivity(intent)
+        val uid = users[position].uid
+        PublicProfileActivity(this, uid, "Friends" , imageGetter, dataGetter, authenticator).setProfileDialog()
     }
 }
 

@@ -1,42 +1,79 @@
 package ch.sdp.vibester.activity
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import ch.sdp.vibester.R
 import ch.sdp.vibester.auth.FireBaseAuthenticator
+import ch.sdp.vibester.database.DataGetter
+import ch.sdp.vibester.database.ImageGetter
 import ch.sdp.vibester.helper.IntentSwitcher
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 /** profile page of the current user with editable information */
-class MyProfileActivity : ProfileActivity() {
+@AndroidEntryPoint
+class MyProfileActivity : AppCompatActivity() {
+    @Inject
+    lateinit var dataGetter: DataGetter
+
+    @Inject
+    lateinit var authenticator: FireBaseAuthenticator
+
+    @Inject
+    lateinit var imageGetter: ImageGetter
+
+    private val imageRequestCode = 100
+
+
+    lateinit var profileActivity: ProfileActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_profile)
 
+        profileActivity = ProfileActivity(view = findViewById(android.R.id.content), ctx = this, imageGetter = imageGetter, dataGetter = dataGetter, authenticator = FireBaseAuthenticator())
         setViewVisibility(findViewById(R.id.editUser), true)
         setViewVisibility(findViewById(R.id.showQRCode), true)
-        setViewVisibility(findViewById(R.id.logout), true)
+        setViewVisibility(findViewById(R.id.profile_logout), true)
 
         setEditUserNameBtnListener()
         setChangeImageBtnListener()
         setLogOutBtnListener()
         setShowQrCodeBtnListener()
         setQrCodeToProfileBtnListener()
-    }
+        setRetToMainBtnListener()
 
-    override fun queryDatabase() {
-        val currentUser = authenticator.getCurrUser()
-        if (currentUser != null) {
-            dataGetter.getUserData(currentUser.uid, this::setupProfile)
+        profileActivity.queryDatabase()
+        profileActivity.setScoreBtnListener()
+
+
+    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK && requestCode == imageRequestCode) {
+            imageGetter.uploadFile("profileImg/${dataGetter.getCurrentUser()?.uid}", data?.data!!) {
+                imageGetter.fetchImage("profileImg/${dataGetter.getCurrentUser()?.uid}", {profileActivity.setImage(it)})
+            }
         }
     }
+
+    private fun setRetToMainBtnListener() {
+        findViewById<FloatingActionButton>(R.id.profile_returnToMain).setOnClickListener {
+            IntentSwitcher.switch(this, MainActivity::class.java)
+            finish()
+        }
+    }
+
 
 
     /**
@@ -84,7 +121,7 @@ class MyProfileActivity : ProfileActivity() {
      * Generic listener for the log out button.
      */
     private fun setLogOutBtnListener() {
-        findViewById<Button>(R.id.logout).setOnClickListener {
+        findViewById<Button>(R.id.profile_logout).setOnClickListener {
             FirebaseAuth.getInstance().signOut()
             IntentSwitcher.switch(this, MainActivity::class.java)
             finish()

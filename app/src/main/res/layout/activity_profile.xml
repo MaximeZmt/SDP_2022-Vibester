@@ -24,6 +24,17 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/profile_close"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="end"
+                android:gravity="center"
+                android:visibility="gone"
+                android:text="X"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="26dp"
@@ -201,7 +212,7 @@
                     android:id="@+id/profile_scroll_stat"
                     android:layout_width="match_parent"
                     android:layout_height="318dp"
-                    android:layout_above="@+id/logout"
+                    android:layout_above="@+id/profile_logout"
                     android:layout_below="@+id/profile_scores"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentEnd="true"
@@ -216,7 +227,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/profile_scores">
 
                     <TableLayout
-                        android:id="@+id/profileStatistics"
+                        android:id="@+id/profile_statistics"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/table_shape"
@@ -407,7 +418,7 @@
                     android:layout_weight="1" />
 
                 <Button
-                    android:id="@+id/logout"
+                    android:id="@+id/profile_logout"
                     android:layout_width="150dp"
                     android:layout_height="match_parent"
                     android:backgroundTint="@color/cg_blue"

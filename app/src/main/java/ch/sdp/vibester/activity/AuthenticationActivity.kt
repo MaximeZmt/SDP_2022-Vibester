@@ -39,7 +39,7 @@ class AuthenticationActivity : AppCompatActivity() {
     @Inject
     lateinit var authenticator: FireBaseAuthenticator
 
-    val faker: Faker = Faker()
+    private val faker: Faker = Faker()
 
     private lateinit var auth: FirebaseAuth
 
@@ -49,9 +49,6 @@ class AuthenticationActivity : AppCompatActivity() {
 
     private var createAcc = false
 
-    /**
-     * Generic onCreate method, automatically called upon the creation of the activity.
-     */
     override fun onCreate(savedInstanceState: Bundle?) {
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         super.onCreate(savedInstanceState)
@@ -192,7 +189,6 @@ class AuthenticationActivity : AppCompatActivity() {
      * A function that authenticates the user
      * @param email email of the user
      * @param password password of the user
-     * @param createAcc boolean to check if the authentication is a login or account creation
      */
     private fun authenticate(email: String, password: String) {
         if (credentialsValidation(email, password)) {
@@ -215,18 +211,15 @@ class AuthenticationActivity : AppCompatActivity() {
 
 
     /**
-     * Function that allows the creation of a new activity, with the given text field as intent and
-     * the given class as the destination.
-     * @param email : The email to write
-     * @param arg : The activity class to start
+     * Start ProfileActivity
      */
-    private fun startNewCustomActivity() {
+    private fun startProfileActivity() {
         val newIntent = Intent(this, ProfileActivity::class.java)
         startActivity(newIntent)
     }
 
     /**
-     * Random username generator
+     * Random username generator with Faker
      */
     private fun usernameGenerator(): String {
         return faker.color().name() + "." + faker.animal().name()
@@ -245,11 +238,12 @@ class AuthenticationActivity : AppCompatActivity() {
      */
     private fun updateOnSuccess(){
         Toast.makeText(baseContext, "Successful login", Toast.LENGTH_SHORT).show()
-        startNewCustomActivity()
+        startProfileActivity()
     }
 
     /**
      *  Toast on failed authentication
+     *  @param: text to display in toast. Can be changed base on error
      */
     private fun updateOnFail(text: String = "Authentication failed"){
         Toast.makeText(baseContext, text, Toast.LENGTH_SHORT).show()

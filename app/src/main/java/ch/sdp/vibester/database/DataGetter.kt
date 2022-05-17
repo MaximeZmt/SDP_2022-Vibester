@@ -101,12 +101,9 @@ class DataGetter @Inject constructor() {
      * @param callback function to be called when the the user has been created
      * @param uid id of the new user
      */
-    fun createUser(email: String, username: String, callback: KFunction0<Unit>, uid: String) {
+    fun createUser(email: String, username: String, uid: String) {
         val newUser = User(email = email, username = username, uid = uid)
         dbUserRef.child(uid).setValue(newUser)
-            .addOnSuccessListener {
-                callback()
-            }
     }
 
     /**

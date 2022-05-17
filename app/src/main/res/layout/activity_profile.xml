@@ -152,10 +152,11 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/profile_friendsList"
-                android:layout_width="match_parent"
+                android:layout_width="310dp"
                 android:layout_height="match_parent"
                 android:nestedScrollingEnabled="false"
                 android:scrollbars="none"
+                android:background="@drawable/table_shape"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
         </androidx.core.widget.NestedScrollView>
@@ -180,7 +181,7 @@
 
             <TableLayout
                 android:id="@+id/profileStatistics"
-                android:layout_width="wrap_content"
+                android:layout_width="310dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/table_shape"
                 app:layout_constraintBottom_toBottomOf="parent"

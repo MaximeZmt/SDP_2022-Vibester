@@ -116,8 +116,7 @@ open class ProfileActivity : AppCompatActivity(), OnItemClickListener {
      */
     private fun setScoreBtnListener() {
         findViewById<Button>(R.id.profile_scores).setOnClickListener {
-            toggleVisibility(R.id.profile_scroll_stat)
-            toggleVisibility(R.id.profile_scroll_friends)
+            switchBetweenTwoView(R.id.profile_scroll_stat, R.id.profile_scroll_friends)
         }
     }
 
@@ -126,14 +125,22 @@ open class ProfileActivity : AppCompatActivity(), OnItemClickListener {
      */
     private fun setFriendsBtnListener() {
         findViewById<Button>(R.id.profile_friends).setOnClickListener {
-            toggleVisibility(R.id.profile_scroll_friends)
-            toggleVisibility(R.id.profile_scroll_stat)
+            switchBetweenTwoView(R.id.profile_scroll_friends, R.id.profile_scroll_stat)
         }
     }
 
     /**
+     * @param show id of the view to show
+     * @param hide id of the view to hide
+     */
+    private fun switchBetweenTwoView(show: Int, hide: Int) {
+        toggleVisibility(show)
+        toggleVisibility(hide)
+    }
+
+    /**
      * toggle the given layout's visibility
-     * @param layout: The given ScrollView id to modify
+     * @param layout: The given NestedScrollView id to modify
      */
     private fun toggleVisibility(layout: Int) {
         if (findViewById<NestedScrollView>(layout).visibility == VISIBLE) findViewById<NestedScrollView>(layout).visibility = GONE

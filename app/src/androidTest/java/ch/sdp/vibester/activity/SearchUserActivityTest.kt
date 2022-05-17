@@ -1,6 +1,5 @@
 package ch.sdp.vibester.activity
 
-import android.content.Context
 import android.content.Intent
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
@@ -10,15 +9,12 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
 import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.intent.Intents
-import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.matcher.BoundedMatcher
 import androidx.test.espresso.matcher.ViewMatchers
-import androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility
-import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
 import ch.sdp.vibester.auth.FireBaseAuthenticator
@@ -57,14 +53,17 @@ class SearchUserActivityTest {
 
         val mockUIDs = arrayListOf<String>("mockUser1uid","mockUser2uid","mockUser3uid")
         val mockUsers = arrayListOf<User>(mockUser1, mockUser2, mockUser3)
-        every {mockUsersRepo.searchByField(any(), any(), any(), any())} answers  {
+
+        every { mockUsersRepo.searchByField(any(), any(), any(), any()) } answers  {
             thirdArg<(ArrayList<User>) -> Unit>().invoke(mockUsers)
             lastArg<(ArrayList<String>) -> Unit>().invoke(mockUIDs)
         }
 
-        every {mockUsersRepo.getUserData(any(), any())} answers {
+        every { mockUsersRepo.getUserData(any(), any()) } answers {
             secondArg<(User) -> Unit>().invoke(mockUser)
         }
+
+        every { mockUsersRepo.getCurrentUser() } answers {createMockUser()}
 
         every {mockUsersRepo.updateSubFieldInt(any(), any(), any(), any(),any())} answers {}
         every {mockUsersRepo.setSubFieldValue(any(), any(), any(), any())} answers {}
@@ -76,7 +75,7 @@ class SearchUserActivityTest {
 
     private fun createMockAuthenticator(){
         val mockUser = createMockUser()
-        every {mockAuthenticator.getCurrUser()} returns mockUser
+        every { mockAuthenticator.getCurrUser() } returns mockUser
     }
 
     private fun createMockUser(email: String = "mockEmail@gmail.com", uid: String = "mockUseruid"): FirebaseUser {
@@ -121,8 +120,7 @@ class SearchUserActivityTest {
 
         val scn: ActivityScenario<SearchUserActivity> = ActivityScenario.launch(intent)
 
-        onView(withId(R.id.searchList))
-            .check(matches(ViewMatchers.isDisplayed()))
+        onView(withId(R.id.searchList)).check(matches(isDisplayed()))
     }
 
     @Test
@@ -141,6 +139,8 @@ class SearchUserActivityTest {
                     click()
                 )
             )
+
+        onView(withId(R.id.profileContent)).check(matches(isDisplayed()))
     }
 
     @Test
@@ -174,8 +174,8 @@ class SearchUserActivityTest {
 
         val scn: ActivityScenario<SearchUserActivity> = ActivityScenario.launch(intent)
 
-        checkRecyclerSubViews(R.id.searchList, 2, withEffectiveVisibility(ViewMatchers.Visibility.INVISIBLE), R.id.addFriendBtn);
-        checkRecyclerSubViews(R.id.searchList, 2, withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE), R.id.addedFriendIcon);
+        checkRecyclerSubViews(R.id.searchList, 2, withEffectiveVisibility(Visibility.INVISIBLE), R.id.addFriendBtn)
+        checkRecyclerSubViews(R.id.searchList, 2, withEffectiveVisibility(Visibility.VISIBLE), R.id.addedFriendIcon)
     }
 
     @Test
@@ -187,16 +187,16 @@ class SearchUserActivityTest {
 
         val scn: ActivityScenario<SearchUserActivity> = ActivityScenario.launch(intent)
 
-        checkRecyclerSubViews(R.id.searchList, 0, withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE), R.id.addFriendBtn);
-        checkRecyclerSubViews(R.id.searchList, 0, withEffectiveVisibility(ViewMatchers.Visibility.INVISIBLE), R.id.addedFriendIcon);
+        checkRecyclerSubViews(R.id.searchList, 0, withEffectiveVisibility(Visibility.VISIBLE), R.id.addFriendBtn)
+        checkRecyclerSubViews(R.id.searchList, 0, withEffectiveVisibility(Visibility.INVISIBLE), R.id.addedFriendIcon)
         onView(withId(R.id.searchList))
             .perform(
                 RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                     0,
                     clickOnViewChild(R.id.addFriendBtn))
             )
-        checkRecyclerSubViews(R.id.searchList, 0, withEffectiveVisibility(ViewMatchers.Visibility.INVISIBLE), R.id.addFriendBtn);
-        checkRecyclerSubViews(R.id.searchList, 0, withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE), R.id.addedFriendIcon);
+        checkRecyclerSubViews(R.id.searchList, 0, withEffectiveVisibility(Visibility.INVISIBLE), R.id.addFriendBtn)
+        checkRecyclerSubViews(R.id.searchList, 0, withEffectiveVisibility(Visibility.VISIBLE), R.id.addedFriendIcon)
     }
 
     /**

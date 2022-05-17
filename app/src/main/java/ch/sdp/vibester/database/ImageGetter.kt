@@ -1,6 +1,7 @@
 package ch.sdp.vibester.database
 
 import android.net.Uri
+import android.view.View
 import com.google.android.gms.tasks.OnSuccessListener
 import javax.inject.Inject
 

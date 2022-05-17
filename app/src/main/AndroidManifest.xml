@@ -63,6 +63,14 @@
             android:windowSoftInputMode="adjustPan"
             android:exported="false" />
         <activity
+            android:name=".activity.MyProfileActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:exported="false" />
+        <activity
+            android:name=".activity.PublicProfileActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:exported="false" />
+        <activity
             android:name=".activity.ScoreBoardActivity"
             android:exported="false"
             android:theme="@style/AppTheme.NoActionBar" />

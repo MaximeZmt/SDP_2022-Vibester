@@ -9,8 +9,7 @@
         android:id="@+id/profile_image"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:src="@drawable/logo">
-    </ImageView>
+        android:src="@drawable/logo"></ImageView>
 
     <TextView
         android:id="@+id/search_user_username"

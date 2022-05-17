@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import ch.sdp.vibester.R
 import ch.sdp.vibester.activity.*
+import ch.sdp.vibester.activity.MyProfileActivity
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.Database
 import ch.sdp.vibester.database.PersistanceSetter
@@ -64,7 +65,7 @@ class WelcomeScreenFragment : Fragment(),View.OnClickListener {
 
     private fun switchToProfile() {
         if (authenticator.isLoggedIn()){
-            sendDirectIntent(ProfileActivity::class.java)
+            sendDirectIntent(MyProfileActivity::class.java)
         } else {
             sendDirectIntent(AuthenticationActivity::class.java)
         }

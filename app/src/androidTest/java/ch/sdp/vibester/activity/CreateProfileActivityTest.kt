@@ -62,11 +62,11 @@ class CreateProfileActivityTest {
     val mockDataGetter = mockk<DataGetter>()
 
     private fun createMockDataGetter(email: String) {
-        every {mockDataGetter.createUser(any(), any(), any(), any())} answers {
+        every { mockDataGetter.createUser(any(), any(), any(), any()) } answers {
             lastArg<(String) -> Unit>().invoke(email)
         }
         every { mockDataGetter.getUserData(any(), any()) } answers {secondArg<(User) -> Unit>().invoke(User())}
-        every { mockDataGetter.getCurrentUser() } answers {null }
+        every { mockDataGetter.getCurrentUser() } answers { null }
         every { mockDataGetter.setSubFieldValue(any(), any(), any(), any()) } answers {}
         every { mockDataGetter.updateFieldInt(any(), any(), any(), any()) } answers {}
         every { mockDataGetter.setFieldValue(any(), any(), any()) } answers {}
@@ -98,7 +98,7 @@ class CreateProfileActivityTest {
 
        onView(withId(R.id.createButton)).perform(click())
 
-       Intents.intended(IntentMatchers.hasComponent(ProfileActivity::class.java.name))
+       Intents.intended(IntentMatchers.hasComponent(MyProfileActivity::class.java.name))
        Intents.intended(IntentMatchers.hasExtra("email", mockEmail))
     }
 

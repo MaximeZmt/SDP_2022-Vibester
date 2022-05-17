@@ -3,18 +3,20 @@ package ch.sdp.vibester.model
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Adapter
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
+import ch.sdp.vibester.helper.AdapterHelper
 
 
 /**
  * SongListAdapter to set correct/wrong guessed songs in the game.
  */
 class SongListAdapter constructor( private val incorrectSongList: ArrayList<String>,
-                                   private val correctSongList: ArrayList<String> ):
+                                   correctSongList: ArrayList<String> ):
     RecyclerView.Adapter<SongListAdapter.SongListViewHolder>() {
     private val songList: ArrayList<String> = arrayListOf()
 
@@ -27,9 +29,9 @@ class SongListAdapter constructor( private val incorrectSongList: ArrayList<Stri
      * Create a RecycleView layout with the Song view as an item
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SongListViewHolder {
-        val view: View = LayoutInflater.from(parent.context)
-            .inflate(R.layout.song_item_layout, parent, false)
-        return SongListViewHolder(view)
+        return SongListViewHolder(
+            AdapterHelper().createViewForViewHolder(parent, R.layout.song_item_layout)
+        )
     }
 
     override fun onBindViewHolder(holder: SongListViewHolder, position: Int) {
@@ -53,18 +55,13 @@ class SongListAdapter constructor( private val incorrectSongList: ArrayList<Stri
             val downloadSongBtn = itemView.findViewById<Button>(R.id.song_download)
 
             downloadSongBtn.setOnClickListener {
-                changeBtnToImage()
+                AdapterHelper().changeBtnToImageHelper(R.id.song_download, R.id.song_download_done, itemView)
             }
 
             // Make background red if song is guessed incorrectly
-            if(songName in incorrectSongList ){
-                itemView.setBackgroundResource(R.color.light_coral);
+            if(songName in incorrectSongList) {
+                itemView.setBackgroundResource(R.color.light_coral)
             }
-        }
-
-        private fun changeBtnToImage(){
-            itemView.findViewById<Button>(R.id.song_download).visibility = View.INVISIBLE
-            itemView.findViewById<ImageView>(R.id.song_download_done).visibility = View.VISIBLE
         }
 
     }

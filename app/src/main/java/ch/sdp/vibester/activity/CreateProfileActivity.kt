@@ -8,7 +8,6 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.R
-import ch.sdp.vibester.TestMode
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.database.ImageGetter
@@ -50,7 +49,7 @@ class CreateProfileActivity : AppCompatActivity() {
     }
 
     private fun startNewActivity(email: String) {
-        val newIntent = Intent(this, ProfileActivity::class.java)
+        val newIntent = Intent(this, MyProfileActivity::class.java)
         newIntent.putExtra("email", email)
 
         startActivity(newIntent)

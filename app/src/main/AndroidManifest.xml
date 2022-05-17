@@ -44,9 +44,6 @@
             android:name=".activity.DownloadActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.CreateProfileActivity"
-            android:exported="false" />
-        <activity
             android:name=".activity.BuzzerSetupActivity"
             android:exported="false" />
         <activity

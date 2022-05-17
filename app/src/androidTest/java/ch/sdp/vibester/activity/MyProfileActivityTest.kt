@@ -2,8 +2,6 @@ package ch.sdp.vibester.activity
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
-import androidx.core.widget.ImageViewCompat
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
@@ -26,8 +24,6 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import io.mockk.every
 import io.mockk.mockk
-import net.glxn.qrgen.core.scheme.Url
-import org.hamcrest.CoreMatchers.not
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -131,7 +127,7 @@ class MyProfileActivityTest {
         val scn: ActivityScenario<MyProfileActivity> = ActivityScenario.launch(intent)
         onView(withId(R.id.profile_scores)).perform(click())
 
-        onView(withId(R.id.profileStatistics)).check(matches(isDisplayed()))
+        onView(withId(R.id.profile_statistics)).check(matches(isDisplayed()))
 
         onView(withId(R.id.profile_top_tracks)).check(matches(withText(inputProfile.scores.getOrDefault("top tracks", 0).toString())))
         onView(withId(R.id.profile_kpop)).check(matches(withText(inputProfile.scores.getOrDefault("kpop", 0).toString())))
@@ -281,7 +277,7 @@ class MyProfileActivityTest {
         onView(withId(R.id.qrCode_returnToProfile)).perform(click())
         onView(withId(R.id.myCardView)).check(matches(isDisplayed()))
 
-        onView(withId(R.id.logout)).perform(scrollTo(), click())
+        onView(withId(R.id.profile_logout)).perform(scrollTo(), click())
         onView(withId(R.id.fragment)).check(matches(isDisplayed()))
     }
 

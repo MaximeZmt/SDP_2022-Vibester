@@ -23,6 +23,7 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import io.mockk.every
 import io.mockk.mockk
+import org.hamcrest.CoreMatchers.not
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -106,7 +107,7 @@ class MyProfileActivityTest {
  */
 
     @Test
-    fun clickScoresShowScores() {
+    fun showScoresByDefaultClickScoresCloseIt() {
         val scorePerGenre: Map<String, Int> = mapOf(
             "top tracks" to 1,
             "kpop" to 2,
@@ -124,9 +125,6 @@ class MyProfileActivityTest {
         createMockImageGetter()
 
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
-        onView(withId(R.id.profile_scores)).perform(click())
-
-        onView(withId(R.id.profileStatistics)).check(matches(isDisplayed()))
 
         onView(withId(R.id.profile_top_tracks)).check(matches(withText(inputProfile.scores.getOrDefault("top tracks", 0).toString())))
         onView(withId(R.id.profile_kpop)).check(matches(withText(inputProfile.scores.getOrDefault("kpop", 0).toString())))
@@ -134,6 +132,10 @@ class MyProfileActivityTest {
         onView(withId(R.id.profile_bts)).check(matches(withText(inputProfile.scores.getOrDefault("BTS", 0).toString())))
         onView(withId(R.id.profile_imagine_dragons)).check(matches(withText(inputProfile.scores.getOrDefault("Imagine Dragons", 0).toString())))
         onView(withId(R.id.profile_billie_eilish)).check(matches(withText(inputProfile.scores.getOrDefault("Billie Eilish", 0).toString())))
+
+        onView(withId(R.id.profile_scores)).perform(click())
+        onView(withId(R.id.profileStatistics)).check(matches(not(isDisplayed())))
+
     }
 
     @Test

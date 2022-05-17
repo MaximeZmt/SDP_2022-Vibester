@@ -133,7 +133,29 @@ class MyProfileActivityTest {
         onView(withId(R.id.profile_bts)).check(matches(withText(inputProfile.scores.getOrDefault("BTS", 0).toString())))
         onView(withId(R.id.profile_imagine_dragons)).check(matches(withText(inputProfile.scores.getOrDefault("Imagine Dragons", 0).toString())))
         onView(withId(R.id.profile_billie_eilish)).check(matches(withText(inputProfile.scores.getOrDefault("Billie Eilish", 0).toString())))
+    }
 
+    @Test
+    fun checkFriendsAndScoresBtn() {
+        val friendsMap: Map<String, Boolean> = mapOf(
+            "PcViA5HcphxqeSXFcZeP8Mpwkx2" to true
+        )
+        val inputProfile = User("Lalisa Bon", R.string.test_profile_image.toString(), "lisa@test.com",
+            12, friends = friendsMap)
+        val ctx = ApplicationProvider.getApplicationContext() as Context
+        val intent = Intent(ctx, MyProfileActivity::class.java)
+
+        createMockDataGetter(inputProfile)
+        createMockAuthenticator()
+        createMockImageGetter()
+
+        val scn: ActivityScenario<MyProfileActivity> = ActivityScenario.launch(intent)
+
+        onView(withId(R.id.profile_friends)).perform(click())
+        onView(withId(R.id.profile_scroll_stat)).check(matches(not(isDisplayed())))
+
+        onView(withId(R.id.profile_scores)).perform(click())
+        onView(withId(R.id.profile_scroll_stat)).check(matches(isDisplayed()))
     }
 
     @Test

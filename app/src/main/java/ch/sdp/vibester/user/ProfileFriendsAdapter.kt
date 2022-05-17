@@ -34,8 +34,12 @@ class ProfileFriendsAdapter constructor(
             itemView.findViewById<ImageView>(R.id.profile_friends_profile_image).loadImg(user.image)
         }
 
+        init {
+            itemView.setOnClickListener(this)
+        }
+
         override fun onClick(v: View?) {
-            TODO("Not yet implemented")
+            AdapterHelper().onClickHelper(adapterPosition, listener)
         }
 
     }

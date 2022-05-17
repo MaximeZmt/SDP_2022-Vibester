@@ -252,6 +252,8 @@ open class ProfileActivity : AppCompatActivity(), OnItemClickListener {
     }
 
     override fun onItemClick(position: Int) {
-        TODO("Not yet implemented")
+        val intent = Intent(this, PublicProfileActivity::class.java)
+        intent.putExtra("UserId", friends?.get(position)?.uid)
+        startActivity(intent)
     }
 }

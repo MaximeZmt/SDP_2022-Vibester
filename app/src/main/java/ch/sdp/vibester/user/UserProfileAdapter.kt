@@ -61,9 +61,7 @@ class UserProfileAdapter constructor(
     /**
      * Get amount of users displayed
      */
-    override fun getItemCount(): Int {
-        return users.size
-    }
+    override fun getItemCount() = users.size
 
 
 

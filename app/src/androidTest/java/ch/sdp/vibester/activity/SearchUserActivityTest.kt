@@ -135,8 +135,7 @@ class SearchUserActivityTest {
         onView(withId(R.id.searchList))
             .perform(
                 RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                    2,
-                    click()
+                    2, click()
                 )
             )
 

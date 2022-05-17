@@ -2,6 +2,7 @@ package ch.sdp.vibester.activity
 
 import android.content.Context
 import android.content.Intent
+import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
@@ -9,6 +10,7 @@ import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.scrollTo
 import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
@@ -175,7 +177,14 @@ class MyProfileActivityTest {
         val scn: ActivityScenario<MyProfileActivity> = ActivityScenario.launch(intent)
 
         onView(withId(R.id.profile_friends)).perform(click())
-        //onView(withId())
+        onView(withId(R.id.profile_friendsList))
+            .perform(
+                RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                    1, click()
+                )
+            )
+
+        onView(withId(R.id.profileContent)).check(matches(isDisplayed()))
     }
 
     @Test

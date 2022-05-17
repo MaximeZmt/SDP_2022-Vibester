@@ -171,7 +171,7 @@ class AuthenticationActivityTest {
         onView(withId(R.id.password)).perform(ViewActions.typeText(password), closeSoftKeyboard())
         onView(withId(R.id.logIn)).perform(click())
 
-        Intents.intended(IntentMatchers.hasComponent(ProfileActivity::class.java.name))
+        Intents.intended(IntentMatchers.hasComponent(MyProfileActivity::class.java.name))
     }
 
     @Test
@@ -191,7 +191,7 @@ class AuthenticationActivityTest {
         onView(withId(R.id.username)).perform(ViewActions.typeText(username), closeSoftKeyboard())
         onView(withId(R.id.password)).perform(ViewActions.typeText(password), closeSoftKeyboard())
         onView(withId(R.id.createAcc)).perform(click())
-        Intents.intended(IntentMatchers.hasComponent(ProfileActivity::class.java.name))
+        Intents.intended(IntentMatchers.hasComponent(MyProfileActivity::class.java.name))
     }
 
 }

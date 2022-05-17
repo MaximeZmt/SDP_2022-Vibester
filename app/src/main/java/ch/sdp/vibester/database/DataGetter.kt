@@ -98,7 +98,6 @@ class DataGetter @Inject constructor() {
      * This function creates a new user account in the database
      * @param email the email of the new user
      * @param username the username of the new user
-     * @param callback function to be called when the the user has been created
      * @param uid id of the new user
      */
     fun createUser(email: String, username: String, uid: String) {

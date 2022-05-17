@@ -214,7 +214,7 @@ class AuthenticationActivity : AppCompatActivity() {
      * Start ProfileActivity
      */
     private fun startProfileActivity() {
-        val newIntent = Intent(this, ProfileActivity::class.java)
+        val newIntent = Intent(this, MyProfileActivity::class.java)
         startActivity(newIntent)
     }
 

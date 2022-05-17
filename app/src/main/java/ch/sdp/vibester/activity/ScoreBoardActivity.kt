@@ -1,7 +1,6 @@
 package ch.sdp.vibester.activity
 
 import android.content.ContentValues
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -13,7 +12,10 @@ import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
+import ch.sdp.vibester.auth.FireBaseAuthenticator
+import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.database.Database
+import ch.sdp.vibester.database.ImageGetter
 import ch.sdp.vibester.user.OnItemClickListener
 import ch.sdp.vibester.user.User
 import ch.sdp.vibester.user.UserScoreboardAdapter
@@ -22,13 +24,22 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ScoreBoardActivity : AppCompatActivity(), OnItemClickListener {
     private val dbRef: DatabaseReference = Database.get().getReference("users")
-    private var players: MutableList<User>? = null
+    private var players: MutableList<User> = mutableListOf()
     private var userScoreboardAdapter: UserScoreboardAdapter? = null
     private var genre: String = ""
+    @Inject
+    lateinit var dataGetter: DataGetter
+
+    @Inject
+    lateinit var authenticator: FireBaseAuthenticator
+
+    @Inject
+    lateinit var imageGetter: ImageGetter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,7 +70,7 @@ class ScoreBoardActivity : AppCompatActivity(), OnItemClickListener {
     private fun setupRecycleView() {
         findViewById<RecyclerView>(R.id.recycler_view).apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = players?.let { UserScoreboardAdapter(it, genre, this@ScoreBoardActivity) }
+            adapter = UserScoreboardAdapter(players, genre, this@ScoreBoardActivity)
             setHasFixedSize(true)
         }
     }
@@ -74,8 +85,8 @@ class ScoreBoardActivity : AppCompatActivity(), OnItemClickListener {
                         (players as? ArrayList<User>)?.add(player)
                     }
                 }
-                players = players?.let { replaceRankingByScore(it) }
-                players = players?.sortedByDescending { it.ranking } as MutableList<User>?
+                players = replaceRankingByScore(players)
+                players = players.sortedByDescending { it.ranking } as MutableList<User>
                 showPlayersPosition(players)
             }
 
@@ -104,9 +115,7 @@ class ScoreBoardActivity : AppCompatActivity(), OnItemClickListener {
      * go to the profile of the player at index position
      */
     override fun onItemClick(position: Int) {
-        val intent = Intent(this, PublicProfileActivity::class.java)
-        intent.putExtra("UserId", players?.get(position)?.uid)
-        intent.putExtra("ScoresOrFriends", "Scores" )
-        startActivity(intent)
+        val uid = players.get(position).uid
+        PublicProfileActivity(this, uid, "Scores" , imageGetter, dataGetter, authenticator).setProfileDialog()
     }
 }

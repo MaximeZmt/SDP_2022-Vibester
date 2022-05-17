@@ -13,10 +13,10 @@ import java.util.concurrent.TimeUnit
 class ImageHelper {
 
     /**
+     * Set the image of imageURI in avatar of given size
      * @param imageURI uri of the image
      * @param avatar ImageView
      * @param imageSize Int
-     * set the image of imageURI in avatar of given size
      */
     fun setImage(imageURI: Uri, avatar: ImageView, imageSize: Int) {
         CoroutineScope(Dispatchers.Main).launch {

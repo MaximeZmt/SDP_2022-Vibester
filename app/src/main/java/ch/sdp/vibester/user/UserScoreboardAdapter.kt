@@ -11,7 +11,7 @@ import ch.sdp.vibester.helper.AdapterHelper
 import ch.sdp.vibester.helper.loadImg
 
 /**
- * set users list in recycleView in scoreboard
+ * Set users list in recycleView in scoreboard
  */
 class UserScoreboardAdapter(
     playersInit: MutableList<User>, private val genre: String,

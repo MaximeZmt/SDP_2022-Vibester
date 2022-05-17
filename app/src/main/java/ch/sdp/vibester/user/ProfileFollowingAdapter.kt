@@ -10,7 +10,7 @@ import ch.sdp.vibester.helper.AdapterHelper
 import ch.sdp.vibester.helper.loadImg
 
 /**
- * set friends in userProfile with profile photo and username in RecycleView.
+ * Set friends in userProfile with profile photo and username in RecycleView.
  */
 class ProfileFollowingAdapter constructor(
     private val following: MutableList<User>,
@@ -33,6 +33,7 @@ class ProfileFollowingAdapter constructor(
     inner class ProfileFollowingViewHolder(itemView: View): RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
         /**
+         * bind the view with information given by user
          * @param user with all the parameters
          */
         fun bind(user: User) {

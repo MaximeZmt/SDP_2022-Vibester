@@ -194,7 +194,8 @@ class QrScanningActivity : AppCompatActivity() {
                 camera.stop()
                 if (isTest || scannedValue in uidList){
                     if (!isTest) {
-                        usersRepo.setSubFieldValue(FireBaseAuthenticator().getCurrUID(),"following", scannedValue, true)
+                        usersRepo.setSubFieldValue(FireBaseAuthenticator().getCurrUID(),
+                            "following", scannedValue, true)
                     }
                     Toast.makeText(this@QrScanningActivity, getString(R.string.qrScanning_newFriend), Toast.LENGTH_SHORT).show()
                     startActivityWExtra(Intent(this@QrScanningActivity, SearchUserActivity::class.java), "isSuccess", true)

@@ -107,7 +107,7 @@ class ScoreBoardActivity : AppCompatActivity(), OnItemClickListener {
     override fun onItemClick(position: Int) {
         val intent = Intent(this, PublicProfileActivity::class.java)
         intent.putExtra("UserId", players?.get(position)?.uid)
-        intent.putExtra("ScoresOrFollowing", R.string.scores.toString() )
+        intent.putExtra("ScoresOrFollowing", R.string.profile_scores.toString() )
         startActivity(intent)
     }
 }

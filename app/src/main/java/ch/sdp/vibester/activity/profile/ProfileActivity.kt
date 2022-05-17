@@ -51,9 +51,6 @@ open class ProfileActivity : AppCompatActivity(), OnItemClickListener {
     private var followings: MutableList<User> ? = null
     private var profileFriendsAdapter: ProfileFollowingAdapter?= null
 
-    /**
-     * Generic onCreate method belonging to ProfileActivity.
-     */
     override fun onCreate(savedInstanceState: Bundle?) {
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         super.onCreate(savedInstanceState)
@@ -105,6 +102,11 @@ open class ProfileActivity : AppCompatActivity(), OnItemClickListener {
         }
     }
 
+    /**
+     * @param btnId Id of the button (either following or scores)
+     * @param show id of the view to show
+     * @param hide id of the view to hide
+     */
     private fun setFollowingScoresBtnListener(btnId: Int, show: Int, hide: Int) {
         findViewById<Button>(btnId).setOnClickListener {
             showAHideB(show, hide)

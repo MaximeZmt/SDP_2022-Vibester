@@ -162,7 +162,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:backgroundTint="@color/cg_blue"
-                    android:text="@string/scores" />
+                    android:text="@string/profile_scores" />
 
                 <Space
                     android:layout_width="100dp"
@@ -174,7 +174,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:backgroundTint="@color/cg_blue"
-                    android:text="@string/following" />
+                    android:text="@string/profile_following" />
 
                 <Space
                     android:layout_width="wrap_content"

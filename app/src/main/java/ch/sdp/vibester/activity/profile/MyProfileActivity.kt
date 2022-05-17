@@ -54,11 +54,18 @@ class MyProfileActivity : ProfileActivity() {
      */
     private fun setChangeImageBtnListener() {
         findViewById<ImageView>(R.id.avatar).setOnClickListener {
-            showGeneralDialog( R.string.verify_change_profile_pic.toString(), false)
+            showDialogWhenChangeImage()
         }
         findViewById<CardView>(R.id.myCardView).setOnClickListener {
-            showGeneralDialog( R.string.verify_change_profile_pic.toString(), false)
+            showDialogWhenChangeImage()
         }
+    }
+
+    /**
+     * helper function to de-duplicate
+     */
+    private fun showDialogWhenChangeImage() {
+        showGeneralDialog(R.string.verify_change_profile_pic.toString(), false)
     }
 
     /**

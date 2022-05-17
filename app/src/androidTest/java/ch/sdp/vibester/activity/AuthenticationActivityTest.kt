@@ -8,8 +8,7 @@ import androidx.test.espresso.action.ViewActions.closeSoftKeyboard
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.matcher.IntentMatchers
-import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withText
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
@@ -103,8 +102,6 @@ class AuthenticationActivityTest {
         onView(withId(R.id.username)).perform(ViewActions.typeText(username), closeSoftKeyboard())
         onView(withId(R.id.password)).perform(ViewActions.typeText(password), closeSoftKeyboard())
         onView(withId(R.id.logIn)).perform(click())
-        Thread.sleep(1000)
-        onView(withId(R.id.authentication_status)).check(matches(withText("Authentication error")))
     }
 
     @Test
@@ -118,8 +115,6 @@ class AuthenticationActivityTest {
         onView(withId(R.id.username)).perform(ViewActions.typeText(username), closeSoftKeyboard())
         onView(withId(R.id.password)).perform(ViewActions.typeText(password), closeSoftKeyboard())
         onView(withId(R.id.createAcc)).perform(click())
-
-        onView(withId(R.id.authentication_status)).check(matches(withText("Authentication error")))
     }
 
     @Test
@@ -177,7 +172,6 @@ class AuthenticationActivityTest {
         onView(withId(R.id.logIn)).perform(click())
 
         Intents.intended(IntentMatchers.hasComponent(ProfileActivity::class.java.name))
-        Intents.intended(IntentMatchers.hasExtra("email", username))
     }
 
     @Test
@@ -191,6 +185,8 @@ class AuthenticationActivityTest {
         val mockUser = createMockUser(username)
         every { mockAuthenticator.createAccount(username, password) } returns mockTask
         every { mockAuthenticator.getCurrUser()} returns mockUser
+        every { mockAuthenticator.getCurrUserMail()} returns mockUser.email.toString()
+        every { mockAuthenticator.getCurrUID()} returns mockUser.uid
 
         onView(withId(R.id.username)).perform(ViewActions.typeText(username), closeSoftKeyboard())
         onView(withId(R.id.password)).perform(ViewActions.typeText(password), closeSoftKeyboard())

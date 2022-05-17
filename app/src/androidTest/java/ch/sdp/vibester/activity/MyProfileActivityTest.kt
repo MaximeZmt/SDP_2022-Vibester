@@ -138,7 +138,7 @@ class MyProfileActivityTest {
     @Test
     fun checkFriendsAndScoresBtn() {
         val friendsMap: Map<String, Boolean> = mapOf(
-            "PcViA5HcphxqeSXFcZeP8Mpwkx2" to true
+            "friend" to true
         )
         val inputProfile = User("Lalisa Bon", R.string.test_profile_image.toString(), "lisa@test.com",
             12, friends = friendsMap)
@@ -156,6 +156,26 @@ class MyProfileActivityTest {
 
         onView(withId(R.id.profile_scores)).perform(click())
         onView(withId(R.id.profile_scroll_stat)).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun friendsRecycleViewClickTest() {
+        val friendsMap: Map<String, Boolean> = mapOf(
+            "friend1" to true, "friend2" to true
+        )
+        val inputProfile = User("Lalisa Bon", R.string.test_profile_image.toString(), "lisa@test.com",
+            12, friends = friendsMap)
+        val ctx = ApplicationProvider.getApplicationContext() as Context
+        val intent = Intent(ctx, MyProfileActivity::class.java)
+
+        createMockDataGetter(inputProfile)
+        createMockAuthenticator()
+        createMockImageGetter()
+
+        val scn: ActivityScenario<MyProfileActivity> = ActivityScenario.launch(intent)
+
+        onView(withId(R.id.profile_friends)).perform(click())
+        //onView(withId())
     }
 
     @Test

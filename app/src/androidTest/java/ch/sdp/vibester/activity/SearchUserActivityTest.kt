@@ -132,7 +132,7 @@ class SearchUserActivityTest {
 
         val scn: ActivityScenario<SearchUserActivity> = ActivityScenario.launch(intent)
 
-        onView((withId(R.id.searchList)))
+        onView(withId(R.id.searchList))
             .perform(
                 RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                     2,

@@ -1,10 +1,6 @@
-package ch.sdp.vibester.activity
+package ch.sdp.vibester.activity.profile
 
 import android.os.Bundle
-import android.view.View.INVISIBLE
-import android.view.View.VISIBLE
-import android.widget.TableLayout
-import androidx.core.widget.NestedScrollView
 import ch.sdp.vibester.R
 
 /** profile page of a user with only public information */

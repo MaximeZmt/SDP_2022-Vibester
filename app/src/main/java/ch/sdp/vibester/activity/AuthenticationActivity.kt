@@ -25,7 +25,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
-
+import net.datafaker.Faker
 
 @AndroidEntryPoint
 class AuthenticationActivity : AppCompatActivity() {
@@ -38,6 +38,8 @@ class AuthenticationActivity : AppCompatActivity() {
 
     @Inject
     lateinit var authenticator: FireBaseAuthenticator
+
+    val faker: Faker = Faker()
 
     private lateinit var auth: FirebaseAuth
 
@@ -126,7 +128,7 @@ class AuthenticationActivity : AppCompatActivity() {
                 googleAuthFirebase(account.idToken!!)
             } catch (e: ApiException) {
                 Log.d(getString(R.string.log_tag), "Google sign in failed", e)
-                updateOnFail()
+                updateOnFail("Google SignIn authentication failed")
             }
         }
     }
@@ -148,7 +150,6 @@ class AuthenticationActivity : AppCompatActivity() {
         auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
                     Log.d(getString(R.string.log_tag), "signInWithCredential:success")
                     if (task.getResult().additionalUserInfo != null) {
                         createAcc = task.getResult().additionalUserInfo!!.isNewUser
@@ -156,7 +157,6 @@ class AuthenticationActivity : AppCompatActivity() {
                     }
                     updateOnSuccess()
                 } else {
-                    // fail
                     Log.d(getString(R.string.log_tag), "signInWithCredential:failure", task.exception)
                     updateOnFail()
                 }
@@ -221,21 +221,38 @@ class AuthenticationActivity : AppCompatActivity() {
      * @param arg : The activity class to start
      */
     private fun startNewCustomActivity() {
-        val newIntent = Intent(this,ProfileActivity::class.java)
+        val newIntent = Intent(this, ProfileActivity::class.java)
         startActivity(newIntent)
     }
 
-    private fun createAccount(){
-        dataGetter.createUser(authenticator.getCurrUserMail(), "fake", this::startNewCustomActivity, authenticator.getCurrUID())
+    /**
+     * Random username generator
+     */
+    private fun usernameGenerator(): String {
+        return faker.color().name() + "." + faker.animal().name()
     }
 
+    /**
+     * Create an account with new email, uid and random username
+     */
+    private fun createAccount(){
+        val username = usernameGenerator()
+        dataGetter.createUser(authenticator.getCurrUserMail(), username, authenticator.getCurrUID())
+    }
+
+    /**
+     * Toast on successful logIn
+     */
     private fun updateOnSuccess(){
-        Toast.makeText(baseContext, "You have logged in successfully", Toast.LENGTH_SHORT).show()
+        Toast.makeText(baseContext, "Successful login", Toast.LENGTH_SHORT).show()
         startNewCustomActivity()
     }
 
-    private fun updateOnFail(){
-        Toast.makeText(baseContext, "Authentication failed", Toast.LENGTH_SHORT).show()
+    /**
+     *  Toast on failed authentication
+     */
+    private fun updateOnFail(text: String = "Authentication failed"){
+        Toast.makeText(baseContext, text, Toast.LENGTH_SHORT).show()
     }
     
 }

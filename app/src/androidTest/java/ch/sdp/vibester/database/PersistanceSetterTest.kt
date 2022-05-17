@@ -6,7 +6,7 @@ import org.junit.Test
 class PersistanceSetterTest {
     @Test
     fun testPersistance() {
-        PersistanceSetter.setPersistance()
-        assertEquals(true, PersistanceSetter.getPersistance())
+        PersistenceSetter.setPersistence()
+        assertEquals(true, PersistenceSetter.getPersistence())
     }
 }

@@ -79,13 +79,11 @@ class SearchUserActivity : AppCompatActivity(), OnItemClickListener {
         }
 
         searchEditText!!.addTextChangedListener(object:TextWatcher{
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 searchForUsers(p0.toString())
             }
-            override fun afterTextChanged(p0: Editable?) {
-            }
+            override fun afterTextChanged(p0: Editable?) {}
         })
     }
 
@@ -115,7 +113,7 @@ class SearchUserActivity : AppCompatActivity(), OnItemClickListener {
     override fun onItemClick(position: Int) {
         val intent = Intent(this, PublicProfileActivity::class.java)
         intent.putExtra("UserId", users[position].uid)
-        intent.putExtra("ScoresOrFriends", "Friends")
+        intent.putExtra("ScoresOrFollowing", R.string.following.toString())
         startActivity(intent)
     }
 }

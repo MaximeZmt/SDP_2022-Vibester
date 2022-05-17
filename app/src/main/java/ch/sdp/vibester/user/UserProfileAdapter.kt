@@ -1,6 +1,5 @@
 package ch.sdp.vibester.user
 
-import android.graphics.Bitmap
 import android.net.Uri
 import android.view.View
 import android.view.ViewGroup
@@ -29,7 +28,7 @@ class UserProfileAdapter constructor(
     RecyclerView.Adapter<UserProfileAdapter.UserProfileViewHolder>() {
 
     private val currentUser = authenticator.getCurrUser()
-    private var userFriends: Array<String> = arrayOf()
+    private var userFollowing: Array<String> = arrayOf()
     private val imageSize = 100
 
     init {
@@ -38,7 +37,7 @@ class UserProfileAdapter constructor(
 
     // Callback for getUserData
     private fun setFriends(user:User){
-        userFriends = user.friends.keys.toTypedArray()
+        userFollowing = user.following.keys.toTypedArray()
     }
 
     /**
@@ -81,15 +80,15 @@ class UserProfileAdapter constructor(
             itemView.findViewById<TextView>(R.id.search_user_username).text = user.username
 
             imageGetter.fetchImage("profileImg/${user.uid}", this::setImage)
-            val addFriendBtn = itemView.findViewById<Button>(R.id.addFriendBtn)
+            val addFriendBtn = itemView.findViewById<Button>(R.id.addFollowingBtn)
 
-            if (userFriends.isNotEmpty() && user.uid in userFriends) {
+            if (userFollowing.isNotEmpty() && user.uid in userFollowing) {
                 changeBtnToImage()
             }
             else {
                 addFriendBtn.setOnClickListener {
                     if (currentUser != null) {
-                        dataGetter.setSubFieldValue(currentUser.uid, "friends", user.uid,true)
+                        dataGetter.setSubFieldValue(currentUser.uid, "following", user.uid,true)
                         changeBtnToImage()
                     }
                 }
@@ -104,7 +103,7 @@ class UserProfileAdapter constructor(
 
 
         private fun changeBtnToImage() {
-            AdapterHelper().changeBtnToImageHelper(R.id.addFriendBtn, R.id.addedFriendIcon, itemView)
+            AdapterHelper().changeBtnToImageHelper(R.id.addFollowingBtn, R.id.addedFollowingIcon, itemView)
         }
 
         init {

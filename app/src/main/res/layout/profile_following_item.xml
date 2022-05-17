@@ -4,17 +4,17 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/profile_friends_profile_image"
+        android:id="@+id/profile_following_profile_image"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:src="@drawable/logo">
     </ImageView>
 
     <TextView
-        android:id="@+id/profile_friends_username"
+        android:id="@+id/profile_following_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/profile_friends_profile_image"
+        android:layout_toEndOf="@+id/profile_following_profile_image"
         android:layout_centerInParent="true"
         android:layout_marginStart="12dp"
         android:text="@string/profile_username"

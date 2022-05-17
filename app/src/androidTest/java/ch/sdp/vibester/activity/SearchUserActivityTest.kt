@@ -13,7 +13,6 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.matcher.BoundedMatcher
-import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
@@ -49,7 +48,7 @@ class SearchUserActivityTest {
         val mockUser1 = User("mockUser1", uid = "mockUser1uid")
         val mockUser2 = User("mockUser2", uid = "mockUser2uid")
         val mockUser3 = User("mockUser3", uid = "mockUser3uid")
-        val mockUser = User("mockUser", uid = "mockUseruid", friends = mapOf(Pair(mockUser2.uid,true), Pair(mockUser3.uid,true)))
+        val mockUser = User("mockUser", uid = "mockUseruid", following = mapOf(Pair(mockUser2.uid,true), Pair(mockUser3.uid,true)))
 
         val mockUIDs = arrayListOf<String>("mockUser1uid","mockUser2uid","mockUser3uid")
         val mockUsers = arrayListOf<User>(mockUser1, mockUser2, mockUser3)
@@ -173,8 +172,8 @@ class SearchUserActivityTest {
 
         val scn: ActivityScenario<SearchUserActivity> = ActivityScenario.launch(intent)
 
-        checkRecyclerSubViews(R.id.searchList, 2, withEffectiveVisibility(Visibility.INVISIBLE), R.id.addFriendBtn)
-        checkRecyclerSubViews(R.id.searchList, 2, withEffectiveVisibility(Visibility.VISIBLE), R.id.addedFriendIcon)
+        checkRecyclerSubViews(R.id.searchList, 2, withEffectiveVisibility(Visibility.INVISIBLE), R.id.addFollowingBtn)
+        checkRecyclerSubViews(R.id.searchList, 2, withEffectiveVisibility(Visibility.VISIBLE), R.id.addedFollowingIcon)
     }
 
     @Test
@@ -186,16 +185,16 @@ class SearchUserActivityTest {
 
         val scn: ActivityScenario<SearchUserActivity> = ActivityScenario.launch(intent)
 
-        checkRecyclerSubViews(R.id.searchList, 0, withEffectiveVisibility(Visibility.VISIBLE), R.id.addFriendBtn)
-        checkRecyclerSubViews(R.id.searchList, 0, withEffectiveVisibility(Visibility.INVISIBLE), R.id.addedFriendIcon)
+        checkRecyclerSubViews(R.id.searchList, 0, withEffectiveVisibility(Visibility.VISIBLE), R.id.addFollowingBtn)
+        checkRecyclerSubViews(R.id.searchList, 0, withEffectiveVisibility(Visibility.INVISIBLE), R.id.addedFollowingIcon)
         onView(withId(R.id.searchList))
             .perform(
                 RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                     0,
-                    clickOnViewChild(R.id.addFriendBtn))
+                    clickOnViewChild(R.id.addFollowingBtn))
             )
-        checkRecyclerSubViews(R.id.searchList, 0, withEffectiveVisibility(Visibility.INVISIBLE), R.id.addFriendBtn)
-        checkRecyclerSubViews(R.id.searchList, 0, withEffectiveVisibility(Visibility.VISIBLE), R.id.addedFriendIcon)
+        checkRecyclerSubViews(R.id.searchList, 0, withEffectiveVisibility(Visibility.INVISIBLE), R.id.addFollowingBtn)
+        checkRecyclerSubViews(R.id.searchList, 0, withEffectiveVisibility(Visibility.VISIBLE), R.id.addedFollowingIcon)
     }
 
     /**

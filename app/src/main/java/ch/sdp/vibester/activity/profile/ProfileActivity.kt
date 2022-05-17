@@ -20,7 +20,7 @@ import ch.sdp.vibester.database.ImageGetter
 import ch.sdp.vibester.helper.ImageHelper
 import ch.sdp.vibester.helper.IntentSwitcher
 import ch.sdp.vibester.user.OnItemClickListener
-import ch.sdp.vibester.user.ProfileFriendsAdapter
+import ch.sdp.vibester.user.ProfileFollowingAdapter
 import ch.sdp.vibester.user.User
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.zxing.BarcodeFormat
@@ -48,8 +48,8 @@ open class ProfileActivity : AppCompatActivity(), OnItemClickListener {
     private val imageSize = 1000
     val imageRequestCode = 100
 
-    private var friends: MutableList<User> ? = null
-    private var profileFriendsAdapter: ProfileFriendsAdapter?= null
+    private var followings: MutableList<User> ? = null
+    private var profileFriendsAdapter: ProfileFollowingAdapter?= null
 
     /**
      * Generic onCreate method belonging to ProfileActivity.
@@ -61,26 +61,26 @@ open class ProfileActivity : AppCompatActivity(), OnItemClickListener {
         setContentView(R.layout.activity_profile)
 
         setupRecycleViewForFriends()
-        friends = ArrayList()
+        followings = ArrayList()
 
         setRetToMainBtnListener()
-        setFriendsScoresBtnListener(R.id.profile_scores, R.id.profile_scroll_stat, R.id.profile_scroll_friends)
-        setFriendsScoresBtnListener(R.id.profile_friends, R.id.profile_scroll_friends, R.id.profile_scroll_stat)
+        setFollowingScoresBtnListener(R.id.profile_scores, R.id.profile_scroll_stat, R.id.profile_scroll_following)
+        setFollowingScoresBtnListener(R.id.profile_following, R.id.profile_scroll_following, R.id.profile_scroll_stat)
 
         queryDatabase()
     }
 
     private fun setupRecycleViewForFriends() {
-        findViewById<RecyclerView>(R.id.profile_friendsList).apply {
+        findViewById<RecyclerView>(R.id.profile_followingList).apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = friends?.let { ProfileFriendsAdapter(it, this@ProfileActivity) }
+            adapter = followings?.let { ProfileFollowingAdapter(it, this@ProfileActivity) }
             setHasFixedSize(true)
         }
     }
 
     private fun showFriendsPosition(friends: MutableList<User>?) {
-        profileFriendsAdapter = ProfileFriendsAdapter(friends!!, this)
-        findViewById<RecyclerView>(R.id.profile_friendsList)!!.adapter = profileFriendsAdapter
+        profileFriendsAdapter = ProfileFollowingAdapter(friends!!, this)
+        findViewById<RecyclerView>(R.id.profile_followingList)!!.adapter = profileFriendsAdapter
     }
 
 
@@ -105,7 +105,7 @@ open class ProfileActivity : AppCompatActivity(), OnItemClickListener {
         }
     }
 
-    private fun setFriendsScoresBtnListener(btnId: Int, show: Int, hide: Int) {
+    private fun setFollowingScoresBtnListener(btnId: Int, show: Int, hide: Int) {
         findViewById<Button>(btnId).setOnClickListener {
             showAHideB(show, hide)
         }
@@ -179,19 +179,19 @@ open class ProfileActivity : AppCompatActivity(), OnItemClickListener {
             generateQrCode(user.uid)
         }
 
-        if (user.friends.isNotEmpty()) {
-            loadFriends(user.friends)
+        if (user.following.isNotEmpty()) {
+            loadFollowing(user.following)
         }
 
     }
 
-    private fun loadFriends(friendsMap: Map<String, Boolean>) {
-        friendsMap.forEach { (userId, _) ->  dataGetter.getUserData(userId, this::addFriend)}
-        showFriendsPosition(friends)
+    private fun loadFollowing(followingMap: Map<String, Boolean>) {
+        followingMap.forEach { (userId, _) ->  dataGetter.getUserData(userId, this::addFollowing)}
+        showFriendsPosition(followings)
     }
 
-    private fun addFriend(friend: User) {
-        friends?.add(friend)
+    private fun addFollowing(following: User) {
+        followings?.add(following)
     }
 
     /**
@@ -220,7 +220,7 @@ open class ProfileActivity : AppCompatActivity(), OnItemClickListener {
 
     override fun onItemClick(position: Int) {
         val intent = Intent(this, PublicProfileActivity::class.java)
-        intent.putExtra("UserId", friends?.get(position)?.uid)
+        intent.putExtra("UserId", followings?.get(position)?.uid)
         startActivity(intent)
     }
 }

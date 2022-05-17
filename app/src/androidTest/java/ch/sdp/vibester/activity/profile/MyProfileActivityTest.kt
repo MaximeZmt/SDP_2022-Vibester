@@ -144,7 +144,7 @@ class MyProfileActivityTest {
             "friend" to true
         )
         val inputProfile = User("Lalisa Bon", R.string.test_profile_image.toString(), "lisa@test.com",
-            12, friends = friendsMap)
+            12, following = friendsMap)
         val ctx = ApplicationProvider.getApplicationContext() as Context
         val intent = Intent(ctx, MyProfileActivity::class.java)
 
@@ -154,7 +154,7 @@ class MyProfileActivityTest {
 
         val scn: ActivityScenario<MyProfileActivity> = ActivityScenario.launch(intent)
 
-        onView(withId(R.id.profile_friends)).perform(click())
+        onView(withId(R.id.profile_following)).perform(click())
         onView(withId(R.id.profile_scroll_stat)).check(matches(not(isDisplayed())))
 
         onView(withId(R.id.profile_scores)).perform(click())
@@ -167,7 +167,7 @@ class MyProfileActivityTest {
             "friend1" to true, "friend2" to true
         )
         val inputProfile = User("Lalisa Bon", R.string.test_profile_image.toString(), "lisa@test.com",
-            12, friends = friendsMap)
+            12, following = friendsMap)
         val ctx = ApplicationProvider.getApplicationContext() as Context
         val intent = Intent(ctx, MyProfileActivity::class.java)
 
@@ -177,8 +177,8 @@ class MyProfileActivityTest {
 
         val scn: ActivityScenario<MyProfileActivity> = ActivityScenario.launch(intent)
 
-        onView(withId(R.id.profile_friends)).perform(click())
-        onView(withId(R.id.profile_friendsList))
+        onView(withId(R.id.profile_following)).perform(click())
+        onView(withId(R.id.profile_followingList))
             .perform(
                 RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                     1, click()

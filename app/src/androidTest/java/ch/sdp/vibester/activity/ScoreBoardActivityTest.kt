@@ -67,7 +67,7 @@ class ScoreBoardActivityTest {
             )
 
         onView(withId(R.id.profileContent)).check(matches(isDisplayed()))
-        onView(withId(R.id.profileStatistics)).check(matches(isDisplayed()))
+        onView(withId(R.id.profile_statistics)).check(matches(isDisplayed()))
     }
 
     @Test

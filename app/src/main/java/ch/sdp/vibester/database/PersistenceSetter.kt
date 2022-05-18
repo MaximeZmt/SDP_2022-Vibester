@@ -12,7 +12,7 @@ class PersistenceSetter private constructor(){
         private var alreadyExecuted : Boolean = false
 
         /**
-         * Turn on the persistance
+         * Turn on the persistence
          */
         fun setPersistence(){
             if (!alreadyExecuted) {

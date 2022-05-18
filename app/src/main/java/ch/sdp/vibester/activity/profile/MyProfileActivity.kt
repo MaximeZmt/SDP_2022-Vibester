@@ -62,7 +62,7 @@ class MyProfileActivity : ProfileActivity() {
     }
 
     /**
-     * helper function to de-duplicate
+     * helper function to show dialog 
      */
     private fun showDialogWhenChangeImage() {
         showGeneralDialog(R.string.profile_verify_change_profile_pic.toString(), false)

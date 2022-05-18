@@ -10,11 +10,13 @@ import ch.sdp.vibester.R
 import ch.sdp.vibester.helper.AdapterHelper
 import ch.sdp.vibester.helper.loadImg
 
+/**
+ * Set users list in recycleView in scoreboard
+ */
 class UserScoreboardAdapter(
     playersInit: MutableList<User>, private val genre: String,
     private val listener: OnItemClickListener?
-) :
-    RecyclerView.Adapter<UserScoreboardAdapter.PlayerViewHolder>() {
+): RecyclerView.Adapter<UserScoreboardAdapter.PlayerViewHolder>() {
 
     var players: MutableList<User> = playersInit
 

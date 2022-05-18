@@ -1,4 +1,4 @@
-package ch.sdp.vibester.activity
+package ch.sdp.vibester.activity.profile
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,6 +9,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import ch.sdp.vibester.R
+import ch.sdp.vibester.activity.MainActivity
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.helper.IntentSwitcher
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -50,14 +51,22 @@ class MyProfileActivity : ProfileActivity() {
 
     /**
      * Generic listener for the change profile picture.
+     * NOTES: we need to set both for both the cases where the user profile image is displayed or not
      */
     private fun setChangeImageBtnListener() {
         findViewById<ImageView>(R.id.profile_image_ImageView).setOnClickListener {
-            showGeneralDialog( "Do you want to change your profile picture?", false)
+            showDialogWhenChangeImage()
         }
         findViewById<CardView>(R.id.profile_image_CardView).setOnClickListener {
-            showGeneralDialog( "Do you want to change your profile picture?", false)
+            showDialogWhenChangeImage()
         }
+    }
+
+    /**
+     * helper function to show dialog 
+     */
+    private fun showDialogWhenChangeImage() {
+        showGeneralDialog(R.string.profile_verify_change_profile_pic.toString(), false)
     }
 
     /**

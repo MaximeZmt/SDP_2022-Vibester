@@ -14,6 +14,7 @@ import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
+import ch.sdp.vibester.activity.profile.PublicProfileActivity
 import ch.sdp.vibester.database.Database
 import ch.sdp.vibester.user.OnItemClickListener
 import ch.sdp.vibester.user.User
@@ -107,7 +108,7 @@ class ScoreBoardActivity : AppCompatActivity(), OnItemClickListener {
     override fun onItemClick(position: Int) {
         val intent = Intent(this, PublicProfileActivity::class.java)
         intent.putExtra("UserId", players?.get(position)?.uid)
-        intent.putExtra("ScoresOrFriends", "Scores" )
+        intent.putExtra("ScoresOrFollowing", R.string.profile_scores.toString() )
         startActivity(intent)
     }
 }

@@ -10,10 +10,10 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import ch.sdp.vibester.R
 import ch.sdp.vibester.activity.*
-import ch.sdp.vibester.activity.MyProfileActivity
+import ch.sdp.vibester.activity.profile.MyProfileActivity
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.Database
-import ch.sdp.vibester.database.PersistanceSetter
+import ch.sdp.vibester.database.PersistenceSetter
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -45,7 +45,7 @@ class WelcomeScreenFragment : Fragment(),View.OnClickListener {
         super.onViewCreated(view, savedInstanceState)
         updateUserConnectionStatus(view)
 
-        PersistanceSetter.setPersistance()
+        PersistenceSetter.setPersistence()
         Database.get()
     }
 

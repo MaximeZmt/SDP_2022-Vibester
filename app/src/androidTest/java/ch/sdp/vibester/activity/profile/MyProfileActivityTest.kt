@@ -1,7 +1,9 @@
-package ch.sdp.vibester.activity
+package ch.sdp.vibester.activity.profile
 
 import android.content.Context
 import android.content.Intent
+
+import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
@@ -9,11 +11,13 @@ import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.scrollTo
 import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
+import ch.sdp.vibester.activity.MainActivity
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.database.ImageGetter
@@ -107,7 +111,7 @@ class MyProfileActivityTest {
 
 
     @Test
-    fun clickScoresShowScores() {
+    fun showScoresByDefault() {
         val scorePerGenre: Map<String, Int> = mapOf(
             "top tracks" to 1,
             "kpop" to 2,
@@ -125,9 +129,6 @@ class MyProfileActivityTest {
         createMockImageGetter()
 
         val scn: ActivityScenario<MyProfileActivity> = ActivityScenario.launch(intent)
-        onView(withId(R.id.profile_scores)).perform(click())
-
-        onView(withId(R.id.profileStatistics)).check(matches(isDisplayed()))
 
         onView(withId(R.id.profile_top_tracks)).check(matches(withText(inputProfile.scores.getOrDefault("top tracks", 0).toString())))
         onView(withId(R.id.profile_kpop)).check(matches(withText(inputProfile.scores.getOrDefault("kpop", 0).toString())))
@@ -135,6 +136,56 @@ class MyProfileActivityTest {
         onView(withId(R.id.profile_bts)).check(matches(withText(inputProfile.scores.getOrDefault("BTS", 0).toString())))
         onView(withId(R.id.profile_imagine_dragons)).check(matches(withText(inputProfile.scores.getOrDefault("Imagine Dragons", 0).toString())))
         onView(withId(R.id.profile_billie_eilish)).check(matches(withText(inputProfile.scores.getOrDefault("Billie Eilish", 0).toString())))
+    }
+
+    @Test
+    fun checkFriendsAndScoresBtn() {
+        val friendsMap: Map<String, Boolean> = mapOf(
+            "friend" to true
+        )
+        val inputProfile = User("Lalisa Bon", R.string.test_profile_image.toString(), "lisa@test.com",
+            12, following = friendsMap)
+        val ctx = ApplicationProvider.getApplicationContext() as Context
+        val intent = Intent(ctx, MyProfileActivity::class.java)
+
+        createMockDataGetter(inputProfile)
+        createMockAuthenticator()
+        createMockImageGetter()
+
+        val scn: ActivityScenario<MyProfileActivity> = ActivityScenario.launch(intent)
+
+        onView(withId(R.id.profile_following)).perform(click())
+        onView(withId(R.id.profile_scroll_stat)).check(matches(not(isDisplayed())))
+
+        onView(withId(R.id.profile_scores)).perform(click())
+        onView(withId(R.id.profile_scroll_stat)).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun friendsRecycleViewClickTest() {
+        val friendsMap: Map<String, Boolean> = mapOf(
+            "friend1" to true, "friend2" to true
+        )
+        val inputProfile = User("Lalisa Bon", R.string.test_profile_image.toString(), "lisa@test.com",
+            12, following = friendsMap)
+        val ctx = ApplicationProvider.getApplicationContext() as Context
+        val intent = Intent(ctx, MyProfileActivity::class.java)
+
+        createMockDataGetter(inputProfile)
+        createMockAuthenticator()
+        createMockImageGetter()
+
+        val scn: ActivityScenario<MyProfileActivity> = ActivityScenario.launch(intent)
+
+        onView(withId(R.id.profile_following)).perform(click())
+        onView(withId(R.id.profile_followingList))
+            .perform(
+                RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                    1, click()
+                )
+            )
+
+        onView(withId(R.id.profileContent)).check(matches(isDisplayed()))
     }
 
     @Test

@@ -53,8 +53,13 @@
     <string name="preferences_game_mode">game_mode</string>
     <string name="preferences_game_genre">game_genre</string>
 
-
-    <!-- OLD String-->
+    <!-- Profile -->
+    <string name="profile_verify_change_profile_pic">Do you want to change your profile picture?</string>
+    <string name="profile_logout">logout</string>
+    <string name="profile_scores">Scores</string>
+    <string name="profile_following">Following</string>
+    <string name="test_profile_image">bit.ly/3IUnyAF</string>
+    <string name="profile_username">Profile Username</string>
 
 
     <!-- OLD String-->
@@ -199,7 +204,6 @@
     <string name="result_will_show_here">result will show here</string>
     <string name="welcome_not_logged_in">"User: Not Logged In"</string>
     <string name="game_lyrics">Local Lyrics</string>
-    <string name="profile_username">Profile Username</string>
     <string name="search_users">SEARCH USERS</string>
     <string name="no_lyrics_found">No lyrics found, try the next song</string>
     <string name="correct_message">%1$d Well Done!</string>
@@ -212,9 +216,7 @@
     <string name="kpop">kpop</string>
     <string name="top_tracks">Top Tracks</string>
 
-    <string name="test_profile_image">bit.ly/3IUnyAF</string>
     <string name="PartyRoom_joinedPeople">Joined People:</string>
-    <string name="logout">logout</string>
-    <string name="scores">Scores</string>
-    <string name="friends">Friends</string>
+
+
 </resources>

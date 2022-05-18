@@ -1,8 +1,6 @@
 package ch.sdp.vibester.user
 
-import android.graphics.Bitmap
 import android.net.Uri
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
@@ -10,18 +8,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
-import ch.sdp.vibester.api.BitmapGetterApi
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.database.ImageGetter
 import ch.sdp.vibester.helper.AdapterHelper
-import ch.sdp.vibester.helper.loadImg
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
-import java.util.concurrent.TimeUnit
-import javax.inject.Inject
+import ch.sdp.vibester.helper.ImageHelper
 
 
 /**
@@ -37,7 +28,7 @@ class UserProfileAdapter constructor(
     RecyclerView.Adapter<UserProfileAdapter.UserProfileViewHolder>() {
 
     private val currentUser = authenticator.getCurrUser()
-    private var userFriends: Array<String> = arrayOf()
+    private var userFollowing: Array<String> = arrayOf()
     private val imageSize = 100
 
     init {
@@ -46,7 +37,7 @@ class UserProfileAdapter constructor(
 
     // Callback for getUserData
     private fun setFriends(user:User){
-        userFriends = user.friends.keys.toTypedArray()
+        userFollowing = user.following.keys.toTypedArray()
     }
 
     /**
@@ -74,9 +65,7 @@ class UserProfileAdapter constructor(
     /**
      * Get amount of users displayed
      */
-    override fun getItemCount(): Int {
-        return users.size
-    }
+    override fun getItemCount() = users.size
 
 
 
@@ -91,16 +80,15 @@ class UserProfileAdapter constructor(
             itemView.findViewById<TextView>(R.id.search_user_username).text = user.username
 
             imageGetter.fetchImage("profileImg/${user.uid}", this::setImage)
-            //itemView.findViewById<ImageView>(R.id.profile_image).loadImg(user.image)
-            val addFriendBtn = itemView.findViewById<Button>(R.id.addFriendBtn)
+            val addFriendBtn = itemView.findViewById<Button>(R.id.addFollowingBtn)
 
-            if (userFriends.isNotEmpty() && user.uid in userFriends) {
+            if (userFollowing.isNotEmpty() && user.uid in userFollowing) {
                 changeBtnToImage()
             }
             else {
                 addFriendBtn.setOnClickListener {
                     if (currentUser != null) {
-                        dataGetter.setSubFieldValue(currentUser.uid, "friends", user.uid,true)
+                        dataGetter.setSubFieldValue(currentUser.uid, "following", user.uid,true)
                         changeBtnToImage()
                     }
                 }
@@ -108,27 +96,14 @@ class UserProfileAdapter constructor(
         }
 
         private fun setImage(imageURI: Uri) {
-            CoroutineScope(Dispatchers.Main).launch {
-                val task = async(Dispatchers.IO) {
-                    try {
-                        val bit = BitmapGetterApi.download(imageURI.toString())
-                        bit.get(10, TimeUnit.SECONDS)
-                    } catch (e: Exception){
-                        null
-                    }
-                }
-                val bm = task.await()
+            val avatar = itemView.findViewById<ImageView>(R.id.search_user_profile_image)
 
-                if (bm != null) {
-                    val avatar = itemView.findViewById<ImageView>(R.id.profile_image)
-                    avatar.setImageBitmap(Bitmap.createScaledBitmap(bm, imageSize, imageSize, false))
-                }
-            }
+            ImageHelper().setImage(imageURI, avatar, imageSize)
         }
 
 
         private fun changeBtnToImage() {
-            AdapterHelper().changeBtnToImageHelper(R.id.addFriendBtn, R.id.addedFriendIcon, itemView)
+            AdapterHelper().changeBtnToImageHelper(R.id.addFollowingBtn, R.id.addedFollowingIcon, itemView)
         }
 
         init {

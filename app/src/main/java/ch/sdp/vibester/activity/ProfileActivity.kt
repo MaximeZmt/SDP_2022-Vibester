@@ -128,7 +128,7 @@ open class ProfileActivity : AppCompatActivity() {
             val bm = task.await()
 
             if (bm != null) {
-                val avatar = findViewById<ImageView>(R.id.avatar)
+                val avatar = findViewById<ImageView>(R.id.profile_image_ImageView)
                 avatar.setImageBitmap(Bitmap.createScaledBitmap(bm, imageSize,imageSize, false))
             }
         }

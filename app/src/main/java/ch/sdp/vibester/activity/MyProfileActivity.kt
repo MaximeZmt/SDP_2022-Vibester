@@ -52,10 +52,10 @@ class MyProfileActivity : ProfileActivity() {
      * Generic listener for the change profile picture.
      */
     private fun setChangeImageBtnListener() {
-        findViewById<ImageView>(R.id.avatar).setOnClickListener {
+        findViewById<ImageView>(R.id.profile_image_ImageView).setOnClickListener {
             showGeneralDialog( "Do you want to change your profile picture?", false)
         }
-        findViewById<CardView>(R.id.myCardView).setOnClickListener {
+        findViewById<CardView>(R.id.profile_image_CardView).setOnClickListener {
             showGeneralDialog( "Do you want to change your profile picture?", false)
         }
     }

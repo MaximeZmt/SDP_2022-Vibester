@@ -99,7 +99,7 @@ class MyProfileActivityTest {
         createMockAuthenticator()
         createMockImageGetter()
 
-        val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
+        val scn: ActivityScenario<MyProfileActivity> = ActivityScenario.launch(intent)
 
         onView(withId(R.id.username)).check(matches(withText(inputProfile.username)))
         onView(withId(R.id.profile_total_games_stat)).check(matches(withText(inputProfile.totalGames.toString())))
@@ -166,7 +166,7 @@ class MyProfileActivityTest {
         createMockAuthenticator()
         createMockImageGetter()
 
-        val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
+        val scn: ActivityScenario<MyProfileActivity> = ActivityScenario.launch(intent)
         onView(withId(R.id.showQRCode)).perform(click())
 
         onView(withId(R.id.QrCodePage)).check(matches(isDisplayed()))
@@ -188,7 +188,7 @@ class MyProfileActivityTest {
         createMockAuthenticator()
         createMockImageGetter()
 
-        val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
+        val scn: ActivityScenario<MyProfileActivity> = ActivityScenario.launch(intent)
         onView(withId(R.id.showQRCode)).perform(click())
         onView(withId(R.id.qrCode_returnToProfile)).perform(click())
 
@@ -254,7 +254,7 @@ class MyProfileActivityTest {
         createMockAuthenticator()
         createMockImageGetter()
 
-        val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
+        val scn: ActivityScenario<MyProfileActivity> = ActivityScenario.launch(intent)
 
         onView(withId(R.id.profile_image_CardView)).perform(click())
         onView(withText("No")).perform(click())
@@ -317,7 +317,7 @@ class MyProfileActivityTest {
         createMockAuthenticator()
         createMockImageGetter()
 
-        val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
+        val scn: ActivityScenario<MyProfileActivity> = ActivityScenario.launch(intent)
         onView(withId(R.id.profile_image_CardView)).check(matches(isDisplayed()))
     }
 

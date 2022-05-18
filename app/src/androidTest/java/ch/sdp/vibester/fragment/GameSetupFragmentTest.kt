@@ -1,16 +1,13 @@
 package ch.sdp.vibester.fragment
 
-import android.view.View
 import androidx.test.espresso.Espresso.onData
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.action.ViewActions.scrollTo
+import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasExtra
-import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
@@ -21,9 +18,7 @@ import ch.sdp.vibester.activity.TypingGameActivity
 import ch.sdp.vibester.launchFragmentInHiltContainer
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import org.hamcrest.Matcher
 import org.hamcrest.Matchers
-import org.hamcrest.Matchers.allOf
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -67,10 +62,10 @@ class GameSetupFragmentTest {
     fun returnFromGenreToGame(){
         onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
         onView(withId(R.id.chooseGame)).check(matches(withEffectiveVisibility(Visibility.GONE)))
-        onView(withId(R.id.chooseGenre)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)));
+        onView(withId(R.id.genrePerScoreboard)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)));
 
         onView(withId(R.id.gameSetup_returnToMain)).perform(click())
-        onView(withId(R.id.chooseGenre)).check(matches(withEffectiveVisibility(Visibility.GONE)))
+        onView(withId(R.id.genrePerScoreboard)).check(matches(withEffectiveVisibility(Visibility.GONE)))
         onView(withId(R.id.chooseGame)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
     }
 
@@ -78,12 +73,12 @@ class GameSetupFragmentTest {
     fun returnFromSettingToGenre(){
         onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
         onView(withId(R.id.btsButton)).perform(click())
-        onView(withId(R.id.chooseGenre)).check(matches(withEffectiveVisibility(Visibility.GONE)))
+        onView(withId(R.id.genrePerScoreboard)).check(matches(withEffectiveVisibility(Visibility.GONE)))
         onView(withId(R.id.chooseSetting)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)));
 
         onView(withId(R.id.gameSetup_returnToMain)).perform(click())
         onView(withId(R.id.chooseSetting)).check(matches(withEffectiveVisibility(Visibility.GONE)))
-        onView(withId(R.id.chooseGenre)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+        onView(withId(R.id.genrePerScoreboard)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
     }
 
     @Test
@@ -293,6 +288,13 @@ class GameSetupFragmentTest {
     fun btsButtonClick() {
         onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
         onView(withId(R.id.btsButton)).perform(click())
+    }
+
+    @Test
+    fun customButtonClick() {
+        onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
+        onView(withId(R.id.searchArtist)).perform(typeText("muse"), closeSoftKeyboard())
+        onView(withId(R.id.validateSearch)).perform(scrollTo(), click())
     }
 
 

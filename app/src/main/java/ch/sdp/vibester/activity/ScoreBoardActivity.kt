@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.NestedScrollView
@@ -51,7 +52,7 @@ class ScoreBoardActivity : AppCompatActivity(), OnItemClickListener {
             R.id.topTracksButton -> {sortedBy += R.string.top_tracks; genre = "top tracks"}
         }
 
-        findViewById<ConstraintLayout>(R.id.genrePerScoreboard).visibility = GONE
+        findViewById<LinearLayout>(R.id.genrePerScoreboard).visibility = GONE
         findViewById<NestedScrollView>(R.id.scoreboard_content_scrolling).visibility = VISIBLE
 
         loadPlayersSortedBy(sortedBy)

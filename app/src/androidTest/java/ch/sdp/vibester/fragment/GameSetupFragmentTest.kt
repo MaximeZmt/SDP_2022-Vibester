@@ -2,8 +2,7 @@ package ch.sdp.vibester.fragment
 
 import androidx.test.espresso.Espresso.onData
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.action.ViewActions.scrollTo
+import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intended
@@ -289,6 +288,13 @@ class GameSetupFragmentTest {
     fun btsButtonClick() {
         onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
         onView(withId(R.id.btsButton)).perform(click())
+    }
+
+    @Test
+    fun customButtonClick() {
+        onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
+        onView(withId(R.id.searchArtist)).perform(typeText("muse"), closeSoftKeyboard())
+        onView(withId(R.id.validateSearch)).perform(scrollTo(), click())
     }
 
 

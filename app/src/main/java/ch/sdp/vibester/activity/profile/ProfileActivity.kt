@@ -187,11 +187,20 @@ open class ProfileActivity : AppCompatActivity(), OnItemClickListener {
 
     }
 
+    /**
+     * helper function to add user from followingMap to followings
+     * @param followingMap user.following
+     *
+     */
     private fun loadFollowing(followingMap: Map<String, Boolean>) {
         followingMap.forEach { (userId, _) ->  dataGetter.getUserData(userId, this::addFollowing)}
         showFriendsPosition(followings)
     }
 
+    /**
+     * callback function to add one user to followings
+     * @param following the user to add in list
+     */
     private fun addFollowing(following: User) {
         followings?.add(following)
     }

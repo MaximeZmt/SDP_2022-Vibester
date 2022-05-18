@@ -51,6 +51,7 @@ class MyProfileActivity : ProfileActivity() {
 
     /**
      * Generic listener for the change profile picture.
+     * NOTES: we need to set both for both the cases where the user profile image is displayed or not
      */
     private fun setChangeImageBtnListener() {
         findViewById<ImageView>(R.id.avatar).setOnClickListener {

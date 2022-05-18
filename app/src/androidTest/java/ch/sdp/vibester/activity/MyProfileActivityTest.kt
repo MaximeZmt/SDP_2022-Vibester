@@ -86,8 +86,7 @@ class MyProfileActivityTest {
     private fun createMockImageGetter() {
         every { mockImageGetter.fetchImage(any(), any())} answers {}
     }
-
-    // FIXME failing test
+    
 
     @Test
     fun checkProfileData() {
@@ -153,7 +152,6 @@ class MyProfileActivityTest {
         Intents.intended(IntentMatchers.hasComponent(MainActivity::class.java.name))
     }
 
-// FIXME failing test
 
     @Test
     fun shouldShowQrCode() {
@@ -197,9 +195,6 @@ class MyProfileActivityTest {
     }
 
 
-
-    // FIXME failing test
-
     @Test
     fun checkEditProfile() {
         val inputProfile = User("Lalisa Bon",R.string.test_profile_image.toString(), "lisa@test.com",  12, 8)
@@ -223,8 +218,6 @@ class MyProfileActivityTest {
         onView(withId(R.id.username)).check(matches(withText(newUsername)))
     }
 
-
-    // FIXME failing test
 
     @Test
     fun checkEditProfileClickCancel() {
@@ -262,8 +255,6 @@ class MyProfileActivityTest {
         onView(withId(R.id.profile_image_CardView)).check(matches(isDisplayed()))
     }
 
-
-    // FIXME failing test
 
 
     @Test
@@ -305,7 +296,6 @@ class MyProfileActivityTest {
         onView(withText("NO")).perform(click())
         onView(withId(R.id.profile_image_CardView)).check(matches(isDisplayed()))
     }
-// FIXME failing test
 
     @Test
     fun checkIfPictureIsDisplayed() {

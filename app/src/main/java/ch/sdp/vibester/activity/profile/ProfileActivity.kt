@@ -134,7 +134,7 @@ open class ProfileActivity : AppCompatActivity(), OnItemClickListener {
      * @param imageURI URI of the image
      */
     private fun setImage(imageURI: Uri) {
-        val avatar = findViewById<ImageView>(R.id.avatar)
+        val avatar = findViewById<ImageView>(R.id.profile_image_ImageView)
 
         ImageHelper().setImage(imageURI, avatar, imageSize)
     }

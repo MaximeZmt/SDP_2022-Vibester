@@ -54,10 +54,10 @@ class MyProfileActivity : ProfileActivity() {
      * NOTES: we need to set both for both the cases where the user profile image is displayed or not
      */
     private fun setChangeImageBtnListener() {
-        findViewById<ImageView>(R.id.avatar).setOnClickListener {
+        findViewById<ImageView>(R.id.profile_image_ImageView).setOnClickListener {
             showDialogWhenChangeImage()
         }
-        findViewById<CardView>(R.id.myCardView).setOnClickListener {
+        findViewById<CardView>(R.id.profile_image_CardView).setOnClickListener {
             showDialogWhenChangeImage()
         }
     }

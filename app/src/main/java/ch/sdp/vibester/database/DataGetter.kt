@@ -3,6 +3,7 @@ package ch.sdp.vibester.database
 import android.content.ContentValues
 import android.util.Log
 import ch.sdp.vibester.auth.FireBaseAuthenticator
+import ch.sdp.vibester.helper.GameManager
 import ch.sdp.vibester.helper.PartyRoom
 import ch.sdp.vibester.user.User
 import com.google.firebase.auth.FirebaseUser
@@ -223,4 +224,14 @@ class DataGetter @Inject constructor() {
             }
         })
     }
+
+    fun saveSongList(roomID: String, songList: MutableList<Pair<String, String>>) {
+        dbRoomRef.child("${roomID}/songList").setValue(songList)
+    }
+
+    fun updateStartGame(roomID: String, value: Boolean) {
+        dbRoomRef.child("${roomID}/songList").setValue(value)
+    }
+
 }
+

@@ -27,6 +27,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import javax.inject.Inject
+import kotlin.properties.Delegates
 
 @AndroidEntryPoint
 class PartyRoomActivity : AppCompatActivity() {
@@ -34,6 +35,8 @@ class PartyRoomActivity : AppCompatActivity() {
     lateinit var dataGetter: DataGetter
 
     lateinit var gameManager: GameManager
+
+    var gameStarted: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,17 +55,6 @@ class PartyRoomActivity : AppCompatActivity() {
 
         startGame.setOnClickListener {
             setGameManager()
-
-            Log.w("DEBUG", gameManager.gameSize.toString())
-            Log.w("DEBUG", gameManager.getSongList().toString())
-
-            Thread.sleep(3000)
-
-            val newIntent = Intent(this, TypingGameActivity::class.java)
-            newIntent.putExtra("gameManager", gameManager)
-            newIntent.putExtra("Difficulty", R.string.easy.toString())
-
-            startActivity(newIntent)
         }
     }
 
@@ -83,8 +75,16 @@ class PartyRoomActivity : AppCompatActivity() {
         gameManager.setGameSize(1)
 
         chooseGenre(method = LastfmMethod.BY_ARTIST.method, artist = "Imagine Dragons", mode = R.string.imagine_dragons)
-//        setGameSongList
+    }
 
+    private fun launchGame(newGameManager: GameManager) {
+        val newIntent = Intent(this, TypingGameActivity::class.java)
+        newIntent.putExtra("gameManager", newGameManager)
+        newIntent.putExtra("Difficulty", R.string.easy.toString())
+
+        Log.w("DEBUG", "KA BLET")
+
+        startActivity(newIntent)
     }
 
     private fun setGameSongList(uri: LastfmUri) {
@@ -98,8 +98,10 @@ class PartyRoomActivity : AppCompatActivity() {
                 gameManager.setContext(context)
                  */
 
+                //Maybe only save URI?
+
                 gameManager.setGameSongList(Gson().toJson(response.body()), uri.method)
-                Log.w("DEBUG", gameManager.getSongList().toString())
+                launchGame(gameManager)
             }
         })
     }

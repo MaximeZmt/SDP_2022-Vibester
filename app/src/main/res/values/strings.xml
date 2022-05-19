@@ -23,6 +23,10 @@
     <string name="qrScanning_noExistUid">Error not an existing uid</string>
     <string name="qrScanning_newFriend">Congratulations, you have a new friend</string>
 
+    <!-- GameSetup -->
+    <string name="GameSetup_internetSwitchOn">Internet is on</string>
+    <string name="GameSetup_internetSwitchOff">Internet is off</string>
+
     <!-- TypingGame -->
     <string name="TypingGame_currentRound">Round\ </string>
     <string name="TypingGame_yourScore0">Your score: 0</string>
@@ -144,8 +148,6 @@
     <string name="online_game_buzzer_title">Online Buzzer</string>
     <string name="join_room">Join party room</string>
     <string name="create_room">Create party room</string>
-    <string name="game_setup_internet_switch_on">Internet is on</string>
-    <string name="game_setup_internet_switch_off">Internet is off</string>
 
 
     <string name="game_typing">Local Typing</string>

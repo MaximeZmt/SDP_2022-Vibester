@@ -126,6 +126,10 @@ class DeleteSongsActivity : AppCompatActivity() {
         return false
     }
 
+    /**
+     * Removes the line correspoding to the song-to-be-deleted from the properties.txt file.
+     * @param buttonText: Text which contains song name - artist name
+     */
     private fun removeFromProperties(buttonText: String): Boolean {
         var properties = File(applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "properties.txt")
         var tempProp = File(applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "tempProp.txt")

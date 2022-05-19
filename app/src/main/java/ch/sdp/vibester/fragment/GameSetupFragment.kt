@@ -247,10 +247,10 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
         val btn: Button = view as Button
         if(hasInternet) {
             hasInternet = false
-            btn.text = getString(R.string.game_setup_internet_switch_off)
+            btn.text = getString(R.string.GameSetup_internetSwitchOff)
         } else {
             hasInternet = true
-            btn.text = getString(R.string.game_setup_internet_switch_on)
+            btn.text = getString(R.string.GameSetup_internetSwitchOn)
         }
     }
 }

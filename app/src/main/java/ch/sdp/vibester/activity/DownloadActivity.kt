@@ -205,7 +205,6 @@ class DownloadActivity : AppCompatActivity() {
             records.createNewFile()
         }
         records.appendText("$songName\n")
-        //TODO: OFFLINE
         recordProperties()
     }
 
@@ -213,7 +212,6 @@ class DownloadActivity : AppCompatActivity() {
      * Records the properties of a song.
      * Order of storage: Track name - artist name - artwork URL - preview URL.
      */
-    //TODO: OFFLINE - Uncomment and test
     private fun recordProperties() {
         var properties = File(applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "properties.txt")
 

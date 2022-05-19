@@ -14,7 +14,7 @@ class OfflineSongListTest {
         val context = InstrumentationRegistry.getInstrumentation().targetContext.applicationContext
         val path = context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)
         lateinit var mySongsList: OfflineSongList
-        if(path != null) {
+        if (path != null) {
             mySongsList = OfflineSongList(path)
         }
 
@@ -41,7 +41,7 @@ class OfflineSongListTest {
 
         val path = context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)
         lateinit var mySongsList: OfflineSongList
-        if(path != null) {
+        if (path != null) {
             mySongsList = OfflineSongList(path)
         }
 

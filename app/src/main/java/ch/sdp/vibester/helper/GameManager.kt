@@ -31,7 +31,6 @@ open class GameManager : Serializable {
     private var songName = ""
     var nextSongInd = 0
     private lateinit var mediaPlayer: CompletableFuture<MediaPlayer>
-    //TODO: OFFLINE
 
     private var hasInternet: Boolean = true
     private lateinit var externals: File
@@ -48,6 +47,7 @@ open class GameManager : Serializable {
 
     /**
      * Set a shuffled songList for a game
+     * HAS OFFLINE
      * @param jsonMeta: JSON song list from lastfm API
      * @param method: method for a game
      */
@@ -55,7 +55,6 @@ open class GameManager : Serializable {
         if (hasInternet) {
             gameSongList = SongList(jsonMeta, method).getShuffledSongList()
         } else {
-            //TODO: OFFLINE
             gameSongList = OfflineSongList(externals).getShuffledDownloadedSongList()
             Log.d("Size of the list", "${gameSongList.size}")
             Log.d("First one is =====================================================", gameSongList[0].toString())
@@ -161,6 +160,7 @@ open class GameManager : Serializable {
      * Set the next song to play. It can happened that the song from a list is not present in
      * Itunes API. In such case, the exception is called and the function is rerun with the
      * next song in the list.
+     * HAS OFFLINE
      * @return: true if the next song to play is set
      *          false otherwise
      */
@@ -183,7 +183,6 @@ open class GameManager : Serializable {
                 }
                 return true
             } else {
-                //TODO: OFFLINE
                 return setNextOfflineSong(songPair)
             }
         }
@@ -193,9 +192,9 @@ open class GameManager : Serializable {
     /**
      * Function that handles setting the next song in the offline mode. Modularized to avoid
      * Code Climate issues.
+     * HAS OFFLINE
      * @param songPair: The pair of song-artist that corresponds to the next track.
      */
-    //TODO: OFFLINE
     private fun setNextOfflineSong(songPair: Pair<String, String>): Boolean {
         try {
             val properties = File(externals, "properties.txt")
@@ -214,16 +213,15 @@ open class GameManager : Serializable {
     /**
      * Function that reads from the given file to check if the given pair of strings exist within it.
      * If yes, then sets the current song.
+     * HAS OFFLINE
      * @param file: The file in which to check for the existence of the pair
      * @param songPair: The pair corresponding to the next song-artist.
      */
-    //TODO: OFFLINE
     private fun readFromFile(file: File, songPair: Pair<String, String>) {
         var reader = BufferedReader(FileReader(file))
         var currentLine = reader.readLine()
 
         while (currentLine != null) {
-            //Log.d("Current is", currentLine)
             var trimmed = currentLine.trim()
             if (trimmed.isNotEmpty()) {
                 val split = trimmed.split(" - ")
@@ -233,12 +231,9 @@ open class GameManager : Serializable {
                         currentSong = Song.songBuilder(split[3].trim(), split[2].trim(), split[0].trim(), split[1].trim())
                         nextSongInd++
                         numPlayedSongs++
-                        //Log.d("Hey I'm here", currentSong.getTrackName())
                         break
                     }
                 } else {
-                    //Log.d("Split size is", split.size.toString())
-                    //Log.d("Split is", split.toString())
                     throw Exception("Inconsistent number of information in properties.txt")
                 }
             } else {
@@ -258,12 +253,12 @@ open class GameManager : Serializable {
 
     /**
      * Play current song with media player.
+     * HAS OFFLINE
      */
     fun playSong() {
         if(hasInternet) {
             mediaPlayer = AudioPlayer.playAudio(currentSong.getPreviewUrl())
         } else {
-            // TODO: OFFLINE
             val trackName = currentSong.getTrackName().trim() + " - " + currentSong.getArtistName().trim()
             var media = File(externals, "extract_of_$trackName")
             if(media.exists()) {

@@ -199,10 +199,10 @@ class GameManagerTest {
         assert(gameManager.setNextSong())
 
         val curSong = gameManager.currentSong
-        assertEquals(curSong.getTrackName(), "Song 1")
-        assertEquals(curSong.getArtistName(), "Artist 1")
-        assertEquals(curSong.getPreviewUrl(), "Preview 1")
-        assertEquals(curSong.getArtworkUrl(), "Artwork 1")
+        assertEquals(curSong.getTrackName(), "Song 2")
+        assertEquals(curSong.getArtistName(), "Artist 2")
+        assertEquals(curSong.getPreviewUrl(), "Preview 2")
+        assertEquals(curSong.getArtworkUrl(), "Artwork 2")
 
 
         offlineTestCleanup()

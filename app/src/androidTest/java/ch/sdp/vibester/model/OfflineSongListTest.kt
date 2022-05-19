@@ -12,7 +12,11 @@ class OfflineSongListTest {
     @Test
     fun noSongsAvailableInitialization() {
         val context = InstrumentationRegistry.getInstrumentation().targetContext.applicationContext
-        val mySongsList = OfflineSongList(context)
+        val path = context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)
+        lateinit var mySongsList: OfflineSongList
+        if(path != null) {
+            mySongsList = OfflineSongList(path)
+        }
 
         val inputSongsList = mutableListOf<Pair<String, String>>()
         val page = "1"
@@ -35,7 +39,11 @@ class OfflineSongListTest {
         records.createNewFile()
         records.appendText("bones - imagine dragons\n")
 
-        val mySongsList = OfflineSongList(context)
+        val path = context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)
+        lateinit var mySongsList: OfflineSongList
+        if(path != null) {
+            mySongsList = OfflineSongList(path)
+        }
 
         val songName = "bones"
         val artistName = "imagine dragons"

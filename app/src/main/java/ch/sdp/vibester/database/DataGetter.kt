@@ -204,15 +204,23 @@ class DataGetter @Inject constructor() {
      * @param callback the function to be called when the data of the appropriate user is available
      */
 
-    fun getRoomData(roomName: String, partyRoomCallback: (PartyRoom) -> Unit ) {
+    fun getRoomData(roomName: String,
+                    startGame: Boolean,
+                    partyRoomCallback: (PartyRoom) -> Unit,
+                    songListCallback: (MutableList<Pair<String, String>>) -> Unit) {
+
+        Log.w("DEBUG", "I get to here")
+
         val queryRooms = dbRoomRef
             .orderByChild("roomName")
             .equalTo(roomName)
 
+        Log.w("DEBUG", "I get to here22")
+
+
         queryRooms.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for (snapshot in dataSnapshot.children) {
-//                    Log.w("DEBUG LMAO", snapshot.value.toString())
                     val partyRoom: PartyRoom? = snapshot.getValue(PartyRoom::class.java)
                     if(partyRoom != null) {
                         val currUserEmail = getCurrentUser()?.email!!
@@ -222,12 +230,21 @@ class DataGetter @Inject constructor() {
                         }
                         partyRoomCallback(partyRoom)
                     }
-                    val songList = snapshot.getValue() as Map<String, Object>
-                    val testList = songList["songList"] as List<*>
-//                    Log.w("DEBUG LOL", testList[0].)
-                    val pairTest: Map<String, String> = testList[0] as Map<String, String>
-//                    Log.w("DEBUG LOL", pairTest.getOrDefault("first", "hello"))
-//                    Log.w("DEBUG gg", songList["songList"].toString())
+                    if(startGame) {
+                        val snapshotMap = snapshot.getValue() as Map<String, Object>
+                        val songList = snapshotMap["songList"] as List<*>
+                        var gameSongList: MutableList<Pair<String, String>> = mutableListOf()
+                        for (song in songList) {
+                            val tempPair: Map<String, String> = song as Map<String, String>
+                            gameSongList.add(
+                                Pair(
+                                    tempPair.getOrDefault("first", ""),
+                                    tempPair.getOrDefault("second", "")
+                                )
+                            )
+                        }
+                        songListCallback(gameSongList)
+                    }
                 }
             }
             override fun onCancelled(error: DatabaseError) {

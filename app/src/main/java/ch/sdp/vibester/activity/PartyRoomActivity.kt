@@ -55,9 +55,12 @@ class PartyRoomActivity : AppCompatActivity() {
         val startGame = findViewById<Button>(R.id.startGame)
 
         startGame.setOnClickListener {
-//            dataGetter.dowloadSongList(roomName, this::launchGame)
-            setGameManager()
-//            dataGetter.updateSongList("room1", gameManager.getSongList())
+            if(!gameStarted) {
+
+            }
+            else {
+                setGameManager()
+            }
         }
     }
 
@@ -66,7 +69,7 @@ class PartyRoomActivity : AppCompatActivity() {
     }
 
     private fun fetchData(roomName: String) {
-        dataGetter.getRoomData(roomName, this::updateUI)
+        dataGetter.getRoomData(roomName, true, this::updateUI, this::setSongs)
     }
 
     private fun createRoom(roomName: String) {
@@ -125,7 +128,19 @@ class PartyRoomActivity : AppCompatActivity() {
         setGameSongList(uri)
     }
 
-    private fun dowloadSongList() {
+    private fun setSongs(gameSongList: MutableList<Pair<String, String>>) {
+        val newGameManager = GameManager()
+        newGameManager.setGameSize(1)
+        newGameManager.gameMode = getString(R.string.imagine_dragons)
 
+        newGameManager.gameSongList = gameSongList
+
+        Log.w("DEBUG LMAO", newGameManager.gameSongList.toString())
+
+        launchGame(newGameManager)
     }
+//
+//    private fun dowloadSongList(gameSongList: MutableList<Pair<String, String>>) {
+//
+//    }
 }

@@ -1,11 +1,18 @@
 package ch.sdp.vibester.helper
 
+import android.content.Context
 import android.media.MediaPlayer
+import android.os.Environment
+import android.util.Log
 import ch.sdp.vibester.api.AudioPlayer
 import ch.sdp.vibester.api.ItunesMusicApi
+import ch.sdp.vibester.model.OfflineSongList
 import ch.sdp.vibester.model.Song
 import ch.sdp.vibester.model.SongList
 import okhttp3.OkHttpClient
+import java.io.BufferedReader
+import java.io.File
+import java.io.FileReader
 import java.io.Serializable
 import java.util.concurrent.CompletableFuture
 
@@ -23,9 +30,12 @@ open class GameManager : Serializable {
     private var artistName = ""
     private var songName = ""
     var nextSongInd = 0
-    private var hasInternet: Boolean = true
-
     private lateinit var mediaPlayer: CompletableFuture<MediaPlayer>
+    //TODO: OFFLINE
+
+    private var hasInternet: Boolean = true
+    private lateinit var externals: File
+
 
     /**
      * set the number of songs in this game
@@ -42,7 +52,38 @@ open class GameManager : Serializable {
      * @param method: method for a game
      */
     fun setGameSongList(jsonMeta: String, method: String) {
-        gameSongList = SongList(jsonMeta, method).getShuffledSongList()
+        if (hasInternet) {
+            gameSongList = SongList(jsonMeta, method).getShuffledSongList()
+        } else {
+            //TODO: OFFLINE
+            gameSongList = OfflineSongList(externals).getShuffledDownloadedSongList()
+            Log.d("Size of the list", "${gameSongList.size}")
+            Log.d("First one is =====================================================", gameSongList[0].toString())
+        }
+    }
+
+    /**
+     * Sets the context field of this class. To be passed to OfflineSongList for access to storage.
+     * @param external: getExternalFilesDir(ENVIRONMENT.DIRECTORY_DOWNLOADS) call's result
+     */
+    fun setExternals(external: File) {
+            externals = external
+    }
+
+    /**
+     * Sets the internet boolean field of this class. Used to determine whether to use online or
+     * offline song list, and songs.
+     * @param internet: True for available
+     */
+    fun setInternet(internet: Boolean) {
+        hasInternet = internet
+    }
+
+    /**
+     * Retrieves the internet connection availability. Used to check if we can use Glide in BuzzerScreen or not.
+     */
+    fun getInternet(): Boolean {
+        return hasInternet
     }
 
     /**
@@ -128,19 +169,75 @@ open class GameManager : Serializable {
             val songPair = gameSongList[nextSongInd]
             songName = songPair.first
             artistName = songPair.second
-            val songName = songPair.first + " " + songPair.second
-            try {
-                currentSong =
-                    Song.singleSong(ItunesMusicApi.querySong(songName, OkHttpClient(), 1).get())
-                nextSongInd++
-                numPlayedSongs++
-            } catch (e: Exception) {
-                nextSongInd++
-                return setNextSong()
+            if(hasInternet) {
+                val songName = songPair.first + " " + songPair.second
+                try {
+                    currentSong =
+                        Song.singleSong(ItunesMusicApi.querySong(songName, OkHttpClient(), 1).get())
+                    Log.d("I'M ONLINEEEEEEEEEEEEEEEEEEEEEEEEE", currentSong.getTrackName())
+                    nextSongInd++
+                    numPlayedSongs++
+                } catch (e: Exception) {
+                    nextSongInd++
+                    return setNextSong()
+                }
+                return true
+            } else {
+                //TODO: OFFLINE
+                try {
+                    val properties = File(externals, "properties.txt")
+                    if(!properties.exists() || properties.length() == 0L) {
+                        throw Exception("No songs available in properties.txt")
+                    } else {
+                        readFromFile(properties, songPair)
+                    }
+                } catch (e: Exception) {
+                    Log.d("GameManager/setNextSong/Offline", e.message.toString())
+                    return false
+                }
+                return true
             }
-            return true
         }
         return false
+    }
+
+    /**
+     * Function that reads from the given file to check if the given pair of strings exist within it.
+     * If yes, then sets the current song.
+     * @param file: The file in which to check for the existence of the pair
+     * @param songPair: The pair corresponding to the next song-artist.
+     */
+    //TODO: OFFLINE
+    private fun readFromFile(file: File, songPair: Pair<String, String>) {
+        var reader = BufferedReader(FileReader(file))
+        var currentLine = reader.readLine()
+
+        while (currentLine != null) {
+            Log.d("Current is", currentLine)
+            var trimmed = currentLine.trim()
+            if (trimmed.isNotEmpty()) {
+                val split = trimmed.split(" - ")
+                if (split.size == 4) {
+                    if (split[0].trim().lowercase() == songPair.first.lowercase()
+                    &&  split[1].trim().lowercase() == songPair.second.lowercase()) {
+                        currentSong = Song.songBuilder(split[3].trim(), split[2].trim(),
+                                                       split[0].trim(), split[1].trim())
+                        nextSongInd++
+                        numPlayedSongs++
+                        Log.d("Hey I'm here", currentSong.getTrackName())
+                        break
+                    }
+                } else {
+                    Log.d("Split size is", split.size.toString())
+                    Log.d("Split is", split.toString())
+                    throw Exception("Inconsistent number of information in properties.txt")
+                }
+            } else {
+                throw Exception("Trimmed line is empty")
+            }
+            currentLine = reader.readLine()
+        }
+        reader.close()
     }
 
     /**
@@ -157,11 +254,13 @@ open class GameManager : Serializable {
         if(hasInternet) {
             mediaPlayer = AudioPlayer.playAudio(currentSong.getPreviewUrl())
         } else {
-            mediaPlayer = AudioPlayer.playAudio(currentSong.getPreviewUrl())
-            /* TODO: OFFLINE
-            var media = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "extract_of_$currentSong.getTrackName()")
-            mediaPlayer = AudioPlayer.playAudio(media.absolutePath)
-             */
+            // TODO: OFFLINE
+            val trackName = currentSong.getTrackName().trim() + " - " + currentSong.getArtistName().trim()
+            var media = File(externals, "extract_of_$trackName")
+            if(media.exists()) {
+                mediaPlayer = AudioPlayer.playAudio(media.absolutePath)
+            }
+
         }
     }
 

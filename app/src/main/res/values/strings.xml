@@ -144,6 +144,8 @@
     <string name="online_game_buzzer_title">Online Buzzer</string>
     <string name="join_room">Join party room</string>
     <string name="create_room">Create party room</string>
+    <string name="game_setup_internet_switch_on">Internet is on</string>
+    <string name="game_setup_internet_switch_off">Internet is off</string>
 
 
     <string name="game_typing">Local Typing</string>

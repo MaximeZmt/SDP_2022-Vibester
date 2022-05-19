@@ -3,6 +3,7 @@ package ch.sdp.vibester.fragment
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Environment
 import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
@@ -38,9 +39,8 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
     var gameSize = R.string.one.toString()
     var searchArtistEditable: Editable? = null
     lateinit var gameManager: GameManager
-    /* TODO: OFFLINE
+    // TODO: OFFLINE
     private var hasInternet: Boolean = true
-     */
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -60,6 +60,7 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
         view.findViewById<Button>(R.id.imagDragonsButton).setOnClickListener(this)
         view.findViewById<Button>(R.id.billieEilishButton).setOnClickListener(this)
         view.findViewById<Button>(R.id.difficulty_proceed).setOnClickListener(this)
+        view.findViewById<Button>(R.id.game_setup_has_internet).setOnClickListener(this)
 
         searchArtistEditable = view.findViewById<EditText>(R.id.searchArtist).text
         view.findViewById<Button>(R.id.validateSearch).setOnClickListener(this)
@@ -168,10 +169,12 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
         call.enqueue(object : Callback<Any> {
             override fun onFailure(call: Call<Any>, t: Throwable?) {}
             override fun onResponse(call: Call<Any>, response: Response<Any>) {
-                /* TODO: OFFLINE
-                gameManager.setInternet()
-                gameManager.setContext(context)
-                 */
+                // TODO: OFFLINE
+                gameManager.setInternet(hasInternet)
+                val external = context?.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)
+                if (external != null) {
+                    gameManager.setExternals(external)
+                }
                 gameManager.setGameSongList(Gson().toJson(response.body()), uri.method)
             }
         })
@@ -231,8 +234,24 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
             R.id.validateSearch -> chooseGenre(method = LastfmMethod.BY_ARTIST.method, artist = searchArtistEditable.toString(), mode = R.string.byArtistSearch)
 
             R.id.difficulty_proceed -> proceedGame()
+
+            R.id.game_setup_has_internet -> switchInternet(v.findViewById(R.id.game_setup_has_internet))
         }
     }
 
-
+    /**
+     * Switches between Internet On and Internet Off when the view button is pressed.
+     * @param view: The button responsible for internet toggling.
+     */
+    //TODO: OFFLINE
+    private fun switchInternet(view: View) {
+        val btn: Button = view as Button
+        if(hasInternet) {
+            hasInternet = false
+            btn.text = getString(R.string.game_setup_internet_switch_off)
+        } else {
+            hasInternet = true
+            btn.text = getString(R.string.game_setup_internet_switch_on)
+        }
+    }
 }

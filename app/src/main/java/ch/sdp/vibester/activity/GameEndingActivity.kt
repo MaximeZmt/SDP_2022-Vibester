@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
 import android.view.Window
 import android.widget.TableLayout
 import android.widget.TableRow
@@ -101,17 +102,16 @@ class GameEndingActivity : AppCompatActivity() {
      * @param gravity: the desired gravity of the view
      * @return the created view
      */
-    private fun createTextView(text: String, gravity: Int): TextView {
+    private fun createTextView(text: String, gravity: Int, row: TableRow) {
         val view = TextView(this)
         view.text = text
         view.height = 100
-        view.width = 200
+        view.width = 300
         view.textAlignment=View.TEXT_ALIGNMENT_CENTER
         view.fontFeatureSettings="monospace"
-        view.textSize= 25f
+        view.textSize= 20f
         view.gravity = gravity
-
-        return view
+        row.addView(view)
     }
 
     /**
@@ -132,11 +132,8 @@ class GameEndingActivity : AppCompatActivity() {
                 val row = findViewById<TableRow>(endStatArrayList[i])
                 row.visibility = View.VISIBLE
 
-                val nameView = createTextView(pName, Gravity.LEFT)
-                val points = createTextView(playerScores[pName]!!.toString(), Gravity.RIGHT)
-
-                row.addView(nameView)
-                row.addView(points)
+                createTextView(pName, Gravity.LEFT, row)
+                createTextView(playerScores[pName]!!.toString(), Gravity.RIGHT, row)
 
                 i += 1
             }

@@ -69,6 +69,7 @@ class BuzzerScreenActivity : GameActivity() {
             buildScores(getPlayers, allPoints)
             buildBuzzers(getPlayers, findViewById(R.id.answer))
 
+            findViewById<Button>(R.id.skip).setOnClickListener { timeoutAnswer(ctx, null, gameManager) }
             setAnswerButton(ctx, findViewById(R.id.buttonCorrect), buzzersToRows)
             setAnswerButton(ctx, findViewById(R.id.buttonWrong), buzzersToRows)
             setNextButton(ctx, gameManager)
@@ -95,6 +96,7 @@ class BuzzerScreenActivity : GameActivity() {
      */
     fun startRoundBuzzer(ctx: Context, gameManager: GameManager) {
         gameIsOn = true
+        toggleBtnVisibility(R.id.skip, true)
         findViewById<LinearLayout>(R.id.answer).visibility=View.INVISIBLE
         val title = gameManager.getCurrentSong().getTrackName()
         val artist = gameManager.getCurrentSong().getArtistName()
@@ -109,7 +111,11 @@ class BuzzerScreenActivity : GameActivity() {
      * Ends the round when no ones answer before the time limit
      */
     fun timeoutAnswer(ctx: Context, chosenSong: Song?=null, gameManager: GameManager) {
+        if (gameManager.playingMediaPlayer()) {
+            gameManager.stopMediaPlayer()
+        }
         toastShowWrong(ctx, gameManager.getCurrentSong())
+        toggleBtnVisibility(R.id.skip, false)
         endRound(gameManager)
     }
 
@@ -184,9 +190,13 @@ class BuzzerScreenActivity : GameActivity() {
             buttons.set(i, button)
             button.setOnClickListener {
                 if (findViewById<ProgressBar>(R.id.progressBarBuzzer).progress>0 && findViewById<Button>(R.id.nextSongBuzzer).visibility==View.GONE) {
-                    answer.visibility = android.view.View.VISIBLE
-                    //findViewById<Button>(R.id.go_to_end).visibility = View.INVISIBLE
+                    answer.visibility = View.VISIBLE
                     setPressed(button.id)
+                    toggleBtnVisibility(R.id.skip, false)
+                    gameIsOn = false // to stop the bar
+                    if (gameManager.playingMediaPlayer()) {
+                        gameManager.stopMediaPlayer()
+                    }
                 }
             }
             i = i + 1

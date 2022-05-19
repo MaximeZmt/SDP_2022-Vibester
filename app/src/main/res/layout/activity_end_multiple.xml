@@ -38,30 +38,31 @@
         app:layout_constraintTop_toBottomOf="@+id/end_game_mode">
 
         <TableRow
+            android:id="@+id/end_stat1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:visibility="visible">
+        </TableRow>
 
-            <TextView
-                android:id="@+id/end_stat1"
-                android:layout_width="175dp"
-                android:layout_height="70dp"
-                android:fontFamily="monospace"
-                android:gravity="center_horizontal|center_vertical"
-                android:text="@string/game_end__stat_1"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
+        <TableRow
+            android:id="@+id/end_stat2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+        </TableRow>
 
-            <TextView
-                android:id="@+id/end_stat1_res"
-                android:layout_width="175dp"
-                android:layout_height="70dp"
-                android:fontFamily="monospace"
-                android:gravity="center_horizontal|center_vertical"
-                android:text="@string/game_end__stat_1_result"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
+        <TableRow
+            android:id="@+id/end_stat3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/end_stat4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
         </TableRow>
 
     </TableLayout>

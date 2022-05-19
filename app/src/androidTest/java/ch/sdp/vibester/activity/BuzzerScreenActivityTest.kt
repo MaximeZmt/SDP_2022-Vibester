@@ -356,8 +356,15 @@ class BuzzerScreenActivityTest {
 
         val scn: ActivityScenario<BuzzerScreenActivity> = ActivityScenario.launch(intent)
 
+        val expectedMap: HashMap<String, Int> = hashMapOf()
+        expectedMap.put("John", 0)
+        expectedMap.put("Bob", 0)
+        expectedMap.put("Doug", 0)
+        expectedMap.put("Mike", 0)
+
         onView(withId(R.id.go_to_end)).check(matches(isDisplayed())).perform(click())
         intended(hasComponent(GameEndingActivity::class.java.name))
         intended(hasExtra("Winner Name", ctx.getString(R.string.BuzzerScreen_noWinner)))
+        intended(hasExtra("Player Scores", expectedMap))
     }
 }

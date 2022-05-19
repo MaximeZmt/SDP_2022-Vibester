@@ -2,7 +2,10 @@ package ch.sdp.vibester.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Gravity
+import android.view.View
 import android.view.Window
+import android.widget.TableRow
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +20,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
  * Game ending activity with game stats and list of songs quessed correctly/wrong
  */
 class GameEndingActivity : AppCompatActivity() {
+
+    private val endStatArrayList = arrayListOf<Int>(R.id.end_stat1, R.id.end_stat2, R.id.end_stat3, R.id.end_stat4)
 
     private var incorrectSongList: ArrayList<String> = arrayListOf()
     private var correctSongList: ArrayList<String> = arrayListOf()
@@ -90,13 +95,45 @@ class GameEndingActivity : AppCompatActivity() {
     }
 
     /**
+     * Creates a text view with a given text and gravity
+     * @param text: the text to be put in the view
+     * @param gravity: the desired gravity of the view
+     * @return the created view
+     */
+    private fun createTextView(text: String, gravity: Int): TextView {
+        val view = TextView(this)
+        view.text = text
+        view.height = 175
+        view.width = 70
+        view.textAlignment=View.TEXT_ALIGNMENT_CENTER
+        view.fontFeatureSettings="monospace"
+        view.textSize= 16 as Float
+        view.gravity = gravity
+
+        return view
+    }
+
+    /**
      * Handle intent values for multiple players game
      * @param intent: intent received by the activity
      */
     private fun getFromIntentMultiple(intent: Intent) {
-        if (intent.hasExtra("Winner Name")) {
-            val winner = intent.getStringExtra("Winner Name")
-            findViewById<TextView>(R.id.winnerText).text = winner
+        val winner = intent.getStringExtra("Winner Name")
+        findViewById<TextView>(R.id.winnerText).text = winner
+
+        val playerScores = intent.getSerializableExtra("Player Scores")!! as HashMap<String, Int>
+        var i = 0
+        for (pName in playerScores.keys) {
+            val row = findViewById<TableRow>(endStatArrayList[i])
+            row.visibility= View.VISIBLE
+
+            val nameView = createTextView(pName, Gravity.START)
+            val points = createTextView(playerScores[pName]!!.toString(), Gravity.END)
+
+            row.addView(nameView)
+            row.addView(points)
+
+            i += 1
         }
     }
 }

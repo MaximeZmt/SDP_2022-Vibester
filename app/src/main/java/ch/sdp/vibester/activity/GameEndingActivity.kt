@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.Gravity
 import android.view.View
 import android.view.Window
+import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -103,11 +104,11 @@ class GameEndingActivity : AppCompatActivity() {
     private fun createTextView(text: String, gravity: Int): TextView {
         val view = TextView(this)
         view.text = text
-        view.height = 175
-        view.width = 70
+        view.height = 100
+        view.width = 200
         view.textAlignment=View.TEXT_ALIGNMENT_CENTER
         view.fontFeatureSettings="monospace"
-        view.textSize= 16 as Float
+        view.textSize= 25f
         view.gravity = gravity
 
         return view
@@ -118,22 +119,27 @@ class GameEndingActivity : AppCompatActivity() {
      * @param intent: intent received by the activity
      */
     private fun getFromIntentMultiple(intent: Intent) {
-        val winner = intent.getStringExtra("Winner Name")
-        findViewById<TextView>(R.id.winnerText).text = winner
+        if (intent.hasExtra("Winner Name")) {
+            val winner = intent.getStringExtra("Winner Name")
+            findViewById<TextView>(R.id.winnerText).text = winner
+        }
 
-        val playerScores = intent.getSerializableExtra("Player Scores")!! as HashMap<String, Int>
-        var i = 0
-        for (pName in playerScores.keys) {
-            val row = findViewById<TableRow>(endStatArrayList[i])
-            row.visibility= View.VISIBLE
+        if (intent.hasExtra("Player Scores")) {
+            val playerScores =
+                intent.getSerializableExtra("Player Scores")!! as HashMap<String, Int>
+            var i = 0
+            for (pName in playerScores.keys) {
+                val row = findViewById<TableRow>(endStatArrayList[i])
+                row.visibility = View.VISIBLE
 
-            val nameView = createTextView(pName, Gravity.START)
-            val points = createTextView(playerScores[pName]!!.toString(), Gravity.END)
+                val nameView = createTextView(pName, Gravity.LEFT)
+                val points = createTextView(playerScores[pName]!!.toString(), Gravity.RIGHT)
 
-            row.addView(nameView)
-            row.addView(points)
+                row.addView(nameView)
+                row.addView(points)
 
-            i += 1
+                i += 1
+            }
         }
     }
 }

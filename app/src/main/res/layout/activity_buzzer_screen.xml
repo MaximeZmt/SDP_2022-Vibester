@@ -17,8 +17,9 @@
         android:paddingRight="25sp"
         android:progress="15"
         android:progressTint="@color/tiffany_blue"
-        app:layout_constraintBottom_toTopOf="@id/go_to_end"
+        app:layout_constraintBottom_toTopOf="@id/buzzersLayout"
         app:layout_constraintTop_toBottomOf="@id/scoresTable"
+        app:layout_constraintVertical_bias="0.263"
         tools:layout_editor_absoluteX="0dp" />
 
     <Button
@@ -31,10 +32,10 @@
         android:stateListAnimator="@null"
         android:text="@string/go_to_end"
         android:translationZ="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/progressBarBuzzer"
-        app:layout_constraintBottom_toTopOf="@id/buzzersLayout"/>
+        app:layout_constraintTop_toBottomOf="@id/buzzersLayout" />
 
     <LinearLayout
         android:id="@+id/buzzersLayout"
@@ -48,16 +49,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/go_to_end">
+        app:layout_constraintTop_toBottomOf="@id/progressBarBuzzer">
 
 
         <Button
             android:id="@+id/buzzer_0"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="invisible"
             android:backgroundTint="@color/cg_blue"
-            android:text="Button" />
+            android:text="Button"
+            android:visibility="invisible" />
 
         <Button
             android:id="@+id/buzzer_1"
@@ -88,13 +89,13 @@
         android:id="@+id/scoresTable"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="5dp"
         android:gravity="center"
-        app:layout_constraintBottom_toTopOf="@+id/progressBarBuzzer"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
     </TableLayout>
 
     <LinearLayout
@@ -103,23 +104,25 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
+        android:layout_marginBottom="184dp"
         android:background="@color/light_grey"
         android:gravity="center"
         android:orientation="vertical"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/buzzersLayout"
+        app:layout_constraintTop_toTopOf="@id/buzzersLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progressBarBuzzer">
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent">
 
         <TextView
             android:id="@+id/songTitle"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
             android:textColor="@color/black"
             android:textSize="16sp"
-            android:textStyle="bold"
-            android:layout_height="wrap_content"
-            android:gravity="center" />
+            android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/songArtwork"

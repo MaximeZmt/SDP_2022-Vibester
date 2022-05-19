@@ -25,13 +25,13 @@
     <TableLayout
         android:id="@+id/end_stat_table"
         android:layout_width="350dp"
-        android:layout_height="70dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/winnerText"
         android:layout_alignParentEnd="true"
         android:layout_centerHorizontal="true"
+        android:gravity="center"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="25dp"
-        android:background="@drawable/table_shape"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -70,11 +70,10 @@
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/end_song_list_nestedScrollView"
-        android:layout_width="350dp"
-        android:layout_height="300dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/end_stat_table"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="212dp"
         android:background="@color/floral_white"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 

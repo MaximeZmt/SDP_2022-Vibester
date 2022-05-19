@@ -232,10 +232,14 @@ class BuzzerScreenActivityTest {
 
     @Test
     fun buttonNextOnClickTest() {
+        val mockPlayersNumber = 2
+        val mockNameArray = arrayOf("John", "Bob")
         val gameManager = setGameManager(2)
         Assert.assertEquals(gameManager.getSongList().size, 2)
 
         val intent = Intent(ApplicationProvider.getApplicationContext(), BuzzerScreenActivity::class.java)
+        intent.putExtra("Number of players", mockPlayersNumber)
+        intent.putExtra("Player Names", mockNameArray)
         intent.putExtra("gameManager", gameManager)
         val scn: ActivityScenario<BuzzerScreenActivity> = ActivityScenario.launch(intent)
         scn.onActivity { activity ->

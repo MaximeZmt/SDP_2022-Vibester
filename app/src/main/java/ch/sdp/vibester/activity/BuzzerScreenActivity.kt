@@ -185,7 +185,7 @@ class BuzzerScreenActivity : GameActivity() {
             button.setOnClickListener {
                 if (findViewById<ProgressBar>(R.id.progressBarBuzzer).progress>0 && findViewById<Button>(R.id.nextSongBuzzer).visibility==View.GONE) {
                     answer.visibility = android.view.View.VISIBLE
-                    findViewById<Button>(R.id.go_to_end).visibility = View.INVISIBLE
+                    //findViewById<Button>(R.id.go_to_end).visibility = View.INVISIBLE
                     setPressed(button.id)
                 }
             }
@@ -255,10 +255,10 @@ class BuzzerScreenActivity : GameActivity() {
      * Makes a Map with the player names and scores, which will be fired in the intent to ending
      */
     fun packMapOfScores(playersArray: Array<String>, updater: BuzzerScoreUpdater): HashMap<String, Int> {
-        val playersToScores:HashMap<String, Int> = hashMapOf()
+        val playersToScores: HashMap<String, Int> = hashMapOf()
         var i = 0
-        for (pName in playersArray) {
-            playersToScores.put(pName, updater.getMap()[buzzersToRows[buzIds[i]]]!!)
+        while (i < playersArray.size) {
+            playersToScores.put(playersArray[i], updater.getMap()[buzIds[i]]!!)
             i += 1
         }
         return playersToScores

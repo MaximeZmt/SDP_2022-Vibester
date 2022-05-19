@@ -28,6 +28,7 @@ class BuzzerScreenActivity : GameActivity() {
 
     private lateinit var gameManager: GameManager
     private lateinit var scoreUpdater: BuzzerScoreUpdater
+    private lateinit var players: Array<String>
     private var gameIsOn: Boolean = true
 
     private fun initHashmap(): HashMap<Int, Int> {
@@ -44,6 +45,12 @@ class BuzzerScreenActivity : GameActivity() {
         pressedBuzzer = id
     }
 
+    private fun checkAndStopPlayer(gameManager: GameManager) {
+        if (gameManager.playingMediaPlayer()) {
+            gameManager.stopMediaPlayer()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         super.onCreate(savedInstanceState)
@@ -55,20 +62,20 @@ class BuzzerScreenActivity : GameActivity() {
         val intentExtras = intent.extras
         if (intentExtras != null) {
             super.setMax(intent)
-            val nPlayers = intentExtras.getInt("Number of players")
-            val allPoints = Array(nPlayers, { i -> 0 })
-            val players = nPlayers.let { intentExtras.getStringArray("Player Names")?.copyOfRange(0, it) }
+            val getPlayers = intentExtras.getInt("Number of players").let { intentExtras.getStringArray("Player Names")?.copyOfRange(0, it) }
+            val allPoints = Array(getPlayers!!.size, { i -> 0 })
 
             if (intentExtras.getSerializable("gameManager") != null) {
                 gameManager = intentExtras.getSerializable("gameManager") as GameManager
             }
-
             scoreUpdater = BuzzerScoreUpdater(buzIds, allPoints)
 
-            if (players != null) {
-                buildScores(players, allPoints)
-                buildBuzzers(players, findViewById(R.id.answer))
-            }
+            // players is already non-null-asserted
+            players = getPlayers
+            buildScores(getPlayers, allPoints)
+            buildBuzzers(getPlayers, findViewById(R.id.answer))
+
+            findViewById<Button>(R.id.skip).setOnClickListener { timeoutAnswer(ctx, null, gameManager) }
             setAnswerButton(ctx, findViewById(R.id.buttonCorrect), buzzersToRows)
             setAnswerButton(ctx, findViewById(R.id.buttonWrong), buzzersToRows)
             setNextButton(ctx, gameManager)
@@ -95,10 +102,11 @@ class BuzzerScreenActivity : GameActivity() {
      */
     fun startRoundBuzzer(ctx: Context, gameManager: GameManager) {
         gameIsOn = true
+        toggleBtnVisibility(R.id.skip, true)
         findViewById<LinearLayout>(R.id.answer).visibility=View.INVISIBLE
-        val title = gameManager.getCurrentSong().getTrackName()
+        val trackName = gameManager.getCurrentSong().getTrackName()
         val artist = gameManager.getCurrentSong().getArtistName()
-        findViewById<TextView>(R.id.songTitle).text= "$title - $artist"
+        findViewById<TextView>(R.id.songTitle).text= "$trackName - $artist"
         Glide.with(ctx).load(gameManager.getCurrentSong().getArtworkUrl()).override(artworkDim, artworkDim).into(findViewById(R.id.songArtwork))
         gameManager.playSong()
         checkRunnable()
@@ -109,7 +117,9 @@ class BuzzerScreenActivity : GameActivity() {
      * Ends the round when no ones answer before the time limit
      */
     fun timeoutAnswer(ctx: Context, chosenSong: Song?=null, gameManager: GameManager) {
+        checkAndStopPlayer(gameManager)
         toastShowWrong(ctx, gameManager.getCurrentSong())
+        toggleBtnVisibility(R.id.skip, false)
         endRound(gameManager)
     }
 
@@ -184,9 +194,11 @@ class BuzzerScreenActivity : GameActivity() {
             buttons.set(i, button)
             button.setOnClickListener {
                 if (findViewById<ProgressBar>(R.id.progressBarBuzzer).progress>0 && findViewById<Button>(R.id.nextSongBuzzer).visibility==View.GONE) {
-                    answer.visibility = android.view.View.VISIBLE
-                    findViewById<Button>(R.id.go_to_end).visibility = View.INVISIBLE
+                    answer.visibility = View.VISIBLE
                     setPressed(button.id)
+                    toggleBtnVisibility(R.id.skip, false)
+                    gameIsOn = false // to stop the bar
+                    checkAndStopPlayer(gameManager)
                 }
             }
             i = i + 1
@@ -213,9 +225,7 @@ class BuzzerScreenActivity : GameActivity() {
                     view.text=scoreUpdater.getMap()[pressedBuzzer].toString()
                 }
             }
-            if (gameManager.playingMediaPlayer()) {
-                gameManager.stopMediaPlayer()
-            }
+            checkAndStopPlayer(gameManager)
             toggleBtnVisibility(R.id.go_to_end, true)
             setPressed(noBuzzerPressed) // reset the buzzer
             gameManager.setNextSong()
@@ -252,15 +262,29 @@ class BuzzerScreenActivity : GameActivity() {
     }
 
     /**
+     * Makes a Map with the player names and scores, which will be fired in the intent to ending
+     * @param playersArray: String array of player names
+     * @param updater: score updater which contains the player's scores
+     */
+    fun packMapOfScores(playersArray: Array<String>, updater: BuzzerScoreUpdater): HashMap<String, Int> {
+        val playersToScores: HashMap<String, Int> = hashMapOf()
+        var i = 0
+        while (i < playersArray.size) {
+            playersToScores.put(playersArray[i], updater.getMap()[buzIds[i]]!!)
+            i += 1
+        }
+        return playersToScores
+    }
+
+    /**
      * Fires an intent from the Gamescreen to the Ending Screen
      */
     fun switchToEnding(view: View) {
-        if (gameManager.playingMediaPlayer()) {
-            gameManager.stopMediaPlayer()
-        }
+        checkAndStopPlayer(gameManager)
         val intent = Intent(this, GameEndingActivity::class.java)
 
         //TODO put extras to display in GameEndingActivity
+        intent.putExtra("Player Scores", packMapOfScores(this.players, this.scoreUpdater))
         intent.putExtra("Winner Name", prepareWinnerAnnouncement(scoreUpdater))
         startActivity(intent)
     }

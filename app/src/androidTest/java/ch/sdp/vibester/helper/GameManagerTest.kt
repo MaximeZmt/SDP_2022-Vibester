@@ -197,7 +197,6 @@ class GameManagerTest {
         val gameManager = offlineTestSetup()
 
         assertEquals(gameManager.getSongList()[0], Pair("Song 1", "Artist 1"))
-        assertEquals(gameManager.getSongList()[1], Pair("Song 2", "Artist 2"))
 
         offlineTestCleanup()
     }

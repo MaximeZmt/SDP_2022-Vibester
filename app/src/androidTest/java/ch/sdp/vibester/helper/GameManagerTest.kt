@@ -193,15 +193,6 @@ class GameManagerTest {
     }
 
     @Test
-    fun checkFirstTwoSongs() {
-        val gameManager = offlineTestSetup()
-
-        assertEquals(gameManager.getSongList()[0], Pair("Song 1", "Artist 1"))
-
-        offlineTestCleanup()
-    }
-
-    @Test
     fun checkCurrentSong() {
         val gameManager = offlineTestSetup()
 

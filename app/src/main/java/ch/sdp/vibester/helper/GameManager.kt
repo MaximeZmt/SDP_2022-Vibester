@@ -184,21 +184,31 @@ open class GameManager : Serializable {
                 return true
             } else {
                 //TODO: OFFLINE
-                try {
-                    val properties = File(externals, "properties.txt")
-                    if(!properties.exists() || properties.length() == 0L) {
-                        throw Exception("No songs available in properties.txt")
-                    } else {
-                        readFromFile(properties, songPair)
-                    }
-                } catch (e: Exception) {
-                    Log.d("GameManager/setNextSong/Offline", e.message.toString())
-                    return false
-                }
-                return true
+                return setNextOfflineSong(songPair)
             }
         }
         return false
+    }
+
+    /**
+     * Function that handles setting the next song in the offline mode. Modularized to avoid
+     * Code Climate issues.
+     * @param songPair: The pair of song-artist that corresponds to the next track.
+     */
+    //TODO: OFFLINE
+    private fun setNextOfflineSong(songPair: Pair<String, String>): Boolean {
+        try {
+            val properties = File(externals, "properties.txt")
+            if(!properties.exists() || properties.length() == 0L) {
+                throw Exception("No songs available in properties.txt")
+            } else {
+                readFromFile(properties, songPair)
+            }
+        } catch (e: Exception) {
+            Log.d("GameManager/setNextSong/Offline", e.message.toString())
+            return false
+        }
+        return true
     }
 
     /**
@@ -213,23 +223,22 @@ open class GameManager : Serializable {
         var currentLine = reader.readLine()
 
         while (currentLine != null) {
-            Log.d("Current is", currentLine)
+            //Log.d("Current is", currentLine)
             var trimmed = currentLine.trim()
             if (trimmed.isNotEmpty()) {
                 val split = trimmed.split(" - ")
                 if (split.size == 4) {
                     if (split[0].trim().lowercase() == songPair.first.lowercase()
                     &&  split[1].trim().lowercase() == songPair.second.lowercase()) {
-                        currentSong = Song.songBuilder(split[3].trim(), split[2].trim(),
-                                                       split[0].trim(), split[1].trim())
+                        currentSong = Song.songBuilder(split[3].trim(), split[2].trim(), split[0].trim(), split[1].trim())
                         nextSongInd++
                         numPlayedSongs++
-                        Log.d("Hey I'm here", currentSong.getTrackName())
+                        //Log.d("Hey I'm here", currentSong.getTrackName())
                         break
                     }
                 } else {
-                    Log.d("Split size is", split.size.toString())
-                    Log.d("Split is", split.toString())
+                    //Log.d("Split size is", split.size.toString())
+                    //Log.d("Split is", split.toString())
                     throw Exception("Inconsistent number of information in properties.txt")
                 }
             } else {

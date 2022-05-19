@@ -37,8 +37,6 @@ class PartyRoomActivity : AppCompatActivity() {
 
     lateinit var gameManager: GameManager
 
-    var gameStarted: Boolean = false
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_party_room)
@@ -50,17 +48,18 @@ class PartyRoomActivity : AppCompatActivity() {
         }
         else {
             fetchData(roomName)
+            fetchGameStarted(roomName, this::startGame)
         }
 
         val startGame = findViewById<Button>(R.id.startGame)
 
         startGame.setOnClickListener {
-            if(!gameStarted) {
-
-            }
-            else {
-                setGameManager()
-            }
+//            if(true) {
+//
+//            }
+//            else {
+//                setGameManager()
+//            }
         }
     }
 
@@ -76,6 +75,16 @@ class PartyRoomActivity : AppCompatActivity() {
         dataGetter.createRoom(roomName, this::updateUI)
     }
 
+    private fun fetchGameStarted(roomName: String, callback: (Boolean) -> Unit) {
+        dataGetter.readStartGame(roomName, callback)
+    }
+
+    private fun startGame(gameStarted: Boolean) {
+        if(gameStarted) {
+            launchGame(gameManager)
+        }
+    }
+
     private fun setGameManager() {
         gameManager = GameManager()
         gameManager.setGameSize(1)
@@ -83,9 +92,6 @@ class PartyRoomActivity : AppCompatActivity() {
         chooseGenre(method = LastfmMethod.BY_ARTIST.method, artist = "Imagine Dragons", mode = R.string.imagine_dragons)
     }
 
-    private fun test() {
-        Log.w("DEBUG LMAO", "HELLO HELLO")
-    }
 
     private fun launchGame(newGameManager: GameManager) {
 
@@ -129,18 +135,13 @@ class PartyRoomActivity : AppCompatActivity() {
     }
 
     private fun setSongs(gameSongList: MutableList<Pair<String, String>>) {
-        val newGameManager = GameManager()
-        newGameManager.setGameSize(1)
-        newGameManager.gameMode = getString(R.string.imagine_dragons)
+//        val newGameManager = GameManager()
+        gameManager = GameManager()
+        gameManager.setGameSize(1)
+        gameManager.gameMode = getString(R.string.imagine_dragons)
 
-        newGameManager.gameSongList = gameSongList
+        gameManager.gameSongList = gameSongList
 
-        Log.w("DEBUG LMAO", newGameManager.gameSongList.toString())
-
-        launchGame(newGameManager)
     }
-//
-//    private fun dowloadSongList(gameSongList: MutableList<Pair<String, String>>) {
-//
-//    }
+
 }

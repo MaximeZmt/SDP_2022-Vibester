@@ -16,7 +16,6 @@ import com.google.firebase.database.ktx.getValue
 import java.util.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList
-
 /**
  * The users class which handled all the interactions with the database that are linked to users
  */
@@ -209,14 +208,9 @@ class DataGetter @Inject constructor() {
                     partyRoomCallback: (PartyRoom) -> Unit,
                     songListCallback: (MutableList<Pair<String, String>>) -> Unit) {
 
-        Log.w("DEBUG", "I get to here")
-
         val queryRooms = dbRoomRef
             .orderByChild("roomName")
             .equalTo(roomName)
-
-        Log.w("DEBUG", "I get to here22")
-
 
         queryRooms.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -260,46 +254,27 @@ class DataGetter @Inject constructor() {
     fun updateStartGame(roomID: String, value: Boolean) {
         dbRoomRef.child("${roomID}/gameStarted").setValue(value)
     }
-//callback: (GameManager) -> Unit
-//    fun dowloadSongList(roomName: String, callback: () -> Unit) {
-//
-//    Log.w("DEBUG LMAO", "I get to here")
-//
-//    val queryRooms = dbRoomRef
-//            .orderByChild("roomName")
-//            .equalTo(roomName)
-//
-//        //Hardcoding for now
-//        val gameManager = GameManager()
-//        gameManager.setGameSize(1)
-//        gameManager.gameMode = R.string.imagine_dragons.toString()
-//
-//    Log.w("DEBUG LMAO", "I get to here22")
-//
-//        queryRooms.addValueEventListener(object : ValueEventListener {
-//            override fun onDataChange(dataSnapshot: DataSnapshot) {
-//                for (snapshot in dataSnapshot.children) {
-////                    callback()
-//                    val partyRoom: PartyRoom? = snapshot.getValue(PartyRoom::class.java)
-//                    if (partyRoom != null) {
-//                        Log.w("DEBUG LMAO", partyRoom.getRoomName())
-//                    }
-//                    Log.w("DEBUG LMAO", snapshot.value.toString())
-////                    val songList = snapshot.getValue(MutableList<Pair<String, String>>)
-////                    if(songList != null) {
-////                        val songList = songList
-////                        gameManager.gameSongList = songList
-////
-////                        callback(gameManager)
-////                    }
-//                }
-//            }
-//            override fun onCancelled(error: DatabaseError) {
-//                Log.w(ContentValues.TAG, "dowloadSongList:onCancelled", error.toException())
-//            }
-//        })
-//    }
+
+    fun readStartGame(roomName: String, callback: (Boolean) -> Unit) {
+        val queryRooms = dbRoomRef
+            .orderByChild("roomName")
+            .equalTo(roomName)
+
+        queryRooms.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                for (snapshot in dataSnapshot.children) {
+                    val snapshotMap = snapshot.getValue() as Map<String, Object>
+                    val gameStarted: Boolean = snapshotMap["gameStarted"] as Boolean
+                    callback(gameStarted)
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {
+                Log.w(ContentValues.TAG, "getRoomData:onCancelled", error.toException())
+            }
+        })
 
 }
+}
+
 
 

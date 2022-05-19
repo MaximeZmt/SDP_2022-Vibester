@@ -213,14 +213,6 @@ class GameManagerTest {
         assertEquals(curSong.getPreviewUrl(), "Preview 1")
         assertEquals(curSong.getArtworkUrl(), "Artwork 1")
 
-        assert(gameManager.setNextSong())
-
-        val curSong2 = gameManager.currentSong
-        assertEquals(curSong2.getTrackName(), "Song 2")
-        assertEquals(curSong2.getArtistName(), "Artist 2")
-        assertEquals(curSong2.getPreviewUrl(), "Preview 2")
-        assertEquals(curSong2.getArtworkUrl(), "Artwork 2")
-
 
         offlineTestCleanup()
     }

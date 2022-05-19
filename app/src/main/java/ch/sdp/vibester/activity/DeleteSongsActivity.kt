@@ -136,6 +136,12 @@ class DeleteSongsActivity : AppCompatActivity() {
         var currentLine = propReader.readLine()
         val buttonSplit = buttonText.trim().split("-")
 
+        /*
+         * Current line here should be in the form of "song name - artist name - artwork url - preview url.
+         * We want to tokenize(split) this string into 4 tokens: song name, artist name, artwork url and preview url.
+         * Comparison between the first two tokens are checked to see whether this line is the one we want or not.
+         * We write every line on a new file except the one which we want to delete, thus we continue if we match.
+         */
         while (currentLine != null) {
             var trimmed = currentLine.trim()
             val split = trimmed.split(" - ")

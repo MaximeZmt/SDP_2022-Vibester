@@ -46,7 +46,7 @@
         android:backgroundTint="@color/cg_blue"
         android:elevation="10dp"
         android:stateListAnimator="@null"
-        android:text="@string/skip"
+        android:text="@string/BuzzerScreen_skip"
         android:translationZ="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

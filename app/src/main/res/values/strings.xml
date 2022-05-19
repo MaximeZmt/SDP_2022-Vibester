@@ -32,6 +32,7 @@
     <string name="BuzzerScreen_noWinner">Nobody won this game!</string>
     <string name="BuzzerScreen_oneWinner">And the winner is…\ </string>
     <string name="BuzzerScreen_moreThanOneWinner">And the winners are…\</string>
+    <string name="BuzzerScreen_skip">SKIP</string>
 
     <!-- GameEnding -->
     <string name="gameEnding_unconnectedUsername">UNCONNECTED</string>
@@ -217,7 +218,6 @@
     <string name="top_tracks">Top Tracks</string>
 
     <string name="PartyRoom_joinedPeople">Joined People:</string>
-    <string name="skip">SKIP</string>
 
 
 </resources>

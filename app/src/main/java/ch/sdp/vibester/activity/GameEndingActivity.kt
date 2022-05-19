@@ -107,9 +107,9 @@ class GameEndingActivity : AppCompatActivity() {
         view.text = text
         view.height = 100
         view.width = 300
-        view.textAlignment=View.TEXT_ALIGNMENT_CENTER
-        view.fontFeatureSettings="monospace"
-        view.textSize= 20f
+        view.textAlignment = View.TEXT_ALIGNMENT_CENTER
+        view.fontFeatureSettings = "monospace"
+        view.textSize = 20f
         view.gravity = gravity
         row.addView(view)
     }

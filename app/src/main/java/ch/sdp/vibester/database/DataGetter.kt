@@ -11,6 +11,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
 import javax.inject.Inject
+import kotlin.reflect.KFunction0
 
 /**
  * The users class which handled all the interactions with the database that are linked to users
@@ -52,7 +53,7 @@ class DataGetter @Inject constructor() {
     fun updateFieldInt(uid: String, fieldName: String, newVal: Int, method:String) {
         dbUserRef.child(uid).child(fieldName)
             .get().addOnSuccessListener { t ->
-                var finalVal  = checkValue(t, method, newVal)//newVal TO DELETE IF TESTS PASS, OTHERWISE ROLL BACK!
+                val finalVal  = checkValue(t, method, newVal)//newVal TO DELETE IF TESTS PASS, OTHERWISE ROLL BACK!
                 setFieldValue(uid, fieldName, finalVal)
             }
     }
@@ -97,15 +98,11 @@ class DataGetter @Inject constructor() {
      * This function creates a new user account in the database
      * @param email the email of the new user
      * @param username the username of the new user
-     * @param callback function to be called when the the user has been created
      * @param uid id of the new user
      */
-    fun createUser(email: String, username: String, callback: (String) -> Unit, uid: String) {
+    fun createUser(email: String, username: String, uid: String) {
         val newUser = User(email = email, username = username, uid = uid)
         dbUserRef.child(uid).setValue(newUser)
-            .addOnSuccessListener {
-                callback(email)
-            }
     }
 
     /**

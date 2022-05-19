@@ -1,6 +1,5 @@
 package ch.sdp.vibester.user
 
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,10 +7,16 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
+import ch.sdp.vibester.helper.AdapterHelper
 import ch.sdp.vibester.helper.loadImg
 
-class UserScoreboardAdapter(playersInit: MutableList<User>, private val genre: String) :
-    RecyclerView.Adapter<UserScoreboardAdapter.PlayerViewHolder>() {
+/**
+ * Set users list in recycleView in scoreboard
+ */
+class UserScoreboardAdapter(
+    playersInit: MutableList<User>, private val genre: String,
+    private val listener: OnItemClickListener?
+): RecyclerView.Adapter<UserScoreboardAdapter.PlayerViewHolder>() {
 
     var players: MutableList<User> = playersInit
 
@@ -44,7 +49,7 @@ class UserScoreboardAdapter(playersInit: MutableList<User>, private val genre: S
     /**
      * Customer ViewHolder class for PlayerAdapter
      */
-    inner class PlayerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class PlayerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
         /**
          * @param player
@@ -56,6 +61,14 @@ class UserScoreboardAdapter(playersInit: MutableList<User>, private val genre: S
             itemView.findViewById<TextView>(R.id.tv_name).text = player.username
             itemView.findViewById<TextView>(R.id.tv_score).text = setScore(player).toString()
             itemView.findViewById<ImageView>(R.id.iv_photo).loadImg(player.image)
+        }
+
+        init {
+            itemView.setOnClickListener(this)
+        }
+
+        override fun onClick(v: View?) {
+            AdapterHelper().onClickHelper(adapterPosition, listener)
         }
     }
 }

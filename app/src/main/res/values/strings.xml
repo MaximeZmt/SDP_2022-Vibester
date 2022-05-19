@@ -30,17 +30,36 @@
 
     <!-- BuzzerScreen -->
     <string name="BuzzerScreen_noWinner">Nobody won this game!</string>
-    <string name="BuzzerScreen_oneWinner">And the winner is...\ </string>
-    <string name="BuzzerScreen_moreThanOneWinner">And the winners are...\</string>
+    <string name="BuzzerScreen_oneWinner">And the winner is…\ </string>
+    <string name="BuzzerScreen_moreThanOneWinner">And the winners are…\</string>
 
     <!-- GameEnding -->
     <string name="gameEnding_unconnectedUsername">UNCONNECTED</string>
+
+
+    <!-- GameGenre -->
+    <string name="gameGenre_validate">Validate</string>
+    <string name="billie_eilish">Billie Eilish</string>
+    <string name="imagine_dragons">Imagine Dragons</string>
+    <string name="bts">BTS</string>
+    <string name="r_o_c_k">R O C K</string>
+    <string name="k_p_o_p">K P O P</string>
+    <string name="t_o_p_t_r_a_c_k_s">T O P T R A C K S</string>
+    <string name="byArtistSearch">Personalized Artist</string>
+
+
 
     <!-- AppPreferences -->
     <string name="preferences_game_mode">game_mode</string>
     <string name="preferences_game_genre">game_genre</string>
 
-    <!-- OLD String-->
+    <!-- Profile -->
+    <string name="profile_verify_change_profile_pic">Do you want to change your profile picture?</string>
+    <string name="profile_logout">logout</string>
+    <string name="profile_scores">Scores</string>
+    <string name="profile_following">Following</string>
+    <string name="test_profile_image">bit.ly/3IUnyAF</string>
+    <string name="profile_username">Profile Username</string>
 
 
     <!-- OLD String-->
@@ -185,7 +204,6 @@
     <string name="result_will_show_here">result will show here</string>
     <string name="welcome_not_logged_in">"User: Not Logged In"</string>
     <string name="game_lyrics">Local Lyrics</string>
-    <string name="profile_username">Profile Username</string>
     <string name="search_users">SEARCH USERS</string>
     <string name="no_lyrics_found">No lyrics found, try the next song</string>
     <string name="correct_message">%1$d Well Done!</string>
@@ -193,16 +211,12 @@
     <string name="wrong_message_with_answer">Sadly you\'re wrong, it was %1$s by %2$s</string>
     <string name="user_add_friend">Add</string>
 
-    <string name="billie_eilish">Billie Eilish</string>
-    <string name="imagine_dragons">Imagine Dragons</string>
-    <string name="bts">BTS</string>
-    <string name="r_o_c_k">R O C K</string>
-    <string name="k_p_o_p">K P O P</string>
-    <string name="t_o_p_t_r_a_c_k_s">T O P T R A C K S</string>
+
     <string name="rock">rock</string>
     <string name="kpop">kpop</string>
     <string name="top_tracks">Top Tracks</string>
 
-    <string name="test_profile_image">bit.ly/3IUnyAF</string>
     <string name="PartyRoom_joinedPeople">Joined People:</string>
+
+
 </resources>

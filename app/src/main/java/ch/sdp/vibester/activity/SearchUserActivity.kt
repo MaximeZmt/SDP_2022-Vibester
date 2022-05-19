@@ -5,15 +5,16 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.Window
-import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
+import ch.sdp.vibester.activity.profile.PublicProfileActivity
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.database.ImageGetter
+import ch.sdp.vibester.user.OnItemClickListener
 import ch.sdp.vibester.user.User
 
 import ch.sdp.vibester.user.UserProfileAdapter
@@ -27,7 +28,7 @@ import javax.inject.Inject
  * Search for users based on their usernames.
  */
 @AndroidEntryPoint
-class SearchUserActivity : AppCompatActivity() {
+class SearchUserActivity : AppCompatActivity(), OnItemClickListener {
 
     @Inject
     lateinit var usersRepo: DataGetter
@@ -57,7 +58,7 @@ class SearchUserActivity : AppCompatActivity() {
         recyclerView!!.setHasFixedSize(true)
         recyclerView!!.layoutManager = LinearLayoutManager(this)
 
-        userProfileAdapter = UserProfileAdapter(this.users, authenticator, usersRepo)
+        userProfileAdapter = UserProfileAdapter(this.users, authenticator, usersRepo, imageGetter, this)
 
         recyclerView!!.adapter = userProfileAdapter
 
@@ -78,13 +79,11 @@ class SearchUserActivity : AppCompatActivity() {
         }
 
         searchEditText!!.addTextChangedListener(object:TextWatcher{
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 searchForUsers(p0.toString())
             }
-            override fun afterTextChanged(p0: Editable?) {
-            }
+            override fun afterTextChanged(p0: Editable?) {}
         })
     }
 
@@ -109,6 +108,13 @@ class SearchUserActivity : AppCompatActivity() {
      */
     private fun searchForUsers(inputUsername:String){
         usersRepo.searchByField("username", inputUsername, callback = ::setUserInAdapter, callbackUid = ::setUserInAdapter2)
+    }
+
+    override fun onItemClick(position: Int) {
+        val intent = Intent(this, PublicProfileActivity::class.java)
+        intent.putExtra("UserId", users[position].uid)
+        intent.putExtra("ScoresOrFollowing", R.string.profile_following.toString())
+        startActivity(intent)
     }
 }
 

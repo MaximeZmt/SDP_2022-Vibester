@@ -1,19 +1,23 @@
-package ch.sdp.vibester.activity
+package ch.sdp.vibester.activity.profile
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
+
+import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.action.ViewActions.scrollTo
 import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
+import ch.sdp.vibester.activity.MainActivity
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.database.ImageGetter
@@ -34,7 +38,7 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 @HiltAndroidTest
-class ProfileActivityTest {
+class MyProfileActivityTest {
 
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
@@ -78,42 +82,36 @@ class ProfileActivityTest {
         every { mockUsersRepo.getUserData(any(), any()) } answers {
             secondArg<(User) -> Unit>().invoke(mockProfile)
         }
-        every {mockUsersRepo.getCurrentUser()} answers {
-            null
-        }
+        every { mockUsersRepo.getCurrentUser() } answers { null }
         every { mockUsersRepo.setFieldValue(any(), any(), any()) } answers {}
         every { mockUsersRepo.setFieldValue(any(), any(), any()) } answers {}
     }
 
-//    val mockImageURI = Uri.parse("https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/45.png")
     private fun createMockImageGetter() {
-        every {mockImageGetter.fetchImage(any(), any())} answers {
-//            secondArg<(Uri) -> Unit>().invoke(mockImageURI)
-        }
+        every { mockImageGetter.fetchImage(any(), any())} answers {}
     }
+    
 
-    // FIXME failing test
-/*
     @Test
     fun checkProfileData() {
         val inputProfile = User("Lalisa Bon", R.string.test_profile_image.toString(), "lisa@test.com",  12, 8)
         val ctx = ApplicationProvider.getApplicationContext() as Context
-        val intent = Intent(ctx, ProfileActivity::class.java)
+        val intent = Intent(ctx, MyProfileActivity::class.java)
 
         createMockDataGetter(inputProfile)
         createMockAuthenticator()
         createMockImageGetter()
 
-        val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
+        val scn: ActivityScenario<MyProfileActivity> = ActivityScenario.launch(intent)
 
         onView(withId(R.id.username)).check(matches(withText(inputProfile.username)))
         onView(withId(R.id.profile_total_games_stat)).check(matches(withText(inputProfile.totalGames.toString())))
     }
     
- */
+
 
     @Test
-    fun clickScoresShowScores() {
+    fun showScoresByDefault() {
         val scorePerGenre: Map<String, Int> = mapOf(
             "top tracks" to 1,
             "kpop" to 2,
@@ -124,16 +122,13 @@ class ProfileActivityTest {
         val inputProfile = User("Lalisa Bon",R.string.test_profile_image.toString(), "lisa@test.com",
             12, scores = scorePerGenre)
         val ctx = ApplicationProvider.getApplicationContext() as Context
-        val intent = Intent(ctx, ProfileActivity::class.java)
+        val intent = Intent(ctx, MyProfileActivity::class.java)
 
         createMockDataGetter(inputProfile)
         createMockAuthenticator()
         createMockImageGetter()
 
-        val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
-        onView(withId(R.id.profile_scores)).perform(click())
-
-        onView(withId(R.id.profileStatistics)).check(matches(isDisplayed()))
+        val scn: ActivityScenario<MyProfileActivity> = ActivityScenario.launch(intent)
 
         onView(withId(R.id.profile_top_tracks)).check(matches(withText(inputProfile.scores.getOrDefault("top tracks", 0).toString())))
         onView(withId(R.id.profile_kpop)).check(matches(withText(inputProfile.scores.getOrDefault("kpop", 0).toString())))
@@ -144,33 +139,83 @@ class ProfileActivityTest {
     }
 
     @Test
-    fun clickBackToMain(){
-        val inputProfile = User("Lalisa Bon",R.string.test_profile_image.toString(), "lisa@test.com",  12, 8)
+    fun checkFriendsAndScoresBtn() {
+        val friendsMap: Map<String, Boolean> = mapOf(
+            "friend" to true
+        )
+        val inputProfile = User("Lalisa Bon", R.string.test_profile_image.toString(), "lisa@test.com",
+            12, following = friendsMap)
         val ctx = ApplicationProvider.getApplicationContext() as Context
-        val intent = Intent(ctx, ProfileActivity::class.java)
+        val intent = Intent(ctx, MyProfileActivity::class.java)
 
         createMockDataGetter(inputProfile)
         createMockAuthenticator()
         createMockImageGetter()
 
-        val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
-        onView(withId(R.id.profile_returnToMain)).perform(click())
+        val scn: ActivityScenario<MyProfileActivity> = ActivityScenario.launch(intent)
+
+        onView(withId(R.id.profile_following)).perform(click())
+        onView(withId(R.id.profile_scroll_stat)).check(matches(not(isDisplayed())))
+
+        onView(withId(R.id.profile_scores)).perform(click())
+        onView(withId(R.id.profile_scroll_stat)).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun friendsRecycleViewClickTest() {
+        val friendsMap: Map<String, Boolean> = mapOf(
+            "friend1" to true, "friend2" to true
+        )
+        val inputProfile = User("Lalisa Bon", R.string.test_profile_image.toString(), "lisa@test.com",
+            12, following = friendsMap)
+        val ctx = ApplicationProvider.getApplicationContext() as Context
+        val intent = Intent(ctx, MyProfileActivity::class.java)
+
+        createMockDataGetter(inputProfile)
+        createMockAuthenticator()
+        createMockImageGetter()
+
+        val scn: ActivityScenario<MyProfileActivity> = ActivityScenario.launch(intent)
+
+        onView(withId(R.id.profile_following)).perform(click())
+        onView(withId(R.id.profile_followingList))
+            .perform(
+                RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                    1, click()
+                )
+            )
+
+        onView(withId(R.id.profileContent)).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun clickBackToMain(){
+        val inputProfile = User("Lalisa Bon",R.string.test_profile_image.toString(), "lisa@test.com",  12, 8)
+        val ctx = ApplicationProvider.getApplicationContext() as Context
+        val intent = Intent(ctx, MyProfileActivity::class.java)
+
+        createMockDataGetter(inputProfile)
+        createMockAuthenticator()
+        createMockImageGetter()
+
+        val scn: ActivityScenario<MyProfileActivity> = ActivityScenario.launch(intent)
+        onView(withId(R.id.profile_returnToMain)).perform(scrollTo(), click())
         Intents.intended(IntentMatchers.hasComponent(MainActivity::class.java.name))
     }
-// FIXME failing test
-    /*
+
+
     @Test
     fun shouldShowQrCode() {
         val inputProfile = User("Lalisa Bon",R.string.test_profile_image.toString(), "lisa@test.com",  12, 8)
 
         val ctx = ApplicationProvider.getApplicationContext() as Context
-        val intent = Intent(ctx, ProfileActivity::class.java)
+        val intent = Intent(ctx, MyProfileActivity::class.java)
 
         createMockDataGetter(inputProfile)
         createMockAuthenticator()
         createMockImageGetter()
 
-        val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
+        val scn: ActivityScenario<MyProfileActivity> = ActivityScenario.launch(intent)
         onView(withId(R.id.showQRCode)).perform(click())
 
         onView(withId(R.id.QrCodePage)).check(matches(isDisplayed()))
@@ -178,21 +223,21 @@ class ProfileActivityTest {
         onView(withId(R.id.qrCode)).check(matches(isDisplayed()))
     }
 
-     */
+
 
     //FIXME layout does not display some elements
-    /*
+
     @Test
     fun clickBackToProfile() {
         val inputProfile = User("Lalisa Bon", R.string.test_profile_image.toString(), "lisa@test.com",  12, 8)
         val ctx = ApplicationProvider.getApplicationContext() as Context
-        val intent = Intent(ctx, ProfileActivity::class.java)
+        val intent = Intent(ctx, MyProfileActivity::class.java)
 
         createMockDataGetter(inputProfile)
         createMockAuthenticator()
         createMockImageGetter()
 
-        val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
+        val scn: ActivityScenario<MyProfileActivity> = ActivityScenario.launch(intent)
         onView(withId(R.id.showQRCode)).perform(click())
         onView(withId(R.id.qrCode_returnToProfile)).perform(click())
 
@@ -200,20 +245,18 @@ class ProfileActivityTest {
         onView(withId(R.id.profileContent)).check(matches(isDisplayed()))
     }
 
-     */
-
 
     @Test
     fun checkEditProfile() {
         val inputProfile = User("Lalisa Bon",R.string.test_profile_image.toString(), "lisa@test.com",  12, 8)
         val ctx = ApplicationProvider.getApplicationContext() as Context
-        val intent = Intent(ctx, ProfileActivity::class.java)
+        val intent = Intent(ctx, MyProfileActivity::class.java)
 
         createMockDataGetter(inputProfile)
         createMockAuthenticator()
         createMockImageGetter()
 
-        val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
+        val scn: ActivityScenario<MyProfileActivity> = ActivityScenario.launch(intent)
         val newUsername = "Lalisa Bon idomesniu"
 
         onView(withId(R.id.editUser)).perform(click())
@@ -226,74 +269,97 @@ class ProfileActivityTest {
         onView(withId(R.id.username)).check(matches(withText(newUsername)))
     }
 
+
     @Test
     fun checkEditProfileClickCancel() {
         val inputProfile = User( "Lalisa Bon", R.string.test_profile_image.toString(), "lisa@test.com",  12, 8)
         val ctx = ApplicationProvider.getApplicationContext() as Context
-        val intent = Intent(ctx, ProfileActivity::class.java)
+        val intent = Intent(ctx, MyProfileActivity::class.java)
 
         createMockDataGetter(inputProfile)
         createMockAuthenticator()
         createMockImageGetter()
 
-        val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
-        onView(withId(R.id.editUser)).perform(click())
-        onView(withText("Cancel")).perform(click())
+        val scn: ActivityScenario<MyProfileActivity> = ActivityScenario.launch(intent)
+        onView(withId(R.id.editUser)).perform(scrollTo(), click())
+        onView(withText("Cancel")).perform(scrollTo(), click())
 
         onView(withId(R.id.username)).check(matches(withText("Lalisa Bon")))
     }
 
-//    @Test
-//    fun checkChangePhotoCancel() {
-//        val inputProfile = User( "Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8, "VvPB47tQCLdjz3YebilS6h5EXdJ3")
-//        val ctx = ApplicationProvider.getApplicationContext() as Context
-//        val intent = Intent(ctx, ProfileActivity::class.java)
-//
-//        createMockDataGetter(inputProfile)
-//        createMockAuthenticator()
-//        createMockImageGetter()
-//
-//        val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
-//
-//        //TODO: potentially refactor this test to not need Thread.sleep
-//        //This thread sleep is added for the mock image to load, might be a better way to test it but for now I'll leave it like that
-//        Thread.sleep(3000)
-//
-//        onView(withId(R.id.avatar)).perform(click())
-//        onView(withText("No")).perform(click())
-//
-//        onView(withId(R.id.avatar)).check(matches(isDisplayed()))
-//    }
+
+    @Test
+    fun checkChangePhotoCancel() {
+        val inputProfile = User( "Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8, "VvPB47tQCLdjz3YebilS6h5EXdJ3")
+        val ctx = ApplicationProvider.getApplicationContext() as Context
+        val intent = Intent(ctx, MyProfileActivity::class.java)
+
+        createMockDataGetter(inputProfile)
+        createMockAuthenticator()
+        createMockImageGetter()
+
+        val scn: ActivityScenario<MyProfileActivity> = ActivityScenario.launch(intent)
+
+        onView(withId(R.id.profile_image_CardView)).perform(click())
+        onView(withText("No")).perform(click())
+
+        onView(withId(R.id.profile_image_CardView)).check(matches(isDisplayed()))
+    }
+
+
 
     @Test
     fun checkQrCodeGenerator() {
         val inputProfile = User( "Lalisa Bon", R.string.test_profile_image.toString(), "lisa@test.com",  12, 8,"VvPB47tQCLdjz3YebilS6h5EXdJ3")
         val ctx = ApplicationProvider.getApplicationContext() as Context
-        val intent = Intent(ctx, ProfileActivity::class.java)
+        val intent = Intent(ctx, MyProfileActivity::class.java)
 
         createMockDataGetter(inputProfile)
         createMockAuthenticator()
         createMockImageGetter()
 
-        val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
+        val scn: ActivityScenario<MyProfileActivity> = ActivityScenario.launch(intent)
+
         onView(withId(R.id.showQRCode)).perform(click())
-
         onView(withId(R.id.qrCode)).check(matches(isDisplayed()))
-    }
-// FIXME failing test
 
-//    @Test
-//    fun checkIfPictureIsDisplayed() {
-//        val inputProfile = User( "Lalisa Bon", R.string.test_profile_image.toString(), "lisa@test.com",  12, 8,"VvPB47tQCLdjz3YebilS6h5EXdJ3")
-//        val ctx = ApplicationProvider.getApplicationContext() as Context
-//        val intent = Intent(ctx, ProfileActivity::class.java)
-//
-//        createMockDataGetter(inputProfile)
-//        createMockAuthenticator()
-//        createMockImageGetter()
-//
-//        val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
-//        onView(withId(R.id.avatar)).check(matches(isDisplayed()))
-//    }
+        onView(withId(R.id.qrCode_returnToProfile)).perform(click())
+        onView(withId(R.id.profile_image_CardView)).check(matches(isDisplayed()))
+
+        onView(withId(R.id.logout)).perform(scrollTo(), click())
+        onView(withId(R.id.fragment)).check(matches(isDisplayed()))
+    }
+
+
+    @Test
+    fun checkChangeImage() {
+        val inputProfile = User( "Lalisa Bon", R.string.test_profile_image.toString(), "lisa@test.com",  12, 8,"VvPB47tQCLdjz3YebilS6h5EXdJ3")
+        val ctx = ApplicationProvider.getApplicationContext() as Context
+        val intent = Intent(ctx, MyProfileActivity::class.java)
+
+        createMockDataGetter(inputProfile)
+        createMockAuthenticator()
+        createMockImageGetter()
+
+        val scn: ActivityScenario<MyProfileActivity> = ActivityScenario.launch(intent)
+
+        onView(withId(R.id.profile_image_CardView)).perform(click())
+        onView(withText("NO")).perform(click())
+        onView(withId(R.id.profile_image_CardView)).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun checkIfPictureIsDisplayed() {
+        val inputProfile = User( "Lalisa Bon", R.string.test_profile_image.toString(), "lisa@test.com",  12, 8,"VvPB47tQCLdjz3YebilS6h5EXdJ3")
+        val ctx = ApplicationProvider.getApplicationContext() as Context
+        val intent = Intent(ctx, MyProfileActivity::class.java)
+
+        createMockDataGetter(inputProfile)
+        createMockAuthenticator()
+        createMockImageGetter()
+
+        val scn: ActivityScenario<MyProfileActivity> = ActivityScenario.launch(intent)
+        onView(withId(R.id.profile_image_CardView)).check(matches(isDisplayed()))
+    }
 
 }

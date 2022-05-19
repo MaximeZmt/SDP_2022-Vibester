@@ -97,12 +97,10 @@ class GameManagerTest {
         var records = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "records.txt")
         records.createNewFile()
         records.appendText("Song 1 - Artist 1\n")
-        records.appendText("Song 2 - Artist 2\n")
 
         var properties = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "properties.txt")
         properties.createNewFile()
         properties.appendText("Song 1 - Artist 1 - Artwork 1 - Preview 1\n")
-        properties.appendText("Song 2 - Artist 2 - Artwork 2 - Preview 2\n")
 
         var testing1 = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "extract_of_Song 1 - Artist 1")
         testing1.createNewFile()
@@ -199,10 +197,10 @@ class GameManagerTest {
         assert(gameManager.setNextSong())
 
         val curSong = gameManager.currentSong
-        assertEquals(curSong.getTrackName(), "Song 2")
-        assertEquals(curSong.getArtistName(), "Artist 2")
-        assertEquals(curSong.getPreviewUrl(), "Preview 2")
-        assertEquals(curSong.getArtworkUrl(), "Artwork 2")
+        assertEquals(curSong.getTrackName(), "Song 1")
+        assertEquals(curSong.getArtistName(), "Artist 1")
+        assertEquals(curSong.getPreviewUrl(), "Preview 1")
+        assertEquals(curSong.getArtworkUrl(), "Artwork 1")
 
 
         offlineTestCleanup()

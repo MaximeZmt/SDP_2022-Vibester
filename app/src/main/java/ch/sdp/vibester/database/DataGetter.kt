@@ -13,7 +13,9 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
+import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 /**
  * The users class which handled all the interactions with the database that are linked to users
@@ -202,7 +204,7 @@ class DataGetter @Inject constructor() {
      * @param callback the function to be called when the data of the appropriate user is available
      */
 
-    fun getRoomData(roomName: String, callback: (PartyRoom) -> Unit) {
+    fun getRoomData(roomName: String, partyRoomCallback: (PartyRoom) -> Unit ) {
         val queryRooms = dbRoomRef
             .orderByChild("roomName")
             .equalTo(roomName)
@@ -210,6 +212,7 @@ class DataGetter @Inject constructor() {
         queryRooms.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for (snapshot in dataSnapshot.children) {
+//                    Log.w("DEBUG LMAO", snapshot.value.toString())
                     val partyRoom: PartyRoom? = snapshot.getValue(PartyRoom::class.java)
                     if(partyRoom != null) {
                         val currUserEmail = getCurrentUser()?.email!!
@@ -217,8 +220,14 @@ class DataGetter @Inject constructor() {
                             partyRoom.addUserEmail(currUserEmail)
                             updateRoomUserList(partyRoom)
                         }
-                        callback(partyRoom)
+                        partyRoomCallback(partyRoom)
                     }
+                    val songList = snapshot.getValue() as Map<String, Object>
+                    val testList = songList["songList"] as List<*>
+//                    Log.w("DEBUG LOL", testList[0].)
+                    val pairTest: Map<String, String> = testList[0] as Map<String, String>
+//                    Log.w("DEBUG LOL", pairTest.getOrDefault("first", "hello"))
+//                    Log.w("DEBUG gg", songList["songList"].toString())
                 }
             }
             override fun onCancelled(error: DatabaseError) {
@@ -234,9 +243,12 @@ class DataGetter @Inject constructor() {
     fun updateStartGame(roomID: String, value: Boolean) {
         dbRoomRef.child("${roomID}/gameStarted").setValue(value)
     }
-
-//    fun dowloadSongList(roomName: String, callback: (GameManager) -> Unit) {
-//        val queryRooms = dbRoomRef
+//callback: (GameManager) -> Unit
+//    fun dowloadSongList(roomName: String, callback: () -> Unit) {
+//
+//    Log.w("DEBUG LMAO", "I get to here")
+//
+//    val queryRooms = dbRoomRef
 //            .orderByChild("roomName")
 //            .equalTo(roomName)
 //
@@ -245,16 +257,24 @@ class DataGetter @Inject constructor() {
 //        gameManager.setGameSize(1)
 //        gameManager.gameMode = R.string.imagine_dragons.toString()
 //
+//    Log.w("DEBUG LMAO", "I get to here22")
+//
 //        queryRooms.addValueEventListener(object : ValueEventListener {
 //            override fun onDataChange(dataSnapshot: DataSnapshot) {
 //                for (snapshot in dataSnapshot.children) {
-//                    val songList = snapshot.getValue(MutableList<Pair<String, String>>)
-//                    if(songList != null) {
-//                        val songList = songList
-//                        gameManager.gameSongList = songList
-//
-//                        callback(gameManager)
+////                    callback()
+//                    val partyRoom: PartyRoom? = snapshot.getValue(PartyRoom::class.java)
+//                    if (partyRoom != null) {
+//                        Log.w("DEBUG LMAO", partyRoom.getRoomName())
 //                    }
+//                    Log.w("DEBUG LMAO", snapshot.value.toString())
+////                    val songList = snapshot.getValue(MutableList<Pair<String, String>>)
+////                    if(songList != null) {
+////                        val songList = songList
+////                        gameManager.gameSongList = songList
+////
+////                        callback(gameManager)
+////                    }
 //                }
 //            }
 //            override fun onCancelled(error: DatabaseError) {
@@ -264,4 +284,5 @@ class DataGetter @Inject constructor() {
 //    }
 
 }
+
 

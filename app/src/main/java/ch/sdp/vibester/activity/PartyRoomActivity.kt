@@ -80,7 +80,12 @@ class PartyRoomActivity : AppCompatActivity() {
         chooseGenre(method = LastfmMethod.BY_ARTIST.method, artist = "Imagine Dragons", mode = R.string.imagine_dragons)
     }
 
+    private fun test() {
+        Log.w("DEBUG LMAO", "HELLO HELLO")
+    }
+
     private fun launchGame(newGameManager: GameManager) {
+
         val newIntent = Intent(this, TypingGameActivity::class.java)
         newIntent.putExtra("gameManager", newGameManager)
         newIntent.putExtra("Difficulty", R.string.easy.toString())

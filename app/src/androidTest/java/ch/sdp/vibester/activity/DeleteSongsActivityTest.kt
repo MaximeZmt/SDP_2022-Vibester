@@ -72,12 +72,17 @@ class DeleteSongsActivityTest {
         val context = InstrumentationRegistry.getInstrumentation().targetContext.applicationContext
         var records = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "records.txt")
         records.createNewFile()
-        records.appendText("Testing 1\n")
-        records.appendText("Testing 2\n")
+        records.appendText("Song 1 - Artist 1\n")
+        records.appendText("Song 2 - Artist 2\n")
 
-        var testing1 = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "extract_of_Testing 1")
+        var properties = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "properties.txt")
+        properties.createNewFile()
+        properties.appendText("Song 1 - Artist 1 - Artwork 1 - Preview 1\n")
+        properties.appendText("Song 2 - Artist 2 - Artwork 2 - Preview 2\n")
+
+        var testing1 = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "extract_of_Song 1 - Artist 1")
         testing1.createNewFile()
-        var testing2 = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "extract_of_Testing 2")
+        var testing2 = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "extract_of_Song 2 - Artist 2")
         testing2.createNewFile()
 
         val intent = Intent(ApplicationProvider.getApplicationContext(), DeleteSongsActivity::class.java)
@@ -89,9 +94,10 @@ class DeleteSongsActivityTest {
         }
 
 
-        onView(withId(layout.getChildAt(0).id)).check(matches(withText("TESTING 1")))
-        onView(withId(layout.getChildAt(1).id)).check(matches(withText("TESTING 2")))
+        onView(withId(layout.getChildAt(0).id)).check(matches(withText("SONG 1 - ARTIST 1")))
+        onView(withId(layout.getChildAt(1).id)).check(matches(withText("SONG 2 - ARTIST 2")))
         records.delete()
+        properties.delete()
         testing1.delete()
         testing2.delete()
     }
@@ -101,12 +107,17 @@ class DeleteSongsActivityTest {
         val context = InstrumentationRegistry.getInstrumentation().targetContext.applicationContext
         var records = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "records.txt")
         records.createNewFile()
-        records.appendText("Testing 1\n")
-        records.appendText("Testing 2\n")
+        records.appendText("Song 1 - Artist 1\n")
+        records.appendText("Song 2 - Artist 2\n")
 
-        var testing1 = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "extract_of_Testing 1")
+        var properties = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "properties.txt")
+        properties.createNewFile()
+        properties.appendText("Song 1 - Artist 1 - Artwork 1 - Preview 1\n")
+        properties.appendText("Song 2 - Artist 2 - Artwork 2 - Preview 2\n")
+
+        var testing1 = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "extract_of_Song 1 - Artist 1")
         testing1.createNewFile()
-        var testing2 = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "extract_of_Testing 2")
+        var testing2 = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "extract_of_Song 2 - Artist 2")
         testing2.createNewFile()
 
         val intent = Intent(ApplicationProvider.getApplicationContext(), DeleteSongsActivity::class.java)
@@ -121,9 +132,10 @@ class DeleteSongsActivityTest {
 
         assert(!testing1.exists())
         assert(testing2.exists())
-        onView(withId(layout.getChildAt(0).id)).check(matches(withText("TESTING 2")))
+        onView(withId(layout.getChildAt(0).id)).check(matches(withText("SONG 2 - ARTIST 2")))
 
         records.delete()
+        properties.delete()
         testing1.delete()
         testing2.delete()
     }
@@ -133,12 +145,17 @@ class DeleteSongsActivityTest {
         val context = InstrumentationRegistry.getInstrumentation().targetContext.applicationContext
         var records = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "records.txt")
         records.createNewFile()
-        records.appendText("Testing 1\n")
-        records.appendText("Testing 2\n")
+        records.appendText("Song 1 - Artist 1\n")
+        records.appendText("Song 2 - Artist 2\n")
 
-        var testing1 = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "extract_of_Testing 1")
+        var properties = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "properties.txt")
+        properties.createNewFile()
+        properties.appendText("Song 1 - Artist 1 - Artwork 1 - Preview 1\n")
+        properties.appendText("Song 2 - Artist 2 - Artwork 2 - Preview 2\n")
+
+        var testing1 = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "extract_of_Song 1 - Artist 1")
         testing1.createNewFile()
-        var testing2 = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "extract_of_Testing 2")
+        var testing2 = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "extract_of_Song 2 - Artist 2")
         testing2.createNewFile()
 
         val intent = Intent(ApplicationProvider.getApplicationContext(), DeleteSongsActivity::class.java)
@@ -153,9 +170,10 @@ class DeleteSongsActivityTest {
 
         assert(testing1.exists())
         assert(!testing2.exists())
-        onView(withId(layout.getChildAt(0).id)).check(matches(withText("TESTING 1")))
+        onView(withId(layout.getChildAt(0).id)).check(matches(withText("SONG 1 - ARTIST 1")))
 
         records.delete()
+        properties.delete()
         testing1.delete()
         testing2.delete()
     }
@@ -165,12 +183,17 @@ class DeleteSongsActivityTest {
         val context = InstrumentationRegistry.getInstrumentation().targetContext.applicationContext
         var records = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "records.txt")
         records.createNewFile()
-        records.appendText("Testing 1\n")
-        records.appendText("Testing 2\n")
+        records.appendText("Song 1 - Artist 1\n")
+        records.appendText("Song 2 - Artist 2\n")
 
-        var testing1 = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "extract_of_Testing 1")
+        var properties = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "properties.txt")
+        properties.createNewFile()
+        properties.appendText("Song 1 - Artist 1 - Artwork 1 - Preview 1\n")
+        properties.appendText("Song 2 - Artist 2 - Artwork 2 - Preview 2\n")
+
+        var testing1 = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "extract_of_Song 1 - Artist 1")
         testing1.createNewFile()
-        var testing2 = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "extract_of_Testing 2")
+        var testing2 = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "extract_of_Song 2 - Artist 2")
         testing2.createNewFile()
 
         val intent = Intent(ApplicationProvider.getApplicationContext(), DeleteSongsActivity::class.java)
@@ -189,6 +212,7 @@ class DeleteSongsActivityTest {
         onView(withId(layout.getChildAt(0).id)).check(matches(withText(R.string.delete_nothing_to_delete)))
 
         records.delete()
+        properties.delete()
         testing1.delete()
         testing2.delete()
     }

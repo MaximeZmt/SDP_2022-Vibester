@@ -297,5 +297,13 @@ class GameSetupFragmentTest {
         onView(withId(R.id.validateSearch)).perform(scrollTo(), click())
     }
 
+    @Test
+    fun internetButtonClick() {
+        onView(withId(R.id.game_setup_has_internet)).check(matches(withText("Internet is on")))
+        onView(withId(R.id.game_setup_has_internet)).perform(click())
+        onView(withId(R.id.game_setup_has_internet)).check(matches(withText("Internet is off")))
+        onView(withId(R.id.game_setup_has_internet)).perform(click())
+        onView(withId(R.id.game_setup_has_internet)).check(matches(withText("Internet is on")))
+    }
 
 }

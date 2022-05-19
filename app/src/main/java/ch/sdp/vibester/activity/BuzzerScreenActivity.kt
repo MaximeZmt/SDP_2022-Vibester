@@ -107,7 +107,11 @@ class BuzzerScreenActivity : GameActivity() {
         val trackName = gameManager.getCurrentSong().getTrackName()
         val artist = gameManager.getCurrentSong().getArtistName()
         findViewById<TextView>(R.id.songTitle).text= "$trackName - $artist"
-        Glide.with(ctx).load(gameManager.getCurrentSong().getArtworkUrl()).override(artworkDim, artworkDim).into(findViewById(R.id.songArtwork))
+        //Checks if internet is available. If not, skip the loading of the artwork from url.
+        if(gameManager.getInternet()) {
+            Glide.with(ctx).load(gameManager.getCurrentSong().getArtworkUrl()).override(artworkDim, artworkDim).into(findViewById(R.id.songArtwork))
+        }
+
         gameManager.playSong()
         checkRunnable()
         super.barTimer(findViewById(R.id.progressBarBuzzer), ctx, gameManager, ::timeoutAnswer)

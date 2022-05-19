@@ -170,10 +170,9 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
             override fun onFailure(call: Call<Any>, t: Throwable?) {}
             override fun onResponse(call: Call<Any>, response: Response<Any>) {
                 // TODO: OFFLINE
-                gameManager.setInternet(hasInternet)
                 val external = context?.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)
                 if (external != null) {
-                    gameManager.setExternals(external)
+                    gameManager.setOffline(external, hasInternet)
                 }
                 gameManager.setGameSongList(Gson().toJson(response.body()), uri.method)
             }

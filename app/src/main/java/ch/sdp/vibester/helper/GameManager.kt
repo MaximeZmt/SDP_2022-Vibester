@@ -62,19 +62,12 @@ open class GameManager : Serializable {
     }
 
     /**
-     * Sets the context field of this class. To be passed to OfflineSongList for access to storage.
+     * Sets the offline fields of this class. To be passed to OfflineSongList for access to storage.
      * @param external: getExternalFilesDir(ENVIRONMENT.DIRECTORY_DOWNLOADS) call's result
-     */
-    fun setExternals(external: File) {
-            externals = external
-    }
-
-    /**
-     * Sets the internet boolean field of this class. Used to determine whether to use online or
-     * offline song list, and songs.
      * @param internet: True for available
      */
-    fun setInternet(internet: Boolean) {
+    fun setOffline(external: File, internet: Boolean) {
+        externals = external
         hasInternet = internet
     }
 

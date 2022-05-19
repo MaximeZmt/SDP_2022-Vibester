@@ -2,7 +2,9 @@ package ch.sdp.vibester.database
 
 import android.content.ContentValues
 import android.util.Log
+import ch.sdp.vibester.R
 import ch.sdp.vibester.auth.FireBaseAuthenticator
+import ch.sdp.vibester.helper.ArtistIdentifier
 import ch.sdp.vibester.helper.GameManager
 import ch.sdp.vibester.helper.PartyRoom
 import ch.sdp.vibester.user.User
@@ -225,13 +227,41 @@ class DataGetter @Inject constructor() {
         })
     }
 
-    fun saveSongList(roomID: String, songList: MutableList<Pair<String, String>>) {
+    fun updateSongList(roomID: String, songList: MutableList<Pair<String, String>>) {
         dbRoomRef.child("${roomID}/songList").setValue(songList)
     }
 
     fun updateStartGame(roomID: String, value: Boolean) {
-        dbRoomRef.child("${roomID}/songList").setValue(value)
+        dbRoomRef.child("${roomID}/gameStarted").setValue(value)
     }
+
+//    fun dowloadSongList(roomName: String, callback: (GameManager) -> Unit) {
+//        val queryRooms = dbRoomRef
+//            .orderByChild("roomName")
+//            .equalTo(roomName)
+//
+//        //Hardcoding for now
+//        val gameManager = GameManager()
+//        gameManager.setGameSize(1)
+//        gameManager.gameMode = R.string.imagine_dragons.toString()
+//
+//        queryRooms.addValueEventListener(object : ValueEventListener {
+//            override fun onDataChange(dataSnapshot: DataSnapshot) {
+//                for (snapshot in dataSnapshot.children) {
+//                    val songList = snapshot.getValue(MutableList<Pair<String, String>>)
+//                    if(songList != null) {
+//                        val songList = songList
+//                        gameManager.gameSongList = songList
+//
+//                        callback(gameManager)
+//                    }
+//                }
+//            }
+//            override fun onCancelled(error: DatabaseError) {
+//                Log.w(ContentValues.TAG, "dowloadSongList:onCancelled", error.toException())
+//            }
+//        })
+//    }
 
 }
 

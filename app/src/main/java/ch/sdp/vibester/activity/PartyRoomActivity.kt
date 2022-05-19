@@ -15,6 +15,7 @@ import ch.sdp.vibester.api.LastfmUri
 import ch.sdp.vibester.database.AppPreferences
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.database.Database
+import ch.sdp.vibester.helper.ArtistIdentifier
 import ch.sdp.vibester.helper.GameManager
 import ch.sdp.vibester.helper.PartyRoom
 import ch.sdp.vibester.user.User
@@ -54,7 +55,9 @@ class PartyRoomActivity : AppCompatActivity() {
         val startGame = findViewById<Button>(R.id.startGame)
 
         startGame.setOnClickListener {
+//            dataGetter.dowloadSongList(roomName, this::launchGame)
             setGameManager()
+//            dataGetter.updateSongList("room1", gameManager.getSongList())
         }
     }
 
@@ -82,8 +85,6 @@ class PartyRoomActivity : AppCompatActivity() {
         newIntent.putExtra("gameManager", newGameManager)
         newIntent.putExtra("Difficulty", R.string.easy.toString())
 
-        Log.w("DEBUG", "KA BLET")
-
         startActivity(newIntent)
     }
 
@@ -98,9 +99,9 @@ class PartyRoomActivity : AppCompatActivity() {
                 gameManager.setContext(context)
                  */
 
-                //Maybe only save URI?
 
                 gameManager.setGameSongList(Gson().toJson(response.body()), uri.method)
+                Log.w("DEBUG", gameManager.getSongList().toString())
                 launchGame(gameManager)
             }
         })
@@ -117,5 +118,9 @@ class PartyRoomActivity : AppCompatActivity() {
         AppPreferences.setStr(getString(R.string.preferences_game_genre), getString(mode))
 
         setGameSongList(uri)
+    }
+
+    private fun dowloadSongList() {
+
     }
 }

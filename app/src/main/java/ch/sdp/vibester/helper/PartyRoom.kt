@@ -5,6 +5,7 @@ class PartyRoom() {
     private lateinit var roomName: String
     private lateinit var userEmails: MutableList<String>
     private lateinit var roomID: String
+//    var gameSongList: MutableList<Pair<String, String>> = mutableListOf()
 
     fun addUserEmail(email: String) {
         userEmails.add(email)
@@ -33,4 +34,12 @@ class PartyRoom() {
     fun setEmailList(userEmails: MutableList<String>) {
         this.userEmails = userEmails
     }
+
+//    fun getSongList(): MutableList<Pair<String, String>> {
+//        return gameSongList
+//    }
+//
+//    fun setSongList(gameSongList: MutableList<Pair<String, String>>) {
+//        this.gameSongList = gameSongList
+//    }
 }

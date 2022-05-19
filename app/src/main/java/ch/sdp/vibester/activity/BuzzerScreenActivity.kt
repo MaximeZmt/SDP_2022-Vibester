@@ -252,6 +252,19 @@ class BuzzerScreenActivity : GameActivity() {
     }
 
     /**
+     * Makes a Map with the player names and scores, which will be fired in the intent to ending
+     */
+    fun packMapOfScores(playersArray: Array<String>, updater: BuzzerScoreUpdater): HashMap<String, Int> {
+        val playersToScores:HashMap<String, Int> = hashMapOf()
+        var i = 0
+        for (pName in playersArray) {
+            playersToScores.put(pName, updater.getMap()[buzzersToRows[buzIds[i]]]!!)
+            i += 1
+        }
+        return playersToScores
+    }
+
+    /**
      * Fires an intent from the Gamescreen to the Ending Screen
      */
     fun switchToEnding(view: View) {
@@ -261,6 +274,7 @@ class BuzzerScreenActivity : GameActivity() {
         val intent = Intent(this, GameEndingActivity::class.java)
 
         //TODO put extras to display in GameEndingActivity
+        intent.putExtra("Player Scores", packMapOfScores(this.players, this.scoreUpdater))
         intent.putExtra("Winner Name", prepareWinnerAnnouncement(scoreUpdater))
         startActivity(intent)
     }

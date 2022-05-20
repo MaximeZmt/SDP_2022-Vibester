@@ -12,6 +12,7 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -53,11 +54,11 @@ class ScoreBoardFragment : Fragment(), OnItemClickListener, View.OnClickListener
         return view
     }
 
-    private fun selectScoreboard(view:View) {
+    private fun selectScoreboard() {
         val sortedBy = "scores/" + genre
 
-        view.findViewById<LinearLayout>(R.id.genrePerScoreboard).visibility = GONE
-        view.findViewById<NestedScrollView>(R.id.scoreboard_content_scrolling).visibility = VISIBLE
+        requireView().findViewById<ConstraintLayout>(R.id.genrePerScoreboard).visibility = GONE
+        requireView().findViewById<NestedScrollView>(R.id.scoreboard_content_scrolling).visibility = VISIBLE
 
         loadPlayersSortedBy(sortedBy)
     }
@@ -102,7 +103,7 @@ class ScoreBoardFragment : Fragment(), OnItemClickListener, View.OnClickListener
 
     private fun showPlayersPosition(players: MutableList<User>?) {
         userScoreboardAdapter = UserScoreboardAdapter(players!!, genre, this)
-        view?.findViewById<RecyclerView>(R.id.recycler_view)!!.adapter = userScoreboardAdapter
+        requireView().findViewById<RecyclerView>(R.id.recycler_view)!!.adapter = userScoreboardAdapter
     }
 
     /**
@@ -119,24 +120,25 @@ class ScoreBoardFragment : Fragment(), OnItemClickListener, View.OnClickListener
     override fun onClick(v: View?) {
             when(v!!.getId()) {
                 R.id.btsButton -> {
-                    genre = "BTS"
+                    genre = "BTS"; selectScoreboard()
                 }
                 R.id.kpopButton -> {
-                    genre = "kpop"
+                    genre = "kpop"; selectScoreboard()
                 }
                 R.id.imagDragonsButton -> {
-                    genre = "Imagine Dragons"
+                    genre = "Imagine Dragons"; selectScoreboard()
                 }
                 R.id.billieEilishButton -> {
-                    genre = "Billie Eilish"
+                    genre = "Billie Eilish"; selectScoreboard()
                 }
                 R.id.rockButton -> {
-                    genre = "rock"
+                    genre = "rock";selectScoreboard()
                 }
                 R.id.topTracksButton -> {
-                    genre = "top tracks"
+                    genre = "top tracks";selectScoreboard()
                 }
+
             }
-            selectScoreboard(v)
+
     }
 }

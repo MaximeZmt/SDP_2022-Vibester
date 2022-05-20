@@ -59,7 +59,7 @@ class QrScanningActivity : AppCompatActivity() {
             isTest = extras.getBoolean("isTest", false)
         } else {
             // If no uid end of activity
-            startActivityWExtra(Intent(this@QrScanningActivity, SearchUserActivity::class.java), null, null)
+//            startActivityWExtra(Intent(this@QrScanningActivity, SearchUserActivity::class.java), null, null)
         }
 
         permissionManager()
@@ -185,7 +185,7 @@ class QrScanningActivity : AppCompatActivity() {
             } else {
                 // Camera permission not granted, come back to previous activity
                 Toast.makeText(applicationContext, getString(R.string.qrScanning_cameraError), Toast.LENGTH_LONG).show()
-                startActivityWExtra(Intent(this@QrScanningActivity, SearchUserActivity::class.java), null, null)
+//                startActivityWExtra(Intent(this@QrScanningActivity, SearchUserActivity::class.java), null, null)
             }
         }
     }
@@ -211,7 +211,7 @@ class QrScanningActivity : AppCompatActivity() {
                     toastText = getString(R.string.qrScanning_newFriend)
                 }
                 Toast.makeText(this@QrScanningActivity, toastText, Toast.LENGTH_SHORT).show()
-                startActivityWExtra(Intent(this@QrScanningActivity, SearchUserActivity::class.java), null, null)
+//                startActivityWExtra(Intent(this@QrScanningActivity, SearchUserActivity::class.java), null, null)
             }
         }
     }

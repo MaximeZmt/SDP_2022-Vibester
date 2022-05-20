@@ -1,4 +1,4 @@
-package ch.sdp.vibester.activity
+package ch.sdp.vibester.fragment
 
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ApplicationProvider
@@ -9,9 +9,9 @@ import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
+import ch.sdp.vibester.launchFragmentInHiltContainer
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import org.hamcrest.CoreMatchers.not
@@ -23,18 +23,19 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 @HiltAndroidTest
-class ScoreBoardActivityTest {
+class ScoreBoardFragmentTest {
 
     @get:Rule(order=0)
     var hiltRule = HiltAndroidRule(this)
 
-    @get:Rule(order=1)
-    val activityRule = ActivityScenarioRule(ScoreBoardActivity::class.java)
 
     @Before
     fun setUp() {
         hiltRule.inject()
         Intents.init()
+        launchFragmentInHiltContainer<ScoreBoardFragment>(
+            themeResId = R.style.AppTheme
+        )
     }
 
     @After
@@ -93,18 +94,5 @@ class ScoreBoardActivityTest {
     @Test
     fun btsButtonClick() {
         onView(withId(R.id.btsButton)).perform(click())
-    }
-
-    @Test
-    fun recycleViewScrollDownTest() {
-        val recyclerView = RecyclerView(ApplicationProvider.getApplicationContext())
-        val itemCount = recyclerView.adapter?.itemCount
-        if (itemCount != null) {
-            onView(withId(R.id.recycler_view)).perform(
-                RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(
-                    itemCount.minus(1)
-                )
-            )
-        }
     }
 }

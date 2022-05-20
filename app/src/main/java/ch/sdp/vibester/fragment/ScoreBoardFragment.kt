@@ -1,16 +1,20 @@
-package ch.sdp.vibester.activity
+package ch.sdp.vibester.fragment
 
 import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.view.ViewGroup
+import android.widget.Button
 import android.widget.LinearLayout
-import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.NestedScrollView
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
@@ -26,42 +30,43 @@ import com.google.firebase.database.ValueEventListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ScoreBoardActivity : AppCompatActivity(), OnItemClickListener {
+class ScoreBoardFragment : Fragment(), OnItemClickListener, View.OnClickListener{
     private val dbRef: DatabaseReference = Database.get().getReference("users")
-    private var players: MutableList<User>? = null
+    private var players: MutableList<User> = mutableListOf()
     private var userScoreboardAdapter: UserScoreboardAdapter? = null
     private var genre: String = ""
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.scoreboard_scoreboard)
-        setSupportActionBar(findViewById(R.id.toolbar))
-        setupRecycleView()
-        players = ArrayList()
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.fragment_scoreboard, container, false)
+        val ctx = inflater.context
+
+        view.findViewById<Button>(R.id.kpopButton).setOnClickListener(this)
+        view.findViewById<Button>(R.id.rockButton).setOnClickListener(this)
+        view.findViewById<Button>(R.id.btsButton).setOnClickListener(this)
+        view.findViewById<Button>(R.id.topTracksButton).setOnClickListener(this)
+        view.findViewById<Button>(R.id.imagDragonsButton).setOnClickListener(this)
+        view.findViewById<Button>(R.id.billieEilishButton).setOnClickListener(this)
+        setupRecycleView(view, ctx)
+
+        return view
     }
 
-    fun selectScoreboard(view: View) {
-        var sortedBy = "scores/"
-        // can't use R.string for genre (getOrDefault in setScore in UserScoreboardAdapter)
-        when (view.id) {
-            R.id.btsButton -> {sortedBy += R.string.bts; genre = "BTS"}
-            R.id.kpopButton -> {sortedBy += R.string.kpop; genre = "kpop"}
-            R.id.imagDragonsButton -> {sortedBy += R.string.imagine_dragons; genre = "Imagine Dragons"}
-            R.id.billieEilishButton -> {sortedBy += R.string.billie_eilish; genre = "Billie Eilish"}
-            R.id.rockButton -> {sortedBy += R.string.rock; genre = "rock"}
-            R.id.topTracksButton -> {sortedBy += R.string.top_tracks; genre = "top tracks"}
-        }
+    private fun selectScoreboard() {
+        val sortedBy = "scores/" + genre
 
-        findViewById<LinearLayout>(R.id.genrePerScoreboard).visibility = GONE
-        findViewById<NestedScrollView>(R.id.scoreboard_content_scrolling).visibility = VISIBLE
+        requireView().findViewById<ConstraintLayout>(R.id.genrePerScoreboard).visibility = GONE
+        requireView().findViewById<NestedScrollView>(R.id.scoreboard_content_scrolling).visibility = VISIBLE
 
         loadPlayersSortedBy(sortedBy)
     }
 
-    private fun setupRecycleView() {
-        findViewById<RecyclerView>(R.id.recycler_view).apply {
+    private fun setupRecycleView(view:View, context: Context) {
+        view.findViewById<RecyclerView>(R.id.recycler_view).apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = players?.let { UserScoreboardAdapter(it, genre, this@ScoreBoardActivity) }
+            adapter = UserScoreboardAdapter(players, genre, this@ScoreBoardFragment)
             setHasFixedSize(true)
         }
     }
@@ -76,8 +81,8 @@ class ScoreBoardActivity : AppCompatActivity(), OnItemClickListener {
                         (players as? ArrayList<User>)?.add(player)
                     }
                 }
-                players = players?.let { replaceRankingByScore(it) }
-                players = players?.sortedByDescending { it.ranking } as MutableList<User>?
+                players = replaceRankingByScore(players)
+                players = players.sortedByDescending { it.ranking } as MutableList<User>
                 showPlayersPosition(players)
             }
 
@@ -98,7 +103,7 @@ class ScoreBoardActivity : AppCompatActivity(), OnItemClickListener {
 
     private fun showPlayersPosition(players: MutableList<User>?) {
         userScoreboardAdapter = UserScoreboardAdapter(players!!, genre, this)
-        findViewById<RecyclerView>(R.id.recycler_view)!!.adapter = userScoreboardAdapter
+        requireView().findViewById<RecyclerView>(R.id.recycler_view)!!.adapter = userScoreboardAdapter
     }
 
     /**
@@ -106,9 +111,34 @@ class ScoreBoardActivity : AppCompatActivity(), OnItemClickListener {
      * go to the profile of the player at index position
      */
     override fun onItemClick(position: Int) {
-        val intent = Intent(this, PublicProfileActivity::class.java)
-        intent.putExtra("UserId", players?.get(position)?.uid)
+        val intent = Intent(requireActivity(), PublicProfileActivity::class.java)
+        intent.putExtra("UserId", players.get(position).uid)
         intent.putExtra("ScoresOrFollowing", R.string.profile_scores.toString() )
         startActivity(intent)
+    }
+
+    override fun onClick(v: View?) {
+            when(v!!.getId()) {
+                R.id.btsButton -> {
+                    genre = "BTS"; selectScoreboard()
+                }
+                R.id.kpopButton -> {
+                    genre = "kpop"; selectScoreboard()
+                }
+                R.id.imagDragonsButton -> {
+                    genre = "Imagine Dragons"; selectScoreboard()
+                }
+                R.id.billieEilishButton -> {
+                    genre = "Billie Eilish"; selectScoreboard()
+                }
+                R.id.rockButton -> {
+                    genre = "rock";selectScoreboard()
+                }
+                R.id.topTracksButton -> {
+                    genre = "top tracks";selectScoreboard()
+                }
+
+            }
+
     }
 }

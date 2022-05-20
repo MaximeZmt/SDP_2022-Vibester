@@ -10,4 +10,6 @@
         android:label="fragment_settings" tools:layout="@layout/fragment_game_setup"/>
     <fragment android:id="@+id/searchUserBtn" android:name="ch.sdp.vibester.fragment.SearchUserFragment"
         android:label="fragment_search" tools:layout="@layout/fragment_search_user"/>
+    <fragment android:id="@+id/scoreboardBtn" android:name="ch.sdp.vibester.fragment.ScoreBoardFragment"
+        android:label="fragment_scoreboard" tools:layout="@layout/fragment_scoreboard"/>
 </navigation>

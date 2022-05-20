@@ -35,7 +35,6 @@ class WelcomeScreenFragment : Fragment(),View.OnClickListener {
 
         view.findViewById<Button>(R.id.welcome_profile).setOnClickListener(this)
         view.findViewById<Button>(R.id.welcome_download).setOnClickListener(this)
-        view.findViewById<Button>(R.id.welcome_scoreboard).setOnClickListener(this)
         view.findViewById<Button>(R.id.welcome_search).setOnClickListener(this)
 
         return view
@@ -71,9 +70,6 @@ class WelcomeScreenFragment : Fragment(),View.OnClickListener {
         }
     }
 
-    private fun switchToScoreboard() {
-        sendDirectIntent(ScoreBoardActivity::class.java)
-    }
 
     private fun switchToDownload() {
         sendDirectIntent(DownloadActivity::class.java)
@@ -83,7 +79,6 @@ class WelcomeScreenFragment : Fragment(),View.OnClickListener {
         when(v!!.getId()) {
             R.id.welcome_download -> switchToDownload()
             R.id.welcome_profile -> switchToProfile()
-            R.id.welcome_scoreboard -> switchToScoreboard()
         }
     }
 }

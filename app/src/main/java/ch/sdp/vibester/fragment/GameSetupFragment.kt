@@ -47,7 +47,7 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_game_setup, container, false)
-        val ctx = inflater.getContext();
+        val ctx = inflater.context
 
         view.findViewById<Button>(R.id.local_buzzer_game_button).setOnClickListener(this)
         view.findViewById<Button>(R.id.local_typing_game_button).setOnClickListener(this)

@@ -15,4 +15,11 @@
         />
 
 
+    <item
+        android:id="@+id/scoreboardBtn"
+        android:title="Scoreboard"
+        android:icon="@drawable/scoreboard"
+        />
+
+
 </menu>

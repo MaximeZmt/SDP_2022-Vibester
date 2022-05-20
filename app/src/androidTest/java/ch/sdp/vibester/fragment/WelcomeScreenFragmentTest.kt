@@ -89,17 +89,6 @@ class WelcomeScreenFragmentTest {
         onView(withId(R.id.welcome_profile)).perform(click())
         intended(hasComponent(MyProfileActivity::class.java.name))
     }
-
-    @Test
-    fun checkIntentOnScoreboard() {
-        val intent = Intent(ApplicationProvider.getApplicationContext(), MainActivity::class.java)
-        createMockAuthenticatorLoggedOut()
-        val scn: ActivityScenario<MainActivity> = ActivityScenario.launch(intent)
-
-        onView(withId(R.id.welcome_scoreboard)).perform(click())
-        intended(hasComponent(ScoreBoardActivity::class.java.name))
-    }
-
     @Test
     fun checkIntentOnDownload() {
         val intent = Intent(ApplicationProvider.getApplicationContext(), MainActivity::class.java)

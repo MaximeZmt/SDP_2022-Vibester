@@ -14,5 +14,11 @@
         android:icon="@drawable/play"
         />
 
+    <item
+        android:id="@+id/searchUserBtn"
+        android:title="Search"
+        android:icon="@drawable/play"
+        />
+
 
 </menu>

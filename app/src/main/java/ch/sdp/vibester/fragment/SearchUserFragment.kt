@@ -1,4 +1,4 @@
-package ch.sdp.vibester.database
+package ch.sdp.vibester.fragment
 
 import android.content.Intent
 import android.os.Bundle
@@ -15,6 +15,8 @@ import ch.sdp.vibester.R
 import ch.sdp.vibester.activity.QrScanningActivity
 import ch.sdp.vibester.activity.profile.PublicProfileActivity
 import ch.sdp.vibester.auth.FireBaseAuthenticator
+import ch.sdp.vibester.database.DataGetter
+import ch.sdp.vibester.database.ImageGetter
 import ch.sdp.vibester.user.OnItemClickListener
 import ch.sdp.vibester.user.User
 
@@ -84,7 +86,7 @@ class SearchUserFragment : Fragment(), OnItemClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.activity_search_user, container, false)
+        val view = inflater.inflate(R.layout.fragment_search_user, container, false)
         return view
     }
 

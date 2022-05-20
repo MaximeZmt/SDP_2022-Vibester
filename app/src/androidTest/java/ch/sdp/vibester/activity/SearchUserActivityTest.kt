@@ -18,6 +18,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
+import ch.sdp.vibester.database.SearchUserActivity
 import ch.sdp.vibester.user.User
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.testing.BindValue

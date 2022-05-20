@@ -54,8 +54,7 @@ class ScoreBoardFragment : Fragment(), OnItemClickListener, View.OnClickListener
         players = ArrayList()
     }
 
-    fun selectScoreboard() {
-        println("here")
+    private fun selectScoreboard() {
         val sortedBy = "scores/" + genre
 
         requireView().findViewById<LinearLayout>(R.id.genrePerScoreboard).visibility = GONE

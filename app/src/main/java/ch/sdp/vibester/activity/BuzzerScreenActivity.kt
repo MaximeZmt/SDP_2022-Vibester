@@ -269,6 +269,7 @@ class BuzzerScreenActivity : GameActivity() {
      * Makes a Map with the player names and scores, which will be fired in the intent to ending
      * @param playersArray: String array of player names
      * @param updater: score updater which contains the player's scores
+     * @return a HashMap with player names as keys and scores as values
      */
     fun packMapOfScores(playersArray: Array<String>, updater: BuzzerScoreUpdater): HashMap<String, Int> {
         val playersToScores: HashMap<String, Int> = hashMapOf()

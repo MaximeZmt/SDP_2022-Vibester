@@ -45,13 +45,9 @@ class ScoreBoardFragment : Fragment(), OnItemClickListener, View.OnClickListener
         view.findViewById<Button>(R.id.topTracksButton).setOnClickListener(this)
         view.findViewById<Button>(R.id.imagDragonsButton).setOnClickListener(this)
         view.findViewById<Button>(R.id.billieEilishButton).setOnClickListener(this)
-        return view
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setupRecycleView()
+        setupRecycleView(view)
         players = ArrayList()
+        return view
     }
 
     private fun selectScoreboard() {
@@ -63,8 +59,8 @@ class ScoreBoardFragment : Fragment(), OnItemClickListener, View.OnClickListener
         loadPlayersSortedBy(sortedBy)
     }
 
-    private fun setupRecycleView() {
-        requireView().findViewById<RecyclerView>(R.id.recycler_view).apply {
+    private fun setupRecycleView(view:View) {
+        view.findViewById<RecyclerView>(R.id.recycler_view).apply {
             layoutManager = LinearLayoutManager(context)
             adapter = players?.let { UserScoreboardAdapter(it, genre, this@ScoreBoardFragment) }
             setHasFixedSize(true)

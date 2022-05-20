@@ -76,6 +76,12 @@ class DownloadActivityTest {
             if(records.exists()) {
                 records.delete()
             }
+
+            val properties = File(activity.applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "properties.txt")
+            assert(!properties.exists())
+            if(properties.exists()) {
+                properties.delete()
+            }
         }
     }
 

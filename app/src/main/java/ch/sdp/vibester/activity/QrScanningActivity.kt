@@ -140,13 +140,6 @@ class QrScanningActivity : AppCompatActivity() {
         }
     }
 
-    private fun restartQrActivity() {
-        val intent = Intent(this@QrScanningActivity, QrScanningActivity::class.java)
-        intent.putExtra( "uidList", uidList)
-        startActivity(intent)
-        finish()
-    }
-
     private fun startActivityWExtra(intent: Intent, name: String?, arg: Serializable?) {
         if (name != null && arg != null) {
             intent.putExtra(name, arg)

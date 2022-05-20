@@ -9,8 +9,13 @@ import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.GrantPermissionRule
 import ch.sdp.vibester.activity.profile.ProfileActivity
+import ch.sdp.vibester.database.DataGetter
+import ch.sdp.vibester.user.User
+import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import io.mockk.every
+import io.mockk.mockk
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -23,6 +28,26 @@ import org.junit.runner.RunWith
 class QrScanningActivityTest {
     @get:Rule(order = 0)
     var hiltRule = HiltAndroidRule(this)
+
+    @BindValue
+    @JvmField
+    val mockDataGetter = mockk<DataGetter>()
+
+    private fun createMockDataGetter() {
+        val mockUser1 = User("mockUser1", uid = "mockUser1uid")
+        val mockUser2 = User("mockUser2", uid = "mockUser2uid")
+        val mockUser3 = User("mockUser3", uid = "mockUser3uid")
+        val mockUser = User("mockUser", uid = "mockUseruid", following = mapOf(Pair(mockUser2.uid,true), Pair(mockUser3.uid,true)))
+
+        val mockUIDs = arrayListOf<String>("mockUser1uid","mockUser2uid","mockUser3uid")
+        val mockUsers = arrayListOf<User>(mockUser1, mockUser2, mockUser3)
+
+        every { mockDataGetter.searchByField(any(), any(), any(), any()) } answers  {
+            thirdArg<(ArrayList<User>) -> Unit>().invoke(mockUsers)
+            lastArg<(ArrayList<String>) -> Unit>().invoke(mockUIDs)
+        }
+        every {mockDataGetter.setSubFieldValue(any(), any(), any(), any())} answers {}
+    }
 
     @get:Rule(order = 1)
     var permissionRule = GrantPermissionRule.grant(android.Manifest.permission.CAMERA)
@@ -45,10 +70,10 @@ class QrScanningActivityTest {
         intent.putExtra("isTest", true)
         val tempList: ArrayList<String> = ArrayList()
         intent.putExtra("uidList", tempList)
+        createMockDataGetter()
 
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
         Intents.intended(IntentMatchers.hasComponent(SearchUserActivity::class.java.name))
-        Intents.intended(IntentMatchers.hasExtra("isSuccess", true))
     }
 
 
@@ -56,12 +81,11 @@ class QrScanningActivityTest {
     fun testNoExtra() {
         val ctx = ApplicationProvider.getApplicationContext() as Context
         val intent = Intent(ctx, QrScanningActivity::class.java)
+        createMockDataGetter()
 
         val scn: ActivityScenario<ProfileActivity> = ActivityScenario.launch(intent)
         Intents.intended(IntentMatchers.hasComponent(SearchUserActivity::class.java.name))
     }
-
-
 }
 
 

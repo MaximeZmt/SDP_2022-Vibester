@@ -21,12 +21,14 @@ import com.google.android.gms.vision.CameraSource
 import com.google.android.gms.vision.Detector
 import com.google.android.gms.vision.barcode.Barcode
 import com.google.android.gms.vision.barcode.BarcodeDetector
+import dagger.hilt.android.AndroidEntryPoint
 import java.io.IOException
-import java.io.Serializable
+import javax.inject.Inject
 
 /**
  * Represent the QR scanner
  */
+@AndroidEntryPoint
 class QrScanningActivity : AppCompatActivity() {
     private val requestCodeCameraPermission = 1001
 
@@ -37,7 +39,9 @@ class QrScanningActivity : AppCompatActivity() {
     private var scannedValue = ""
     private var isTest: Boolean = false
     var uidList: ArrayList<String> = ArrayList()
-    val usersRepo: DataGetter = DataGetter()
+
+    @Inject
+    lateinit var dataGetter: DataGetter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -53,7 +57,7 @@ class QrScanningActivity : AppCompatActivity() {
             isTest = extras.getBoolean("isTest", false)
         } else {
             // If no uid end of activity
-            startActivityWExtra(Intent(this@QrScanningActivity, SearchUserActivity::class.java), null, null)
+            startSearchUserActivity()
         }
 
         permissionManager()
@@ -134,11 +138,15 @@ class QrScanningActivity : AppCompatActivity() {
         }
     }
 
+    private fun restartQrActivity() {
+        val intent = Intent(this@QrScanningActivity, QrScanningActivity::class.java)
+        intent.putExtra( "uidList", uidList)
+        startActivity(intent)
+        finish()
+    }
 
-    private fun startActivityWExtra(intent: Intent, name: String?, arg: Serializable?) {
-        if (name != null && arg != null) {
-            intent.putExtra(name, arg)
-        }
+    private fun startSearchUserActivity() {
+        val intent = Intent(this@QrScanningActivity, SearchUserActivity::class.java)
         startActivity(intent)
         finish()
     }
@@ -168,11 +176,11 @@ class QrScanningActivity : AppCompatActivity() {
         if (requestCode == requestCodeCameraPermission && grantResults.isNotEmpty()) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // If permission are granted restart the activity to make sure they are taken into account
-                startActivityWExtra(Intent(this@QrScanningActivity, QrScanningActivity::class.java), "uidList", uidList)
+                restartQrActivity()
             } else {
                 // Camera permission not granted, come back to previous activity
                 Toast.makeText(applicationContext, getString(R.string.qrScanning_cameraError), Toast.LENGTH_LONG).show()
-                startActivityWExtra(Intent(this@QrScanningActivity, SearchUserActivity::class.java), null, null)
+                startSearchUserActivity()
             }
         }
     }
@@ -191,18 +199,14 @@ class QrScanningActivity : AppCompatActivity() {
                 scannedValue = barcodes.valueAt(0).rawValue
             }
             runOnUiThread {
+                var toastText =  getString(R.string.qrScanning_noExistUid)
                 camera.stop()
                 if (isTest || scannedValue in uidList){
-                    if (!isTest) {
-                        usersRepo.setSubFieldValue(FireBaseAuthenticator().getCurrUID(),
-                            "following", scannedValue, true)
-                    }
-                    Toast.makeText(this@QrScanningActivity, getString(R.string.qrScanning_newFriend), Toast.LENGTH_SHORT).show()
-                    startActivityWExtra(Intent(this@QrScanningActivity, SearchUserActivity::class.java), "isSuccess", true)
-                } else {
-                    Toast.makeText(this@QrScanningActivity, getString(R.string.qrScanning_noExistUid), Toast.LENGTH_SHORT).show()
-                    startActivityWExtra(Intent(this@QrScanningActivity, SearchUserActivity::class.java), null, null)
+                    dataGetter.setSubFieldValue(FireBaseAuthenticator().getCurrUID(), "following", scannedValue, true)
+                    toastText = getString(R.string.qrScanning_newFriend)
                 }
+                Toast.makeText(this@QrScanningActivity, toastText, Toast.LENGTH_SHORT).show()
+                startSearchUserActivity()
             }
         }
     }

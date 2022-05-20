@@ -111,16 +111,6 @@ class WelcomeScreenFragmentTest {
     }
 
     @Test
-    fun checkIntentOnSearch() {
-        val intent = Intent(ApplicationProvider.getApplicationContext(), MainActivity::class.java)
-        createMockAuthenticatorLoggedOut()
-        val scn: ActivityScenario<MainActivity> = ActivityScenario.launch(intent)
-
-        onView(withId(R.id.welcome_search)).perform(click())
-        intended(hasComponent(SearchUserActivity::class.java.name))
-    }
-
-    @Test
     fun checkIntentOnSearchWithoutTestMode() {
         val intent = Intent(ApplicationProvider.getApplicationContext(), MainActivity::class.java)
         createMockAuthenticatorLoggedOut()

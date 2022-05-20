@@ -95,17 +95,4 @@ class ScoreBoardFragmentTest {
     fun btsButtonClick() {
         onView(withId(R.id.btsButton)).perform(click())
     }
-
-    @Test
-    fun recycleViewScrollDownTest() {
-        val recyclerView = RecyclerView(ApplicationProvider.getApplicationContext())
-        val itemCount = recyclerView.adapter?.itemCount
-        if (itemCount != null) {
-            onView(withId(R.id.recycler_view)).perform(
-                RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(
-                    itemCount.minus(1)
-                )
-            )
-        }
-    }
 }

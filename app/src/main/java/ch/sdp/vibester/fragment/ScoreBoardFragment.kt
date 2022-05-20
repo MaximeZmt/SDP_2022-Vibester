@@ -1,6 +1,7 @@
 package ch.sdp.vibester.fragment
 
 import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -30,7 +31,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class ScoreBoardFragment : Fragment(), OnItemClickListener, View.OnClickListener{
     private val dbRef: DatabaseReference = Database.get().getReference("users")
-    private var players: MutableList<User>? = null
+    private var players: MutableList<User> = mutableListOf()
     private var userScoreboardAdapter: UserScoreboardAdapter? = null
     private var genre: String = ""
 
@@ -39,14 +40,16 @@ class ScoreBoardFragment : Fragment(), OnItemClickListener, View.OnClickListener
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_scoreboard, container, false)
+        val ctx = inflater.context
+
         view.findViewById<Button>(R.id.kpopButton).setOnClickListener(this)
         view.findViewById<Button>(R.id.rockButton).setOnClickListener(this)
         view.findViewById<Button>(R.id.btsButton).setOnClickListener(this)
         view.findViewById<Button>(R.id.topTracksButton).setOnClickListener(this)
         view.findViewById<Button>(R.id.imagDragonsButton).setOnClickListener(this)
         view.findViewById<Button>(R.id.billieEilishButton).setOnClickListener(this)
-        setupRecycleView(view)
-        players = ArrayList()
+        setupRecycleView(view, ctx)
+
         return view
     }
 
@@ -59,10 +62,10 @@ class ScoreBoardFragment : Fragment(), OnItemClickListener, View.OnClickListener
         loadPlayersSortedBy(sortedBy)
     }
 
-    private fun setupRecycleView(view:View) {
+    private fun setupRecycleView(view:View, context: Context) {
         view.findViewById<RecyclerView>(R.id.recycler_view).apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = players?.let { UserScoreboardAdapter(it, genre, this@ScoreBoardFragment) }
+            adapter = UserScoreboardAdapter(players, genre, this@ScoreBoardFragment)
             setHasFixedSize(true)
         }
     }
@@ -77,8 +80,8 @@ class ScoreBoardFragment : Fragment(), OnItemClickListener, View.OnClickListener
                         (players as? ArrayList<User>)?.add(player)
                     }
                 }
-                players = players?.let { replaceRankingByScore(it) }
-                players = players?.sortedByDescending { it.ranking } as MutableList<User>?
+                players = replaceRankingByScore(players)
+                players = players.sortedByDescending { it.ranking } as MutableList<User>
                 showPlayersPosition(players)
             }
 

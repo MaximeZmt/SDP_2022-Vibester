@@ -53,11 +53,11 @@ class ScoreBoardFragment : Fragment(), OnItemClickListener, View.OnClickListener
         return view
     }
 
-    private fun selectScoreboard() {
+    private fun selectScoreboard(view:View) {
         val sortedBy = "scores/" + genre
 
-        requireView().findViewById<LinearLayout>(R.id.genrePerScoreboard).visibility = GONE
-        requireView().findViewById<NestedScrollView>(R.id.scoreboard_content_scrolling).visibility = VISIBLE
+        view.findViewById<LinearLayout>(R.id.genrePerScoreboard).visibility = GONE
+        view.findViewById<NestedScrollView>(R.id.scoreboard_content_scrolling).visibility = VISIBLE
 
         loadPlayersSortedBy(sortedBy)
     }
@@ -102,7 +102,7 @@ class ScoreBoardFragment : Fragment(), OnItemClickListener, View.OnClickListener
 
     private fun showPlayersPosition(players: MutableList<User>?) {
         userScoreboardAdapter = UserScoreboardAdapter(players!!, genre, this)
-        requireView().findViewById<RecyclerView>(R.id.recycler_view)!!.adapter = userScoreboardAdapter
+        view?.findViewById<RecyclerView>(R.id.recycler_view)!!.adapter = userScoreboardAdapter
     }
 
     /**
@@ -111,7 +111,7 @@ class ScoreBoardFragment : Fragment(), OnItemClickListener, View.OnClickListener
      */
     override fun onItemClick(position: Int) {
         val intent = Intent(requireActivity(), PublicProfileActivity::class.java)
-        intent.putExtra("UserId", players?.get(position)?.uid)
+        intent.putExtra("UserId", players.get(position).uid)
         intent.putExtra("ScoresOrFollowing", R.string.profile_scores.toString() )
         startActivity(intent)
     }
@@ -137,6 +137,6 @@ class ScoreBoardFragment : Fragment(), OnItemClickListener, View.OnClickListener
                     genre = "top tracks"
                 }
             }
-            selectScoreboard()
+            selectScoreboard(v)
     }
 }

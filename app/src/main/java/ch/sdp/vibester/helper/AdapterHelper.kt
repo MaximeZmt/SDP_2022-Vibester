@@ -4,6 +4,8 @@ import android.view.LayoutInflater
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.user.OnItemClickListener
 import android.view.View
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
@@ -12,9 +14,9 @@ import android.widget.ImageView
 class AdapterHelper {
 
     /**
+     * verify the item still exits then tell the listener it has been click
      * @param position position of the item in the recycle view
      * @param listener listener of the item on click
-     * verify the item still exits then tell the listener it has been click
      */
     fun onClickHelper(position: Int, listener: OnItemClickListener?) {
         //check the item is not deleted between time
@@ -24,20 +26,31 @@ class AdapterHelper {
     }
 
     /**
+     * change the view from button to image in itemView
      * @param buttonId ID of the button
      * @param imageId ID of the image
      * @param itemView View contains the button and image
-     * change the view from button to image in itemView
      */
     fun changeBtnToImageHelper(buttonId: Int, imageId: Int, itemView: View) {
-        itemView.findViewById<Button>(buttonId).visibility = View.INVISIBLE
-        itemView.findViewById<ImageView>(imageId).visibility = View.VISIBLE
+        itemView.findViewById<Button>(buttonId).visibility = INVISIBLE
+        itemView.findViewById<ImageView>(imageId).visibility = VISIBLE
     }
 
     /**
+     * change the view from image to button in itemView
+     * @param imageId ID of the image
+     * @param buttonId ID of the button
+     * @param itemView View contains the image and button
+     */
+    fun changeImageToBtn(imageId: Int, buttonId: Int, itemView: View) {
+        itemView.findViewById<ImageView>(imageId).visibility = INVISIBLE
+        itemView.findViewById<Button>(buttonId).visibility = VISIBLE
+    }
+
+    /**
+     * helper function creates the view used in function onCreateViewHolder
      * @param parent
      * @param layoutId id of the layout
-     * helper function creates the view used in function onCreateViewHolder
      */
     fun createViewForViewHolder(parent: ViewGroup, layoutId: Int): View {
         return LayoutInflater.from(parent.context).inflate(layoutId, parent, false)

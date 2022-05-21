@@ -54,15 +54,11 @@ class ProfileFollowingAdapter constructor(
             itemView.findViewById<ImageView>(R.id.profile_unfollowIcon).setOnClickListener {
                 if (currentUser != null) {
                     dataGetter.setSubFieldValue(currentUser.uid, "following", user.uid, false)
-                    changeImageToBtn()
+                    AdapterHelper().changeImageToBtn(R.id.profile_unfollowIcon, R.id.profile_followingBtn, itemView)
                 }
             }
         }
 
-        private fun changeImageToBtn() {
-            itemView.findViewById<ImageView>(R.id.profile_unfollowIcon).visibility = View.INVISIBLE
-            itemView.findViewById<Button>(R.id.profile_followingBtn).visibility = View.VISIBLE
-        }
 
         private fun followBtnListener(user: User) {
             itemView.findViewById<Button>(R.id.profile_followingBtn).setOnClickListener {

@@ -115,15 +115,11 @@ class UserProfileAdapter constructor(
             itemView.findViewById<ImageView>(R.id.addedFollowingIcon).setOnClickListener {
                 if (currentUser != null) {
                     dataGetter.setSubFieldValue(currentUser.uid, "following", user.uid, false)
-                    changeImageToBtn()
+                    AdapterHelper().changeImageToBtn(R.id.addedFollowingIcon, R.id.addFollowingBtn, itemView)
                 }
             }
         }
 
-        private fun changeImageToBtn() {
-            itemView.findViewById<ImageView>(R.id.addedFollowingIcon).visibility = INVISIBLE
-            itemView.findViewById<Button>(R.id.addFollowingBtn).visibility = VISIBLE
-        }
 
         init {
             itemView.setOnClickListener(this)

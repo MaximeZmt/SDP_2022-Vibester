@@ -58,8 +58,13 @@ class SearchUserActivity : AppCompatActivity(), OnItemClickListener {
         searchEditText = findViewById(R.id.searchUserET)
         searchForUsers("")
 
-        val buttonScan: FloatingActionButton = findViewById(R.id.searchUser_scanning)
+        setScanBtnListener()
 
+        setSearchFieldListener()
+    }
+
+    private fun setScanBtnListener() {
+        val buttonScan: FloatingActionButton = findViewById(R.id.searchUser_scanning)
         val extras = intent.extras
 
         buttonScan.setOnClickListener {
@@ -70,7 +75,9 @@ class SearchUserActivity : AppCompatActivity(), OnItemClickListener {
             }
             startActivity(qrIntent)
         }
+    }
 
+    private fun setSearchFieldListener() {
         searchEditText!!.addTextChangedListener(object:TextWatcher{
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {

@@ -42,7 +42,7 @@ class GameEndingActivity : AppCompatActivity() {
             setContentView(R.layout.activity_end_solo)
             getFromIntentSolo(intent)
         }
-        else{
+        else {
             setContentView(R.layout.activity_end_multiple)
             getFromIntentMultiple(intent)
         }
@@ -56,8 +56,7 @@ class GameEndingActivity : AppCompatActivity() {
         songListAdapter = SongListAdapter(incorrectSongList, correctSongList)
         recyclerView!!.adapter = songListAdapter
 
-        findViewById<FloatingActionButton>(R.id.end_returnToMain)
-            .setOnClickListener {
+        findViewById<FloatingActionButton>(R.id.end_returnToMain).setOnClickListener {
                 IntentSwitcher.switch(this, MainActivity::class.java)
             }
     }

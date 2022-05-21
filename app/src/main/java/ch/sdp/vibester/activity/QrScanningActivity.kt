@@ -3,7 +3,6 @@ package ch.sdp.vibester.activity
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.SurfaceHolder
@@ -11,8 +10,11 @@ import android.view.Window
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import ch.sdp.vibester.R
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
@@ -23,8 +25,8 @@ import com.google.android.gms.vision.barcode.Barcode
 import com.google.android.gms.vision.barcode.BarcodeDetector
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.IOException
-import javax.inject.Inject
 import java.io.Serializable
+import javax.inject.Inject
 
 
 /**
@@ -40,7 +42,7 @@ class QrScanningActivity : AppCompatActivity() {
 
     private var scannedValue = ""
     private var isTest: Boolean = false
-    var uidList: ArrayList<String> = ArrayList()
+    private var uidList: ArrayList<String> = ArrayList()
 
     @Inject
     lateinit var dataGetter: DataGetter
@@ -59,7 +61,7 @@ class QrScanningActivity : AppCompatActivity() {
             isTest = extras.getBoolean("isTest", false)
         } else {
             // If no uid end of activity
-//            startActivityWExtra(Intent(this@QrScanningActivity, SearchUserActivity::class.java), null, null)
+            finishActivity()
         }
 
         permissionManager()
@@ -140,22 +142,18 @@ class QrScanningActivity : AppCompatActivity() {
         }
     }
 
-    private fun restartQrActivity() {
-        val intent = Intent(this@QrScanningActivity, QrScanningActivity::class.java)
-        intent.putExtra( "uidList", uidList)
+    private fun startActivityWExtra(intent: Intent, name: String, arg: Serializable) {
+        intent.putExtra(name, arg)
         startActivity(intent)
         finish()
     }
 
-
-    private fun startActivityWExtra(intent: Intent, name: String?, arg: Serializable?) {
-        if (name != null && arg != null) {
-            intent.putExtra(name, arg)
-        }
-        startActivity(intent)
+    /**
+     * Go back to previous fragment
+     */
+    private fun finishActivity(){
         finish()
     }
-
 
     /*
      * This section is related to permission request
@@ -185,7 +183,7 @@ class QrScanningActivity : AppCompatActivity() {
             } else {
                 // Camera permission not granted, come back to previous activity
                 Toast.makeText(applicationContext, getString(R.string.qrScanning_cameraError), Toast.LENGTH_LONG).show()
-//                startActivityWExtra(Intent(this@QrScanningActivity, SearchUserActivity::class.java), null, null)
+                finishActivity()
             }
         }
     }
@@ -211,7 +209,7 @@ class QrScanningActivity : AppCompatActivity() {
                     toastText = getString(R.string.qrScanning_newFriend)
                 }
                 Toast.makeText(this@QrScanningActivity, toastText, Toast.LENGTH_SHORT).show()
-//                startActivityWExtra(Intent(this@QrScanningActivity, SearchUserActivity::class.java), null, null)
+                finishActivity()
             }
         }
     }

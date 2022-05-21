@@ -3,9 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/fragment_search_user"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/floral_white"
-    tools:context=".activity.SearchUserActivity">
+    tools:context=".fragment.SearchUserFragment">
 
     <RelativeLayout
         android:id="@+id/search_tool"

@@ -52,7 +52,9 @@ class SongListAdapter constructor( private val incorrectSongList: ArrayList<Stri
             val downloadSongBtn = itemView.findViewById<Button>(R.id.song_download)
 
             downloadSongBtn.setOnClickListener {
-                AdapterHelper().changeBtnToImage(R.id.song_download, R.id.song_download_done, itemView)
+                AdapterHelper().switchViewsVisibility(
+                    itemView.findViewById(R.id.song_download), itemView.findViewById(R.id.song_download_done)
+                )
             }
 
             // Make background red if song is guessed incorrectly

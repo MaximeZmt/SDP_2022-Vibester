@@ -2,8 +2,6 @@ package ch.sdp.vibester.user
 
 import android.net.Uri
 import android.view.View
-import android.view.View.INVISIBLE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
@@ -100,7 +98,7 @@ class UserProfileAdapter constructor(
             else {
                 followBtn.setOnClickListener {
                     if (currentUser != null) {
-                        dataGetter.setSubFieldValue(currentUser.uid, "following", user.uid,true)
+                        dataGetter.setFollowing(currentUser.uid, user.uid)
                         changeBtnToImage()
                     }
                 }
@@ -114,7 +112,7 @@ class UserProfileAdapter constructor(
         private fun unFollowBtnListener(user: User) {
             itemView.findViewById<ImageView>(R.id.addedFollowingIcon).setOnClickListener {
                 if (currentUser != null) {
-                    dataGetter.setSubFieldValue(currentUser.uid, "following", user.uid, false)
+                    dataGetter.setUnfollow(currentUser.uid, user.uid)
                     AdapterHelper().changeImageToBtn(R.id.addedFollowingIcon, R.id.addFollowingBtn, itemView)
                 }
             }

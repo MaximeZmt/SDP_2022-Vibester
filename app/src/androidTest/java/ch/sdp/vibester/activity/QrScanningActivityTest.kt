@@ -81,6 +81,7 @@ class QrScanningActivityTest {
         createMockDataGetter()
 
         val scn: ActivityScenario<QrScanningActivity> = ActivityScenario.launch(intent)
+        Thread.sleep(2000) // needed to execute the function.
         assertThat(scn.result, hasResultCode(Activity.RESULT_CANCELED));
     }
 

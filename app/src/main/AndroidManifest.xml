@@ -37,10 +37,6 @@
             android:name=".activity.DeleteSongsActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.SearchUserActivity"
-            android:windowSoftInputMode="adjustResize"
-            android:exported="false" />
-        <activity
             android:name=".activity.DownloadActivity"
             android:exported="false" />
         <activity

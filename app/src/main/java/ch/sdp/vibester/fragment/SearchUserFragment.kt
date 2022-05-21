@@ -1,15 +1,18 @@
-package ch.sdp.vibester.activity
+package ch.sdp.vibester.fragment
 
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.Window
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.EditText
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
+import ch.sdp.vibester.activity.QrScanningActivity
 import ch.sdp.vibester.activity.profile.PublicProfileActivity
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
@@ -28,7 +31,7 @@ import javax.inject.Inject
  * Search for users based on their usernames.
  */
 @AndroidEntryPoint
-class SearchUserActivity : AppCompatActivity(), OnItemClickListener {
+class SearchUserFragment : Fragment(), OnItemClickListener {
 
     @Inject
     lateinit var usersRepo: DataGetter
@@ -47,34 +50,25 @@ class SearchUserActivity : AppCompatActivity(), OnItemClickListener {
 
     private var uidList: ArrayList<String> = ArrayList()
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        requestWindowFeature(Window.FEATURE_NO_TITLE)
-        super.onCreate(savedInstanceState)
-        supportActionBar?.hide()
-        setContentView(R.layout.activity_search_user)
-
-        recyclerView = findViewById(R.id.searchList)
+        recyclerView = view.findViewById(R.id.searchList)
         recyclerView!!.setHasFixedSize(true)
-        recyclerView!!.layoutManager = LinearLayoutManager(this)
+        recyclerView!!.layoutManager = LinearLayoutManager(requireContext())
 
         userProfileAdapter = UserProfileAdapter(this.users, authenticator, usersRepo, imageGetter, this)
 
         recyclerView!!.adapter = userProfileAdapter
 
-        searchEditText = findViewById(R.id.searchUserET)
+        searchEditText = view.findViewById(R.id.searchUserET)
         searchForUsers("")
 
-        val buttonScan: FloatingActionButton = findViewById(R.id.searchUser_scanning)
-
-        val extras = intent.extras
+        val buttonScan: FloatingActionButton = view.findViewById(R.id.searchUser_scanning)
 
         buttonScan.setOnClickListener {
-            val qrIntent = Intent(this, QrScanningActivity::class.java)
+            val qrIntent = Intent(requireActivity(), QrScanningActivity::class.java)
             qrIntent.putExtra("uidList", uidList)
-            if (extras != null) {
-                qrIntent.putExtra("isTest", extras.getBoolean("isTest", false))
-            }
             startActivity(qrIntent)
         }
 
@@ -85,6 +79,14 @@ class SearchUserActivity : AppCompatActivity(), OnItemClickListener {
             }
             override fun afterTextChanged(p0: Editable?) {}
         })
+    }
+
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.fragment_search_user, container, false)
     }
 
     /**
@@ -111,7 +113,7 @@ class SearchUserActivity : AppCompatActivity(), OnItemClickListener {
     }
 
     override fun onItemClick(position: Int) {
-        val intent = Intent(this, PublicProfileActivity::class.java)
+        val intent = Intent(requireActivity(), PublicProfileActivity::class.java)
         intent.putExtra("UserId", users[position].uid)
         intent.putExtra("ScoresOrFollowing", R.string.profile_following.toString())
         startActivity(intent)

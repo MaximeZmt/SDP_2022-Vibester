@@ -57,7 +57,6 @@ class ProfileFollowingAdapter constructor(
                     changeImageToBtn()
                 }
             }
-
         }
 
         private fun changeImageToBtn() {

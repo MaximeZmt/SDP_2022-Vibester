@@ -2,6 +2,8 @@ package ch.sdp.vibester.user
 
 import android.net.Uri
 import android.view.View
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
@@ -68,7 +70,6 @@ class UserProfileAdapter constructor(
     override fun getItemCount() = users.size
 
 
-
     /**
      * Customer ViewHolder class for UserProfile. Each item contains username and image.
      */
@@ -80,19 +81,8 @@ class UserProfileAdapter constructor(
             itemView.findViewById<TextView>(R.id.search_user_username).text = user.username
             imageGetter.fetchImage("profileImg/${user.uid}", this::setImage)
 
-            val addFriendBtn = itemView.findViewById<Button>(R.id.addFollowingBtn)
-
-            if (userFollowing.isNotEmpty() && user.uid in userFollowing) {
-                changeBtnToImage()
-            }
-            else {
-                addFriendBtn.setOnClickListener {
-                    if (currentUser != null) {
-                        dataGetter.setSubFieldValue(currentUser.uid, "following", user.uid,true)
-                        changeBtnToImage()
-                    }
-                }
-            }
+            setFollowBtnListener(user)
+            unFollowBtnListener(user)
         }
 
         private fun setImage(imageURI: Uri) {
@@ -101,9 +91,38 @@ class UserProfileAdapter constructor(
             ImageHelper().setImage(imageURI, avatar, imageSize)
         }
 
+        private fun setFollowBtnListener(user: User) {
+            val followBtn = itemView.findViewById<Button>(R.id.addFollowingBtn)
+
+            if (userFollowing.isNotEmpty() && user.uid in userFollowing) {
+                changeBtnToImage()
+            }
+            else {
+                followBtn.setOnClickListener {
+                    if (currentUser != null) {
+                        dataGetter.setSubFieldValue(currentUser.uid, "following", user.uid,true)
+                        changeBtnToImage()
+                    }
+                }
+            }
+        }
 
         private fun changeBtnToImage() {
             AdapterHelper().changeBtnToImageHelper(R.id.addFollowingBtn, R.id.addedFollowingIcon, itemView)
+        }
+
+        private fun unFollowBtnListener(user: User) {
+            itemView.findViewById<ImageView>(R.id.addedFollowingIcon).setOnClickListener {
+                if (currentUser != null) {
+                    dataGetter.setSubFieldValue(currentUser.uid, "following", user.uid, false)
+                    changeImageToBtn()
+                }
+            }
+        }
+
+        private fun changeImageToBtn() {
+            itemView.findViewById<ImageView>(R.id.addedFollowingIcon).visibility = INVISIBLE
+            itemView.findViewById<Button>(R.id.addFollowingBtn).visibility = VISIBLE
         }
 
         init {

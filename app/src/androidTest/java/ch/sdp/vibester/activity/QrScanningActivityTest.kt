@@ -94,7 +94,8 @@ class QrScanningActivityTest {
         createMockDataGetter()
 
         val scn: ActivityScenario<QrScanningActivity> = ActivityScenario.launch(intent)
-        assertThat(scn.result, hasResultCode(Activity.RESULT_CANCELED));
+        assertThat(scn.result, hasResultCode(Activity.RESULT_CANCELED))
+
     }
 
 }

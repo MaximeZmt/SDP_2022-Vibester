@@ -113,7 +113,7 @@ class SearchUserActivity : AppCompatActivity(), OnItemClickListener {
 
     /**
      * Search for users by usernames in Firebase Realtime Database
-     * @param inputUsername search text inputed by user
+     * @param inputUsername search text inputted by user
      */
     private fun searchForUsers(inputUsername:String){
         usersRepo.searchByField("username", inputUsername, callback = ::setUserInAdapter, callbackUid = ::setUserInAdapter2)

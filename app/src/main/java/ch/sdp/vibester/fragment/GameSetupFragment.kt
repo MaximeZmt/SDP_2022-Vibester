@@ -102,6 +102,11 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
     override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
         if (parent.id == R.id.difficulty_spinner) {
             difficulty = parent.getItemAtPosition(position).toString()
+            when (difficulty) {
+                "Easy" -> gameManager.setDifficultyLevel(1)
+                "Medium" -> gameManager.setDifficultyLevel(2)
+                "Hard" -> gameManager.setDifficultyLevel(3)
+            }
         } else if (parent.id == R.id.size_spinner) {
             gameSize = parent.getItemAtPosition(position).toString()
             when (gameSize) {

@@ -23,6 +23,8 @@ open class GameManager : Serializable {
     var gameSize = 5
     var numPlayedSongs = 0
     var gameMode = ""
+    var difficultyLevel = 0
+
     open lateinit var currentSong: Song
     var gameSongList: MutableList<Pair<String, String>> = mutableListOf()
     private var correctSongs = mutableListOf<Song>()
@@ -43,6 +45,15 @@ open class GameManager : Serializable {
     @JvmName("setGameSize1")
     fun setGameSize(numberOfSongs: Int) {
         gameSize = numberOfSongs
+    }
+
+    /**
+     * set the level of difficulty in this game
+     * @param level: 1 -> easy, 2 -> medium, 3 -> hard
+     */
+    @JvmName("setDifficultyLevel1")
+    fun setDifficultyLevel(level: Int) {
+        difficultyLevel = level
     }
 
     /**
@@ -103,7 +114,7 @@ open class GameManager : Serializable {
      * Get a score for a game (current and total)
      */
     fun getScore(): Int {
-        return correctSongs.size
+        return correctSongs.size*difficultyLevel
     }
 
     /**

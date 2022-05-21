@@ -59,8 +59,8 @@ class ScoreBoardFragment : Fragment(), OnItemClickListener, View.OnClickListener
     private fun selectScoreboard() {
         val sortedBy = "scores/" + genre
 
-        requireView().findViewById<ConstraintLayout>(R.id.genrePerScoreboard).visibility = GONE
-        requireView().findViewById<NestedScrollView>(R.id.scoreboard_content_scrolling).visibility = VISIBLE
+        view?.findViewById<ConstraintLayout>(R.id.genrePerScoreboard)?.visibility = GONE
+        view?.findViewById<NestedScrollView>(R.id.scoreboard_content_scrolling)?.visibility = VISIBLE
 
         loadPlayersSortedBy(sortedBy)
     }
@@ -105,7 +105,7 @@ class ScoreBoardFragment : Fragment(), OnItemClickListener, View.OnClickListener
 
     private fun showPlayersPosition(players: MutableList<User>?) {
         userScoreboardAdapter = UserScoreboardAdapter(players!!, genre, this)
-        requireView().findViewById<RecyclerView>(R.id.recycler_view)!!.adapter = userScoreboardAdapter
+        view?.findViewById<RecyclerView>(R.id.recycler_view)!!.adapter = userScoreboardAdapter
     }
 
     /**

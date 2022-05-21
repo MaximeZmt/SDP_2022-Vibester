@@ -148,22 +148,22 @@ class SearchUserFragmentTest {
     
     @Test
     fun checkIconVisible(){
-        checkRecyclerSubViews(R.id.searchList, 2, withEffectiveVisibility(Visibility.INVISIBLE), R.id.addFollowingBtn)
-        checkRecyclerSubViews(R.id.searchList, 2, withEffectiveVisibility(Visibility.VISIBLE), R.id.addedFollowingIcon)
+        checkRecyclerSubViews(R.id.searchList, 2, withEffectiveVisibility(Visibility.INVISIBLE), R.id.search_user_add)
+        checkRecyclerSubViews(R.id.searchList, 2, withEffectiveVisibility(Visibility.VISIBLE), R.id.search_user_added)
     }
 
     @Test
     fun checkAddBtnClick(){
-        checkRecyclerSubViews(R.id.searchList, 0, withEffectiveVisibility(Visibility.VISIBLE), R.id.addFollowingBtn)
-        checkRecyclerSubViews(R.id.searchList, 0, withEffectiveVisibility(Visibility.INVISIBLE), R.id.addedFollowingIcon)
+        checkRecyclerSubViews(R.id.searchList, 0, withEffectiveVisibility(Visibility.VISIBLE), R.id.search_user_add)
+        checkRecyclerSubViews(R.id.searchList, 0, withEffectiveVisibility(Visibility.INVISIBLE), R.id.search_user_added)
         onView(withId(R.id.searchList))
             .perform(
                 RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                     0,
-                    clickOnViewChild(R.id.addFollowingBtn))
+                    clickOnViewChild(R.id.search_user_add))
             )
-        checkRecyclerSubViews(R.id.searchList, 0, withEffectiveVisibility(Visibility.INVISIBLE), R.id.addFollowingBtn)
-        checkRecyclerSubViews(R.id.searchList, 0, withEffectiveVisibility(Visibility.VISIBLE), R.id.addedFollowingIcon)
+        checkRecyclerSubViews(R.id.searchList, 0, withEffectiveVisibility(Visibility.INVISIBLE), R.id.search_user_add)
+        checkRecyclerSubViews(R.id.searchList, 0, withEffectiveVisibility(Visibility.VISIBLE), R.id.search_user_added)
     }
 
     /**

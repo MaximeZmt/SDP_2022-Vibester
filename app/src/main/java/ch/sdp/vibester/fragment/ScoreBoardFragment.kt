@@ -55,7 +55,7 @@ class ScoreBoardFragment : Fragment(), OnItemClickListener, View.OnClickListener
     }
 
     private fun selectScoreboard() {
-        val sortedBy = "scores/" + genre
+        val sortedBy = "scores/$genre"
 
         requireView().findViewById<ConstraintLayout>(R.id.genrePerScoreboard).visibility = GONE
         requireView().findViewById<NestedScrollView>(R.id.scoreboard_content_scrolling).visibility = VISIBLE
@@ -118,7 +118,7 @@ class ScoreBoardFragment : Fragment(), OnItemClickListener, View.OnClickListener
     }
 
     override fun onClick(v: View?) {
-            when(v!!.getId()) {
+            when(v!!.id) {
                 R.id.btsButton -> {
                     genre = "BTS"; selectScoreboard()
                 }

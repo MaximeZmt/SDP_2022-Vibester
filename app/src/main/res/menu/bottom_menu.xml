@@ -17,7 +17,7 @@
     <item
         android:id="@+id/searchUserBtn"
         android:title="Search"
-        android:icon="@drawable/play"
+        android:icon="@drawable/search_selector"
         />
 
 

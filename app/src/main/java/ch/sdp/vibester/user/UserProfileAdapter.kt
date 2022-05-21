@@ -78,8 +78,8 @@ class UserProfileAdapter constructor(
          */
         fun bind(user: User) {
             itemView.findViewById<TextView>(R.id.search_user_username).text = user.username
-
             imageGetter.fetchImage("profileImg/${user.uid}", this::setImage)
+
             val addFriendBtn = itemView.findViewById<Button>(R.id.addFollowingBtn)
 
             if (userFollowing.isNotEmpty() && user.uid in userFollowing) {

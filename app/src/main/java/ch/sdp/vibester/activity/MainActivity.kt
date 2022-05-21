@@ -2,7 +2,6 @@ package ch.sdp.vibester.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
@@ -25,9 +24,9 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.hide()
 
         //Get the Navigation Controller
-        navController = Navigation.findNavController(this, R.id.fragment)
+        navController = Navigation.findNavController(this, R.id.main_bottom_nav_fragment)
         //Set the navigation controller to Bottom Nav
-        val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
+        val bottomNav = findViewById<BottomNavigationView>(R.id.main_bottom_nav)
        
         bottomNav.setupWithNavController(navController)
 

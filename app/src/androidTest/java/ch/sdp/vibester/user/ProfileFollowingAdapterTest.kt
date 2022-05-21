@@ -2,6 +2,8 @@ package ch.sdp.vibester.user
 
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.matcher.ViewMatchers.assertThat
+import ch.sdp.vibester.auth.FireBaseAuthenticator
+import ch.sdp.vibester.database.DataGetter
 import org.hamcrest.CoreMatchers.equalTo
 import org.junit.Test
 
@@ -13,7 +15,7 @@ class ProfileFollowingAdapterTest {
         val friends: MutableList<User> = arrayListOf()
         friends.addAll(listOf(friend1, friend2))
         val profileFollowingViewHolder: RecyclerView.Adapter<ProfileFollowingAdapter.ProfileFollowingViewHolder> =
-            ProfileFollowingAdapter(friends, null)
+            ProfileFollowingAdapter(friends, DataGetter(), FireBaseAuthenticator(), null)
         assertThat(profileFollowingViewHolder.itemCount, equalTo(friends.size))
     }
 
@@ -24,7 +26,7 @@ class ProfileFollowingAdapterTest {
         val friends: MutableList<User> = arrayListOf()
         friends.addAll(listOf(friend1, friend2))
         val profileFollowingViewHolder: RecyclerView.Adapter<ProfileFollowingAdapter.ProfileFollowingViewHolder> =
-            ProfileFollowingAdapter(friends, null)
+            ProfileFollowingAdapter(friends, DataGetter(), FireBaseAuthenticator(), null)
         val defaultType = 0
         assertThat(
             profileFollowingViewHolder.getItemViewType(0),

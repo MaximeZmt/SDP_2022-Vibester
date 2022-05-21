@@ -114,8 +114,7 @@ class LyricsBelongGameActivity : GameActivity() {
     /**
      * Gets the lyrics of a given song and checks if the result matches.
      * @param ctx: Context on which the game is running.
-     * @param songName: Name of the song being played.
-     * @param artistName: Name of the artist of the song being played.
+     * @param song: Song contains the name of the song and the artist
      * @param speechInput: The inputted string from the speech.
      * @param gameManager: The gameManager instance that is managing the game.
      */
@@ -219,9 +218,9 @@ class LyricsBelongGameActivity : GameActivity() {
     /*
      * The following functions are helper for testing
      */
-    fun testCheckLyrics(ctx: Context, lyricToBeCheck: String, lyrics: String, gameManager: GameManager) {
+    /*fun testCheckLyrics(ctx: Context, lyricToBeCheck: String, lyrics: String, gameManager: GameManager) {
         checkAnswer(ctx, lyricToBeCheck, lyrics, gameManager)
-    }
+    }*/
 
     fun testGetAndCheckLyrics(ctx: Context, song: Song, speechInput: String, gameManager: GameManager) {
         getAndCheckLyrics(ctx, song, speechInput, gameManager)

@@ -113,7 +113,8 @@ class UserProfileAdapter constructor(
             itemView.findViewById<ImageView>(R.id.addedFollowingIcon).setOnClickListener {
                 if (currentUser != null) {
                     dataGetter.setUnfollow(currentUser.uid, user.uid)
-                    AdapterHelper().changeImageToBtn(R.id.addedFollowingIcon, R.id.addFollowingBtn, itemView)
+                    AdapterHelper().switchViewsVisibility(
+                        itemView.findViewById(R.id.addedFollowingIcon), itemView.findViewById(R.id.addFollowingBtn))
                 }
             }
         }

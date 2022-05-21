@@ -54,7 +54,8 @@ class ProfileFollowingAdapter constructor(
             itemView.findViewById<ImageView>(R.id.profile_unfollowIcon).setOnClickListener {
                 if (currentUser != null) {
                     dataGetter.setUnfollow(currentUser.uid, user.uid)
-                    AdapterHelper().changeImageToBtn(R.id.profile_unfollowIcon, R.id.profile_followingBtn, itemView)
+                    AdapterHelper().switchViewsVisibility(
+                        itemView.findViewById(R.id.profile_unfollowIcon), itemView.findViewById(R.id.profile_followingBtn))
                 }
             }
         }

@@ -217,7 +217,7 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
     }
 
     override fun onClick(v: View?) {
-        when(v!!.getId()) {
+        when(v!!.id) {
             R.id.local_buzzer_game_button -> chooseGame("local_buzzer", GameManager())
             R.id.local_typing_game_button -> chooseGame("local_typing", GameManager())
             R.id.local_lyrics_game_button -> chooseGame("local_lyrics", GameManager())

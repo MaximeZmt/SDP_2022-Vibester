@@ -64,8 +64,11 @@ class SearchUserActivityTest {
 
         every { mockUsersRepo.getCurrentUser() } answers {createMockUser()}
 
-        every {mockUsersRepo.updateSubFieldInt(any(), any(), any(), any(),any())} answers {}
-        every {mockUsersRepo.setSubFieldValue(any(), any(), any(), any())} answers {}
+        every { mockUsersRepo.updateSubFieldInt(any(), any(), any(), any(),any())} answers {}
+        every { mockUsersRepo.setSubFieldValue(any(), any(), any(), any())} answers {}
+
+        every { mockUsersRepo.setFollowing(any(), any())} answers {}
+        every { mockUsersRepo.setUnfollow(any(), any())} answers {}
 
     }
 
@@ -187,6 +190,7 @@ class SearchUserActivityTest {
 
         checkRecyclerSubViews(R.id.searchList, 0, withEffectiveVisibility(Visibility.VISIBLE), R.id.addFollowingBtn)
         checkRecyclerSubViews(R.id.searchList, 0, withEffectiveVisibility(Visibility.INVISIBLE), R.id.addedFollowingIcon)
+
         onView(withId(R.id.searchList))
             .perform(
                 RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
@@ -196,9 +200,9 @@ class SearchUserActivityTest {
         checkRecyclerSubViews(R.id.searchList, 0, withEffectiveVisibility(Visibility.INVISIBLE), R.id.addFollowingBtn)
         checkRecyclerSubViews(R.id.searchList, 0, withEffectiveVisibility(Visibility.VISIBLE), R.id.addedFollowingIcon)
     }
-/*
+
     @Test
-    fun checkUnFollowBtnClick() {
+    fun checkUnfollowBtnClick() {
         val intent = Intent(ApplicationProvider.getApplicationContext(), SearchUserActivity::class.java)
 
         createMockInvocation()
@@ -206,20 +210,22 @@ class SearchUserActivityTest {
 
         val scn: ActivityScenario<SearchUserActivity> = ActivityScenario.launch(intent)
 
+        //follow
         onView(withId(R.id.searchList)).perform(
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                 0, clickOnViewChild(R.id.addFollowingBtn)
             )
         )
-
+        //unfollow
         onView(withId(R.id.searchList)).perform(
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                 0, clickOnViewChild(R.id.addedFollowingIcon)
             )
         )
+
         checkRecyclerSubViews(R.id.searchList, 0, withEffectiveVisibility(Visibility.VISIBLE), R.id.addFollowingBtn)
         checkRecyclerSubViews(R.id.searchList, 0, withEffectiveVisibility(Visibility.INVISIBLE), R.id.addedFollowingIcon)
-    }*/
+    }
 
     /**
      * Custom function to handle button clicks inside recycleView

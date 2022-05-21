@@ -196,6 +196,30 @@ class SearchUserActivityTest {
         checkRecyclerSubViews(R.id.searchList, 0, withEffectiveVisibility(Visibility.INVISIBLE), R.id.addFollowingBtn)
         checkRecyclerSubViews(R.id.searchList, 0, withEffectiveVisibility(Visibility.VISIBLE), R.id.addedFollowingIcon)
     }
+/*
+    @Test
+    fun checkUnFollowBtnClick() {
+        val intent = Intent(ApplicationProvider.getApplicationContext(), SearchUserActivity::class.java)
+
+        createMockInvocation()
+        createMockAuthenticator()
+
+        val scn: ActivityScenario<SearchUserActivity> = ActivityScenario.launch(intent)
+
+        onView(withId(R.id.searchList)).perform(
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                0, clickOnViewChild(R.id.addFollowingBtn)
+            )
+        )
+
+        onView(withId(R.id.searchList)).perform(
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                0, clickOnViewChild(R.id.addedFollowingIcon)
+            )
+        )
+        checkRecyclerSubViews(R.id.searchList, 0, withEffectiveVisibility(Visibility.VISIBLE), R.id.addFollowingBtn)
+        checkRecyclerSubViews(R.id.searchList, 0, withEffectiveVisibility(Visibility.INVISIBLE), R.id.addedFollowingIcon)
+    }*/
 
     /**
      * Custom function to handle button clicks inside recycleView

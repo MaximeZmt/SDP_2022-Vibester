@@ -35,7 +35,6 @@ class WelcomeScreenFragment : Fragment(),View.OnClickListener {
 
         view.findViewById<Button>(R.id.welcome_profile).setOnClickListener(this)
         view.findViewById<Button>(R.id.welcome_download).setOnClickListener(this)
-        view.findViewById<Button>(R.id.welcome_search).setOnClickListener(this)
 
         return view
     }

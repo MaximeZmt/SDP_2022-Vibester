@@ -3,25 +3,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#26ffffff"
     android:layout_marginBottom="8dp"
     android:layout_marginStart="8dp"
     android:layout_marginEnd="8dp"
+    android:background="@color/floral_white"
     android:orientation="horizontal">
 
     <RelativeLayout
         android:layout_width="32dp"
         android:layout_height="match_parent"
-        android:padding="5dp"
-        android:background="#33f58220">
+        android:padding="5dp">
         <TextView
             android:id="@+id/tv_position"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:textStyle="bold"
+            android:textColor="@color/cg_blue"
             android:textSize="18sp"
-            tools:text="11"/>
+            tools:text="1"/>
     </RelativeLayout>
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -44,8 +44,8 @@
             android:layout_height="wrap_content"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            tools:text="awidiyadew"
             android:textStyle="bold"
+            android:textColor="@color/cg_blue"
             android:textAllCaps="true"
             android:textSize="18sp" />
 
@@ -63,6 +63,7 @@
             android:layout_height="wrap_content"
             android:textSize="30sp"
             android:textStyle="bold"
+            android:textColor="@color/cg_blue"
             tools:text="54" />
     </LinearLayout>
 

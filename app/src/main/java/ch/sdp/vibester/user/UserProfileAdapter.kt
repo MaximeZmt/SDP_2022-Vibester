@@ -28,16 +28,16 @@ class UserProfileAdapter constructor(
     RecyclerView.Adapter<UserProfileAdapter.UserProfileViewHolder>() {
 
     private val currentUser = authenticator.getCurrUser()
-    private var userFollowing: Array<String> = arrayOf()
+    private var userFollowing: MutableList<String> = mutableListOf()
     private val imageSize = 100
 
     init {
-        if (currentUser != null) { dataGetter.getUserData(currentUser.uid, this::setFriends) }
+        if (currentUser != null) { dataGetter.getUserData(currentUser.uid, this::setFollowing) }
     }
 
     // Callback for getUserData
-    private fun setFriends(user:User){
-        userFollowing = user.following.keys.toTypedArray()
+    private fun setFollowing(user:User) {
+        user.following.forEach { (userId, isFollowing) -> if (isFollowing) userFollowing.add(userId) }
     }
 
     /**

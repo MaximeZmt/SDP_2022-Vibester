@@ -193,7 +193,7 @@ open class ProfileActivity : AppCompatActivity(), OnItemClickListener {
      *
      */
     private fun loadFollowing(followingMap: Map<String, Boolean>) {
-        followingMap.forEach { (userId, _) ->  dataGetter.getUserData(userId, this::addFollowing)}
+        followingMap.forEach { (userId, isFollowing) ->  if (isFollowing) dataGetter.getUserData(userId, this::addFollowing) }
         showFriendsPosition(followings)
     }
 

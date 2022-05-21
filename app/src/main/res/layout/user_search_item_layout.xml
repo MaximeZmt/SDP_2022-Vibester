@@ -3,7 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="@color/floral_white"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp">
 
     <ImageView
         android:id="@+id/search_user_profile_image"
@@ -18,32 +21,32 @@
         android:layout_toEndOf="@+id/search_user_profile_image"
         android:layout_centerInParent="true"
         android:layout_marginStart="12dp"
+        android:textColor="@color/cg_blue"
         android:text="@string/profile_username"
         android:textSize="19sp">
     </TextView>
 
-    <Button
-        android:id="@+id/addFollowingBtn"
-        android:backgroundTint="@color/cg_blue"
-        android:layout_width="118dp"
-        android:layout_height="62dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="49dp"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="25dp"
-        android:text="@string/user_add_friend" />
-
     <ImageView
-        android:id="@+id/addedFollowingIcon"
+        android:id="@+id/search_user_add"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="49dp"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="25dp"
-        android:visibility="invisible"
-        android:src="@drawable/green_tick">
-    </ImageView>
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="15dp"
+        android:visibility="visible"
+        android:src="@drawable/add"/>
+
+    <ImageView
+        android:id="@+id/search_user_added"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="49dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="15dp"
+        android:src="@drawable/add_done"
+        android:visibility="invisible" />
 </RelativeLayout>

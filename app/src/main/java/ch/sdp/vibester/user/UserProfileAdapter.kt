@@ -106,7 +106,7 @@ class UserProfileAdapter constructor(
         }
 
         private fun changeBtnToImage() {
-            AdapterHelper().changeBtnToImageHelper(R.id.addFollowingBtn, R.id.addedFollowingIcon, itemView)
+            AdapterHelper().changeBtnToImage(R.id.addFollowingBtn, R.id.addedFollowingIcon, itemView)
         }
 
         private fun unFollowBtnListener(user: User) {

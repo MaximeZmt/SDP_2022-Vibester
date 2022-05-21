@@ -64,7 +64,7 @@ class ProfileFollowingAdapter constructor(
             itemView.findViewById<Button>(R.id.profile_followingBtn).setOnClickListener {
                 if (currentUser != null) {
                     dataGetter.setFollowing(currentUser.uid, user.uid)
-                    AdapterHelper().changeBtnToImageHelper(R.id.profile_followingBtn, R.id.profile_unfollowIcon, itemView)
+                    AdapterHelper().changeBtnToImage(R.id.profile_followingBtn, R.id.profile_unfollowIcon, itemView)
                 }
             }
         }

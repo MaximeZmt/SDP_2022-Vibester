@@ -30,7 +30,8 @@
         android:layout_marginStart="49dp"
         android:layout_marginTop="9dp"
         android:layout_marginEnd="25dp"
-        android:src="@drawable/green_tick"></ImageView>
+        android:src="@drawable/green_tick">
+    </ImageView>
 
     <Button
         android:id="@+id/profile_followingBtn"

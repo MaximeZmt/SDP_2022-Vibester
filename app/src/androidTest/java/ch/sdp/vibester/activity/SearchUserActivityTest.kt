@@ -197,6 +197,7 @@ class SearchUserActivityTest {
                     0,
                     clickOnViewChild(R.id.addFollowingBtn))
             )
+
         checkRecyclerSubViews(R.id.searchList, 0, withEffectiveVisibility(Visibility.INVISIBLE), R.id.addFollowingBtn)
         checkRecyclerSubViews(R.id.searchList, 0, withEffectiveVisibility(Visibility.VISIBLE), R.id.addedFollowingIcon)
     }

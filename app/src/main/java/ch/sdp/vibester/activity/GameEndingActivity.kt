@@ -4,9 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
-import android.view.ViewGroup
 import android.view.Window
-import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -23,7 +21,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
  */
 class GameEndingActivity : AppCompatActivity() {
 
-    private val endStatArrayList = arrayListOf<Int>(R.id.end_stat1, R.id.end_stat2, R.id.end_stat3, R.id.end_stat4)
+    private val endStatArrayList = arrayListOf(R.id.end_stat1, R.id.end_stat2, R.id.end_stat3, R.id.end_stat4)
 
     private var incorrectSongList: ArrayList<String> = arrayListOf()
     private var correctSongList: ArrayList<String> = arrayListOf()
@@ -39,8 +37,8 @@ class GameEndingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
 
-        val game_mode = AppPreferences.getStr(getString(R.string.preferences_game_mode))
-        if (game_mode == "local_typing" || game_mode == "local_lyrics") {
+        val gameMode = AppPreferences.getStr(getString(R.string.preferences_game_mode))
+        if (gameMode == "local_typing" || gameMode == "local_lyrics") {
             setContentView(R.layout.activity_end_solo)
             getFromIntentSolo(intent)
         }
@@ -70,7 +68,7 @@ class GameEndingActivity : AppCompatActivity() {
     private fun setGameMode(){
         val gameMode = AppPreferences.getStr(getString(R.string.preferences_game_mode))?.replace("_", " ")?.replaceFirstChar { it.uppercase() }
         val gameGenre = AppPreferences.getStr(getString(R.string.preferences_game_genre))
-        findViewById<TextView>(R.id.end_game_mode).text = gameMode + " - " + gameGenre
+        findViewById<TextView>(R.id.end_game_mode).text = "$gameMode - $gameGenre"
     }
 
     /**
@@ -78,9 +76,9 @@ class GameEndingActivity : AppCompatActivity() {
      */
     private fun setSoloStats() {
         val stat1: TextView = findViewById(R.id.end_stat1)
-        stat1.text = statNames.get(0)
+        stat1.text = statNames[0]
         val stat1res: TextView = findViewById(R.id.end_stat1_res)
-        stat1res.text = statValues.get(0)
+        stat1res.text = statValues[0]
     }
 
     /**

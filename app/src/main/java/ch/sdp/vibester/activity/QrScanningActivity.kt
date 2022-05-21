@@ -19,6 +19,7 @@ import ch.sdp.vibester.R
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.databinding.ActivityQrScanningBinding
+import ch.sdp.vibester.helper.IntentSwitcher
 import com.google.android.gms.vision.CameraSource
 import com.google.android.gms.vision.Detector
 import com.google.android.gms.vision.barcode.Barcode
@@ -142,12 +143,6 @@ class QrScanningActivity : AppCompatActivity() {
         }
     }
 
-    private fun startActivityWExtra(intent: Intent, name: String, arg: Serializable) {
-        intent.putExtra(name, arg)
-        startActivity(intent)
-        finish()
-    }
-
     /**
      * Go back to previous fragment
      */
@@ -179,7 +174,8 @@ class QrScanningActivity : AppCompatActivity() {
         if (requestCode == requestCodeCameraPermission && grantResults.isNotEmpty()) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // If permission are granted restart the activity to make sure they are taken into account
-                startActivityWExtra(Intent(this@QrScanningActivity, QrScanningActivity::class.java), "uidList", uidList)
+                IntentSwitcher.switch(this@QrScanningActivity, QrScanningActivity::class.java, mapOf(Pair("uidList", uidList)))
+                finish()
             } else {
                 // Camera permission not granted, come back to previous activity
                 Toast.makeText(applicationContext, getString(R.string.qrScanning_cameraError), Toast.LENGTH_LONG).show()

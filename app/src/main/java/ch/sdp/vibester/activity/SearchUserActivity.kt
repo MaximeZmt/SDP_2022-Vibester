@@ -42,7 +42,6 @@ class SearchUserActivity : AppCompatActivity(), OnItemClickListener {
     var users = arrayListOf<User>()
     lateinit var userProfileAdapter: UserProfileAdapter
 
-    private var recyclerView: RecyclerView? = null
     private var searchEditText: EditText? = null
 
     private var uidList: ArrayList<String> = ArrayList()
@@ -54,13 +53,7 @@ class SearchUserActivity : AppCompatActivity(), OnItemClickListener {
         supportActionBar?.hide()
         setContentView(R.layout.activity_search_user)
 
-        recyclerView = findViewById(R.id.searchList)
-        recyclerView!!.setHasFixedSize(true)
-        recyclerView!!.layoutManager = LinearLayoutManager(this)
-
-        userProfileAdapter = UserProfileAdapter(this.users, authenticator, usersRepo, imageGetter, this)
-
-        recyclerView!!.adapter = userProfileAdapter
+        setUpRecycleView()
 
         searchEditText = findViewById(R.id.searchUserET)
         searchForUsers("")
@@ -85,6 +78,15 @@ class SearchUserActivity : AppCompatActivity(), OnItemClickListener {
             }
             override fun afterTextChanged(p0: Editable?) {}
         })
+    }
+
+    private fun setUpRecycleView() {
+        findViewById<RecyclerView>(R.id.searchList).apply {
+            layoutManager = LinearLayoutManager(context)
+            userProfileAdapter = UserProfileAdapter(users, authenticator, usersRepo, imageGetter, this@SearchUserActivity)
+            adapter = userProfileAdapter
+            setHasFixedSize(true)
+        }
     }
 
     /**

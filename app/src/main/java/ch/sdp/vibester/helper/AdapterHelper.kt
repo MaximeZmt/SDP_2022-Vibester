@@ -32,18 +32,23 @@ class AdapterHelper {
      * @param itemView View contains the button and image
      */
     fun changeBtnToImage(buttonId: Int, imageId: Int, itemView: View) {
-        itemView.findViewById<Button>(buttonId).visibility = INVISIBLE
-        itemView.findViewById<ImageView>(imageId).visibility = VISIBLE
+        switchViewVisibility(itemView.findViewById<Button>(buttonId), itemView.findViewById<ImageView>(imageId))
     }
 
     /**
      * change the view from image to button in itemView
      * inverse of changeBtnToImage
-     * no documentation for this function to avoid duplication
      */
     fun changeImageToBtn(imageId: Int, buttonId: Int, itemView: View) {
-        itemView.findViewById<ImageView>(imageId).visibility = INVISIBLE
-        itemView.findViewById<Button>(buttonId).visibility = VISIBLE
+        switchViewVisibility(itemView.findViewById<ImageView>(imageId), itemView.findViewById<Button>(buttonId))
+    }
+
+    /**
+     * switch the visibility between two view
+     */
+    private fun switchViewVisibility(invisible: View, visible: View) {
+        invisible.visibility = INVISIBLE
+        visible.visibility = VISIBLE
     }
 
     /**

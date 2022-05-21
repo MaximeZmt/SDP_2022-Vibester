@@ -26,6 +26,15 @@ class AdapterHelper {
     }
 
     /**
+     * change the view from button to image
+     */
+    fun changeBtnToImage(btnId: Int, imageId: Int, itemView: View) {
+        switchViewsVisibility(
+            itemView.findViewById(btnId), itemView.findViewById(imageId)
+        )
+    }
+
+    /**
      * switch the visibility between two view
      */
     fun switchViewsVisibility(invisible: View, visible: View) {

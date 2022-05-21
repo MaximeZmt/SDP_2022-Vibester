@@ -106,8 +106,8 @@ class UserProfileAdapter constructor(
         }
 
         private fun changeBtnToImage() {
-            AdapterHelper().switchViewsVisibility(
-                itemView.findViewById(R.id.addFollowingBtn), itemView.findViewById(R.id.addedFollowingIcon)
+            AdapterHelper().changeBtnToImage(
+                R.id.addFollowingBtn, R.id.addedFollowingIcon, itemView
             )
         }
 

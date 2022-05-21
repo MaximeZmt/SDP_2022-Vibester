@@ -397,6 +397,7 @@ class MyProfileActivityTest {
 
         checkRecyclerSubViews(R.id.profile_followingList, 0, withEffectiveVisibility(Visibility.VISIBLE), R.id.profile_followingBtn)
         checkRecyclerSubViews(R.id.profile_followingList, 0, withEffectiveVisibility(Visibility.INVISIBLE), R.id.profile_unfollowIcon)
+
     }
 
     @Test

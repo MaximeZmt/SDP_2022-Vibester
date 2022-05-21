@@ -1,9 +1,9 @@
 package ch.sdp.vibester.user
 
+import android.graphics.Color
 import android.net.Uri
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -59,7 +59,7 @@ class UserProfileAdapter constructor(
     }
 
     override fun onBindViewHolder(holder: UserProfileViewHolder, position: Int) {
-        holder.bind(users[position])
+        holder.bind(users[position], position)
     }
 
     /**
@@ -76,11 +76,12 @@ class UserProfileAdapter constructor(
         /**
          * @param user with all the parameters
          */
-        fun bind(user: User) {
+        fun bind(user: User, position: Int) {
             itemView.findViewById<TextView>(R.id.search_user_username).text = user.username
+            if(position %2 == 0) itemView.setBackgroundColor(Color.parseColor("#FFFDF0D7"));
 
             imageGetter.fetchImage("profileImg/${user.uid}", this::setImage)
-            val addFriendBtn = itemView.findViewById<Button>(R.id.addFollowingBtn)
+            val addFriendBtn = itemView.findViewById<ImageView>(R.id.search_user_add)
 
             if (userFollowing.isNotEmpty() && user.uid in userFollowing) {
                 changeBtnToImage()
@@ -103,7 +104,7 @@ class UserProfileAdapter constructor(
 
 
         private fun changeBtnToImage() {
-            AdapterHelper().changeBtnToImageHelper(R.id.addFollowingBtn, R.id.addedFollowingIcon, itemView)
+            AdapterHelper().changeImageToImageHelper(R.id.search_user_add, R.id.search_user_added, itemView)
         }
 
         init {

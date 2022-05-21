@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
         android:id="@+id/welcomeScreenBtn"
-        android:title="Home"
-        android:icon="@drawable/home"
+        tools:ignore="MenuTitle"
+        android:icon="@drawable/home_selector"
         />
 
 
     <item
         android:id="@+id/gameSetupBtn"
-        android:title="Play"
-        android:icon="@drawable/play"
-        />
+        android:icon="@drawable/play_selector"
+        tools:ignore="MenuTitle"/>
 
 
     <item
         android:id="@+id/scoreboardBtn"
-        android:title="Scoreboard"
-        android:icon="@drawable/scoreboard"
+        tools:ignore="MenuTitle"
+        android:icon="@drawable/scoreboard_selector"
         />
 
 

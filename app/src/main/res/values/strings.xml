@@ -16,6 +16,12 @@
     <string name="authentication_placeholderUsername">Placeholder Username</string>
     <string name="authentication_placeholderEmptyScore">Error</string>
     <string name="authentication_noActionDoneYet">Either log in with your Google account or fill in credentials to create an account or log in</string>
+    <string name="createAcc">Create Account</string>
+    <string name="logIn">Log in</string>
+    <string name="logInGoogle">Log in with Google</string>
+    <string name="emptyField">Empty email or password</string>
+    <string name="notAnEmail">Not an email</string>
+    <string name="shortPassword">Password has to be at least 6 symbols</string>
 
     <!-- QrScanning -->
     <string name="qrScanning_scannerClosed">Scanner has been closed</string>
@@ -67,43 +73,46 @@
     <string name="profile_username">Profile Username</string>
 
 
-    <!-- OLD String-->
-
-    <string name="greeting_txt">Greeting:</string>
-    <string name="default_txtview_txt">empty text view</string>
-    <string name="button_txt">Enter</string>
-    <string name="hint_input_txt">Enter</string>
+    <!-- ScoreBoard -->
     <string name="scoreboard">S C O R E B O A R D</string>
-    <string name="the_song_was">The song was…</string>
+
+    <!-- Buzzer-->
     <string name="wrong">Wrong</string>
     <string name="correct">Correct</string>
-    <string name="best_score">Best Score</string>
-    <string name="total_games">Total Games</string>
-    <string name="correct_songs">Correct Songs</string>
-    <string name="ranking">Ranking</string>
     <string name="ask_nb_players">Please choose the number of players in your game</string>
-    <string name="proceed">PROCEED</string>
-    <string name="welcome_screen">WELCOME SCREEN</string>
-    <string name="app_logo">app_logo</string>
-    <string name="welcome_text">Welcome to Vibester!</string>
-    <string name="play_a_game">PLAY A GAME</string>
-    <string name="profile">PROFILE</string>
-    <string name="welcome_scoreboard">SCOREBOARD</string>
-    <string name="listen_to_music">LISTEN TO MUSIC</string>
-    <string name="settings">SETTINGS</string>
-    <string name="what_music">What is the music ?</string>
-    <string name="your_guess">Enter your guess</string>
-    <string name="createAcc">Create Account</string>
-    <string name="logIn">Log in</string>
-    <string name="logInGoogle">Log in with Google</string>
-    <string name="emptyField">Empty email or password</string>
-    <string name="notAnEmail">Not an email</string>
-    <string name="shortPassword">Password has to be at least 6 symbols</string>
-    <string name="AccCreation">Account creation form</string>
-    <string name="uploadImageStatus">Upload OK</string>
+    <string-array name="nb_players">
+        <item>One</item>
+        <item>Two</item>
+        <item>Three</item>
+        <item>Four</item>
+    </string-array>
 
-    <string name="game_end__player_name">Player Name Here</string>
-    <string name="game_end__show_stats">Here are your stats!</string>
+
+    <!-- GameSetup-->
+    <string name="easy">Easy</string>
+    <string name="medium">Medium</string>
+    <string name="hard">Hard</string>
+
+    <string-array name="difficulties_name">
+        <item>@string/easy</item>
+        <item>@string/medium</item>
+        <item>@string/hard</item>
+    </string-array>
+
+    <!-- OLD String-->
+
+
+
+    <string name="total_games">Total Games</string>
+    <string name="proceed">PROCEED</string>
+
+    <string name="app_logo">app_logo</string>
+
+    <string name="welcome_text">Welcome to Vibester!</string>
+    <string name="what_music">What is the music ?</string>
+
+    <string name="your_guess">Enter your guess</string>
+
     <string name="game_end__stat_1">Stat 1</string>
     <string name="game_end__stat_1_result">Stat 1 Result</string>
     <string name="game_end__stat_2">Stat 2</string>
@@ -116,12 +125,8 @@
     <string name="game_end__stat_5_result">Stat 5 Result</string>
     <string name="game_end__stat_6">Stat 6</string>
     <string name="game_end__stat_6_result">Stat 6 Result</string>
-    <string name="game_end__go_back">GO BACK TO MAIN MENU</string>
-    <string name="game_end__view_incorrect_songs">VIEW INCORRECT GUESSES</string>
+
     <string name="go_to_end">GO TO END</string>
-    <string name="show_incorrect_songs">YOUR INCORRECT SONGS THIS GAME ARE:</string>
-    <string name="inc_thats_all">THAT\'S ALL!</string>
-    <string name="inc_go_back">GO BACK TO WELCOME SCREEN</string>
     <string name="inc_all_correct">You got every song correctly. Congrats!</string>
     <string name="editUsername">Edit Username</string>
     <string name="editHandle">Edit Handle</string>
@@ -155,22 +160,8 @@
     <string name="game_setup_ask_difficulty">Please choose the difficulty of your game</string>
 
 
-    <string-array name="nb_players">
-        <item>One</item>
-        <item>Two</item>
-        <item>Three</item>
-        <item>Four</item>
-    </string-array>
 
-    <string name="easy">Easy</string>
-    <string name="medium">Medium</string>
-    <string name="hard">Hard</string>
 
-    <string-array name="difficulties_name">
-        <item>@string/easy</item>
-        <item>@string/medium</item>
-        <item>@string/hard</item>
-    </string-array>
 
     <string name="one">One</string>
     <string name="two">Two</string>
@@ -201,9 +192,7 @@
     <string name="winner">And the winner is… </string>
     <string name="noWinner">Nobody won this game!</string>
 
-    <string name="title_activity_fullscreen">FullscreenActivity</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
+
     <string name="next">Next</string>
     <string name="check_for_correctness">Check for correctness</string>
     <string name="result_will_show_here">result will show here</string>

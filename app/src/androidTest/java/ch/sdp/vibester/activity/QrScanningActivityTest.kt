@@ -48,7 +48,8 @@ class QrScanningActivityTest {
         val mockUser = User("mockUser", uid = "mockUseruid", following = mapOf(Pair(mockUser2.uid, true), Pair(mockUser3.uid, true)))
 
 
-        val mockUIDs = arrayListOf<String>("mockUser1uid","mockUser2uid","mockUser3uid")
+        val mockUIDs = arrayListOf<String>("mockUser1uid", "mockUser2uid", "mockUser3uid")
+
         val mockUsers = arrayListOf<User>(mockUser1, mockUser2, mockUser3)
 
         every { mockDataGetter.searchByField(any(), any(), any(), any()) } answers  {

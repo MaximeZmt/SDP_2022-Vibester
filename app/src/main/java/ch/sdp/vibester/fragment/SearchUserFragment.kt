@@ -1,15 +1,18 @@
-package ch.sdp.vibester.activity
+package ch.sdp.vibester.fragment
 
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.Window
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.EditText
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
+import ch.sdp.vibester.activity.QrScanningActivity
 import ch.sdp.vibester.activity.profile.PublicProfileActivity
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
@@ -28,7 +31,7 @@ import javax.inject.Inject
  * Search for users based on their usernames.
  */
 @AndroidEntryPoint
-class SearchUserActivity : AppCompatActivity(), OnItemClickListener {
+class SearchUserFragment : Fragment(), OnItemClickListener {
 
     @Inject
     lateinit var usersRepo: DataGetter
@@ -46,33 +49,25 @@ class SearchUserActivity : AppCompatActivity(), OnItemClickListener {
 
     private var uidList: ArrayList<String> = ArrayList()
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        requestWindowFeature(Window.FEATURE_NO_TITLE)
-        super.onCreate(savedInstanceState)
-        supportActionBar?.hide()
-        setContentView(R.layout.activity_search_user)
+        setUpRecycleView(view)
 
-        setUpRecycleView()
-
-        searchEditText = findViewById(R.id.searchUserET)
+        searchEditText = view.findViewById(R.id.searchUserET)
         searchForUsers("")
 
-        setScanBtnListener()
+        setScanBtnListener(view)
 
         setSearchFieldListener()
     }
 
-    private fun setScanBtnListener() {
-        val buttonScan: FloatingActionButton = findViewById(R.id.searchUser_scanning)
-        val extras = intent.extras
+    private fun setScanBtnListener(view: View) {
+        val buttonScan: FloatingActionButton = view.findViewById(R.id.searchUser_scanning)
 
         buttonScan.setOnClickListener {
-            val qrIntent = Intent(this, QrScanningActivity::class.java)
+            val qrIntent = Intent(requireActivity(), QrScanningActivity::class.java)
             qrIntent.putExtra("uidList", uidList)
-            if (extras != null) {
-                qrIntent.putExtra("isTest", extras.getBoolean("isTest", false))
-            }
             startActivity(qrIntent)
         }
     }
@@ -87,10 +82,18 @@ class SearchUserActivity : AppCompatActivity(), OnItemClickListener {
         })
     }
 
-    private fun setUpRecycleView() {
-        findViewById<RecyclerView>(R.id.searchList).apply {
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.fragment_search_user, container, false)
+    }
+
+    private fun setUpRecycleView(view: View) {
+        view.findViewById<RecyclerView>(R.id.searchList).apply {
             layoutManager = LinearLayoutManager(context)
-            userProfileAdapter = UserProfileAdapter(users, authenticator, usersRepo, imageGetter, this@SearchUserActivity)
+            userProfileAdapter = UserProfileAdapter(users, authenticator, usersRepo, imageGetter, this@SearchUserFragment)
             adapter = userProfileAdapter
             setHasFixedSize(true)
         }
@@ -120,7 +123,7 @@ class SearchUserActivity : AppCompatActivity(), OnItemClickListener {
     }
 
     override fun onItemClick(position: Int) {
-        val intent = Intent(this, PublicProfileActivity::class.java)
+        val intent = Intent(requireActivity(), PublicProfileActivity::class.java)
         intent.putExtra("UserId", users[position].uid)
         intent.putExtra("ScoresOrFollowing", R.string.profile_following.toString())
         startActivity(intent)

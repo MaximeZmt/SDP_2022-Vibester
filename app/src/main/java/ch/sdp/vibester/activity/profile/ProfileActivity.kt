@@ -56,7 +56,7 @@ open class ProfileActivity : Fragment(), OnItemClickListener {
     val imageRequestCode = 100
 
     private var followings: MutableList<User> ? = null
-    private var profileFriendsAdapter: ProfileFollowingAdapter?= null
+    private var profileFollowingAdapter: ProfileFollowingAdapter?= null
 
 
     override fun onCreateView(
@@ -87,15 +87,15 @@ open class ProfileActivity : Fragment(), OnItemClickListener {
 
     private fun setupRecycleViewForFriends() {
         requireView().findViewById<RecyclerView>(R.id.profile_followingList).apply {
-            layoutManager = LinearLayoutManager(requireContext())
-            adapter = followings?.let { ProfileFollowingAdapter(it, this@ProfileActivity) }
+            layoutManager = LinearLayoutManager(context)
+            adapter = followings?.let { ProfileFollowingAdapter(it, dataGetter, authenticator,this@ProfileActivity) }
             setHasFixedSize(true)
         }
     }
 
     private fun showFriendsPosition(friends: MutableList<User>?) {
-        profileFriendsAdapter = ProfileFollowingAdapter(friends!!, this)
-        requireView().findViewById<RecyclerView>(R.id.profile_followingList)!!.adapter = profileFriendsAdapter
+        profileFollowingAdapter = ProfileFollowingAdapter(friends!!, dataGetter, authenticator, this)
+        requireView().findViewById<RecyclerView>(R.id.profile_followingList)!!.adapter = profileFollowingAdapter
     }
 
 
@@ -210,7 +210,7 @@ open class ProfileActivity : Fragment(), OnItemClickListener {
      *
      */
     private fun loadFollowing(followingMap: Map<String, Boolean>) {
-        followingMap.forEach { (userId, _) ->  dataGetter.getUserData(userId, this::addFollowing)}
+        followingMap.forEach { (userId, isFollowing) ->  if (isFollowing) dataGetter.getUserData(userId, this::addFollowing) }
         showFriendsPosition(followings)
     }
 

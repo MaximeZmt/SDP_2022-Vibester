@@ -328,7 +328,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:padding="18dip"
-                                android:text="@string/bts"
+                                android:text="@string/gameGenre_bts"
                                 android:textColor="#000"
                                 android:textSize="16sp"
                                 android:typeface="monospace" />
@@ -354,7 +354,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:padding="18dip"
-                                android:text="@string/imagine_dragons"
+                                android:text="@string/gameGenre_imagine_dragons"
                                 android:textColor="#000"
                                 android:textSize="16sp"
                                 android:typeface="monospace" />
@@ -380,7 +380,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:padding="18dip"
-                                android:text="@string/billie_eilish"
+                                android:text="@string/gameGenre_billie_eilish"
                                 android:textColor="#000"
                                 android:textSize="16sp"
                                 android:typeface="monospace" />

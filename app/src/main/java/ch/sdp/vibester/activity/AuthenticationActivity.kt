@@ -167,17 +167,17 @@ class AuthenticationActivity : Fragment(),  View.OnClickListener {
      */
     private fun credentialsValidation(username: String, password: String): Boolean {
         if (username.isEmpty() || password.isEmpty()) {
-            authentication_status.setText(R.string.emptyField)
+            authentication_status.setText(R.string.authentication_emptyField)
             return false
         }
 
         if (!username.contains('@')) {
-            authentication_status.setText(R.string.notAnEmail)
+            authentication_status.setText(R.string.authentication_notAnEmail)
             return false
         }
 
         if (password.length < 6) {
-            authentication_status.setText(R.string.shortPassword)
+            authentication_status.setText(R.string.authentication_shortPassword)
             return false
         }
         return true

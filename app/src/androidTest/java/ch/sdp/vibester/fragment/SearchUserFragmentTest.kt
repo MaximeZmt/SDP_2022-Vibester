@@ -49,8 +49,8 @@ class SearchUserFragmentTest {
         val mockUser3 = User("mockUser3", uid = "mockUser3uid")
         val mockUser = User("mockUser", uid = "mockUseruid", following = mapOf(Pair(mockUser2.uid,true), Pair(mockUser3.uid,true)))
 
-        val mockUIDs = arrayListOf<String>("mockUser1uid","mockUser2uid","mockUser3uid")
-        val mockUsers = arrayListOf<User>(mockUser1, mockUser2, mockUser3)
+        val mockUIDs = arrayListOf("mockUser1uid","mockUser2uid","mockUser3uid")
+        val mockUsers = arrayListOf(mockUser1, mockUser2, mockUser3)
 
         every { mockUsersRepo.searchByField(any(), any(), any(), any()) } answers  {
             thirdArg<(ArrayList<User>) -> Unit>().invoke(mockUsers)
@@ -61,11 +61,12 @@ class SearchUserFragmentTest {
             secondArg<(User) -> Unit>().invoke(mockUser)
         }
 
-        every { mockUsersRepo.getCurrentUser() } answers {createMockUser()}
+        every { mockUsersRepo.getCurrentUser() } answers { createMockUser() }
 
-        every {mockUsersRepo.updateSubFieldInt(any(), any(), any(), any(),any())} answers {}
-        every {mockUsersRepo.setSubFieldValue(any(), any(), any(), any())} answers {}
-
+        every { mockUsersRepo.updateSubFieldInt(any(), any(), any(), any(),any()) } answers {}
+        every { mockUsersRepo.setSubFieldValue(any(), any(), any(), any()) } answers {}
+        every { mockUsersRepo.setFollowing(any(), any()) } answers {}
+        every { mockUsersRepo.setUnfollow(any(), any()) } answers {}
     }
 
     @BindValue @JvmField
@@ -156,6 +157,7 @@ class SearchUserFragmentTest {
     fun checkAddBtnClick(){
         checkRecyclerSubViews(R.id.searchList, 0, withEffectiveVisibility(Visibility.VISIBLE), R.id.search_user_add)
         checkRecyclerSubViews(R.id.searchList, 0, withEffectiveVisibility(Visibility.INVISIBLE), R.id.search_user_added)
+
         onView(withId(R.id.searchList))
             .perform(
                 RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
@@ -164,6 +166,25 @@ class SearchUserFragmentTest {
             )
         checkRecyclerSubViews(R.id.searchList, 0, withEffectiveVisibility(Visibility.INVISIBLE), R.id.search_user_add)
         checkRecyclerSubViews(R.id.searchList, 0, withEffectiveVisibility(Visibility.VISIBLE), R.id.search_user_added)
+    }
+
+    @Test
+    fun checkUnfollowBtnClick() {
+        //follow
+        onView(withId(R.id.searchList)).perform(
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                0, clickOnViewChild(R.id.search_user_add)
+            )
+        )
+        //unfollow
+        onView(withId(R.id.searchList)).perform(
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                0, clickOnViewChild(R.id.search_user_added)
+            )
+        )
+
+        checkRecyclerSubViews(R.id.searchList, 0, withEffectiveVisibility(Visibility.VISIBLE), R.id.search_user_add)
+        checkRecyclerSubViews(R.id.searchList, 0, withEffectiveVisibility(Visibility.INVISIBLE), R.id.search_user_added)
     }
 
     /**

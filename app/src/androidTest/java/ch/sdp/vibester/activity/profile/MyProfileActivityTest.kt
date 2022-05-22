@@ -92,8 +92,8 @@ class MyProfileActivityTest {
         every { mockUsersRepo.setFieldValue(any(), any(), any()) } answers {}
         every { mockUsersRepo.setFieldValue(any(), any(), any()) } answers {}
 
-        every { mockUsersRepo.setFollowing(any(), any())} answers {}
-        every { mockUsersRepo.setUnfollow(any(), any())} answers {}
+        every { mockUsersRepo.setFollowing(any(), any()) } answers {}
+        every { mockUsersRepo.setUnfollow(any(), any()) } answers {}
     }
 
     private fun createMockImageGetter() {

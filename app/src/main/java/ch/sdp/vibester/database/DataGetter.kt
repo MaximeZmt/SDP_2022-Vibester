@@ -44,7 +44,7 @@ class DataGetter @Inject constructor() {
     }
 
     /**
-     * set user with userId to follow user with followingId
+     * Set user with userId to follow user with followingId
      * @param userId id of of the current user
      * @param followingId id of the user to be following
      */
@@ -53,7 +53,7 @@ class DataGetter @Inject constructor() {
     }
 
     /**
-     * set user with userId to unfollow user with followingId
+     * Set user with userId to unfollow user with followingId
      * @param userId if of the current user
      * @param followingId id of the user to be unfollowing
      */
@@ -175,7 +175,7 @@ class DataGetter @Inject constructor() {
                 }
                 callback(users)
                 callbackUid(uidList)
-                queryUsers.removeEventListener(this);
+                queryUsers.removeEventListener(this)
             }
             override fun onCancelled(error: DatabaseError) {
                 Log.w(ContentValues.TAG, "searchByField:onCancelled", error.toException())

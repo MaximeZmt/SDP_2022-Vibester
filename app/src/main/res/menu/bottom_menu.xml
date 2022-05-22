@@ -3,26 +3,25 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/myProfileBtn"
+        android:id="@+id/fragment_my_profile"
         tools:ignore="MenuTitle"
         android:icon="@drawable/profile_selector"
         />
 
-
     <item
-        android:id="@+id/gameSetupBtn"
+        android:id="@+id/fragment_game_setup"
         android:icon="@drawable/play_selector"
-        tools:ignore="MenuTitle"/>
+        tools:ignore="MenuTitle"
+        />
 
     <item
-        android:id="@+id/searchUserBtn"
+        android:id="@+id/fragment_search_user"
         android:title="Search"
         android:icon="@drawable/search_selector"
         />
 
-
     <item
-        android:id="@+id/scoreboardBtn"
+        android:id="@+id/fragment_scoreboard"
         tools:ignore="MenuTitle"
         android:icon="@drawable/scoreboard_selector"
         />

@@ -106,6 +106,9 @@ open class GameActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Custom onDestroy to verify progressbar is stopped
+     */
     override fun onDestroy() {
         checkRunnable()
         super.onDestroy()

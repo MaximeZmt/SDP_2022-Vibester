@@ -106,7 +106,7 @@ class BuzzerScreenActivity : GameActivity() {
         val artist = gameManager.getCurrentSong().getArtistName()
         findViewById<TextView>(R.id.songTitle).text = "$trackName - $artist"
         //Checks if internet is available. If not, skip the loading of the artwork from url.
-        if(gameManager.getInternet()) {
+        if (gameManager.getInternet()) {
             Glide.with(ctx).load(gameManager.getCurrentSong().getArtworkUrl()).override(artworkDim, artworkDim).into(findViewById(R.id.songArtwork))
         }
 
@@ -171,7 +171,7 @@ class BuzzerScreenActivity : GameActivity() {
 
             score.addView(nameView)
             score.addView(points)
-            viewsOfPoints.set(i, score)
+            viewsOfPoints[i] = score
             scores.addView(score)
 
             i += 1
@@ -193,7 +193,7 @@ class BuzzerScreenActivity : GameActivity() {
             val button = findViewById<Button>(buzIds[i])
             button.text = pName
             button.visibility = View.VISIBLE
-            buttons.set(i, button)
+            buttons[i] = button
             button.setOnClickListener {
                 if (findViewById<ProgressBar>(R.id.progressBarBuzzer).progress>0 && findViewById<Button>(R.id.nextSongBuzzer).visibility==View.GONE) {
                     answer.visibility = View.VISIBLE

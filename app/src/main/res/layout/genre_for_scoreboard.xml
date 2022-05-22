@@ -26,7 +26,7 @@
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/imagDragonsButton"
+                android:id="@+id/scoreboard_imagDragonsButton"
                 android:layout_width="170dp"
                 android:layout_height="130dp"
                 android:layout_weight="1"
@@ -45,7 +45,7 @@
                 android:layout_weight="1" />
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/billieEilishButton"
+                android:id="@+id/scoreboard_billieEilishButton"
                 android:layout_width="170dp"
                 android:layout_height="130dp"
                 android:layout_weight="1"
@@ -69,7 +69,7 @@
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/rockButton"
+                android:id="@+id/scoreboard_rockButton"
                 android:layout_width="170sp"
                 android:layout_height="130sp"
                 android:layout_weight="1"
@@ -88,7 +88,7 @@
                 android:layout_weight="1" />
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btsButton"
+                android:id="@+id/scoreboard_btsButton"
                 android:layout_width="170dp"
                 android:layout_height="130dp"
                 android:layout_weight="1"
@@ -112,7 +112,7 @@
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/topTracksButton"
+                android:id="@+id/scoreboard_topTracksButton"
                 android:layout_width="170dp"
                 android:layout_height="130dp"
                 android:layout_weight="1"
@@ -131,7 +131,7 @@
                 android:layout_weight="1" />
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/kpopButton"
+                android:id="@+id/scoreboard_kpopButton"
                 android:layout_width="170dp"
                 android:layout_height="130dp"
                 android:layout_weight="1"

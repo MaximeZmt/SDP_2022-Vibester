@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
 import ch.sdp.vibester.R
 import ch.sdp.vibester.helper.GameManager
+import ch.sdp.vibester.helper.Helper
 
 /**
  * Class to set up buzzer game (number of players)
@@ -102,7 +103,7 @@ class BuzzerSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
         intent.putExtra("gameManager", gameManager)
         intent.putExtra("Difficulty", difficulty)
         val editTextIdArray =
-            arrayOf(R.id.namePlayer1, R.id.namePlayer2, R.id.namePlayer3, R.id.namePlayer4)
+            Helper().createArrayOfFour(R.id.namePlayer1, R.id.namePlayer2, R.id.namePlayer3, R.id.namePlayer4)
         var i = 0
         for (playerView in players) {
             val name = findViewById<EditText>(editTextIdArray[i]).text.toString()

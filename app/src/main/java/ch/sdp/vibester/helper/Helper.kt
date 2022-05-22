@@ -10,7 +10,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 
-class ImageHelper {
+class Helper {
 
     /**
      * Set the image of imageURI in avatar of given size
@@ -34,5 +34,12 @@ class ImageHelper {
                 avatar.setImageBitmap(Bitmap.createScaledBitmap(bm, imageSize, imageSize, false))
             }
         }
+    }
+
+    /**
+     * create an array list of the four given elements
+     */
+    fun createArrayOfFour(e1: Int, e2: Int, e3: Int, e4: Int) : ArrayList<Int> {
+        return arrayListOf(e1, e2, e3, e4)
     }
 }

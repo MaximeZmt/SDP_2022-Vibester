@@ -123,10 +123,9 @@ class SearchUserFragment : Fragment(), OnItemClickListener {
     }
 
     override fun onItemClick(position: Int) {
-        val intent = Intent(requireActivity(), PublicProfileActivity::class.java)
-        intent.putExtra("UserId", users[position].uid)
-        intent.putExtra("ScoresOrFollowing", R.string.profile_following.toString())
-        startActivity(intent)
+        val bundle = bundleOf("UserId" to users[position].uid)
+        bundle.putString("ScoresOrFollowing", R.string.profile_following.toString())
+        view?.findNavController()?.navigate(R.id.fragment_public_profile, bundle)
     }
 }
 

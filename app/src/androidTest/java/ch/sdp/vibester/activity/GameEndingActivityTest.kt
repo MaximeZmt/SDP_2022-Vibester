@@ -2,7 +2,6 @@ package ch.sdp.vibester.activity
 
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ActivityScenario
@@ -16,10 +15,8 @@ import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.matcher.BoundedMatcher
-import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import ch.sdp.vibester.R
 import ch.sdp.vibester.database.AppPreferences
 import dagger.hilt.android.testing.HiltAndroidRule

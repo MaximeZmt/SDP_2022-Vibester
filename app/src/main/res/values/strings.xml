@@ -16,12 +16,12 @@
     <string name="authentication_placeholderUsername">Placeholder Username</string>
     <string name="authentication_placeholderEmptyScore">Error</string>
     <string name="authentication_noActionDoneYet">Either log in with your Google account or fill in credentials to create an account or log in</string>
-    <string name="createAcc">Create Account</string>
-    <string name="logIn">Log in</string>
-    <string name="logInGoogle">Log in with Google</string>
-    <string name="emptyField">Empty email or password</string>
-    <string name="notAnEmail">Not an email</string>
-    <string name="shortPassword">Password has to be at least 6 symbols</string>
+    <string name="authentication_createAcc">Create Account</string>
+    <string name="authentication_logIn">Log in</string>
+    <string name="authentication_googleLogIn">Log in with Google</string>
+    <string name="authentication_emptyField">Empty email or password</string>
+    <string name="authentication_notAnEmail">Not an email</string>
+    <string name="authentication_shortPassword">Password has to be at least 6 symbols</string>
 
     <!-- QrScanning -->
     <string name="qrScanning_scannerClosed">Scanner has been closed</string>
@@ -32,6 +32,17 @@
     <!-- GameSetup -->
     <string name="GameSetup_internetSwitchOn">Internet is on</string>
     <string name="GameSetup_internetSwitchOff">Internet is off</string>
+    <string name="GameSetup_easy">Easy</string>
+    <string name="GameSetup_medium">Medium</string>
+    <string name="GameSetup_hard">Hard</string>
+    <string name="GameSetup_ask_difficulty">Please choose the difficulty of your game</string>
+
+
+    <string-array name="difficulties_name">
+        <item>@string/GameSetup_easy</item>
+        <item>@string/GameSetup_medium</item>
+        <item>@string/GameSetup_hard</item>
+    </string-array>
 
     <!-- TypingGame -->
     <string name="TypingGame_currentRound">Round\ </string>
@@ -43,6 +54,17 @@
     <string name="BuzzerScreen_oneWinner">And the winner is…\ </string>
     <string name="BuzzerScreen_moreThanOneWinner">And the winners are…\</string>
     <string name="BuzzerScreen_skip">SKIP</string>
+    <string name="BuzzerScreen_wrong">Wrong</string>
+    <string name="BuzzerScreen_correct">Correct</string>
+    <string name="BuzzerScreen_ask_nb_players">Please choose the number of players in your game</string>
+    <string-array name="nb_players">
+        <item>One</item>
+        <item>Two</item>
+        <item>Three</item>
+        <item>Four</item>
+    </string-array>
+    <string name="BuzzerScreen_player_missing">Please enter a name for every player.</string>
+    <string name="BuzzerScreen_ok">OK</string>
 
     <!-- GameEnding -->
     <string name="gameEnding_unconnectedUsername">UNCONNECTED</string>
@@ -50,15 +72,13 @@
 
     <!-- GameGenre -->
     <string name="gameGenre_validate">Validate</string>
-    <string name="billie_eilish">Billie Eilish</string>
-    <string name="imagine_dragons">Imagine Dragons</string>
-    <string name="bts">BTS</string>
-    <string name="r_o_c_k">R O C K</string>
-    <string name="k_p_o_p">K P O P</string>
-    <string name="t_o_p_t_r_a_c_k_s">T O P T R A C K S</string>
-    <string name="byArtistSearch">Personalized Artist</string>
-
-
+    <string name="gameGenre_billie_eilish">Billie Eilish</string>
+    <string name="gameGenre_imagine_dragons">Imagine Dragons</string>
+    <string name="gameGenre_bts">BTS</string>
+    <string name="gameGenre_r_o_c_k">R O C K</string>
+    <string name="gameGenre_k_p_o_p">K P O P</string>
+    <string name="gameGenre_t_o_p_t_r_a_c_k_s">T O P T R A C K S</string>
+    <string name="gameGenre_byArtistSearch">Personalized Artist</string>
 
     <!-- AppPreferences -->
     <string name="preferences_game_mode">game_mode</string>
@@ -72,37 +92,10 @@
     <string name="test_profile_image">bit.ly/3IUnyAF</string>
     <string name="profile_username">Profile Username</string>
 
-
     <!-- ScoreBoard -->
     <string name="scoreboard">S C O R E B O A R D</string>
 
-    <!-- Buzzer-->
-    <string name="wrong">Wrong</string>
-    <string name="correct">Correct</string>
-    <string name="ask_nb_players">Please choose the number of players in your game</string>
-    <string-array name="nb_players">
-        <item>One</item>
-        <item>Two</item>
-        <item>Three</item>
-        <item>Four</item>
-    </string-array>
-
-
-    <!-- GameSetup-->
-    <string name="easy">Easy</string>
-    <string name="medium">Medium</string>
-    <string name="hard">Hard</string>
-
-    <string-array name="difficulties_name">
-        <item>@string/easy</item>
-        <item>@string/medium</item>
-        <item>@string/hard</item>
-    </string-array>
-
     <!-- OLD String-->
-
-
-
     <string name="total_games">Total Games</string>
     <string name="proceed">PROCEED</string>
 
@@ -157,12 +150,7 @@
 
 
     <string name="game_typing">Local Typing</string>
-    <string name="game_setup_ask_difficulty">Please choose the difficulty of your game</string>
-
-
-
-
-
+    
     <string name="one">One</string>
     <string name="two">Two</string>
     <string name="three">Three</string>
@@ -187,10 +175,6 @@
         <item>@string/ten</item>
     </string-array>
 
-    <string name="player_missing">Please enter a name for every player.</string>
-    <string name="ok">OK</string>
-    <string name="winner">And the winner is… </string>
-    <string name="noWinner">Nobody won this game!</string>
 
 
     <string name="next">Next</string>

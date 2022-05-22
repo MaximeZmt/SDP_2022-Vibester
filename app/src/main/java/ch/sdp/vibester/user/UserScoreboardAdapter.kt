@@ -63,7 +63,7 @@ class UserScoreboardAdapter(
             itemView.findViewById<TextView>(R.id.tv_name).text = player.username
             itemView.findViewById<TextView>(R.id.tv_score).text = setScore(player).toString()
             itemView.findViewById<ImageView>(R.id.iv_photo).loadImg(player.image)
-            if(position %2 == 0) itemView.setBackgroundColor(Color.parseColor("#FFFDF0D7"));
+            if(position %2 == 0) itemView.setBackgroundColor(Color.parseColor("#FFFDF0D7"))
         }
 
         init {

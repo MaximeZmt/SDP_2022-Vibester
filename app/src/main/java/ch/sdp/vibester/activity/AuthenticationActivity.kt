@@ -6,19 +6,15 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import ch.sdp.vibester.R
-import ch.sdp.vibester.activity.profile.MyProfileActivity
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
-import ch.sdp.vibester.helper.IntentSwitcher
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -59,7 +55,7 @@ class AuthenticationActivity : Fragment(),  View.OnClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.activity_authentication, container, false)
+        return inflater.inflate(R.layout.fragment_layout_authentication, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -213,7 +209,7 @@ class AuthenticationActivity : Fragment(),  View.OnClickListener {
      * Start ProfileActivity
      */
     private fun startProfileActivity() {
-        findNavController().navigate(R.id.myProfileBtn)
+        findNavController().navigate(R.id.fragment_my_profile)
     }
 
     /**

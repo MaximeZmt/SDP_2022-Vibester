@@ -39,7 +39,6 @@ class AdapterHelper {
      * @param imageId ID of the image
      * @param imageId2 ID of the image
      * @param itemView View contains the button and image
-     * change the view from image to image in itemView
      */
     fun changeImageToImageHelper(imageId: Int, imageId2: Int, itemView: View) {
         itemView.findViewById<ImageView>(imageId).visibility = View.INVISIBLE

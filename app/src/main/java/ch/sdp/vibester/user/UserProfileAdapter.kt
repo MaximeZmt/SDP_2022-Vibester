@@ -1,9 +1,9 @@
 package ch.sdp.vibester.user
 
+import android.graphics.Color
 import android.net.Uri
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -59,7 +59,7 @@ class UserProfileAdapter constructor(
     }
 
     override fun onBindViewHolder(holder: UserProfileViewHolder, position: Int) {
-        holder.bind(users[position])
+        holder.bind(users[position], position)
     }
 
     /**
@@ -75,8 +75,10 @@ class UserProfileAdapter constructor(
         /**
          * @param user with all the parameters
          */
-        fun bind(user: User) {
+        fun bind(user: User, position: Int) {
             itemView.findViewById<TextView>(R.id.search_user_username).text = user.username
+            if(position %2 == 0) itemView.setBackgroundColor(itemView.resources.getColor(R.color.darker_floral_white))
+
             imageGetter.fetchImage("profileImg/${user.uid}", this::setImage)
 
             setFollowBtnListener(user)
@@ -90,7 +92,7 @@ class UserProfileAdapter constructor(
         }
 
         private fun setFollowBtnListener(user: User) {
-            val followBtn = itemView.findViewById<Button>(R.id.addFollowingBtn)
+            val followBtn = itemView.findViewById<ImageView>(R.id.search_user_add)
 
             if (userFollowing.isNotEmpty() && user.uid in userFollowing) {
                 changeBtnToImage()
@@ -106,17 +108,17 @@ class UserProfileAdapter constructor(
         }
 
         private fun changeBtnToImage() {
-            AdapterHelper().changeBtnToImage(
-                R.id.addFollowingBtn, R.id.addedFollowingIcon, itemView
+            AdapterHelper().changeAToB(
+                R.id.search_user_add, R.id.search_user_added, itemView
             )
         }
 
         private fun unFollowBtnListener(user: User) {
-            itemView.findViewById<ImageView>(R.id.addedFollowingIcon).setOnClickListener {
+            itemView.findViewById<ImageView>(R.id.search_user_added).setOnClickListener {
                 if (currentUser != null) {
                     dataGetter.setUnfollow(currentUser.uid, user.uid)
                     AdapterHelper().switchViewsVisibility(
-                        itemView.findViewById(R.id.addedFollowingIcon), itemView.findViewById(R.id.addFollowingBtn))
+                        itemView.findViewById(R.id.search_user_added), itemView.findViewById(R.id.search_user_add))
                 }
             }
         }

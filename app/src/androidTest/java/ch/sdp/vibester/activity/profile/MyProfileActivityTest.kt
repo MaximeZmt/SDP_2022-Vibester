@@ -333,7 +333,7 @@ class MyProfileActivityTest {
         onView(withId(R.id.profile_image_CardView)).check(matches(isDisplayed()))
 
         onView(withId(R.id.logout)).perform(scrollTo(), click())
-        onView(withId(R.id.fragment)).check(matches(isDisplayed()))
+        onView(withId(R.id.main_bottom_nav_fragment)).check(matches(isDisplayed()))
     }
 
 

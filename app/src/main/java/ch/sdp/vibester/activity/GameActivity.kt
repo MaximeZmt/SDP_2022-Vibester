@@ -106,6 +106,11 @@ open class GameActivity : AppCompatActivity() {
         }
     }
 
+    override fun onDestroy() {
+        checkRunnable()
+        super.onDestroy()
+    }
+
     /**
      * Called upon the ending of a game. Passes gathered information during the game to the next
      * activity through the intent.

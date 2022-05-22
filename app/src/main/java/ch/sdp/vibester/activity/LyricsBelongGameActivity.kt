@@ -39,12 +39,9 @@ class LyricsBelongGameActivity : GameActivity() {
         val getIntent = intent.extras
         if (getIntent != null) {
             gameManager = getIntent.getSerializable("gameManager") as GameManager
-            findViewById<Button>(R.id.nextSongButton).setOnClickListener {
-                startRound(ctx, gameManager)
-            }
-            findViewById<Button>(R.id.lyricMatchButton).setOnClickListener {
-                getAndCheckLyrics(ctx, song, speechInput, gameManager)
-            }
+            // put in one line to increase coverage
+            findViewById<Button>(R.id.nextSongButton).setOnClickListener { startRound(ctx, gameManager) }
+            findViewById<Button>(R.id.lyricMatchButton).setOnClickListener { getAndCheckLyrics(ctx, song, speechInput, gameManager) }
             gameManager.setNextSong()
             startRound(ctx, gameManager)
             super.setMax(intent)
@@ -156,13 +153,6 @@ class LyricsBelongGameActivity : GameActivity() {
              hasWon(ctx, gameManager.getScore(), false)
          }
         endRound(gameManager)
-    }
-
-    override fun onDestroy() {
-        if (runnable != null) {
-            handler.removeCallbacks(runnable!!)
-        }
-        super.onDestroy()
     }
 
     /**

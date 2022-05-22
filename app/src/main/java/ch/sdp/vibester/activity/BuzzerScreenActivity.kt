@@ -88,9 +88,6 @@ class BuzzerScreenActivity : GameActivity() {
      * A custom onDestroy to verify progressbar and media player are stopped
      */
     override fun onDestroy() {
-        if (runnable != null) {
-            handler.removeCallbacks(runnable!!)
-        }
         if (this::gameManager.isInitialized && gameManager.initializeMediaPlayer()) {
             gameManager.stopMediaPlayer()
         }

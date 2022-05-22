@@ -77,7 +77,7 @@ class UserProfileAdapter constructor(
          */
         fun bind(user: User, position: Int) {
             itemView.findViewById<TextView>(R.id.search_user_username).text = user.username
-            if(position %2 == 0) itemView.setBackgroundColor(Color.parseColor("#FFFDF0D7"))
+            if(position %2 == 0) itemView.setBackgroundColor(itemView.resources.getColor(R.color.darker_floral_white))
 
             imageGetter.fetchImage("profileImg/${user.uid}", this::setImage)
 

@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
 import ch.sdp.vibester.auth.FireBaseAuthenticator
@@ -100,6 +101,8 @@ class UserProfileAdapter constructor(
                     if (currentUser != null) {
                         dataGetter.setFollowing(currentUser.uid, user.uid)
                         changeBtnToImage()
+                    } else {
+                        Toast.makeText(it.context, "Please logged in first", Toast.LENGTH_SHORT).show()
                     }
                 }
             }

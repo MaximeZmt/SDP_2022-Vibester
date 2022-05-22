@@ -80,15 +80,15 @@ class WelcomeScreenFragmentTest {
         intended(hasComponent(AuthenticationActivity::class.java.name))
     }
 
-    @Test
-    fun checkIntentOnMyAccountLoggedIn() {
-        val intent = Intent(ApplicationProvider.getApplicationContext(), MainActivity::class.java)
-        createMockAuthenticatorLoggedIn()
-        val scn: ActivityScenario<MainActivity> = ActivityScenario.launch(intent)
-
-        onView(withId(R.id.welcome_profile)).perform(click())
-        intended(hasComponent(MyProfileActivity::class.java.name))
-    }
+//    @Test
+//    fun checkIntentOnMyAccountLoggedIn() {
+//        val intent = Intent(ApplicationProvider.getApplicationContext(), MainActivity::class.java)
+//        createMockAuthenticatorLoggedIn()
+//        val scn: ActivityScenario<MainActivity> = ActivityScenario.launch(intent)
+//
+//        onView(withId(R.id.welcome_profile)).perform(click())
+//        intended(hasComponent(MyProfileActivity::class.java.name))
+//    }
     @Test
     fun checkIntentOnDownload() {
         val intent = Intent(ApplicationProvider.getApplicationContext(), MainActivity::class.java)

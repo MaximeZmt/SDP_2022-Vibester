@@ -10,6 +10,7 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.navigation.fragment.findNavController
 import ch.sdp.vibester.R
 import ch.sdp.vibester.activity.MainActivity
 import ch.sdp.vibester.auth.FireBaseAuthenticator
@@ -20,15 +21,13 @@ import com.google.firebase.auth.FirebaseAuth
 /** profile page of the current user with editable information */
 class MyProfileActivity : ProfileActivity() {
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.activity_profile, container, false)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        if (!authenticator.isLoggedIn()) {
+            val navController = findNavController()
+            navController.navigate(R.id.fragment_authentication)
+        }
+        queryDatabase()
 
         setViewVisibility(view.findViewById(R.id.editUser), true)
         setViewVisibility(view.findViewById(R.id.showQRCode), true)
@@ -39,6 +38,12 @@ class MyProfileActivity : ProfileActivity() {
         setLogOutBtnListener()
         setShowQrCodeBtnListener()
         setQrCodeToProfileBtnListener()
+
+        setupRecycleViewForFriends()
+
+        setFollowingScoresBtnListener(R.id.profile_scores, R.id.profile_scroll_stat, R.id.profile_scroll_following)
+        setFollowingScoresBtnListener(R.id.profile_following, R.id.profile_scroll_following, R.id.profile_scroll_stat)
+
     }
 
     override fun queryDatabase() {

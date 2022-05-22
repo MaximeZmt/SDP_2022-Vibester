@@ -37,6 +37,8 @@ class PartyRoomActivity : AppCompatActivity() {
 
     lateinit var gameManager: GameManager
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_party_room)
@@ -48,19 +50,15 @@ class PartyRoomActivity : AppCompatActivity() {
         }
         else {
             fetchData(roomName)
-            fetchGameStarted(roomName, this::startGame)
         }
 
         val startGame = findViewById<Button>(R.id.startGame)
 
         startGame.setOnClickListener {
-//            if(true) {
-//
-//            }
-//            else {
-//                setGameManager()
-//            }
+            dataGetter.updateStartGame("room1", true)
         }
+
+        fetchGameStarted(roomName, this::startGame)
     }
 
     private fun updateUI(partyRoom: PartyRoom) {
@@ -135,7 +133,6 @@ class PartyRoomActivity : AppCompatActivity() {
     }
 
     private fun setSongs(gameSongList: MutableList<Pair<String, String>>) {
-//        val newGameManager = GameManager()
         gameManager = GameManager()
         gameManager.setGameSize(1)
         gameManager.gameMode = getString(R.string.imagine_dragons)

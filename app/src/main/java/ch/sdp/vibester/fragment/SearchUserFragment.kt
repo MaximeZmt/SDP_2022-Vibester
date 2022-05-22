@@ -17,6 +17,7 @@ import ch.sdp.vibester.activity.profile.PublicProfileActivity
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.database.ImageGetter
+import ch.sdp.vibester.helper.Helper
 import ch.sdp.vibester.user.OnItemClickListener
 import ch.sdp.vibester.user.User
 
@@ -24,8 +25,6 @@ import ch.sdp.vibester.user.UserProfileAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
-
-
 
 /**
  * Search for users based on their usernames.
@@ -124,9 +123,7 @@ class SearchUserFragment : Fragment(), OnItemClickListener {
 
     override fun onItemClick(position: Int) {
         val intent = Intent(requireActivity(), PublicProfileActivity::class.java)
-        intent.putExtra("UserId", users[position].uid)
-        intent.putExtra("ScoresOrFollowing", R.string.profile_following.toString())
-        startActivity(intent)
+        startActivity(Helper().showUsersProfile(intent, users[position].uid, R.string.profile_following))
     }
 }
 

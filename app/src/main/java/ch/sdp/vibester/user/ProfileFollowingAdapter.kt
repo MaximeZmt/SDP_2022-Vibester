@@ -46,11 +46,11 @@ class ProfileFollowingAdapter constructor(
             itemView.findViewById<TextView>(R.id.profile_following_username).text = user.username
             itemView.findViewById<ImageView>(R.id.profile_following_profile_image).loadImg(user.image)
 
-            unFollowBtnListener(user)
+            unfollowBtnListener(user)
             followBtnListener(user)
         }
 
-        private fun unFollowBtnListener(user: User) {
+        private fun unfollowBtnListener(user: User) {
             itemView.findViewById<ImageView>(R.id.profile_unfollowIcon).setOnClickListener {
                 if (currentUser != null) {
                     dataGetter.setUnfollow(currentUser.uid, user.uid)

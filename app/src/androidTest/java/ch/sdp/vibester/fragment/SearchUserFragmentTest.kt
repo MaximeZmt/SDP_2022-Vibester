@@ -65,7 +65,6 @@ class SearchUserFragmentTest {
 
         every { mockUsersRepo.updateSubFieldInt(any(), any(), any(), any(),any())} answers {}
         every { mockUsersRepo.setSubFieldValue(any(), any(), any(), any())} answers {}
-
         every { mockUsersRepo.setFollowing(any(), any())} answers {}
         every { mockUsersRepo.setUnfollow(any(), any())} answers {}
 

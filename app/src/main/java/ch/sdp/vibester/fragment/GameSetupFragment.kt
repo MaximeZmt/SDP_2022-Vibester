@@ -103,9 +103,9 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
         if (parent.id == R.id.difficulty_spinner) {
             difficulty = parent.getItemAtPosition(position).toString()
             when (difficulty) {
-                "Easy" -> gameManager.setDifficultyLevel(1)
-                "Medium" -> gameManager.setDifficultyLevel(2)
-                "Hard" -> gameManager.setDifficultyLevel(3)
+                "Easy" -> gameManager.difficultyLevel = 1
+                "Medium" -> gameManager.difficultyLevel = 2
+                "Hard" -> gameManager.difficultyLevel = 3
             }
         } else if (parent.id == R.id.size_spinner) {
             gameSize = parent.getItemAtPosition(position).toString()

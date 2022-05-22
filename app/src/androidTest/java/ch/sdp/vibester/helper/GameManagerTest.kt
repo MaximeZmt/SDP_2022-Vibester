@@ -45,7 +45,7 @@ class GameManagerTest {
     @Test
     fun setDifficultyLevelCorrect() {
         val gameManager = setGameManager()
-        gameManager.setDifficultyLevel(3)
+        gameManager.difficultyLevel = 3
         assertEquals(gameManager.difficultyLevel, 3)
     }
 

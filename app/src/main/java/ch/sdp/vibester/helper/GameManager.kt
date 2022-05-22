@@ -46,15 +46,6 @@ open class GameManager : Serializable {
     }
 
     /**
-     * set the level of difficulty in this game
-     * @param level: 1 -> easy, 2 -> medium, 3 -> hard
-     */
-    @JvmName("setDifficultyLevel1")
-    fun setDifficultyLevel(level: Int) {
-        difficultyLevel = level
-    }
-
-    /**
      * Set a shuffled songList for a game
      * HAS OFFLINE
      * @param jsonMeta: JSON song list from lastfm API

@@ -110,16 +110,16 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
         } else if (parent.id == R.id.size_spinner) {
             gameSize = parent.getItemAtPosition(position).toString()
             when (gameSize) {
-                "One" -> gameManager.setGameSize(1)
-                "Two" -> gameManager.setGameSize(2)
-                "Three" -> gameManager.setGameSize(3)
-                "Four" -> gameManager.setGameSize(4)
-                "Five" -> gameManager.setGameSize(5)
-                "Six" -> gameManager.setGameSize(6)
-                "Seven" -> gameManager.setGameSize(7)
-                "Eight" -> gameManager.setGameSize(8)
-                "Nine" -> gameManager.setGameSize(9)
-                "Ten" -> gameManager.setGameSize(10)
+                "One" -> gameManager.gameSize = 1
+                "Two" -> gameManager.gameSize = 2
+                "Three" -> gameManager.gameSize = 3
+                "Four" -> gameManager.gameSize = 4
+                "Five" -> gameManager.gameSize = 5
+                "Six" -> gameManager.gameSize = 6
+                "Seven" -> gameManager.gameSize = 7
+                "Eight" -> gameManager.gameSize = 8
+                "Nine" -> gameManager.gameSize = 9
+                "Ten" -> gameManager.gameSize = 10
             }
         }
     }

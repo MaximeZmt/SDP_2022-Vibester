@@ -38,7 +38,7 @@ class GameManagerTest {
     @Test
     fun setGameSizeCorrect() {
         val gameManager = setGameManager()
-        gameManager.setGameSize(3)
+        gameManager.gameSize = 3
         assertEquals(gameManager.gameSize, 3)
     }
 

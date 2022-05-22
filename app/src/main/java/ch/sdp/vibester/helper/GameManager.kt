@@ -35,16 +35,6 @@ open class GameManager : Serializable {
     private var hasInternet: Boolean = true
     private lateinit var externals: File
 
-
-    /**
-     * set the number of songs in this game
-     * @param numberOfSongs: number of songs
-     */
-    @JvmName("setGameSize1")
-    fun setGameSize(numberOfSongs: Int) {
-        gameSize = numberOfSongs
-    }
-
     /**
      * Set a shuffled songList for a game
      * HAS OFFLINE

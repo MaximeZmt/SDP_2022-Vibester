@@ -9,14 +9,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.*
 import android.view.ViewGroup
-import android.view.Window
 import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
@@ -55,7 +52,7 @@ open class ProfileActivity : Fragment(), OnItemClickListener {
     private val imageSize = 1000
     val imageRequestCode = 100
 
-    private var followings: MutableList<User> ? = null
+    private var followings: ArrayList<User> = ArrayList()
     private var profileFollowingAdapter: ProfileFollowingAdapter?= null
 
 
@@ -63,32 +60,13 @@ open class ProfileActivity : Fragment(), OnItemClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        return inflater.inflate(R.layout.activity_profile, container, false)
+        return inflater.inflate(R.layout.fragment_layout_my_profile, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val navController = findNavController()
-        if (!authenticator.isLoggedIn()) {
-            navController.navigate(R.id.authenticationBtn)
-        }
-
-        setupRecycleViewForFriends()
-        followings = ArrayList()
-
-        setFollowingScoresBtnListener(R.id.profile_scores, R.id.profile_scroll_stat, R.id.profile_scroll_following)
-        setFollowingScoresBtnListener(R.id.profile_following, R.id.profile_scroll_following, R.id.profile_scroll_stat)
-
-        queryDatabase()
-
-
-    }
-
-    private fun setupRecycleViewForFriends() {
+    fun setupRecycleViewForFriends() {
         requireView().findViewById<RecyclerView>(R.id.profile_followingList).apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = followings?.let { ProfileFollowingAdapter(it, dataGetter, authenticator,this@ProfileActivity) }
+            adapter = ProfileFollowingAdapter(followings, dataGetter, authenticator,this@ProfileActivity)
             setHasFixedSize(true)
         }
     }
@@ -124,7 +102,7 @@ open class ProfileActivity : Fragment(), OnItemClickListener {
      * @param show id of the view to show
      * @param hide id of the view to hide
      */
-    private fun setFollowingScoresBtnListener(btnId: Int, show: Int, hide: Int) {
+    fun setFollowingScoresBtnListener(btnId: Int, show: Int, hide: Int) {
         requireView().findViewById<Button>(btnId).setOnClickListener {
             showAHideB(show, hide)
         }
@@ -219,7 +197,7 @@ open class ProfileActivity : Fragment(), OnItemClickListener {
      * @param following the user to add in list
      */
     private fun addFollowing(following: User) {
-        followings?.add(following)
+        followings.add(following)
     }
 
     /**
@@ -247,11 +225,7 @@ open class ProfileActivity : Fragment(), OnItemClickListener {
     }
 
     override fun onItemClick(position: Int) {
-//        val intent = Intent(this, PublicProfileActivity::class.java)
-//        intent.putExtra("UserId", followings?.get(position)?.uid)
-//        startActivity(intent)
-        val bundle = bundleOf("UserId" to followings?.get(position)?.uid)
-
-        view?.findNavController()?.navigate(R.id.fragment_search_user, bundle)
+        val bundle = bundleOf("UserId" to followings.get(position).uid)
+        view?.findNavController()?.navigate(R.id.fragment_public_profile, bundle)
     }
 }

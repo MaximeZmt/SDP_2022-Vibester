@@ -17,7 +17,6 @@ class PublicProfileActivity : ProfileActivity() {
         }
     }
 
-
     override fun queryDatabase() {
         dataGetter.getUserData(userId, this::setupProfile)
     }

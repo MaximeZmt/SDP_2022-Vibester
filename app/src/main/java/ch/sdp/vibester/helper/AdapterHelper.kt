@@ -4,6 +4,8 @@ import android.view.LayoutInflater
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.user.OnItemClickListener
 import android.view.View
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
@@ -12,9 +14,9 @@ import android.widget.ImageView
 class AdapterHelper {
 
     /**
+     * verify the item still exits then tell the listener it has been click
      * @param position position of the item in the recycle view
      * @param listener listener of the item on click
-     * verify the item still exits then tell the listener it has been click
      */
     fun onClickHelper(position: Int, listener: OnItemClickListener?) {
         //check the item is not deleted between time
@@ -24,31 +26,32 @@ class AdapterHelper {
     }
 
     /**
-     * @param buttonId ID of the button
-     * @param imageId ID of the image
-     * @param itemView View contains the button and image
-     * change the view from button to image in itemView
+     * change the view from one element to another with the given ids
+     * @param a ID of the first element
+     * @param b ID of the second element
+     * @param itemView View contains both elements
      */
-    fun changeBtnToImageHelper(buttonId: Int, imageId: Int, itemView: View) {
-        itemView.findViewById<Button>(buttonId).visibility = View.INVISIBLE
-        itemView.findViewById<ImageView>(imageId).visibility = View.VISIBLE
+    fun changeAToB(a: Int, b: Int, itemView: View) {
+        switchViewsVisibility(
+            itemView.findViewById(a), itemView.findViewById(b)
+        )
     }
 
     /**
-     * Change the view from image to image2 in itemView
-     * @param imageId ID of the image
-     * @param imageId2 ID of the image
-     * @param itemView View contains the button and image
+     * switch the visibility between two view
+     * @param invisible view to hide
+     * @param visible view to show
      */
-    fun changeImageToImageHelper(imageId: Int, imageId2: Int, itemView: View) {
-        itemView.findViewById<ImageView>(imageId).visibility = View.INVISIBLE
-        itemView.findViewById<ImageView>(imageId2).visibility = View.VISIBLE
+    fun switchViewsVisibility(invisible: View, visible: View) {
+        invisible.visibility = INVISIBLE
+        visible.visibility = VISIBLE
     }
 
     /**
+     * helper function creates the view used in function onCreateViewHolder
+
      * @param parent
      * @param layoutId id of the layout
-     * helper function creates the view used in function onCreateViewHolder
      */
     fun createViewForViewHolder(parent: ViewGroup, layoutId: Int): View {
         return LayoutInflater.from(parent.context).inflate(layoutId, parent, false)

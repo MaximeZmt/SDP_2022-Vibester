@@ -107,7 +107,7 @@ class BuzzerScreenActivity : GameActivity() {
         findViewById<LinearLayout>(R.id.answer).visibility=View.INVISIBLE
         val trackName = gameManager.getCurrentSong().getTrackName()
         val artist = gameManager.getCurrentSong().getArtistName()
-        findViewById<TextView>(R.id.songTitle).text= "$trackName - $artist"
+        findViewById<TextView>(R.id.songTitle).text= "$trackName by $artist"
         //Checks if internet is available. If not, skip the loading of the artwork from url.
         if(gameManager.getInternet()) {
             Glide.with(ctx).load(gameManager.getCurrentSong().getArtworkUrl()).override(artworkDim, artworkDim).into(findViewById(R.id.songArtwork))

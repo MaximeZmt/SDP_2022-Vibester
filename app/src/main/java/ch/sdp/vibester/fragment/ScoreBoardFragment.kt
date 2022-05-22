@@ -55,7 +55,7 @@ class ScoreBoardFragment : Fragment(), OnItemClickListener, View.OnClickListener
     }
 
     private fun selectScoreboard() {
-        val sortedBy = "scores/" + genre
+        val sortedBy = "scores/$genre"
 
         requireView().findViewById<ConstraintLayout>(R.id.genrePerScoreboard).visibility = GONE
         requireView().findViewById<NestedScrollView>(R.id.scoreboard_content_scrolling).visibility = VISIBLE
@@ -112,13 +112,13 @@ class ScoreBoardFragment : Fragment(), OnItemClickListener, View.OnClickListener
      */
     override fun onItemClick(position: Int) {
         val intent = Intent(requireActivity(), PublicProfileActivity::class.java)
-        intent.putExtra("UserId", players.get(position).uid)
+        intent.putExtra("UserId", players[position].uid)
         intent.putExtra("ScoresOrFollowing", R.string.profile_scores.toString() )
         startActivity(intent)
     }
 
     override fun onClick(v: View?) {
-            when(v!!.getId()) {
+            when(v!!.id) {
                 R.id.btsButton -> {
                     genre = "BTS"; selectScoreboard()
                 }

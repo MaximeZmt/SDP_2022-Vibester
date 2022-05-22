@@ -35,6 +35,7 @@ class AdapterHelper {
     }
 
     /**
+     * Change the view from image to image2 in itemView
      * @param imageId ID of the image
      * @param imageId2 ID of the image
      * @param itemView View contains the button and image

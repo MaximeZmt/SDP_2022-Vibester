@@ -1,9 +1,7 @@
-package ch.sdp.vibester.activity
+package ch.sdp.vibester.fragment
 
-import android.content.Intent
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.UiController
@@ -18,6 +16,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
+import ch.sdp.vibester.launchFragmentInHiltContainer
 import ch.sdp.vibester.user.User
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.testing.BindValue
@@ -36,7 +35,7 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 @HiltAndroidTest
-class SearchUserActivityTest {
+class SearchUserFragmentTest {
 
     @get:Rule(order = 0)
     var hiltRule = HiltAndroidRule(this)
@@ -89,6 +88,11 @@ class SearchUserActivityTest {
     fun setUp() {
         hiltRule.inject()
         Intents.init()
+        createMockInvocation()
+        createMockAuthenticator()
+        launchFragmentInHiltContainer<SearchUserFragment>(
+            themeResId = R.style.AppTheme
+        )
     }
 
     @After
@@ -112,25 +116,11 @@ class SearchUserActivityTest {
 
     @Test
     fun recycleViewToViewTest() {
-        val intent = Intent(ApplicationProvider.getApplicationContext(), SearchUserActivity::class.java)
-
-        createMockInvocation()
-        createMockAuthenticator()
-
-        val scn: ActivityScenario<SearchUserActivity> = ActivityScenario.launch(intent)
-
         onView(withId(R.id.searchList)).check(matches(isDisplayed()))
     }
 
     @Test
     fun recycleViewClickTest() {
-        val intent = Intent(ApplicationProvider.getApplicationContext(), SearchUserActivity::class.java)
-
-        createMockInvocation()
-        createMockAuthenticator()
-
-        val scn: ActivityScenario<SearchUserActivity> = ActivityScenario.launch(intent)
-
         onView(withId(R.id.searchList))
             .perform(
                 RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
@@ -143,13 +133,6 @@ class SearchUserActivityTest {
 
     @Test
     fun recycleViewScrollDownTest() {
-        val intent = Intent(ApplicationProvider.getApplicationContext(), SearchUserActivity::class.java)
-
-        createMockInvocation()
-        createMockAuthenticator()
-
-        val scn: ActivityScenario<SearchUserActivity> = ActivityScenario.launch(intent)
-
         val recyclerView = RecyclerView(ApplicationProvider.getApplicationContext())
         val itemCount = recyclerView.adapter?.itemCount
         if (itemCount != null) {
@@ -165,26 +148,12 @@ class SearchUserActivityTest {
     
     @Test
     fun checkIconVisible(){
-        val intent = Intent(ApplicationProvider.getApplicationContext(), SearchUserActivity::class.java)
-
-        createMockInvocation()
-        createMockAuthenticator()
-
-        val scn: ActivityScenario<SearchUserActivity> = ActivityScenario.launch(intent)
-
         checkRecyclerSubViews(R.id.searchList, 2, withEffectiveVisibility(Visibility.INVISIBLE), R.id.addFollowingBtn)
         checkRecyclerSubViews(R.id.searchList, 2, withEffectiveVisibility(Visibility.VISIBLE), R.id.addedFollowingIcon)
     }
 
     @Test
     fun checkAddBtnClick(){
-        val intent = Intent(ApplicationProvider.getApplicationContext(), SearchUserActivity::class.java)
-
-        createMockInvocation()
-        createMockAuthenticator()
-
-        val scn: ActivityScenario<SearchUserActivity> = ActivityScenario.launch(intent)
-
         checkRecyclerSubViews(R.id.searchList, 0, withEffectiveVisibility(Visibility.VISIBLE), R.id.addFollowingBtn)
         checkRecyclerSubViews(R.id.searchList, 0, withEffectiveVisibility(Visibility.INVISIBLE), R.id.addedFollowingIcon)
         onView(withId(R.id.searchList))

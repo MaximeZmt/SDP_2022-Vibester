@@ -75,13 +75,8 @@ class WelcomeScreenFragment : Fragment(),View.OnClickListener {
         sendDirectIntent(DownloadActivity::class.java)
     }
 
-    private fun switchToSearch() {
-        sendDirectIntent(SearchUserActivity::class.java)
-    }
-
     override fun onClick(v: View?) {
         when(v!!.id) {
-            R.id.welcome_search -> switchToSearch()
             R.id.welcome_download -> switchToDownload()
             R.id.welcome_profile -> switchToProfile()
         }

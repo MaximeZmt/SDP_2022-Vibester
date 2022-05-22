@@ -26,14 +26,14 @@ class AdapterHelper {
     }
 
     /**
-     * change the view from button to image with given ids
-     * @param btnId ID of the button
-     * @param imageId ID of the image
-     * @param itemView View contains the button and image
+     * change the view from one element to another with the given ids
+     * @param a ID of the first element
+     * @param b ID of the second element
+     * @param itemView View contains both elements
      */
-    fun changeBtnToImage(btnId: Int, imageId: Int, itemView: View) {
+    fun changeAToB(a: Int, b: Int, itemView: View) {
         switchViewsVisibility(
-            itemView.findViewById(btnId), itemView.findViewById(imageId)
+            itemView.findViewById(a), itemView.findViewById(b)
         )
     }
 
@@ -49,6 +49,7 @@ class AdapterHelper {
 
     /**
      * helper function creates the view used in function onCreateViewHolder
+
      * @param parent
      * @param layoutId id of the layout
      */

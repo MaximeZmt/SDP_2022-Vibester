@@ -1,5 +1,6 @@
 package ch.sdp.vibester.user
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -57,10 +58,13 @@ class UserScoreboardAdapter(
          */
         fun bind(player: User, position: Int) {
             val newPosition = position + 1
-            itemView.findViewById<TextView>(R.id.tv_position).text = (newPosition).toString()
+            val rank = (newPosition).toString() + "."
+            itemView.findViewById<TextView>(R.id.tv_position).text = rank
             itemView.findViewById<TextView>(R.id.tv_name).text = player.username
             itemView.findViewById<TextView>(R.id.tv_score).text = setScore(player).toString()
             itemView.findViewById<ImageView>(R.id.iv_photo).loadImg(player.image)
+
+            if(position %2 == 0) itemView.setBackgroundColor(itemView.resources.getColor(R.color.darker_floral_white))
         }
 
         init {

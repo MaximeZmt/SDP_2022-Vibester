@@ -34,7 +34,7 @@ import retrofit2.Response
 */
 @AndroidEntryPoint
 class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSelectedListener {
-    var difficulty = R.string.easy.toString()
+    var difficulty = R.string.GameSetup_easy.toString()
     var game = "local_buzzer"
     var gameSize = R.string.one.toString()
     var searchArtistEditable: Editable? = null
@@ -126,7 +126,7 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
 
     override fun onNothingSelected(parent: AdapterView<*>) {
         if (parent.id == R.id.difficulty_spinner) {
-            difficulty = R.string.easy.toString()
+            difficulty = R.string.GameSetup_easy.toString()
         } else if (parent.id == R.id.size_spinner) {
             gameSize = R.string.one.toString()
         }
@@ -228,14 +228,14 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
             R.id.local_lyrics_game_button -> chooseGame("local_lyrics", GameManager())
             R.id.online_buzzer_game_button -> switchToGameNoParameters(ChoosePartyRoomActivity())
 
-            R.id.btsButton -> chooseGenre(method = LastfmMethod.BY_ARTIST.method, artist = "BTS", mode = R.string.bts)
+            R.id.btsButton -> chooseGenre(method = LastfmMethod.BY_ARTIST.method, artist = "BTS", mode = R.string.gameGenre_bts)
             R.id.kpopButton -> chooseGenre(method = LastfmMethod.BY_TAG.method, tag = "kpop", mode = R.string.kpop)
-            R.id.imagDragonsButton -> chooseGenre(method = LastfmMethod.BY_ARTIST.method, artist = "Imagine Dragons", mode = R.string.imagine_dragons)
+            R.id.imagDragonsButton -> chooseGenre(method = LastfmMethod.BY_ARTIST.method, artist = "Imagine Dragons", mode = R.string.gameGenre_imagine_dragons)
             R.id.rockButton-> chooseGenre(method = LastfmMethod.BY_TAG.method, tag = "rock", mode = R.string.rock)
             R.id.topTracksButton -> chooseGenre(method = LastfmMethod.BY_CHART.method, mode = R.string.top_tracks)
-            R.id.billieEilishButton -> chooseGenre(method = LastfmMethod.BY_ARTIST.method, artist = "Billie Eilish", mode = R.string.billie_eilish)
+            R.id.billieEilishButton -> chooseGenre(method = LastfmMethod.BY_ARTIST.method, artist = "Billie Eilish", mode = R.string.gameGenre_billie_eilish)
 
-            R.id.validateSearch -> chooseGenre(method = LastfmMethod.BY_ARTIST.method, artist = searchArtistEditable.toString(), mode = R.string.byArtistSearch)
+            R.id.validateSearch -> chooseGenre(method = LastfmMethod.BY_ARTIST.method, artist = searchArtistEditable.toString(), mode = R.string.gameGenre_byArtistSearch)
 
             R.id.difficulty_proceed -> proceedGame()
 

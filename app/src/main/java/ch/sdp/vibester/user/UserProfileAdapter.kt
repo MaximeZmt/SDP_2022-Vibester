@@ -28,16 +28,16 @@ class UserProfileAdapter constructor(
     RecyclerView.Adapter<UserProfileAdapter.UserProfileViewHolder>() {
 
     private val currentUser = authenticator.getCurrUser()
-    private var userFollowing: Array<String> = arrayOf()
+    private var userFollowing: MutableList<String> = mutableListOf()
     private val imageSize = 100
 
     init {
-        if (currentUser != null) { dataGetter.getUserData(currentUser.uid, this::setFriends) }
+        if (currentUser != null) { dataGetter.getUserData(currentUser.uid, this::setFollowing) }
     }
 
     // Callback for getUserData
-    private fun setFriends(user:User){
-        userFollowing = user.following.keys.toTypedArray()
+    private fun setFollowing(user:User) {
+        user.following.forEach { (userId, isFollowing) -> if (isFollowing) userFollowing.add(userId) }
     }
 
     /**
@@ -68,7 +68,6 @@ class UserProfileAdapter constructor(
     override fun getItemCount() = users.size
 
 
-
     /**
      * Customer ViewHolder class for UserProfile. Each item contains username and image.
      */
@@ -78,21 +77,10 @@ class UserProfileAdapter constructor(
          */
         fun bind(user: User) {
             itemView.findViewById<TextView>(R.id.search_user_username).text = user.username
-
             imageGetter.fetchImage("profileImg/${user.uid}", this::setImage)
-            val addFriendBtn = itemView.findViewById<Button>(R.id.addFollowingBtn)
 
-            if (userFollowing.isNotEmpty() && user.uid in userFollowing) {
-                changeBtnToImage()
-            }
-            else {
-                addFriendBtn.setOnClickListener {
-                    if (currentUser != null) {
-                        dataGetter.setSubFieldValue(currentUser.uid, "following", user.uid,true)
-                        changeBtnToImage()
-                    }
-                }
-            }
+            setFollowBtnListener(user)
+            unFollowBtnListener(user)
         }
 
         private fun setImage(imageURI: Uri) {
@@ -101,10 +89,38 @@ class UserProfileAdapter constructor(
             Helper().setImage(imageURI, avatar, imageSize)
         }
 
+        private fun setFollowBtnListener(user: User) {
+            val followBtn = itemView.findViewById<Button>(R.id.addFollowingBtn)
+
+            if (userFollowing.isNotEmpty() && user.uid in userFollowing) {
+                changeBtnToImage()
+            }
+            else {
+                followBtn.setOnClickListener {
+                    if (currentUser != null) {
+                        dataGetter.setFollowing(currentUser.uid, user.uid)
+                        changeBtnToImage()
+                    }
+                }
+            }
+        }
 
         private fun changeBtnToImage() {
-            AdapterHelper().changeBtnToImageHelper(R.id.addFollowingBtn, R.id.addedFollowingIcon, itemView)
+            AdapterHelper().changeBtnToImage(
+                R.id.addFollowingBtn, R.id.addedFollowingIcon, itemView
+            )
         }
+
+        private fun unFollowBtnListener(user: User) {
+            itemView.findViewById<ImageView>(R.id.addedFollowingIcon).setOnClickListener {
+                if (currentUser != null) {
+                    dataGetter.setUnfollow(currentUser.uid, user.uid)
+                    AdapterHelper().switchViewsVisibility(
+                        itemView.findViewById(R.id.addedFollowingIcon), itemView.findViewById(R.id.addFollowingBtn))
+                }
+            }
+        }
+
 
         init {
             itemView.setOnClickListener(this)

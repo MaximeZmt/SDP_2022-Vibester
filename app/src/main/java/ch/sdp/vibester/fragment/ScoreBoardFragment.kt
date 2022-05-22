@@ -11,7 +11,6 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.LinearLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
@@ -20,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
 import ch.sdp.vibester.activity.profile.PublicProfileActivity
 import ch.sdp.vibester.database.Database
+import ch.sdp.vibester.helper.Helper
 import ch.sdp.vibester.user.OnItemClickListener
 import ch.sdp.vibester.user.User
 import ch.sdp.vibester.user.UserScoreboardAdapter
@@ -30,7 +30,7 @@ import com.google.firebase.database.ValueEventListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ScoreBoardFragment : Fragment(), OnItemClickListener, View.OnClickListener{
+class ScoreBoardFragment : Fragment(), OnItemClickListener, View.OnClickListener {
     private val dbRef: DatabaseReference = Database.get().getReference("users")
     private var players: MutableList<User> = mutableListOf()
     private var userScoreboardAdapter: UserScoreboardAdapter? = null
@@ -43,12 +43,12 @@ class ScoreBoardFragment : Fragment(), OnItemClickListener, View.OnClickListener
         val view = inflater.inflate(R.layout.fragment_scoreboard, container, false)
         val ctx = inflater.context
 
-        view.findViewById<Button>(R.id.kpopButton).setOnClickListener(this)
-        view.findViewById<Button>(R.id.rockButton).setOnClickListener(this)
-        view.findViewById<Button>(R.id.btsButton).setOnClickListener(this)
-        view.findViewById<Button>(R.id.topTracksButton).setOnClickListener(this)
-        view.findViewById<Button>(R.id.imagDragonsButton).setOnClickListener(this)
-        view.findViewById<Button>(R.id.billieEilishButton).setOnClickListener(this)
+        view.findViewById<Button>(R.id.scoreboard_kpopButton).setOnClickListener(this)
+        view.findViewById<Button>(R.id.scoreboard_rockButton).setOnClickListener(this)
+        view.findViewById<Button>(R.id.scoreboard_btsButton).setOnClickListener(this)
+        view.findViewById<Button>(R.id.scoreboard_topTracksButton).setOnClickListener(this)
+        view.findViewById<Button>(R.id.scoreboard_imagDragonsButton).setOnClickListener(this)
+        view.findViewById<Button>(R.id.scoreboard_billieEilishButton).setOnClickListener(this)
         setupRecycleView(view, ctx)
 
         return view
@@ -112,29 +112,27 @@ class ScoreBoardFragment : Fragment(), OnItemClickListener, View.OnClickListener
      */
     override fun onItemClick(position: Int) {
         val intent = Intent(requireActivity(), PublicProfileActivity::class.java)
-        intent.putExtra("UserId", players.get(position).uid)
-        intent.putExtra("ScoresOrFollowing", R.string.profile_scores.toString() )
-        startActivity(intent)
+        startActivity(Helper().showUsersProfile(intent, players[position].uid, R.string.profile_scores))
     }
 
     override fun onClick(v: View?) {
             when(v!!.id) {
-                R.id.btsButton -> {
+                R.id.scoreboard_btsButton -> {
                     genre = "BTS"; selectScoreboard()
                 }
-                R.id.kpopButton -> {
+                R.id.scoreboard_kpopButton -> {
                     genre = "kpop"; selectScoreboard()
                 }
-                R.id.imagDragonsButton -> {
+                R.id.scoreboard_imagDragonsButton -> {
                     genre = "Imagine Dragons"; selectScoreboard()
                 }
-                R.id.billieEilishButton -> {
+                R.id.scoreboard_billieEilishButton -> {
                     genre = "Billie Eilish"; selectScoreboard()
                 }
-                R.id.rockButton -> {
+                R.id.scoreboard_rockButton -> {
                     genre = "rock";selectScoreboard()
                 }
-                R.id.topTracksButton -> {
+                R.id.scoreboard_topTracksButton -> {
                     genre = "top tracks";selectScoreboard()
                 }
 

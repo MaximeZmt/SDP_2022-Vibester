@@ -17,6 +17,7 @@ import ch.sdp.vibester.activity.profile.PublicProfileActivity
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.database.ImageGetter
+import ch.sdp.vibester.helper.Helper
 import ch.sdp.vibester.user.OnItemClickListener
 import ch.sdp.vibester.user.User
 
@@ -24,8 +25,6 @@ import ch.sdp.vibester.user.UserProfileAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
-
-
 
 /**
  * Search for users based on their usernames.
@@ -45,7 +44,6 @@ class SearchUserFragment : Fragment(), OnItemClickListener {
     var users = arrayListOf<User>()
     lateinit var userProfileAdapter: UserProfileAdapter
 
-    private var recyclerView: RecyclerView? = null
     private var searchEditText: EditText? = null
 
     private var uidList: ArrayList<String> = ArrayList()
@@ -53,17 +51,17 @@ class SearchUserFragment : Fragment(), OnItemClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        recyclerView = view.findViewById(R.id.searchList)
-        recyclerView!!.setHasFixedSize(true)
-        recyclerView!!.layoutManager = LinearLayoutManager(requireContext())
-
-        userProfileAdapter = UserProfileAdapter(this.users, authenticator, usersRepo, imageGetter, this)
-
-        recyclerView!!.adapter = userProfileAdapter
+        setUpRecycleView(view)
 
         searchEditText = view.findViewById(R.id.searchUserET)
         searchForUsers("")
 
+        setScanBtnListener(view)
+
+        setSearchFieldListener()
+    }
+
+    private fun setScanBtnListener(view: View) {
         val buttonScan: FloatingActionButton = view.findViewById(R.id.searchUser_scanning)
 
         buttonScan.setOnClickListener {
@@ -71,7 +69,9 @@ class SearchUserFragment : Fragment(), OnItemClickListener {
             qrIntent.putExtra("uidList", uidList)
             startActivity(qrIntent)
         }
+    }
 
+    private fun setSearchFieldListener() {
         searchEditText!!.addTextChangedListener(object:TextWatcher{
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -87,6 +87,15 @@ class SearchUserFragment : Fragment(), OnItemClickListener {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_search_user, container, false)
+    }
+
+    private fun setUpRecycleView(view: View) {
+        view.findViewById<RecyclerView>(R.id.searchList).apply {
+            layoutManager = LinearLayoutManager(context)
+            userProfileAdapter = UserProfileAdapter(users, authenticator, usersRepo, imageGetter, this@SearchUserFragment)
+            adapter = userProfileAdapter
+            setHasFixedSize(true)
+        }
     }
 
     /**
@@ -106,7 +115,7 @@ class SearchUserFragment : Fragment(), OnItemClickListener {
 
     /**
      * Search for users by usernames in Firebase Realtime Database
-     * @param inputUsername search text inputed by user
+     * @param inputUsername search text inputted by user
      */
     private fun searchForUsers(inputUsername:String){
         usersRepo.searchByField("username", inputUsername, callback = ::setUserInAdapter, callbackUid = ::setUserInAdapter2)
@@ -114,9 +123,7 @@ class SearchUserFragment : Fragment(), OnItemClickListener {
 
     override fun onItemClick(position: Int) {
         val intent = Intent(requireActivity(), PublicProfileActivity::class.java)
-        intent.putExtra("UserId", users[position].uid)
-        intent.putExtra("ScoresOrFollowing", R.string.profile_following.toString())
-        startActivity(intent)
+        startActivity(Helper().showUsersProfile(intent, users[position].uid, R.string.profile_following))
     }
 }
 

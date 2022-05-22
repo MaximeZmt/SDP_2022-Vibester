@@ -5,11 +5,18 @@ import android.content.Intent
 import android.graphics.*
 import android.net.Uri
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
 import android.view.View.*
+import android.view.ViewGroup
 import android.view.Window
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 import androidx.core.widget.NestedScrollView
+import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
@@ -35,7 +42,7 @@ import javax.inject.Inject
  * Display user profile's data (image, username, scores, etc.) in UI
  */
 @AndroidEntryPoint
-open class ProfileActivity : AppCompatActivity(), OnItemClickListener {
+open class ProfileActivity : Fragment(), OnItemClickListener {
     @Inject
     lateinit var dataGetter: DataGetter
 
@@ -51,25 +58,36 @@ open class ProfileActivity : AppCompatActivity(), OnItemClickListener {
     private var followings: MutableList<User> ? = null
     private var profileFriendsAdapter: ProfileFollowingAdapter?= null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        requestWindowFeature(Window.FEATURE_NO_TITLE)
-        super.onCreate(savedInstanceState)
-        supportActionBar?.hide()
-        setContentView(R.layout.activity_profile)
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+
+        return inflater.inflate(R.layout.activity_profile, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val navController = findNavController()
+        if (!authenticator.isLoggedIn()) {
+            navController.navigate(R.id.authenticationBtn)
+        }
 
         setupRecycleViewForFriends()
         followings = ArrayList()
 
-        setRetToMainBtnListener()
         setFollowingScoresBtnListener(R.id.profile_scores, R.id.profile_scroll_stat, R.id.profile_scroll_following)
         setFollowingScoresBtnListener(R.id.profile_following, R.id.profile_scroll_following, R.id.profile_scroll_stat)
 
         queryDatabase()
+
+
     }
 
     private fun setupRecycleViewForFriends() {
-        findViewById<RecyclerView>(R.id.profile_followingList).apply {
-            layoutManager = LinearLayoutManager(context)
+        requireView().findViewById<RecyclerView>(R.id.profile_followingList).apply {
+            layoutManager = LinearLayoutManager(requireContext())
             adapter = followings?.let { ProfileFollowingAdapter(it, this@ProfileActivity) }
             setHasFixedSize(true)
         }
@@ -77,7 +95,7 @@ open class ProfileActivity : AppCompatActivity(), OnItemClickListener {
 
     private fun showFriendsPosition(friends: MutableList<User>?) {
         profileFriendsAdapter = ProfileFollowingAdapter(friends!!, this)
-        findViewById<RecyclerView>(R.id.profile_followingList)!!.adapter = profileFriendsAdapter
+        requireView().findViewById<RecyclerView>(R.id.profile_followingList)!!.adapter = profileFriendsAdapter
     }
 
 
@@ -96,9 +114,8 @@ open class ProfileActivity : AppCompatActivity(), OnItemClickListener {
      * Generic listener for the return to main button.
      */
     private fun setRetToMainBtnListener() {
-        findViewById<FloatingActionButton>(R.id.profile_returnToMain).setOnClickListener {
-            IntentSwitcher.switch(this, MainActivity::class.java)
-            finish()
+        requireView().findViewById<FloatingActionButton>(R.id.profile_returnToMain).setOnClickListener {
+            IntentSwitcher.switch(requireContext(), MainActivity::class.java)
         }
     }
 
@@ -108,7 +125,7 @@ open class ProfileActivity : AppCompatActivity(), OnItemClickListener {
      * @param hide id of the view to hide
      */
     private fun setFollowingScoresBtnListener(btnId: Int, show: Int, hide: Int) {
-        findViewById<Button>(btnId).setOnClickListener {
+        requireView().findViewById<Button>(btnId).setOnClickListener {
             showAHideB(show, hide)
         }
     }
@@ -118,8 +135,8 @@ open class ProfileActivity : AppCompatActivity(), OnItemClickListener {
      * @param b id of the view to hide
      */
     fun showAHideB(a: Int, b: Int) {
-        findViewById<NestedScrollView>(a).visibility = VISIBLE
-        findViewById<NestedScrollView>(b).visibility = GONE
+        requireView().findViewById<NestedScrollView>(a).visibility = VISIBLE
+        requireView().findViewById<NestedScrollView>(b).visibility = GONE
     }
 
 
@@ -134,7 +151,7 @@ open class ProfileActivity : AppCompatActivity(), OnItemClickListener {
      * @param imageURI URI of the image
      */
     private fun setImage(imageURI: Uri) {
-        val avatar = findViewById<ImageView>(R.id.profile_image_ImageView)
+        val avatar = requireView().findViewById<ImageView>(R.id.profile_image_ImageView)
 
         ImageHelper().setImage(imageURI, avatar, imageSize)
     }
@@ -146,7 +163,7 @@ open class ProfileActivity : AppCompatActivity(), OnItemClickListener {
      * @param text: The integer to be set as the text.
      */
     private fun setTextOfView(id: Int, text: Int) {
-        findViewById<TextView>(id).text = text.toString()
+        requireView().findViewById<TextView>(id).text = text.toString()
     }
 
     /**
@@ -170,7 +187,7 @@ open class ProfileActivity : AppCompatActivity(), OnItemClickListener {
     fun setupProfile(user: User){
         // Currently assuming that empty username means no user !
         if (user.username != "") {
-            findViewById<TextView>(R.id.username).text =  user.username
+            requireView().findViewById<TextView>(R.id.username).text =  user.username
             setTextOfMultipleViews(user)
         }
 
@@ -219,19 +236,22 @@ open class ProfileActivity : AppCompatActivity(), OnItemClickListener {
         val qrCodeCanvas = Canvas(bmp)
 
         val scaleFactor = 4 // resize the image
-        val logo = BitmapFactory.decodeStream(assets.open("logo.png"))
+        val logo = BitmapFactory.decodeStream(resources.assets.open("logo.png"))
         logo.density = logo.density * scaleFactor
         val xLogo = (size - logo.width / scaleFactor) / 2f
         val yLogo = (size - logo.height / scaleFactor) / 2f
 
         qrCodeCanvas.drawBitmap(logo, xLogo, yLogo, null)
 
-        findViewById<ImageView>(R.id.qrCode).setImageBitmap(bmp)
+        requireView().findViewById<ImageView>(R.id.qrCode).setImageBitmap(bmp)
     }
 
     override fun onItemClick(position: Int) {
-        val intent = Intent(this, PublicProfileActivity::class.java)
-        intent.putExtra("UserId", followings?.get(position)?.uid)
-        startActivity(intent)
+//        val intent = Intent(this, PublicProfileActivity::class.java)
+//        intent.putExtra("UserId", followings?.get(position)?.uid)
+//        startActivity(intent)
+        val bundle = bundleOf("UserId" to followings?.get(position)?.uid)
+
+        view?.findNavController()?.navigate(R.id.fragment_search_user, bundle)
     }
 }

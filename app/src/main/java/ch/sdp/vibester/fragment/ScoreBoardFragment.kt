@@ -11,10 +11,11 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.LinearLayout
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.os.bundleOf
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
@@ -40,7 +41,7 @@ class ScoreBoardFragment : Fragment(), OnItemClickListener, View.OnClickListener
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_scoreboard, container, false)
+        val view = inflater.inflate(R.layout.fragment_layout_scoreboard, container, false)
         val ctx = inflater.context
 
         view.findViewById<Button>(R.id.scoreboard_kpopButton).setOnClickListener(this)

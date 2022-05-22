@@ -3,7 +3,9 @@ package ch.sdp.vibester.activity.profile
 import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
@@ -18,12 +20,19 @@ import com.google.firebase.auth.FirebaseAuth
 /** profile page of the current user with editable information */
 class MyProfileActivity : ProfileActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.activity_profile, container, false)
+    }
 
-        setViewVisibility(findViewById(R.id.editUser), true)
-        setViewVisibility(findViewById(R.id.showQRCode), true)
-        setViewVisibility(findViewById(R.id.logout), true)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setViewVisibility(view.findViewById(R.id.editUser), true)
+        setViewVisibility(view.findViewById(R.id.showQRCode), true)
+        setViewVisibility(view.findViewById(R.id.logout), true)
 
         setEditUserNameBtnListener()
         setChangeImageBtnListener()
@@ -44,7 +53,7 @@ class MyProfileActivity : ProfileActivity() {
      * Generic listener for the edit username button.
      */
     private fun setEditUserNameBtnListener() {
-        findViewById<ImageView>(R.id.editUser).setOnClickListener {
+        requireView().findViewById<ImageView>(R.id.editUser).setOnClickListener {
             showGeneralDialog( "username", true)
         }
     }
@@ -54,10 +63,10 @@ class MyProfileActivity : ProfileActivity() {
      * NOTES: we need to set both for both the cases where the user profile image is displayed or not
      */
     private fun setChangeImageBtnListener() {
-        findViewById<ImageView>(R.id.profile_image_ImageView).setOnClickListener {
+        requireView().findViewById<ImageView>(R.id.profile_image_ImageView).setOnClickListener {
             showDialogWhenChangeImage()
         }
-        findViewById<CardView>(R.id.profile_image_CardView).setOnClickListener {
+        requireView().findViewById<CardView>(R.id.profile_image_CardView).setOnClickListener {
             showDialogWhenChangeImage()
         }
     }
@@ -93,10 +102,9 @@ class MyProfileActivity : ProfileActivity() {
      * Generic listener for the log out button.
      */
     private fun setLogOutBtnListener() {
-        findViewById<Button>(R.id.logout).setOnClickListener {
+        requireView().findViewById<Button>(R.id.logout).setOnClickListener {
             FirebaseAuth.getInstance().signOut()
-            IntentSwitcher.switch(this, MainActivity::class.java)
-            finish()
+            IntentSwitcher.switch(requireContext(), MainActivity::class.java)
         }
     }
 
@@ -105,9 +113,9 @@ class MyProfileActivity : ProfileActivity() {
      * Generic listener for the show qr code button.
      */
     private fun setShowQrCodeBtnListener() {
-        findViewById<ImageView>(R.id.showQRCode).setOnClickListener {
-            setViewVisibility(findViewById<ConstraintLayout>(R.id.QrCodePage), true)
-            setViewVisibility(findViewById<RelativeLayout>(R.id.profileContent), false)
+        requireView().findViewById<ImageView>(R.id.showQRCode).setOnClickListener {
+            setViewVisibility(requireView().findViewById<ConstraintLayout>(R.id.QrCodePage), true)
+            setViewVisibility(requireView().findViewById<RelativeLayout>(R.id.profileContent), false)
         }
     }
 
@@ -115,9 +123,9 @@ class MyProfileActivity : ProfileActivity() {
      * Generic listener for the show qr code and return to profile button.
      */
     private fun setQrCodeToProfileBtnListener() {
-        findViewById<FloatingActionButton>(R.id.qrCode_returnToProfile).setOnClickListener {
-            setViewVisibility(findViewById<ConstraintLayout>(R.id.QrCodePage), false)
-            setViewVisibility(findViewById<RelativeLayout>(R.id.profileContent), true)
+        requireView().findViewById<FloatingActionButton>(R.id.qrCode_returnToProfile).setOnClickListener {
+            setViewVisibility(requireView().findViewById<ConstraintLayout>(R.id.QrCodePage), false)
+            setViewVisibility(requireView().findViewById<RelativeLayout>(R.id.profileContent), true)
         }
     }
 
@@ -143,17 +151,17 @@ class MyProfileActivity : ProfileActivity() {
      * @param name of the dialog
      */
     private fun showTextDialog(title: String, hint: String, id: Int, textId: Int, name: String) {
-        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
         builder.setTitle(title)
 
-        val input = EditText(this)
+        val input = EditText(requireContext())
         input.hint = hint
         input.inputType = InputType.TYPE_CLASS_TEXT
         input.id = id
 
         builder.setView(input)
         builder.setPositiveButton("OK") { _, _ ->
-            findViewById<TextView>(textId).text = input.text.toString()
+            requireView().findViewById<TextView>(textId).text = input.text.toString()
 
             if (name == "username"){
                 dataGetter.setFieldValue(FireBaseAuthenticator().getCurrUID(), "username",  input.text.toString())
@@ -168,7 +176,7 @@ class MyProfileActivity : ProfileActivity() {
      * @param title title of the dialog
      */
     private fun showImageChangeDialog(title: String) {
-        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
         builder.setTitle(title)
 
         builder.setPositiveButton("Yes") { _, _ ->

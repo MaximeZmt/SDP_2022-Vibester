@@ -223,5 +223,7 @@
 
     <string name="PartyRoom_joinedPeople">Joined People:</string>
 
+    <string name="searchUser_pleaseLoggedInFirst">Please logged in first</string>
+
 
 </resources>

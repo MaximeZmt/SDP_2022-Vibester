@@ -1,8 +1,6 @@
 package ch.sdp.vibester.helper
 
-import android.content.Context
 import android.media.MediaPlayer
-import android.os.Environment
 import android.util.Log
 import ch.sdp.vibester.api.AudioPlayer
 import ch.sdp.vibester.api.ItunesMusicApi
@@ -122,10 +120,10 @@ open class GameManager : Serializable {
      */
     @JvmName("getCurrentSong1")
     fun getCurrentSong(): Song {
-        if(this::currentSong.isInitialized) {
-            return currentSong
+        return if(this::currentSong.isInitialized) {
+            currentSong
         } else {
-            return Song.songBuilder("http://example.com", "http://example.com", songName, artistName)
+            Song.songBuilder("http://example.com", "http://example.com", songName, artistName)
         }
     }
 
@@ -222,11 +220,11 @@ open class GameManager : Serializable {
      * @param songPair: The pair corresponding to the next song-artist.
      */
     private fun readFromFile(file: File, songPair: Pair<String, String>) {
-        var reader = BufferedReader(FileReader(file))
+        val reader = BufferedReader(FileReader(file))
         var currentLine = reader.readLine()
 
         while (currentLine != null) {
-            var trimmed = currentLine.trim()
+            val trimmed = currentLine.trim()
             if (trimmed.isNotEmpty()) {
                 val split = trimmed.split(" - ")
                 if (split.size == 4) {
@@ -264,7 +262,7 @@ open class GameManager : Serializable {
             mediaPlayer = AudioPlayer.playAudio(currentSong.getPreviewUrl())
         } else {
             val trackName = currentSong.getTrackName().trim() + " - " + currentSong.getArtistName().trim()
-            var media = File(externals, "extract_of_$trackName")
+            val media = File(externals, "extract_of_$trackName")
             if(media.exists()) {
                 mediaPlayer = AudioPlayer.playAudio(media.absolutePath)
             }

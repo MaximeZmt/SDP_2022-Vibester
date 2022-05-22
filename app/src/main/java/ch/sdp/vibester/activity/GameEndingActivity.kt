@@ -49,16 +49,20 @@ class GameEndingActivity : AppCompatActivity() {
 
         setGameMode()
 
+        setUpRecyclerView()
+
+        findViewById<FloatingActionButton>(R.id.end_returnToMain).setOnClickListener {
+                IntentSwitcher.switch(this, MainActivity::class.java)
+            }
+    }
+
+    private fun setUpRecyclerView() {
         recyclerView = findViewById(R.id.end_song_list)
         recyclerView!!.setHasFixedSize(true)
         recyclerView!!.layoutManager = LinearLayoutManager(this)
 
         songListAdapter = SongListAdapter(incorrectSongList, correctSongList)
         recyclerView!!.adapter = songListAdapter
-
-        findViewById<FloatingActionButton>(R.id.end_returnToMain).setOnClickListener {
-                IntentSwitcher.switch(this, MainActivity::class.java)
-            }
     }
 
     /**

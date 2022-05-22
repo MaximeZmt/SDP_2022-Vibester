@@ -25,7 +25,7 @@ class BuzzerScreenActivity : GameActivity() {
     /* the array must be declared explicitly (and not with buzzersToRows.keys)
     else the buzzers may not be ordered properly
      */
-    private val buzIds = Helper().createArrayOfFour(R.id.buzzer_0, R.id.buzzer_1, R.id.buzzer_2, R.id.buzzer_3)
+    private val buzIds = arrayListOf(R.id.buzzer_0, R.id.buzzer_1, R.id.buzzer_2, R.id.buzzer_3)
 
     private lateinit var gameManager: GameManager
     private lateinit var scoreUpdater: BuzzerScoreUpdater
@@ -219,7 +219,7 @@ class BuzzerScreenActivity : GameActivity() {
     private fun setAnswerButton(ctx: Context, button: Button, map: Map<Int, Int>) {
         val answer = findViewById<LinearLayout>(R.id.answer)
         button.setOnClickListener {
-            answer.visibility = android.view.View.INVISIBLE
+            answer.visibility = View.INVISIBLE
             if (pressedBuzzer >= 0) {
                 if(button.id==R.id.buttonCorrect)  {
                     scoreUpdater.updateScoresArray(pressedBuzzer, true)

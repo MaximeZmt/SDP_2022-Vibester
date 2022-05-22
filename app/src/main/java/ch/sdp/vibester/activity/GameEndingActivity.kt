@@ -22,7 +22,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
  */
 class GameEndingActivity : AppCompatActivity() {
 
-    private val endStatArrayList = Helper().createArrayOfFour(R.id.end_stat1, R.id.end_stat2, R.id.end_stat3, R.id.end_stat4)
+    private val endStatArrayList = arrayListOf(R.id.end_stat1, R.id.end_stat2, R.id.end_stat3, R.id.end_stat4)
 
     private var incorrectSongList: ArrayList<String> = arrayListOf()
     private var correctSongList: ArrayList<String> = arrayListOf()

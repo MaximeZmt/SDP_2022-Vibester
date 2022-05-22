@@ -35,11 +35,4 @@ class Helper {
             }
         }
     }
-
-    /**
-     * create an array list of the four given elements
-     */
-    fun createArrayOfFour(e1: Int, e2: Int, e3: Int, e4: Int) : ArrayList<Int> {
-        return arrayListOf(e1, e2, e3, e4)
-    }
 }

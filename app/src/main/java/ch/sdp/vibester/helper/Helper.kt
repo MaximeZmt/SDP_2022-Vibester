@@ -1,6 +1,5 @@
 package ch.sdp.vibester.helper
 
-import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.widget.ImageView
@@ -35,17 +34,5 @@ class Helper {
                 avatar.setImageBitmap(Bitmap.createScaledBitmap(bm, imageSize, imageSize, false))
             }
         }
-    }
-
-    /**
-     * put user id and default view to show in intent
-     * @param intent intent to modify
-     * @param uid id of the user
-     * @param defaultView scores or following section to show by default
-     */
-    fun showUsersProfile(intent: Intent, uid: String, defaultView: Int): Intent {
-        intent.putExtra("UserId", uid)
-        intent.putExtra("ScoresOrFollowing", defaultView.toString())
-        return intent
     }
 }

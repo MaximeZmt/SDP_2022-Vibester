@@ -122,9 +122,10 @@ class SearchUserFragment : Fragment(), OnItemClickListener {
     }
 
     override fun onItemClick(position: Int) {
-        startActivity(Helper().showUsersProfile(
-            Intent(requireActivity(), PublicProfileActivity::class.java),
-            users[position].uid, R.string.profile_following))
+        val intent = Intent(requireActivity(), PublicProfileActivity::class.java)
+        intent.putExtra("UserId", users[position].uid)
+        intent.putExtra("ScoresOrFollowing", R.string.profile_following.toString())
+        startActivity(intent)
     }
 }
 

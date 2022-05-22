@@ -111,9 +111,10 @@ class ScoreBoardFragment : Fragment(), OnItemClickListener, View.OnClickListener
      * go to the profile of the player at index position
      */
     override fun onItemClick(position: Int) {
-        startActivity(Helper().showUsersProfile(
-            Intent(requireActivity(), PublicProfileActivity::class.java),
-            players[position].uid, R.string.profile_scores))
+        val intent = Intent(requireActivity(), PublicProfileActivity::class.java)
+        intent.putExtra("UserId", players.get(position).uid)
+        intent.putExtra("ScoresOrFollowing", R.string.profile_scores.toString() )
+        startActivity(intent)
     }
 
     override fun onClick(v: View?) {

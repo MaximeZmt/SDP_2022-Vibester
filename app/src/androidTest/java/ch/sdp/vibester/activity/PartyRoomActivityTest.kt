@@ -1,8 +1,7 @@
 package ch.sdp.vibester.activity
 
-/*
+
 import android.content.Intent
-import android.provider.Telephony
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso
@@ -13,7 +12,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.helper.PartyRoom
-import ch.sdp.vibester.user.User
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -42,30 +40,38 @@ class PartyRoomActivityTest {
     @JvmField
     val mockUsersRepo = mockk<DataGetter>()
 
-    private fun createMockInvocation(partyRoom: PartyRoom) {
+    private fun createMockInvocation(partyRoom: PartyRoom, songList: MutableList<Pair<String, String>>) {
         every {mockUsersRepo.createRoom(any(), any())} answers {
             lastArg<(PartyRoom) -> Unit>().invoke(partyRoom)
         }
 
-        every {mockUsersRepo.getRoomData(any(), any())} answers {
-            lastArg<(PartyRoom) -> Unit>().invoke(partyRoom)
+        every {mockUsersRepo.getRoomData(any(), any(), any(), any())} answers {
+            thirdArg<(PartyRoom) -> Unit>().invoke(partyRoom)
+            lastArg<(MutableList<Pair<String, String>>) -> Unit>().invoke(songList)
         }
+
+        every { mockUsersRepo.readStartGame(any(), any()) } answers {
+            false
+        }
+
+        every { mockUsersRepo.updateSongList(any(), any()) } answers {}
     }
 
     @After
     fun clean() {
         Intents.release()
     }
-/*
+
     @Test
     fun correctCreation() {
         var mockRoomName = "mockName"
         var mockUserEmailList = mutableListOf<String>("email1, email2")
+        var mockSongList = mutableListOf<Pair<String, String>>(Pair("mockSong1", "mockSong2"))
         var mockPartyRoom = PartyRoom()
 
         mockPartyRoom.setEmailList(mockUserEmailList)
 
-        createMockInvocation(mockPartyRoom)
+        createMockInvocation(mockPartyRoom, mockSongList)
 
         val intent = Intent(ApplicationProvider.getApplicationContext(), PartyRoomActivity::class.java)
         intent.putExtra("roomName", mockRoomName)
@@ -77,17 +83,16 @@ class PartyRoomActivityTest {
             .check(ViewAssertions.matches(ViewMatchers.withText(mockUserEmailList.toString())))
     }
 
- */
-/*
     @Test
     fun correctJoin() {
         var mockRoomName = "mockName"
         var mockUserEmailList = mutableListOf<String>("email1, email2")
+        var mockSongList = mutableListOf<Pair<String, String>>(Pair("mockSong1", "mockSong2"))
         var mockPartyRoom = PartyRoom()
 
         mockPartyRoom.setEmailList(mockUserEmailList)
 
-        createMockInvocation(mockPartyRoom)
+        createMockInvocation(mockPartyRoom, mockSongList)
 
         val intent = Intent(ApplicationProvider.getApplicationContext(), PartyRoomActivity::class.java)
         intent.putExtra("roomName", mockRoomName)
@@ -99,7 +104,10 @@ class PartyRoomActivityTest {
             .check(ViewAssertions.matches(ViewMatchers.withText(mockUserEmailList.toString())))
     }
 
- */
+    @Test
+    fun correctSongList() {
+
+    }
+
 }
 
- */

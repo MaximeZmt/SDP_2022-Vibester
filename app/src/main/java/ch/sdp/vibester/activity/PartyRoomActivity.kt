@@ -47,6 +47,7 @@ class PartyRoomActivity : AppCompatActivity() {
         val createPartyRoom = intent.getBooleanExtra("createRoom", false)
         if(createPartyRoom) {
             createRoom(roomName)
+            setGameManager()
         }
         else {
             fetchData(roomName)
@@ -106,15 +107,8 @@ class PartyRoomActivity : AppCompatActivity() {
         call.enqueue(object : Callback<Any> {
             override fun onFailure(call: Call<Any>, t: Throwable?) {}
             override fun onResponse(call: Call<Any>, response: Response<Any>) {
-                /* TODO: OFFLINE
-                gameManager.setInternet()
-                gameManager.setContext(context)
-                 */
-
-
                 gameManager.setGameSongList(Gson().toJson(response.body()), uri.method)
-                Log.w("DEBUG", gameManager.getSongList().toString())
-                launchGame(gameManager)
+                dataGetter.updateSongList("room1", gameManager.getSongList())
             }
         })
     }
@@ -127,8 +121,6 @@ class PartyRoomActivity : AppCompatActivity() {
         uri.tag = tag
 
         gameManager.gameMode = getString(mode)
-        AppPreferences.setStr(getString(R.string.preferences_game_genre), getString(mode))
-
         setGameSongList(uri)
     }
 

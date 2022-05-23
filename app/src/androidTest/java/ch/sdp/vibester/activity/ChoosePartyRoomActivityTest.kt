@@ -47,8 +47,12 @@ class ChoosePartyRoomActivityTest {
             lastArg<(PartyRoom) -> Unit>().invoke(partyRoom)
         }
 
-        every {mockUsersRepo.getRoomData(any(), any())} answers {
+        every {mockUsersRepo.getRoomData(any(), any(), any(), any())} answers {
             lastArg<(PartyRoom) -> Unit>().invoke(partyRoom)
+        }
+
+        every { mockUsersRepo.readStartGame(any(), any()) } answers {
+            false
         }
     }
 

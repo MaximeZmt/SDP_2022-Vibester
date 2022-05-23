@@ -107,10 +107,18 @@ open class GameActivity : AppCompatActivity() {
     }
 
     /**
+     * Custom onDestroy to verify progressbar is stopped
+     */
+    override fun onDestroy() {
+        checkRunnable()
+        super.onDestroy()
+    }
+
+    /**
      * Called upon the ending of a game. Passes gathered information during the game to the next
      * activity through the intent.
      */
-    fun switchToEnding(gameManager: GameManager) {
+    private fun switchToEnding(gameManager: GameManager) {
         val intent = Intent(this, GameEndingActivity::class.java)
 
         //Set list of incorrect songs
@@ -171,7 +179,7 @@ open class GameActivity : AppCompatActivity() {
     /**
      * Function to check if the game has ended or not.
      */
-    fun isEndGame(gameManager: GameManager): Boolean {
+    private fun isEndGame(gameManager: GameManager): Boolean {
         return !gameManager.checkGameStatus() || !gameManager.setNextSong()
     }
 
@@ -181,8 +189,6 @@ open class GameActivity : AppCompatActivity() {
     fun setScores(gameManager: GameManager) {
         if(authenticator.isLoggedIn()){
             dataGetter.updateFieldInt(authenticator.getCurrUID(), "totalGames", 1, method = "sum")
-            dataGetter.updateFieldInt(authenticator.getCurrUID(), "correctSongs", gameManager.getCorrectSongs().size, method = "sum")
-            dataGetter.updateFieldInt(authenticator.getCurrUID(), "bestScore", gameManager.getScore(), method = "best")
             dataGetter.updateSubFieldInt(authenticator.getCurrUID(), gameManager.getScore(), "scores", gameManager.gameMode, method = "best")
         }
     }

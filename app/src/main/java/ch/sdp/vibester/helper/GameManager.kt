@@ -1,8 +1,6 @@
 package ch.sdp.vibester.helper
 
-import android.content.Context
 import android.media.MediaPlayer
-import android.os.Environment
 import android.util.Log
 import ch.sdp.vibester.api.AudioPlayer
 import ch.sdp.vibester.api.ItunesMusicApi
@@ -23,6 +21,8 @@ open class GameManager : Serializable {
     var gameSize = 5
     var numPlayedSongs = 0
     var gameMode = ""
+    var difficultyLevel = 0
+
     open lateinit var currentSong: Song
     var gameSongList: MutableList<Pair<String, String>> = mutableListOf()
     private var correctSongs = mutableListOf<Song>()
@@ -34,16 +34,6 @@ open class GameManager : Serializable {
 
     private var hasInternet: Boolean = true
     private lateinit var externals: File
-
-
-    /**
-     * set the number of songs in this game
-     * @param numberOfSongs: number of songs
-     */
-    @JvmName("setGameSize1")
-    fun setGameSize(numberOfSongs: Int) {
-        gameSize = numberOfSongs
-    }
 
     /**
      * Set a shuffled songList for a game
@@ -103,7 +93,7 @@ open class GameManager : Serializable {
      * Get a score for a game (current and total)
      */
     fun getScore(): Int {
-        return correctSongs.size
+        return correctSongs.size*difficultyLevel
     }
 
     /**
@@ -111,10 +101,10 @@ open class GameManager : Serializable {
      */
     @JvmName("getCurrentSong1")
     fun getCurrentSong(): Song {
-        if(this::currentSong.isInitialized) {
-            return currentSong
+        return if(this::currentSong.isInitialized) {
+            currentSong
         } else {
-            return Song.songBuilder("http://example.com", "http://example.com", songName, artistName)
+            Song.songBuilder("http://example.com", "http://example.com", songName, artistName)
         }
     }
 
@@ -211,11 +201,11 @@ open class GameManager : Serializable {
      * @param songPair: The pair corresponding to the next song-artist.
      */
     private fun readFromFile(file: File, songPair: Pair<String, String>) {
-        var reader = BufferedReader(FileReader(file))
+        val reader = BufferedReader(FileReader(file))
         var currentLine = reader.readLine()
 
         while (currentLine != null) {
-            var trimmed = currentLine.trim()
+            val trimmed = currentLine.trim()
             if (trimmed.isNotEmpty()) {
                 val split = trimmed.split(" - ")
                 if (split.size == 4) {
@@ -253,7 +243,7 @@ open class GameManager : Serializable {
             mediaPlayer = AudioPlayer.playAudio(currentSong.getPreviewUrl())
         } else {
             val trackName = currentSong.getTrackName().trim() + " - " + currentSong.getArtistName().trim()
-            var media = File(externals, "extract_of_$trackName")
+            val media = File(externals, "extract_of_$trackName")
             if(media.exists()) {
                 mediaPlayer = AudioPlayer.playAudio(media.absolutePath)
             }

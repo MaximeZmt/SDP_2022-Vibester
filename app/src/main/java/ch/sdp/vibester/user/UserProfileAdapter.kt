@@ -1,6 +1,5 @@
 package ch.sdp.vibester.user
 
-import android.graphics.Color
 import android.net.Uri
 import android.view.View
 import android.view.ViewGroup

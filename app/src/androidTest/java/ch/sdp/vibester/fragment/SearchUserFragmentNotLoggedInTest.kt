@@ -46,7 +46,7 @@ class SearchUserFragmentNotLoggedInTest {
         val mockUser3 = User("mockUser3", uid = "mockUser3uid")
         val mockUser = User("mockUser", uid = "mockUseruid", following = mapOf(Pair(mockUser2.uid, true), Pair(mockUser3.uid, true)))
 
-        val mockUIDs = arrayListOf("mockUser1uid","mockUser2uid","mockUser3uid")
+        val mockUIDs = arrayListOf("mockUser1uid", "mockUser2uid", "mockUser3uid")
         val mockUsers = arrayListOf(mockUser1, mockUser2, mockUser3)
 
         every { mockUsersRepo.searchByField(any(), any(), any(), any()) } answers  {

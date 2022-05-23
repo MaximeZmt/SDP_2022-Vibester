@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
 import ch.sdp.vibester.activity.profile.PublicProfileActivity
 import ch.sdp.vibester.database.Database
+import ch.sdp.vibester.database.ImageGetter
 import ch.sdp.vibester.user.OnItemClickListener
 import ch.sdp.vibester.user.User
 import ch.sdp.vibester.user.UserScoreboardAdapter
@@ -28,6 +29,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ScoreBoardFragment : Fragment(), OnItemClickListener, View.OnClickListener{
@@ -35,6 +37,9 @@ class ScoreBoardFragment : Fragment(), OnItemClickListener, View.OnClickListener
     private var players: MutableList<User> = mutableListOf()
     private var userScoreboardAdapter: UserScoreboardAdapter? = null
     private var genre: String = ""
+
+    @Inject
+    lateinit var imageGetter: ImageGetter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -66,7 +71,7 @@ class ScoreBoardFragment : Fragment(), OnItemClickListener, View.OnClickListener
     private fun setupRecycleView(view:View, context: Context) {
         view.findViewById<RecyclerView>(R.id.recycler_view).apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = UserScoreboardAdapter(players, genre, this@ScoreBoardFragment)
+            adapter = UserScoreboardAdapter(players, genre, this@ScoreBoardFragment, imageGetter)
             setHasFixedSize(true)
         }
     }
@@ -102,7 +107,7 @@ class ScoreBoardFragment : Fragment(), OnItemClickListener, View.OnClickListener
     }
 
     private fun showPlayersPosition(players: MutableList<User>?) {
-        userScoreboardAdapter = UserScoreboardAdapter(players!!, genre, this)
+        userScoreboardAdapter = UserScoreboardAdapter(players!!, genre, this, imageGetter)
         requireView().findViewById<RecyclerView>(R.id.recycler_view)!!.adapter = userScoreboardAdapter
     }
 

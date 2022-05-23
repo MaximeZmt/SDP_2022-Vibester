@@ -1,6 +1,7 @@
 package ch.sdp.vibester.user
 
 import android.graphics.Color
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,16 +9,21 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
+import ch.sdp.vibester.database.ImageGetter
 import ch.sdp.vibester.helper.AdapterHelper
+import ch.sdp.vibester.helper.ImageHelper
 import ch.sdp.vibester.helper.loadImg
 
 /**
  * Set users list in recycleView in scoreboard
  */
 class UserScoreboardAdapter(
-    playersInit: MutableList<User>, private val genre: String,
-    private val listener: OnItemClickListener?
+    playersInit: MutableList<User>,
+    private val genre: String,
+    private val listener: OnItemClickListener?,
+    val imageGetter: ImageGetter,
 ): RecyclerView.Adapter<UserScoreboardAdapter.PlayerViewHolder>() {
+    private val imageSize = 100
 
     var players: MutableList<User> = playersInit
 
@@ -62,7 +68,7 @@ class UserScoreboardAdapter(
             itemView.findViewById<TextView>(R.id.tv_position).text = rank
             itemView.findViewById<TextView>(R.id.tv_name).text = player.username
             itemView.findViewById<TextView>(R.id.tv_score).text = setScore(player).toString()
-            itemView.findViewById<ImageView>(R.id.iv_photo).loadImg(player.image)
+            imageGetter.fetchImage("profileImg/${player.uid}", this::setImage)
 
             if(position %2 == 0) itemView.setBackgroundColor(itemView.resources.getColor(R.color.darker_floral_white))
         }
@@ -74,5 +80,12 @@ class UserScoreboardAdapter(
         override fun onClick(v: View?) {
             AdapterHelper().onClickHelper(adapterPosition, listener)
         }
+
+        private fun setImage(imageURI: Uri) {
+            val avatar = itemView.findViewById<ImageView>(R.id.iv_photo)
+            ImageHelper().setImage(imageURI, avatar, imageSize)
+        }
+
+
     }
 }

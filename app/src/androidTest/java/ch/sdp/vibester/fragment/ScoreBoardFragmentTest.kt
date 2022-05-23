@@ -55,7 +55,7 @@ class ScoreBoardFragmentTest {
         onView(withId(R.id.scoreboard_content_scrolling)).check(matches(isDisplayed()))
     }
 
-    @Test
+    /*@Test
     fun clickOnItemShouldGoesToProfileAndDisplaysScores() {
         onView(withId(R.id.scoreboard_rockButton)).perform(click())
 
@@ -69,6 +69,8 @@ class ScoreBoardFragmentTest {
         onView(withId(R.id.profileContent)).check(matches(isDisplayed()))
         onView(withId(R.id.profileStatistics)).check(matches(isDisplayed()))
     }
+    
+     */
 
     @Test
     fun topBtnClick() {
@@ -80,7 +82,7 @@ class ScoreBoardFragmentTest {
     fun kpopBtnClick() {
         onView(withId(R.id.scoreboard_kpopButton)).perform(click())
     }
-    
+
      */
 
     @Test

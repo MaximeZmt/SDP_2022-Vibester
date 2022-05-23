@@ -40,12 +40,9 @@ class ScoreBoardFragment : Fragment(), OnItemClickListener, View.OnClickListener
     @Inject
     lateinit var imageGetter: ImageGetter
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_scoreboard, container, false)
-        val ctx = inflater.context
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val ctx = view.context
 
         view.findViewById<Button>(R.id.scoreboard_kpopButton).setOnClickListener(this)
         view.findViewById<Button>(R.id.scoreboard_rockButton).setOnClickListener(this)
@@ -54,8 +51,6 @@ class ScoreBoardFragment : Fragment(), OnItemClickListener, View.OnClickListener
         view.findViewById<Button>(R.id.scoreboard_imagDragonsButton).setOnClickListener(this)
         view.findViewById<Button>(R.id.scoreboard_billieEilishButton).setOnClickListener(this)
         setupRecycleView(view, ctx)
-
-        return view
     }
 
     private fun selectScoreboard() {

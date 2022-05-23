@@ -50,9 +50,6 @@ class TypingGameActivity : GameActivity() {
      * Custom onDestroy to verify progressbar and media player are stopped
      */
     override fun onDestroy() {
-        if (runnable != null) {
-            handler.removeCallbacks(runnable!!)
-        }
         if (this::gameManager.isInitialized && gameManager.initializeMediaPlayer()) {
             gameManager.stopMediaPlayer()
         }
@@ -130,7 +127,7 @@ class TypingGameActivity : GameActivity() {
     /**
      * Create the frame layout and its logic of the suggestion when user is typing
      */
-    fun guess(song: Song, guessLayout: LinearLayout, ctx: Context, gameManager: GameManager): FrameLayout {
+    private fun guess(song: Song, guessLayout: LinearLayout, ctx: Context, gameManager: GameManager): FrameLayout {
         val frameLay = FrameLayout(ctx)
         frameLay.background = DisplayContents.borderGen(ctx, R.color.maximum_yellow_red)
 

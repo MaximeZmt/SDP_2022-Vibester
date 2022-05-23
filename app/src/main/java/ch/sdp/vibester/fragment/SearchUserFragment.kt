@@ -25,8 +25,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-
-
 /**
  * Search for users based on their usernames.
  */

@@ -102,19 +102,24 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
     override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
         if (parent.id == R.id.difficulty_spinner) {
             difficulty = parent.getItemAtPosition(position).toString()
+            when (difficulty) {
+                "Easy" -> gameManager.difficultyLevel = 1
+                "Medium" -> gameManager.difficultyLevel = 2
+                "Hard" -> gameManager.difficultyLevel = 3
+            }
         } else if (parent.id == R.id.size_spinner) {
             gameSize = parent.getItemAtPosition(position).toString()
             when (gameSize) {
-                "One" -> gameManager.setGameSize(1)
-                "Two" -> gameManager.setGameSize(2)
-                "Three" -> gameManager.setGameSize(3)
-                "Four" -> gameManager.setGameSize(4)
-                "Five" -> gameManager.setGameSize(5)
-                "Six" -> gameManager.setGameSize(6)
-                "Seven" -> gameManager.setGameSize(7)
-                "Eight" -> gameManager.setGameSize(8)
-                "Nine" -> gameManager.setGameSize(9)
-                "Ten" -> gameManager.setGameSize(10)
+                "One" -> gameManager.gameSize = 1
+                "Two" -> gameManager.gameSize = 2
+                "Three" -> gameManager.gameSize = 3
+                "Four" -> gameManager.gameSize = 4
+                "Five" -> gameManager.gameSize = 5
+                "Six" -> gameManager.gameSize = 6
+                "Seven" -> gameManager.gameSize = 7
+                "Eight" -> gameManager.gameSize = 8
+                "Nine" -> gameManager.gameSize = 9
+                "Ten" -> gameManager.gameSize = 10
             }
         }
     }
@@ -217,7 +222,7 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
     }
 
     override fun onClick(v: View?) {
-        when(v!!.getId()) {
+        when(v!!.id) {
             R.id.local_buzzer_game_button -> chooseGame("local_buzzer", GameManager())
             R.id.local_typing_game_button -> chooseGame("local_typing", GameManager())
             R.id.local_lyrics_game_button -> chooseGame("local_lyrics", GameManager())

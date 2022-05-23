@@ -92,7 +92,7 @@ class BuzzerSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
     fun switchToGame(view: View) {
         val intent = Intent(this, BuzzerScreenActivity::class.java)
         val players =
-            findViewById<LinearLayout>(R.id.playerNames).children.filter { child: View -> child.visibility == android.view.View.VISIBLE }
+            findViewById<LinearLayout>(R.id.playerNames).children.filter { child: View -> child.visibility == View.VISIBLE }
         val pNameArray = arrayOfNulls<String>(players.count())
         if (players.count() > 0) {
             intent.putExtra("Number of players", players.count())
@@ -102,13 +102,13 @@ class BuzzerSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
         intent.putExtra("gameManager", gameManager)
         intent.putExtra("Difficulty", difficulty)
         val editTextIdArray =
-            arrayOf(R.id.namePlayer1, R.id.namePlayer2, R.id.namePlayer3, R.id.namePlayer4)
+            arrayListOf(R.id.namePlayer1, R.id.namePlayer2, R.id.namePlayer3, R.id.namePlayer4)
         var i = 0
         for (playerView in players) {
             val name = findViewById<EditText>(editTextIdArray[i]).text.toString()
             if (name.isNotEmpty()) { pNameArray[i] = name } else {
-                findViewById<LinearLayout>(R.id.missingNameAlert).visibility=View.VISIBLE
-                findViewById<Button>(R.id.nb_players_selected).visibility=View.INVISIBLE
+                findViewById<LinearLayout>(R.id.missingNameAlert).visibility = View.VISIBLE
+                findViewById<Button>(R.id.nb_players_selected).visibility = View.INVISIBLE
                 return }
             i += 1
         }

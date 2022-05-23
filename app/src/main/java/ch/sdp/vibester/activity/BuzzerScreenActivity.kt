@@ -118,7 +118,7 @@ class BuzzerScreenActivity : GameActivity() {
     /**
      * Ends the round when no ones answer before the time limit
      */
-    private fun timeoutAnswer(ctx: Context, chosenSong: Song?=null, gameManager: GameManager) {
+    private fun timeoutAnswer(ctx: Context, chosenSong: Song? = null, gameManager: GameManager) {
         checkAndStopPlayer(gameManager)
         toastShowWrong(ctx, gameManager.getCurrentSong())
         toggleBtnVisibility(R.id.skip, false)

@@ -53,11 +53,11 @@ class ScoreBoardFragment : Fragment(R.layout.fragment_scoreboard), OnItemClickLi
         setupRecycleView(view, ctx)
     }
 
-    private fun selectScoreboard() {
+    private fun selectScoreboard(view:View) {
         val sortedBy = "scores/$genre"
 
-        requireView().findViewById<ConstraintLayout>(R.id.genrePerScoreboard).visibility = GONE
-        requireView().findViewById<NestedScrollView>(R.id.scoreboard_content_scrolling).visibility = VISIBLE
+        view.findViewById<ConstraintLayout>(R.id.genrePerScoreboard).visibility = GONE
+        view.findViewById<NestedScrollView>(R.id.scoreboard_content_scrolling).visibility = VISIBLE
 
         loadPlayersSortedBy(sortedBy)
     }
@@ -119,25 +119,23 @@ class ScoreBoardFragment : Fragment(R.layout.fragment_scoreboard), OnItemClickLi
     override fun onClick(v: View?) {
             when(v!!.id) {
                 R.id.scoreboard_btsButton -> {
-                    genre = "BTS"; selectScoreboard()
+                    genre = "BTS"; selectScoreboard(v)
                 }
                 R.id.scoreboard_kpopButton -> {
-                    genre = "kpop"; selectScoreboard()
+                    genre = "kpop"; selectScoreboard(v)
                 }
                 R.id.scoreboard_imagDragonsButton -> {
-                    genre = "Imagine Dragons"; selectScoreboard()
+                    genre = "Imagine Dragons"; selectScoreboard(v)
                 }
                 R.id.scoreboard_billieEilishButton -> {
-                    genre = "Billie Eilish"; selectScoreboard()
+                    genre = "Billie Eilish"; selectScoreboard(v)
                 }
                 R.id.scoreboard_rockButton -> {
-                    genre = "rock";selectScoreboard()
+                    genre = "rock"; selectScoreboard(v)
                 }
                 R.id.scoreboard_topTracksButton -> {
-                    genre = "top tracks";selectScoreboard()
+                    genre = "top tracks"; selectScoreboard(v)
                 }
-
             }
-
     }
 }

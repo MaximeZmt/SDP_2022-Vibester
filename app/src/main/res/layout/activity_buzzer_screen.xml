@@ -156,7 +156,7 @@
             android:elevation="10dp"
             android:gravity="center"
             android:stateListAnimator="@null"
-            android:text="@string/correct"
+            android:text="@string/BuzzerScreen_correct"
             android:translationZ="10dp" />
 
         <Button
@@ -167,7 +167,7 @@
             android:elevation="10dp"
             android:gravity="center"
             android:stateListAnimator="@null"
-            android:text="@string/wrong"
+            android:text="@string/BuzzerScreen_wrong"
             android:translationZ="10dp" />
 
     </LinearLayout>

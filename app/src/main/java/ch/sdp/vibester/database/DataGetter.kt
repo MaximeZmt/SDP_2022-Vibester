@@ -43,6 +43,24 @@ class DataGetter @Inject constructor() {
         dbUserRef.child(uid).child(fieldName).child(subFieldName).setValue(newVal)
     }
 
+    /**
+     * Set user with userId to follow user with followingId
+     * @param userId id of of the current user
+     * @param followingId id of the user to be following
+     */
+    fun setFollowing(userId: String, followingId: String) {
+        setSubFieldValue(userId, "following", followingId, true)
+    }
+
+    /**
+     * Set user with userId to unfollow user with followingId
+     * @param userId if of the current user
+     * @param followingId id of the user to be unfollowing
+     */
+    fun setUnfollow(userId: String, followingId: String) {
+        setSubFieldValue(userId, "following", followingId, false)
+    }
+
 
     /**
      * Update integer value in a subfield based on method sum/best
@@ -157,7 +175,7 @@ class DataGetter @Inject constructor() {
                 }
                 callback(users)
                 callbackUid(uidList)
-                queryUsers.removeEventListener(this);
+                queryUsers.removeEventListener(this)
             }
             override fun onCancelled(error: DatabaseError) {
                 Log.w(ContentValues.TAG, "searchByField:onCancelled", error.toException())

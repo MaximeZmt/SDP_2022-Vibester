@@ -107,7 +107,7 @@
                 android:elevation="10dp"
                 android:onClick="logInListener"
                 android:stateListAnimator="@null"
-                android:text="@string/logIn"
+                android:text="@string/authentication_logIn"
                 android:translationZ="10dp" />
 
             <Button
@@ -118,7 +118,7 @@
                 android:elevation="10dp"
                 android:onClick="googleSignInListener"
                 android:stateListAnimator="@null"
-                android:text="@string/logInGoogle"
+                android:text="@string/authentication_googleLogIn"
                 android:translationZ="10dp" />
 
             <Button
@@ -129,7 +129,7 @@
                 android:elevation="10dp"
                 android:onClick="createAccountListener"
                 android:stateListAnimator="@null"
-                android:text="@string/createAcc"
+                android:text="@string/authentication_createAcc"
                 android:translationZ="10dp" />
 
         </LinearLayout>

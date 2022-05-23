@@ -1,9 +1,9 @@
 package ch.sdp.vibester.user
 
+import android.graphics.Color
 import android.net.Uri
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -28,16 +28,16 @@ class UserProfileAdapter constructor(
     RecyclerView.Adapter<UserProfileAdapter.UserProfileViewHolder>() {
 
     private val currentUser = authenticator.getCurrUser()
-    private var userFollowing: Array<String> = arrayOf()
+    private var userFollowing: MutableList<String> = mutableListOf()
     private val imageSize = 100
 
     init {
-        if (currentUser != null) { dataGetter.getUserData(currentUser.uid, this::setFriends) }
+        if (currentUser != null) { dataGetter.getUserData(currentUser.uid, this::setFollowing) }
     }
 
     // Callback for getUserData
-    private fun setFriends(user:User){
-        userFollowing = user.following.keys.toTypedArray()
+    private fun setFollowing(user:User) {
+        user.following.forEach { (userId, isFollowing) -> if (isFollowing) userFollowing.add(userId) }
     }
 
     /**
@@ -59,14 +59,13 @@ class UserProfileAdapter constructor(
     }
 
     override fun onBindViewHolder(holder: UserProfileViewHolder, position: Int) {
-        holder.bind(users[position])
+        holder.bind(users[position], position)
     }
 
     /**
      * Get amount of users displayed
      */
     override fun getItemCount() = users.size
-
 
 
     /**
@@ -76,23 +75,14 @@ class UserProfileAdapter constructor(
         /**
          * @param user with all the parameters
          */
-        fun bind(user: User) {
+        fun bind(user: User, position: Int) {
             itemView.findViewById<TextView>(R.id.search_user_username).text = user.username
+            if(position %2 == 0) itemView.setBackgroundColor(itemView.resources.getColor(R.color.darker_floral_white))
 
             imageGetter.fetchImage("profileImg/${user.uid}", this::setImage)
-            val addFriendBtn = itemView.findViewById<Button>(R.id.addFollowingBtn)
 
-            if (userFollowing.isNotEmpty() && user.uid in userFollowing) {
-                changeBtnToImage()
-            }
-            else {
-                addFriendBtn.setOnClickListener {
-                    if (currentUser != null) {
-                        dataGetter.setSubFieldValue(currentUser.uid, "following", user.uid,true)
-                        changeBtnToImage()
-                    }
-                }
-            }
+            setFollowBtnListener(user)
+            unFollowBtnListener(user)
         }
 
         private fun setImage(imageURI: Uri) {
@@ -101,10 +91,38 @@ class UserProfileAdapter constructor(
             ImageHelper().setImage(imageURI, avatar, imageSize)
         }
 
+        private fun setFollowBtnListener(user: User) {
+            val followBtn = itemView.findViewById<ImageView>(R.id.search_user_add)
+
+            if (userFollowing.isNotEmpty() && user.uid in userFollowing) {
+                changeBtnToImage()
+            }
+            else {
+                followBtn.setOnClickListener {
+                    if (currentUser != null) {
+                        dataGetter.setFollowing(currentUser.uid, user.uid)
+                        changeBtnToImage()
+                    }
+                }
+            }
+        }
 
         private fun changeBtnToImage() {
-            AdapterHelper().changeBtnToImageHelper(R.id.addFollowingBtn, R.id.addedFollowingIcon, itemView)
+            AdapterHelper().changeAToB(
+                R.id.search_user_add, R.id.search_user_added, itemView
+            )
         }
+
+        private fun unFollowBtnListener(user: User) {
+            itemView.findViewById<ImageView>(R.id.search_user_added).setOnClickListener {
+                if (currentUser != null) {
+                    dataGetter.setUnfollow(currentUser.uid, user.uid)
+                    AdapterHelper().switchViewsVisibility(
+                        itemView.findViewById(R.id.search_user_added), itemView.findViewById(R.id.search_user_add))
+                }
+            }
+        }
+
 
         init {
             itemView.setOnClickListener(this)

@@ -13,17 +13,21 @@
         app:defaultNavHost="true"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_weight="1"
-        android:id="@+id/fragment"
+        android:id="@+id/main_bottom_nav_fragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         />
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNav"
+        android:id="@+id/main_bottom_nav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:labelVisibilityMode="unlabeled"
         app:menu="@menu/bottom_menu"
+        android:background="@color/floral_white"
+        app:itemTextColor="@color/bottom_nav_color"
+        app:itemIconTint="@color/bottom_nav_color"
         />
 
 </LinearLayout>

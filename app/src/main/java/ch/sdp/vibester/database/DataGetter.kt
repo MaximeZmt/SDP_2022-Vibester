@@ -200,11 +200,12 @@ class DataGetter @Inject constructor() {
     /**
      * This functions fetches the data of the given user from the database
      * @param roomName the name of the room to retrieve data from
-     * @param callback the function to be called when the data of the appropriate user is available
+     * @param partyRoomCallback the function to be called when the data of the appropriate room data is available
+     * @param songListCallback the function to be called when the data of the appropriate song list is available
+
      */
 
     fun getRoomData(roomName: String,
-                    startGame: Boolean,
                     partyRoomCallback: (PartyRoom) -> Unit,
                     songListCallback: (MutableList<Pair<String, String>>) -> Unit) {
 
@@ -224,7 +225,6 @@ class DataGetter @Inject constructor() {
                         }
                         partyRoomCallback(partyRoom)
                     }
-                    if(startGame) {
                         val snapshotMap = snapshot.getValue() as Map<String, Object>
                         val songList = snapshotMap["songList"] as List<*>
                         var gameSongList: MutableList<Pair<String, String>> = mutableListOf()
@@ -238,7 +238,6 @@ class DataGetter @Inject constructor() {
                             )
                         }
                         songListCallback(gameSongList)
-                    }
                 }
             }
             override fun onCancelled(error: DatabaseError) {
@@ -247,13 +246,31 @@ class DataGetter @Inject constructor() {
         })
     }
 
+    /**
+     * This functions that updates the song list of the room
+     * @param roomID ID of the room
+     * @param songList the new song list
+     */
+
     fun updateSongList(roomID: String, songList: MutableList<Pair<String, String>>) {
         dbRoomRef.child("${roomID}/songList").setValue(songList)
     }
 
+    /**
+     * This functions that updates the the start game field
+     * @param roomID ID of the room
+     * @param value the new value to store
+     */
+
     fun updateStartGame(roomID: String, value: Boolean) {
         dbRoomRef.child("${roomID}/gameStarted").setValue(value)
     }
+
+    /**
+     * This functions reads the start of the game field and calls the appropriate functions
+     * @param roomName name of the room
+     * @param callback callback to be called when the read value is available
+     */
 
     fun readStartGame(roomName: String, callback: (Boolean) -> Unit) {
         val queryRooms = dbRoomRef

@@ -67,7 +67,7 @@ class PartyRoomActivity : AppCompatActivity() {
     }
 
     private fun fetchData(roomName: String) {
-        dataGetter.getRoomData(roomName, true, this::updateUI, this::setSongs)
+        dataGetter.getRoomData(roomName, this::updateUI, this::setSongs)
     }
 
     private fun createRoom(roomName: String) {
@@ -121,6 +121,8 @@ class PartyRoomActivity : AppCompatActivity() {
         uri.tag = tag
 
         gameManager.gameMode = getString(mode)
+        AppPreferences.setStr(getString(R.string.preferences_game_genre), getString(mode))
+
         setGameSongList(uri)
     }
 

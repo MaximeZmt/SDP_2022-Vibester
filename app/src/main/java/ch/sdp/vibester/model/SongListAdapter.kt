@@ -52,7 +52,7 @@ class SongListAdapter constructor( private val incorrectSongList: ArrayList<Stri
             val downloadSongBtn = itemView.findViewById<Button>(R.id.song_download)
 
             downloadSongBtn.setOnClickListener {
-                AdapterHelper().changeBtnToImage(
+                AdapterHelper().changeAToB(
                     R.id.song_download, R.id.song_download_done, itemView
                 )
             }

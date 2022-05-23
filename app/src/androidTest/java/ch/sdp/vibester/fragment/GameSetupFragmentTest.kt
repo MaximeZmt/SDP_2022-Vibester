@@ -49,7 +49,7 @@ class GameSetupFragmentTest {
     @Test
     fun checkDefaultSelectDifficulty() {
         onView(withId(R.id.difficulty_spinner))
-            .check(matches(withSpinnerText(R.string.easy)))
+            .check(matches(withSpinnerText(R.string.GameSetup_easy)))
     }
 
     @Test
@@ -88,7 +88,7 @@ class GameSetupFragmentTest {
         onView(withId(R.id.difficulty_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(0).perform(click())
 
-        onView(withId(R.id.difficulty_spinner)).check(matches(withSpinnerText(R.string.easy)))
+        onView(withId(R.id.difficulty_spinner)).check(matches(withSpinnerText(R.string.GameSetup_easy)))
     }
 
     @Test
@@ -98,7 +98,7 @@ class GameSetupFragmentTest {
         onView(withId(R.id.difficulty_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(1).perform(click())
 
-        onView(withId(R.id.difficulty_spinner)).check(matches(withSpinnerText(R.string.medium)))
+        onView(withId(R.id.difficulty_spinner)).check(matches(withSpinnerText(R.string.GameSetup_medium)))
     }
 
     @Test
@@ -108,7 +108,7 @@ class GameSetupFragmentTest {
         onView(withId(R.id.difficulty_spinner)).perform(click())
         onData(Matchers.anything()).atPosition(2).perform(click())
 
-        onView(withId(R.id.difficulty_spinner)).check(matches(withSpinnerText(R.string.hard)))
+        onView(withId(R.id.difficulty_spinner)).check(matches(withSpinnerText(R.string.GameSetup_hard)))
     }
 
     @Test

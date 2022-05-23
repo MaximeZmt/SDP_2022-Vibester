@@ -15,6 +15,7 @@ import ch.sdp.vibester.activity.BuzzerSetupActivity
 import ch.sdp.vibester.activity.ChoosePartyRoomActivity
 import ch.sdp.vibester.activity.LyricsBelongGameActivity
 import ch.sdp.vibester.activity.TypingGameActivity
+import ch.sdp.vibester.api.InternetState
 import ch.sdp.vibester.launchFragmentInHiltContainer
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -300,10 +301,8 @@ class GameSetupFragmentTest {
     @Test
     fun internetButtonClick() {
         onView(withId(R.id.game_setup_has_internet)).check(matches(withText("Internet is on")))
-        onView(withId(R.id.game_setup_has_internet)).perform(click())
+        InternetState.forceOffline()
         onView(withId(R.id.game_setup_has_internet)).check(matches(withText("Internet is off")))
-        onView(withId(R.id.game_setup_has_internet)).perform(click())
-        onView(withId(R.id.game_setup_has_internet)).check(matches(withText("Internet is on")))
     }
 
 }

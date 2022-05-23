@@ -64,7 +64,7 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
         viewfrag!!.findViewById<Button>(R.id.imagDragonsButton).setOnClickListener(this)
         viewfrag!!.findViewById<Button>(R.id.billieEilishButton).setOnClickListener(this)
         viewfrag!!.findViewById<Button>(R.id.difficulty_proceed).setOnClickListener(this)
-        //view.findViewById<Button>(R.id.game_setup_has_internet).setOnClickListener(this)
+        viewfrag!!.findViewById<Button>(R.id.game_setup_has_internet).setOnClickListener(this)
         updateInternet(viewfrag!!.findViewById<Button>(R.id.game_setup_has_internet))
 
         searchArtistEditable = viewfrag!!.findViewById<EditText>(R.id.searchArtist).text
@@ -249,7 +249,7 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
 
             R.id.difficulty_proceed -> proceedGame()
 
-            //R.id.game_setup_has_internet -> switchInternet(v.findViewById(R.id.game_setup_has_internet))
+            R.id.game_setup_has_internet -> updateInternet(v.findViewById(R.id.game_setup_has_internet))
         }
     }
 

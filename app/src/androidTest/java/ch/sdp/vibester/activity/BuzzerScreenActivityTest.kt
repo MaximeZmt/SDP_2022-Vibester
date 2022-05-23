@@ -16,17 +16,11 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.BuzzerScoreUpdater
 import ch.sdp.vibester.R
-import ch.sdp.vibester.TestMode
 import ch.sdp.vibester.api.LastfmMethod
 import ch.sdp.vibester.database.AppPreferences
-import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.helper.GameManager
-import ch.sdp.vibester.model.Song
-import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import io.mockk.every
-import io.mockk.mockk
 import org.junit.*
 import org.junit.runner.RunWith
 
@@ -198,7 +192,7 @@ class BuzzerScreenActivityTest {
         intent.putExtra("gameManager", gameManager)
         val scn: ActivityScenario<BuzzerScreenActivity> = ActivityScenario.launch(intent)
 
-        onView(withId(R.id.skip)).check(matches(withEffectiveVisibility(Visibility.VISIBLE))).perform(click())
+        onView(withId(R.id.skip_buzzer)).check(matches(withEffectiveVisibility(Visibility.VISIBLE))).perform(click())
         scn.onActivity { activity -> Assert.assertEquals(false, activity.testGetGameIsOn()) }
     }
 

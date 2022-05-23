@@ -53,6 +53,11 @@ class LyricsBelongGameActivity : GameActivity() {
         findViewById<ImageView>(R.id.btnSpeak).setOnClickListener {
             getSpeechInput()
         }
+
+        findViewById<Button>(R.id.skip_lyrics).setOnClickListener {
+            toastShowSimpleMsg(ctx, R.string.no_lyrics_found)
+            endRound(gameManager)
+        }
     }
 
     /**

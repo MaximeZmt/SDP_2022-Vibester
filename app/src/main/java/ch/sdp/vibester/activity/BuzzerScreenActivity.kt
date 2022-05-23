@@ -75,7 +75,7 @@ class BuzzerScreenActivity : GameActivity() {
             buildScores(getPlayers, allPoints)
             buildBuzzers(getPlayers, findViewById(R.id.answer))
 
-            findViewById<Button>(R.id.skip).setOnClickListener { timeoutAnswer(ctx, null, gameManager) }
+            findViewById<Button>(R.id.skip_buzzer).setOnClickListener { timeoutAnswer(ctx, null, gameManager) }
             setAnswerButton(ctx, findViewById(R.id.buttonCorrect), buzzersToRows)
             setAnswerButton(ctx, findViewById(R.id.buttonWrong), buzzersToRows)
             setNextButton(ctx, gameManager)
@@ -102,7 +102,7 @@ class BuzzerScreenActivity : GameActivity() {
      */
     fun startRoundBuzzer(ctx: Context, gameManager: GameManager) {
         gameIsOn = true
-        toggleBtnVisibility(R.id.skip, true)
+        toggleBtnVisibility(R.id.skip_buzzer, true)
         findViewById<LinearLayout>(R.id.answer).visibility=View.INVISIBLE
         val trackName = gameManager.getCurrentSong().getTrackName()
         val artist = gameManager.getCurrentSong().getArtistName()
@@ -123,7 +123,7 @@ class BuzzerScreenActivity : GameActivity() {
     fun timeoutAnswer(ctx: Context, chosenSong: Song?=null, gameManager: GameManager) {
         checkAndStopPlayer(gameManager)
         toastShowWrong(ctx, gameManager.getCurrentSong())
-        toggleBtnVisibility(R.id.skip, false)
+        toggleBtnVisibility(R.id.skip_buzzer, false)
         endRound(gameManager)
     }
 
@@ -200,7 +200,7 @@ class BuzzerScreenActivity : GameActivity() {
                 if (findViewById<ProgressBar>(R.id.progressBarBuzzer).progress>0 && findViewById<Button>(R.id.nextSongBuzzer).visibility==View.GONE) {
                     answer.visibility = View.VISIBLE
                     setPressed(button.id)
-                    toggleBtnVisibility(R.id.skip, false)
+                    toggleBtnVisibility(R.id.skip_buzzer, false)
                     gameIsOn = false // to stop the bar
                     checkAndStopPlayer(gameManager)
                 }

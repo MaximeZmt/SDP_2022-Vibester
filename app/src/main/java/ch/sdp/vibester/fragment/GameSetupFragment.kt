@@ -42,12 +42,9 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
     // TODO: OFFLINE
     private var hasInternet: Boolean = true
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_game_setup, container, false)
-        val ctx = inflater.context
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val ctx = view.context
 
         view.findViewById<Button>(R.id.local_buzzer_game_button).setOnClickListener(this)
         view.findViewById<Button>(R.id.local_typing_game_button).setOnClickListener(this)
@@ -68,7 +65,6 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
         setReturnBtnListener(view)
         setSpinnerListener(view, ctx, R.id.difficulty_spinner, R.array.difficulties_name)
         setSpinnerListener(view, ctx, R.id.size_spinner, R.array.game_size_options)
-        return view
     }
 
 

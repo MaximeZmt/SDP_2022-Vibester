@@ -98,13 +98,13 @@ class SearchUserFragmentNotLoggedInTest {
             .perform(
                 RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                     0,
-                    clickOnViewChild(R.id.addFollowingBtn))
+                    clickOnViewChild(R.id.search_user_add))
             )
 
         checkRecyclerSubViews(R.id.searchList, 0,
-            ViewMatchers.withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE), R.id.addFollowingBtn)
+            ViewMatchers.withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE), R.id.search_user_add)
         checkRecyclerSubViews(R.id.searchList, 0,
-            ViewMatchers.withEffectiveVisibility(ViewMatchers.Visibility.INVISIBLE), R.id.addedFollowingIcon)
+            ViewMatchers.withEffectiveVisibility(ViewMatchers.Visibility.INVISIBLE), R.id.search_user_added)
     }
 
     /**

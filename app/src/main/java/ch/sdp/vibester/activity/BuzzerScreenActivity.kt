@@ -129,7 +129,7 @@ class BuzzerScreenActivity : GameActivity() {
      * Function called in the end of each round. Displays the button "Next" and
      * sets the next songs to play.
      */
-    private fun endRound(gameManager: GameManager){
+    private fun endRound(gameManager: GameManager) {
         gameIsOn = false
         toggleBtnVisibility(R.id.nextSongBuzzer, true)
         super.endRound(gameManager, this::testWinner)

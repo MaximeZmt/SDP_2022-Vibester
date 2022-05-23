@@ -1,6 +1,7 @@
 package ch.sdp.vibester.activity
 
 
+import android.content.Context
 import android.content.Intent
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
@@ -12,6 +13,7 @@ import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
+import ch.sdp.vibester.database.AppPreferences
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.helper.GameManager
 import ch.sdp.vibester.helper.PartyRoom
@@ -70,6 +72,8 @@ class PartyRoomActivityTest {
 
     @Test
     fun correctCreation() {
+        val ctx: Context = ApplicationProvider.getApplicationContext()
+
         var mockRoomName = "mockName"
         var mockUserEmailList = mutableListOf<String>("email1, email2")
         var mockSongList = mutableListOf<Pair<String, String>>(Pair("mockSong1", "mockSong2"))
@@ -79,7 +83,12 @@ class PartyRoomActivityTest {
 
         createMockInvocation(mockPartyRoom, mockSongList, false)
 
-        val intent = Intent(ApplicationProvider.getApplicationContext(), PartyRoomActivity::class.java)
+        AppPreferences.init(ctx)
+        AppPreferences.setStr(ctx.getString(R.string.preferences_game_mode), "local_typing")
+        AppPreferences.setStr(ctx.getString(R.string.preferences_game_genre), "imagine dragons")
+
+
+        val intent = Intent(ctx, PartyRoomActivity::class.java)
         intent.putExtra("roomName", mockRoomName)
         intent.putExtra("createRoom", true)
 
@@ -91,6 +100,8 @@ class PartyRoomActivityTest {
 
     @Test
     fun correctJoin() {
+        val ctx: Context = ApplicationProvider.getApplicationContext()
+
         var mockRoomName = "mockName"
         var mockUserEmailList = mutableListOf<String>("email1, email2")
         var mockSongList = mutableListOf<Pair<String, String>>(Pair("mockSong1", "mockSong2"))
@@ -100,7 +111,11 @@ class PartyRoomActivityTest {
 
         createMockInvocation(mockPartyRoom, mockSongList, false)
 
-        val intent = Intent(ApplicationProvider.getApplicationContext(), PartyRoomActivity::class.java)
+        AppPreferences.init(ctx)
+        AppPreferences.setStr(ctx.getString(R.string.preferences_game_mode), "local_typing")
+        AppPreferences.setStr(ctx.getString(R.string.preferences_game_genre), "imagine dragons")
+
+        val intent = Intent(ctx, PartyRoomActivity::class.java)
         intent.putExtra("roomName", mockRoomName)
         intent.putExtra("createRoom", false)
 
@@ -112,24 +127,28 @@ class PartyRoomActivityTest {
 
     @Test
     fun correctDifficulty() {
+        val ctx: Context = ApplicationProvider.getApplicationContext()
+
         var mockRoomName = "mockRoom"
         var mockUserEmailList = mutableListOf<String>("email1, email2")
         var mockSongList = mutableListOf<Pair<String, String>>(Pair("mockSong1", "mockSong2"))
         var mockPartyRoom = PartyRoom()
         val gameManager = GameManager()
 
+        AppPreferences.init(ctx)
+        AppPreferences.setStr(ctx.getString(R.string.preferences_game_mode), "local_typing")
+        AppPreferences.setStr(ctx.getString(R.string.preferences_game_genre), "imagine dragons")
+
+
         mockPartyRoom.setEmailList(mockUserEmailList)
 
         createMockInvocation(mockPartyRoom, mockSongList, true)
 
-        val intent = Intent(ApplicationProvider.getApplicationContext(), PartyRoomActivity::class.java)
+        val intent = Intent(ctx, PartyRoomActivity::class.java)
         intent.putExtra("roomName", mockRoomName)
         intent.putExtra("createRoom", true)
 
         val scn: ActivityScenario<CreateProfileActivity> = ActivityScenario.launch(intent)
-
-        Espresso.onView(ViewMatchers.withId(R.id.startGame)).perform(ViewActions.click())
-
 
         Intents.intended(IntentMatchers.hasComponent(TypingGameActivity ::class.java.name))
         Intents.intended(IntentMatchers.hasExtra("Difficulty", R.string.easy.toString()))

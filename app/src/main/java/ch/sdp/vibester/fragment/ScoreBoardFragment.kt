@@ -31,7 +31,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ScoreBoardFragment : Fragment(), OnItemClickListener, View.OnClickListener {
+class ScoreBoardFragment : Fragment(R.layout.fragment_scoreboard), OnItemClickListener, View.OnClickListener {
     private val dbRef: DatabaseReference = Database.get().getReference("users")
     private var players: MutableList<User> = mutableListOf()
     private var userScoreboardAdapter: UserScoreboardAdapter? = null

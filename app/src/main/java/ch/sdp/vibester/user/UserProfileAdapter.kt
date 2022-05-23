@@ -1,6 +1,5 @@
 package ch.sdp.vibester.user
 
-import android.graphics.Color
 import android.net.Uri
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +11,7 @@ import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.database.ImageGetter
 import ch.sdp.vibester.helper.AdapterHelper
-import ch.sdp.vibester.helper.Helper
+import ch.sdp.vibester.helper.ImageHelper
 
 
 /**
@@ -88,7 +87,7 @@ class UserProfileAdapter constructor(
         private fun setImage(imageURI: Uri) {
             val avatar = itemView.findViewById<ImageView>(R.id.search_user_profile_image)
 
-            Helper().setImage(imageURI, avatar, imageSize)
+            ImageHelper().setImage(imageURI, avatar, imageSize)
         }
 
         private fun setFollowBtnListener(user: User) {

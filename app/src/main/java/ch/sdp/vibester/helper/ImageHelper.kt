@@ -10,7 +10,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 
-class Helper {
+class ImageHelper {
 
     /**
      * Set the image of imageURI in avatar of given size

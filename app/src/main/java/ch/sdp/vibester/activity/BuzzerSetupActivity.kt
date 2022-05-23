@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
 import ch.sdp.vibester.R
 import ch.sdp.vibester.helper.GameManager
-import ch.sdp.vibester.helper.Helper
 
 /**
  * Class to set up buzzer game (number of players)

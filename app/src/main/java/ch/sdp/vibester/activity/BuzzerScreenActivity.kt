@@ -10,7 +10,6 @@ import android.widget.*
 import ch.sdp.vibester.BuzzerScoreUpdater
 import ch.sdp.vibester.R
 import ch.sdp.vibester.helper.GameManager
-import ch.sdp.vibester.helper.Helper
 import ch.sdp.vibester.model.Song
 import com.bumptech.glide.Glide
 import kotlin.collections.ArrayList

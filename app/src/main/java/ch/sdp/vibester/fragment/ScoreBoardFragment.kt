@@ -19,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
 import ch.sdp.vibester.activity.profile.PublicProfileActivity
 import ch.sdp.vibester.database.Database
-import ch.sdp.vibester.helper.Helper
 import ch.sdp.vibester.user.OnItemClickListener
 import ch.sdp.vibester.user.User
 import ch.sdp.vibester.user.UserScoreboardAdapter
@@ -112,7 +111,7 @@ class ScoreBoardFragment : Fragment(), OnItemClickListener, View.OnClickListener
      */
     override fun onItemClick(position: Int) {
         val intent = Intent(requireActivity(), PublicProfileActivity::class.java)
-        intent.putExtra("UserId", players.get(position).uid)
+        intent.putExtra("UserId", players[position].uid)
         intent.putExtra("ScoresOrFollowing", R.string.profile_scores.toString() )
         startActivity(intent)
     }

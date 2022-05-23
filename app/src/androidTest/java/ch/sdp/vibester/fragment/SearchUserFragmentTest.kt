@@ -10,10 +10,12 @@ import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.intent.Intents
+import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.matcher.BoundedMatcher
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
+import ch.sdp.vibester.activity.QrScanningActivity
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.launchFragmentInHiltContainer
@@ -101,19 +103,11 @@ class SearchUserFragmentTest {
         Intents.release()
     }
 
-    //TODO fix the test that fails due to the media non initialization
-//    @Test
-//    fun goToScanQr() {
-//        val intent = Intent(ApplicationProvider.getApplicationContext(), SearchUserActivity::class.java)
-//        intent.putExtra("isTest", true)
-//
-//        createMockInvocation()
-//        createMockAuthenticator()
-//        val scn: ActivityScenario<SearchUserActivity> = ActivityScenario.launch(intent)
-//
-//        onView(withId(R.id.searchUser_scanning)).perform(click())
-//        Intents.intended(IntentMatchers.hasComponent(QrScanningActivity::class.java.name))
-//    }
+    @Test
+    fun goToScanQr() {
+        onView(withId(R.id.searchUser_scanning)).perform(click())
+        Intents.intended(IntentMatchers.hasComponent(QrScanningActivity::class.java.name))
+    }
 
     @Test
     fun recycleViewToViewTest() {

@@ -20,7 +20,7 @@ class InternetState private constructor(){
             if(networkInfo != null){
                 isNetwork = networkInfo.isConnected
             }
-            return isNetwork || forceOffline
+            return isNetwork && !forceOffline
         }
 
         /**

@@ -86,11 +86,7 @@ class DownloadActivity : AppCompatActivity() {
             songName = songView.text.toString()
 
             if (checkExistingSong()) {
-                alert(
-                    getString(R.string.download_already_done),
-                    getString(R.string.download_try_different),
-                    songView
-                )
+                alert(getString(R.string.download_already_done), getString(R.string.download_try_different), songView)
             } else {
                 getAndDownload(songView)
             }
@@ -104,11 +100,7 @@ class DownloadActivity : AppCompatActivity() {
             songName = song.getTrackName().lowercase() + " - " + song.getArtistName().lowercase()
             checkPermissionsAndDownload()
         } catch (e: IllegalArgumentException) {
-            alert(
-                getString(R.string.download_unable_to_find),
-                getString(R.string.download_retry),
-                songView
-            )
+            alert(getString(R.string.download_unable_to_find), getString(R.string.download_retry), songView)
         }
     }
 

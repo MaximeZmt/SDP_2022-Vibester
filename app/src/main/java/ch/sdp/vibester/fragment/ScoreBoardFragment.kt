@@ -36,6 +36,7 @@ class ScoreBoardFragment : Fragment(), OnItemClickListener {
     private var players: MutableList<User> = mutableListOf()
     private var userScoreboardAdapter: UserScoreboardAdapter? = null
     private var genre: String = ""
+    private var testView: View? = null
 
     @Inject
     lateinit var imageGetter: ImageGetter
@@ -50,6 +51,8 @@ class ScoreBoardFragment : Fragment(), OnItemClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val ctx = view.context
+
+        testView = view
 
         view.findViewById<Button>(R.id.scoreboard_kpopButton).setOnClickListener { setGenreListeners(view, "Kpop") }
         view.findViewById<Button>(R.id.scoreboard_rockButton).setOnClickListener {setGenreListeners(view, "Rock") }
@@ -109,7 +112,7 @@ class ScoreBoardFragment : Fragment(), OnItemClickListener {
 
     private fun showPlayersPosition(players: MutableList<User>?) {
         userScoreboardAdapter = UserScoreboardAdapter(players!!, genre, this, imageGetter)
-        requireView().findViewById<RecyclerView>(R.id.recycler_view)!!.adapter = userScoreboardAdapter
+        testView!!.findViewById<RecyclerView>(R.id.recycler_view)!!.adapter = userScoreboardAdapter
     }
 
     /**

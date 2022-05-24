@@ -18,7 +18,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.ItunesMusicApi
-import ch.sdp.vibester.helper.IntentSwitcher
+import ch.sdp.vibester.helper.Helper
 import ch.sdp.vibester.model.Song
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import okhttp3.OkHttpClient
@@ -54,9 +54,7 @@ class DownloadActivity : AppCompatActivity() {
             downloadListener(songNameView)
         }
 
-        findViewById<FloatingActionButton>(R.id.download_returnToMain).setOnClickListener {
-            IntentSwitcher.switch(this, MainActivity::class.java)
-        }
+        Helper().setReturnToMainListener(findViewById<FloatingActionButton>(R.id.download_returnToMain), this)
 
         val broadcast = object:BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {

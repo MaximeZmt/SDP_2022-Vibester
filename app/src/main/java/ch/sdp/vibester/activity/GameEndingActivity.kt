@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
 import ch.sdp.vibester.database.AppPreferences
-import ch.sdp.vibester.helper.IntentSwitcher
+import ch.sdp.vibester.helper.Helper
 import ch.sdp.vibester.model.SongListAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -51,9 +51,7 @@ class GameEndingActivity : AppCompatActivity() {
 
         setUpRecyclerView()
 
-        findViewById<FloatingActionButton>(R.id.end_returnToMain).setOnClickListener {
-                IntentSwitcher.switch(this, MainActivity::class.java)
-            }
+        Helper().setReturnToMainListener(findViewById<FloatingActionButton>(R.id.end_returnToMain), this)
     }
 
     private fun setUpRecyclerView() {

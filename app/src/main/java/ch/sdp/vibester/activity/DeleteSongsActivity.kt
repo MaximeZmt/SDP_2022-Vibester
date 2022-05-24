@@ -14,7 +14,7 @@ import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.TextView
 import android.widget.Toast
 import ch.sdp.vibester.R
-import ch.sdp.vibester.helper.IntentSwitcher
+import ch.sdp.vibester.helper.Helper
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.io.*
 /**
@@ -28,9 +28,7 @@ class DeleteSongsActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_delete_songs)
 
-        findViewById<FloatingActionButton>(R.id.delete_returnToMain).setOnClickListener {
-            IntentSwitcher.switch(this, MainActivity::class.java)
-        }
+        Helper().setReturnToMainListener(findViewById<FloatingActionButton>(R.id.delete_returnToMain), this)
 
         val layout: LinearLayout = findViewById(R.id.delete_songs_linear)
         generateButtons(layout)

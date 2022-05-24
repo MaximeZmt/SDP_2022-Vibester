@@ -5,8 +5,7 @@
     android:layout_height="match_parent"
     android:id="@+id/fragment_search_user"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/floral_white"
-    tools:context=".fragment.SearchUserFragment">
+    android:background="@color/floral_white">
 
     <RelativeLayout
         android:id="@+id/search_tool"

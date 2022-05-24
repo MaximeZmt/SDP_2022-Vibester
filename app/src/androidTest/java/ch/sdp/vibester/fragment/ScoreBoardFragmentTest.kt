@@ -1,5 +1,5 @@
 package ch.sdp.vibester.fragment
-/*
+
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
@@ -102,5 +102,3 @@ class ScoreBoardFragmentTest {
         onView(withId(R.id.scoreboard_btsButton)).perform(click())
     }
 }
-
- */

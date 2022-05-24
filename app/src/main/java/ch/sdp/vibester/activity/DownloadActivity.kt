@@ -45,10 +45,8 @@ class DownloadActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_download)
 
-
         val songNameView = findViewById<TextView>(R.id.download_songName)
         val downloadButton = findViewById<Button>(R.id.download_downloadsong)
-
 
         downloadButton.setOnClickListener {
             downloadListener(songNameView)
@@ -134,8 +132,7 @@ class DownloadActivity : AppCompatActivity() {
      * Checks if the required app permissions are already given. If not, request those permissions.
      */
     private fun checkPermissionsAndDownload() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
-            Build.VERSION.SDK_INT <  Build.VERSION_CODES.Q) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && Build.VERSION.SDK_INT <  Build.VERSION_CODES.Q) {
             if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
                 requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), STORAGE_PERMISSION_CODE)
             } else { downloadId = startDownload() }

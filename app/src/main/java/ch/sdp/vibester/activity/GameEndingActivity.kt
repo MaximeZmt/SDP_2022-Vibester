@@ -14,12 +14,13 @@ import ch.sdp.vibester.R
 import ch.sdp.vibester.database.AppPreferences
 import ch.sdp.vibester.helper.Helper
 import ch.sdp.vibester.model.SongListAdapter
+import ch.sdp.vibester.user.OnItemClickListener
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 /**
  * Game ending activity with game stats and list of songs quessed correctly/wrong
  */
-class GameEndingActivity : AppCompatActivity() {
+class GameEndingActivity : AppCompatActivity(), OnItemClickListener {
 
     private val endStatArrayList = arrayListOf(R.id.end_stat1, R.id.end_stat2, R.id.end_stat3, R.id.end_stat4)
 
@@ -59,7 +60,7 @@ class GameEndingActivity : AppCompatActivity() {
         recyclerView!!.setHasFixedSize(true)
         recyclerView!!.layoutManager = LinearLayoutManager(this)
 
-        songListAdapter = SongListAdapter(incorrectSongList, correctSongList)
+        songListAdapter = SongListAdapter(incorrectSongList, correctSongList, this)
         recyclerView!!.adapter = songListAdapter
     }
 
@@ -137,5 +138,9 @@ class GameEndingActivity : AppCompatActivity() {
                 i += 1
             }
         }
+    }
+
+    override fun onItemClick(position: Int) {
+        TODO("Not yet implemented")
     }
 }

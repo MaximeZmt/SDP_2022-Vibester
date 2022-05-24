@@ -102,7 +102,7 @@ class ScoreBoardFragment : Fragment(R.layout.fragment_scoreboard), OnItemClickLi
 
     private fun showPlayersPosition(players: MutableList<User>?) {
         userScoreboardAdapter = UserScoreboardAdapter(players!!, genre, this, imageGetter)
-        requireView().findViewById<RecyclerView>(R.id.recycler_view)!!.adapter = userScoreboardAdapter
+        view?.findViewById<RecyclerView>(R.id.recycler_view)!!.adapter = userScoreboardAdapter
     }
 
     /**

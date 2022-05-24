@@ -116,7 +116,7 @@ class ScoreBoardFragment : Fragment(R.layout.fragment_scoreboard), OnItemClickLi
         startActivity(intent)
     }
 
-    private fun setGenreListeners(view:View, genre:String){
+    private fun setGenreListeners(view: View, genre: String){
         this.genre = genre
         selectScoreboard(view)
     }

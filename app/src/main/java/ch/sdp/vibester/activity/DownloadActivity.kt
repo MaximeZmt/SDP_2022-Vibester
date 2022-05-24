@@ -62,11 +62,7 @@ class DownloadActivity : AppCompatActivity() {
             override fun onReceive(context: Context?, intent: Intent?) {
                 val id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
                 if (id == downloadId) {
-                    alert(
-                        getString(R.string.download_download_complete),
-                        getString(R.string.download_try_another),
-                        songNameView
-                    )
+                    alert(getString(R.string.download_download_complete), getString(R.string.download_try_another), songNameView)
                 }
             }
         }

@@ -29,7 +29,7 @@ import javax.inject.Inject
  * Search for users based on their usernames.
  */
 @AndroidEntryPoint
-class SearchUserFragment : Fragment(), OnItemClickListener {
+class SearchUserFragment : Fragment(R.layout.fragment_search_user), OnItemClickListener {
 
     @Inject
     lateinit var usersRepo: DataGetter

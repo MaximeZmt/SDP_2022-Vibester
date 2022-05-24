@@ -51,29 +51,33 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
         savedInstanceState: Bundle?
     ): View? {
         viewfrag = inflater.inflate(R.layout.fragment_game_setup, container, false)
-        val ctx = inflater.context
-
-        viewfrag!!.findViewById<Button>(R.id.local_buzzer_game_button).setOnClickListener(this)
-        viewfrag!!.findViewById<Button>(R.id.local_typing_game_button).setOnClickListener(this)
-        viewfrag!!.findViewById<Button>(R.id.local_lyrics_game_button).setOnClickListener(this)
-        viewfrag!!.findViewById<Button>(R.id.online_buzzer_game_button).setOnClickListener(this)
-        viewfrag!!.findViewById<Button>(R.id.kpopButton).setOnClickListener(this)
-        viewfrag!!.findViewById<Button>(R.id.rockButton).setOnClickListener(this)
-        viewfrag!!.findViewById<Button>(R.id.btsButton).setOnClickListener(this)
-        viewfrag!!.findViewById<Button>(R.id.topTracksButton).setOnClickListener(this)
-        viewfrag!!.findViewById<Button>(R.id.imagDragonsButton).setOnClickListener(this)
-        viewfrag!!.findViewById<Button>(R.id.billieEilishButton).setOnClickListener(this)
-        viewfrag!!.findViewById<Button>(R.id.difficulty_proceed).setOnClickListener(this)
-        viewfrag!!.findViewById<Button>(R.id.game_setup_has_internet).setOnClickListener(this)
-        updateInternet(viewfrag!!.findViewById<Button>(R.id.game_setup_has_internet))
-
-        searchArtistEditable = viewfrag!!.findViewById<EditText>(R.id.searchArtist).text
-        viewfrag!!.findViewById<Button>(R.id.validateSearch).setOnClickListener(this)
-
-        setReturnBtnListener(viewfrag!!)
-        setSpinnerListener(viewfrag!!, ctx, R.id.difficulty_spinner, R.array.difficulties_name)
-        setSpinnerListener(viewfrag!!, ctx, R.id.size_spinner, R.array.game_size_options)
         return viewfrag
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val ctx = view.context
+
+        view.findViewById<Button>(R.id.local_buzzer_game_button).setOnClickListener(this)
+        view.findViewById<Button>(R.id.local_typing_game_button).setOnClickListener(this)
+        view.findViewById<Button>(R.id.local_lyrics_game_button).setOnClickListener(this)
+        view.findViewById<Button>(R.id.online_buzzer_game_button).setOnClickListener(this)
+        view.findViewById<Button>(R.id.kpopButton).setOnClickListener(this)
+        view.findViewById<Button>(R.id.rockButton).setOnClickListener(this)
+        view.findViewById<Button>(R.id.btsButton).setOnClickListener(this)
+        view.findViewById<Button>(R.id.topTracksButton).setOnClickListener(this)
+        view.findViewById<Button>(R.id.imagDragonsButton).setOnClickListener(this)
+        view.findViewById<Button>(R.id.billieEilishButton).setOnClickListener(this)
+        view.findViewById<Button>(R.id.difficulty_proceed).setOnClickListener(this)
+        view.findViewById<Button>(R.id.game_setup_has_internet).setOnClickListener(this)
+        updateInternet(view.findViewById<Button>(R.id.game_setup_has_internet))
+
+        searchArtistEditable = view.findViewById<EditText>(R.id.searchArtist).text
+        view.findViewById<Button>(R.id.validateSearch).setOnClickListener(this)
+
+        setReturnBtnListener(view)
+        setSpinnerListener(view, ctx, R.id.difficulty_spinner, R.array.difficulties_name)
+        setSpinnerListener(view, ctx, R.id.size_spinner, R.array.game_size_options)
     }
 
     override fun onResume() {

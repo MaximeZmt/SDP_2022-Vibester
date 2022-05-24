@@ -31,7 +31,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ScoreBoardFragment : Fragment(), OnItemClickListener, View.OnClickListener {
+class ScoreBoardFragment : Fragment(R.layout.fragment_scoreboard), OnItemClickListener {
     private val dbRef: DatabaseReference = Database.get().getReference("users")
     private var players: MutableList<User> = mutableListOf()
     private var userScoreboardAdapter: UserScoreboardAdapter? = null
@@ -40,29 +40,24 @@ class ScoreBoardFragment : Fragment(), OnItemClickListener, View.OnClickListener
     @Inject
     lateinit var imageGetter: ImageGetter
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_scoreboard, container, false)
-        val ctx = inflater.context
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val ctx = view.context
 
-        view.findViewById<Button>(R.id.scoreboard_kpopButton).setOnClickListener(this)
-        view.findViewById<Button>(R.id.scoreboard_rockButton).setOnClickListener(this)
-        view.findViewById<Button>(R.id.scoreboard_btsButton).setOnClickListener(this)
-        view.findViewById<Button>(R.id.scoreboard_topTracksButton).setOnClickListener(this)
-        view.findViewById<Button>(R.id.scoreboard_imagDragonsButton).setOnClickListener(this)
-        view.findViewById<Button>(R.id.scoreboard_billieEilishButton).setOnClickListener(this)
+        view.findViewById<Button>(R.id.scoreboard_kpopButton).setOnClickListener { setGenreListeners(view, "Kpop") }
+        view.findViewById<Button>(R.id.scoreboard_rockButton).setOnClickListener {setGenreListeners(view, "Rock") }
+        view.findViewById<Button>(R.id.scoreboard_btsButton).setOnClickListener { setGenreListeners(view, "BTS") }
+        view.findViewById<Button>(R.id.scoreboard_topTracksButton).setOnClickListener{ setGenreListeners(view, "top tracks") }
+        view.findViewById<Button>(R.id.scoreboard_imagDragonsButton).setOnClickListener{ setGenreListeners(view, "Imagine Dragons") }
+        view.findViewById<Button>(R.id.scoreboard_billieEilishButton).setOnClickListener { setGenreListeners(view, "Billie Eillish") }
         setupRecycleView(view, ctx)
-
-        return view
     }
 
-    private fun selectScoreboard() {
+    private fun selectScoreboard(view: View) {
         val sortedBy = "scores/$genre"
 
-        requireView().findViewById<ConstraintLayout>(R.id.genrePerScoreboard).visibility = GONE
-        requireView().findViewById<NestedScrollView>(R.id.scoreboard_content_scrolling).visibility = VISIBLE
+        view.findViewById<ConstraintLayout>(R.id.genrePerScoreboard).visibility = GONE
+        view.findViewById<NestedScrollView>(R.id.scoreboard_content_scrolling).visibility = VISIBLE
 
         loadPlayersSortedBy(sortedBy)
     }
@@ -121,28 +116,8 @@ class ScoreBoardFragment : Fragment(), OnItemClickListener, View.OnClickListener
         startActivity(intent)
     }
 
-    override fun onClick(v: View?) {
-            when(v!!.id) {
-                R.id.scoreboard_btsButton -> {
-                    genre = "BTS"; selectScoreboard()
-                }
-                R.id.scoreboard_kpopButton -> {
-                    genre = "kpop"; selectScoreboard()
-                }
-                R.id.scoreboard_imagDragonsButton -> {
-                    genre = "Imagine Dragons"; selectScoreboard()
-                }
-                R.id.scoreboard_billieEilishButton -> {
-                    genre = "Billie Eilish"; selectScoreboard()
-                }
-                R.id.scoreboard_rockButton -> {
-                    genre = "rock";selectScoreboard()
-                }
-                R.id.scoreboard_topTracksButton -> {
-                    genre = "top tracks";selectScoreboard()
-                }
-
-            }
-
+    private fun setGenreListeners(view: View, genre: String){
+        this.genre = genre
+        selectScoreboard(view)
     }
 }

@@ -58,9 +58,9 @@ class DownloadActivity : AppCompatActivity() {
             IntentSwitcher.switch(this, MainActivity::class.java)
         }
 
-        var broadcast = object:BroadcastReceiver() {
+        val broadcast = object:BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
-                var id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
+                val id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
                 if (id == downloadId) {
                     alert(
                         getString(R.string.download_download_complete),
@@ -190,7 +190,7 @@ class DownloadActivity : AppCompatActivity() {
      * Indicator of if the song already exists or not.
      */
     private fun checkExistingSong(): Boolean {
-        var existing = File(applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "extract_of_$songName")
+        val existing = File(applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "extract_of_$songName")
         return existing.exists()
     }
 
@@ -199,7 +199,7 @@ class DownloadActivity : AppCompatActivity() {
      * If the file does not exist, it is created.
      */
     private fun record() {
-        var records = File(applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "records.txt")
+        val records = File(applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "records.txt")
 
         if (!records.exists()) {
             records.createNewFile()
@@ -213,7 +213,7 @@ class DownloadActivity : AppCompatActivity() {
      * Order of storage: Track name - artist name - artwork URL - preview URL.
      */
     private fun recordProperties() {
-        var properties = File(applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "properties.txt")
+        val properties = File(applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "properties.txt")
 
         if (!properties.exists()) {
             properties.createNewFile()

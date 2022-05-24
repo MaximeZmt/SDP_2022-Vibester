@@ -83,9 +83,7 @@ class DownloadActivity : AppCompatActivity() {
 
             if (checkExistingSong()) {
                 alert(getString(R.string.download_already_done), getString(R.string.download_try_different), songView)
-            } else {
-                getAndDownload(songView)
-            }
+            } else { getAndDownload(songView) }
         }
     }
 
@@ -131,9 +129,7 @@ class DownloadActivity : AppCompatActivity() {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 downloadId = startDownload()
             }
-        } else {
-            Toast.makeText(this, getString(R.string.download_permission_denied), Toast.LENGTH_LONG).show()
-        }
+        } else { Toast.makeText(this, getString(R.string.download_permission_denied), Toast.LENGTH_LONG).show() }
     }
 
     /**
@@ -144,12 +140,8 @@ class DownloadActivity : AppCompatActivity() {
             Build.VERSION.SDK_INT <  Build.VERSION_CODES.Q) {
             if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
                 requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), STORAGE_PERMISSION_CODE)
-            } else {
-                downloadId = startDownload()
-            }
-        } else {
-            downloadId = startDownload()
-        }
+            } else { downloadId = startDownload() }
+        } else { downloadId = startDownload() }
     }
 
     /**
@@ -166,9 +158,7 @@ class DownloadActivity : AppCompatActivity() {
             .setAllowedOverRoaming(true)
             .setDescription("Downloading extract of the song + $songName")
             .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-            .setDestinationInExternalFilesDir(this,
-            Environment.DIRECTORY_DOWNLOADS,
-            "extract_of_$songName")
+            .setDestinationInExternalFilesDir(this, Environment.DIRECTORY_DOWNLOADS, "extract_of_$songName")
 
         val downloader = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         return downloader.enqueue(request)
@@ -192,6 +182,7 @@ class DownloadActivity : AppCompatActivity() {
         if (!records.exists()) {
             records.createNewFile()
         }
+
         records.appendText("$songName\n")
         recordProperties()
     }
@@ -207,11 +198,7 @@ class DownloadActivity : AppCompatActivity() {
             properties.createNewFile()
         }
 
-        val trackName = song.getTrackName()
-        val artistName = song.getArtistName()
-        val artworkURL = song.getArtworkUrl()
-        val previewURL = song.getPreviewUrl()
-        properties.appendText("$trackName - $artistName - $artworkURL - $previewURL\n")
+        properties.appendText("${song.getTrackName()} - ${song.getArtistName()} - ${song.getArtworkUrl()} - ${song.getPreviewUrl()}\n")
     }
 
     fun switchToDeleteSongs(view: View) {

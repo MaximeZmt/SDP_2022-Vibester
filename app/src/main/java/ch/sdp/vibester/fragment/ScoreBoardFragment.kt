@@ -31,7 +31,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ScoreBoardFragment : Fragment(R.layout.fragment_scoreboard), OnItemClickListener, View.OnClickListener {
+class ScoreBoardFragment : Fragment(R.layout.fragment_scoreboard), OnItemClickListener {
     private val dbRef: DatabaseReference = Database.get().getReference("users")
     private var players: MutableList<User> = mutableListOf()
     private var userScoreboardAdapter: UserScoreboardAdapter? = null
@@ -44,12 +44,12 @@ class ScoreBoardFragment : Fragment(R.layout.fragment_scoreboard), OnItemClickLi
         super.onViewCreated(view, savedInstanceState)
         val ctx = view.context
 
-        view.findViewById<Button>(R.id.scoreboard_kpopButton).setOnClickListener(this)
-        view.findViewById<Button>(R.id.scoreboard_rockButton).setOnClickListener(this)
-        view.findViewById<Button>(R.id.scoreboard_btsButton).setOnClickListener(this)
-        view.findViewById<Button>(R.id.scoreboard_topTracksButton).setOnClickListener(this)
-        view.findViewById<Button>(R.id.scoreboard_imagDragonsButton).setOnClickListener(this)
-        view.findViewById<Button>(R.id.scoreboard_billieEilishButton).setOnClickListener(this)
+        view.findViewById<Button>(R.id.scoreboard_kpopButton).setOnClickListener { setGenreListeners(view, "Kpop") }
+        view.findViewById<Button>(R.id.scoreboard_rockButton).setOnClickListener {setGenreListeners(view, "Rock") }
+        view.findViewById<Button>(R.id.scoreboard_btsButton).setOnClickListener { setGenreListeners(view, "BTS") }
+        view.findViewById<Button>(R.id.scoreboard_topTracksButton).setOnClickListener{ setGenreListeners(view, "top tracks") }
+        view.findViewById<Button>(R.id.scoreboard_imagDragonsButton).setOnClickListener{ setGenreListeners(view, "Imagine Dragons") }
+        view.findViewById<Button>(R.id.scoreboard_billieEilishButton).setOnClickListener { setGenreListeners(view, "Billie Eillish") }
         setupRecycleView(view, ctx)
     }
 
@@ -116,27 +116,6 @@ class ScoreBoardFragment : Fragment(R.layout.fragment_scoreboard), OnItemClickLi
         startActivity(intent)
     }
 
-    override fun onClick(v: View?) {
-            when(v!!.id) {
-                R.id.scoreboard_btsButton -> {
-                    genre = "BTS"; selectScoreboard(v)
-                }
-                R.id.scoreboard_kpopButton -> {
-                    genre = "kpop"; selectScoreboard(v)
-                }
-                R.id.scoreboard_imagDragonsButton -> {
-                    genre = "Imagine Dragons"; selectScoreboard(v)
-                }
-                R.id.scoreboard_billieEilishButton -> {
-                    genre = "Billie Eilish"; selectScoreboard(v)
-                }
-                R.id.scoreboard_rockButton -> {
-                    genre = "rock"; selectScoreboard(v)
-                }
-                R.id.scoreboard_topTracksButton -> {
-                    genre = "top tracks"; selectScoreboard(v)
-                }
-            }
     private fun setGenreListeners(view:View, genre:String){
         this.genre = genre
         selectScoreboard(view)

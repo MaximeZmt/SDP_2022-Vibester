@@ -137,5 +137,8 @@ class ScoreBoardFragment : Fragment(R.layout.fragment_scoreboard), OnItemClickLi
                     genre = "top tracks"; selectScoreboard(v)
                 }
             }
+    private fun setGenreListeners(view:View, genre:String){
+        this.genre = genre
+        selectScoreboard(view)
     }
 }

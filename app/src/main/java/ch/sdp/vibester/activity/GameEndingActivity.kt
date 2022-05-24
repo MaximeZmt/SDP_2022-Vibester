@@ -1,41 +1,25 @@
 package ch.sdp.vibester.activity
 
-import android.Manifest
-import android.app.DownloadManager
-import android.content.BroadcastReceiver
-import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
-import android.content.pm.PackageManager
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.os.Environment
 import android.view.Gravity
 import android.view.View
 import android.view.Window
 import android.widget.TableRow
 import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
-import ch.sdp.vibester.api.ItunesMusicApi
 import ch.sdp.vibester.database.AppPreferences
 import ch.sdp.vibester.helper.Helper
-import ch.sdp.vibester.model.Song
 import ch.sdp.vibester.model.SongListAdapter
 import ch.sdp.vibester.user.OnItemClickListener
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import okhttp3.OkHttpClient
-import java.io.File
-import java.lang.IllegalArgumentException
 
 /**
  * Game ending activity with game stats and list of songs quessed correctly/wrong
  */
-class GameEndingActivity : AppCompatActivity(), OnItemClickListener {
+class GameEndingActivity : DownloadFunctionalityActivity(), OnItemClickListener {
 
     private val endStatArrayList = arrayListOf(R.id.end_stat1, R.id.end_stat2, R.id.end_stat3, R.id.end_stat4)
 
@@ -46,17 +30,6 @@ class GameEndingActivity : AppCompatActivity(), OnItemClickListener {
 
     lateinit var songListAdapter: SongListAdapter
     private var recyclerView: RecyclerView? = null
-
-    //Companion object to indicate when the download completes.
-    companion object {
-        var downloadComplete = false
-        var downloadStarted = false
-    }
-
-    private val STORAGE_PERMISSION_CODE = 1000
-    private lateinit var song: Song
-    private lateinit var songName: String
-    private var downloadId: Long = 0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -80,15 +53,7 @@ class GameEndingActivity : AppCompatActivity(), OnItemClickListener {
 
         Helper().setReturnToMainListener(findViewById<FloatingActionButton>(R.id.end_returnToMain), this)
 
-        val broadcast = object: BroadcastReceiver() {
-            override fun onReceive(context: Context?, intent: Intent?) {
-                val id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
-                if (id == downloadId) {
-                    alert(getString(R.string.download_download_complete))
-                }
-            }
-        }
-        registerReceiver(broadcast, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
+        createDownloadReceiver(null)
     }
 
     private fun setUpRecyclerView() {
@@ -178,91 +143,8 @@ class GameEndingActivity : AppCompatActivity(), OnItemClickListener {
 
     override fun onItemClick(position: Int) {
         val songList = incorrectSongList + correctSongList
-        downloadListener(songList[position])
+        downloadListener(null, songList[position])
     }
 
-    private fun alert(toast: String) {
-        downloadComplete = true
-        downloadStarted = false
-        Toast.makeText(applicationContext, toast, Toast.LENGTH_LONG).show()
-    }
 
-    /**
-     * Function that handles deletion button pushes.
-     */
-    private fun downloadListener(songName0: String) {
-        if (downloadStarted) {
-            Toast.makeText(applicationContext, getString(R.string.download_already_downloading), Toast.LENGTH_LONG).show()
-        } else {
-            downloadStarted = true
-            downloadComplete = false
-            songName = songName0
-
-            if (checkExistingSong()) {
-                alert(getString(R.string.download_already_done))
-            } else { getAndDownload() }
-        }
-    }
-
-    private fun checkExistingSong(): Boolean {
-        val existing = File(applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "extract_of_$songName")
-        return existing.exists()
-    }
-
-    private fun getAndDownload() {
-        val songFuture = ItunesMusicApi.querySong(songName, OkHttpClient(), 1)
-        try {
-            song = Song.singleSong(songFuture.get())
-            songName = song.getTrackName().lowercase() + " - " + song.getArtistName().lowercase()
-            checkPermissionsAndDownload()
-        } catch (e: IllegalArgumentException) {
-            alert(getString(R.string.download_unable_to_find))
-        }
-    }
-
-    private fun checkPermissionsAndDownload() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && Build.VERSION.SDK_INT <  Build.VERSION_CODES.Q) {
-            if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-                requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), STORAGE_PERMISSION_CODE)
-            } else { downloadId = startDownload() }
-        } else { downloadId = startDownload() }
-    }
-
-    private fun startDownload(): Long {
-        record()
-        val request = DownloadManager.Request(Uri.parse(song.getPreviewUrl()))
-        request.setAllowedNetworkTypes(
-            DownloadManager.Request.NETWORK_MOBILE
-                    or DownloadManager.Request.NETWORK_WIFI
-        )
-            .setTitle("extract_of_$songName")
-            .setAllowedOverRoaming(true)
-            .setDescription("Downloading extract of the song + $songName")
-            .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-            .setDestinationInExternalFilesDir(this, Environment.DIRECTORY_DOWNLOADS, "extract_of_$songName")
-
-        val downloader = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
-        return downloader.enqueue(request)
-    }
-
-    private fun record() {
-        val records = File(applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "records.txt")
-
-        if (!records.exists()) {
-            records.createNewFile()
-        }
-
-        records.appendText("$songName\n")
-        recordProperties()
-    }
-
-    private fun recordProperties() {
-        val properties = File(applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "properties.txt")
-
-        if (!properties.exists()) {
-            properties.createNewFile()
-        }
-
-        properties.appendText("${song.getTrackName()} - ${song.getArtistName()} - ${song.getArtworkUrl()} - ${song.getPreviewUrl()}\n")
-    }
 }

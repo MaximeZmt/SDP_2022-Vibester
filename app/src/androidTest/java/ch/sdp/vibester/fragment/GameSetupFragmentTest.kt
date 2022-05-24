@@ -60,7 +60,19 @@ class GameSetupFragmentTest {
     }
 
     @Test
-    fun returnFromGenreToGame(){
+    fun internetButtonClick() {
+        InternetState.disableForceOnline()
+        onView(withId(R.id.game_setup_has_internet)).perform(click())
+        onView(withId(R.id.game_setup_has_internet)).check(matches(withText("Internet is on")))
+        InternetState.forceOffline()
+        onView(withId(R.id.game_setup_has_internet)).perform(click())
+        onView(withId(R.id.game_setup_has_internet)).check(matches(withText("Internet is off")))
+    }
+
+    @Test
+    fun returnFromGenreToGame() {
+        InternetState.forceOnline()
+        onView(withId(R.id.game_setup_has_internet)).perform(click())
         onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
         onView(withId(R.id.chooseGame)).check(matches(withEffectiveVisibility(Visibility.GONE)))
         onView(withId(R.id.genrePerScoreboard)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)));
@@ -71,7 +83,9 @@ class GameSetupFragmentTest {
     }
 
     @Test
-    fun returnFromSettingToGenre(){
+    fun returnFromSettingToGenre() {
+        InternetState.forceOnline()
+        onView(withId(R.id.game_setup_has_internet)).perform(click())
         onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
         onView(withId(R.id.btsButton)).perform(click())
         onView(withId(R.id.genrePerScoreboard)).check(matches(withEffectiveVisibility(Visibility.GONE)))
@@ -84,6 +98,8 @@ class GameSetupFragmentTest {
 
     @Test
     fun checkCustomSelectEasy() {
+        InternetState.forceOnline()
+        onView(withId(R.id.game_setup_has_internet)).perform(click())
         onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
         onView(withId(R.id.btsButton)).perform(click())
         onView(withId(R.id.difficulty_spinner)).perform(click())
@@ -94,6 +110,8 @@ class GameSetupFragmentTest {
 
     @Test
     fun checkCustomSelectMedium() {
+        InternetState.forceOnline()
+        onView(withId(R.id.game_setup_has_internet)).perform(click())
         onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
         onView(withId(R.id.btsButton)).perform(click())
         onView(withId(R.id.difficulty_spinner)).perform(click())
@@ -104,6 +122,8 @@ class GameSetupFragmentTest {
 
     @Test
     fun checkCustomSelectHard() {
+        InternetState.forceOnline()
+        onView(withId(R.id.game_setup_has_internet)).perform(click())
         onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
         onView(withId(R.id.btsButton)).perform(click())
         onView(withId(R.id.difficulty_spinner)).perform(click())
@@ -114,6 +134,8 @@ class GameSetupFragmentTest {
 
     @Test
     fun checkBTSBuzzerEasyProceed() {
+        InternetState.forceOnline()
+        onView(withId(R.id.game_setup_has_internet)).perform(click())
         onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
         onView(withId(R.id.btsButton)).perform(click())
         onView(withId(R.id.difficulty_spinner)).perform(click())
@@ -126,6 +148,8 @@ class GameSetupFragmentTest {
 
     @Test
     fun checkBTSTypingEasyProceed() {
+        InternetState.forceOnline()
+        onView(withId(R.id.game_setup_has_internet)).perform(click())
         onView(withId(R.id.local_typing_game_button)).perform(scrollTo(), click())
         onView(withId(R.id.btsButton)).perform(click())
         onView(withId(R.id.difficulty_spinner)).perform(click())
@@ -138,6 +162,8 @@ class GameSetupFragmentTest {
 
     @Test
     fun checkBTSLyricsEasyProceed() {
+        InternetState.forceOnline()
+        onView(withId(R.id.game_setup_has_internet)).perform(click())
         onView(withId(R.id.local_lyrics_game_button)).perform(scrollTo(), click())
         onView(withId(R.id.btsButton)).perform(click())
         onView(withId(R.id.difficulty_spinner)).perform(click())
@@ -150,12 +176,16 @@ class GameSetupFragmentTest {
 
     @Test
     fun checkBTSOnlineEasyProceed(){
+        InternetState.forceOnline()
+        onView(withId(R.id.game_setup_has_internet)).perform(click())
         onView(withId(R.id.online_buzzer_game_button)).perform(scrollTo(), click())
         intended(hasComponent(ChoosePartyRoomActivity::class.java.name))
     }
 
     @Test
     fun checkCustomSelectOne() {
+        InternetState.forceOnline()
+        onView(withId(R.id.game_setup_has_internet)).perform(click())
         onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
         onView(withId(R.id.btsButton)).perform(click())
         onView(withId(R.id.size_spinner)).perform(click())
@@ -166,6 +196,8 @@ class GameSetupFragmentTest {
 
     @Test
     fun checkCustomSelectTwo() {
+        InternetState.forceOnline()
+        onView(withId(R.id.game_setup_has_internet)).perform(click())
         onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
         onView(withId(R.id.btsButton)).perform(click())
         onView(withId(R.id.size_spinner)).perform(click())
@@ -176,6 +208,8 @@ class GameSetupFragmentTest {
 
     @Test
     fun checkCustomSelectThree() {
+        InternetState.forceOnline()
+        onView(withId(R.id.game_setup_has_internet)).perform(click())
         onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
         onView(withId(R.id.btsButton)).perform(click())
         onView(withId(R.id.size_spinner)).perform(click())
@@ -186,6 +220,8 @@ class GameSetupFragmentTest {
 
     @Test
     fun checkCustomSelectFour() {
+        InternetState.forceOnline()
+        onView(withId(R.id.game_setup_has_internet)).perform(click())
         onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
         onView(withId(R.id.btsButton)).perform(click())
         onView(withId(R.id.size_spinner)).perform(click())
@@ -196,6 +232,8 @@ class GameSetupFragmentTest {
 
     @Test
     fun checkCustomSelectFive() {
+        InternetState.forceOnline()
+        onView(withId(R.id.game_setup_has_internet)).perform(click())
         onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
         onView(withId(R.id.btsButton)).perform(click())
         onView(withId(R.id.size_spinner)).perform(click())
@@ -206,6 +244,8 @@ class GameSetupFragmentTest {
 
     @Test
     fun checkCustomSelectSix() {
+        InternetState.forceOnline()
+        onView(withId(R.id.game_setup_has_internet)).perform(click())
         onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
         onView(withId(R.id.btsButton)).perform(click())
         onView(withId(R.id.size_spinner)).perform(click())
@@ -216,6 +256,8 @@ class GameSetupFragmentTest {
 
     @Test
     fun checkCustomSelectSeven() {
+        InternetState.forceOnline()
+        onView(withId(R.id.game_setup_has_internet)).perform(click())
         onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
         onView(withId(R.id.btsButton)).perform(click())
         onView(withId(R.id.size_spinner)).perform(click())
@@ -226,6 +268,8 @@ class GameSetupFragmentTest {
 
     @Test
     fun checkCustomSelectEight() {
+        InternetState.forceOnline()
+        onView(withId(R.id.game_setup_has_internet)).perform(click())
         onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
         onView(withId(R.id.btsButton)).perform(click())
         onView(withId(R.id.size_spinner)).perform(click())
@@ -237,6 +281,8 @@ class GameSetupFragmentTest {
 
     @Test
     fun checkCustomSelectNine() {
+        InternetState.forceOnline()
+        onView(withId(R.id.game_setup_has_internet)).perform(click())
         onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
         onView(withId(R.id.btsButton)).perform(click())
         onView(withId(R.id.size_spinner)).perform(click())
@@ -247,6 +293,8 @@ class GameSetupFragmentTest {
 
     @Test
     fun checkCustomSelectTen() {
+        InternetState.forceOnline()
+        onView(withId(R.id.game_setup_has_internet)).perform(click())
         onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
         onView(withId(R.id.btsButton)).perform(click())
         onView(withId(R.id.size_spinner)).perform(click())
@@ -257,12 +305,16 @@ class GameSetupFragmentTest {
 
     @Test
     fun rockButtonClick() {
+        InternetState.forceOnline()
+        onView(withId(R.id.game_setup_has_internet)).perform(click())
         onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
         onView(withId(R.id.rockButton)).perform(click())
     }
 
     @Test
     fun topButtonClick() {
+        InternetState.forceOnline()
+        onView(withId(R.id.game_setup_has_internet)).perform(click())
         onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
         onView(withId(R.id.topTracksButton)).perform(click())
     }
@@ -275,35 +327,36 @@ class GameSetupFragmentTest {
 
     @Test
     fun billieEilishButtonClick() {
+        InternetState.forceOnline()
+        onView(withId(R.id.game_setup_has_internet)).perform(click())
         onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
         onView(withId(R.id.billieEilishButton)).perform(click())
     }
 
     @Test
     fun imagineDragonsButtonClick() {
+        InternetState.forceOnline()
+        onView(withId(R.id.game_setup_has_internet)).perform(click())
         onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
         onView(withId(R.id.imagDragonsButton)).perform(click())
     }
 
     @Test
     fun btsButtonClick() {
+        InternetState.forceOnline()
+        onView(withId(R.id.game_setup_has_internet)).perform(click())
         onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
         onView(withId(R.id.btsButton)).perform(click())
     }
 
     @Test
     fun customButtonClick() {
+        InternetState.forceOnline()
+        onView(withId(R.id.game_setup_has_internet)).perform(click())
         onView(withId(R.id.local_buzzer_game_button)).perform(scrollTo(), click())
         onView(withId(R.id.searchArtist)).perform(typeText("muse"), closeSoftKeyboard())
         onView(withId(R.id.validateSearch)).perform(scrollTo(), click())
     }
 
-    @Test
-    fun internetButtonClick() {
-        onView(withId(R.id.game_setup_has_internet)).check(matches(withText("Internet is on")))
-        InternetState.forceOffline()
-        onView(withId(R.id.game_setup_has_internet)).perform(click())
-        onView(withId(R.id.game_setup_has_internet)).check(matches(withText("Internet is off")))
-    }
 
 }

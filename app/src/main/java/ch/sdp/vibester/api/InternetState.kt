@@ -6,6 +6,7 @@ import android.net.ConnectivityManager
 class InternetState private constructor(){
     companion object{
         private var forceOffline: Boolean = false
+        private var forceOnline: Boolean = false
         private var hasAlreadyAccessedInternetOnce: Boolean = false
 
         /**
@@ -20,7 +21,7 @@ class InternetState private constructor(){
             if(networkInfo != null){
                 isNetwork = networkInfo.isConnected
             }
-            return isNetwork && !forceOffline
+            return (isNetwork && !forceOffline) || forceOnline
         }
 
         /**
@@ -28,6 +29,20 @@ class InternetState private constructor(){
          */
         fun forceOffline() {
            forceOffline = true
+        }
+
+        /**
+         * Force online answer from getInternetStatus
+         */
+        fun forceOnline() {
+            forceOnline = true
+        }
+
+        /**
+         * Disable force online answer from getInternetStatus
+         */
+        fun disableForceOnline() {
+            forceOnline = false
         }
 
         /**

@@ -263,7 +263,7 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
      */
     private fun updateInternet(view: View) {
         val btn: Button = view as Button
-        val isConncted = InternetState.getInternetStatus(context!!)
+        val isConncted = InternetState.getInternetStatus(requireContext())
         if(isConncted) {
             hasInternet = true
             btn.text = getString(R.string.GameSetup_internetSwitchOn)

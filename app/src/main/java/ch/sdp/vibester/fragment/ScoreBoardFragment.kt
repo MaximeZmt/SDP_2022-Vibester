@@ -53,7 +53,7 @@ class ScoreBoardFragment : Fragment(R.layout.fragment_scoreboard), OnItemClickLi
         setupRecycleView(view, ctx)
     }
 
-    private fun selectScoreboard(view:View) {
+    private fun selectScoreboard(view: View) {
         val sortedBy = "scores/$genre"
 
         view.findViewById<ConstraintLayout>(R.id.genrePerScoreboard).visibility = GONE

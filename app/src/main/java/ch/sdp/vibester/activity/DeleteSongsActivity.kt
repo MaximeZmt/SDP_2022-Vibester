@@ -39,17 +39,17 @@ class DeleteSongsActivity : AppCompatActivity() {
      * Assigns each button a call to the "deleteDownloadedSong" function as a listener.
      */
     private fun generateButtons(layout: LinearLayout) {
-        var records = File(applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "records.txt")
+        val records = File(applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "records.txt")
 
         if(!records.exists() || records.length() == 0L) {
             createNoSongsView(layout)
         } else {
-            var reader = BufferedReader(FileReader(records))
+            val reader = BufferedReader(FileReader(records))
             var currentLine = reader.readLine()
             var iterator = 0
 
             while(currentLine != null) {
-                var trimmed = currentLine.trim()
+                val trimmed = currentLine.trim()
                 if(trimmed.isNotEmpty()) {
                     val deleteButton = createButton(trimmed, iterator, layout)
                     layout.addView(deleteButton)
@@ -81,18 +81,18 @@ class DeleteSongsActivity : AppCompatActivity() {
      * from the text file which keeps track of all downloads.
      */
     private fun deleteDownloadedSong(btn: View, layout: LinearLayout): Boolean {
-        var records = File(applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "records.txt")
-        var tempRecords = File(applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "temp.txt")
+        val records = File(applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "records.txt")
+        val tempRecords = File(applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "temp.txt")
 
-        var recordReader = BufferedReader(FileReader(records))
-        var recordWriter = BufferedWriter(FileWriter(tempRecords, true))
+        val recordReader = BufferedReader(FileReader(records))
+        val recordWriter = BufferedWriter(FileWriter(tempRecords, true))
 
         var currentLine = recordReader.readLine()
-        var button: Button = btn as Button
+        val button: Button = btn as Button
         val buttonText = button.text.toString()
 
         while (currentLine != null) {
-            var trimmed = currentLine.trim()
+            val trimmed = currentLine.trim()
 
             if (trimmed == buttonText) {
                 currentLine = recordReader.readLine()
@@ -114,7 +114,7 @@ class DeleteSongsActivity : AppCompatActivity() {
         records.delete()
         if (tempRecords.renameTo(records) && removeFromProperties(buttonText)) {
             layout.removeView(btn)
-            var songToDelete = File(applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "extract_of_${button.text}")
+            val songToDelete = File(applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "extract_of_${button.text}")
             if (songToDelete.delete()) {
                 Toast.makeText(applicationContext, "Song successfully removed!", Toast.LENGTH_LONG).show()
                 return true
@@ -129,11 +129,11 @@ class DeleteSongsActivity : AppCompatActivity() {
      * @param buttonText: Text which contains song name - artist name
      */
     private fun removeFromProperties(buttonText: String): Boolean {
-        var properties = File(applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "properties.txt")
-        var tempProp = File(applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "tempProp.txt")
+        val properties = File(applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "properties.txt")
+        val tempProp = File(applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "tempProp.txt")
 
-        var propReader = BufferedReader(FileReader(properties))
-        var propWriter = BufferedWriter(FileWriter(tempProp, true))
+        val propReader = BufferedReader(FileReader(properties))
+        val propWriter = BufferedWriter(FileWriter(tempProp, true))
 
         var currentLine = propReader.readLine()
         val buttonSplit = buttonText.trim().split("-")
@@ -145,7 +145,7 @@ class DeleteSongsActivity : AppCompatActivity() {
          * We write every line on a new file except the one which we want to delete, thus we continue if we match.
          */
         while (currentLine != null) {
-            var trimmed = currentLine.trim()
+            val trimmed = currentLine.trim()
             val split = trimmed.split(" - ")
 
             if (split[0].trim().lowercase() == buttonSplit[0].trim().lowercase()

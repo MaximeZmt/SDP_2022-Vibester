@@ -17,7 +17,7 @@ class SongListAdapter constructor( private val incorrectSongList: ArrayList<Stri
     RecyclerView.Adapter<SongListAdapter.SongListViewHolder>() {
     private val songList: ArrayList<String> = arrayListOf()
 
-    init{
+    init {
         songList.addAll(incorrectSongList)
         songList.addAll(correctSongList)
     }
@@ -38,13 +38,11 @@ class SongListAdapter constructor( private val incorrectSongList: ArrayList<Stri
     /**
      * Get amount of songs displayed
      */
-    override fun getItemCount(): Int {
-        return songList.size
-    }
+    override fun getItemCount() = songList.size
 
 
     /**
-     * Customer ViewHolder class for SongList. Each item contains songname and a button.
+     * Customer ViewHolder class for SongList. Each item contains the name of the song and a button.
      */
     inner class SongListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(songName: String) {
@@ -58,7 +56,7 @@ class SongListAdapter constructor( private val incorrectSongList: ArrayList<Stri
             }
 
             // Make background red if song is guessed incorrectly
-            if(songName in incorrectSongList) {
+            if (songName in incorrectSongList) {
                 itemView.setBackgroundResource(R.color.light_coral)
             }
         }

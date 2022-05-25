@@ -23,23 +23,6 @@
         tools:layout_editor_absoluteX="0dp" />
 
     <Button
-        android:id="@+id/go_to_end"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/cg_blue"
-        android:elevation="10dp"
-        android:onClick="switchToEnding"
-        android:stateListAnimator="@null"
-        android:text="@string/go_to_end"
-        android:translationZ="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.9"
-        app:layout_constraintHorizontal_bias="0.1"/>
-
-    <Button
         android:id="@+id/skip_buzzer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

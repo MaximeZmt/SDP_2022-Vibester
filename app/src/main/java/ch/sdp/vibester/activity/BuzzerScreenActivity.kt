@@ -136,11 +136,11 @@ class BuzzerScreenActivity : GameActivity() {
     private fun endRound(gameManager: GameManager) {
         gameIsOn = false
         toggleBtnVisibility(R.id.nextSongBuzzer, true)
-        super.endRound(gameManager, this::testWinner)
-    }
-
-    private fun testWinner() {
-        scoreUpdater.computeWinner()
+        //super.endRound(gameManager, this::testWinner)
+        checkRunnable()
+        if (isEndGame(gameManager)) {
+            this.switchToEnding(gameManager)
+        }
     }
 
     /**
@@ -231,7 +231,6 @@ class BuzzerScreenActivity : GameActivity() {
                 }
             }
             checkAndStopPlayer(gameManager)
-            toggleBtnVisibility(R.id.go_to_end, true)
             setPressed(noBuzzerPressed) // reset the buzzer
             endRound(gameManager)
         }
@@ -293,7 +292,7 @@ class BuzzerScreenActivity : GameActivity() {
     /**
      * Fires an intent from the Gamescreen to the Ending Screen
      */
-    fun switchToEnding(view: View) {
+    fun switchToEnding(gameManager: GameManager) {
         checkAndStopPlayer(gameManager)
         val intent = Intent(this, GameEndingActivity::class.java)
 

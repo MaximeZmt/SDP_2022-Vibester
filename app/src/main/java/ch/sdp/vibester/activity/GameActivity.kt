@@ -179,7 +179,7 @@ open class GameActivity : AppCompatActivity() {
     /**
      * Function to check if the game has ended or not.
      */
-    private fun isEndGame(gameManager: GameManager): Boolean {
+    fun isEndGame(gameManager: GameManager): Boolean {
         return !gameManager.checkGameStatus() || !gameManager.setNextSong()
     }
 

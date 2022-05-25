@@ -20,7 +20,7 @@ class ProfileFollowingAdapter(
     private val following: MutableList<User>,
     val dataGetter: DataGetter,
     authenticator: FireBaseAuthenticator,
-    private val listener: OnItemClickListener,
+    private val listener: OnItemClickListener?,
 ): RecyclerView.Adapter<ProfileFollowingAdapter.ProfileFollowingViewHolder>() {
     private val currentUser = authenticator.getCurrUser()
 

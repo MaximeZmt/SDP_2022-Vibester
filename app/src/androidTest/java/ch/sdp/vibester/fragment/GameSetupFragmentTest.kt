@@ -64,6 +64,7 @@ class GameSetupFragmentTest {
         InternetState.disableForceOnline()
         onView(withId(R.id.game_setup_has_internet)).perform(click())
         onView(withId(R.id.game_setup_has_internet)).check(matches(withText("Internet is on")))
+
         InternetState.forceOffline()
         onView(withId(R.id.game_setup_has_internet)).perform(click())
         onView(withId(R.id.game_setup_has_internet)).check(matches(withText("Internet is off")))

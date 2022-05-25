@@ -31,18 +31,28 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ScoreBoardFragment : Fragment(R.layout.fragment_scoreboard), OnItemClickListener {
+class ScoreBoardFragment : Fragment(), OnItemClickListener {
     private val dbRef: DatabaseReference = Database.get().getReference("users")
     private var players: MutableList<User> = mutableListOf()
     private var userScoreboardAdapter: UserScoreboardAdapter? = null
     private var genre: String = ""
+    private var testView: View? = null
 
     @Inject
     lateinit var imageGetter: ImageGetter
 
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.fragment_scoreboard, container, false).rootView
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val ctx = view.context
+
+        testView = view
 
         view.findViewById<Button>(R.id.scoreboard_kpopButton).setOnClickListener { setGenreListeners(view, "Kpop") }
         view.findViewById<Button>(R.id.scoreboard_rockButton).setOnClickListener {setGenreListeners(view, "Rock") }
@@ -99,6 +109,7 @@ class ScoreBoardFragment : Fragment(R.layout.fragment_scoreboard), OnItemClickLi
         }
         return list
     }
+
 
     private fun showPlayersPosition(players: MutableList<User>, view: View) {
         userScoreboardAdapter = UserScoreboardAdapter(players, genre, this, imageGetter)

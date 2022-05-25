@@ -39,7 +39,7 @@ class LyricsBelongGameActivity : GameActivity() {
         val getIntent = intent.extras
         if (getIntent != null) {
             gameManager = getIntent.getSerializable("gameManager") as GameManager
-            findViewById<Button>(R.id.nextSongButton).setOnClickListener {
+            findViewById<Button>(R.id.nextSongLyrics).setOnClickListener {
                 startRound(ctx, gameManager)
             }
             findViewById<Button>(R.id.lyricMatchButton).setOnClickListener {
@@ -91,7 +91,7 @@ class LyricsBelongGameActivity : GameActivity() {
      */
     private fun startRound(ctx: Context, gameManager: GameManager) {
         toggleBtnVisibility(R.id.lyricMatchButton, false)
-        toggleBtnVisibility(R.id.nextSongButton, false)
+        toggleBtnVisibility(R.id.nextSongLyrics, false)
         song = gameManager.getCurrentSong()//Song.songBuilder("", "", gameManager.currentSong.getTrackName(), gameManager.currentSong.getArtistName())
 
         val frameLay = findViewById<FrameLayout>(R.id.LyricsSongQuestion)
@@ -104,7 +104,7 @@ class LyricsBelongGameActivity : GameActivity() {
 
     override fun endRound(gameManager: GameManager, callback: (() -> Unit)?) {
         super.endRound(gameManager, this::setScores)
-        toggleBtnVisibility(R.id.nextSongButton, true)
+        toggleBtnVisibility(R.id.nextSongLyrics, true)
     }
 
     /**

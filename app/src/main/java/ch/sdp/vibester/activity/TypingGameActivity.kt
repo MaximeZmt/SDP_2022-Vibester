@@ -44,6 +44,10 @@ class TypingGameActivity : GameActivity() {
         val guessLayout = findViewById<LinearLayout>(R.id.displayGuess)
         val inputTxt = findViewById<EditText>(R.id.yourGuessET)
         setGuessLayoutListener(inputTxt, guessLayout)
+
+        findViewById<Button>(R.id.skip_typing).setOnClickListener {
+            checkAnswer(ctx, null, gameManager)
+        }
     }
 
     /**
@@ -124,6 +128,9 @@ class TypingGameActivity : GameActivity() {
             gameManager.addWrongSong()
             hasWon(ctx, false, playedSong, gameManager)
         }
+        if (gameManager.playingMediaPlayer()) {
+            gameManager.stopMediaPlayer()
+        }
         endRound(gameManager)
     }
 
@@ -143,9 +150,6 @@ class TypingGameActivity : GameActivity() {
                 frameLay.setBackgroundColor(getColor(ctx, R.color.tiffany_blue))
                 guessLayout.removeAllViews()
                 guessLayout.addView(frameLay)
-                if (gameManager.playingMediaPlayer()) {
-                    gameManager.stopMediaPlayer()
-                }
                 checkAnswer(ctx, song, gameManager)
             }
         }

@@ -25,11 +25,8 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import io.mockk.every
 import io.mockk.mockk
 import org.hamcrest.CoreMatchers.not
-import org.junit.After
+import org.junit.*
 import org.junit.Assert.assertEquals
-import org.junit.Before
-import org.junit.Rule
-import org.junit.Test
 import org.junit.runner.RunWith
 
 
@@ -215,7 +212,7 @@ class LyricsBelongGameActivityTest {
         scn.onActivity { activityRule -> activityRule.testProgressBar() }
         Thread.sleep(1000)
 
-        onView(withId(R.id.nextSongButton)).check(matches(isDisplayed())).perform(click())
+        onView(withId(R.id.nextSongLyrics)).check(matches(isDisplayed())).perform(click())
         scn.onActivity { activityRule -> activityRule.testProgressBar() }
         Thread.sleep(1000)
 
@@ -231,6 +228,23 @@ class LyricsBelongGameActivityTest {
         Intents.intended(IntentMatchers.hasExtra("statNames", statNames))
         Intents.intended(IntentMatchers.hasExtra("statValues", statVal))
     }
+
+    @Test
+    fun skipLyricsTest() {
+        val ctx: Context = ApplicationProvider.getApplicationContext()
+        AppPreferences.init(ctx)
+        AppPreferences.setStr(ctx.getString(R.string.preferences_game_mode), "local_typing")
+        AppPreferences.setStr(ctx.getString(R.string.preferences_game_genre), "BTS")
+
+        createMockInvocation()
+        val gameManager = setGameManager(2)
+        val intent = Intent(ApplicationProvider.getApplicationContext(), LyricsBelongGameActivity::class.java)
+        intent.putExtra("gameManager", gameManager)
+        val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
+        onView(withId(R.id.skip_lyrics)).check(matches(isDisplayed())).perform(click())
+        assertEquals(true, onView(withId(R.id.nextSongLyrics)).check(matches(isDisplayed())))
+    }
+
     // FIXME: this test fails after implement QR code reader for no reason
 /*    @Test
     fun btnCheckVisibilityAfterSpeak() {

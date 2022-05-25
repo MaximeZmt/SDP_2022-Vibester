@@ -69,7 +69,7 @@ class ScoreBoardFragment : Fragment(), OnItemClickListener {
         view.findViewById<ConstraintLayout>(R.id.genrePerScoreboard).visibility = GONE
         view.findViewById<NestedScrollView>(R.id.scoreboard_content_scrolling).visibility = VISIBLE
 
-        loadPlayersSortedBy(sortedBy)
+        loadPlayersSortedBy(sortedBy, view)
     }
 
     private fun setupRecycleView(view:View, context: Context) {
@@ -80,7 +80,7 @@ class ScoreBoardFragment : Fragment(), OnItemClickListener {
         }
     }
 
-    private fun loadPlayersSortedBy(genre: String) {
+    private fun loadPlayersSortedBy(genre: String, view: View) {
         dbRef.orderByChild(genre)
             .addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshots: DataSnapshot) {
@@ -92,7 +92,7 @@ class ScoreBoardFragment : Fragment(), OnItemClickListener {
                 }
                 players = replaceRankingByScore(players)
                 players = players.sortedByDescending { it.ranking } as MutableList<User>
-                showPlayersPosition(players)
+                showPlayersPosition(players, view)
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -110,9 +110,10 @@ class ScoreBoardFragment : Fragment(), OnItemClickListener {
         return list
     }
 
-    private fun showPlayersPosition(players: MutableList<User>?) {
-        userScoreboardAdapter = UserScoreboardAdapter(players!!, genre, this, imageGetter)
-        testView!!.findViewById<RecyclerView>(R.id.recycler_view)!!.adapter = userScoreboardAdapter
+
+    private fun showPlayersPosition(players: MutableList<User>, view: View) {
+        userScoreboardAdapter = UserScoreboardAdapter(players, genre, this, imageGetter)
+        view.findViewById<RecyclerView>(R.id.recycler_view)!!.adapter = userScoreboardAdapter
     }
 
     /**

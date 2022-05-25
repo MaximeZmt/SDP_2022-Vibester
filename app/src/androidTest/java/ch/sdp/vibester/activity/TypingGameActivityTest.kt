@@ -261,15 +261,18 @@ class TypingGameActivityTest {
             """
 
         val songTest = Song.singleSong(inputTxt)
-        val gameManager = setGameManager()
-        gameManager.setNextSong()
+        val gameManager = setGameManager(2)
+        //gameManager.setNextSong()
+
+        createMockDataGetter()
+        createMockAuthenticator()
 
         val intent =
             Intent(ApplicationProvider.getApplicationContext(), TypingGameActivity::class.java)
         intent.putExtra("gameManager", gameManager)
         val scn: ActivityScenario<TypingGameActivity> = ActivityScenario.launch(intent)
         onView(withId(R.id.skip_typing)).check(matches(isDisplayed())).perform(click())
-        assertEquals(true, onView(withId(R.id.nextSongTyping)).check(matches(isDisplayed())))
+        onView(withId(R.id.nextSongTyping)).check(matches(isDisplayed()))
     }
 
     /**

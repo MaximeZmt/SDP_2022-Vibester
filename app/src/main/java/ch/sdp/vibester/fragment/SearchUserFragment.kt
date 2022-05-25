@@ -80,14 +80,6 @@ class SearchUserFragment : Fragment(R.layout.fragment_search_user), OnItemClickL
         })
     }
 
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_search_user, container, false)
-    }
-
     private fun setUpRecycleView(view: View) {
         view.findViewById<RecyclerView>(R.id.searchList).apply {
             layoutManager = LinearLayoutManager(context)

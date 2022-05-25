@@ -267,7 +267,7 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
         if(isConncted) {
             hasInternet = true
             btn.text = getString(R.string.GameSetup_internetSwitchOn)
-            btn.setBackgroundColor(context!!.getColor(R.color.maximum_yellow_red))
+            btn.setBackgroundColor(requireContext().getColor(R.color.maximum_yellow_red))
             viewfrag!!.findViewById<LinearLayout>(R.id.horilayer_multi).visibility = VISIBLE
             viewfrag!!.findViewById<LinearLayout>(R.id.horilayer_single).visibility = VISIBLE
             viewfrag!!.findViewById<TextView>(R.id.singleplayer_game_txt).visibility = VISIBLE
@@ -276,7 +276,7 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
         } else {
             hasInternet = false
             btn.text = getString(R.string.GameSetup_internetSwitchOff)
-            btn.setBackgroundColor(context!!.getColor(R.color.light_coral))
+            btn.setBackgroundColor(requireContext().getColor(R.color.light_coral))
             viewfrag!!.findViewById<LinearLayout>(R.id.horilayer_multi).visibility = GONE
             viewfrag!!.findViewById<LinearLayout>(R.id.horilayer_single).visibility = GONE
             viewfrag!!.findViewById<TextView>(R.id.singleplayer_game_txt).visibility = GONE

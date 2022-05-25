@@ -242,7 +242,7 @@ class LyricsBelongGameActivityTest {
         intent.putExtra("gameManager", gameManager)
         val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
         onView(withId(R.id.skip_lyrics)).check(matches(isDisplayed())).perform(click())
-        assertEquals(true, onView(withId(R.id.nextSongLyrics)).check(matches(isDisplayed())))
+        onView(withId(R.id.nextSongLyrics)).check(matches(isDisplayed()))
     }
 
     // FIXME: this test fails after implement QR code reader for no reason

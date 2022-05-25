@@ -96,6 +96,8 @@ class BuzzerScreenActivity : GameActivity() {
     /**
      * Function to set a new round. It includes reinitializing activity elements,
      * and playing new song for the round.
+     * @param ctx
+     * @param gameManager: the manager for this game
      */
     private fun startRoundBuzzer(ctx: Context, gameManager: GameManager) {
         gameIsOn = true
@@ -116,6 +118,9 @@ class BuzzerScreenActivity : GameActivity() {
 
     /**
      * Ends the round when no ones answer before the time limit
+     * @param ctx
+     * @param chosenSong: is null here, this function is called when no answer is given
+     * @param gameManager: the game manager, which contains the song used for the round
      */
     private fun timeoutAnswer(ctx: Context, chosenSong: Song? = null, gameManager: GameManager) {
         checkAndStopPlayer(gameManager)
@@ -233,6 +238,11 @@ class BuzzerScreenActivity : GameActivity() {
 
     }
 
+    /**
+     * Connects the "next" button to the start of a game round
+     * @param ctx
+     * @param gameManager: the manager for this game
+     */
     private fun setNextButton(ctx: Context, gameManager: GameManager) {
         findViewById<Button>(R.id.nextSongBuzzer).setOnClickListener {
             toggleBtnVisibility(R.id.nextSongBuzzer, false)
@@ -240,6 +250,10 @@ class BuzzerScreenActivity : GameActivity() {
         }
     }
 
+    /**
+     * Prepares the message with the name of the winner(s), which will be displayed on the ending screen
+     * @param scoreUpdater: the score updater, which contains the array of scores for this game
+     */
     fun prepareWinnerAnnouncement(scoreUpdater: BuzzerScoreUpdater): String {
         val winner: ArrayList<Int> = scoreUpdater.computeWinner()
         val winnerAnnouncement: String

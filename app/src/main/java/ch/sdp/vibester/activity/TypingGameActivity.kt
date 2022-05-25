@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
 
 /**
- * Class that represent a game
+ * Class that represents a game
  */
 class TypingGameActivity : GameActivity() {
     private lateinit var gameManager: GameManager

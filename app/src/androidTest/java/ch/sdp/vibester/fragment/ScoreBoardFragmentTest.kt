@@ -13,6 +13,7 @@ import ch.sdp.vibester.R
 import ch.sdp.vibester.launchFragmentInHiltContainer
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import dagger.hilt.android.testing.HiltTestApplication
 import org.hamcrest.CoreMatchers.not
 import org.junit.After
 import org.junit.Before
@@ -20,8 +21,8 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
-@RunWith(AndroidJUnit4::class)
 @HiltAndroidTest
+@RunWith(AndroidJUnit4::class)
 class ScoreBoardFragmentTest {
 
     @get:Rule(order=0)

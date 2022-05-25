@@ -36,6 +36,8 @@
     <string name="GameSetup_medium">Medium</string>
     <string name="GameSetup_hard">Hard</string>
     <string name="GameSetup_ask_difficulty">Please choose the difficulty of your game</string>
+    <string name="gameSetup_offlineGame">Offline Game</string>
+    <string name="gameSetup_offlineBuzzer">Offline Buzzer</string>
 
 
     <string-array name="difficulties_name">
@@ -197,6 +199,9 @@
     <string name="PartyRoom_joinedPeople">Joined People:</string>
     <string name="LyricsBelongGame_skip">SKIP</string>
     <string name="TypingGame_skip">SKIP</string>
+
+    <string name="searchUser_pleaseLogInFirst">Please login first</string>
+
 
 
 </resources>

@@ -135,7 +135,6 @@ open class ProfileActivity : AppCompatActivity(), OnItemClickListener {
      */
     private fun setImage(imageURI: Uri) {
         val avatar = findViewById<ImageView>(R.id.profile_image_ImageView)
-
         ImageHelper().setImage(imageURI, avatar, imageSize)
     }
 
@@ -174,8 +173,7 @@ open class ProfileActivity : AppCompatActivity(), OnItemClickListener {
             setTextOfMultipleViews(user)
         }
 
-        val imageID = dataGetter.getCurrentUser()?.uid
-        imageGetter.fetchImage("profileImg/${imageID}", this::setImage)
+        imageGetter.fetchImage("profileImg/${user.uid}", this::setImage)
 
         if (user.uid != "") {
             generateQrCode(user.uid)

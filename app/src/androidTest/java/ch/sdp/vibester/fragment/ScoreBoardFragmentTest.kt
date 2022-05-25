@@ -13,6 +13,7 @@ import ch.sdp.vibester.R
 import ch.sdp.vibester.launchFragmentInHiltContainer
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import dagger.hilt.android.testing.HiltTestApplication
 import org.hamcrest.CoreMatchers.not
 import org.junit.After
 import org.junit.Before
@@ -20,8 +21,8 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
-@RunWith(AndroidJUnit4::class)
 @HiltAndroidTest
+@RunWith(AndroidJUnit4::class)
 class ScoreBoardFragmentTest {
 
     @get:Rule(order=0)
@@ -49,11 +50,13 @@ class ScoreBoardFragmentTest {
         onView(withId(R.id.genrePerScoreboard)).check(matches(not(isDisplayed())))
     }
 
-    @Test
+   @Test
     fun rockBtnShouldSetUpRecycleView() {
         onView(withId(R.id.scoreboard_rockButton)).perform(click())
         onView(withId(R.id.scoreboard_content_scrolling)).check(matches(isDisplayed()))
     }
+
+
 
     @Test
     fun clickOnItemShouldGoesToProfileAndDisplaysScores() {
@@ -70,15 +73,20 @@ class ScoreBoardFragmentTest {
         onView(withId(R.id.profileStatistics)).check(matches(isDisplayed()))
     }
 
+
+
     @Test
     fun topBtnClick() {
         onView(withId(R.id.scoreboard_topTracksButton)).perform(click())
     }
 
+
     @Test
     fun kpopBtnClick() {
         onView(withId(R.id.scoreboard_kpopButton)).perform(click())
     }
+
+
 
     @Test
     fun billieEilishButtonClick() {

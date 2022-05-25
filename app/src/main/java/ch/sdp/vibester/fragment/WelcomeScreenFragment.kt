@@ -75,7 +75,7 @@ class WelcomeScreenFragment : Fragment(),View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
-        when(v!!.getId()) {
+        when(v!!.id) {
             R.id.welcome_download -> switchToDownload()
             R.id.welcome_profile -> switchToProfile()
         }

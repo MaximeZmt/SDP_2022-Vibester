@@ -7,6 +7,8 @@ import android.os.Environment
 import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -17,6 +19,7 @@ import ch.sdp.vibester.activity.BuzzerSetupActivity
 import ch.sdp.vibester.activity.ChoosePartyRoomActivity
 import ch.sdp.vibester.activity.LyricsBelongGameActivity
 import ch.sdp.vibester.activity.TypingGameActivity
+import ch.sdp.vibester.api.InternetState
 import ch.sdp.vibester.api.LastfmApiInterface
 import ch.sdp.vibester.api.LastfmMethod
 import ch.sdp.vibester.api.LastfmUri
@@ -41,13 +44,19 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
     lateinit var gameManager: GameManager
     // TODO: OFFLINE
     private var hasInternet: Boolean = true
+    var viewfrag: View? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_game_setup, container, false)
-        val ctx = inflater.context
+        viewfrag = inflater.inflate(R.layout.fragment_game_setup, container, false)
+        return viewfrag!!.rootView
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val ctx = view.context
 
         view.findViewById<Button>(R.id.local_buzzer_game_button).setOnClickListener(this)
         view.findViewById<Button>(R.id.local_typing_game_button).setOnClickListener(this)
@@ -61,6 +70,7 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
         view.findViewById<Button>(R.id.billieEilishButton).setOnClickListener(this)
         view.findViewById<Button>(R.id.difficulty_proceed).setOnClickListener(this)
         view.findViewById<Button>(R.id.game_setup_has_internet).setOnClickListener(this)
+        updateInternet(view.findViewById<Button>(R.id.game_setup_has_internet))
 
         searchArtistEditable = view.findViewById<EditText>(R.id.searchArtist).text
         view.findViewById<Button>(R.id.validateSearch).setOnClickListener(this)
@@ -68,7 +78,11 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
         setReturnBtnListener(view)
         setSpinnerListener(view, ctx, R.id.difficulty_spinner, R.array.difficulties_name)
         setSpinnerListener(view, ctx, R.id.size_spinner, R.array.game_size_options)
-        return view
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateInternet(viewfrag!!.findViewById<Button>(R.id.game_setup_has_internet))
     }
 
 
@@ -102,19 +116,24 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
     override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
         if (parent.id == R.id.difficulty_spinner) {
             difficulty = parent.getItemAtPosition(position).toString()
+            when (difficulty) {
+                "Easy" -> gameManager.difficultyLevel = 1
+                "Medium" -> gameManager.difficultyLevel = 2
+                "Hard" -> gameManager.difficultyLevel = 3
+            }
         } else if (parent.id == R.id.size_spinner) {
             gameSize = parent.getItemAtPosition(position).toString()
             when (gameSize) {
-                "One" -> gameManager.setGameSize(1)
-                "Two" -> gameManager.setGameSize(2)
-                "Three" -> gameManager.setGameSize(3)
-                "Four" -> gameManager.setGameSize(4)
-                "Five" -> gameManager.setGameSize(5)
-                "Six" -> gameManager.setGameSize(6)
-                "Seven" -> gameManager.setGameSize(7)
-                "Eight" -> gameManager.setGameSize(8)
-                "Nine" -> gameManager.setGameSize(9)
-                "Ten" -> gameManager.setGameSize(10)
+                "One" -> gameManager.gameSize = 1
+                "Two" -> gameManager.gameSize = 2
+                "Three" -> gameManager.gameSize = 3
+                "Four" -> gameManager.gameSize = 4
+                "Five" -> gameManager.gameSize = 5
+                "Six" -> gameManager.gameSize = 6
+                "Seven" -> gameManager.gameSize = 7
+                "Eight" -> gameManager.gameSize = 8
+                "Nine" -> gameManager.gameSize = 9
+                "Ten" -> gameManager.gameSize = 10
             }
         }
     }
@@ -217,7 +236,7 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
     }
 
     override fun onClick(v: View?) {
-        when(v!!.getId()) {
+        when(v!!.id) {
             R.id.local_buzzer_game_button -> chooseGame("local_buzzer", GameManager())
             R.id.local_typing_game_button -> chooseGame("local_typing", GameManager())
             R.id.local_lyrics_game_button -> chooseGame("local_lyrics", GameManager())
@@ -234,7 +253,7 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
 
             R.id.difficulty_proceed -> proceedGame()
 
-            R.id.game_setup_has_internet -> switchInternet(v.findViewById(R.id.game_setup_has_internet))
+            R.id.game_setup_has_internet -> updateInternet(v.findViewById(R.id.game_setup_has_internet))
         }
     }
 
@@ -242,15 +261,28 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
      * Switches between Internet On and Internet Off when the view button is pressed.
      * @param view: The button responsible for internet toggling.
      */
-    //TODO: OFFLINE
-    private fun switchInternet(view: View) {
+    private fun updateInternet(view: View) {
         val btn: Button = view as Button
-        if(hasInternet) {
-            hasInternet = false
-            btn.text = getString(R.string.GameSetup_internetSwitchOff)
-        } else {
+        val isConncted = InternetState.getInternetStatus(requireContext())
+        if (isConncted) {
             hasInternet = true
             btn.text = getString(R.string.GameSetup_internetSwitchOn)
+            btn.setBackgroundColor(requireContext().getColor(R.color.maximum_yellow_red))
+
+            viewfrag!!.findViewById<LinearLayout>(R.id.horilayer_multi).visibility = VISIBLE
+            viewfrag!!.findViewById<LinearLayout>(R.id.horilayer_single).visibility = VISIBLE
+            viewfrag!!.findViewById<TextView>(R.id.singleplayer_game_txt).visibility = VISIBLE
+            viewfrag!!.findViewById<TextView>(R.id.multiplayer_game_txt).visibility = VISIBLE
+
+        } else {
+            hasInternet = false
+            btn.text = getString(R.string.GameSetup_internetSwitchOff)
+            btn.setBackgroundColor(requireContext().getColor(R.color.light_coral))
+
+            viewfrag!!.findViewById<LinearLayout>(R.id.horilayer_multi).visibility = GONE
+            viewfrag!!.findViewById<LinearLayout>(R.id.horilayer_single).visibility = GONE
+            viewfrag!!.findViewById<TextView>(R.id.singleplayer_game_txt).visibility = GONE
+            viewfrag!!.findViewById<TextView>(R.id.multiplayer_game_txt).visibility = GONE
         }
     }
 }

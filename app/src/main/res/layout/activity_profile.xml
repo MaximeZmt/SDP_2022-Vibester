@@ -426,7 +426,8 @@
                     android:layout_height="match_parent"
                     android:backgroundTint="@color/cg_blue"
                     android:text="logout"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/white"
+                    android:visibility="gone" />
 
                 <Space
                     android:layout_width="wrap_content"

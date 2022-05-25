@@ -33,10 +33,10 @@ class BuzzerScreenActivity : GameActivity() {
 
     private fun initHashmap(): HashMap<Int, Int> {
         val buzzersToRows:HashMap<Int, Int> = hashMapOf()
-        buzzersToRows.put(R.id.buzzer_0, R.id.row_0)
-        buzzersToRows.put(R.id.buzzer_1, R.id.row_1)
-        buzzersToRows.put(R.id.buzzer_2, R.id.row_2)
-        buzzersToRows.put(R.id.buzzer_3, R.id.row_3)
+        buzzersToRows[R.id.buzzer_0] = R.id.row_0
+        buzzersToRows[R.id.buzzer_1] = R.id.row_1
+        buzzersToRows[R.id.buzzer_2] = R.id.row_2
+        buzzersToRows[R.id.buzzer_3] = R.id.row_3
         return buzzersToRows
     }
     var pressedBuzzer = noBuzzerPressed
@@ -63,7 +63,7 @@ class BuzzerScreenActivity : GameActivity() {
         if (intentExtras != null) {
             super.setMax(intent)
             val getPlayers = intentExtras.getInt("Number of players").let { intentExtras.getStringArray("Player Names")?.copyOfRange(0, it) }
-            val allPoints = Array(getPlayers!!.size, { i -> 0 })
+            val allPoints = Array(getPlayers!!.size) { _ -> 0 }
 
             if (intentExtras.getSerializable("gameManager") != null) {
                 gameManager = intentExtras.getSerializable("gameManager") as GameManager
@@ -87,9 +87,6 @@ class BuzzerScreenActivity : GameActivity() {
      * A custom onDestroy to verify progressbar and media player are stopped
      */
     override fun onDestroy() {
-        if (runnable != null) {
-            handler.removeCallbacks(runnable!!)
-        }
         if (this::gameManager.isInitialized && gameManager.initializeMediaPlayer()) {
             gameManager.stopMediaPlayer()
         }
@@ -100,15 +97,15 @@ class BuzzerScreenActivity : GameActivity() {
      * Function to set a new round. It includes reinitializing activity elements,
      * and playing new song for the round.
      */
-    fun startRoundBuzzer(ctx: Context, gameManager: GameManager) {
+    private fun startRoundBuzzer(ctx: Context, gameManager: GameManager) {
         gameIsOn = true
         toggleBtnVisibility(R.id.skip_buzzer, true)
         findViewById<LinearLayout>(R.id.answer).visibility=View.INVISIBLE
         val trackName = gameManager.getCurrentSong().getTrackName()
         val artist = gameManager.getCurrentSong().getArtistName()
-        findViewById<TextView>(R.id.songTitle).text= "$trackName - $artist"
+        findViewById<TextView>(R.id.songTitle).text = "$trackName - $artist"
         //Checks if internet is available. If not, skip the loading of the artwork from url.
-        if(gameManager.getInternet()) {
+        if (gameManager.getInternet()) {
             Glide.with(ctx).load(gameManager.getCurrentSong().getArtworkUrl()).override(artworkDim, artworkDim).into(findViewById(R.id.songArtwork))
         }
 
@@ -120,7 +117,7 @@ class BuzzerScreenActivity : GameActivity() {
     /**
      * Ends the round when no ones answer before the time limit
      */
-    fun timeoutAnswer(ctx: Context, chosenSong: Song?=null, gameManager: GameManager) {
+    private fun timeoutAnswer(ctx: Context, chosenSong: Song? = null, gameManager: GameManager) {
         checkAndStopPlayer(gameManager)
         toastShowWrong(ctx, gameManager.getCurrentSong())
         toggleBtnVisibility(R.id.skip_buzzer, false)
@@ -131,13 +128,13 @@ class BuzzerScreenActivity : GameActivity() {
      * Function called in the end of each round. Displays the button "Next" and
      * sets the next songs to play.
      */
-     fun endRound(gameManager: GameManager){
+    private fun endRound(gameManager: GameManager) {
         gameIsOn = false
         toggleBtnVisibility(R.id.nextSongBuzzer, true)
         super.endRound(gameManager, this::testWinner)
     }
 
-    fun testWinner() {
+    private fun testWinner() {
         scoreUpdater.computeWinner()
     }
 
@@ -173,10 +170,10 @@ class BuzzerScreenActivity : GameActivity() {
 
             score.addView(nameView)
             score.addView(points)
-            viewsOfPoints.set(i, score)
+            viewsOfPoints[i] = score
             scores.addView(score)
 
-            i = i + 1
+            i += 1
         }
     }
 
@@ -195,7 +192,7 @@ class BuzzerScreenActivity : GameActivity() {
             val button = findViewById<Button>(buzIds[i])
             button.text = pName
             button.visibility = View.VISIBLE
-            buttons.set(i, button)
+            buttons[i] = button
             button.setOnClickListener {
                 if (findViewById<ProgressBar>(R.id.progressBarBuzzer).progress>0 && findViewById<Button>(R.id.nextSongBuzzer).visibility==View.GONE) {
                     answer.visibility = View.VISIBLE
@@ -205,21 +202,20 @@ class BuzzerScreenActivity : GameActivity() {
                     checkAndStopPlayer(gameManager)
                 }
             }
-            i = i + 1
+            i += 1
         }
     }
 
     /**
      * Connects the answer buttons to the answer layout's visibility
-     * @param answer: the answer layout
+     * @param ctx
      * @param button: the answer button to be set
-     * @param scoreUpdater: the updater for the scores
      * @param map: a map from the buzzers' IDs to the IDs of each score's position in the score table layout
      */
     private fun setAnswerButton(ctx: Context, button: Button, map: Map<Int, Int>) {
         val answer = findViewById<LinearLayout>(R.id.answer)
         button.setOnClickListener {
-            answer.visibility = android.view.View.INVISIBLE
+            answer.visibility = View.INVISIBLE
             if (pressedBuzzer >= 0) {
                 if(button.id==R.id.buttonCorrect)  {
                     scoreUpdater.updateScoresArray(pressedBuzzer, true)
@@ -270,11 +266,11 @@ class BuzzerScreenActivity : GameActivity() {
      * @param updater: score updater which contains the player's scores
      * @return a HashMap with player names as keys and scores as values
      */
-    fun packMapOfScores(playersArray: Array<String>, updater: BuzzerScoreUpdater): HashMap<String, Int> {
+    private fun packMapOfScores(playersArray: Array<String>, updater: BuzzerScoreUpdater): HashMap<String, Int> {
         val playersToScores: HashMap<String, Int> = hashMapOf()
         var i = 0
         while (i < playersArray.size) {
-            playersToScores.put(playersArray[i], updater.getMap()[buzIds[i]]!!)
+            playersToScores[playersArray[i]] = updater.getMap()[buzIds[i]]!!
             i += 1
         }
         return playersToScores

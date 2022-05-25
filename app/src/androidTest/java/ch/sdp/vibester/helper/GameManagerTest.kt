@@ -11,18 +11,18 @@ import java.io.File
 class GameManagerTest {
     private fun setGameManager(valid:Boolean = true): GameManager {
         var managerTxt = ""
-        if (valid) {
-             managerTxt = """
-                {"tracks":
-                {"track":[{"name":"Monday","duration":"259",
-                "artist":{"name":"Imagine Dragons"}}],"@attr":{"tag":"british","page":"1","perPage":"1","totalPages":"66649","total":"66649"}}}
-                """
+        managerTxt = if (valid) {
+            """
+                    {"tracks":
+                    {"track":[{"name":"Monday","duration":"259",
+                    "artist":{"name":"Imagine Dragons"}}],"@attr":{"tag":"british","page":"1","perPage":"1","totalPages":"66649","total":"66649"}}}
+                    """
         } else {
-             managerTxt = """
-                {"tracks":
-                {"track":[{"name":"TEST_MUSIC_TEST","duration":"259",
-                "artist":{"name":"TEST_ARTIST_TEST"}}],"@attr":{"tag":"british","page":"1","perPage":"1","totalPages":"66649","total":"66649"}}}
-                """
+            """
+                    {"tracks":
+                    {"track":[{"name":"TEST_MUSIC_TEST","duration":"259",
+                    "artist":{"name":"TEST_ARTIST_TEST"}}],"@attr":{"tag":"british","page":"1","perPage":"1","totalPages":"66649","total":"66649"}}}
+                    """
         }
         val gameManager = GameManager()
         gameManager.setGameSongList(managerTxt, LastfmMethod.BY_TAG.method)
@@ -38,8 +38,15 @@ class GameManagerTest {
     @Test
     fun setGameSizeCorrect() {
         val gameManager = setGameManager()
-        gameManager.setGameSize(3)
+        gameManager.gameSize = 3
         assertEquals(gameManager.gameSize, 3)
+    }
+
+    @Test
+    fun setDifficultyLevelCorrect() {
+        val gameManager = setGameManager()
+        gameManager.difficultyLevel = 3
+        assertEquals(gameManager.difficultyLevel, 3)
     }
 
     @Test
@@ -94,17 +101,17 @@ class GameManagerTest {
 
     private fun offlineTestSetup(): GameManager {
         val context = InstrumentationRegistry.getInstrumentation().targetContext.applicationContext
-        var records = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "records.txt")
+        val records = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "records.txt")
         records.createNewFile()
         records.appendText("Song 1 - Artist 1\n")
 
-        var properties = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "properties.txt")
+        val properties = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "properties.txt")
         properties.createNewFile()
         properties.appendText("Song 1 - Artist 1 - Artwork 1 - Preview 1\n")
 
-        var testing1 = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "extract_of_Song 1 - Artist 1")
+        val testing1 = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "extract_of_Song 1 - Artist 1")
         testing1.createNewFile()
-        var testing2 = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "extract_of_Song 2 - Artist 2")
+        val testing2 = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "extract_of_Song 2 - Artist 2")
         testing2.createNewFile()
 
         lateinit var manager: GameManager
@@ -117,9 +124,7 @@ class GameManagerTest {
 
     private fun createOfflineGameManager(path: File): GameManager {
         val gameManager = GameManager()
-        if(path != null) {
-            gameManager.setOffline(path, false)
-        }
+        gameManager.setOffline(path, false)
         gameManager.setGameSongList("", LastfmMethod.BY_TAG.method)
         return gameManager
     }
@@ -129,7 +134,7 @@ class GameManagerTest {
         val context = InstrumentationRegistry.getInstrumentation().targetContext.applicationContext
         val gameManager = offlineTestSetup()
 
-        var properties = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "properties.txt")
+        val properties = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "properties.txt")
         if(properties.exists()){
             properties.delete()
         }
@@ -144,7 +149,7 @@ class GameManagerTest {
         val context = InstrumentationRegistry.getInstrumentation().targetContext.applicationContext
         val gameManager = offlineTestSetup()
 
-        var properties = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "properties.txt")
+        val properties = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "properties.txt")
         if(properties.exists()) {
             properties.delete()
         }
@@ -161,7 +166,7 @@ class GameManagerTest {
         val context = InstrumentationRegistry.getInstrumentation().targetContext.applicationContext
         val gameManager = offlineTestSetup()
 
-        var properties = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "properties.txt")
+        val properties = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "properties.txt")
         if(properties.exists()){
             properties.delete()
         }
@@ -178,7 +183,7 @@ class GameManagerTest {
         val context = InstrumentationRegistry.getInstrumentation().targetContext.applicationContext
         val gameManager = offlineTestSetup()
 
-        var properties = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "properties.txt")
+        val properties = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "properties.txt")
         if(properties.exists()){
             properties.delete()
         }
@@ -208,10 +213,10 @@ class GameManagerTest {
 
     private fun offlineTestCleanup() {
         val context = InstrumentationRegistry.getInstrumentation().targetContext.applicationContext
-        var records = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "records.txt")
-        var properties = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "properties.txt")
-        var testing1 = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "extract_of_Song 1 - Artist 1")
-        var testing2 = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "extract_of_Song 2 - Artist 2")
+        val records = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "records.txt")
+        val properties = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "properties.txt")
+        val testing1 = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "extract_of_Song 1 - Artist 1")
+        val testing2 = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "extract_of_Song 2 - Artist 2")
 
         records.delete()
         properties.delete()

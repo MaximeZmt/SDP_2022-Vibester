@@ -25,13 +25,11 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-
-
 /**
  * Search for users based on their usernames.
  */
 @AndroidEntryPoint
-class SearchUserFragment : Fragment(), OnItemClickListener {
+class SearchUserFragment : Fragment(R.layout.fragment_search_user), OnItemClickListener {
 
     @Inject
     lateinit var usersRepo: DataGetter
@@ -80,14 +78,6 @@ class SearchUserFragment : Fragment(), OnItemClickListener {
             }
             override fun afterTextChanged(p0: Editable?) {}
         })
-    }
-
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_search_user, container, false)
     }
 
     private fun setUpRecycleView(view: View) {

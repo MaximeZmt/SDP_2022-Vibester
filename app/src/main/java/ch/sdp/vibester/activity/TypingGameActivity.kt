@@ -128,7 +128,7 @@ class TypingGameActivity : GameActivity() {
             gameManager.addWrongSong()
             hasWon(ctx, false, playedSong, gameManager)
         }
-        if (gameManager.playingMediaPlayer()) {
+        if (gameManager.initializeMediaPlayer() && gameManager.playingMediaPlayer()) {
             gameManager.stopMediaPlayer()
         }
         endRound(gameManager)

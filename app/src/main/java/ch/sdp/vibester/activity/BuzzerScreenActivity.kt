@@ -232,7 +232,6 @@ class BuzzerScreenActivity : GameActivity() {
             checkAndStopPlayer(gameManager)
             toggleBtnVisibility(R.id.go_to_end, true)
             setPressed(noBuzzerPressed) // reset the buzzer
-            gameManager.setNextSong()
             endRound(gameManager)
         }
 

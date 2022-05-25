@@ -43,8 +43,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/cg_blue"
-            android:text="@string/TypingGame_skip"
-            app:layout_constraintHorizontal_bias="0.5" />
+            android:layout_marginStart="160dp"
+            android:text="@string/TypingGame_skip" />
 
         <TextView
             android:id="@+id/textView"

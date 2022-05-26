@@ -195,4 +195,13 @@ class AuthenticationActivityTest {
         Intents.intended(IntentMatchers.hasComponent(MyProfileActivity::class.java.name))
     }
 
+    @Test
+    fun correctResetPassword() {
+        val email = "incorrectEmail"
+
+        onView(withId(R.id.username)).perform(ViewActions.typeText(email), closeSoftKeyboard())
+        onView(withId(R.id.forgotPassword)).perform(click())
+
+    }
+
 }

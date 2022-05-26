@@ -94,6 +94,15 @@ class AuthenticationActivity : AppCompatActivity() {
         signInGoogle()
     }
 
+    fun resetPasswordListener(view: View) {
+        resetPassword(username.text.toString())
+    }
+
+    fun resetPassword(email: String) {
+        auth.sendPasswordResetEmail(email).addOnSuccessListener {
+        }
+    }
+
     /**
      * Listener bound to the red return button in the Authentication activity.
      */

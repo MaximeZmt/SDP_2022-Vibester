@@ -3,6 +3,7 @@ package ch.sdp.vibester.user
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ApplicationProvider
+import ch.sdp.vibester.database.ImageGetter
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
@@ -16,7 +17,7 @@ class UserScoreboardAdapterTest {
         val players: MutableList<User> = arrayListOf()
         players.addAll(listOf(user1, user2))
         val userScoreboardViewHolder: RecyclerView.Adapter<UserScoreboardAdapter.PlayerViewHolder> =
-            UserScoreboardAdapter(players, "rock", null)
+            UserScoreboardAdapter(players, "rock", null, ImageGetter())
         assertThat(userScoreboardViewHolder.itemCount, equalTo(2))
     }
 
@@ -27,7 +28,7 @@ class UserScoreboardAdapterTest {
         val players: MutableList<User> = arrayListOf()
         players.addAll(listOf(user1, user2))
         val userScoreboardViewHolder: RecyclerView.Adapter<UserScoreboardAdapter.PlayerViewHolder> =
-            UserScoreboardAdapter(players, "BTS", null)
+            UserScoreboardAdapter(players, "BTS", null, ImageGetter())
         val defaultType = 0
         assertThat(userScoreboardViewHolder.getItemViewType(0), equalTo(defaultType))
     }
@@ -41,7 +42,7 @@ class UserScoreboardAdapterTest {
         val recyclerView = RecyclerView(ApplicationProvider.getApplicationContext())
         recyclerView.layoutManager =
             LinearLayoutManager(ApplicationProvider.getApplicationContext())
-        val playerAdapter = UserScoreboardAdapter(players, "Imagine Dragons", null)
+        val playerAdapter = UserScoreboardAdapter(players, "Imagine Dragons", null, ImageGetter())
         recyclerView.adapter = playerAdapter
         val newPlayers: MutableList<User> = arrayListOf()
         newPlayers.add(User("test3","https://images.app.goo.gl/YkBi16zwyjB7ejj96", "test3@gmail.com"))
@@ -58,7 +59,7 @@ class UserScoreboardAdapterTest {
         val recyclerView = RecyclerView(ApplicationProvider.getApplicationContext())
         recyclerView.layoutManager =
             LinearLayoutManager(ApplicationProvider.getApplicationContext())
-        val playerAdapter = UserScoreboardAdapter(players, "Billie Eilish", null)
+        val playerAdapter = UserScoreboardAdapter(players, "Billie Eilish", null, ImageGetter())
         val player3 = User("test3","https://images.app.goo.gl/YkBi16zwyjB7ejj96", "test3@gmail.com")
         val updatedList = arrayListOf(player3)
         playerAdapter.addPlayers(updatedList)

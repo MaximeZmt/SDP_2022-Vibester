@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/floral_white"
-    android:noHistory="true"
-    android:id="@+id/fragment_game_setup">
+    android:noHistory="true">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/gameSetup_returnToMain"
@@ -55,6 +54,72 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/game_setup_check_internet"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <Space
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+                        <Button
+                            android:id="@+id/game_setup_has_internet"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/GameSetup_internetSwitchOn" />
+
+                        <Space
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/offline_game_txt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/gameSetup_offlineGame"
+                        android:textSize="20sp" />
+
+                    <LinearLayout
+                        android:id="@+id/horilayer_offline"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <Space
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/offline_game_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/squared_button"
+                            android:backgroundTint="@color/cg_blue"
+                            android:elevation="10dp"
+                            android:stateListAnimator="@null"
+                            android:text="@string/gameSetup_offlineBuzzer"
+                            android:textColor="@color/white"
+                            android:translationZ="10dp" />
+
+                        <Space
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp" />
 
                     <TextView
                         android:id="@+id/singleplayer_game_txt"

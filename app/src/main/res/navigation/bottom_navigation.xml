@@ -1,11 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools" android:id="@+id/bottom_navigation"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottom_nav"
     app:startDestination="@id/welcomeScreenBtn">
 
-    <fragment android:id="@+id/welcomeScreenBtn" android:name="ch.sdp.vibester.fragment.WelcomeScreenFragment"
-        android:label="fragment_home" tools:layout="@layout/fragment_welcome_screen"/>
-    <fragment android:id="@+id/gameSetupBtn" android:name="ch.sdp.vibester.fragment.GameSetupFragment"
-        android:label="fragment_settings" tools:layout="@layout/fragment_game_setup"/>
+    <fragment android:id="@+id/welcomeScreenBtn"
+        android:name="ch.sdp.vibester.fragment.WelcomeScreenFragment"
+        tools:layout="@layout/fragment_welcome_screen"/>
+
+    <fragment android:id="@+id/fragment_game_setup"
+        android:name="ch.sdp.vibester.fragment.GameSetupFragment"
+        tools:layout="@layout/fragment_layout_game_setup"/>
+
+    <fragment android:id="@+id/fragment_search_user"
+        android:name="ch.sdp.vibester.fragment.SearchUserFragment"
+        tools:layout="@layout/fragment_layout_search_user"/>
+
+    <fragment android:id="@+id/fragment_scoreboard"
+        android:name="ch.sdp.vibester.fragment.ScoreBoardFragment"
+        tools:layout="@layout/fragment_layout_scoreboard"/>
 </navigation>

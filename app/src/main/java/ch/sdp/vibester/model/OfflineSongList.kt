@@ -13,13 +13,13 @@ import java.io.FileReader
  * @param ctx: Context of the caller, to fetch the downloaded folder
  * @param method: Chosen playlist type
  */
-class OfflineSongList(ctx: Context) {
+class OfflineSongList(externalDir: File) {
     private var songList = mutableListOf<Pair<String, String>>()
     private val page = "1"
     private val songsPerPage = "100"
     private val totalPages = "20"
     private val totalSongs = "2000"
-    private var context = ctx
+    private var externals = externalDir
     private var emptySongs: Boolean = false
 
     init {
@@ -31,7 +31,7 @@ class OfflineSongList(ctx: Context) {
      * Saves the list of songs in songList
      */
     private fun fillList() {
-        var records = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "records.txt")
+        var records = File(externals, "records.txt")
 
 
         if (!records.exists() || records.length() == 0L) {

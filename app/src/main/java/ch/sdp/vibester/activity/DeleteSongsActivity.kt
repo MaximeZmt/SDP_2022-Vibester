@@ -91,11 +91,12 @@ class DeleteSongsActivity : AppCompatActivity() {
 
         var currentLine = recordReader.readLine()
         var button: Button = btn as Button
+        val buttonText = button.text.toString()
 
-        while(currentLine != null) {
+        while (currentLine != null) {
             var trimmed = currentLine.trim()
 
-            if(trimmed == button.text.toString()) {
+            if (trimmed == buttonText) {
                 currentLine = recordReader.readLine()
                 continue
             }
@@ -108,21 +109,63 @@ class DeleteSongsActivity : AppCompatActivity() {
         recordWriter.close()
         recordReader.close()
 
-        if(tempRecords.length() == 0L) {
+        if (tempRecords.length() == 0L) {
             createNoSongsView(layout)
         }
 
         records.delete()
-        if(tempRecords.renameTo(records)) {
+        if (tempRecords.renameTo(records) && removeFromProperties(buttonText)) {
             layout.removeView(btn)
             var songToDelete = File(applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "extract_of_${button.text}")
-            if(songToDelete.delete()) {
+            if (songToDelete.delete()) {
                 Toast.makeText(applicationContext, "Song successfully removed!", Toast.LENGTH_LONG).show()
                 return true
             }
         }
         Toast.makeText(applicationContext, "Song was unable to be removed!", Toast.LENGTH_LONG).show()
         return false
+    }
+
+    /**
+     * Removes the line correspoding to the song-to-be-deleted from the properties.txt file.
+     * @param buttonText: Text which contains song name - artist name
+     */
+    private fun removeFromProperties(buttonText: String): Boolean {
+        var properties = File(applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "properties.txt")
+        var tempProp = File(applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "tempProp.txt")
+
+        var propReader = BufferedReader(FileReader(properties))
+        var propWriter = BufferedWriter(FileWriter(tempProp, true))
+
+        var currentLine = propReader.readLine()
+        val buttonSplit = buttonText.trim().split("-")
+
+        /*
+         * Current line here should be in the form of "song name - artist name - artwork url - preview url.
+         * We want to tokenize(split) this string into 4 tokens: song name, artist name, artwork url and preview url.
+         * Comparison between the first two tokens are checked to see whether this line is the one we want or not.
+         * We write every line on a new file except the one which we want to delete, thus we continue if we match.
+         */
+        while (currentLine != null) {
+            var trimmed = currentLine.trim()
+            val split = trimmed.split(" - ")
+
+            if (split[0].trim().lowercase() == buttonSplit[0].trim().lowercase()
+             && split[1].trim().lowercase() == buttonSplit[1].trim().lowercase()) {
+                currentLine = propReader.readLine()
+                continue
+            }
+
+            propWriter.write(currentLine)
+            propWriter.newLine()
+            currentLine = propReader.readLine()
+        }
+
+        propWriter.close()
+        propReader.close()
+
+        properties.delete()
+        return tempProp.renameTo(properties)
     }
 
     /**

@@ -15,7 +15,6 @@ import ch.sdp.vibester.api.LastfmUri
 import ch.sdp.vibester.database.AppPreferences
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.database.Database
-import ch.sdp.vibester.helper.ArtistIdentifier
 import ch.sdp.vibester.helper.GameManager
 import ch.sdp.vibester.helper.PartyRoom
 import ch.sdp.vibester.user.User
@@ -49,7 +48,7 @@ class PartyRoomActivity : AppCompatActivity() {
         if(createPartyRoom) {
             createRoom()
             setGameManager()
-            dataGetter.updateStartGame(roomID, false)
+            dataGetter.updateRoomField(roomID, "gameStarted", false)
         }
         else {
             this.roomID = intent.getStringExtra("roomID").toString()
@@ -59,7 +58,8 @@ class PartyRoomActivity : AppCompatActivity() {
         val startGame = findViewById<Button>(R.id.startGame)
 
         startGame.setOnClickListener {
-            dataGetter.updateStartGame(roomID, true)
+//            dataGetter.updateStartGame(roomID, true)
+            dataGetter.updateRoomField(roomID, "gameStarted", true)
         }
 
         fetchGameStarted(roomID, this::startGame)
@@ -91,9 +91,9 @@ class PartyRoomActivity : AppCompatActivity() {
 
     private fun  setGameManager() {
         gameManager = GameManager()
-        gameManager.setGameSize(1)
+        gameManager.gameSize = 1
 
-        chooseGenre(method = LastfmMethod.BY_ARTIST.method, artist = "Imagine Dragons", mode = R.string.imagine_dragons)
+        chooseGenre(method = LastfmMethod.BY_ARTIST.method, artist = "Imagine Dragons", mode = R.string.gameGenre_imagine_dragons)
     }
 
 
@@ -101,7 +101,7 @@ class PartyRoomActivity : AppCompatActivity() {
 
         val newIntent = Intent(this, TypingGameActivity::class.java)
         newIntent.putExtra("gameManager", newGameManager)
-        newIntent.putExtra("Difficulty", R.string.easy.toString())
+        newIntent.putExtra("Difficulty", R.string.GameSetup_easy)
 
         startActivity(newIntent)
     }
@@ -113,7 +113,7 @@ class PartyRoomActivity : AppCompatActivity() {
             override fun onFailure(call: Call<Any>, t: Throwable?) {}
             override fun onResponse(call: Call<Any>, response: Response<Any>) {
                 gameManager.setGameSongList(Gson().toJson(response.body()), uri.method)
-                dataGetter.updateSongList(roomID, gameManager.getSongList())
+                dataGetter.updateRoomField(roomID, "songList", gameManager.getSongList())
             }
         })
     }
@@ -133,8 +133,8 @@ class PartyRoomActivity : AppCompatActivity() {
 
     private fun setSongs(gameSongList: MutableList<Pair<String, String>>) {
         gameManager = GameManager()
-        gameManager.setGameSize(1)
-        gameManager.gameMode = getString(R.string.imagine_dragons)
+        gameManager.gameSize = 1
+        gameManager.gameMode = getString(R.string.gameGenre_imagine_dragons)
 
         gameManager.gameSongList = gameSongList
 

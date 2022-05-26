@@ -1,17 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
         android:id="@+id/welcomeScreenBtn"
-        android:title="Home"
-        android:icon="@drawable/home"
+        tools:ignore="MenuTitle"
+        android:icon="@drawable/profile_selector"
         />
 
+    <item
+        android:id="@+id/fragment_game_setup"
+        android:icon="@drawable/play_selector"
+        tools:ignore="MenuTitle"
+        />
 
     <item
-        android:id="@+id/gameSetupBtn"
-        android:title="Play"
-        android:icon="@drawable/play"
+        android:id="@+id/fragment_search_user"
+        tools:ignore="MenuTitle"
+        android:icon="@drawable/search_selector"
+        />
+
+    <item
+        android:id="@+id/fragment_scoreboard"
+        tools:ignore="MenuTitle"
+        android:icon="@drawable/scoreboard_selector"
         />
 
 

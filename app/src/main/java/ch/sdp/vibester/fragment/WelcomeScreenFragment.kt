@@ -10,10 +10,10 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import ch.sdp.vibester.R
 import ch.sdp.vibester.activity.*
-import ch.sdp.vibester.activity.MyProfileActivity
+import ch.sdp.vibester.activity.profile.MyProfileActivity
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.Database
-import ch.sdp.vibester.database.PersistanceSetter
+import ch.sdp.vibester.database.PersistenceSetter
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -35,8 +35,6 @@ class WelcomeScreenFragment : Fragment(),View.OnClickListener {
 
         view.findViewById<Button>(R.id.welcome_profile).setOnClickListener(this)
         view.findViewById<Button>(R.id.welcome_download).setOnClickListener(this)
-        view.findViewById<Button>(R.id.welcome_scoreboard).setOnClickListener(this)
-        view.findViewById<Button>(R.id.welcome_search).setOnClickListener(this)
 
         return view
     }
@@ -45,7 +43,7 @@ class WelcomeScreenFragment : Fragment(),View.OnClickListener {
         super.onViewCreated(view, savedInstanceState)
         updateUserConnectionStatus(view)
 
-        PersistanceSetter.setPersistance()
+        PersistenceSetter.setPersistence()
         Database.get()
     }
 
@@ -71,24 +69,15 @@ class WelcomeScreenFragment : Fragment(),View.OnClickListener {
         }
     }
 
-    private fun switchToScoreboard() {
-        sendDirectIntent(ScoreBoardActivity::class.java)
-    }
 
     private fun switchToDownload() {
         sendDirectIntent(DownloadActivity::class.java)
     }
 
-    private fun switchToSearch() {
-        sendDirectIntent(SearchUserActivity::class.java)
-    }
-
     override fun onClick(v: View?) {
-        when(v!!.getId()) {
-            R.id.welcome_search -> switchToSearch()
+        when(v!!.id) {
             R.id.welcome_download -> switchToDownload()
             R.id.welcome_profile -> switchToProfile()
-            R.id.welcome_scoreboard -> switchToScoreboard()
         }
     }
 }

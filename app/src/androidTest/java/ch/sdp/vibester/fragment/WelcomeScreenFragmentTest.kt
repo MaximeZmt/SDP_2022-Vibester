@@ -12,7 +12,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
 import ch.sdp.vibester.activity.*
-import ch.sdp.vibester.activity.MyProfileActivity
+import ch.sdp.vibester.activity.profile.MyProfileActivity
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.testing.BindValue
@@ -89,17 +89,6 @@ class WelcomeScreenFragmentTest {
         onView(withId(R.id.welcome_profile)).perform(click())
         intended(hasComponent(MyProfileActivity::class.java.name))
     }
-
-    @Test
-    fun checkIntentOnScoreboard() {
-        val intent = Intent(ApplicationProvider.getApplicationContext(), MainActivity::class.java)
-        createMockAuthenticatorLoggedOut()
-        val scn: ActivityScenario<MainActivity> = ActivityScenario.launch(intent)
-
-        onView(withId(R.id.welcome_scoreboard)).perform(click())
-        intended(hasComponent(ScoreBoardActivity::class.java.name))
-    }
-
     @Test
     fun checkIntentOnDownload() {
         val intent = Intent(ApplicationProvider.getApplicationContext(), MainActivity::class.java)
@@ -108,25 +97,6 @@ class WelcomeScreenFragmentTest {
 
         onView(withId(R.id.welcome_download)).perform(click())
         intended(hasComponent(DownloadActivity::class.java.name))
-    }
-
-    @Test
-    fun checkIntentOnSearch() {
-        val intent = Intent(ApplicationProvider.getApplicationContext(), MainActivity::class.java)
-        createMockAuthenticatorLoggedOut()
-        val scn: ActivityScenario<MainActivity> = ActivityScenario.launch(intent)
-
-        onView(withId(R.id.welcome_search)).perform(click())
-        intended(hasComponent(SearchUserActivity::class.java.name))
-    }
-
-    @Test
-    fun checkIntentOnSearchWithoutTestMode() {
-        val intent = Intent(ApplicationProvider.getApplicationContext(), MainActivity::class.java)
-        createMockAuthenticatorLoggedOut()
-        val scn: ActivityScenario<MainActivity> = ActivityScenario.launch(intent)
-
-        onView(withId(R.id.welcome_search)).perform(click())
     }
 }
 

@@ -14,6 +14,8 @@ import com.google.firebase.database.ktx.getValue
 import java.util.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList
+import kotlin.reflect.KFunction0
+
 /**
  * The users class which handled all the interactions with the database that are linked to users
  */
@@ -44,6 +46,24 @@ class DataGetter @Inject constructor() {
         dbUserRef.child(uid).child(fieldName).child(subFieldName).setValue(newVal)
     }
 
+    /**
+     * Set user with userId to follow user with followingId
+     * @param userId id of of the current user
+     * @param followingId id of the user to be following
+     */
+    fun setFollowing(userId: String, followingId: String) {
+        setSubFieldValue(userId, "following", followingId, true)
+    }
+
+    /**
+     * Set user with userId to unfollow user with followingId
+     * @param userId if of the current user
+     * @param followingId id of the user to be unfollowing
+     */
+    fun setUnfollow(userId: String, followingId: String) {
+        setSubFieldValue(userId, "following", followingId, false)
+    }
+
 
     /**
      * Update integer value in a subfield based on method sum/best
@@ -54,7 +74,7 @@ class DataGetter @Inject constructor() {
     fun updateFieldInt(uid: String, fieldName: String, newVal: Int, method:String) {
         dbUserRef.child(uid).child(fieldName)
             .get().addOnSuccessListener { t ->
-                var finalVal  = checkValue(t, method, newVal)//newVal TO DELETE IF TESTS PASS, OTHERWISE ROLL BACK!
+                val finalVal  = checkValue(t, method, newVal)//newVal TO DELETE IF TESTS PASS, OTHERWISE ROLL BACK!
                 setFieldValue(uid, fieldName, finalVal)
             }
     }
@@ -99,15 +119,11 @@ class DataGetter @Inject constructor() {
      * This function creates a new user account in the database
      * @param email the email of the new user
      * @param username the username of the new user
-     * @param callback function to be called when the the user has been created
      * @param uid id of the new user
      */
-    fun createUser(email: String, username: String, callback: (String) -> Unit, uid: String) {
+    fun createUser(email: String, username: String, uid: String) {
         val newUser = User(email = email, username = username, uid = uid)
         dbUserRef.child(uid).setValue(newUser)
-            .addOnSuccessListener {
-                callback(email)
-            }
     }
 
     /**
@@ -163,7 +179,7 @@ class DataGetter @Inject constructor() {
                 }
                 callback(users)
                 callbackUid(uidList)
-                queryUsers.removeEventListener(this);
+                queryUsers.removeEventListener(this)
             }
             override fun onCancelled(error: DatabaseError) {
                 Log.w(ContentValues.TAG, "searchByField:onCancelled", error.toException())
@@ -212,8 +228,6 @@ class DataGetter @Inject constructor() {
             .orderByChild("roomID")
             .equalTo(roomID)
 
-        Log.w("DEBUG LMAO3", roomID)
-
         queryRooms.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for (snapshot in dataSnapshot.children) {
@@ -248,25 +262,15 @@ class DataGetter @Inject constructor() {
     }
 
     /**
-     * This functions that updates the song list of the room
+     * This functions that updates the field of a room entry
      * @param roomID ID of the room
-     * @param songList the new song list
+     * @param fieldName name of the field to update
+     * @param value new value to write to the database
      */
 
-    fun updateSongList(roomID: String, songList: MutableList<Pair<String, String>>) {
-        dbRoomRef.child("${roomID}/songList").setValue(songList)
+    fun <T> updateRoomField(roomID: String, fieldName: String, value: T) {
+        dbRoomRef.child("${roomID}/${fieldName}").setValue(value)
     }
-
-    /**
-     * This functions that updates the the start game field
-     * @param roomID ID of the room
-     * @param value the new value to store
-     */
-
-    fun updateStartGame(roomID: String, value: Boolean) {
-        dbRoomRef.child("${roomID}/gameStarted").setValue(value)
-    }
-
     /**
      * This functions reads the start of the game field and calls the appropriate functions
      * @param roomID ID of the room

@@ -33,19 +33,6 @@
             android:gravity="center"
             android:orientation="vertical">
 
-
-            <Button
-                android:id="@+id/welcome_scoreboard"
-                android:layout_width="200dp"
-                android:layout_height="48dp"
-                android:layout_marginTop="10dp"
-                android:backgroundTint="@color/cg_blue"
-                android:elevation="10dp"
-                android:stateListAnimator="@null"
-                android:text="@string/welcomeScreen_scoreboard"
-                android:translationZ="10dp"
-                app:icon="@android:drawable/ic_menu_share" />
-
             <Button
                 android:id="@+id/welcome_profile"
                 android:layout_width="200dp"
@@ -69,18 +56,6 @@
                 android:text="@string/welcomeScreen_download"
                 android:translationZ="10dp"
                 app:icon="@android:drawable/stat_sys_download" />
-
-            <Button
-                android:id="@+id/welcome_search"
-                android:layout_width="200dp"
-                android:layout_height="48dp"
-                android:layout_marginTop="10dp"
-                android:backgroundTint="@color/cg_blue"
-                android:elevation="10dp"
-                android:stateListAnimator="@null"
-                android:text="@string/search_users"
-                android:translationZ="10dp"
-                app:icon="@android:drawable/ic_menu_search" />
 
 
             <Space

@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="26dp"
         android:fontFeatureSettings="smcp"
-        android:text="@string/ask_nb_players"
+        android:text="@string/BuzzerScreen_ask_nb_players"
         android:textAlignment="center"
         android:textSize="30sp"
         android:textStyle="bold"
@@ -126,14 +126,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/player_missing"
+            android:text="@string/BuzzerScreen_player_missing"
             android:visibility="visible" />
 
         <Button
             android:id="@+id/missingNameOk"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/ok"
+            android:text="@string/BuzzerScreen_ok"
             android:backgroundTint="@color/cg_blue"
             android:visibility="visible" />
     </LinearLayout>

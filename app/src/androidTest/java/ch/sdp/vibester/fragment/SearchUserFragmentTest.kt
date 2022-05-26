@@ -1,9 +1,7 @@
-package ch.sdp.vibester.activity
+package ch.sdp.vibester.fragment
 
-import android.content.Intent
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.UiController
@@ -12,13 +10,15 @@ import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.intent.Intents
+import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.matcher.BoundedMatcher
-import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
+import ch.sdp.vibester.activity.QrScanningActivity
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
+import ch.sdp.vibester.launchFragmentInHiltContainer
 import ch.sdp.vibester.user.User
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.testing.BindValue
@@ -37,7 +37,7 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 @HiltAndroidTest
-class SearchUserActivityTest {
+class SearchUserFragmentTest {
 
     @get:Rule(order = 0)
     var hiltRule = HiltAndroidRule(this)
@@ -49,10 +49,10 @@ class SearchUserActivityTest {
         val mockUser1 = User("mockUser1", uid = "mockUser1uid")
         val mockUser2 = User("mockUser2", uid = "mockUser2uid")
         val mockUser3 = User("mockUser3", uid = "mockUser3uid")
-        val mockUser = User("mockUser", uid = "mockUseruid", friends = mapOf(Pair(mockUser2.uid,true), Pair(mockUser3.uid,true)))
+        val mockUser = User("mockUser", uid = "mockUseruid", following = mapOf(Pair(mockUser2.uid,true), Pair(mockUser3.uid,true)))
 
-        val mockUIDs = arrayListOf<String>("mockUser1uid","mockUser2uid","mockUser3uid")
-        val mockUsers = arrayListOf<User>(mockUser1, mockUser2, mockUser3)
+        val mockUIDs = arrayListOf("mockUser1uid","mockUser2uid","mockUser3uid")
+        val mockUsers = arrayListOf(mockUser1, mockUser2, mockUser3)
 
         every { mockUsersRepo.searchByField(any(), any(), any(), any()) } answers  {
             thirdArg<(ArrayList<User>) -> Unit>().invoke(mockUsers)
@@ -63,11 +63,12 @@ class SearchUserActivityTest {
             secondArg<(User) -> Unit>().invoke(mockUser)
         }
 
-        every { mockUsersRepo.getCurrentUser() } answers {createMockUser()}
+        every { mockUsersRepo.getCurrentUser() } answers { createMockUser() }
 
-        every {mockUsersRepo.updateSubFieldInt(any(), any(), any(), any(),any())} answers {}
-        every {mockUsersRepo.setSubFieldValue(any(), any(), any(), any())} answers {}
-
+        every { mockUsersRepo.updateSubFieldInt(any(), any(), any(), any(),any()) } answers {}
+        every { mockUsersRepo.setSubFieldValue(any(), any(), any(), any()) } answers {}
+        every { mockUsersRepo.setFollowing(any(), any()) } answers {}
+        every { mockUsersRepo.setUnfollow(any(), any()) } answers {}
     }
 
     @BindValue @JvmField
@@ -90,6 +91,11 @@ class SearchUserActivityTest {
     fun setUp() {
         hiltRule.inject()
         Intents.init()
+        createMockInvocation()
+        createMockAuthenticator()
+        launchFragmentInHiltContainer<SearchUserFragment>(
+            themeResId = R.style.AppTheme
+        )
     }
 
     @After
@@ -97,46 +103,26 @@ class SearchUserActivityTest {
         Intents.release()
     }
 
-    //TODO fix the test that fails due to the media non initialization
-//    @Test
-//    fun goToScanQr() {
-//        val intent = Intent(ApplicationProvider.getApplicationContext(), SearchUserActivity::class.java)
-//        intent.putExtra("isTest", true)
-//
-//        createMockInvocation()
-//        createMockAuthenticator()
-//        val scn: ActivityScenario<SearchUserActivity> = ActivityScenario.launch(intent)
-//
-//        onView(withId(R.id.searchUser_scanning)).perform(click())
-//        Intents.intended(IntentMatchers.hasComponent(QrScanningActivity::class.java.name))
-//    }
+    //FIXME test is timed out
+/*
+    @Test
+    fun goToScanQr() {
+        onView(withId(R.id.searchUser_scanning)).perform(click())
+        Intents.intended(IntentMatchers.hasComponent(QrScanningActivity::class.java.name))
+    }
+ */
 
     @Test
     fun recycleViewToViewTest() {
-        val intent = Intent(ApplicationProvider.getApplicationContext(), SearchUserActivity::class.java)
-
-        createMockInvocation()
-        createMockAuthenticator()
-
-        val scn: ActivityScenario<SearchUserActivity> = ActivityScenario.launch(intent)
-
         onView(withId(R.id.searchList)).check(matches(isDisplayed()))
     }
 
     @Test
     fun recycleViewClickTest() {
-        val intent = Intent(ApplicationProvider.getApplicationContext(), SearchUserActivity::class.java)
-
-        createMockInvocation()
-        createMockAuthenticator()
-
-        val scn: ActivityScenario<SearchUserActivity> = ActivityScenario.launch(intent)
-
-        onView((withId(R.id.searchList)))
+        onView(withId(R.id.searchList))
             .perform(
                 RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                    2,
-                    click()
+                    2, click()
                 )
             )
 
@@ -145,13 +131,6 @@ class SearchUserActivityTest {
 
     @Test
     fun recycleViewScrollDownTest() {
-        val intent = Intent(ApplicationProvider.getApplicationContext(), SearchUserActivity::class.java)
-
-        createMockInvocation()
-        createMockAuthenticator()
-
-        val scn: ActivityScenario<SearchUserActivity> = ActivityScenario.launch(intent)
-
         val recyclerView = RecyclerView(ApplicationProvider.getApplicationContext())
         val itemCount = recyclerView.adapter?.itemCount
         if (itemCount != null) {
@@ -167,36 +146,42 @@ class SearchUserActivityTest {
     
     @Test
     fun checkIconVisible(){
-        val intent = Intent(ApplicationProvider.getApplicationContext(), SearchUserActivity::class.java)
-
-        createMockInvocation()
-        createMockAuthenticator()
-
-        val scn: ActivityScenario<SearchUserActivity> = ActivityScenario.launch(intent)
-
-        checkRecyclerSubViews(R.id.searchList, 2, withEffectiveVisibility(Visibility.INVISIBLE), R.id.addFriendBtn)
-        checkRecyclerSubViews(R.id.searchList, 2, withEffectiveVisibility(Visibility.VISIBLE), R.id.addedFriendIcon)
+        checkRecyclerSubViews(R.id.searchList, 2, withEffectiveVisibility(Visibility.INVISIBLE), R.id.search_user_add)
+        checkRecyclerSubViews(R.id.searchList, 2, withEffectiveVisibility(Visibility.VISIBLE), R.id.search_user_added)
     }
 
     @Test
     fun checkAddBtnClick(){
-        val intent = Intent(ApplicationProvider.getApplicationContext(), SearchUserActivity::class.java)
+        checkRecyclerSubViews(R.id.searchList, 0, withEffectiveVisibility(Visibility.VISIBLE), R.id.search_user_add)
+        checkRecyclerSubViews(R.id.searchList, 0, withEffectiveVisibility(Visibility.INVISIBLE), R.id.search_user_added)
 
-        createMockInvocation()
-        createMockAuthenticator()
-
-        val scn: ActivityScenario<SearchUserActivity> = ActivityScenario.launch(intent)
-
-        checkRecyclerSubViews(R.id.searchList, 0, withEffectiveVisibility(Visibility.VISIBLE), R.id.addFriendBtn)
-        checkRecyclerSubViews(R.id.searchList, 0, withEffectiveVisibility(Visibility.INVISIBLE), R.id.addedFriendIcon)
         onView(withId(R.id.searchList))
             .perform(
                 RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                     0,
-                    clickOnViewChild(R.id.addFriendBtn))
+                    clickOnViewChild(R.id.search_user_add))
             )
-        checkRecyclerSubViews(R.id.searchList, 0, withEffectiveVisibility(Visibility.INVISIBLE), R.id.addFriendBtn)
-        checkRecyclerSubViews(R.id.searchList, 0, withEffectiveVisibility(Visibility.VISIBLE), R.id.addedFriendIcon)
+        checkRecyclerSubViews(R.id.searchList, 0, withEffectiveVisibility(Visibility.INVISIBLE), R.id.search_user_add)
+        checkRecyclerSubViews(R.id.searchList, 0, withEffectiveVisibility(Visibility.VISIBLE), R.id.search_user_added)
+    }
+
+    @Test
+    fun checkUnfollowBtnClick() {
+        //follow
+        onView(withId(R.id.searchList)).perform(
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                0, clickOnViewChild(R.id.search_user_add)
+            )
+        )
+        //unfollow
+        onView(withId(R.id.searchList)).perform(
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                0, clickOnViewChild(R.id.search_user_added)
+            )
+        )
+
+        checkRecyclerSubViews(R.id.searchList, 0, withEffectiveVisibility(Visibility.VISIBLE), R.id.search_user_add)
+        checkRecyclerSubViews(R.id.searchList, 0, withEffectiveVisibility(Visibility.INVISIBLE), R.id.search_user_added)
     }
 
     /**

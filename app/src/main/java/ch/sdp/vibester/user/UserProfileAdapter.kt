@@ -1,27 +1,18 @@
 package ch.sdp.vibester.user
 
-import android.graphics.Bitmap
 import android.net.Uri
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
-import ch.sdp.vibester.api.BitmapGetterApi
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.database.ImageGetter
 import ch.sdp.vibester.helper.AdapterHelper
-import ch.sdp.vibester.helper.loadImg
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
-import java.util.concurrent.TimeUnit
-import javax.inject.Inject
+import ch.sdp.vibester.helper.ImageHelper
 
 
 /**
@@ -37,16 +28,16 @@ class UserProfileAdapter constructor(
     RecyclerView.Adapter<UserProfileAdapter.UserProfileViewHolder>() {
 
     private val currentUser = authenticator.getCurrUser()
-    private var userFriends: Array<String> = arrayOf()
+    private var userFollowing: MutableList<String> = mutableListOf()
     private val imageSize = 100
 
     init {
-        if (currentUser != null) { dataGetter.getUserData(currentUser.uid, this::setFriends) }
+        if (currentUser != null) { dataGetter.getUserData(currentUser.uid, this::setFollowing) }
     }
 
     // Callback for getUserData
-    private fun setFriends(user:User){
-        userFriends = user.friends.keys.toTypedArray()
+    private fun setFollowing(user:User) {
+        user.following.forEach { (userId, isFollowing) -> if (isFollowing) userFollowing.add(userId) }
     }
 
     /**
@@ -68,16 +59,13 @@ class UserProfileAdapter constructor(
     }
 
     override fun onBindViewHolder(holder: UserProfileViewHolder, position: Int) {
-        holder.bind(users[position])
+        holder.bind(users[position], position)
     }
 
     /**
      * Get amount of users displayed
      */
-    override fun getItemCount(): Int {
-        return users.size
-    }
-
+    override fun getItemCount() = users.size
 
 
     /**
@@ -87,49 +75,56 @@ class UserProfileAdapter constructor(
         /**
          * @param user with all the parameters
          */
-        fun bind(user: User) {
+        fun bind(user: User, position: Int) {
             itemView.findViewById<TextView>(R.id.search_user_username).text = user.username
+            if(position %2 == 0) itemView.setBackgroundColor(itemView.resources.getColor(R.color.darker_floral_white))
 
             imageGetter.fetchImage("profileImg/${user.uid}", this::setImage)
-            //itemView.findViewById<ImageView>(R.id.profile_image).loadImg(user.image)
-            val addFriendBtn = itemView.findViewById<Button>(R.id.addFriendBtn)
 
-            if (userFriends.isNotEmpty() && user.uid in userFriends) {
-                changeBtnToImage()
-            }
-            else {
-                addFriendBtn.setOnClickListener {
-                    if (currentUser != null) {
-                        dataGetter.setSubFieldValue(currentUser.uid, "friends", user.uid,true)
-                        changeBtnToImage()
-                    }
-                }
-            }
+            setFollowBtnListener(user)
+            unFollowBtnListener(user)
         }
 
         private fun setImage(imageURI: Uri) {
-            CoroutineScope(Dispatchers.Main).launch {
-                val task = async(Dispatchers.IO) {
-                    try {
-                        val bit = BitmapGetterApi.download(imageURI.toString())
-                        bit.get(10, TimeUnit.SECONDS)
-                    } catch (e: Exception){
-                        null
-                    }
-                }
-                val bm = task.await()
+            val avatar = itemView.findViewById<ImageView>(R.id.search_user_profile_image)
 
-                if (bm != null) {
-                    val avatar = itemView.findViewById<ImageView>(R.id.profile_image)
-                    avatar.setImageBitmap(Bitmap.createScaledBitmap(bm, imageSize, imageSize, false))
+            ImageHelper().setImage(imageURI, avatar, imageSize)
+        }
+
+        private fun setFollowBtnListener(user: User) {
+            val followBtn = itemView.findViewById<ImageView>(R.id.search_user_add)
+
+            if (userFollowing.isNotEmpty() && user.uid in userFollowing) {
+                changeBtnToImage()
+            }
+            else {
+                followBtn.setOnClickListener {
+                    if (currentUser != null) {
+                        dataGetter.setFollowing(currentUser.uid, user.uid)
+                        changeBtnToImage()
+                    } else {
+                        Toast.makeText(it.context, R.string.searchUser_pleaseLogInFirst, Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         }
 
-
         private fun changeBtnToImage() {
-            AdapterHelper().changeBtnToImageHelper(R.id.addFriendBtn, R.id.addedFriendIcon, itemView)
+            AdapterHelper().changeAToB(
+                R.id.search_user_add, R.id.search_user_added, itemView
+            )
         }
+
+        private fun unFollowBtnListener(user: User) {
+            itemView.findViewById<ImageView>(R.id.search_user_added).setOnClickListener {
+                if (currentUser != null) {
+                    dataGetter.setUnfollow(currentUser.uid, user.uid)
+                    AdapterHelper().switchViewsVisibility(
+                        itemView.findViewById(R.id.search_user_added), itemView.findViewById(R.id.search_user_add))
+                }
+            }
+        }
+
 
         init {
             itemView.setOnClickListener(this)

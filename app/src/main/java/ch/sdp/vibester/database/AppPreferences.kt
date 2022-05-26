@@ -26,12 +26,19 @@ object AppPreferences {
     }
 
     fun getStr(key: String): String? {
-       return preferences.getString(key, "")
+        if (this::preferences.isInitialized) {
+            return preferences.getString(key, "")
+        } else {
+            return ""
+        }
+
     }
 
     fun setStr(key: String, value: String){
-        preferences.edit {
-            it.putString(key, value)
+        if (this::preferences.isInitialized) {
+            preferences.edit {
+                it.putString(key, value)
+            }
         }
     }
 }

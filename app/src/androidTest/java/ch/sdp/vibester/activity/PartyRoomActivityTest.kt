@@ -59,9 +59,10 @@ class PartyRoomActivityTest {
             secondArg<(Boolean) -> Unit>().invoke(startGame)
         }
 
-        every { mockUsersRepo.updateSongList(any(), any()) } answers {}
+        every { mockUsersRepo.updateRoomField<Boolean>(any(), any(), any()) } answers {}
+        every { mockUsersRepo.updateRoomField<MutableList<Pair<String, String>>>(any(), any(), any()) } answers {}
 
-        every { mockUsersRepo.updateStartGame(any(), any())} answers {}
+
     }
 
     @After
@@ -91,7 +92,7 @@ class PartyRoomActivityTest {
         intent.putExtra("roomName", mockRoomName)
         intent.putExtra("createRoom", true)
 
-        val scn: ActivityScenario<CreateProfileActivity> = ActivityScenario.launch(intent)
+        val scn: ActivityScenario<PartyRoomActivity> = ActivityScenario.launch(intent)
 
         Espresso.onView(ViewMatchers.withId(R.id.emails))
             .check(ViewAssertions.matches(ViewMatchers.withText(mockUserEmailList.toString())))
@@ -118,7 +119,7 @@ class PartyRoomActivityTest {
         intent.putExtra("roomName", mockRoomName)
         intent.putExtra("createRoom", false)
 
-        val scn: ActivityScenario<CreateProfileActivity> = ActivityScenario.launch(intent)
+        val scn: ActivityScenario<PartyRoomActivity> = ActivityScenario.launch(intent)
 
         Espresso.onView(ViewMatchers.withId(R.id.emails))
             .check(ViewAssertions.matches(ViewMatchers.withText(mockUserEmailList.toString())))
@@ -146,10 +147,10 @@ class PartyRoomActivityTest {
         intent.putExtra("roomName", mockRoomName)
         intent.putExtra("createRoom", true)
 
-        val scn: ActivityScenario<CreateProfileActivity> = ActivityScenario.launch(intent)
+        val scn: ActivityScenario<PartyRoomActivity> = ActivityScenario.launch(intent)
 
         Intents.intended(IntentMatchers.hasComponent(TypingGameActivity ::class.java.name))
-        Intents.intended(IntentMatchers.hasExtra("Difficulty", R.string.easy.toString()))
+        Intents.intended(IntentMatchers.hasExtra("Difficulty", R.string.GameSetup_easy))
     }
 
     @Test
@@ -174,7 +175,7 @@ class PartyRoomActivityTest {
         intent.putExtra("roomName", mockRoomID)
         intent.putExtra("createRoom", false)
 
-        val scn: ActivityScenario<CreateProfileActivity> = ActivityScenario.launch(intent)
+        val scn: ActivityScenario<PartyRoomActivity> = ActivityScenario.launch(intent)
 
         Espresso.onView(ViewMatchers.withId(R.id.roomId))
             .check(ViewAssertions.matches(ViewMatchers.withText(mockRoomID)))

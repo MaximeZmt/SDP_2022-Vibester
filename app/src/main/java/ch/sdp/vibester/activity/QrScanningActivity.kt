@@ -3,7 +3,6 @@ package ch.sdp.vibester.activity
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.SurfaceHolder
@@ -11,22 +10,30 @@ import android.view.Window
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import ch.sdp.vibester.R
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.databinding.ActivityQrScanningBinding
+import ch.sdp.vibester.helper.IntentSwitcher
 import com.google.android.gms.vision.CameraSource
 import com.google.android.gms.vision.Detector
 import com.google.android.gms.vision.barcode.Barcode
 import com.google.android.gms.vision.barcode.BarcodeDetector
+import dagger.hilt.android.AndroidEntryPoint
 import java.io.IOException
 import java.io.Serializable
+import javax.inject.Inject
+
 
 /**
  * Represent the QR scanner
  */
+@AndroidEntryPoint
 class QrScanningActivity : AppCompatActivity() {
     private val requestCodeCameraPermission = 1001
 
@@ -36,8 +43,10 @@ class QrScanningActivity : AppCompatActivity() {
 
     private var scannedValue = ""
     private var isTest: Boolean = false
-    var uidList: ArrayList<String> = ArrayList()
-    val usersRepo: DataGetter = DataGetter()
+    private var uidList: ArrayList<String> = ArrayList()
+
+    @Inject
+    lateinit var dataGetter: DataGetter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -53,7 +62,7 @@ class QrScanningActivity : AppCompatActivity() {
             isTest = extras.getBoolean("isTest", false)
         } else {
             // If no uid end of activity
-            startActivityWExtra(Intent(this@QrScanningActivity, SearchUserActivity::class.java), null, null)
+            finishActivity()
         }
 
         permissionManager()
@@ -134,15 +143,12 @@ class QrScanningActivity : AppCompatActivity() {
         }
     }
 
-
-    private fun startActivityWExtra(intent: Intent, name: String?, arg: Serializable?) {
-        if (name != null && arg != null) {
-            intent.putExtra(name, arg)
-        }
-        startActivity(intent)
+    /**
+     * Go back to previous fragment
+     */
+    private fun finishActivity(){
         finish()
     }
-
 
     /*
      * This section is related to permission request
@@ -168,11 +174,12 @@ class QrScanningActivity : AppCompatActivity() {
         if (requestCode == requestCodeCameraPermission && grantResults.isNotEmpty()) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // If permission are granted restart the activity to make sure they are taken into account
-                startActivityWExtra(Intent(this@QrScanningActivity, QrScanningActivity::class.java), "uidList", uidList)
+                IntentSwitcher.switch(this@QrScanningActivity, QrScanningActivity::class.java, mapOf(Pair("uidList", uidList)))
+                finish()
             } else {
                 // Camera permission not granted, come back to previous activity
                 Toast.makeText(applicationContext, getString(R.string.qrScanning_cameraError), Toast.LENGTH_LONG).show()
-                startActivityWExtra(Intent(this@QrScanningActivity, SearchUserActivity::class.java), null, null)
+                finishActivity()
             }
         }
     }
@@ -191,17 +198,14 @@ class QrScanningActivity : AppCompatActivity() {
                 scannedValue = barcodes.valueAt(0).rawValue
             }
             runOnUiThread {
+                var toastText =  getString(R.string.qrScanning_noExistUid)
                 camera.stop()
                 if (isTest || scannedValue in uidList){
-                    if (!isTest) {
-                        usersRepo.setSubFieldValue(FireBaseAuthenticator().getCurrUID(),"friends", scannedValue, true)
-                    }
-                    Toast.makeText(this@QrScanningActivity, getString(R.string.qrScanning_newFriend), Toast.LENGTH_SHORT).show()
-                    startActivityWExtra(Intent(this@QrScanningActivity, SearchUserActivity::class.java), "isSuccess", true)
-                } else {
-                    Toast.makeText(this@QrScanningActivity, getString(R.string.qrScanning_noExistUid), Toast.LENGTH_SHORT).show()
-                    startActivityWExtra(Intent(this@QrScanningActivity, SearchUserActivity::class.java), null, null)
+                    dataGetter.setSubFieldValue(FireBaseAuthenticator().getCurrUID(), "following", scannedValue, true)
+                    toastText = getString(R.string.qrScanning_newFriend)
                 }
+                Toast.makeText(this@QrScanningActivity, toastText, Toast.LENGTH_SHORT).show()
+                finishActivity()
             }
         }
     }

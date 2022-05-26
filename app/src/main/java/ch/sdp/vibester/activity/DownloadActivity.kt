@@ -101,6 +101,7 @@ class DownloadActivity : AppCompatActivity() {
         val songFuture = ItunesMusicApi.querySong(songName, OkHttpClient(), 1)
         try {
             song = Song.singleSong(songFuture.get())
+            songName = song.getTrackName().lowercase() + " - " + song.getArtistName().lowercase()
             checkPermissionsAndDownload()
         } catch (e: IllegalArgumentException) {
             alert(
@@ -204,16 +205,13 @@ class DownloadActivity : AppCompatActivity() {
             records.createNewFile()
         }
         records.appendText("$songName\n")
-        /* TODO: OFFLINE
         recordProperties()
-         */
     }
 
     /**
      * Records the properties of a song.
      * Order of storage: Track name - artist name - artwork URL - preview URL.
      */
-    /* TODO: OFFLINE
     private fun recordProperties() {
         var properties = File(applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "properties.txt")
 
@@ -227,7 +225,6 @@ class DownloadActivity : AppCompatActivity() {
         val previewURL = song.getPreviewUrl()
         properties.appendText("$trackName - $artistName - $artworkURL - $previewURL\n")
     }
-     */
 
     fun switchToDeleteSongs(view: View) {
         val intent = Intent(this, DeleteSongsActivity::class.java)

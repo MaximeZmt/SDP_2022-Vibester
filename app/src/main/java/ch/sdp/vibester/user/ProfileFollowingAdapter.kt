@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
+import ch.sdp.vibester.activity.profile.ProfileActivity
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.helper.AdapterHelper
@@ -15,7 +16,7 @@ import ch.sdp.vibester.helper.loadImg
 /**
  * Set friends in userProfile with profile photo and username in RecycleView.
  */
-class ProfileFollowingAdapter constructor(
+class ProfileFollowingAdapter(
     private val following: MutableList<User>,
     val dataGetter: DataGetter,
     authenticator: FireBaseAuthenticator,

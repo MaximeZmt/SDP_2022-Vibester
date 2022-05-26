@@ -45,24 +45,26 @@ class PartyRoomActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_party_room)
 
-        val roomName = intent.getStringExtra("roomName").toString()
+//        val roomID = intent.getStringExtra("roomName").toString()
         val createPartyRoom = intent.getBooleanExtra("createRoom", false)
         if(createPartyRoom) {
-            createRoom(roomName)
+            createRoom()
             setGameManager()
             dataGetter.updateStartGame(roomID, false)
         }
         else {
-            fetchData(roomName)
+            this.roomID = intent.getStringExtra("roomName").toString()
+//            Log.w("DEBUG LMAO1", roomID)
+            fetchData(roomID)
         }
 
-//        val startGame = findViewById<Button>(R.id.startGame)
+        val startGame = findViewById<Button>(R.id.startGame)
 
-//        startGame.setOnClickListener {
-//            dataGetter.updateStartGame("room1", true)
-//        }
+        startGame.setOnClickListener {
+            dataGetter.updateStartGame(roomID, true)
+        }
 
-//        fetchGameStarted(roomID, this::startGame)
+        fetchGameStarted(roomID, this::startGame)
     }
 
     private fun updateUI(partyRoom: PartyRoom, roomID: String) {
@@ -71,12 +73,13 @@ class PartyRoomActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.roomId).text = roomID
     }
 
-    private fun fetchData(roomName: String) {
-        dataGetter.getRoomData(roomName, this::updateUI, this::setSongs)
+    private fun fetchData(roomID: String) {
+        Log.w("DEBUG LMAO2", roomID)
+        dataGetter.getRoomData(roomID, this::updateUI, this::setSongs)
     }
 
-    private fun createRoom(roomName: String) {
-        dataGetter.createRoom(roomName, this::updateUI)
+    private fun createRoom() {
+        dataGetter.createRoom(this::updateUI)
     }
 
     private fun fetchGameStarted(roomName: String, callback: (Boolean) -> Unit) {
@@ -89,7 +92,7 @@ class PartyRoomActivity : AppCompatActivity() {
         }
     }
 
-    private fun setGameManager() {
+    private fun  setGameManager() {
         gameManager = GameManager()
         gameManager.setGameSize(1)
 
@@ -106,14 +109,14 @@ class PartyRoomActivity : AppCompatActivity() {
         startActivity(newIntent)
     }
 
-    private fun setGameSongList(uri: LastfmUri) {
+    private fun setGameSongList(uri: LastfmUri, roomID: String) {
         val service = LastfmApiInterface.createLastfmService()
         val call = service.getSongList(uri.convertToHashmap())
         call.enqueue(object : Callback<Any> {
             override fun onFailure(call: Call<Any>, t: Throwable?) {}
             override fun onResponse(call: Call<Any>, response: Response<Any>) {
                 gameManager.setGameSongList(Gson().toJson(response.body()), uri.method)
-                dataGetter.updateSongList("room1", gameManager.getSongList())
+                dataGetter.updateSongList(roomID, gameManager.getSongList())
             }
         })
     }
@@ -128,7 +131,7 @@ class PartyRoomActivity : AppCompatActivity() {
         gameManager.gameMode = getString(mode)
         AppPreferences.setStr(getString(R.string.preferences_game_genre), getString(mode))
 
-        setGameSongList(uri)
+        setGameSongList(uri, roomID)
     }
 
     private fun setSongs(gameSongList: MutableList<Pair<String, String>>) {

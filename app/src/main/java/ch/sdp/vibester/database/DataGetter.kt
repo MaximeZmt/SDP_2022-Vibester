@@ -1,11 +1,9 @@
 package ch.sdp.vibester.database
 
 import android.content.ContentValues
+import android.content.ContentValues.TAG
 import android.util.Log
-import ch.sdp.vibester.R
 import ch.sdp.vibester.auth.FireBaseAuthenticator
-import ch.sdp.vibester.helper.ArtistIdentifier
-import ch.sdp.vibester.helper.GameManager
 import ch.sdp.vibester.helper.PartyRoom
 import ch.sdp.vibester.user.User
 import com.google.firebase.auth.FirebaseUser
@@ -117,9 +115,8 @@ class DataGetter @Inject constructor() {
      * @param roomName the name of the new room
      * @param callback function to be called when the room has been created
      */
-    fun createRoom(roomName: String,  callback: (PartyRoom, String) -> Unit) {
+    fun createRoom(callback: (PartyRoom, String) -> Unit) {
         val partyRoom = PartyRoom()
-        partyRoom.setRoomName(roomName)
         partyRoom.setEmailList(mutableListOf(authenticator.getCurrUser()?.email!!))
         val ref = dbRoomRef.push()
         val key = ref.key
@@ -201,19 +198,21 @@ class DataGetter @Inject constructor() {
 
     /**
      * This functions fetches the data of the given user from the database
-     * @param roomName the name of the room to retrieve data from
+     * @param roomID the name of the room to retrieve data from
      * @param partyRoomCallback the function to be called when the data of the appropriate room data is available
      * @param songListCallback the function to be called when the data of the appropriate song list is available
 
      */
 
-    fun getRoomData(roomName: String,
+    fun getRoomData(roomID: String,
                     partyRoomCallback: (PartyRoom, String) -> Unit,
                     songListCallback: (MutableList<Pair<String, String>>) -> Unit) {
 
         val queryRooms = dbRoomRef
-            .orderByChild("roomName")
-            .equalTo(roomName)
+            .orderByChild("roomID")
+            .equalTo(roomID)
+
+        Log.w("DEBUG LMAO3", roomID)
 
         queryRooms.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -227,19 +226,19 @@ class DataGetter @Inject constructor() {
                         }
                         partyRoomCallback(partyRoom, partyRoom.getRoomID())
                     }
-                        val snapshotMap = snapshot.value as Map<String, Object>
-                        val songList = snapshotMap["songList"] as List<*>
-                        var gameSongList: MutableList<Pair<String, String>> = mutableListOf()
-                        for (song in songList) {
-                            val tempPair: Map<String, String> = song as Map<String, String>
-                            gameSongList.add(
-                                Pair(
-                                    tempPair.getOrDefault("first", ""),
-                                    tempPair.getOrDefault("second", "")
-                                )
+                    val snapshotMap = snapshot.value as Map<String, Object>
+                    val songList = snapshotMap["songList"] as List<*>
+                    var gameSongList: MutableList<Pair<String, String>> = mutableListOf()
+                    for (song in songList) {
+                        val tempPair: Map<String, String> = song as Map<String, String>
+                        gameSongList.add(
+                            Pair(
+                                tempPair.getOrDefault("first", ""),
+                                tempPair.getOrDefault("second", "")
                             )
-                        }
-                        songListCallback(gameSongList)
+                        )
+                    }
+                    songListCallback(gameSongList)
                 }
             }
             override fun onCancelled(error: DatabaseError) {
@@ -270,28 +269,25 @@ class DataGetter @Inject constructor() {
 
     /**
      * This functions reads the start of the game field and calls the appropriate functions
-     * @param roomName name of the room
+     * @param roomID ID of the room
      * @param callback callback to be called when the read value is available
      */
 
-    fun readStartGame(roomName: String, callback: (Boolean) -> Unit) {
-        val queryRooms = dbRoomRef
-            .orderByChild("roomName")
-            .equalTo(roomName)
+    fun readStartGame(roomID: String, callback: (Boolean) -> Unit) {
+        val queryRooms = dbRoomRef.child(roomID).child("gameStarted")
 
-        queryRooms.addValueEventListener(object : ValueEventListener {
+        val startGameListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                for (snapshot in dataSnapshot.children) {
-                    val snapshotMap = snapshot.getValue() as Map<String, Object>
-                    val gameStarted: Boolean = snapshotMap["gameStarted"] as Boolean
-                    callback(gameStarted)
+                val value = dataSnapshot.getValue<Boolean>()
+                if (value != null) {
+                    callback(value)
                 }
             }
-            override fun onCancelled(error: DatabaseError) {
-                Log.w(ContentValues.TAG, "getRoomData:onCancelled", error.toException())
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException())
             }
-        })
-
+        }
+        queryRooms.addValueEventListener(startGameListener)
 }
 }
 

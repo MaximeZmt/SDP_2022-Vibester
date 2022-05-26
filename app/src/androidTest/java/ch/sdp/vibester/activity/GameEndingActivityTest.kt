@@ -129,7 +129,7 @@ class GameEndingActivityTest {
                     clickOnViewChild(R.id.song_download))
             )
         checkRecyclerSubViews(R.id.end_song_list, 0, withEffectiveVisibility(Visibility.INVISIBLE), R.id.song_download)
-        checkRecyclerSubViews(R.id.end_song_list, 0, withEffectiveVisibility(Visibility.VISIBLE), R.id.song_download_done)
+        checkRecyclerSubViews(R.id.end_song_list, 0, withEffectiveVisibility(Visibility.VISIBLE), R.id.song_download_ongoing)
     }
 
 

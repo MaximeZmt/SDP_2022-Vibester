@@ -20,6 +20,11 @@ import okhttp3.OkHttpClient
 import java.io.File
 import java.lang.IllegalArgumentException
 
+/**
+ * This is a class that handles downloading songs on demand. This is an AppCompatActivity instance,
+ * which means all the inheritors can inherit only from this class to be fully functional at the
+ * minimum.
+ */
 open class DownloadFunctionalityActivity : AppCompatActivity() {
 
     companion object {

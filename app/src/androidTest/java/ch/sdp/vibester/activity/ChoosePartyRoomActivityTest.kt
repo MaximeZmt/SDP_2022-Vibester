@@ -46,7 +46,7 @@ class ChoosePartyRoomActivityTest {
     val mockUsersRepo = mockk<DataGetter>()
 
     private fun createMockInvocation(partyRoom: PartyRoom) {
-        every {mockUsersRepo.createRoom(any())} answers {
+        every { mockUsersRepo.createRoom(any()) } answers {
             firstArg<(PartyRoom, String) -> Unit>().invoke(partyRoom, "")
         }
 

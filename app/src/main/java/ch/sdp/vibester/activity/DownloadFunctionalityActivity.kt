@@ -23,7 +23,7 @@ import java.lang.IllegalArgumentException
 open class DownloadFunctionalityActivity : AppCompatActivity() {
 
     companion object {
-        var downloadComplete = false
+        var downloadComplete = true
         var downloadStarted = false
     }
 

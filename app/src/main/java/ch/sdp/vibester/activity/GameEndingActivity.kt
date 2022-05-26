@@ -2,15 +2,17 @@ package ch.sdp.vibester.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.Window
-import android.widget.TableRow
-import android.widget.TextView
+import android.widget.*
+import androidx.core.view.children
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
 import ch.sdp.vibester.database.AppPreferences
+import ch.sdp.vibester.helper.AdapterHelper
 import ch.sdp.vibester.helper.Helper
 import ch.sdp.vibester.model.SongListAdapter
 import ch.sdp.vibester.user.OnItemClickListener
@@ -142,7 +144,28 @@ class GameEndingActivity : DownloadFunctionalityActivity(), OnItemClickListener 
     }
 
     override fun onItemClick(position: Int) {
+        val parentActual = findViewById<Button>(R.id.song_download).parent as RelativeLayout
+        val parentOfParent = parentActual.parent as RecyclerView
+        Log.d("parent name of button is ============================ ", "${parentOfParent.javaClass}")
+        Log.d("parent's number of children is ============================ ", "${parentOfParent.childCount}")
+        val relative = parentOfParent.children.elementAt(position) as RelativeLayout
+        val children = relative.children
+        val songName = children.elementAt(0) as TextView
+        val downloadButton = children.elementAt(1) as Button
+        val downloadOngoing = children.elementAt(3) as ProgressBar
+        val downloadDone = children.elementAt(2) as ImageView
+        Log.d("child song is =============================== ", "${songName.text}")
+        Log.d("child song is =============================== ", "${downloadButton.id}")
+        Log.d("child song is =============================== ", "${downloadOngoing.id}")
+
         val songList = incorrectSongList + correctSongList
+        if(downloadComplete) {
+            Log.d("-----------------------------","++++++++++++++++++++++++++++++++++++")
+            downloadButton.visibility = View.INVISIBLE
+            downloadOngoing.visibility = View.VISIBLE
+            Log.d("name of button is ============================ ", "${downloadButton.id}")
+            Log.d("name of ongoing is ============================ ", "${downloadOngoing.id}")
+        }
         downloadListener(null, songList[position])
     }
 

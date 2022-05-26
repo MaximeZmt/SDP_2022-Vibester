@@ -35,4 +35,15 @@
         android:src="@drawable/green_tick"
         android:visibility="invisible" />
 
+    <ProgressBar
+        android:id="@+id/song_download_ongoing"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="10dp"
+        android:layout_toEndOf="@id/song_name"
+        android:visibility="invisible" />
+
 </RelativeLayout>

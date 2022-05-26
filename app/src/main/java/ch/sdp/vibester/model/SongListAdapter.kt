@@ -1,11 +1,14 @@
 package ch.sdp.vibester.model
 
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Adapter
 import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
+import ch.sdp.vibester.activity.DownloadFunctionalityActivity
 import ch.sdp.vibester.helper.AdapterHelper
 import ch.sdp.vibester.user.OnItemClickListener
 
@@ -53,11 +56,6 @@ class SongListAdapter constructor(
             itemView.findViewById<TextView>(R.id.song_name).text = songName
             val downloadSongBtn = itemView.findViewById<Button>(R.id.song_download)
 
-            /*downloadSongBtn.setOnClickListener {
-                AdapterHelper().changeAToB(
-                    R.id.song_download, R.id.song_download_done, itemView
-                )
-            }*/
             downloadSongBtn.setOnClickListener(this)
 
             // Make background red if song is guessed incorrectly

@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Environment
 import android.text.Editable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -58,6 +59,7 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
         super.onViewCreated(view, savedInstanceState)
         val ctx = view.context
 
+        view.findViewById<Button>(R.id.offline_game_button).setOnClickListener(this)
         view.findViewById<Button>(R.id.local_buzzer_game_button).setOnClickListener(this)
         view.findViewById<Button>(R.id.local_typing_game_button).setOnClickListener(this)
         view.findViewById<Button>(R.id.local_lyrics_game_button).setOnClickListener(this)
@@ -182,16 +184,15 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
      * Fetch data from Lastfm and set song list in a GameManager
      * @param uri: contains all Lastfm query parameters (method, artist, tag)
      */
-    private fun setGameSongList(uri: LastfmUri) {
+    private fun setGameSongList(uri: LastfmUri, playOffline: Boolean = false) {
         val service = LastfmApiInterface.createLastfmService()
         val call = service.getSongList(uri.convertToHashmap())
         call.enqueue(object : Callback<Any> {
             override fun onFailure(call: Call<Any>, t: Throwable?) {}
             override fun onResponse(call: Call<Any>, response: Response<Any>) {
-                // TODO: OFFLINE
                 val external = context?.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)
                 if (external != null) {
-                    gameManager.setOffline(external, hasInternet)
+                    gameManager.setOffline(external, !playOffline)
                 }
                 gameManager.setGameSongList(Gson().toJson(response.body()), uri.method)
             }
@@ -201,12 +202,16 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
     /**
      * Set game mode. Set appropriate GameManager.
      */
-    private fun chooseGame(gameMode: String, gameManager: GameManager){
+    private fun chooseGame(gameMode: String, gameManager: GameManager, playOffline: Boolean = false){
         this.game = gameMode
         this.gameManager = gameManager
 
-        toggleViewsVisibility(goneView = requireView().findViewById<LinearLayout>(R.id.chooseGame),
-            visibleView = requireView().findViewById<ConstraintLayout>(R.id.genrePerScoreboard))
+        if (playOffline) {
+            chooseGenre(method = LastfmMethod.BY_ARTIST.method, artist = "Personalized", mode = R.string.gameGenre_byArtistSearch, playOffline = playOffline)
+        } else {
+            toggleViewsVisibility(goneView = requireView().findViewById<LinearLayout>(R.id.chooseGame),
+                visibleView = requireView().findViewById<ConstraintLayout>(R.id.genrePerScoreboard))
+        }
     }
 
     /**
@@ -216,7 +221,7 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
      * @param tag: tag (genre) to fetch songs from: used in BY_TAG method
      * @param mode: official game mode name
      */
-    private fun chooseGenre(method: String = "", artist: String = "", tag: String = "", mode: Int = 0) {
+    private fun chooseGenre(method: String = "", artist: String = "", tag: String = "", mode: Int = 0, playOffline: Boolean = false) {
         if (artist != "") {
             val uri = LastfmUri()
 
@@ -224,14 +229,22 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
             uri.artist = artist
             uri.tag = tag
 
-            toggleViewsVisibility(
-                goneView = requireView().findViewById<LinearLayout>(R.id.genrePerScoreboard),
-                visibleView = requireView().findViewById<ConstraintLayout>(R.id.chooseSetting)
-            )
+            if (playOffline) {
+                toggleViewsVisibility(
+                    goneView = requireView().findViewById<LinearLayout>(R.id.chooseGame),
+                    visibleView = requireView().findViewById<ConstraintLayout>(R.id.chooseSetting)
+                )
+            } else{
+                toggleViewsVisibility(
+                    goneView = requireView().findViewById<LinearLayout>(R.id.genrePerScoreboard),
+                    visibleView = requireView().findViewById<ConstraintLayout>(R.id.chooseSetting)
+                )
+            }
+
 
             gameManager.gameMode = getString(mode)
             AppPreferences.setStr(getString(R.string.preferences_game_genre), getString(mode))
-            setGameSongList(uri)
+            setGameSongList(uri, playOffline)
         }
     }
 
@@ -241,6 +254,7 @@ class GameSetupFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
             R.id.local_typing_game_button -> chooseGame("local_typing", GameManager())
             R.id.local_lyrics_game_button -> chooseGame("local_lyrics", GameManager())
             R.id.online_buzzer_game_button -> switchToGameNoParameters(ChoosePartyRoomActivity())
+            R.id.offline_game_button -> chooseGame("local_buzzer", GameManager(), true)
 
             R.id.btsButton -> chooseGenre(method = LastfmMethod.BY_ARTIST.method, artist = "BTS", mode = R.string.gameGenre_bts)
             R.id.kpopButton -> chooseGenre(method = LastfmMethod.BY_TAG.method, tag = "kpop", mode = R.string.kpop)

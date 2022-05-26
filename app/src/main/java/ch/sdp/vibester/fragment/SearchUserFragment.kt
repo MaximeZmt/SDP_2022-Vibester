@@ -15,6 +15,7 @@ import ch.sdp.vibester.activity.profile.PublicProfileActivity
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.database.ImageGetter
+import ch.sdp.vibester.helper.IntentSwitcher
 import ch.sdp.vibester.helper.ViewModel
 import ch.sdp.vibester.user.OnItemClickListener
 import ch.sdp.vibester.user.User
@@ -66,9 +67,7 @@ class SearchUserFragment : Fragment(R.layout.fragment_layout_search_user), OnIte
         val buttonScan: FloatingActionButton = vmSearchUser.view.findViewById(R.id.searchUser_scanning)
 
         buttonScan.setOnClickListener {
-            val qrIntent = Intent(activity, QrScanningActivity::class.java)
-            qrIntent.putExtra("uidList", uidList)
-            startActivity(qrIntent)
+            IntentSwitcher.switch(vmSearchUser.ctx, QrScanningActivity::class.java, mapOf(Pair("uidList", uidList)))
         }
     }
 
@@ -115,10 +114,8 @@ class SearchUserFragment : Fragment(R.layout.fragment_layout_search_user), OnIte
     }
 
     override fun onItemClick(position: Int) {
-        val intent = Intent(activity, PublicProfileActivity::class.java)
-        intent.putExtra("UserId", users[position].uid)
-        intent.putExtra("ScoresOrFollowing", R.string.profile_following.toString())
-        startActivity(intent)
+        val extras = mapOf(Pair("UserId", users[position].uid), Pair("ScoresOrFollowing", R.string.profile_following.toString()))
+        IntentSwitcher.switch(vmSearchUser.ctx,PublicProfileActivity::class.java, extras)
     }
 }
 

@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/floral_white"
-    android:noHistory="true"
-    android:id="@+id/fragment_game_setup">
+    android:noHistory="true">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/gameSetup_returnToMain"

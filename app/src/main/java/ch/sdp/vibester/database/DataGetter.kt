@@ -290,6 +290,11 @@ class DataGetter @Inject constructor() {
      * @param roomID ID of the room
      * @param callback callback to be called when the read value is available
      */
+    /**
+     * This functions reads the start of the game field and calls the appropriate functions
+     * @param roomID ID of the room
+     * @param callback callback to be called when the read value is available
+     */
     fun readStartGame(roomID: String, callback: (Boolean) -> Unit) {
         val queryRooms = dbRoomRef.child(roomID).child("gameStarted")
 

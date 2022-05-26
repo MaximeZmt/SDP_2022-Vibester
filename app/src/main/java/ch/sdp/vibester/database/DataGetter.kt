@@ -294,6 +294,3 @@ class DataGetter @Inject constructor() {
         queryRooms.addValueEventListener(startGameListener)
 }
 }
-
-
-

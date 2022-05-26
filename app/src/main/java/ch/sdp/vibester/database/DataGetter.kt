@@ -220,7 +220,15 @@ class DataGetter @Inject constructor() {
 
      */
 
-    fun getRoomData(roomID: String,
+        /**
+     * This functions fetches the data of the given user from the database
+     * @param roomName the name of the room to retrieve data from
+     * @param callback the function to be called when the data of the appropriate user is available
+     * @param roomID the name of the room to retrieve data from
+     * @param partyRoomCallback the function to be called when the data of the appropriate room data is available
+     * @param songListCallback the function to be called when the data of the appropriate song list is available
+     */
+    fun getRoomData(roomName: String, callback: (PartyRoom) -> Unit) {
                     partyRoomCallback: (PartyRoom, String) -> Unit,
                     songListCallback: (MutableList<Pair<String, String>>) -> Unit) {
 

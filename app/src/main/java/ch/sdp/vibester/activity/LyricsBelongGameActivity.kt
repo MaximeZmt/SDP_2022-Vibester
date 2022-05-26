@@ -40,8 +40,9 @@ class LyricsBelongGameActivity : GameActivity() {
         if (getIntent != null) {
             gameManager = getIntent.getSerializable("gameManager") as GameManager
             // put in one line to increase coverage
-            findViewById<Button>(R.id.nextSongButton).setOnClickListener { startRound(ctx, gameManager) }
+            findViewById<Button>(R.id.nextSongLyrics).setOnClickListener { startRound(ctx, gameManager) }
             findViewById<Button>(R.id.lyricMatchButton).setOnClickListener { getAndCheckLyrics(ctx, song, speechInput, gameManager) }
+
             gameManager.setNextSong()
             startRound(ctx, gameManager)
             super.setMax(intent)
@@ -49,6 +50,11 @@ class LyricsBelongGameActivity : GameActivity() {
 
         findViewById<ImageView>(R.id.btnSpeak).setOnClickListener {
             getSpeechInput()
+        }
+
+        findViewById<Button>(R.id.skip_lyrics).setOnClickListener {
+            toastShowSimpleMsg(ctx, R.string.no_lyrics_found)
+            endRound(gameManager)
         }
     }
 
@@ -83,7 +89,7 @@ class LyricsBelongGameActivity : GameActivity() {
      */
     private fun startRound(ctx: Context, gameManager: GameManager) {
         toggleBtnVisibility(R.id.lyricMatchButton, false)
-        toggleBtnVisibility(R.id.nextSongButton, false)
+        toggleBtnVisibility(R.id.nextSongLyrics, false)
         song = gameManager.getCurrentSong()//Song.songBuilder("", "", gameManager.currentSong.getTrackName(), gameManager.currentSong.getArtistName())
 
         val frameLay = findViewById<FrameLayout>(R.id.LyricsSongQuestion)
@@ -96,7 +102,7 @@ class LyricsBelongGameActivity : GameActivity() {
 
     override fun endRound(gameManager: GameManager, callback: (() -> Unit)?) {
         super.endRound(gameManager, this::setScores)
-        toggleBtnVisibility(R.id.nextSongButton, true)
+        toggleBtnVisibility(R.id.nextSongLyrics, true)
     }
 
     /**

@@ -16,10 +16,10 @@
             android:id="@+id/playerScore"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@string/TypingGame_yourScore0"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="20sp"
-            android:text="@string/TypingGame_yourScore0"/>
+            android:textSize="20sp" />
 
         <Space
             android:layout_width="match_parent"
@@ -38,9 +38,16 @@
             android:progressTint="@color/tiffany_blue"
             android:scaleY="3" />
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="43dp" />
+        <Button
+            android:id="@+id/skip_typing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/cg_blue"
+            android:layout_marginStart="160dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="0dp"
+            android:layout_marginEnd="0dp"
+            android:text="@string/TypingGame_skip" />
 
         <TextView
             android:id="@+id/textView"
@@ -68,16 +75,19 @@
 
         <ScrollView
             android:layout_width="match_parent"
+            android:background="@color/floral_white"
             android:layout_height="match_parent">
 
             <LinearLayout
                 android:id="@+id/displayGuess"
                 android:layout_width="match_parent"
+                android:background="@color/floral_white"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <Space
                     android:layout_width="match_parent"
+                    android:background="@color/floral_white"
                     android:layout_height="22dp" />
 
             </LinearLayout>
@@ -89,10 +99,10 @@
         android:id="@+id/nextSongTyping"
         android:layout_width="140dp"
         android:layout_height="40dp"
-        android:text="@string/next"
-        android:visibility="gone"
         android:background="@drawable/squared_button"
         android:backgroundTint="@color/cg_blue"
+        android:text="@string/next"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.8"

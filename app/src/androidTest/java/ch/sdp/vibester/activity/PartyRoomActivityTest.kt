@@ -50,7 +50,7 @@ class PartyRoomActivityTest {
             firstArg<(PartyRoom, String) -> Unit>().invoke(partyRoom, roomID)
         }
 
-        every {mockUsersRepo.getRoomData(any(), any(), any())} answers {
+        every { mockUsersRepo.getRoomData(any(), any(), any()) } answers {
             secondArg<(PartyRoom, String) -> Unit>().invoke(partyRoom, roomID)
             lastArg<(MutableList<Pair<String, String>>) -> Unit>().invoke(songList)
         }

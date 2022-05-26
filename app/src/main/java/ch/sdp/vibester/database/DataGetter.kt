@@ -267,7 +267,6 @@ class DataGetter @Inject constructor() {
      * @param fieldName name of the field to update
      * @param value new value to write to the database
      */
-
     fun <T> updateRoomField(roomID: String, fieldName: String, value: T) {
         dbRoomRef.child("${roomID}/${fieldName}").setValue(value)
     }

@@ -1,5 +1,7 @@
 package ch.sdp.vibester.activity
 
+import android.content.Context
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
@@ -9,6 +11,7 @@ import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
+import ch.sdp.vibester.database.AppPreferences
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.helper.PartyRoom
 import ch.sdp.vibester.user.User
@@ -54,6 +57,9 @@ class ChoosePartyRoomActivityTest {
         every { mockUsersRepo.readStartGame(any(), any()) } answers {
             false
         }
+
+        every { mockUsersRepo.updateSongList(any(), any()) } answers {}
+
     }
 
     @After
@@ -63,6 +69,8 @@ class ChoosePartyRoomActivityTest {
 
     @Test
     fun correctJoinPartyIntent() {
+        val ctx: Context = ApplicationProvider.getApplicationContext()
+
         val roomName = "testRoomName"
         var mockUserEmailList = mutableListOf<String>("email1, email2")
         var mockPartyRoom = PartyRoom()
@@ -70,6 +78,10 @@ class ChoosePartyRoomActivityTest {
         mockPartyRoom.setEmailList(mockUserEmailList)
 
         createMockInvocation(mockPartyRoom)
+
+        AppPreferences.init(ctx)
+        AppPreferences.setStr(ctx.getString(R.string.preferences_game_mode), "local_typing")
+        AppPreferences.setStr(ctx.getString(R.string.preferences_game_genre), "imagine dragons")
 
         onView(ViewMatchers.withId(R.id.roomNameInput)).perform(
             ViewActions.typeText("testRoomName"),
@@ -84,6 +96,8 @@ class ChoosePartyRoomActivityTest {
 
     @Test
     fun correctCreatePartyIntent() {
+        val ctx: Context = ApplicationProvider.getApplicationContext()
+
         val roomName = "testRoomName"
         var mockUserEmailList = mutableListOf<String>("email1, email2")
         var mockPartyRoom = PartyRoom()
@@ -91,6 +105,10 @@ class ChoosePartyRoomActivityTest {
         mockPartyRoom.setEmailList(mockUserEmailList)
 
         createMockInvocation(mockPartyRoom)
+
+        AppPreferences.init(ctx)
+        AppPreferences.setStr(ctx.getString(R.string.preferences_game_mode), "local_typing")
+        AppPreferences.setStr(ctx.getString(R.string.preferences_game_genre), "imagine dragons")
 
         onView(ViewMatchers.withId(R.id.roomNameInput)).perform(
             ViewActions.typeText("testRoomName"),

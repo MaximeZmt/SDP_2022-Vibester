@@ -37,6 +37,8 @@ class PartyRoomActivity : AppCompatActivity() {
 
     lateinit var gameManager: GameManager
 
+    lateinit var roomID: String
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,22 +50,25 @@ class PartyRoomActivity : AppCompatActivity() {
         if(createPartyRoom) {
             createRoom(roomName)
             setGameManager()
+            dataGetter.updateStartGame(roomID, false)
         }
         else {
             fetchData(roomName)
         }
 
-        val startGame = findViewById<Button>(R.id.startGame)
+//        val startGame = findViewById<Button>(R.id.startGame)
 
-        startGame.setOnClickListener {
-            dataGetter.updateStartGame("room1", true)
-        }
+//        startGame.setOnClickListener {
+//            dataGetter.updateStartGame("room1", true)
+//        }
 
-        fetchGameStarted(roomName, this::startGame)
+//        fetchGameStarted(roomID, this::startGame)
     }
 
-    private fun updateUI(partyRoom: PartyRoom) {
+    private fun updateUI(partyRoom: PartyRoom, roomID: String) {
+        this.roomID = roomID
         findViewById<TextView>(R.id.emails).text = partyRoom.getEmailList().toString()
+        findViewById<TextView>(R.id.roomId).text = roomID
     }
 
     private fun fetchData(roomName: String) {

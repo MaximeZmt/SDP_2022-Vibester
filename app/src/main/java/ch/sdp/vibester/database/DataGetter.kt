@@ -117,7 +117,7 @@ class DataGetter @Inject constructor() {
      * @param roomName the name of the new room
      * @param callback function to be called when the room has been created
      */
-    fun createRoom(roomName: String,  callback: (PartyRoom) -> Unit) {
+    fun createRoom(roomName: String,  callback: (PartyRoom, String) -> Unit) {
         val partyRoom = PartyRoom()
         partyRoom.setRoomName(roomName)
         partyRoom.setEmailList(mutableListOf(authenticator.getCurrUser()?.email!!))
@@ -127,7 +127,9 @@ class DataGetter @Inject constructor() {
             partyRoom.setRoomID(key)
         }
         ref.setValue(partyRoom)
-        callback(partyRoom)
+        if (key != null) {
+            callback(partyRoom, key)
+        }
     }
 
 
@@ -206,7 +208,7 @@ class DataGetter @Inject constructor() {
      */
 
     fun getRoomData(roomName: String,
-                    partyRoomCallback: (PartyRoom) -> Unit,
+                    partyRoomCallback: (PartyRoom, String) -> Unit,
                     songListCallback: (MutableList<Pair<String, String>>) -> Unit) {
 
         val queryRooms = dbRoomRef
@@ -223,9 +225,9 @@ class DataGetter @Inject constructor() {
                             partyRoom.addUserEmail(currUserEmail)
                             updateRoomUserList(partyRoom)
                         }
-                        partyRoomCallback(partyRoom)
+                        partyRoomCallback(partyRoom, partyRoom.getRoomID())
                     }
-                        val snapshotMap = snapshot.getValue() as Map<String, Object>
+                        val snapshotMap = snapshot.value as Map<String, Object>
                         val songList = snapshotMap["songList"] as List<*>
                         var gameSongList: MutableList<Pair<String, String>> = mutableListOf()
                         for (song in songList) {

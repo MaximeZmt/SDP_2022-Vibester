@@ -46,19 +46,20 @@ class ChoosePartyRoomActivityTest {
     val mockUsersRepo = mockk<DataGetter>()
 
     private fun createMockInvocation(partyRoom: PartyRoom) {
-        every {mockUsersRepo.createRoom(any(), any())} answers {
-            lastArg<(PartyRoom) -> Unit>().invoke(partyRoom)
+        every {mockUsersRepo.createRoom(any())} answers {
+            firstArg<(PartyRoom, String) -> Unit>().invoke(partyRoom, "")
         }
 
-        every {mockUsersRepo.getRoomData(any(), any(), any())} answers {
-            lastArg<(PartyRoom) -> Unit>().invoke(partyRoom)
-        }
 
         every { mockUsersRepo.readStartGame(any(), any()) } answers {
             false
         }
 
+        every { mockUsersRepo.updateStartGame(any(), any()) } answers {}
+
         every { mockUsersRepo.updateSongList(any(), any()) } answers {}
+
+        every {mockUsersRepo.getRoomData(any(), any(), any())} answers {}
 
     }
 
@@ -90,7 +91,7 @@ class ChoosePartyRoomActivityTest {
         onView(ViewMatchers.withId(R.id.joinParty)).perform(ViewActions.click())
 
         Intents.intended(IntentMatchers.hasComponent(PartyRoomActivity ::class.java.name))
-        Intents.intended(IntentMatchers.hasExtra("roomName", roomName))
+        Intents.intended(IntentMatchers.hasExtra("roomID", roomName))
         Intents.intended(IntentMatchers.hasExtra("createRoom", false))
     }
 
@@ -117,7 +118,7 @@ class ChoosePartyRoomActivityTest {
         onView(ViewMatchers.withId(R.id.createParty)).perform(ViewActions.click())
 
         Intents.intended(IntentMatchers.hasComponent(PartyRoomActivity ::class.java.name))
-        Intents.intended(IntentMatchers.hasExtra("roomName", roomName))
+        Intents.intended(IntentMatchers.hasExtra("roomID", roomName))
         Intents.intended(IntentMatchers.hasExtra("createRoom", true))
     }
 }

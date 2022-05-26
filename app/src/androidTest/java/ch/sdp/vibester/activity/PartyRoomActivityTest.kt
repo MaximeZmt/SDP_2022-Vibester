@@ -45,13 +45,13 @@ class PartyRoomActivityTest {
     @JvmField
     val mockUsersRepo = mockk<DataGetter>()
 
-    private fun createMockInvocation(partyRoom: PartyRoom, songList: MutableList<Pair<String, String>>, startGame: Boolean) {
-        every {mockUsersRepo.createRoom(any(), any())} answers {
-            lastArg<(PartyRoom) -> Unit>().invoke(partyRoom)
+    private fun createMockInvocation(partyRoom: PartyRoom, songList: MutableList<Pair<String, String>>, startGame: Boolean, roomID: String) {
+        every {mockUsersRepo.createRoom(any())} answers {
+            firstArg<(PartyRoom, String) -> Unit>().invoke(partyRoom, roomID)
         }
 
         every {mockUsersRepo.getRoomData(any(), any(), any())} answers {
-            secondArg<(PartyRoom) -> Unit>().invoke(partyRoom)
+            secondArg<(PartyRoom, String) -> Unit>().invoke(partyRoom, roomID)
             lastArg<(MutableList<Pair<String, String>>) -> Unit>().invoke(songList)
         }
 
@@ -80,7 +80,7 @@ class PartyRoomActivityTest {
 
         mockPartyRoom.setEmailList(mockUserEmailList)
 
-        createMockInvocation(mockPartyRoom, mockSongList, false)
+        createMockInvocation(mockPartyRoom, mockSongList, false, mockRoomName)
 
         AppPreferences.init(ctx)
         AppPreferences.setStr(ctx.getString(R.string.preferences_game_mode), "local_typing")
@@ -108,7 +108,7 @@ class PartyRoomActivityTest {
 
         mockPartyRoom.setEmailList(mockUserEmailList)
 
-        createMockInvocation(mockPartyRoom, mockSongList, false)
+        createMockInvocation(mockPartyRoom, mockSongList, false, mockRoomName)
 
         AppPreferences.init(ctx)
         AppPreferences.setStr(ctx.getString(R.string.preferences_game_mode), "local_typing")
@@ -132,7 +132,6 @@ class PartyRoomActivityTest {
         var mockUserEmailList = mutableListOf<String>("email1, email2")
         var mockSongList = mutableListOf<Pair<String, String>>(Pair("mockSong1", "mockSong2"))
         var mockPartyRoom = PartyRoom()
-        val gameManager = GameManager()
 
         AppPreferences.init(ctx)
         AppPreferences.setStr(ctx.getString(R.string.preferences_game_mode), "local_typing")
@@ -141,7 +140,7 @@ class PartyRoomActivityTest {
 
         mockPartyRoom.setEmailList(mockUserEmailList)
 
-        createMockInvocation(mockPartyRoom, mockSongList, true)
+        createMockInvocation(mockPartyRoom, mockSongList, true, mockRoomName)
 
         val intent = Intent(ctx, PartyRoomActivity::class.java)
         intent.putExtra("roomName", mockRoomName)

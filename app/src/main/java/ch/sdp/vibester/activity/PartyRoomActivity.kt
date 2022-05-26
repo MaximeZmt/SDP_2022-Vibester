@@ -45,7 +45,6 @@ class PartyRoomActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_party_room)
 
-//        val roomID = intent.getStringExtra("roomName").toString()
         val createPartyRoom = intent.getBooleanExtra("createRoom", false)
         if(createPartyRoom) {
             createRoom()
@@ -53,8 +52,7 @@ class PartyRoomActivity : AppCompatActivity() {
             dataGetter.updateStartGame(roomID, false)
         }
         else {
-            this.roomID = intent.getStringExtra("roomName").toString()
-//            Log.w("DEBUG LMAO1", roomID)
+            this.roomID = intent.getStringExtra("roomID").toString()
             fetchData(roomID)
         }
 
@@ -74,7 +72,6 @@ class PartyRoomActivity : AppCompatActivity() {
     }
 
     private fun fetchData(roomID: String) {
-        Log.w("DEBUG LMAO2", roomID)
         dataGetter.getRoomData(roomID, this::updateUI, this::setSongs)
     }
 

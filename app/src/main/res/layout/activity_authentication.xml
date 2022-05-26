@@ -132,6 +132,17 @@
                 android:text="@string/authentication_createAcc"
                 android:translationZ="10dp" />
 
+            <Button
+                android:id="@+id/forgotPassword"
+                android:layout_width="205dp"
+                android:layout_height="48dp"
+                android:backgroundTint="@color/cg_blue"
+                android:elevation="10dp"
+                android:onClick="resetPasswordListener"
+                android:stateListAnimator="@null"
+                android:text="@string/authentication_forgotPassword"
+                android:translationZ="10dp" />
+
         </LinearLayout>
     </ScrollView>
 

@@ -95,6 +95,13 @@ class AuthenticationActivity : AppCompatActivity() {
     }
 
     /**
+     * Listener bound to the "Reset Password" button in the Authentication activity.
+     */
+    fun resetPasswordListener(view: View) {
+        resetPassword(username.text.toString())
+    }
+
+    /**
      * Listener bound to the red return button in the Authentication activity.
      */
     fun returnToMainListener(view: View) {
@@ -248,6 +255,16 @@ class AuthenticationActivity : AppCompatActivity() {
      */
     private fun updateOnFail(text: String = "Authentication failed"){
         Toast.makeText(baseContext, text, Toast.LENGTH_SHORT).show()
+    }
+
+    /**
+     *  Reset Password function
+     *  @param email email adress for the password reset
+     */
+    private fun resetPassword(email: String) {
+        auth.sendPasswordResetEmail(email).addOnFailureListener {
+            Toast.makeText(baseContext, R.string.authentication_forgotPassword, Toast.LENGTH_SHORT).show()
+        }
     }
     
 }

@@ -19,9 +19,11 @@
     <string name="authentication_createAcc">Create Account</string>
     <string name="authentication_logIn">Log in</string>
     <string name="authentication_googleLogIn">Log in with Google</string>
+    <string name="authentication_forgotPassword">Forgot Password</string>
     <string name="authentication_emptyField">Empty email or password</string>
     <string name="authentication_notAnEmail">Not an email</string>
     <string name="authentication_shortPassword">Password has to be at least 6 symbols</string>
+    <string name="authentication_resetPasswordError">Failed to send password recovery email</string>
 
     <!-- QrScanning -->
     <string name="qrScanning_scannerClosed">Scanner has been closed</string>

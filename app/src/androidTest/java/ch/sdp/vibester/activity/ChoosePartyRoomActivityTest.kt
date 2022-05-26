@@ -58,7 +58,7 @@ class ChoosePartyRoomActivityTest {
         every { mockUsersRepo.updateRoomField<Boolean>(any(), any(), any()) } answers {}
         every { mockUsersRepo.updateRoomField<MutableList<Pair<String, String>>>(any(), any(), any()) } answers {}
 
-        every {mockUsersRepo.getRoomData(any(), any(), any())} answers {}
+        every { mockUsersRepo.getRoomData(any(), any(), any()) } answers {}
 
     }
 

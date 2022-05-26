@@ -7,16 +7,6 @@ import org.junit.Test
 
 class PartyRoomTest {
     @Test
-    fun correctSetRoom() {
-        val roomName = "testRoom"
-        val testPartyRoom = PartyRoom()
-
-        testPartyRoom.setRoomName(roomName)
-
-        assertEquals(testPartyRoom.getRoomName(), roomName)
-    }
-
-    @Test
     fun correctSetEmailList() {
         val emailList = mutableListOf("email1, email2")
         val testPartyRoom = PartyRoom()

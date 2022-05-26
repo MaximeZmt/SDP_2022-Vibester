@@ -1,6 +1,7 @@
 package ch.sdp.vibester.database
 
 import android.content.ContentValues
+import android.content.ContentValues.TAG
 import android.util.Log
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.helper.PartyRoom
@@ -10,7 +11,9 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
+import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 import kotlin.reflect.KFunction0
 
 /**
@@ -128,9 +131,8 @@ class DataGetter @Inject constructor() {
      * @param roomName the name of the new room
      * @param callback function to be called when the room has been created
      */
-    fun createRoom(roomName: String,  callback: (PartyRoom) -> Unit) {
+    fun createRoom(callback: (PartyRoom, String) -> Unit) {
         val partyRoom = PartyRoom()
-        partyRoom.setRoomName(roomName)
         partyRoom.setEmailList(mutableListOf(authenticator.getCurrUser()?.email!!))
         val ref = dbRoomRef.push()
         val key = ref.key
@@ -138,7 +140,9 @@ class DataGetter @Inject constructor() {
             partyRoom.setRoomID(key)
         }
         ref.setValue(partyRoom)
-        callback(partyRoom)
+        if (key != null) {
+            callback(partyRoom, key)
+        }
     }
 
 
@@ -208,16 +212,19 @@ class DataGetter @Inject constructor() {
         return authenticator.getCurrUser()
     }
 
-    /**
+        /**
      * This functions fetches the data of the given user from the database
-     * @param roomName the name of the room to retrieve data from
-     * @param callback the function to be called when the data of the appropriate user is available
+     * @param roomID the name of the room to retrieve data from
+     * @param partyRoomCallback the function to be called when the data of the appropriate room data is available
+     * @param songListCallback the function to be called when the data of the appropriate song list is available
      */
+    fun getRoomData(roomID: String,
+                    partyRoomCallback: (PartyRoom, String) -> Unit,
+                    songListCallback: (MutableList<Pair<String, String>>) -> Unit) {
 
-    fun getRoomData(roomName: String, callback: (PartyRoom) -> Unit) {
         val queryRooms = dbRoomRef
-            .orderByChild("roomName")
-            .equalTo(roomName)
+            .orderByChild("roomID")
+            .equalTo(roomID)
 
         queryRooms.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -229,8 +236,21 @@ class DataGetter @Inject constructor() {
                             partyRoom.addUserEmail(currUserEmail)
                             updateRoomUserList(partyRoom)
                         }
-                        callback(partyRoom)
+                        partyRoomCallback(partyRoom, partyRoom.getRoomID())
                     }
+                    val snapshotMap = snapshot.value as Map<String, Object>
+                    val songList = snapshotMap["songList"] as List<*>
+                    var gameSongList: MutableList<Pair<String, String>> = mutableListOf()
+                    for (song in songList) {
+                        val tempPair: Map<String, String> = song as Map<String, String>
+                        gameSongList.add(
+                            Pair(
+                                tempPair.getOrDefault("first", ""),
+                                tempPair.getOrDefault("second", "")
+                            )
+                        )
+                    }
+                    songListCallback(gameSongList)
                 }
             }
             override fun onCancelled(error: DatabaseError) {
@@ -238,4 +258,47 @@ class DataGetter @Inject constructor() {
             }
         })
     }
+
+    /**
+     * This functions that updates the field of a room entry
+     * @param roomID ID of the room
+     * @param fieldName name of the field to update
+     * @param value new value to write to the database
+     */
+    /**
+     * This functions that updates the field of a room entry
+     * @param roomID ID of the room
+     * @param fieldName name of the field to update
+     * @param value new value to write to the database
+     */
+    fun <T> updateRoomField(roomID: String, fieldName: String, value: T) {
+        dbRoomRef.child("${roomID}/${fieldName}").setValue(value)
+    }
+    
+    /**
+     * This functions reads the start of the game field and calls the appropriate functions
+     * @param roomID ID of the room
+     * @param callback callback to be called when the read value is available
+     */
+    /**
+     * This functions reads the start of the game field and calls the appropriate functions
+     * @param roomID ID of the room
+     * @param callback callback to be called when the read value is available
+     */
+    fun readStartGame(roomID: String, callback: (Boolean) -> Unit) {
+        val queryRooms = dbRoomRef.child(roomID).child("gameStarted")
+
+        val startGameListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val value = dataSnapshot.getValue<Boolean>()
+                if (value != null) {
+                  callback(value)
+                }
+            }
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException())
+            }
+        }
+        queryRooms.addValueEventListener(startGameListener)
+}
 }

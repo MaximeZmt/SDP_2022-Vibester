@@ -99,9 +99,7 @@ class AuthenticationActivity : AppCompatActivity() {
     }
 
     private fun resetPassword(email: String) {
-        auth.sendPasswordResetEmail(email).addOnFailureListener {
-            Toast.makeText(applicationContext, "Couldn't send password recovery email", Toast.LENGTH_LONG)
-        }
+        auth.sendPasswordResetEmail(email)
     }
 
     /**

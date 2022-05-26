@@ -36,8 +36,6 @@ class DownloadActivity : DownloadFunctionalityActivity() {
         createDownloadReceiver(songNameView)
     }
 
-
-
     fun switchToDeleteSongs(view: View) {
         val intent = Intent(this, DeleteSongsActivity::class.java)
         startActivity(intent)

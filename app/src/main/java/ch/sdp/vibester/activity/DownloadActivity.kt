@@ -13,13 +13,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
  * Activity that handles downloading of song extracts.
  */
 class DownloadActivity : DownloadFunctionalityActivity() {
-    //Companion object to indicate when the download completes.
-    /*companion object {
-        var downloadComplete = false
-        var downloadStarted = false
-    }*/
 
-
+    /**
+     * Generic onCreate function, nothing of interest.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_download)
@@ -36,6 +33,9 @@ class DownloadActivity : DownloadFunctionalityActivity() {
         createDownloadReceiver(songNameView)
     }
 
+    /**
+     * Generic function to switch to a different, namely DeleteSongsActivity activity.
+     */
     fun switchToDeleteSongs(view: View) {
         val intent = Intent(this, DeleteSongsActivity::class.java)
         startActivity(intent)

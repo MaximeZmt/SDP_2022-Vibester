@@ -33,7 +33,9 @@ class GameEndingActivity : DownloadFunctionalityActivity(), OnItemClickListener 
     lateinit var songListAdapter: SongListAdapter
     private var recyclerView: RecyclerView? = null
 
-
+    /**
+     * Generic onCreate method. Nothing of interested here.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         super.onCreate(savedInstanceState)
@@ -58,6 +60,10 @@ class GameEndingActivity : DownloadFunctionalityActivity(), OnItemClickListener 
         createDownloadReceiver(null)
     }
 
+    /**
+     * Sets up the recycler view which hosts the multitude of songs that were in the previously played
+     * game session.
+     */
     private fun setUpRecyclerView() {
         recyclerView = findViewById(R.id.end_song_list)
         recyclerView!!.setHasFixedSize(true)
@@ -143,13 +149,22 @@ class GameEndingActivity : DownloadFunctionalityActivity(), OnItemClickListener 
         }
     }
 
+    /**
+     * Handles the case where an item in the recycler view is clicked, i.e the download buttons.
+     * @param position: The position of the clicked song in the list of songs.
+     */
     override fun onItemClick(position: Int) {
+        //Retrieval of the top-most parent which is the RecyclerView
         val parentActual = findViewById<Button>(R.id.song_download).parent as RelativeLayout
         val parentOfParent = parentActual.parent as RecyclerView
         Log.d("parent name of button is ============================ ", "${parentOfParent.javaClass}")
         Log.d("parent's number of children is ============================ ", "${parentOfParent.childCount}")
+
+        //Retrieve the RelativeLayout that hosts its children, and those children
         val relative = parentOfParent.children.elementAt(position) as RelativeLayout
         val children = relative.children
+
+        //Retrieve items of the child that is currently being selected by the position argument
         val songName = children.elementAt(0) as TextView
         val downloadButton = children.elementAt(1) as Button
         val downloadOngoing = children.elementAt(3) as ProgressBar
@@ -158,6 +173,7 @@ class GameEndingActivity : DownloadFunctionalityActivity(), OnItemClickListener 
         Log.d("child song is =============================== ", "${downloadButton.id}")
         Log.d("child song is =============================== ", "${downloadOngoing.id}")
 
+        //Logic to switch item visibility and start the download attempt
         val songList = incorrectSongList + correctSongList
         if(downloadComplete) {
             Log.d("-----------------------------","++++++++++++++++++++++++++++++++++++")

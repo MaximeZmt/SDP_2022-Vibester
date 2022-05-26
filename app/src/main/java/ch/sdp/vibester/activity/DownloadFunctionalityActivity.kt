@@ -32,6 +32,12 @@ open class DownloadFunctionalityActivity : AppCompatActivity() {
     private lateinit var songName: String
     private var downloadId: Long = 0
 
+    /**
+     * Asks for the requested permission code in case it is not already granted to the app.
+     * @param requestCode: request code of the permission being asked
+     * @param permissions: an Array of permissions to pass to the super.onRPS
+     * @param grantResults: IntArray in which the results for the permission inquiries are stored
+     */
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == STORAGE_PERMISSION_CODE) {
@@ -41,7 +47,12 @@ open class DownloadFunctionalityActivity : AppCompatActivity() {
         } else { Toast.makeText(this, getString(R.string.download_permission_denied), Toast.LENGTH_LONG).show() }
     }
 
-
+    /**
+     * Creates a broadcast receiver and registers it to the caller class. This receiver is used to
+     * listen to actions indicating a download has been done.
+     * @param songNameView: The TextView instance which will be modified in accordance to the current
+     * state of the broadcast receiver. Used for DownloadActivity.
+     */
     fun createDownloadReceiver(songNameView: TextView?) {
         val broadcast = object: BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
@@ -117,6 +128,10 @@ open class DownloadFunctionalityActivity : AppCompatActivity() {
         return existing.exists()
     }
 
+    /**
+     * Retrieves the song to be downloaded from the ITunes API and initiates the download procedure.
+     * @param songView: TextView to be edited and alerted.
+     */
     private fun getAndDownload(songView: TextView?) {
         val songFuture = ItunesMusicApi.querySong(songName, OkHttpClient(), 1)
         try {

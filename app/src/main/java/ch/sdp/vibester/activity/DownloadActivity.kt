@@ -14,10 +14,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
  */
 class DownloadActivity : DownloadFunctionalityActivity() {
     //Companion object to indicate when the download completes.
-    companion object {
+    /*companion object {
         var downloadComplete = false
         var downloadStarted = false
-    }
+    }*/
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

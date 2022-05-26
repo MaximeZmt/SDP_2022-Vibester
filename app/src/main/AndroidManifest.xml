@@ -55,10 +55,6 @@
             android:name=".activity.BuzzerScreenActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.profile.ProfileActivity"
-            android:windowSoftInputMode="adjustPan"
-            android:exported="false" />
-        <activity
             android:name=".activity.profile.MyProfileActivity"
             android:windowSoftInputMode="adjustPan"
             android:exported="false" />

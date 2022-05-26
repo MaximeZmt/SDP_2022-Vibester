@@ -75,7 +75,7 @@ class PartyRoomActivityTest {
         val ctx: Context = ApplicationProvider.getApplicationContext()
 
         var mockRoomName = "mockName"
-        var mockUserEmailList = mutableListOf<String>("email1, email2")
+        var mockUserEmailList = mutableListOf<String>("Email1", "Email2")
         var mockSongList = mutableListOf<Pair<String, String>>(Pair("mockSong1", "mockSong2"))
         var mockPartyRoom = PartyRoom()
 

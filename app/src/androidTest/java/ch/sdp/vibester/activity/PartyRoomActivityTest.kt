@@ -152,5 +152,35 @@ class PartyRoomActivityTest {
         Intents.intended(IntentMatchers.hasExtra("Difficulty", R.string.easy.toString()))
     }
 
+    @Test
+    fun correctRoomID() {
+        val ctx: Context = ApplicationProvider.getApplicationContext()
+
+        var mockRoomID = "mockRoom"
+        var mockUserEmailList = mutableListOf<String>("email1, email2")
+        var mockSongList = mutableListOf<Pair<String, String>>(Pair("mockSong1", "mockSong2"))
+        var mockPartyRoom = PartyRoom()
+
+        AppPreferences.init(ctx)
+        AppPreferences.setStr(ctx.getString(R.string.preferences_game_mode), "local_typing")
+        AppPreferences.setStr(ctx.getString(R.string.preferences_game_genre), "imagine dragons")
+
+
+        mockPartyRoom.setEmailList(mockUserEmailList)
+
+        createMockInvocation(mockPartyRoom, mockSongList, false, mockRoomID)
+
+        val intent = Intent(ctx, PartyRoomActivity::class.java)
+        intent.putExtra("roomName", mockRoomID)
+        intent.putExtra("createRoom", false)
+
+        val scn: ActivityScenario<CreateProfileActivity> = ActivityScenario.launch(intent)
+
+        Espresso.onView(ViewMatchers.withId(R.id.roomId))
+            .check(ViewAssertions.matches(ViewMatchers.withText(mockRoomID)))
+
+
+    }
+
 }
 

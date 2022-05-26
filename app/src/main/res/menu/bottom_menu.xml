@@ -8,21 +8,20 @@
         android:icon="@drawable/profile_selector"
         />
 
-
     <item
-        android:id="@+id/gameSetupBtn"
+        android:id="@+id/fragment_game_setup"
         android:icon="@drawable/play_selector"
-        tools:ignore="MenuTitle"/>
+        tools:ignore="MenuTitle"
+        />
 
     <item
-        android:id="@+id/searchUserBtn"
-        android:title="Search"
+        android:id="@+id/fragment_search_user"
+        tools:ignore="MenuTitle"
         android:icon="@drawable/search_selector"
         />
 
-
     <item
-        android:id="@+id/scoreboardBtn"
+        android:id="@+id/fragment_scoreboard"
         tools:ignore="MenuTitle"
         android:icon="@drawable/scoreboard_selector"
         />

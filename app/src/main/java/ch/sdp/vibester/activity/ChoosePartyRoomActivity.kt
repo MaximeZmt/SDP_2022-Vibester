@@ -30,7 +30,7 @@ class ChoosePartyRoomActivity : AppCompatActivity() {
 
     private fun switchToRoom(roomName: String, createRoom: Boolean) {
         val newIntent = Intent(this, PartyRoomActivity::class.java)
-        newIntent.putExtra("roomName", roomName)
+        newIntent.putExtra("roomID", roomName)
         newIntent.putExtra("createRoom", createRoom)
 
         startActivity(newIntent)

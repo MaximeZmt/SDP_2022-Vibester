@@ -4,9 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +15,8 @@ import ch.sdp.vibester.activity.profile.PublicProfileActivity
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.database.ImageGetter
+import ch.sdp.vibester.helper.IntentSwitcher
+import ch.sdp.vibester.helper.ViewModel
 import ch.sdp.vibester.user.OnItemClickListener
 import ch.sdp.vibester.user.User
 
@@ -29,7 +29,7 @@ import javax.inject.Inject
  * Search for users based on their usernames.
  */
 @AndroidEntryPoint
-class SearchUserFragment : Fragment(R.layout.fragment_search_user), OnItemClickListener {
+class SearchUserFragment : Fragment(R.layout.fragment_layout_search_user), OnItemClickListener {
 
     @Inject
     lateinit var usersRepo: DataGetter
@@ -40,6 +40,8 @@ class SearchUserFragment : Fragment(R.layout.fragment_search_user), OnItemClickL
     @Inject
     lateinit var authenticator: FireBaseAuthenticator
 
+    private val vmSearchUser = ViewModel()
+
     var users = arrayListOf<User>()
     lateinit var userProfileAdapter: UserProfileAdapter
 
@@ -49,24 +51,23 @@ class SearchUserFragment : Fragment(R.layout.fragment_search_user), OnItemClickL
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        vmSearchUser.view = view
+        vmSearchUser.ctx = view.context
 
-        setUpRecycleView(view)
-
-        searchEditText = view.findViewById(R.id.searchUserET)
+        setUpRecycleView()
+        searchEditText = vmSearchUser.view.findViewById(R.id.searchUserET)
         searchForUsers("")
 
-        setScanBtnListener(view)
+        setScanBtnListener()
 
         setSearchFieldListener()
     }
 
-    private fun setScanBtnListener(view: View) {
-        val buttonScan: FloatingActionButton = view.findViewById(R.id.searchUser_scanning)
+    private fun setScanBtnListener() {
+        val buttonScan: FloatingActionButton = vmSearchUser.view.findViewById(R.id.searchUser_scanning)
 
         buttonScan.setOnClickListener {
-            val qrIntent = Intent(requireActivity(), QrScanningActivity::class.java)
-            qrIntent.putExtra("uidList", uidList)
-            startActivity(qrIntent)
+            IntentSwitcher.switch(vmSearchUser.ctx, QrScanningActivity::class.java, mapOf(Pair("uidList", uidList)))
         }
     }
 
@@ -80,8 +81,8 @@ class SearchUserFragment : Fragment(R.layout.fragment_search_user), OnItemClickL
         })
     }
 
-    private fun setUpRecycleView(view: View) {
-        view.findViewById<RecyclerView>(R.id.searchList).apply {
+    private fun setUpRecycleView() {
+        vmSearchUser.view.findViewById<RecyclerView>(R.id.searchList).apply {
             layoutManager = LinearLayoutManager(context)
             userProfileAdapter = UserProfileAdapter(users, authenticator, usersRepo, imageGetter, this@SearchUserFragment)
             adapter = userProfileAdapter
@@ -113,10 +114,8 @@ class SearchUserFragment : Fragment(R.layout.fragment_search_user), OnItemClickL
     }
 
     override fun onItemClick(position: Int) {
-        val intent = Intent(requireActivity(), PublicProfileActivity::class.java)
-        intent.putExtra("UserId", users[position].uid)
-        intent.putExtra("ScoresOrFollowing", R.string.profile_following.toString())
-        startActivity(intent)
+        val extras = mapOf(Pair("UserId", users[position].uid), Pair("ScoresOrFollowing", R.string.profile_following.toString()))
+        IntentSwitcher.switch(vmSearchUser.ctx,PublicProfileActivity::class.java, extras)
     }
 }
 

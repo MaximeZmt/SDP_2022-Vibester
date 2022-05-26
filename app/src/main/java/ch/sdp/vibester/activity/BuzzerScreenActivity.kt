@@ -75,7 +75,7 @@ class BuzzerScreenActivity : GameActivity() {
             buildScores(getPlayers, allPoints)
             buildBuzzers(getPlayers, findViewById(R.id.answer))
 
-            findViewById<Button>(R.id.skip).setOnClickListener { timeoutAnswer(ctx, null, gameManager) }
+            findViewById<Button>(R.id.skip_buzzer).setOnClickListener { timeoutAnswer(ctx, null, gameManager) }
             setAnswerButton(ctx, findViewById(R.id.buttonCorrect), buzzersToRows)
             setAnswerButton(ctx, findViewById(R.id.buttonWrong), buzzersToRows)
             setNextButton(ctx, gameManager)
@@ -96,10 +96,12 @@ class BuzzerScreenActivity : GameActivity() {
     /**
      * Function to set a new round. It includes reinitializing activity elements,
      * and playing new song for the round.
+     * @param ctx
+     * @param gameManager: the manager for this game
      */
     private fun startRoundBuzzer(ctx: Context, gameManager: GameManager) {
         gameIsOn = true
-        toggleBtnVisibility(R.id.skip, true)
+        toggleBtnVisibility(R.id.skip_buzzer, true)
         findViewById<LinearLayout>(R.id.answer).visibility=View.INVISIBLE
         val trackName = gameManager.getCurrentSong().getTrackName()
         val artist = gameManager.getCurrentSong().getArtistName()
@@ -116,11 +118,14 @@ class BuzzerScreenActivity : GameActivity() {
 
     /**
      * Ends the round when no ones answer before the time limit
+     * @param ctx
+     * @param chosenSong: is null here, this function is called when no answer is given
+     * @param gameManager: the game manager, which contains the song used for the round
      */
     private fun timeoutAnswer(ctx: Context, chosenSong: Song? = null, gameManager: GameManager) {
         checkAndStopPlayer(gameManager)
         toastShowWrong(ctx, gameManager.getCurrentSong())
-        toggleBtnVisibility(R.id.skip, false)
+        toggleBtnVisibility(R.id.skip_buzzer, false)
         endRound(gameManager)
     }
 
@@ -131,11 +136,11 @@ class BuzzerScreenActivity : GameActivity() {
     private fun endRound(gameManager: GameManager) {
         gameIsOn = false
         toggleBtnVisibility(R.id.nextSongBuzzer, true)
-        super.endRound(gameManager, this::testWinner)
-    }
-
-    private fun testWinner() {
-        scoreUpdater.computeWinner()
+        //super.endRound(gameManager, this::testWinner)
+        checkRunnable()
+        if (isEndGame(gameManager)) {
+            this.switchToEnding(gameManager)
+        }
     }
 
     /**
@@ -197,7 +202,7 @@ class BuzzerScreenActivity : GameActivity() {
                 if (findViewById<ProgressBar>(R.id.progressBarBuzzer).progress>0 && findViewById<Button>(R.id.nextSongBuzzer).visibility==View.GONE) {
                     answer.visibility = View.VISIBLE
                     setPressed(button.id)
-                    toggleBtnVisibility(R.id.skip, false)
+                    toggleBtnVisibility(R.id.skip_buzzer, false)
                     gameIsOn = false // to stop the bar
                     checkAndStopPlayer(gameManager)
                 }
@@ -226,14 +231,17 @@ class BuzzerScreenActivity : GameActivity() {
                 }
             }
             checkAndStopPlayer(gameManager)
-            toggleBtnVisibility(R.id.go_to_end, true)
             setPressed(noBuzzerPressed) // reset the buzzer
-            gameManager.setNextSong()
             endRound(gameManager)
         }
 
     }
 
+    /**
+     * Connects the "next" button to the start of a game round
+     * @param ctx
+     * @param gameManager: the manager for this game
+     */
     private fun setNextButton(ctx: Context, gameManager: GameManager) {
         findViewById<Button>(R.id.nextSongBuzzer).setOnClickListener {
             toggleBtnVisibility(R.id.nextSongBuzzer, false)
@@ -241,6 +249,11 @@ class BuzzerScreenActivity : GameActivity() {
         }
     }
 
+    /**
+     * Prepares the message with the name of the winner(s), which will be displayed on the ending screen
+     * @param scoreUpdater: the score updater, which contains the array of scores for this game
+     * @return: the string containing the winner names and the appropriate message according to the number of winners
+     */
     fun prepareWinnerAnnouncement(scoreUpdater: BuzzerScoreUpdater): String {
         val winner: ArrayList<Int> = scoreUpdater.computeWinner()
         val winnerAnnouncement: String
@@ -280,7 +293,7 @@ class BuzzerScreenActivity : GameActivity() {
     /**
      * Fires an intent from the Gamescreen to the Ending Screen
      */
-    fun switchToEnding(view: View) {
+    fun switchToEnding(gameManager: GameManager) {
         checkAndStopPlayer(gameManager)
         val intent = Intent(this, GameEndingActivity::class.java)
 

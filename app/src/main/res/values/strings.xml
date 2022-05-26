@@ -198,6 +198,8 @@
     <string name="top_tracks">Top Tracks</string>
 
     <string name="PartyRoom_joinedPeople">Joined People:</string>
+    <string name="LyricsBelongGame_skip">SKIP</string>
+    <string name="TypingGame_skip">SKIP</string>
 
     <string name="searchUser_pleaseLogInFirst">Please login first</string>
 

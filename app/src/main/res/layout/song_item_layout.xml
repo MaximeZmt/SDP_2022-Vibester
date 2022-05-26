@@ -11,7 +11,7 @@
         android:layout_height="60dp"
         android:layout_alignParentStart="true"
         android:layout_marginStart="20dp"
-        android:textSize="20sp"></TextView>
+        android:textSize="20sp" />
 
     <Button
         android:id="@+id/song_download"
@@ -33,6 +33,17 @@
         android:layout_marginTop="11dp"
         android:layout_toEndOf="@+id/song_name"
         android:src="@drawable/green_tick"
-        android:visibility="invisible"></ImageView>
+        android:visibility="invisible" />
+
+    <ProgressBar
+        android:id="@+id/song_download_ongoing"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="10dp"
+        android:layout_toEndOf="@id/song_name"
+        android:visibility="invisible" />
 
 </RelativeLayout>

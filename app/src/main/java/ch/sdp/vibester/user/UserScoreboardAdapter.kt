@@ -1,6 +1,5 @@
 package ch.sdp.vibester.user
 
-import android.graphics.Color
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
@@ -11,8 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
 import ch.sdp.vibester.database.ImageGetter
 import ch.sdp.vibester.helper.AdapterHelper
-import ch.sdp.vibester.helper.ImageHelper
-import ch.sdp.vibester.helper.loadImg
+import ch.sdp.vibester.helper.Helper
 
 /**
  * Set users list in recycleView in scoreboard
@@ -83,7 +81,7 @@ class UserScoreboardAdapter(
 
         private fun setImage(imageURI: Uri) {
             val avatar = itemView.findViewById<ImageView>(R.id.iv_photo)
-            ImageHelper().setImage(imageURI, avatar, imageSize)
+            Helper().setImage(imageURI, avatar, imageSize)
         }
 
 

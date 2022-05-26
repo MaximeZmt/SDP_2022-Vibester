@@ -2,24 +2,26 @@ package ch.sdp.vibester.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.Window
-import android.widget.TableRow
-import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
+import android.widget.*
+import androidx.core.view.children
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
 import ch.sdp.vibester.database.AppPreferences
-import ch.sdp.vibester.helper.IntentSwitcher
+import ch.sdp.vibester.helper.AdapterHelper
+import ch.sdp.vibester.helper.Helper
 import ch.sdp.vibester.model.SongListAdapter
+import ch.sdp.vibester.user.OnItemClickListener
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 /**
  * Game ending activity with game stats and list of songs quessed correctly/wrong
  */
-class GameEndingActivity : AppCompatActivity() {
+class GameEndingActivity : DownloadFunctionalityActivity(), OnItemClickListener {
 
     private val endStatArrayList = arrayListOf(R.id.end_stat1, R.id.end_stat2, R.id.end_stat3, R.id.end_stat4)
 
@@ -31,7 +33,9 @@ class GameEndingActivity : AppCompatActivity() {
     lateinit var songListAdapter: SongListAdapter
     private var recyclerView: RecyclerView? = null
 
-
+    /**
+     * Generic onCreate method. Nothing of interested here.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         super.onCreate(savedInstanceState)
@@ -51,17 +55,21 @@ class GameEndingActivity : AppCompatActivity() {
 
         setUpRecyclerView()
 
-        findViewById<FloatingActionButton>(R.id.end_returnToMain).setOnClickListener {
-                IntentSwitcher.switch(this, MainActivity::class.java)
-            }
+        Helper().setReturnToMainListener(findViewById<FloatingActionButton>(R.id.end_returnToMain), this)
+
+        createDownloadReceiver(null)
     }
 
+    /**
+     * Sets up the recycler view which hosts the multitude of songs that were in the previously played
+     * game session.
+     */
     private fun setUpRecyclerView() {
         recyclerView = findViewById(R.id.end_song_list)
         recyclerView!!.setHasFixedSize(true)
         recyclerView!!.layoutManager = LinearLayoutManager(this)
 
-        songListAdapter = SongListAdapter(incorrectSongList, correctSongList)
+        songListAdapter = SongListAdapter(incorrectSongList, correctSongList, this)
         recyclerView!!.adapter = songListAdapter
     }
 
@@ -140,4 +148,42 @@ class GameEndingActivity : AppCompatActivity() {
             }
         }
     }
+
+    /**
+     * Handles the case where an item in the recycler view is clicked, i.e the download buttons.
+     * @param position: The position of the clicked song in the list of songs.
+     */
+    override fun onItemClick(position: Int) {
+        //Retrieval of the top-most parent which is the RecyclerView
+        val parentActual = findViewById<Button>(R.id.song_download).parent as RelativeLayout
+        val parentOfParent = parentActual.parent as RecyclerView
+        Log.d("parent name of button is ============================ ", "${parentOfParent.javaClass}")
+        Log.d("parent's number of children is ============================ ", "${parentOfParent.childCount}")
+
+        //Retrieve the RelativeLayout that hosts its children, and those children
+        val relative = parentOfParent.children.elementAt(position) as RelativeLayout
+        val children = relative.children
+
+        //Retrieve items of the child that is currently being selected by the position argument
+        val songName = children.elementAt(0) as TextView
+        val downloadButton = children.elementAt(1) as Button
+        val downloadOngoing = children.elementAt(3) as ProgressBar
+        val downloadDone = children.elementAt(2) as ImageView
+        Log.d("child song is =============================== ", "${songName.text}")
+        Log.d("child song is =============================== ", "${downloadButton.id}")
+        Log.d("child song is =============================== ", "${downloadOngoing.id}")
+
+        //Logic to switch item visibility and start the download attempt
+        val songList = incorrectSongList + correctSongList
+        if(downloadComplete) {
+            Log.d("-----------------------------","++++++++++++++++++++++++++++++++++++")
+            downloadButton.visibility = View.INVISIBLE
+            downloadOngoing.visibility = View.VISIBLE
+            Log.d("name of button is ============================ ", "${downloadButton.id}")
+            Log.d("name of ongoing is ============================ ", "${downloadOngoing.id}")
+        }
+        downloadListener(null, songList[position])
+    }
+
+
 }

@@ -160,6 +160,8 @@ open class GameActivity : AppCompatActivity() {
 
     /**
      * Sets the visibility of the given button to VISIBLE if value is true, GONE otherwise.
+     * @param btnId: the ID of the Button view we want to change
+     * @param value: true to make the button VISIBLE, false to make it GONE
      */
     fun toggleBtnVisibility(btnId: Int, value: Boolean){
         findViewById<Button>(btnId).visibility = if (value) VISIBLE else GONE
@@ -167,6 +169,8 @@ open class GameActivity : AppCompatActivity() {
 
     /**
      * Function called in the end of each round.
+     * @param gameManager: the manager for the current game
+     * @param callback: a unit function that is called if the game has reached its end
      */
     open fun endRound(gameManager: GameManager, callback: (()->Unit)?= null) {
         checkRunnable()
@@ -178,6 +182,7 @@ open class GameActivity : AppCompatActivity() {
 
     /**
      * Function to check if the game has ended or not.
+     * @param gameManager: the manager for the current game
      */
     fun isEndGame(gameManager: GameManager): Boolean {
         return !gameManager.checkGameStatus() || !gameManager.setNextSong()
@@ -185,6 +190,7 @@ open class GameActivity : AppCompatActivity() {
 
     /**
      * Function to set scores in the end of the game
+     * @param gameManager: the manager for the current game
      */
     fun setScores(gameManager: GameManager) {
         if(authenticator.isLoggedIn()){
@@ -195,6 +201,9 @@ open class GameActivity : AppCompatActivity() {
 
     /**
      * Checks if a song chosen by the player matches the played song
+     * @param chosen: the song chosen by the player
+     * @param played: the song currently played
+     * @return a boolean indicating whether the two songs match
      */
     fun checkSong(chosen: Song?, played: Song): Boolean {
         return chosen != null && chosen.getTrackName() == played.getTrackName() && chosen.getArtistName() == played.getArtistName()
@@ -216,6 +225,8 @@ open class GameActivity : AppCompatActivity() {
 
     /**
      * Shows a variable score on a toast.
+     * @param ctx
+     * @param score: the score to show on the toast
      */
     fun toastShowCorrect(ctx: Context, score: Int) {
         Toast.makeText(ctx, ctx.getString(R.string.correct_message, score), Toast.LENGTH_SHORT).show()
@@ -223,6 +234,8 @@ open class GameActivity : AppCompatActivity() {
 
     /**
      * Shows the correct answer on a toast.
+     * @param ctx
+     * @param itWas: the correct song to display
      */
     fun toastShowWrong(ctx: Context, itWas: Song) {
         Toast.makeText(
@@ -234,6 +247,8 @@ open class GameActivity : AppCompatActivity() {
 
     /**
      * Shows a given message on a toast.
+     * @param ctx
+     * @param SId: the id of the string (from string.xml) we want to display
      */
     fun toastShowSimpleMsg(ctx: Context, SId: Int) {
         Toast.makeText(ctx, ctx.getString(SId), Toast.LENGTH_SHORT).show()

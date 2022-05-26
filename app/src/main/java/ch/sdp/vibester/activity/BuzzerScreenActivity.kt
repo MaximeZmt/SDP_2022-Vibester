@@ -252,6 +252,7 @@ class BuzzerScreenActivity : GameActivity() {
     /**
      * Prepares the message with the name of the winner(s), which will be displayed on the ending screen
      * @param scoreUpdater: the score updater, which contains the array of scores for this game
+     * @return: the string containing the winner names and the appropriate message according to the number of winners
      */
     fun prepareWinnerAnnouncement(scoreUpdater: BuzzerScoreUpdater): String {
         val winner: ArrayList<Int> = scoreUpdater.computeWinner()

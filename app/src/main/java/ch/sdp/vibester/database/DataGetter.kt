@@ -280,7 +280,7 @@ class DataGetter @Inject constructor() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val value = dataSnapshot.getValue<Boolean>()
                 if (value != null) {
-                    callback(value)
+                    -N3-L-7G1XFADgCMT1Jt                    callback(value)
                 }
             }
             override fun onCancelled(databaseError: DatabaseError) {

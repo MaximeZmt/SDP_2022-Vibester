@@ -189,19 +189,22 @@ class GameSetupFragment : Fragment(R.layout.fragment_layout_game_setup), Adapter
      * @param uri: contains all Lastfm query parameters (method, artist, tag)
      */
     private fun setGameSongList(uri: LastfmUri, playOffline: Boolean = false) {
-        val service = LastfmApiInterface.createLastfmService()
-        val call = service.getSongList(uri.convertToHashmap())
-        call.enqueue(object : Callback<Any> {
-            override fun onFailure(call: Call<Any>, t: Throwable?) {}
-            override fun onResponse(call: Call<Any>, response: Response<Any>) {
-
-                val external = vmGameSetup.ctx.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)
-                if (external != null) {
-                    gameManager.setOffline(external, !playOffline)
-                }
-                gameManager.setGameSongList(Gson().toJson(response.body()), uri.method)
+        if (playOffline) {
+            val external = vmGameSetup.ctx.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)
+            if (external != null) {
+                gameManager.setOffline(external, !playOffline)
+                gameManager.setGameSongList(Gson().toJson(""), uri.method)
             }
-        })
+        } else {
+            val service = LastfmApiInterface.createLastfmService()
+            val call = service.getSongList(uri.convertToHashmap())
+            call.enqueue(object : Callback<Any> {
+                override fun onFailure(call: Call<Any>, t: Throwable?) {}
+                override fun onResponse(call: Call<Any>, response: Response<Any>) {
+                    gameManager.setGameSongList(Gson().toJson(response.body()), uri.method)
+                }
+            })
+        }
     }
 
     /**

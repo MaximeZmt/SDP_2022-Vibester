@@ -51,7 +51,7 @@ class SongListAdapterForEndGame constructor(
         View.OnClickListener {
 
         fun bind(songName: String) {
-            itemView.findViewById<TextView>(R.id.song_name).text = songName
+            itemView.findViewById<TextView>(R.id.download_song_name).text = songName
             val downloadSongBtn = itemView.findViewById<Button>(R.id.song_download)
 
             downloadSongBtn.setOnClickListener(this)

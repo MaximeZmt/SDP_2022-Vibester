@@ -17,7 +17,7 @@ class SongListAdapterForEndGame constructor(
     private val incorrectSongList: ArrayList<String>,
     correctSongList: ArrayList<String>,
     private val listener: OnItemClickListener?
-) : RecyclerView.Adapter<SongListAdapterForEndGame.SongListViewHolder>() {
+) : RecyclerView.Adapter<SongListAdapterForEndGame.SongListForEndGameViewHolder>() {
     private val songList: ArrayList<String> = arrayListOf()
 
     init {
@@ -28,13 +28,13 @@ class SongListAdapterForEndGame constructor(
     /**
      * Create a RecycleView layout with the Song view as an item
      */
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SongListViewHolder {
-        return SongListViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SongListForEndGameViewHolder {
+        return SongListForEndGameViewHolder(
             AdapterHelper().createViewForViewHolder(parent, R.layout.song_item_download_layout)
         )
     }
 
-    override fun onBindViewHolder(holder: SongListViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: SongListForEndGameViewHolder, position: Int) {
         holder.bind(songList[position])
     }
 
@@ -47,14 +47,12 @@ class SongListAdapterForEndGame constructor(
     /**
      * Customer ViewHolder class for SongList. Each item contains the name of the song and a button.
      */
-    inner class SongListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
+    inner class SongListForEndGameViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
         View.OnClickListener {
 
         fun bind(songName: String) {
             itemView.findViewById<TextView>(R.id.download_song_name).text = songName
-            val downloadSongBtn = itemView.findViewById<Button>(R.id.song_download)
-
-            downloadSongBtn.setOnClickListener(this)
+            itemView.findViewById<Button>(R.id.song_download).setOnClickListener(this)
 
             // Make background red if song is guessed incorrectly
             if (songName in incorrectSongList) {

@@ -30,7 +30,7 @@ class SongListAdapterForEndGame constructor(
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SongListViewHolder {
         return SongListViewHolder(
-            AdapterHelper().createViewForViewHolder(parent, R.layout.song_item_layout)
+            AdapterHelper().createViewForViewHolder(parent, R.layout.song_item_download_layout)
         )
     }
 

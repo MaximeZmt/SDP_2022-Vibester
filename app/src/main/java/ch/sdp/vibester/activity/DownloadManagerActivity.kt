@@ -165,6 +165,7 @@ class DownloadManagerActivity : AppCompatActivity(), OnItemClickListener {
 
 
     override fun onItemClick(position: Int) {
+        // TODO: remove the entire item correct
         val parentActual = findViewById<Button>(R.id.song_delete).parent as RelativeLayout
         val parentOfParent = parentActual.parent as RecyclerView
 

@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
 import ch.sdp.vibester.database.AppPreferences
 import ch.sdp.vibester.helper.Helper
-import ch.sdp.vibester.model.SongListAdapter
+import ch.sdp.vibester.model.SongListAdapterForEndGame
 import ch.sdp.vibester.user.OnItemClickListener
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -30,7 +30,7 @@ class GameEndingActivity : DownloadFunctionalityActivity(), OnItemClickListener 
     private var statNames: ArrayList<String> = arrayListOf()
     private var statValues: ArrayList<String> = arrayListOf()
 
-    lateinit var songListAdapter: SongListAdapter
+    lateinit var songListAdapter: SongListAdapterForEndGame
     private var recyclerView: RecyclerView? = null
 
     /**
@@ -68,7 +68,7 @@ class GameEndingActivity : DownloadFunctionalityActivity(), OnItemClickListener 
         recyclerView!!.setHasFixedSize(true)
         recyclerView!!.layoutManager = LinearLayoutManager(this)
 
-        songListAdapter = SongListAdapter(incorrectSongList, correctSongList, this)
+        songListAdapter = SongListAdapterForEndGame(incorrectSongList, correctSongList, this)
         recyclerView!!.adapter = songListAdapter
     }
 

@@ -13,11 +13,11 @@ import ch.sdp.vibester.user.OnItemClickListener
 /**
  * SongListAdapter to set correct/wrong guessed songs in the game.
  */
-class SongListAdapter constructor(
+class SongListAdapterForEndGame constructor(
     private val incorrectSongList: ArrayList<String>,
     correctSongList: ArrayList<String>,
     private val listener: OnItemClickListener?
-) : RecyclerView.Adapter<SongListAdapter.SongListViewHolder>() {
+) : RecyclerView.Adapter<SongListAdapterForEndGame.SongListViewHolder>() {
     private val songList: ArrayList<String> = arrayListOf()
 
     init {

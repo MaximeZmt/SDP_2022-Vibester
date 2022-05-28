@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/welcomeScreenBtn"
+        android:id="@+id/fragment_my_profile"
         tools:ignore="MenuTitle"
         android:icon="@drawable/profile_selector"
         />

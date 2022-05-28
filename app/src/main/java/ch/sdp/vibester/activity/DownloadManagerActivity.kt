@@ -2,8 +2,12 @@ package ch.sdp.vibester.activity
 
 import android.os.Bundle
 import android.os.Environment
+import android.view.View
+import android.widget.Button
+import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.children
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
@@ -161,6 +165,14 @@ class DownloadManagerActivity : AppCompatActivity(), OnItemClickListener {
 
 
     override fun onItemClick(position: Int) {
-        deleteDownloadedSong(songList[position])
+        val parentActual = findViewById<Button>(R.id.song_delete).parent as RelativeLayout
+        val parentOfParent = parentActual.parent as RecyclerView
+
+        val relative = parentOfParent.children.elementAt(position) as RelativeLayout
+        val deleteButton = relative.children.elementAt(1) as Button
+        if (deleteDownloadedSong(songList[position])) {
+            deleteButton.visibility = View.INVISIBLE
+        }
+
     }
 }

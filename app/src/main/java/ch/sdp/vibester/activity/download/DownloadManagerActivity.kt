@@ -117,11 +117,11 @@ class DownloadManagerActivity : AppCompatActivity(), OnItemClickListener {
                 "extract_of_$song")
 
             if (songToDelete.delete()) {
-                Toast.makeText(applicationContext, "Successfully remove song", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, R.string.download_manager_delete_success, Toast.LENGTH_SHORT).show()
                 return true
             }
         }
-        Toast.makeText(applicationContext, "unable to remove song", Toast.LENGTH_SHORT).show()
+        Toast.makeText(applicationContext, R.string.download_manager_delete_fail, Toast.LENGTH_SHORT).show()
         return false
     }
 

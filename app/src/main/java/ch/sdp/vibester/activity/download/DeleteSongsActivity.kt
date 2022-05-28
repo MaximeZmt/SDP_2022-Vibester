@@ -1,3 +1,4 @@
+/*
 package ch.sdp.vibester.activity.download
 
 import android.os.Bundle
@@ -18,9 +19,11 @@ import ch.sdp.vibester.helper.Helper
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.io.*
 
+*/
 /**
  * Class that handles deleting files, more specifically songs in the scope of this project.
- */
+ *//*
+
 class DeleteSongsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -38,10 +41,12 @@ class DeleteSongsActivity : AppCompatActivity() {
         generateButtons(layout)
     }
 
-    /**
+    */
+/**
      * Generates buttons for each downloaded extract to be added to the scrollview layout.
      * Assigns each button a call to the "deleteDownloadedSong" function as a listener.
-     */
+     *//*
+
     private fun generateButtons(layout: LinearLayout) {
         val records = File(
             applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS),
@@ -68,9 +73,11 @@ class DeleteSongsActivity : AppCompatActivity() {
         }
     }
 
-    /**
+    */
+/**
      * Handles the creation and initialization of buttons.
-     */
+     *//*
+
     private fun createButton(trimmed: String, iterator: Int, layout: LinearLayout): Button {
         val deleteButton = Button(this)
         deleteButton.id = iterator
@@ -83,10 +90,12 @@ class DeleteSongsActivity : AppCompatActivity() {
         return deleteButton
     }
 
-    /**
+    */
+/**
      * Handles the deletion of a downloaded extract. Also handles the removal of the said extract
      * from the text file which keeps track of all downloads.
-     */
+     *//*
+
     private fun deleteDownloadedSong(btn: View, layout: LinearLayout): Boolean {
         val records = File(
             applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS),
@@ -140,10 +149,12 @@ class DeleteSongsActivity : AppCompatActivity() {
         return false
     }
 
-    /**
+    */
+/**
      * Removes the line corresponding to the song-to-be-deleted from the properties.txt file.
      * @param buttonText: Text which contains song name - artist name
-     */
+     *//*
+
     private fun removeFromProperties(buttonText: String): Boolean {
         val properties = File(
             applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS),
@@ -160,12 +171,14 @@ class DeleteSongsActivity : AppCompatActivity() {
         var currentLine = propReader.readLine()
         val buttonSplit = buttonText.trim().split("-")
 
-        /*
+        */
+/*
          * Current line here should be in the form of "song name - artist name - artwork url - preview url.
          * We want to tokenize(split) this string into 4 tokens: song name, artist name, artwork url and preview url.
          * Comparison between the first two tokens are checked to see whether this line is the one we want or not.
          * We write every line on a new file except the one which we want to delete, thus we continue if we match.
-         */
+         *//*
+
         while (currentLine != null) {
             val trimmed = currentLine.trim()
             val split = trimmed.split(" - ")
@@ -189,9 +202,11 @@ class DeleteSongsActivity : AppCompatActivity() {
         return tempProp.renameTo(properties)
     }
 
-    /**
+    */
+/**
      * Handles the creation and initialization of a TextView which is then added to the layout.
-     */
+     *//*
+
     private fun createNoSongsView(layout: LinearLayout) {
         val noDownloadsText = TextView(this)
         noDownloadsText.id = resources.getIdentifier("noDownloadsView", "id", packageName)
@@ -200,4 +215,4 @@ class DeleteSongsActivity : AppCompatActivity() {
         noDownloadsText.layoutParams = LinearLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT)
         layout.addView(noDownloadsText)
     }
-}
+}*/

@@ -106,10 +106,15 @@ class DownloadManagerActivity : AppCompatActivity(), OnItemClickListener {
         }
 
         records.delete()
+
+        return deleteResult(records, tempRecords, song)
+    }
+
+    private fun deleteResult(records: File, tempRecords: File, song: String): Boolean {
         if (tempRecords.renameTo(records) && removeFromProperties(song)) {
             val songToDelete = File(
                 applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS),
-            "extract_of_$song")
+                "extract_of_$song")
 
             if (songToDelete.delete()) {
                 Toast.makeText(applicationContext, "Successfully remove song", Toast.LENGTH_SHORT).show()

@@ -3,11 +3,15 @@ package ch.sdp.vibester.activity.download
 import android.os.Bundle
 import android.os.Environment
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.Button
 import android.widget.RelativeLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
+import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
@@ -160,7 +164,8 @@ class DownloadManagerActivity : AppCompatActivity(), OnItemClickListener {
     }
 
     private fun createNoSongsView() {
-        Toast.makeText(applicationContext, "no downloaded song", Toast.LENGTH_SHORT).show()
+        findViewById<TextView>(R.id.download_empty).visibility = VISIBLE
+        findViewById<NestedScrollView>(R.id.download_song_list_nestedScrollView).visibility = GONE
     }
 
 

@@ -30,7 +30,7 @@ class GameEndingActivity : DownloadFunctionalityActivity(), OnItemClickListener 
     private var statNames: ArrayList<String> = arrayListOf()
     private var statValues: ArrayList<String> = arrayListOf()
 
-    lateinit var songListAdapter: SongListAdapterForEndGame
+    private lateinit var songListAdapter: SongListAdapterForEndGame
     private var recyclerView: RecyclerView? = null
 
     /**

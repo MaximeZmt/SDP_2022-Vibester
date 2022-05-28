@@ -1,4 +1,4 @@
-package ch.sdp.vibester.activity
+package ch.sdp.vibester.activity.download
 
 import android.os.Bundle
 import android.os.Environment

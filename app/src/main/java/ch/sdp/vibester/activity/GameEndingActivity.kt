@@ -11,6 +11,7 @@ import androidx.core.view.children
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
+import ch.sdp.vibester.activity.download.DownloadFunctionalityActivity
 import ch.sdp.vibester.database.AppPreferences
 import ch.sdp.vibester.helper.Helper
 import ch.sdp.vibester.model.SongListAdapterForEndGame

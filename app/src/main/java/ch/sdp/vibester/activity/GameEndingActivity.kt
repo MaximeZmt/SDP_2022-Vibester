@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
 import ch.sdp.vibester.database.AppPreferences
-import ch.sdp.vibester.helper.AdapterHelper
 import ch.sdp.vibester.helper.Helper
 import ch.sdp.vibester.model.SongListAdapter
 import ch.sdp.vibester.user.OnItemClickListener
@@ -23,7 +22,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
  */
 class GameEndingActivity : DownloadFunctionalityActivity(), OnItemClickListener {
 
-    private val endStatArrayList = arrayListOf(R.id.end_stat1, R.id.end_stat2, R.id.end_stat3, R.id.end_stat4)
+    private val endStatArrayList =
+        arrayListOf(R.id.end_stat1, R.id.end_stat2, R.id.end_stat3, R.id.end_stat4)
 
     private var incorrectSongList: ArrayList<String> = arrayListOf()
     private var correctSongList: ArrayList<String> = arrayListOf()
@@ -45,8 +45,7 @@ class GameEndingActivity : DownloadFunctionalityActivity(), OnItemClickListener 
         if (gameMode == "local_typing" || gameMode == "local_lyrics") {
             setContentView(R.layout.activity_end_solo)
             getFromIntentSolo(intent)
-        }
-        else {
+        } else {
             setContentView(R.layout.activity_end_multiple)
             getFromIntentMultiple(intent)
         }
@@ -76,8 +75,9 @@ class GameEndingActivity : DownloadFunctionalityActivity(), OnItemClickListener 
     /**
      * Set text for game mode
      */
-    private fun setGameMode(){
-        val gameMode = AppPreferences.getStr(getString(R.string.preferences_game_mode))?.replace("_", " ")?.replaceFirstChar { it.uppercase() }
+    private fun setGameMode() {
+        val gameMode =
+            AppPreferences.getStr(getString(R.string.preferences_game_mode))?.replace("_", " ")?.replaceFirstChar { it.uppercase() }
         val gameGenre = AppPreferences.getStr(getString(R.string.preferences_game_genre))
         findViewById<TextView>(R.id.end_game_mode).text = "$gameMode - $gameGenre"
     }
@@ -175,8 +175,8 @@ class GameEndingActivity : DownloadFunctionalityActivity(), OnItemClickListener 
 
         //Logic to switch item visibility and start the download attempt
         val songList = incorrectSongList + correctSongList
-        if(downloadComplete) {
-            Log.d("-----------------------------","++++++++++++++++++++++++++++++++++++")
+        if (downloadComplete) {
+            Log.d("-----------------------------", "++++++++++++++++++++++++++++++++++++")
             downloadButton.visibility = View.INVISIBLE
             downloadOngoing.visibility = View.VISIBLE
             Log.d("name of button is ============================ ", "${downloadButton.id}")

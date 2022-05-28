@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.NestedScrollView
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
@@ -24,6 +25,7 @@ import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.database.ImageGetter
 import ch.sdp.vibester.helper.ImageHelper
 import ch.sdp.vibester.helper.IntentSwitcher
+import ch.sdp.vibester.helper.ViewModel
 import ch.sdp.vibester.user.OnItemClickListener
 import ch.sdp.vibester.user.ProfileFollowingAdapter
 import ch.sdp.vibester.user.User
@@ -39,7 +41,7 @@ import javax.inject.Inject
 
 /** profile page of the current user with editable information */
 @AndroidEntryPoint
-class MyProfileActivity : AppCompatActivity(), OnItemClickListener {
+class MyProfileActivity : Fragment(R.layout.activity_profile), OnItemClickListener {
     @Inject
     lateinit var dataGetter: DataGetter
 
@@ -54,13 +56,14 @@ class MyProfileActivity : AppCompatActivity(), OnItemClickListener {
 
     private var followings: MutableList<User> ? = null
     private var profileFollowingAdapter: ProfileFollowingAdapter?= null
+    private var vmMyProfile = ViewModel()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        requestWindowFeature(Window.FEATURE_NO_TITLE)
-        super.onCreate(savedInstanceState)
-        supportActionBar?.hide()
-        setContentView(R.layout.activity_profile)
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        if(!authenticator.isLoggedIn())
+        vmMyProfile.view = view
+        vmMyProfile.ctx = view.context
         setupRecycleViewForFriends()
         followings = ArrayList()
 
@@ -69,9 +72,9 @@ class MyProfileActivity : AppCompatActivity(), OnItemClickListener {
 
         queryDatabase()
 
-        setViewVisibility(findViewById(R.id.editUser), true)
-        setViewVisibility(findViewById(R.id.showQRCode), true)
-        setViewVisibility(findViewById(R.id.logout), true)
+        setViewVisibility(view.findViewById(R.id.editUser), true)
+        setViewVisibility(view.findViewById(R.id.showQRCode), true)
+        setViewVisibility(view.findViewById(R.id.logout), true)
 
         setEditUserNameBtnListener()
         setChangeImageBtnListener()
@@ -80,7 +83,7 @@ class MyProfileActivity : AppCompatActivity(), OnItemClickListener {
         setQrCodeToProfileBtnListener()
     }
 
-    fun queryDatabase() {
+    private fun queryDatabase() {
         val currentUser = authenticator.getCurrUser()
         if (currentUser != null) {
             dataGetter.getUserData(currentUser.uid, this::setupProfile)
@@ -92,7 +95,7 @@ class MyProfileActivity : AppCompatActivity(), OnItemClickListener {
      * Generic listener for the edit username button.
      */
     private fun setEditUserNameBtnListener() {
-        findViewById<ImageView>(R.id.editUser).setOnClickListener {
+        vmMyProfile.view.findViewById<ImageView>(R.id.editUser).setOnClickListener {
             showGeneralDialog( "username", true)
         }
     }
@@ -102,10 +105,10 @@ class MyProfileActivity : AppCompatActivity(), OnItemClickListener {
      * NOTES: we need to set both for both the cases where the user profile image is displayed or not
      */
     private fun setChangeImageBtnListener() {
-        findViewById<ImageView>(R.id.profile_image_ImageView).setOnClickListener {
+        vmMyProfile.view.findViewById<ImageView>(R.id.profile_image_ImageView).setOnClickListener {
             showDialogWhenChangeImage()
         }
-        findViewById<CardView>(R.id.profile_image_CardView).setOnClickListener {
+        vmMyProfile.view.findViewById<CardView>(R.id.profile_image_CardView).setOnClickListener {
             showDialogWhenChangeImage()
         }
     }
@@ -141,10 +144,10 @@ class MyProfileActivity : AppCompatActivity(), OnItemClickListener {
      * Generic listener for the log out button.
      */
     private fun setLogOutBtnListener() {
-        findViewById<Button>(R.id.logout).setOnClickListener {
+        vmMyProfile.view.findViewById<Button>(R.id.logout).setOnClickListener {
             FirebaseAuth.getInstance().signOut()
-            IntentSwitcher.switch(this, MainActivity::class.java)
-            finish()
+//            IntentSwitcher.switch(this, MainActivity::class.java)
+//            finish()
         }
     }
 
@@ -153,9 +156,9 @@ class MyProfileActivity : AppCompatActivity(), OnItemClickListener {
      * Generic listener for the show qr code button.
      */
     private fun setShowQrCodeBtnListener() {
-        findViewById<ImageView>(R.id.showQRCode).setOnClickListener {
-            setViewVisibility(findViewById<ConstraintLayout>(R.id.QrCodePage), true)
-            setViewVisibility(findViewById<RelativeLayout>(R.id.profileContent), false)
+        vmMyProfile.view.findViewById<ImageView>(R.id.showQRCode).setOnClickListener {
+            setViewVisibility(vmMyProfile.view.findViewById<ConstraintLayout>(R.id.QrCodePage), true)
+            setViewVisibility(vmMyProfile.view.findViewById<RelativeLayout>(R.id.profileContent), false)
         }
     }
 
@@ -163,9 +166,9 @@ class MyProfileActivity : AppCompatActivity(), OnItemClickListener {
      * Generic listener for the show qr code and return to profile button.
      */
     private fun setQrCodeToProfileBtnListener() {
-        findViewById<FloatingActionButton>(R.id.qrCode_returnToProfile).setOnClickListener {
-            setViewVisibility(findViewById<ConstraintLayout>(R.id.QrCodePage), false)
-            setViewVisibility(findViewById<RelativeLayout>(R.id.profileContent), true)
+        vmMyProfile.view.findViewById<FloatingActionButton>(R.id.qrCode_returnToProfile).setOnClickListener {
+            setViewVisibility(vmMyProfile.view.findViewById<ConstraintLayout>(R.id.QrCodePage), false)
+            setViewVisibility(vmMyProfile.view.findViewById<RelativeLayout>(R.id.profileContent), true)
         }
     }
 
@@ -191,17 +194,17 @@ class MyProfileActivity : AppCompatActivity(), OnItemClickListener {
      * @param name of the dialog
      */
     private fun showTextDialog(title: String, hint: String, id: Int, textId: Int, name: String) {
-        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        val builder: AlertDialog.Builder = AlertDialog.Builder(vmMyProfile.ctx)
         builder.setTitle(title)
 
-        val input = EditText(this)
+        val input = EditText(vmMyProfile.ctx)
         input.hint = hint
         input.inputType = InputType.TYPE_CLASS_TEXT
         input.id = id
 
         builder.setView(input)
         builder.setPositiveButton("OK") { _, _ ->
-            findViewById<TextView>(textId).text = input.text.toString()
+            vmMyProfile.view.findViewById<TextView>(textId).text = input.text.toString()
 
             if (name == "username"){
                 dataGetter.setFieldValue(FireBaseAuthenticator().getCurrUID(), "username",  input.text.toString())
@@ -216,7 +219,7 @@ class MyProfileActivity : AppCompatActivity(), OnItemClickListener {
      * @param title title of the dialog
      */
     private fun showImageChangeDialog(title: String) {
-        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        val builder: AlertDialog.Builder = AlertDialog.Builder(vmMyProfile.ctx)
         builder.setTitle(title)
 
         builder.setPositiveButton("Yes") { _, _ ->
@@ -244,7 +247,7 @@ class MyProfileActivity : AppCompatActivity(), OnItemClickListener {
         }
     }
     private fun setupRecycleViewForFriends() {
-        findViewById<RecyclerView>(R.id.profile_followingList).apply {
+        vmMyProfile.view.findViewById<RecyclerView>(R.id.profile_followingList).apply {
             layoutManager = LinearLayoutManager(context)
             adapter = followings?.let { ProfileFollowingAdapter(it, dataGetter, authenticator,this@MyProfileActivity) }
             setHasFixedSize(true)
@@ -253,7 +256,7 @@ class MyProfileActivity : AppCompatActivity(), OnItemClickListener {
 
     private fun showFriendsPosition(friends: MutableList<User>?) {
         profileFollowingAdapter = ProfileFollowingAdapter(friends!!, dataGetter, authenticator, this@MyProfileActivity)
-        findViewById<RecyclerView>(R.id.profile_followingList)!!.adapter = profileFollowingAdapter
+        vmMyProfile.view.findViewById<RecyclerView>(R.id.profile_followingList)!!.adapter = profileFollowingAdapter
     }
 
 
@@ -269,22 +272,12 @@ class MyProfileActivity : AppCompatActivity(), OnItemClickListener {
 
 
     /**
-     * Generic listener for the return to main button.
-     */
-    private fun setRetToMainBtnListener() {
-        findViewById<FloatingActionButton>(R.id.profile_returnToMain).setOnClickListener {
-            IntentSwitcher.switch(this, MainActivity::class.java)
-            finish()
-        }
-    }
-
-    /**
      * @param btnId Id of the button (either following or scores)
      * @param show id of the view to show
      * @param hide id of the view to hide
      */
     private fun setFollowingScoresBtnListener(btnId: Int, show: Int, hide: Int) {
-        findViewById<Button>(btnId).setOnClickListener {
+        vmMyProfile.view.findViewById<Button>(btnId).setOnClickListener {
             showAHideB(show, hide)
         }
     }
@@ -294,8 +287,8 @@ class MyProfileActivity : AppCompatActivity(), OnItemClickListener {
      * @param b id of the view to hide
      */
     fun showAHideB(a: Int, b: Int) {
-        findViewById<NestedScrollView>(a).visibility = View.VISIBLE
-        findViewById<NestedScrollView>(b).visibility = View.GONE
+        vmMyProfile.view.findViewById<NestedScrollView>(a).visibility = View.VISIBLE
+        vmMyProfile.view.findViewById<NestedScrollView>(b).visibility = View.GONE
     }
 
     /**
@@ -303,7 +296,7 @@ class MyProfileActivity : AppCompatActivity(), OnItemClickListener {
      * @param imageURI URI of the image
      */
     private fun setImage(imageURI: Uri) {
-        val avatar = findViewById<ImageView>(R.id.profile_image_ImageView)
+        val avatar = vmMyProfile.view.findViewById<ImageView>(R.id.profile_image_ImageView)
         ImageHelper().setImage(imageURI, avatar, imageSize)
     }
 
@@ -314,7 +307,7 @@ class MyProfileActivity : AppCompatActivity(), OnItemClickListener {
      * @param text: The integer to be set as the text.
      */
     private fun setTextOfView(id: Int, text: Int) {
-        findViewById<TextView>(id).text = text.toString()
+        vmMyProfile.view.findViewById<TextView>(id).text = text.toString()
     }
 
     /**
@@ -338,7 +331,7 @@ class MyProfileActivity : AppCompatActivity(), OnItemClickListener {
     fun setupProfile(user: User){
         // Currently assuming that empty username means no user !
         if (user.username != "") {
-            findViewById<TextView>(R.id.username).text =  user.username
+            vmMyProfile.view.findViewById<TextView>(R.id.username).text =  user.username
             setTextOfMultipleViews(user)
         }
 
@@ -386,18 +379,18 @@ class MyProfileActivity : AppCompatActivity(), OnItemClickListener {
         val qrCodeCanvas = Canvas(bmp)
 
         val scaleFactor = 4 // resize the image
-        val logo = BitmapFactory.decodeStream(assets.open("logo.png"))
+        val logo = BitmapFactory.decodeStream(resources.assets.open("logo.png"))
         logo.density = logo.density * scaleFactor
         val xLogo = (size - logo.width / scaleFactor) / 2f
         val yLogo = (size - logo.height / scaleFactor) / 2f
 
         qrCodeCanvas.drawBitmap(logo, xLogo, yLogo, null)
 
-        findViewById<ImageView>(R.id.qrCode).setImageBitmap(bmp)
+        vmMyProfile.view.findViewById<ImageView>(R.id.qrCode).setImageBitmap(bmp)
     }
 
     override fun onItemClick(position: Int) {
-        val intent = Intent(this, PublicProfileActivity::class.java)
+        val intent = Intent(vmMyProfile.ctx, PublicProfileActivity::class.java)
         intent.putExtra("UserId", followings?.get(position)?.uid)
         startActivity(intent)
     }

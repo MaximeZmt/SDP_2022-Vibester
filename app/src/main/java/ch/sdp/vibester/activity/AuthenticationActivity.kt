@@ -9,11 +9,15 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.navigateUp
 import ch.sdp.vibester.R
 import ch.sdp.vibester.activity.profile.MyProfileActivity
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.helper.IntentSwitcher
+import ch.sdp.vibester.helper.ViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -29,7 +33,7 @@ import javax.inject.Inject
 import net.datafaker.Faker
 
 @AndroidEntryPoint
-class AuthenticationActivity : AppCompatActivity() {
+class AuthenticationActivity : Fragment(R.layout.activity_authentication) {
     private val AUTHENTICATION_PERMISSION_CODE = 1000
 
     private lateinit var googleSignInClient: GoogleSignInClient
@@ -47,15 +51,13 @@ class AuthenticationActivity : AppCompatActivity() {
     private lateinit var authentication_status: TextView
     private lateinit var username: EditText
     private lateinit var password: EditText
+    private var vmAuth = ViewModel()
 
     private var createAcc = false
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        requestWindowFeature(Window.FEATURE_NO_TITLE)
-        super.onCreate(savedInstanceState)
-        supportActionBar?.hide()
-        setContentView(R.layout.activity_authentication)
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        vmAuth.view = view
+        vmAuth.ctx = view.context
         val googleSignInToken = "7687769601-qiqrp6kt48v89ub76k9lkpefh9ls36ha.apps.googleusercontent.com"
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -63,13 +65,13 @@ class AuthenticationActivity : AppCompatActivity() {
             .requestEmail()
             .build()
 
-        googleSignInClient = GoogleSignIn.getClient(this, gso)
+        googleSignInClient = GoogleSignIn.getClient(view.context, gso)
 
         auth = Firebase.auth
 
-        username = findViewById(R.id.username)
-        password = findViewById(R.id.password)
-        authentication_status = findViewById(R.id.authentication_status)
+        username = view.findViewById(R.id.username)
+        password = view.findViewById(R.id.password)
+        authentication_status = view.findViewById(R.id.authentication_status)
     }
 
     /**
@@ -94,13 +96,7 @@ class AuthenticationActivity : AppCompatActivity() {
         signInGoogle()
     }
 
-    /**
-     * Listener bound to the red return button in the Authentication activity.
-     */
-    fun returnToMainListener(view: View) {
-        IntentSwitcher.switch(this, MainActivity::class.java)
-        finish()
-    }
+
 
     /**
      * Generic onStart method. Direct call to super.onStart().
@@ -146,7 +142,7 @@ class AuthenticationActivity : AppCompatActivity() {
     private fun googleAuthFirebase(idToken: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         auth.signInWithCredential(credential)
-            .addOnCompleteListener(this) { task ->
+            .addOnCompleteListener{ task ->
                 if (task.isSuccessful) {
                     Log.d(getString(R.string.log_tag), "signInWithCredential:success")
                     if (task.getResult().additionalUserInfo != null) {
@@ -199,7 +195,7 @@ class AuthenticationActivity : AppCompatActivity() {
                 authenticator.signIn(email, password)
             }
 
-            auth.addOnCompleteListener(this) { task ->
+            auth.addOnCompleteListener{ task ->
                 if (task.isSuccessful) {
                     if(createAcc)createAccount()
                     updateOnSuccess()
@@ -210,13 +206,8 @@ class AuthenticationActivity : AppCompatActivity() {
         }
     }
 
-
-    /**
-     * Start ProfileActivity
-     */
     private fun startProfileActivity() {
-        val newIntent = Intent(this, MyProfileActivity::class.java)
-        startActivity(newIntent)
+        findNavController().navigateUp()
     }
 
     /**
@@ -238,7 +229,7 @@ class AuthenticationActivity : AppCompatActivity() {
      * Toast on successful logIn
      */
     private fun updateOnSuccess(){
-        Toast.makeText(baseContext, "Successful login", Toast.LENGTH_SHORT).show()
+        Toast.makeText(vmAuth.ctx, "Successful login", Toast.LENGTH_SHORT).show()
         startProfileActivity()
     }
 
@@ -247,7 +238,7 @@ class AuthenticationActivity : AppCompatActivity() {
      *  @param: text to display in toast. Can be changed base on error
      */
     private fun updateOnFail(text: String = "Authentication failed"){
-        Toast.makeText(baseContext, text, Toast.LENGTH_SHORT).show()
+        Toast.makeText(vmAuth.ctx, text, Toast.LENGTH_SHORT).show()
     }
     
 }

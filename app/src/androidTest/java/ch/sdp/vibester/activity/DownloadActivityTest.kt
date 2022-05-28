@@ -175,6 +175,6 @@ class DownloadActivityTest {
     @Test
     fun checkIntentOnDelete() {
         onView(withId(R.id.download_to_delete)).perform(click())
-        Intents.intended(IntentMatchers.hasComponent(DeleteSongsActivity::class.java.name))
+        Intents.intended(IntentMatchers.hasComponent(DownloadManagerActivity::class.java.name))
     }
 }

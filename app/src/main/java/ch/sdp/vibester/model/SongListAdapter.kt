@@ -1,14 +1,11 @@
 package ch.sdp.vibester.model
 
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Adapter
 import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
-import ch.sdp.vibester.activity.DownloadFunctionalityActivity
 import ch.sdp.vibester.helper.AdapterHelper
 import ch.sdp.vibester.user.OnItemClickListener
 
@@ -20,7 +17,7 @@ class SongListAdapter constructor(
     private val incorrectSongList: ArrayList<String>,
     correctSongList: ArrayList<String>,
     private val listener: OnItemClickListener?
-    ): RecyclerView.Adapter<SongListAdapter.SongListViewHolder>() {
+) : RecyclerView.Adapter<SongListAdapter.SongListViewHolder>() {
     private val songList: ArrayList<String> = arrayListOf()
 
     init {
@@ -50,7 +47,8 @@ class SongListAdapter constructor(
     /**
      * Customer ViewHolder class for SongList. Each item contains the name of the song and a button.
      */
-    inner class SongListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    inner class SongListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
+        View.OnClickListener {
 
         fun bind(songName: String) {
             itemView.findViewById<TextView>(R.id.song_name).text = songName

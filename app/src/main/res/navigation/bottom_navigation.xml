@@ -20,4 +20,12 @@
     <fragment android:id="@+id/fragment_scoreboard"
         android:name="ch.sdp.vibester.fragment.ScoreBoardFragment"
         tools:layout="@layout/fragment_layout_scoreboard"/>
+
+    <fragment android:id="@+id/fragment_my_profile"
+        android:name="ch.sdp.vibester.activity.profile.MyProfileActivity"
+        tools:layout="@layout/activity_profile"/>
+
+    <fragment android:id="@+id/fragment_auth"
+        android:name="ch.sdp.vibester.activity.AuthenticationActivity"
+        tools:layout="@layout/activity_authentication"/>
 </navigation>

@@ -33,9 +33,9 @@
         <activity
             android:name=".activity.PartyRoomActivity"
             android:exported="false" />
-        <activity
+        <!--<activity
             android:name=".activity.download.DeleteSongsActivity"
-            android:exported="false" />
+            android:exported="false" />-->
         <activity
             android:name=".activity.download.DownloadManagerActivity"
             android:exported="false" />

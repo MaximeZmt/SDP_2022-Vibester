@@ -10,7 +10,6 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
 import androidx.test.espresso.action.ViewActions
-import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.intent.Intents
@@ -57,14 +56,6 @@ class DownloadManagerActivityTest {
         onView(withId(R.id.downloadManager_returnToMain)).perform(ViewActions.click())
         intended(hasComponent(MainActivity::class.java.name))
     }
-
-    /*@Test
-    fun noSongsToDelete() {
-        val intent = Intent(ApplicationProvider.getApplicationContext(), DownloadManagerActivity::class.java)
-        val scn: ActivityScenario<DownloadManagerActivity> = ActivityScenario.launch(intent)
-
-        onView(withId(R.id.download_empty)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
-    }*/
 
     @Test
     fun seeExistingSongs() {

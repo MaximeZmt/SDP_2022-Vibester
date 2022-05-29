@@ -72,7 +72,7 @@ class DownloadActivityTest {
             }
 
             val records = File(activity.applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "records.txt")
-            assert(!records.exists())
+            //assert(!records.exists())
             if (records.exists()) {
                 records.delete()
             }

@@ -25,8 +25,6 @@ import java.io.*
  * class that manages downloaded songs
  */
 class DownloadManagerActivity : AppCompatActivity(), OnItemClickListener {
-    private var recyclerView: RecyclerView? = null
-    private lateinit var songListAdapter: SongListAdapterForDelete
     private var songList: ArrayList<String> = arrayListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,12 +42,11 @@ class DownloadManagerActivity : AppCompatActivity(), OnItemClickListener {
     }
 
     private fun setUpRecyclerView() {
-        recyclerView = findViewById(R.id.download_song_list)
-        recyclerView!!.setHasFixedSize(true)
-        recyclerView!!.layoutManager = LinearLayoutManager(this)
-
-        songListAdapter = SongListAdapterForDelete(getDownloadedSongs(), this)
-        recyclerView!!.adapter = songListAdapter
+        findViewById<RecyclerView>(R.id.download_song_list).apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = SongListAdapterForDelete(getDownloadedSongs(), this@DownloadManagerActivity)
+            setHasFixedSize(true)
+        }
     }
 
     private fun getDownloadedSongs(): ArrayList<String> {

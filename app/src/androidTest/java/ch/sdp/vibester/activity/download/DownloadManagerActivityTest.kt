@@ -96,7 +96,7 @@ class DownloadManagerActivityTest {
     }
 
     @Test
-    fun deleteInTheList() {
+    fun deleteOneInTheList() {
         val context = InstrumentationRegistry.getInstrumentation().targetContext.applicationContext
         val records = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "records.txt")
         records.createNewFile()
@@ -133,6 +133,35 @@ class DownloadManagerActivityTest {
         testing2.delete()
     }
 
+    @Test
+    fun deleteAllInTheList() {
+        val context = InstrumentationRegistry.getInstrumentation().targetContext.applicationContext
+        val records = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "records.txt")
+        records.createNewFile()
+        records.appendText("Song 1 - Artist 1\n")
+
+        val properties = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "properties.txt")
+        properties.createNewFile()
+        properties.appendText("Song 1 - Artist 1 - Artwork 1 - Preview 1\n")
+
+        val testing1 = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "extract_of_Song 1 - Artist 1")
+        testing1.createNewFile()
+
+        val intent = Intent(ApplicationProvider.getApplicationContext(), DownloadManagerActivity::class.java)
+        val scn: ActivityScenario<DownloadManagerActivity> = ActivityScenario.launch(intent)
+
+        onView(withId(R.id.download_song_list)).perform(
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                0, clickOnViewChild(R.id.song_delete)
+            )
+        )
+
+        onView(withId(R.id.download_empty)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+
+        records.delete()
+        properties.delete()
+        testing1.delete()
+    }
     /**
      * Custom function to handle button clicks inside recycleView
      */

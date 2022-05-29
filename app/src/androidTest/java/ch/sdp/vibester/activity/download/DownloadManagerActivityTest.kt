@@ -63,7 +63,7 @@ class DownloadManagerActivityTest {
         val intent = Intent(ApplicationProvider.getApplicationContext(), DownloadManagerActivity::class.java)
         val scn: ActivityScenario<DownloadManagerActivity> = ActivityScenario.launch(intent)
 
-        onView(withId(R.id.download_empty)).check(matches(isDisplayed()))
+        onView(withId(R.id.download_empty)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
     }
 
     @Test
@@ -87,7 +87,8 @@ class DownloadManagerActivityTest {
         val intent = Intent(ApplicationProvider.getApplicationContext(), DownloadManagerActivity::class.java)
         val scn: ActivityScenario<DownloadManagerActivity> = ActivityScenario.launch(intent)
 
-        //checkRecyclerSubViews(R.id.download_song_list, 0, withText("SONG 1 - ARTIST 1"), R.id.delete_song_name)
+        onView(withId(R.id.download_song_list)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+
         records.delete()
         properties.delete()
         testing1.delete()
@@ -150,7 +151,7 @@ class DownloadManagerActivityTest {
     private fun checkRecyclerSubViews(recyclerViewId: Int, position: Int, itemMatcher: Matcher<View?>, subViewId: Int) {
         onView(withId(recyclerViewId)).perform(
             RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(position))
-            .check(ViewAssertions.matches(atPositionOnView(position, itemMatcher, subViewId)))
+            .check(matches(atPositionOnView(position, itemMatcher, subViewId)))
     }
 
     private fun atPositionOnView(position: Int, itemMatcher: Matcher<View?>, targetViewId: Int): Matcher<View?> {

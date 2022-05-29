@@ -21,6 +21,9 @@ import ch.sdp.vibester.user.OnItemClickListener
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.io.*
 
+/**
+ * class that manages downloaded songs
+ */
 class DownloadManagerActivity : AppCompatActivity(), OnItemClickListener {
     private var recyclerView: RecyclerView? = null
     private lateinit var songListAdapter: SongListAdapterForDelete
@@ -76,6 +79,10 @@ class DownloadManagerActivity : AppCompatActivity(), OnItemClickListener {
         return songList
     }
 
+    /**
+     * Handles the deletion of a downloaded extract. Also handles the removal of the said extract
+     * from the text file which keeps track of all downloads.
+     */
     private fun deleteDownloadedSong(song: String): Boolean {
         val records = File(applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "records.txt")
         val tempRecords = File(applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "temp.txt")
@@ -110,6 +117,9 @@ class DownloadManagerActivity : AppCompatActivity(), OnItemClickListener {
         return deleteResult(records, tempRecords, song)
     }
 
+    /**
+     * show toast for the result of deleting a song
+     */
     private fun deleteResult(records: File, tempRecords: File, song: String): Boolean {
         if (tempRecords.renameTo(records) && removeFromProperties(song)) {
             val songToDelete = File(

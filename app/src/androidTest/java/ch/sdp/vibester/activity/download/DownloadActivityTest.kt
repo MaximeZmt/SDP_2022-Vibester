@@ -56,7 +56,7 @@ class DownloadActivityTest {
         Thread.sleep(waitForButton)
         onView(withId(R.id.download_downloadsong)).perform(click())
 
-        while(!DownloadFunctionalityActivity.downloadComplete) {
+        while (!DownloadFunctionalityActivity.downloadComplete) {
             Thread.sleep(waitForDownload)
         }
         Thread.sleep(waitForButton)
@@ -67,19 +67,19 @@ class DownloadActivityTest {
         scn.onActivity { activity ->
             val extract = File(activity.applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS),"extract_of_$songName")
             assert(!extract.exists())
-            if(extract.exists()) {
+            if (extract.exists()) {
                 extract.delete()
             }
 
             val records = File(activity.applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "records.txt")
             assert(!records.exists())
-            if(records.exists()) {
+            if (records.exists()) {
                 records.delete()
             }
 
             val properties = File(activity.applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "properties.txt")
             assert(!properties.exists())
-            if(properties.exists()) {
+            if (properties.exists()) {
                 properties.delete()
             }
         }

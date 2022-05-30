@@ -101,7 +101,13 @@ class QrScanningActivity : AppCompatActivity() {
             .setAutoFocusEnabled(true)
             .build()
 
-        binding.cameraSurfaceView.getHolder().addCallback(object : SurfaceHolder.Callback {
+        setupCamera(camera)
+
+        setupBarcodeDetector(barcodeDetector)
+    }
+
+    private fun setupCamera(camera: CameraSource) {
+        binding.cameraSurfaceView.holder.addCallback(object : SurfaceHolder.Callback {
             override fun surfaceCreated(holder: SurfaceHolder) {
                 surfaceHandler(holder)
             }
@@ -123,7 +129,9 @@ class QrScanningActivity : AppCompatActivity() {
                 camera.stop()
             }
         })
+    }
 
+    private fun setupBarcodeDetector(barcodeDetector: BarcodeDetector) {
         barcodeDetector.setProcessor(object : Detector.Processor<Barcode> {
             override fun release() {
                 Toast.makeText(applicationContext, getString(R.string.qrScanning_scannerClosed), Toast.LENGTH_SHORT).show()

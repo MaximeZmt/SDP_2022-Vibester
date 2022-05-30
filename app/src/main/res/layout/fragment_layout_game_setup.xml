@@ -37,13 +37,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="41dp"
-                android:layout_marginTop="60dp"
+                android:layout_marginTop="122dp"
                 android:layout_marginEnd="45dp"
-                android:layout_marginBottom="40dp"
+                android:layout_marginBottom="54dp"
                 android:fontFeatureSettings="smcp"
                 android:text="@string/holder_setup_game_type"
                 android:textAlignment="center"
-                android:textSize="30sp"
+                android:textSize="30dp"
                 android:textStyle="bold" />
 
             <ScrollView
@@ -208,7 +208,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="@string/Multiplayer"
-                        android:textSize="20sp" />
+                        android:textSize="20dp" />
 
                     <LinearLayout
                         android:id="@+id/horilayer_multi"

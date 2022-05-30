@@ -138,18 +138,17 @@ class MyProfileActivity : ProfileActivity() {
      * A function that displays the dialog
      * @param title title of the dialog
      * @param hint hint of the text in the dialog
-     * @param id id of the dialog
      * @param textId id of the text in the dialog
      * @param name of the dialog
      */
-    private fun showTextDialog(title: String, hint: String, id: Int, textId: Int, name: String) {
+    private fun showTextDialog(title: String, hint: String, textId: Int, name: String) {
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
         builder.setTitle(title)
 
         val input = EditText(this)
         input.hint = hint
         input.inputType = InputType.TYPE_CLASS_TEXT
-        input.id = id
+        input.id = 0
 
         builder.setView(input)
         builder.setPositiveButton("OK") { _, _ ->
@@ -189,7 +188,7 @@ class MyProfileActivity : ProfileActivity() {
             val title = "Create $name"
             val hint = "Enter new $name"
 
-            showTextDialog(title, hint, 0, R.id.username, name)
+            showTextDialog(title, hint, R.id.username, name)
         }
         else {
             showImageChangeDialog(name)

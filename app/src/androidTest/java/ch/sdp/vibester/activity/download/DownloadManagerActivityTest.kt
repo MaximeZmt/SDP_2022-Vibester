@@ -154,6 +154,7 @@ class DownloadManagerActivityTest {
         properties.delete()
         testing1.delete()
     }
+
     /**
      * Custom function to handle button clicks inside recycleView
      */

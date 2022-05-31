@@ -39,6 +39,7 @@ class DownloadManagerActivity : AppCompatActivity(), OnItemClickListener {
     }
 
     private fun setUpRecyclerView() {
+        songList.clear()
         findViewById<RecyclerView>(R.id.download_song_list).apply {
             layoutManager = LinearLayoutManager(context)
             adapter = SongListAdapterForDelete(getDownloadedSongs(), this@DownloadManagerActivity)
@@ -179,14 +180,13 @@ class DownloadManagerActivity : AppCompatActivity(), OnItemClickListener {
 
 
     override fun onItemClick(position: Int) {
-        // TODO: remove the entire item correct
         val parentActual = findViewById<ImageView>(R.id.song_delete).parent as RelativeLayout
         val parentOfParent = parentActual.parent as RecyclerView
 
         val relative = parentOfParent.children.elementAt(position) as RelativeLayout
         val deleteButton = relative.children.elementAt(1) as ImageView
         if (deleteDownloadedSong(songList[position])) {
-            deleteButton.visibility = View.INVISIBLE
+            setUpRecyclerView()
         }
 
     }

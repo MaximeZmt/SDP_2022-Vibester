@@ -86,7 +86,7 @@ class DownloadManagerActivityTest {
         testing2.delete()
     }
 
-    /*@Test
+    @Test
     fun deleteOneInTheList() {
         val context = InstrumentationRegistry.getInstrumentation().targetContext.applicationContext
         val records = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "records.txt")
@@ -113,17 +113,13 @@ class DownloadManagerActivityTest {
             )
         )
 
-        //assert(!testing1.exists())
-        assert(testing2.exists())
-
-        //checkRecyclerSubViews(R.id.download_song_list, 0, withEffectiveVisibility(Visibility.INVISIBLE), R.id.song_delete)
-        onView(withId(R.id.downloa_song_list)).check(matches())
+        checkRecyclerSubViews(R.id.download_song_list, 0, withText("Song 2 - Artist 2"), R.id.delete_song_name)
 
         records.delete()
         properties.delete()
         testing1.delete()
         testing2.delete()
-    }*/
+    }
 
     @Test
     fun deleteAllInTheList() {

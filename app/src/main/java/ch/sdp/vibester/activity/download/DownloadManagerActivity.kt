@@ -5,10 +5,7 @@ import android.os.Environment
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.widget.Button
-import android.widget.RelativeLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
 import androidx.core.widget.NestedScrollView
@@ -183,11 +180,11 @@ class DownloadManagerActivity : AppCompatActivity(), OnItemClickListener {
 
     override fun onItemClick(position: Int) {
         // TODO: remove the entire item correct
-        val parentActual = findViewById<Button>(R.id.song_delete).parent as RelativeLayout
+        val parentActual = findViewById<ImageView>(R.id.song_delete).parent as RelativeLayout
         val parentOfParent = parentActual.parent as RecyclerView
 
         val relative = parentOfParent.children.elementAt(position) as RelativeLayout
-        val deleteButton = relative.children.elementAt(1) as Button
+        val deleteButton = relative.children.elementAt(1) as ImageView
         if (deleteDownloadedSong(songList[position])) {
             deleteButton.visibility = View.INVISIBLE
         }

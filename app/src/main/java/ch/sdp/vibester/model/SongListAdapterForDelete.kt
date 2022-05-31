@@ -3,6 +3,7 @@ package ch.sdp.vibester.model
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
@@ -30,7 +31,7 @@ class SongListAdapterForDelete constructor(
 
         fun bind(songName: String) {
             itemView.findViewById<TextView>(R.id.delete_song_name).text = songName
-            itemView.findViewById<Button>(R.id.song_delete).setOnClickListener(this)
+            itemView.findViewById<ImageView>(R.id.song_delete).setOnClickListener(this)
         }
 
         override fun onClick(v: View?) {

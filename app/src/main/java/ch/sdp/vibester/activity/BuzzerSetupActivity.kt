@@ -103,13 +103,6 @@ class BuzzerSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
         intent.putExtra("gameManager", gameManager)
         intent.putExtra("Difficulty", difficulty)
 
-        setupPlayerView(players, pNameArray)
-
-        intent.putExtra("Player Names", pNameArray)
-        startActivity(intent)
-    }
-
-    private fun setupPlayerView(players: Sequence<View>, pNameArray: Array<String?>) {
         val editTextIdArray = arrayListOf(R.id.namePlayer1, R.id.namePlayer2, R.id.namePlayer3, R.id.namePlayer4)
         var i = 0
         for (playerView in players) {
@@ -121,6 +114,9 @@ class BuzzerSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
             }
             i += 1
         }
+
+        intent.putExtra("Player Names", pNameArray)
+        startActivity(intent)
     }
 
 }

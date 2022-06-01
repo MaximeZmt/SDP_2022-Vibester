@@ -158,7 +158,7 @@ class AuthenticationActivity : AppCompatActivity() {
                     Log.d(getString(R.string.log_tag), "signInWithCredential:success")
                     if (task.getResult().additionalUserInfo != null) {
                         createAcc = task.getResult().additionalUserInfo!!.isNewUser
-                        if (createAcc){
+                        if (createAcc) {
                             createAccount()
                         }
                     }

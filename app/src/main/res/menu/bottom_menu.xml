@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <item
-        android:id="@+id/fragment_my_profile"
-        tools:ignore="MenuTitle"
-        android:icon="@drawable/profile_selector"
-        />
-
     <item
         android:id="@+id/fragment_game_setup"
         android:icon="@drawable/play_selector"
@@ -24,6 +17,12 @@
         android:id="@+id/fragment_scoreboard"
         tools:ignore="MenuTitle"
         android:icon="@drawable/scoreboard_selector"
+        />
+
+    <item
+        android:id="@+id/fragment_my_profile"
+        tools:ignore="MenuTitle"
+        android:icon="@drawable/profile_selector"
         />
 
 

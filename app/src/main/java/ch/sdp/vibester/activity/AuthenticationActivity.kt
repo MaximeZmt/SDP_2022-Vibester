@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.Window
+import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
@@ -54,6 +55,7 @@ class AuthenticationActivity : Fragment(R.layout.activity_authentication) {
     private var vmAuth = ViewModel()
 
     private var createAcc = false
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         vmAuth.view = view
@@ -65,19 +67,24 @@ class AuthenticationActivity : Fragment(R.layout.activity_authentication) {
             .requestEmail()
             .build()
 
-        googleSignInClient = GoogleSignIn.getClient(view.context, gso)
+        googleSignInClient = GoogleSignIn.getClient(vmAuth.ctx, gso)
 
         auth = Firebase.auth
 
-        username = view.findViewById(R.id.username)
-        password = view.findViewById(R.id.password)
-        authentication_status = view.findViewById(R.id.authentication_status)
+        username = vmAuth.view.findViewById(R.id.username)
+        password = vmAuth.view.findViewById(R.id.password)
+        authentication_status = vmAuth.view.findViewById(R.id.authentication_status)
+
+        vmAuth.view.findViewById<Button>(R.id.createAcc).setOnClickListener{createAccountListener()}
+        vmAuth.view.findViewById<Button>(R.id.logIn).setOnClickListener{logInListener()}
+        vmAuth.view.findViewById<Button>(R.id.googleBtn).setOnClickListener{googleSignInListener()}
+
     }
 
     /**
      * Listener bound to the "Create Account" button in the Authentication activity.
      */
-    fun createAccountListener(view: View) {
+    fun createAccountListener() {
         this.createAcc = true
         authenticate(username.text.toString(), password.text.toString())
     }
@@ -85,24 +92,15 @@ class AuthenticationActivity : Fragment(R.layout.activity_authentication) {
     /**
      * Listener bound to the "Log In" button in the Authentication activity.
      */
-    fun logInListener(view: View) {
+    fun logInListener() {
         authenticate(username.text.toString(), password.text.toString())
     }
 
     /**
      * Listener bound to the "Google Log In" button in the Authentication activity.
      */
-    fun googleSignInListener(view: View) {
+    fun googleSignInListener() {
         signInGoogle()
-    }
-
-
-
-    /**
-     * Generic onStart method. Direct call to super.onStart().
-     */
-    public override fun onStart() {
-        super.onStart()
     }
 
 
@@ -207,7 +205,7 @@ class AuthenticationActivity : Fragment(R.layout.activity_authentication) {
     }
 
     private fun startProfileActivity() {
-        findNavController().navigateUp()
+        findNavController().popBackStack()
     }
 
     /**

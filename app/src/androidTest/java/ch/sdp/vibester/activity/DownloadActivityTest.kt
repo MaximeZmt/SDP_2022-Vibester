@@ -49,14 +49,14 @@ class DownloadActivityTest {
     fun downloadIncorrectSong() {
         val intent = Intent(ApplicationProvider.getApplicationContext(), DownloadActivity::class.java)
         val scn: ActivityScenario<DownloadActivity> = ActivityScenario.launch(intent)
-        assertEquals(false, DownloadActivity.downloadStarted)
+        assertEquals(false, DownloadFunctionalityActivity.downloadStarted)
         val songName = "adsfasdgyasdfa"
 
         onView(withId(R.id.download_songName)).perform(typeText(songName), closeSoftKeyboard())
         Thread.sleep(waitForButton)
         onView(withId(R.id.download_downloadsong)).perform(click())
 
-        while(!DownloadActivity.downloadComplete) {
+        while(!DownloadFunctionalityActivity.downloadComplete) {
             Thread.sleep(waitForDownload)
         }
         Thread.sleep(waitForButton)

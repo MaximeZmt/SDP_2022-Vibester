@@ -53,6 +53,16 @@
         android:textSize="26sp"
         android:textStyle="bold" />
 
+    <Button
+        android:id="@+id/skip_lyrics"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/cg_blue"
+        android:elevation="10dp"
+        android:layout_marginStart="160dp"
+        android:layout_marginTop="250dp"
+        android:text="@string/LyricsBelongGame_skip" />
+
     <ImageView
         android:id="@+id/btnSpeak"
         android:layout_width="wrap_content"
@@ -72,7 +82,7 @@
         android:text="@string/check_for_correctness" />
 
     <Button
-        android:id="@+id/nextSongButton"
+        android:id="@+id/nextSongLyrics"
         android:layout_width="113dp"
         android:layout_height="64dp"
         android:layout_alignParentBottom="true"

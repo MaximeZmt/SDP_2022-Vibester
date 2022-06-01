@@ -1,23 +1,29 @@
 package ch.sdp.vibester.model
 
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Adapter
 import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
+import ch.sdp.vibester.activity.DownloadFunctionalityActivity
 import ch.sdp.vibester.helper.AdapterHelper
+import ch.sdp.vibester.user.OnItemClickListener
 
 
 /**
  * SongListAdapter to set correct/wrong guessed songs in the game.
  */
-class SongListAdapter constructor( private val incorrectSongList: ArrayList<String>,
-                                   correctSongList: ArrayList<String> ):
-    RecyclerView.Adapter<SongListAdapter.SongListViewHolder>() {
+class SongListAdapter constructor(
+    private val incorrectSongList: ArrayList<String>,
+    correctSongList: ArrayList<String>,
+    private val listener: OnItemClickListener?
+    ): RecyclerView.Adapter<SongListAdapter.SongListViewHolder>() {
     private val songList: ArrayList<String> = arrayListOf()
 
-    init{
+    init {
         songList.addAll(incorrectSongList)
         songList.addAll(correctSongList)
     }
@@ -38,29 +44,28 @@ class SongListAdapter constructor( private val incorrectSongList: ArrayList<Stri
     /**
      * Get amount of songs displayed
      */
-    override fun getItemCount(): Int {
-        return songList.size
-    }
+    override fun getItemCount() = songList.size
 
 
     /**
-     * Customer ViewHolder class for SongList. Each item contains songname and a button.
+     * Customer ViewHolder class for SongList. Each item contains the name of the song and a button.
      */
-    inner class SongListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class SongListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+
         fun bind(songName: String) {
             itemView.findViewById<TextView>(R.id.song_name).text = songName
             val downloadSongBtn = itemView.findViewById<Button>(R.id.song_download)
 
-            downloadSongBtn.setOnClickListener {
-                AdapterHelper().changeAToB(
-                    R.id.song_download, R.id.song_download_done, itemView
-                )
-            }
+            downloadSongBtn.setOnClickListener(this)
 
             // Make background red if song is guessed incorrectly
-            if(songName in incorrectSongList) {
+            if (songName in incorrectSongList) {
                 itemView.setBackgroundResource(R.color.light_coral)
             }
+        }
+
+        override fun onClick(v: View?) {
+            AdapterHelper().onClickHelper(adapterPosition, listener)
         }
 
     }

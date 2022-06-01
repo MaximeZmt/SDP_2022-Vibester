@@ -55,7 +55,8 @@ class AuthenticationFragment : Fragment(R.layout.fragment_layout_authentication)
         super.onViewCreated(view, savedInstanceState)
         vmAuth.view = view
         vmAuth.ctx = view.context
-        val googleSignInToken = "7687769601-qiqrp6kt48v89ub76k9lkpefh9ls36ha.apps.googleusercontent.com"
+        val googleSignInToken =
+            "7687769601-qiqrp6kt48v89ub76k9lkpefh9ls36ha.apps.googleusercontent.com"
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(googleSignInToken)
@@ -70,9 +71,11 @@ class AuthenticationFragment : Fragment(R.layout.fragment_layout_authentication)
         password = vmAuth.view.findViewById(R.id.password)
         authentication_status = vmAuth.view.findViewById(R.id.authentication_status)
 
-        vmAuth.view.findViewById<Button>(R.id.createAcc).setOnClickListener{createAccountListener()}
-        vmAuth.view.findViewById<Button>(R.id.logIn).setOnClickListener{logInListener()}
-        vmAuth.view.findViewById<Button>(R.id.googleBtn).setOnClickListener{googleSignInListener()}
+        vmAuth.view.findViewById<Button>(R.id.createAcc)
+            .setOnClickListener { createAccountListener() }
+        vmAuth.view.findViewById<Button>(R.id.logIn).setOnClickListener { logInListener() }
+        vmAuth.view.findViewById<Button>(R.id.googleBtn)
+            .setOnClickListener { googleSignInListener() }
 
     }
 
@@ -96,6 +99,13 @@ class AuthenticationFragment : Fragment(R.layout.fragment_layout_authentication)
      */
     private fun googleSignInListener() {
         signInGoogle()
+    }
+
+    /**
+     * Listener bound to the "Reset Password" button in the Authentication activity.
+     */
+    fun resetPasswordListener() {
+        resetPassword(username.text.toString())
     }
 
 
@@ -135,7 +145,7 @@ class AuthenticationFragment : Fragment(R.layout.fragment_layout_authentication)
     private fun googleAuthFirebase(idToken: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         auth.signInWithCredential(credential)
-            .addOnCompleteListener{ task ->
+            .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     Log.d(getString(R.string.log_tag), "signInWithCredential:success")
                     if (task.getResult().additionalUserInfo != null) {
@@ -144,7 +154,11 @@ class AuthenticationFragment : Fragment(R.layout.fragment_layout_authentication)
                     }
                     updateOnSuccess()
                 } else {
-                    Log.d(getString(R.string.log_tag), "signInWithCredential:failure", task.exception)
+                    Log.d(
+                        getString(R.string.log_tag),
+                        "signInWithCredential:failure",
+                        task.exception
+                    )
                     updateOnFail()
                 }
             }
@@ -184,13 +198,13 @@ class AuthenticationFragment : Fragment(R.layout.fragment_layout_authentication)
         if (credentialsValidation(email, password)) {
             val auth: Task<AuthResult> = if (createAcc) {
                 authenticator.createAccount(email, password)
-            }else {
+            } else {
                 authenticator.signIn(email, password)
             }
 
-            auth.addOnCompleteListener{ task ->
+            auth.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    if(createAcc)createAccount()
+                    if (createAcc) createAccount()
                     updateOnSuccess()
                 } else {
                     updateOnFail()
@@ -213,7 +227,7 @@ class AuthenticationFragment : Fragment(R.layout.fragment_layout_authentication)
     /**
      * Create an account with new email, uid and random username
      */
-    private fun createAccount(){
+    private fun createAccount() {
         val username = usernameGenerator()
         dataGetter.createUser(authenticator.getCurrUserMail(), username, authenticator.getCurrUID())
     }
@@ -221,7 +235,7 @@ class AuthenticationFragment : Fragment(R.layout.fragment_layout_authentication)
     /**
      * Toast on successful logIn
      */
-    private fun updateOnSuccess(){
+    private fun updateOnSuccess() {
         Toast.makeText(vmAuth.ctx, "Successful login", Toast.LENGTH_SHORT).show()
         startProfileActivity()
     }
@@ -230,8 +244,18 @@ class AuthenticationFragment : Fragment(R.layout.fragment_layout_authentication)
      *  Toast on failed authentication
      *  @param: text to display in toast. Can be changed base on error
      */
-    private fun updateOnFail(text: String = "Authentication failed"){
+    private fun updateOnFail(text: String = "Authentication failed") {
         Toast.makeText(vmAuth.ctx, text, Toast.LENGTH_SHORT).show()
     }
-    
+
+    /**
+     *  Reset Password function
+     *  @param email email adress for the password reset
+     */
+    private fun resetPassword(email: String) {
+        auth.sendPasswordResetEmail(email).addOnFailureListener {
+            Toast.makeText(vmAuth.ctx, R.string.authentication_forgotPassword, Toast.LENGTH_SHORT)
+                .show()
+        }
+    }
 }

@@ -14,8 +14,11 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import ch.sdp.vibester.R
 import ch.sdp.vibester.TestMode
-import ch.sdp.vibester.activity.profile.MyProfileActivity
+import ch.sdp.vibester.activity.profile.MyProfileFragment
 import ch.sdp.vibester.auth.FireBaseAuthenticator
+import ch.sdp.vibester.fragment.AuthenticationFragment
+import ch.sdp.vibester.fragment.GameSetupFragment
+import ch.sdp.vibester.launchFragmentInHiltContainer
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
@@ -41,15 +44,22 @@ import org.junit.runner.RunWith
  */
 @RunWith(AndroidJUnit4::class)
 @HiltAndroidTest
-class AuthenticationActivityTest {
+class AuthenticationFragmentTest {
 
     @get:Rule(order = 0)
     var hiltRule = HiltAndroidRule(this)
 
-    @get:Rule(order = 1)
-    val testRule = ActivityScenarioRule(
-        AuthenticationActivity::class.java
-    )
+    @After
+    fun clean() {
+        Intents.release()
+    }
+
+    @Before
+    fun setUp() {
+        hiltRule.inject()
+        Intents.init()
+    }
+
 
     @BindValue @JvmField
     val mockAuthenticator = mockk<FireBaseAuthenticator>()
@@ -74,16 +84,6 @@ class AuthenticationActivityTest {
         return mockUser
     }
 
-    @Before
-    fun setUp() {
-        hiltRule.inject()
-        Intents.init()
-    }
-
-    @After
-    fun clean() {
-        Intents.release()
-    }
     @Test
     fun useAppContext() {
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
@@ -99,7 +99,9 @@ class AuthenticationActivityTest {
 
         val mockTask = createMockTask(false)
         every { mockAuthenticator.signIn(username, password) } returns mockTask
-
+        launchFragmentInHiltContainer<AuthenticationFragment>(
+            themeResId = R.style.AppTheme
+        )
         onView(withId(R.id.username)).perform(ViewActions.typeText(username), closeSoftKeyboard())
         onView(withId(R.id.password)).perform(ViewActions.typeText(password), closeSoftKeyboard())
         onView(withId(R.id.logIn)).perform(click())
@@ -124,13 +126,6 @@ class AuthenticationActivityTest {
         onView(withId(R.id.authentication_status)).check(matches(withText("Empty email or password")))
     }
 
-
-    @Test
-    fun returnToMain() {
-        every { mockAuthenticator.isLoggedIn() } returns false
-        onView(withId(R.id.authentication_returnToMain)).perform(click())
-        Intents.intended(IntentMatchers.hasComponent(MainActivity::class.java.name))
-    }
 
 
     @Test
@@ -172,7 +167,7 @@ class AuthenticationActivityTest {
         onView(withId(R.id.password)).perform(ViewActions.typeText(password), closeSoftKeyboard())
         onView(withId(R.id.logIn)).perform(click())
 
-        Intents.intended(IntentMatchers.hasComponent(MyProfileActivity::class.java.name))
+        Intents.intended(IntentMatchers.hasComponent(MyProfileFragment::class.java.name))
     }
 
     @Test
@@ -192,7 +187,7 @@ class AuthenticationActivityTest {
         onView(withId(R.id.username)).perform(ViewActions.typeText(username), closeSoftKeyboard())
         onView(withId(R.id.password)).perform(ViewActions.typeText(password), closeSoftKeyboard())
         onView(withId(R.id.createAcc)).perform(click())
-        Intents.intended(IntentMatchers.hasComponent(MyProfileActivity::class.java.name))
+        Intents.intended(IntentMatchers.hasComponent(MyProfileFragment::class.java.name))
     }
 
 }

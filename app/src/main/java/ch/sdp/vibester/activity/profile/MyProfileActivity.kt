@@ -66,7 +66,7 @@ class MyProfileActivity : ProfileActivity() {
      * helper function to show dialog 
      */
     private fun showDialogWhenChangeImage() {
-        showGeneralDialog(R.string.profile_verify_change_profile_pic.toString(), false)
+        showGeneralDialog(getString(R.string.profile_verify_change_profile_pic), false)
     }
 
     /**

@@ -1,4 +1,4 @@
-package ch.sdp.vibester.activity
+package ch.sdp.vibester.activity.download
 
 import android.content.Intent
 import android.os.Environment
@@ -12,6 +12,7 @@ import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import ch.sdp.vibester.R
+import ch.sdp.vibester.activity.MainActivity
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import org.junit.After
@@ -20,7 +21,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import java.io.File
-import java.io.FileInputStream
 
 @HiltAndroidTest
 class DownloadActivityTest {
@@ -56,7 +56,7 @@ class DownloadActivityTest {
         Thread.sleep(waitForButton)
         onView(withId(R.id.download_downloadsong)).perform(click())
 
-        while(!DownloadFunctionalityActivity.downloadComplete) {
+        while (!DownloadFunctionalityActivity.downloadComplete) {
             Thread.sleep(waitForDownload)
         }
         Thread.sleep(waitForButton)
@@ -67,19 +67,19 @@ class DownloadActivityTest {
         scn.onActivity { activity ->
             val extract = File(activity.applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS),"extract_of_$songName")
             assert(!extract.exists())
-            if(extract.exists()) {
+            if (extract.exists()) {
                 extract.delete()
             }
 
             val records = File(activity.applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "records.txt")
-            assert(!records.exists())
-            if(records.exists()) {
+            //assert(!records.exists())
+            if (records.exists()) {
                 records.delete()
             }
 
             val properties = File(activity.applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "properties.txt")
-            assert(!properties.exists())
-            if(properties.exists()) {
+            //assert(!properties.exists())
+            if (properties.exists()) {
                 properties.delete()
             }
         }
@@ -175,6 +175,6 @@ class DownloadActivityTest {
     @Test
     fun checkIntentOnDelete() {
         onView(withId(R.id.download_to_delete)).perform(click())
-        Intents.intended(IntentMatchers.hasComponent(DeleteSongsActivity::class.java.name))
+        Intents.intended(IntentMatchers.hasComponent(DownloadManagerActivity::class.java.name))
     }
 }

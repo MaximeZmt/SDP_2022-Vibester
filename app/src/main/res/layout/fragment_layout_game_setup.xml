@@ -37,7 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="41dp"
-                android:layout_marginTop="122dp"
+                android:layout_marginTop="40dp"
                 android:layout_marginEnd="45dp"
                 android:layout_marginBottom="54dp"
                 android:fontFeatureSettings="smcp"
@@ -127,7 +127,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="@string/Singleplayer"
-                        android:textSize="20dp" />
+                        android:textSize="20sp" />
 
                     <LinearLayout
                         android:id="@+id/horilayer_single"

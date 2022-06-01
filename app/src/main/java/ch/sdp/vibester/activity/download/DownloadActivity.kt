@@ -1,4 +1,4 @@
-package ch.sdp.vibester.activity
+package ch.sdp.vibester.activity.download
 
 import android.content.Intent
 import android.os.Bundle
@@ -37,7 +37,7 @@ class DownloadActivity : DownloadFunctionalityActivity() {
      * Generic function to switch to a different, namely DeleteSongsActivity activity.
      */
     fun switchToDeleteSongs(view: View) {
-        val intent = Intent(this, DeleteSongsActivity::class.java)
+        val intent = Intent(this, DownloadManagerActivity::class.java)
         startActivity(intent)
     }
 }

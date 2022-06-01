@@ -34,10 +34,10 @@
             android:name=".activity.PartyRoomActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.DeleteSongsActivity"
+            android:name=".activity.download.DownloadManagerActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.DownloadActivity"
+            android:name=".activity.download.DownloadActivity"
             android:exported="false" />
         <activity
             android:name=".activity.BuzzerSetupActivity"

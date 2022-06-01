@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import ch.sdp.vibester.R
 import ch.sdp.vibester.activity.*
+import ch.sdp.vibester.activity.download.DownloadActivity
 import ch.sdp.vibester.activity.profile.MyProfileActivity
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.Database

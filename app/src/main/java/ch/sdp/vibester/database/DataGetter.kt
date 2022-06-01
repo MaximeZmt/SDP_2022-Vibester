@@ -9,6 +9,7 @@ import ch.sdp.vibester.user.User
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.Query
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
 import java.util.*
@@ -90,7 +91,7 @@ class DataGetter @Inject constructor() {
     fun updateSubFieldInt(userID: String, newVal: Int, fieldName: String, subFieldName: String, method: String) {
         dbUserRef.child(userID).child(fieldName).child(subFieldName)
             .get().addOnSuccessListener { t ->
-                var finalVal = checkValue(t, method, newVal) //newVal: TO DELETE IF TESTS PASS, OTHERWISE ROLL BACK!
+                val finalVal = checkValue(t, method, newVal) //newVal: TO DELETE IF TESTS PASS, OTHERWISE ROLL BACK!
                 setSubFieldValue(userID, fieldName, subFieldName, finalVal)
             }
     }
@@ -104,7 +105,7 @@ class DataGetter @Inject constructor() {
      */
     private fun checkValue(t: DataSnapshot, method: String, newVal: Int): Int {
         var finalVal = newVal
-        if(t.value != null) {
+        if (t.value != null) {
             val previousVal = (t.value as Long?)!!.toInt()
             when (method) {
                 "sum" -> finalVal += previousVal
@@ -128,7 +129,6 @@ class DataGetter @Inject constructor() {
 
     /**
      * This function creates a new room in the database
-     * @param roomName the name of the new room
      * @param callback function to be called when the room has been created
      */
     fun createRoom(callback: (PartyRoom, String) -> Unit) {
@@ -182,7 +182,7 @@ class DataGetter @Inject constructor() {
                 queryUsers.removeEventListener(this)
             }
             override fun onCancelled(error: DatabaseError) {
-                Log.w(ContentValues.TAG, "searchByField:onCancelled", error.toException())
+                Log.w(TAG, "searchByField:onCancelled", error.toException())
             }
         })
     }
@@ -212,7 +212,8 @@ class DataGetter @Inject constructor() {
         return authenticator.getCurrUser()
     }
 
-        /**
+
+    /**
      * This functions fetches the data of the given user from the database
      * @param roomID the name of the room to retrieve data from
      * @param partyRoomCallback the function to be called when the data of the appropriate room data is available
@@ -222,40 +223,38 @@ class DataGetter @Inject constructor() {
                     partyRoomCallback: (PartyRoom, String) -> Unit,
                     songListCallback: (MutableList<Pair<String, String>>) -> Unit) {
 
-        val queryRooms = dbRoomRef
-            .orderByChild("roomID")
-            .equalTo(roomID)
+        dbRoomRef.orderByChild("roomID").equalTo(roomID)
+            .addValueEventListener(object : ValueEventListener {
 
-        queryRooms.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                for (snapshot in dataSnapshot.children) {
-                    val partyRoom: PartyRoom? = snapshot.getValue(PartyRoom::class.java)
-                    if(partyRoom != null) {
-                        val currUserEmail = getCurrentUser()?.email!!
-                        if(!partyRoom.getEmailList().contains(currUserEmail)) {
-                            partyRoom.addUserEmail(currUserEmail)
-                            updateRoomUserList(partyRoom)
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    for (snapshot in dataSnapshot.children) {
+                        val partyRoom: PartyRoom? = snapshot.getValue(PartyRoom::class.java)
+                        if (partyRoom != null) {
+                            val currUserEmail = getCurrentUser()?.email!!
+                            if (!partyRoom.getEmailList().contains(currUserEmail)) {
+                                partyRoom.addUserEmail(currUserEmail)
+                                updateRoomUserList(partyRoom)
+                            }
+                            partyRoomCallback(partyRoom, partyRoom.getRoomID())
                         }
-                        partyRoomCallback(partyRoom, partyRoom.getRoomID())
-                    }
-                    val snapshotMap = snapshot.value as Map<String, Object>
-                    val songList = snapshotMap["songList"] as List<*>
-                    var gameSongList: MutableList<Pair<String, String>> = mutableListOf()
-                    for (song in songList) {
-                        val tempPair: Map<String, String> = song as Map<String, String>
-                        gameSongList.add(
-                            Pair(
-                                tempPair.getOrDefault("first", ""),
-                                tempPair.getOrDefault("second", "")
+
+                        val gameSongList: MutableList<Pair<String, String>> = mutableListOf()
+                        for (song in (snapshot.value as Map<String, Object>) ["songList"] as List<*>) {
+                            val tempPair: Map<String, String> = song as Map<String, String>
+                            gameSongList.add(
+                                Pair(
+                                    tempPair.getOrDefault("first", ""),
+                                    tempPair.getOrDefault("second", "")
+                                )
                             )
-                        )
+                        }
+                        songListCallback(gameSongList)
                     }
-                    songListCallback(gameSongList)
                 }
-            }
-            override fun onCancelled(error: DatabaseError) {
-                Log.w(ContentValues.TAG, "getRoomData:onCancelled", error.toException())
-            }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Log.w(TAG, "getRoomData:onCancelled", error.toException())
+                }
         })
     }
 
@@ -265,21 +264,10 @@ class DataGetter @Inject constructor() {
      * @param fieldName name of the field to update
      * @param value new value to write to the database
      */
-    /**
-     * This functions that updates the field of a room entry
-     * @param roomID ID of the room
-     * @param fieldName name of the field to update
-     * @param value new value to write to the database
-     */
     fun <T> updateRoomField(roomID: String, fieldName: String, value: T) {
         dbRoomRef.child("${roomID}/${fieldName}").setValue(value)
     }
-    
-    /**
-     * This functions reads the start of the game field and calls the appropriate functions
-     * @param roomID ID of the room
-     * @param callback callback to be called when the read value is available
-     */
+
     /**
      * This functions reads the start of the game field and calls the appropriate functions
      * @param roomID ID of the room
@@ -300,5 +288,5 @@ class DataGetter @Inject constructor() {
             }
         }
         queryRooms.addValueEventListener(startGameListener)
-}
+    }
 }

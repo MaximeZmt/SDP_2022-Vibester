@@ -1,23 +1,18 @@
-package ch.sdp.vibester.activity
+package ch.sdp.vibester.fragment
 
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.Window
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.navigateUp
 import ch.sdp.vibester.R
-import ch.sdp.vibester.activity.profile.MyProfileActivity
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
-import ch.sdp.vibester.helper.IntentSwitcher
 import ch.sdp.vibester.helper.ViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -34,7 +29,7 @@ import javax.inject.Inject
 import net.datafaker.Faker
 
 @AndroidEntryPoint
-class AuthenticationActivity : Fragment(R.layout.activity_authentication) {
+class AuthenticationFragment : Fragment(R.layout.fragment_layout_authentication) {
     private val AUTHENTICATION_PERMISSION_CODE = 1000
 
     private lateinit var googleSignInClient: GoogleSignInClient
@@ -84,7 +79,7 @@ class AuthenticationActivity : Fragment(R.layout.activity_authentication) {
     /**
      * Listener bound to the "Create Account" button in the Authentication activity.
      */
-    fun createAccountListener() {
+    private fun createAccountListener() {
         this.createAcc = true
         authenticate(username.text.toString(), password.text.toString())
     }
@@ -92,14 +87,14 @@ class AuthenticationActivity : Fragment(R.layout.activity_authentication) {
     /**
      * Listener bound to the "Log In" button in the Authentication activity.
      */
-    fun logInListener() {
+    private fun logInListener() {
         authenticate(username.text.toString(), password.text.toString())
     }
 
     /**
      * Listener bound to the "Google Log In" button in the Authentication activity.
      */
-    fun googleSignInListener() {
+    private fun googleSignInListener() {
         signInGoogle()
     }
 

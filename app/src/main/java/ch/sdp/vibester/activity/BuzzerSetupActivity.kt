@@ -75,7 +75,7 @@ class BuzzerSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
      * id: the id of the field to update
      */
     fun updatePlayerNameVisibility(n: Int, id: Int) {
-        var i = when (id) {
+        val i = when (id) {
             R.id.namePlayer2 -> 2
             R.id.namePlayer3 -> 3
             R.id.namePlayer4 -> 4
@@ -91,27 +91,30 @@ class BuzzerSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
 
     fun switchToGame(view: View) {
         val intent = Intent(this, BuzzerScreenActivity::class.java)
-        val players =
-            findViewById<LinearLayout>(R.id.playerNames).children.filter { child: View -> child.visibility == View.VISIBLE }
+        val players = findViewById<LinearLayout>(R.id.playerNames).children.filter { child: View -> child.visibility == View.VISIBLE }
         val pNameArray = arrayOfNulls<String>(players.count())
+
         if (players.count() > 0) {
             intent.putExtra("Number of players", players.count())
         } else {
             intent.putExtra("Number of players", 1)
         }
+
         intent.putExtra("gameManager", gameManager)
         intent.putExtra("Difficulty", difficulty)
-        val editTextIdArray =
-            arrayListOf(R.id.namePlayer1, R.id.namePlayer2, R.id.namePlayer3, R.id.namePlayer4)
+
+        val editTextIdArray = arrayListOf(R.id.namePlayer1, R.id.namePlayer2, R.id.namePlayer3, R.id.namePlayer4)
         var i = 0
         for (playerView in players) {
             val name = findViewById<EditText>(editTextIdArray[i]).text.toString()
             if (name.isNotEmpty()) { pNameArray[i] = name } else {
                 findViewById<LinearLayout>(R.id.missingNameAlert).visibility = View.VISIBLE
                 findViewById<Button>(R.id.nb_players_selected).visibility = View.INVISIBLE
-                return }
+                return
+            }
             i += 1
         }
+
         intent.putExtra("Player Names", pNameArray)
         startActivity(intent)
     }

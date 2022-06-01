@@ -8,24 +8,21 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.InputType
 import android.view.View
-import android.view.Window
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
-import ch.sdp.vibester.activity.MainActivity
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.database.ImageGetter
 import ch.sdp.vibester.helper.ImageHelper
-import ch.sdp.vibester.helper.IntentSwitcher
 import ch.sdp.vibester.helper.ViewModel
 import ch.sdp.vibester.user.OnItemClickListener
 import ch.sdp.vibester.user.ProfileFollowingAdapter
@@ -42,7 +39,7 @@ import javax.inject.Inject
 
 /** profile page of the current user with editable information */
 @AndroidEntryPoint
-class MyProfileActivity : Fragment(R.layout.activity_profile), OnItemClickListener {
+class MyProfileFragment : Fragment(R.layout.activity_profile), OnItemClickListener {
     @Inject
     lateinit var dataGetter: DataGetter
 
@@ -63,7 +60,9 @@ class MyProfileActivity : Fragment(R.layout.activity_profile), OnItemClickListen
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if(!authenticator.isLoggedIn()) {
-            findNavController().navigate(R.id.fragment_auth)
+            val navHostFragment = activity?.supportFragmentManager?.findFragmentById(R.id.main_bottom_nav_fragment) as NavHostFragment
+            val navController = navHostFragment.navController
+            navController.navigate(R.id.fragment_auth)
         }
 
         vmMyProfile.view = view
@@ -252,13 +251,13 @@ class MyProfileActivity : Fragment(R.layout.activity_profile), OnItemClickListen
     private fun setupRecycleViewForFriends() {
         vmMyProfile.view.findViewById<RecyclerView>(R.id.profile_followingList).apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = followings?.let { ProfileFollowingAdapter(it, dataGetter, authenticator,this@MyProfileActivity) }
+            adapter = followings?.let { ProfileFollowingAdapter(it, dataGetter, authenticator,this@MyProfileFragment) }
             setHasFixedSize(true)
         }
     }
 
     private fun showFriendsPosition(friends: MutableList<User>?) {
-        profileFollowingAdapter = ProfileFollowingAdapter(friends!!, dataGetter, authenticator, this@MyProfileActivity)
+        profileFollowingAdapter = ProfileFollowingAdapter(friends!!, dataGetter, authenticator, this@MyProfileFragment)
         vmMyProfile.view.findViewById<RecyclerView>(R.id.profile_followingList)!!.adapter = profileFollowingAdapter
     }
 

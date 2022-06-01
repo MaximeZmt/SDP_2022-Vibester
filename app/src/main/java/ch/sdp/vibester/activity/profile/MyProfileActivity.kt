@@ -16,6 +16,7 @@ import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
@@ -61,7 +62,10 @@ class MyProfileActivity : Fragment(R.layout.activity_profile), OnItemClickListen
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if(!authenticator.isLoggedIn())
+        if(!authenticator.isLoggedIn()) {
+            findNavController().navigate(R.id.fragment_auth)
+        }
+
         vmMyProfile.view = view
         vmMyProfile.ctx = view.context
         setupRecycleViewForFriends()
@@ -146,8 +150,7 @@ class MyProfileActivity : Fragment(R.layout.activity_profile), OnItemClickListen
     private fun setLogOutBtnListener() {
         vmMyProfile.view.findViewById<Button>(R.id.logout).setOnClickListener {
             FirebaseAuth.getInstance().signOut()
-//            IntentSwitcher.switch(this, MainActivity::class.java)
-//            finish()
+            findNavController().navigate(R.id.fragment_auth)
         }
     }
 

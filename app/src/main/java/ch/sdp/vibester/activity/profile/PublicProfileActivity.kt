@@ -20,7 +20,7 @@ import ch.sdp.vibester.activity.MainActivity
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.database.ImageGetter
-import ch.sdp.vibester.helper.ImageHelper
+import ch.sdp.vibester.helper.Helper
 import ch.sdp.vibester.helper.IntentSwitcher
 import ch.sdp.vibester.user.OnItemClickListener
 import ch.sdp.vibester.user.ProfileFollowingAdapter
@@ -142,7 +142,7 @@ class PublicProfileActivity : AppCompatActivity(), OnItemClickListener {
      */
     private fun setImage(imageURI: Uri) {
         val avatar = findViewById<ImageView>(R.id.profile_image_ImageView)
-        ImageHelper().setImage(imageURI, avatar, imageSize)
+        Helper().setImage(imageURI, avatar, imageSize)
     }
 
 

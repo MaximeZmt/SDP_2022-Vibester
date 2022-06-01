@@ -131,7 +131,7 @@
     <string name="welcome_download">DOWNLOAD</string>
     <string name="download_songname">Enter a song name…</string>
     <string name="download_download">DOWNLOAD SONG</string>
-    <string name="download_to_delete">DELETE SONGS</string>
+    <string name="download_to_manager">Manage downloaded songs</string>
     <string name="delete_songs_description">CHOOSE A SONG TO DELETE:</string>
     <string name="delete_nothing_to_delete">YOU HAVE NO DOWNLOADED SONGS!</string>
     <string name="download_download_complete">Download completed!</string>
@@ -144,6 +144,8 @@
     <string name="download_already_downloading">A song is being downloaded, please be patient!</string>
     <string name="download_please_retry_later">Please retry later!</string>
     <string name="download_indicator">Please write the name of the song you desire to download in the following format:\n Song Name - Artist Name</string>
+    <string name="download_manager_delete_success">Successfully remove song</string>
+    <string name="download_manager_delete_fail">unable to remove song</string>
 
     <string name="Singleplayer">Single-player</string>
     <string name="Multiplayer">Multiplayer</string>

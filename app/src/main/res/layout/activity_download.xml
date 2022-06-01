@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.DownloadActivity">
+    tools:context=".activity.download.DownloadActivity">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/download_returnToMain"
@@ -49,7 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="140dp"
         android:onClick="switchToDeleteSongs"
-        android:text="@string/download_to_delete"
+        android:text="@string/download_to_manager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"

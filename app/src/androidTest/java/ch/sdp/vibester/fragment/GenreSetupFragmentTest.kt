@@ -1,15 +1,13 @@
 package ch.sdp.vibester.fragment
 
-import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
-import androidx.test.espresso.assertion.ViewAssertions
+import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.action.ViewActions.closeSoftKeyboard
 import androidx.test.espresso.intent.Intents
-import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
-import ch.sdp.vibester.api.InternetState
 import ch.sdp.vibester.launchFragmentInHiltContainer
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -42,39 +40,39 @@ class GenreSetupFragmentTest {
 
     @Test
     fun rockButtonClick() {
-        onView(withId(R.id.rockButton)).perform(ViewActions.click())
+        onView(withId(R.id.rockButton)).perform(click())
     }
 
     @Test
     fun topButtonClick() {
-        onView(withId(R.id.topTracksButton)).perform(ViewActions.click())
+        onView(withId(R.id.topTracksButton)).perform(click())
     }
 
     @Test
     fun kpopButtonClick() {
-        onView(withId(R.id.kpopButton)).perform(ViewActions.click())
+        onView(withId(R.id.kpopButton)).perform(click())
     }
 
     @Test
     fun billieEilishButtonClick() {
-        onView(withId(R.id.billieEilishButton)).perform(ViewActions.click())
+        onView(withId(R.id.billieEilishButton)).perform(click())
     }
 
     @Test
     fun imagineDragonsButtonClick() {
-        onView(withId(R.id.imagDragonsButton)).perform(ViewActions.click())
+        onView(withId(R.id.imagDragonsButton)).perform(click())
     }
 
     @Test
     fun btsButtonClick() {
-        onView(withId(R.id.btsButton)).perform(ViewActions.click())
+        onView(withId(R.id.btsButton)).perform(click())
     }
 
     @Test
     fun customButtonClick() {
         onView(withId(R.id.searchArtist))
-            .perform(ViewActions.typeText("muse"), ViewActions.closeSoftKeyboard())
+            .perform(ViewActions.typeText("muse"), closeSoftKeyboard())
         onView(withId(R.id.validateSearch))
-            .perform(ViewActions.scrollTo(), ViewActions.click())
+            .perform(ViewActions.scrollTo(), click())
     }
 }

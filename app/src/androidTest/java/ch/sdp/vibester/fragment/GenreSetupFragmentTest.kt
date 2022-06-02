@@ -6,6 +6,7 @@ import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.matcher.ViewMatchers
+import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.InternetState
@@ -41,39 +42,39 @@ class GenreSetupFragmentTest {
 
     @Test
     fun rockButtonClick() {
-        onView(ViewMatchers.withId(R.id.rockButton)).perform(ViewActions.click())
+        onView(withId(R.id.rockButton)).perform(ViewActions.click())
     }
 
     @Test
     fun topButtonClick() {
-        onView(ViewMatchers.withId(R.id.topTracksButton)).perform(ViewActions.click())
+        onView(withId(R.id.topTracksButton)).perform(ViewActions.click())
     }
 
     @Test
     fun kpopButtonClick() {
-        onView(ViewMatchers.withId(R.id.kpopButton)).perform(ViewActions.click())
+        onView(withId(R.id.kpopButton)).perform(ViewActions.click())
     }
 
     @Test
     fun billieEilishButtonClick() {
-        onView(ViewMatchers.withId(R.id.billieEilishButton)).perform(ViewActions.click())
+        onView(withId(R.id.billieEilishButton)).perform(ViewActions.click())
     }
 
     @Test
     fun imagineDragonsButtonClick() {
-        onView(ViewMatchers.withId(R.id.imagDragonsButton)).perform(ViewActions.click())
+        onView(withId(R.id.imagDragonsButton)).perform(ViewActions.click())
     }
 
     @Test
     fun btsButtonClick() {
-        onView(ViewMatchers.withId(R.id.btsButton)).perform(ViewActions.click())
+        onView(withId(R.id.btsButton)).perform(ViewActions.click())
     }
 
     @Test
     fun customButtonClick() {
-        onView(ViewMatchers.withId(R.id.searchArtist))
+        onView(withId(R.id.searchArtist))
             .perform(ViewActions.typeText("muse"), ViewActions.closeSoftKeyboard())
-        onView(ViewMatchers.withId(R.id.validateSearch))
+        onView(withId(R.id.validateSearch))
             .perform(ViewActions.scrollTo(), ViewActions.click())
     }
 }

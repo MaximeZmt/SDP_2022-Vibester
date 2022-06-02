@@ -68,7 +68,7 @@ class GameSetupFragment : Fragment(R.layout.fragment_layout_game_setup){
         if (playOffline) {
             navController.navigate(R.id.fragment_setting_setup, bundle)
         }
-        else if(gameMode == "online_buzzer"){
+        else if (gameMode == "online_buzzer"){
             navController.navigate(R.id.fragment_choose_online_room, bundle)
         }
         else {

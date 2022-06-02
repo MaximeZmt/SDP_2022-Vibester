@@ -50,6 +50,7 @@ class GameSetupFragmentTest {
 
     @Test
     fun localBuzzerOnClick() {
+        InternetState.forceOnline()
         onView(withId(R.id.local_buzzer_game_button)).perform(click())
     }
 

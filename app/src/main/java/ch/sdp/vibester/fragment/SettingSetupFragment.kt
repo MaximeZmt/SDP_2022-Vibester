@@ -14,6 +14,7 @@ import ch.sdp.vibester.activity.TypingGameActivity
 import ch.sdp.vibester.database.AppPreferences
 import ch.sdp.vibester.helper.GameManager
 import ch.sdp.vibester.helper.ViewModel
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class SettingSetupFragment:Fragment(R.layout.fragment_layout_setting), AdapterView.OnItemSelectedListener {
 
@@ -27,7 +28,12 @@ class SettingSetupFragment:Fragment(R.layout.fragment_layout_setting), AdapterVi
         super.onViewCreated(view, savedInstanceState)
         vmSettSetup.view = view
         vmSettSetup.ctx = view.context
-        gameManager =  AppPreferences.getObject<GameManager>("gameManager") as GameManager
+
+        val bundle = this.arguments
+        if (bundle != null) {
+            gameManager = bundle.get("gameManager") as GameManager
+        }
+
         vmSettSetup.view.findViewById<Button>(R.id.difficulty_proceed).setOnClickListener{ proceedGame() }
 
         setReturnBtnListener()
@@ -36,7 +42,9 @@ class SettingSetupFragment:Fragment(R.layout.fragment_layout_setting), AdapterVi
     }
 
     private fun setReturnBtnListener() {
-        findNavController().popBackStack()
+        vmSettSetup.view.findViewById<FloatingActionButton>(R.id.gameSetting_returnToMain).setOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 
     /**

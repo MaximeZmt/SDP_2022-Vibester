@@ -80,15 +80,13 @@ class SettingSetupFragment:Fragment(R.layout.fragment_layout_setting), AdapterVi
     override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
         if (::gameManager.isInitialized) {
             if (parent.id == R.id.difficulty_spinner) {
-                difficulty = parent.getItemAtPosition(position).toString()
-                when (difficulty) {
+                when (parent.getItemAtPosition(position).toString()) {
                     "Easy" -> gameManager.difficultyLevel = 1
                     "Medium" -> gameManager.difficultyLevel = 2
                     "Hard" -> gameManager.difficultyLevel = 3
                 }
             } else if (parent.id == R.id.size_spinner) {
-                gameSize = parent.getItemAtPosition(position).toString()
-                when (gameSize) {
+                when (parent.getItemAtPosition(position).toString()) {
                     "One" -> gameManager.gameSize = 1
                     "Two" -> gameManager.gameSize = 2
                     "Three" -> gameManager.gameSize = 3

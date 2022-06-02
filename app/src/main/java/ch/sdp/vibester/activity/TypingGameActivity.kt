@@ -208,7 +208,6 @@ class TypingGameActivity : GameActivity() {
         return superTestProgressBarColor(findViewById(R.id.progressBarTyping))
     }
 
-
 }
 
 

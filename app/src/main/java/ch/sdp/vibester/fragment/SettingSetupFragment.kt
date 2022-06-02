@@ -2,6 +2,7 @@ package ch.sdp.vibester.fragment
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -60,7 +61,7 @@ class SettingSetupFragment:Fragment(R.layout.fragment_layout_setting), AdapterVi
      * Switch to an activity with extras in intent.
      */
     private fun switchToGameWithParameters(nextActivity: AppCompatActivity) {
-
+        Log.d(null, "########## enter switch to game with parameters ##########")
         val newIntent = Intent(activity, nextActivity::class.java)
         newIntent.putExtra("gameManager", gameManager)
         newIntent.putExtra("Difficulty", difficulty)
@@ -79,28 +80,38 @@ class SettingSetupFragment:Fragment(R.layout.fragment_layout_setting), AdapterVi
 
     override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
         if (::gameManager.isInitialized) {
+            Log.d(null, "########## game manager is initialized ##########")
             if (parent.id == R.id.difficulty_spinner) {
-                when (parent.getItemAtPosition(position).toString()) {
-                    "Easy" -> gameManager.difficultyLevel = 1
-                    "Medium" -> gameManager.difficultyLevel = 2
-                    "Hard" -> gameManager.difficultyLevel = 3
-                }
+               selectDifficulty(parent, position)
             } else if (parent.id == R.id.size_spinner) {
-                when (parent.getItemAtPosition(position).toString()) {
-                    "One" -> gameManager.gameSize = 1
-                    "Two" -> gameManager.gameSize = 2
-                    "Three" -> gameManager.gameSize = 3
-                    "Four" -> gameManager.gameSize = 4
-                    "Five" -> gameManager.gameSize = 5
-                    "Six" -> gameManager.gameSize = 6
-                    "Seven" -> gameManager.gameSize = 7
-                    "Eight" -> gameManager.gameSize = 8
-                    "Nine" -> gameManager.gameSize = 9
-                    "Ten" -> gameManager.gameSize = 10
-                }
+                selectGameSize(parent, position)
             }
+        } else {
+            Log.d(null, "########## game manager is not initialized ##########")
         }
+    }
 
+    private fun selectDifficulty(parent: AdapterView<*>, position: Int) {
+        when (parent.getItemAtPosition(position).toString()) {
+            "Easy" -> gameManager.difficultyLevel = 1
+            "Medium" -> gameManager.difficultyLevel = 2
+            "Hard" -> gameManager.difficultyLevel = 3
+        }
+    }
+
+    private fun selectGameSize(parent: AdapterView<*>, position: Int) {
+        when (parent.getItemAtPosition(position).toString()) {
+            "One" -> gameManager.gameSize = 1
+            "Two" -> gameManager.gameSize = 2
+            "Three" -> gameManager.gameSize = 3
+            "Four" -> gameManager.gameSize = 4
+            "Five" -> gameManager.gameSize = 5
+            "Six" -> gameManager.gameSize = 6
+            "Seven" -> gameManager.gameSize = 7
+            "Eight" -> gameManager.gameSize = 8
+            "Nine" -> gameManager.gameSize = 9
+            "Ten" -> gameManager.gameSize = 10
+        }
     }
 
     override fun onNothingSelected(parent: AdapterView<*>) {
@@ -115,10 +126,12 @@ class SettingSetupFragment:Fragment(R.layout.fragment_layout_setting), AdapterVi
      * Start the game based on the chosen mode
      */
     private fun proceedGame() {
-
+        Log.d(null, "########## enter proceed game ###########")
         when (AppPreferences.getStr(getString(R.string.preferences_game_mode))) {
             "local_buzzer" -> { switchToGameWithParameters(BuzzerSetupActivity()) }
-            "local_typing" -> { switchToGameWithParameters(TypingGameActivity()) }
+            "local_typing" -> {
+                Log.d(null, "########## enter proceed game local typing ###########")
+                switchToGameWithParameters(TypingGameActivity()) }
             "local_lyrics" -> { switchToGameWithParameters(LyricsBelongGameActivity()) }
             "online_buzzer" -> { switchToGameWithParameters(PartyRoomActivity()) }
         }

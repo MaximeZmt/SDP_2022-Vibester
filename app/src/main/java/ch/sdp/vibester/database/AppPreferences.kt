@@ -3,6 +3,7 @@ package ch.sdp.vibester.database
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import com.google.gson.GsonBuilder
 
 /**
@@ -17,11 +18,12 @@ object AppPreferences {
         preferences = context.getSharedPreferences(NAME, MODE)
     }
 
-
     fun getStr(key: String): String? {
         return if (this::preferences.isInitialized) {
+            Log.d(null, "########## preferences is initialized ##########")
             preferences.getString(key, "")
         } else {
+            Log.d(null, "########## preferences is noooot initialized ##########")
             ""
         }
     }

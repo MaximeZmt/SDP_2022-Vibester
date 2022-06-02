@@ -65,6 +65,8 @@ class PartyRoomActivity : AppCompatActivity() {
             dataGetter.updateRoomField(roomID, "gameStarted", true)
         }
 
+//        AppPreferences.setStr(getString(R.string.preferences_game_genre), getString(gameManager.gameMode))
+
         fetchGameStarted(roomID, this::startGame)
     }
 

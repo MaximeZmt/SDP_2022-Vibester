@@ -49,7 +49,7 @@ class GameSetupFragmentTest {
     }
 
     @Test
-    fun localBuzzerOnlick() {
+    fun localBuzzerOnClick() {
         onView(withId(R.id.local_buzzer_game_button)).perform(click())
     }
 
@@ -67,7 +67,4 @@ class GameSetupFragmentTest {
     fun onlineBuzzerOnClick() {
         onView(withId(R.id.online_buzzer_game_button)).perform(click())
     }
-
-
-
 }

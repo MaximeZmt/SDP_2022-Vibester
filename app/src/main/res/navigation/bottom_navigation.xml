@@ -20,4 +20,12 @@
     <fragment android:id="@+id/fragment_scoreboard"
         android:name="ch.sdp.vibester.fragment.ScoreBoardFragment"
         tools:layout="@layout/fragment_layout_scoreboard"/>
+
+    <fragment android:id="@+id/fragment_genre_setup"
+        android:name="ch.sdp.vibester.fragment.GenreSetupFragment"
+        tools:layout="@layout/fragment_layout_genre"/>
+
+    <fragment android:id="@+id/fragment_setting_setup"
+        android:name="ch.sdp.vibester.fragment.SettingSetupFragment"
+        tools:layout="@layout/fragment_layout_setting"/>
 </navigation>

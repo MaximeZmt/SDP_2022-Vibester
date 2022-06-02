@@ -7,6 +7,7 @@ import android.view.View.VISIBLE
 import android.widget.*
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.InternetState
@@ -30,6 +31,7 @@ class GameSetupFragment : Fragment(R.layout.fragment_layout_game_setup){
 
         vmGameSetup.view = view
         vmGameSetup.ctx = view.context
+
 
         setGameModeListeners()
         vmGameSetup.view.findViewById<Button>(R.id.game_setup_has_internet).setOnClickListener { updateInternet(vmGameSetup.view.findViewById(R.id.game_setup_has_internet)) }
@@ -60,16 +62,17 @@ class GameSetupFragment : Fragment(R.layout.fragment_layout_game_setup){
     private fun chooseGame(gameMode: String, gameManager: GameManager, playOffline: Boolean = false){
         AppPreferences.setStr(getString(R.string.preferences_game_mode), gameMode)
         val bundle = bundleOf("gameManager" to gameManager)
-
+        val navHostFragment = activity?.supportFragmentManager?.findFragmentById(R.id.main_bottom_nav_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
 
         if (playOffline) {
-            findNavController().navigate(R.id.fragment_setting_setup, bundle)
+            navController.navigate(R.id.fragment_setting_setup, bundle)
         }
         else if(gameMode == "online_buzzer"){
-            findNavController().navigate(R.id.fragment_choose_online_room, bundle)
+            navController.navigate(R.id.fragment_choose_online_room, bundle)
         }
         else {
-            findNavController().navigate(R.id.fragment_genre_setup, bundle)
+            navController.navigate(R.id.fragment_genre_setup, bundle)
         }
     }
 

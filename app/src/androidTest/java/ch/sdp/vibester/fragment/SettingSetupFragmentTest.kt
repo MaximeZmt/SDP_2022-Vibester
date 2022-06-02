@@ -4,9 +4,12 @@ import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions
+import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.matcher.ViewMatchers
+import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withSpinnerText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
 import ch.sdp.vibester.activity.BuzzerSetupActivity
@@ -47,14 +50,14 @@ class SettingSetupFragmentTest {
 
     @Test
     fun checkDefaultSelectDifficulty() {
-        onView(ViewMatchers.withId(R.id.difficulty_spinner))
-            .check(ViewAssertions.matches(ViewMatchers.withSpinnerText(R.string.GameSetup_easy)))
+        onView(withId(R.id.difficulty_spinner))
+            .check(matches(withSpinnerText(R.string.GameSetup_easy)))
     }
 
     @Test
     fun checkDefaultSelectGameSize() {
-        onView(ViewMatchers.withId(R.id.size_spinner))
-            .check(ViewAssertions.matches(ViewMatchers.withSpinnerText(R.string.one)))
+        onView(withId(R.id.size_spinner))
+            .check(matches(withSpinnerText(R.string.one)))
     }
 //    @Test
 //    fun returnFromGenreToGame() {
@@ -77,178 +80,118 @@ class SettingSetupFragmentTest {
 
     @Test
     fun checkCustomSelectEasy() {
-        onView(ViewMatchers.withId(R.id.difficulty_spinner)).perform(ViewActions.click())
+        onView(withId(R.id.difficulty_spinner)).perform(ViewActions.click())
         Espresso.onData(Matchers.anything()).atPosition(0).perform(ViewActions.click())
 
-        onView(ViewMatchers.withId(R.id.difficulty_spinner))
-            .check(ViewAssertions.matches(ViewMatchers.withSpinnerText(R.string.GameSetup_easy)))
+        onView(withId(R.id.difficulty_spinner))
+            .check(matches(withSpinnerText(R.string.GameSetup_easy)))
     }
 
     @Test
     fun checkCustomSelectMedium() {
-        onView(ViewMatchers.withId(R.id.difficulty_spinner)).perform(ViewActions.click())
+        onView(withId(R.id.difficulty_spinner)).perform(ViewActions.click())
         Espresso.onData(Matchers.anything()).atPosition(1).perform(ViewActions.click())
-        onView(ViewMatchers.withId(R.id.difficulty_spinner))
-            .check(ViewAssertions.matches(ViewMatchers.withSpinnerText(R.string.GameSetup_medium)))
+        onView(withId(R.id.difficulty_spinner))
+            .check(matches(withSpinnerText(R.string.GameSetup_medium)))
     }
 
     @Test
     fun checkCustomSelectHard() {
-        onView(ViewMatchers.withId(R.id.difficulty_spinner)).perform(ViewActions.click())
+        onView(withId(R.id.difficulty_spinner)).perform(ViewActions.click())
         Espresso.onData(Matchers.anything()).atPosition(2).perform(ViewActions.click())
 
-        onView(ViewMatchers.withId(R.id.difficulty_spinner))
-            .check(ViewAssertions.matches(ViewMatchers.withSpinnerText(R.string.GameSetup_hard)))
+        onView(withId(R.id.difficulty_spinner))
+            .check(matches(withSpinnerText(R.string.GameSetup_hard)))
     }
 
     @Test
     fun checkCustomSelectOne() {
-        onView(ViewMatchers.withId(R.id.size_spinner)).perform(ViewActions.click())
+        onView(withId(R.id.size_spinner)).perform(ViewActions.click())
         Espresso.onData(Matchers.anything()).atPosition(0).perform(ViewActions.click())
 
-        onView(ViewMatchers.withId(R.id.size_spinner)).check(
-            ViewAssertions.matches(
-                ViewMatchers.withSpinnerText(
-                    R.string.one
-                )
-            )
-        )
+        onView(withId(R.id.size_spinner)).check(matches(withSpinnerText(R.string.one)))
     }
 
     @Test
     fun checkCustomSelectTwo() {
-        onView(ViewMatchers.withId(R.id.size_spinner)).perform(ViewActions.click())
+        onView(withId(R.id.size_spinner)).perform(ViewActions.click())
         Espresso.onData(Matchers.anything()).atPosition(1).perform(ViewActions.click())
 
-        onView(ViewMatchers.withId(R.id.size_spinner)).check(
-            ViewAssertions.matches(
-                ViewMatchers.withSpinnerText(
-                    R.string.two
-                )
-            )
-        )
+        onView(withId(R.id.size_spinner)).check(matches(withSpinnerText(R.string.two)))
     }
 
     @Test
     fun checkCustomSelectThree() {
-        onView(ViewMatchers.withId(R.id.size_spinner)).perform(ViewActions.click())
+        onView(withId(R.id.size_spinner)).perform(ViewActions.click())
         Espresso.onData(Matchers.anything()).atPosition(2).perform(ViewActions.click())
 
-        onView(ViewMatchers.withId(R.id.size_spinner)).check(
-            ViewAssertions.matches(
-                ViewMatchers.withSpinnerText(
-                    R.string.three
-                )
-            )
-        )
+        onView(withId(R.id.size_spinner)).check(matches(withSpinnerText(R.string.three)))
     }
 
     @Test
     fun checkCustomSelectFour() {
-        onView(ViewMatchers.withId(R.id.size_spinner)).perform(ViewActions.click())
+        onView(withId(R.id.size_spinner)).perform(ViewActions.click())
         Espresso.onData(Matchers.anything()).atPosition(3).perform(ViewActions.click())
 
-        onView(ViewMatchers.withId(R.id.size_spinner)).check(
-            ViewAssertions.matches(
-                ViewMatchers.withSpinnerText(
-                    R.string.four
-                )
-            )
-        )
+        onView(withId(R.id.size_spinner)).check(matches(withSpinnerText(R.string.four)))
     }
 
     @Test
     fun checkCustomSelectFive() {
-        onView(ViewMatchers.withId(R.id.size_spinner)).perform(ViewActions.click())
+        onView(withId(R.id.size_spinner)).perform(ViewActions.click())
         Espresso.onData(Matchers.anything()).atPosition(4).perform(ViewActions.click())
 
-        onView(ViewMatchers.withId(R.id.size_spinner)).check(
-            ViewAssertions.matches(
-                ViewMatchers.withSpinnerText(
-                    R.string.five
-                )
-            )
-        )
+        onView(withId(R.id.size_spinner)).check(matches(withSpinnerText(R.string.five)))
     }
 
     @Test
     fun checkCustomSelectSix() {
-        onView(ViewMatchers.withId(R.id.size_spinner)).perform(ViewActions.click())
+        onView(withId(R.id.size_spinner)).perform(ViewActions.click())
         Espresso.onData(Matchers.anything()).atPosition(5).perform(ViewActions.click())
 
-        onView(ViewMatchers.withId(R.id.size_spinner)).check(
-            ViewAssertions.matches(
-                ViewMatchers.withSpinnerText(
-                    R.string.six
-                )
-            )
-        )
+        onView(withId(R.id.size_spinner)).check(matches(withSpinnerText(R.string.six)))
     }
 
     @Test
     fun checkCustomSelectSeven() {
-        onView(ViewMatchers.withId(R.id.size_spinner)).perform(ViewActions.click())
+        onView(withId(R.id.size_spinner)).perform(ViewActions.click())
         Espresso.onData(Matchers.anything()).atPosition(6).perform(ViewActions.click())
 
-        onView(ViewMatchers.withId(R.id.size_spinner)).check(
-            ViewAssertions.matches(
-                ViewMatchers.withSpinnerText(
-                    R.string.seven
-                )
-            )
-        )
+        onView(withId(R.id.size_spinner)).check(matches(withSpinnerText(R.string.seven)))
     }
 
     @Test
     fun checkCustomSelectEight() {
-        onView(ViewMatchers.withId(R.id.size_spinner)).perform(ViewActions.click())
+        onView(withId(R.id.size_spinner)).perform(ViewActions.click())
         Espresso.onData(Matchers.anything()).atPosition(7).perform(ViewActions.click())
 
-        onView(ViewMatchers.withId(R.id.size_spinner)).check(
-            ViewAssertions.matches(
-                ViewMatchers.withSpinnerText(
-                    R.string.eight
-                )
-            )
-        )
+        onView(withId(R.id.size_spinner)).check(matches(withSpinnerText(R.string.eight)))
     }
 
 
     @Test
     fun checkCustomSelectNine() {
-        onView(ViewMatchers.withId(R.id.size_spinner)).perform(ViewActions.click())
+        onView(withId(R.id.size_spinner)).perform(ViewActions.click())
         Espresso.onData(Matchers.anything()).atPosition(8).perform(ViewActions.click())
 
-        onView(ViewMatchers.withId(R.id.size_spinner)).check(
-            ViewAssertions.matches(
-                ViewMatchers.withSpinnerText(
-                    R.string.nine
-                )
-            )
-        )
+        onView(withId(R.id.size_spinner)).check(matches(withSpinnerText(R.string.nine)))
     }
 
     @Test
     fun checkCustomSelectTen() {
-        onView(ViewMatchers.withId(R.id.size_spinner)).perform(ViewActions.click())
+        onView(withId(R.id.size_spinner)).perform(ViewActions.click())
         Espresso.onData(Matchers.anything()).atPosition(9).perform(ViewActions.click())
 
-        onView(ViewMatchers.withId(R.id.size_spinner)).check(
-            ViewAssertions.matches(
-                ViewMatchers.withSpinnerText(
-                    R.string.ten
-                )
-            )
-        )
+        onView(withId(R.id.size_spinner)).check(matches(withSpinnerText(R.string.ten)))
     }
 
 
     @Test
     fun checkBTSBuzzerEasyProceed() {
 
-        onView(ViewMatchers.withId(R.id.difficulty_spinner)).perform(ViewActions.click())
+        onView(withId(R.id.difficulty_spinner)).perform(ViewActions.click())
         Espresso.onData(Matchers.anything()).atPosition(0).perform(ViewActions.click())
-        onView(ViewMatchers.withId(R.id.difficulty_proceed)).perform(ViewActions.click())
+        onView(withId(R.id.difficulty_proceed)).perform(ViewActions.click())
 
         Intents.intended(IntentMatchers.hasComponent(BuzzerSetupActivity::class.java.name))
         Intents.intended(IntentMatchers.hasExtra("Difficulty", "Easy"))
@@ -257,9 +200,9 @@ class SettingSetupFragmentTest {
     @Test
     fun checkBTSTypingEasyProceed() {
 
-        onView(ViewMatchers.withId(R.id.difficulty_spinner)).perform(ViewActions.click())
+        onView(withId(R.id.difficulty_spinner)).perform(ViewActions.click())
         Espresso.onData(Matchers.anything()).atPosition(0).perform(ViewActions.click())
-        onView(ViewMatchers.withId(R.id.difficulty_proceed)).perform(ViewActions.click())
+        onView(withId(R.id.difficulty_proceed)).perform(ViewActions.click())
 
         Intents.intended(IntentMatchers.hasComponent(TypingGameActivity::class.java.name))
         Intents.intended(IntentMatchers.hasExtra("Difficulty", "Easy"))
@@ -268,15 +211,15 @@ class SettingSetupFragmentTest {
     @Test
     fun checkBTSOnlineBuzzerEasyProceed() {
         InternetState.forceOnline()
-        onView(ViewMatchers.withId(R.id.game_setup_has_internet)).perform(ViewActions.click())
-        onView(ViewMatchers.withId(R.id.online_buzzer_game_button)).perform(
+        onView(withId(R.id.game_setup_has_internet)).perform(ViewActions.click())
+        onView(withId(R.id.online_buzzer_game_button)).perform(
             ViewActions.scrollTo(),
             ViewActions.click()
         )
-        onView(ViewMatchers.withId(R.id.btsButton)).perform(ViewActions.click())
-        onView(ViewMatchers.withId(R.id.difficulty_spinner)).perform(ViewActions.click())
+        onView(withId(R.id.btsButton)).perform(ViewActions.click())
+        onView(withId(R.id.difficulty_spinner)).perform(ViewActions.click())
         Espresso.onData(Matchers.anything()).atPosition(0).perform(ViewActions.click())
-        onView(ViewMatchers.withId(R.id.difficulty_proceed)).perform(ViewActions.click())
+        onView(withId(R.id.difficulty_proceed)).perform(ViewActions.click())
 
         Intents.intended(IntentMatchers.hasComponent(ChoosePartyRoomFragment::class.java.name))
         Intents.intended(IntentMatchers.hasExtra("Difficulty", "Easy"))
@@ -285,19 +228,19 @@ class SettingSetupFragmentTest {
 
     @Test
     fun checkBTSLyricsEasyProceed() {
-        onView(ViewMatchers.withId(R.id.difficulty_spinner)).perform(ViewActions.click())
+        onView(withId(R.id.difficulty_spinner)).perform(ViewActions.click())
         Espresso.onData(Matchers.anything()).atPosition(0).perform(ViewActions.click())
-        onView(ViewMatchers.withId(R.id.difficulty_proceed)).perform(ViewActions.click())
+        onView(withId(R.id.difficulty_proceed)).perform(ViewActions.click())
 
         Intents.intended(IntentMatchers.hasComponent(LyricsBelongGameActivity::class.java.name))
         Intents.intended(IntentMatchers.hasExtra("Difficulty", "Easy"))
     }
 
     @Test
-    fun checkBTSOnlineEasyProceed(){
+    fun checkBTSOnlineEasyProceed() {
         InternetState.forceOnline()
-        onView(ViewMatchers.withId(R.id.game_setup_has_internet)).perform(ViewActions.click())
-        onView(ViewMatchers.withId(R.id.online_buzzer_game_button)).perform(
+        onView(withId(R.id.game_setup_has_internet)).perform(ViewActions.click())
+        onView(withId(R.id.online_buzzer_game_button)).perform(
             ViewActions.scrollTo(),
             ViewActions.click()
         )

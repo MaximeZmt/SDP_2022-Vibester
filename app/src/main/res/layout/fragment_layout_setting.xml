@@ -6,17 +6,6 @@
     android:background="@color/floral_white"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/gameSetting_returnToMain"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="@color/light_coral"
-        android:src="@android:drawable/ic_menu_revert"
-        app:borderWidth="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/getDifficultyText"
@@ -90,4 +79,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/size_spinner" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/gameSetting_returnToMain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/light_coral"
+        android:src="@android:drawable/ic_menu_revert"
+        app:borderWidth="0dp" />
 </RelativeLayout>

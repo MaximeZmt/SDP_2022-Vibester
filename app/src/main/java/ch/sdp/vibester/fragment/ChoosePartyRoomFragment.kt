@@ -40,7 +40,6 @@ class ChoosePartyRoomFragment : Fragment(R.layout.activity_choose_party_room) {
             val bundle = bundleOf("gameManager" to gameManager)
             findNavController().navigate(R.id.fragment_genre_setup, bundle)
         }
-
     }
 
     private fun switchToRoom(roomName: String, joinRoom: Boolean) {

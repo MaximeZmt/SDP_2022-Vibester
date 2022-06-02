@@ -1,6 +1,7 @@
 package ch.sdp.vibester.fragment
 
 import android.content.Context
+import androidx.core.os.bundleOf
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
@@ -12,6 +13,7 @@ import ch.sdp.vibester.R
 import ch.sdp.vibester.activity.PartyRoomActivity
 import ch.sdp.vibester.database.AppPreferences
 import ch.sdp.vibester.database.DataGetter
+import ch.sdp.vibester.helper.GameManager
 import ch.sdp.vibester.helper.PartyRoom
 import ch.sdp.vibester.launchFragmentInHiltContainer
 import dagger.hilt.android.testing.BindValue
@@ -42,6 +44,7 @@ class ChoosePartyRoomFragmentTest {
         hiltRule.inject()
         Intents.init()
         launchFragmentInHiltContainer<ChoosePartyRoomFragment>(
+            fragmentArgs= bundleOf("gameManager" to GameManager()),
             themeResId = R.style.AppTheme
         )
     }

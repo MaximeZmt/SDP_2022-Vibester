@@ -2,7 +2,6 @@ package ch.sdp.vibester.activity
 
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
-import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.intent.Intents
@@ -14,7 +13,6 @@ import ch.sdp.vibester.R
 import ch.sdp.vibester.database.AppPreferences
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.helper.PartyRoom
-import ch.sdp.vibester.user.User
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -34,7 +32,7 @@ class ChoosePartyRoomActivityTest {
     var hiltRule = HiltAndroidRule(this)
 
     @get:Rule(order = 1)
-    val activityRule = ActivityScenarioRule(ChoosePartyRoomActivity::class.java)
+    val activityRule = ActivityScenarioRule(ChoosePartyRoomFragment::class.java)
 
     @Before
     fun setUp() {

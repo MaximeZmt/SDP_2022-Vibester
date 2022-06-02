@@ -10,7 +10,7 @@ import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
 import ch.sdp.vibester.activity.BuzzerSetupActivity
-import ch.sdp.vibester.activity.ChoosePartyRoomActivity
+import ch.sdp.vibester.activity.ChoosePartyRoomFragment
 import ch.sdp.vibester.activity.LyricsBelongGameActivity
 import ch.sdp.vibester.activity.TypingGameActivity
 import ch.sdp.vibester.api.InternetState
@@ -278,7 +278,7 @@ class SettingSetupFragmentTest {
         Espresso.onData(Matchers.anything()).atPosition(0).perform(ViewActions.click())
         onView(ViewMatchers.withId(R.id.difficulty_proceed)).perform(ViewActions.click())
 
-        Intents.intended(IntentMatchers.hasComponent(ChoosePartyRoomActivity::class.java.name))
+        Intents.intended(IntentMatchers.hasComponent(ChoosePartyRoomFragment::class.java.name))
         Intents.intended(IntentMatchers.hasExtra("Difficulty", "Easy"))
     }
 
@@ -301,6 +301,6 @@ class SettingSetupFragmentTest {
             ViewActions.scrollTo(),
             ViewActions.click()
         )
-        Intents.intended(IntentMatchers.hasComponent(ChoosePartyRoomActivity::class.java.name))
+        Intents.intended(IntentMatchers.hasComponent(ChoosePartyRoomFragment::class.java.name))
     }
 }

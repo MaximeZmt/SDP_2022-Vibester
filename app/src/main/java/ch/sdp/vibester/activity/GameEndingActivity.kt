@@ -151,20 +151,11 @@ class GameEndingActivity : DownloadFunctionalityActivity(), OnItemClickListener 
                 intent.getSerializableExtra("Player Scores")!! as HashMap<String, Int>
 
             setScoreboardList(playerScores)
-//            var i = 0
-//            for (pName in playerScores.keys) {
-//                val row = findViewById<TableRow>(endStatArrayList[i])
-//                row.visibility = View.VISIBLE
-//
-//                createTextView(pName, Gravity.LEFT, row)
-//                createTextView(playerScores[pName]!!.toString(), Gravity.RIGHT, row)
-//
-//                i += 1
 //            }
         }
 
         if(onlineGame) {
-            Log.w("DEBUG", "I get here :DDD")
+            dataGetter.updateRoomField(roomID, "gameStarted", false)
             dataGetter.readScores(roomID, this::setScoreboardList)
         }
     }

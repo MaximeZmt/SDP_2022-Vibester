@@ -45,14 +45,11 @@ class PartyRoomActivity : AppCompatActivity() {
         setContentView(R.layout.activity_party_room)
 
         val joinRoom = intent.getBooleanExtra("joinRoom", false)
-//        Log.w("DEBUG", gameManager.getSongList().toString())
-//        Log.w("DEBUG", joinRoom.toString())
         if(!joinRoom) {
             gameManager = intent.getSerializableExtra("gameManager") as GameManager
+            AppPreferences.setStr(getString(R.string.preferences_game_genre), gameManager.gameMode)
             createRoom()
             setGameManager()
-//            setGameManager()
-//            dataGetter.updateRoomField(roomID, "gameStarted", false)
         }
         else {
             this.roomID = intent.getStringExtra("roomID").toString()
@@ -64,8 +61,6 @@ class PartyRoomActivity : AppCompatActivity() {
         startGame.setOnClickListener {
             dataGetter.updateRoomField(roomID, "gameStarted", true)
         }
-
-//        AppPreferences.setStr(getString(R.string.preferences_game_genre), getString(gameManager.gameMode))
 
         fetchGameStarted(roomID, this::startGame)
     }
@@ -87,6 +82,8 @@ class PartyRoomActivity : AppCompatActivity() {
         gameManager.gameSize = gameSize
         gameManager.gameMode = gameMode
         gameManager.difficultyLevel = difficultyLevel
+
+        AppPreferences.setStr(getString(R.string.preferences_game_genre), gameManager.gameMode)
     }
 
     private fun createRoom() {
@@ -110,55 +107,12 @@ class PartyRoomActivity : AppCompatActivity() {
         }
     }
 
-//    private fun  setGameManager() {
-//        gameManager = GameManager()
-//        gameManager.gameSize = 1
-//
-//        chooseGenre(method = LastfmMethod.BY_ARTIST.method, artist = "Imagine Dragons", mode = R.string.gameGenre_imagine_dragons)
-//    }
-
-
     private fun launchGame(newGameManager: GameManager) {
-
         val newIntent = Intent(this, TypingGameActivity::class.java)
         newIntent.putExtra("gameManager", newGameManager)
         newIntent.putExtra("Difficulty", newGameManager.difficultyLevel)
 
         startActivity(newIntent)
     }
-
-//    private fun setGameSongList(uri: LastfmUri, roomID: String) {
-//        val service = LastfmApiInterface.createLastfmService()
-//        val call = service.getSongList(uri.convertToHashmap())
-//        call.enqueue(object : Callback<Any> {
-//            override fun onFailure(call: Call<Any>, t: Throwable?) {}
-//            override fun onResponse(call: Call<Any>, response: Response<Any>) {
-//                gameManager.setGameSongList(Gson().toJson(response.body()), uri.method)
-//                dataGetter.updateRoomField(roomID, "songList", gameManager.getSongList())
-//            }
-//        })
-//    }
-
-//    private fun chooseGenre(method: String = "", artist: String = "", tag: String = "", mode: Int = 0) {
-//        val uri = LastfmUri()
-//
-//        uri.method = method
-//        uri.artist = artist
-//        uri.tag = tag
-//
-//        gameManager.gameMode = getString(mode)
-//        AppPreferences.setStr(getString(R.string.preferences_game_genre), getString(mode))
-//
-//        setGameSongList(uri, roomID)
-//    }
-
-//    private fun setSongs(gameSongList: MutableList<Pair<String, String>>) {
-//        gameManager = GameManager()
-//        gameManager.gameSize = 1
-//        gameManager.gameMode = getString(R.string.gameGenre_imagine_dragons)
-//
-//        gameManager.gameSongList = gameSongList
-//
-//    }
 
 }

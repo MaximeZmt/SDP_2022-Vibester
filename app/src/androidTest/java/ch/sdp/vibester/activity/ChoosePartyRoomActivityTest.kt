@@ -12,7 +12,9 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
 import ch.sdp.vibester.database.AppPreferences
 import ch.sdp.vibester.database.DataGetter
+import ch.sdp.vibester.fragment.SettingSetupFragment
 import ch.sdp.vibester.helper.PartyRoom
+import ch.sdp.vibester.launchFragmentInHiltContainer
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -31,12 +33,18 @@ class ChoosePartyRoomActivityTest {
     @get:Rule(order = 0)
     var hiltRule = HiltAndroidRule(this)
 
-    @get:Rule(order = 1)
-    val activityRule = ActivityScenarioRule(ChoosePartyRoomFragment::class.java)
+    @After
+    fun clean() {
+        Intents.release()
+    }
 
     @Before
     fun setUp() {
+        hiltRule.inject()
         Intents.init()
+        launchFragmentInHiltContainer<ChoosePartyRoomFragment>(
+            themeResId = R.style.AppTheme
+        )
     }
 
     @BindValue
@@ -60,10 +68,6 @@ class ChoosePartyRoomActivityTest {
 
     }
 
-    @After
-    fun clean() {
-        Intents.release()
-    }
 
     @Test
     fun correctJoinPartyIntent() {

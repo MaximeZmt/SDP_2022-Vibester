@@ -47,13 +47,13 @@ class SettingSetupFragmentTest {
 
     @Test
     fun checkDefaultSelectDifficulty() {
-        Espresso.onView(ViewMatchers.withId(R.id.difficulty_spinner))
+        onView(ViewMatchers.withId(R.id.difficulty_spinner))
             .check(ViewAssertions.matches(ViewMatchers.withSpinnerText(R.string.GameSetup_easy)))
     }
 
     @Test
     fun checkDefaultSelectGameSize() {
-        Espresso.onView(ViewMatchers.withId(R.id.size_spinner))
+        onView(ViewMatchers.withId(R.id.size_spinner))
             .check(ViewAssertions.matches(ViewMatchers.withSpinnerText(R.string.one)))
     }
 //    @Test

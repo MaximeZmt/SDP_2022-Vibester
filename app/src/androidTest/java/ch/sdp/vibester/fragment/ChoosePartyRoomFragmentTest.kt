@@ -1,4 +1,4 @@
-package ch.sdp.vibester.activity
+package ch.sdp.vibester.fragment
 
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
@@ -9,9 +9,9 @@ import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
+import ch.sdp.vibester.activity.PartyRoomActivity
 import ch.sdp.vibester.database.AppPreferences
 import ch.sdp.vibester.database.DataGetter
-import ch.sdp.vibester.fragment.ChoosePartyRoomFragment
 import ch.sdp.vibester.helper.PartyRoom
 import ch.sdp.vibester.launchFragmentInHiltContainer
 import dagger.hilt.android.testing.BindValue

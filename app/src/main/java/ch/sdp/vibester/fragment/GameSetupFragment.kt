@@ -10,6 +10,7 @@ import android.view.View.VISIBLE
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import ch.sdp.vibester.R
@@ -75,15 +76,16 @@ class GameSetupFragment : Fragment(R.layout.fragment_layout_game_setup){
      */
     private fun chooseGame(gameMode: String, gameManager: GameManager, playOffline: Boolean = false){
         AppPreferences.setStr(getString(R.string.preferences_game_mode), gameMode)
-        AppPreferences.setObject(gameManager,"gameManager")
+        val bundle = bundleOf("gameManager" to gameManager)
+
 
         if (playOffline) {
-            findNavController().navigate(R.id.fragment_setting_setup)
+            findNavController().navigate(R.id.fragment_setting_setup, bundle)
         }
         else if(gameMode == "online_buzzer"){
-            findNavController().navigate(R.id.fragment_setting_setup)
+            findNavController().navigate(R.id.fragment_setting_setup, bundle)
         } else {
-            findNavController().navigate(R.id.fragment_genre_setup)
+            findNavController().navigate(R.id.fragment_genre_setup, bundle)
         }
     }
 

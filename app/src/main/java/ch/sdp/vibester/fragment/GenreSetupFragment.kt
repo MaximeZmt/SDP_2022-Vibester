@@ -3,6 +3,7 @@ package ch.sdp.vibester.fragment
 import android.os.Bundle
 import android.os.Environment
 import android.text.Editable
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -50,7 +51,9 @@ class GenreSetupFragment: Fragment(R.layout.fragment_layout_genre) {
 
     private fun setGenreListeners(){
         vmGenreSetup.view.findViewById<Button>(R.id.kpopButton).setOnClickListener { chooseGenre(method = LastfmMethod.BY_TAG.method, tag = "kpop", mode = R.string.kpop) }
-        vmGenreSetup.view.findViewById<Button>(R.id.rockButton).setOnClickListener { chooseGenre(method = LastfmMethod.BY_TAG.method, tag = "rock", mode = R.string.rock) }
+        vmGenreSetup.view.findViewById<Button>(R.id.rockButton).setOnClickListener {
+            Log.d(null, "########## enter rock btn click ##########")
+            chooseGenre(method = LastfmMethod.BY_TAG.method, tag = "rock", mode = R.string.rock) }
         vmGenreSetup.view.findViewById<Button>(R.id.btsButton).setOnClickListener { chooseGenre(method = LastfmMethod.BY_ARTIST.method, artist = "BTS", mode = R.string.gameGenre_bts) }
         vmGenreSetup.view.findViewById<Button>(R.id.topTracksButton).setOnClickListener { chooseGenre(method = LastfmMethod.BY_CHART.method, mode = R.string.top_tracks) }
         vmGenreSetup.view.findViewById<Button>(R.id.imagDragonsButton).setOnClickListener{ chooseGenre(method = LastfmMethod.BY_ARTIST.method, artist = "Imagine Dragons", mode = R.string.gameGenre_imagine_dragons) }

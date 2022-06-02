@@ -31,7 +31,6 @@ class GameSetupFragment : Fragment(R.layout.fragment_layout_game_setup){
         vmGameSetup.view = view
         vmGameSetup.ctx = view.context
 
-
         setGameModeListeners()
         vmGameSetup.view.findViewById<Button>(R.id.game_setup_has_internet).setOnClickListener { updateInternet(vmGameSetup.view.findViewById(R.id.game_setup_has_internet)) }
         updateInternet(vmGameSetup.view.findViewById<Button>(R.id.game_setup_has_internet))

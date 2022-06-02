@@ -45,7 +45,7 @@ class PartyRoomActivity : AppCompatActivity() {
         setContentView(R.layout.activity_party_room)
 
         val joinRoom = intent.getBooleanExtra("joinRoom", false)
-        if(!joinRoom) {
+        if (!joinRoom) {
             gameManager = intent.getSerializableExtra("gameManager") as GameManager
             AppPreferences.setStr(getString(R.string.preferences_game_genre), gameManager.gameMode)
             createRoom()

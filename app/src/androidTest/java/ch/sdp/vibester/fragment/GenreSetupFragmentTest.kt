@@ -1,5 +1,6 @@
 package ch.sdp.vibester.fragment
 
+import androidx.core.os.bundleOf
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
@@ -7,7 +8,10 @@ import androidx.test.espresso.action.ViewActions.closeSoftKeyboard
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.platform.app.InstrumentationRegistry
 import ch.sdp.vibester.R
+import ch.sdp.vibester.database.AppPreferences
+import ch.sdp.vibester.helper.GameManager
 import ch.sdp.vibester.launchFragmentInHiltContainer
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -33,8 +37,13 @@ class GenreSetupFragmentTest {
         hiltRule.inject()
         Intents.init()
         launchFragmentInHiltContainer<GenreSetupFragment>(
+            fragmentArgs= bundleOf("gameManager" to GameManager()),
             themeResId = R.style.AppTheme
         )
+        val ctx = InstrumentationRegistry.getInstrumentation().targetContext.applicationContext
+        AppPreferences.init(ctx)
+        AppPreferences.setStr(ctx.getString(R.string.preferences_game_mode), "local_lyrics")
+        AppPreferences.setStr(ctx.getString(R.string.preferences_game_genre), "imagine dragons")
     }
 
 

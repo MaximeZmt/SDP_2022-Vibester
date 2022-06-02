@@ -8,7 +8,6 @@ import android.widget.*
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.InternetState
 import ch.sdp.vibester.database.AppPreferences
@@ -61,6 +60,7 @@ class GameSetupFragment : Fragment(R.layout.fragment_layout_game_setup){
      */
     private fun chooseGame(gameMode: String, gameManager: GameManager, playOffline: Boolean = false){
         AppPreferences.setStr(getString(R.string.preferences_game_mode), gameMode)
+
         val bundle = bundleOf("gameManager" to gameManager)
         val navHostFragment = activity?.supportFragmentManager?.findFragmentById(R.id.main_bottom_nav_fragment) as NavHostFragment
         val navController = navHostFragment.navController

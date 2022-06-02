@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.LastfmApiInterface
@@ -74,8 +75,11 @@ class GenreSetupFragment: Fragment(R.layout.fragment_layout_genre) {
         AppPreferences.setStr("gameMode", getString(mode))
         gameManager.gameMode = getString(mode)
         setGameSongList(uri, playOffline)
+
         val bundle = bundleOf("gameManager" to gameManager)
-        findNavController().navigate(R.id.fragment_setting_setup, bundle)
+        val navHostFragment = activity?.supportFragmentManager?.findFragmentById(R.id.main_bottom_nav_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
+        navController.navigate(R.id.fragment_setting_setup, bundle)
     }
 
 

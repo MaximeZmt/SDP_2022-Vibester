@@ -60,7 +60,7 @@ class MyProfileFragment : Fragment(R.layout.activity_profile), OnItemClickListen
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if(!authenticator.isLoggedIn()) {
-            val navHostFragment = activity?.supportFragmentManager?.findFragmentById(R.id.main_bottom_nav_fragment) as NavHostFragment
+            val navHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.main_bottom_nav_fragment) as NavHostFragment
             val navController = navHostFragment.navController
             navController.navigate(R.id.fragment_auth)
         }
@@ -78,6 +78,7 @@ class MyProfileFragment : Fragment(R.layout.activity_profile), OnItemClickListen
         setViewVisibility(view.findViewById(R.id.editUser), true)
         setViewVisibility(view.findViewById(R.id.showQRCode), true)
         setViewVisibility(view.findViewById(R.id.logout), true)
+        setViewVisibility(view.findViewById(R.id.profile_returnToMain), false)
 
         setEditUserNameBtnListener()
         setChangeImageBtnListener()
@@ -184,7 +185,6 @@ class MyProfileFragment : Fragment(R.layout.activity_profile), OnItemClickListen
     private fun setViewVisibility(view: View, isVisible: Boolean){
         view.visibility = if (isVisible) View.VISIBLE else View.GONE
     }
-
 
 
     /**

@@ -73,10 +73,12 @@ class AuthenticationFragment : Fragment(R.layout.fragment_layout_authentication)
 
         vmAuth.view.findViewById<Button>(R.id.createAcc)
             .setOnClickListener { createAccountListener() }
-        vmAuth.view.findViewById<Button>(R.id.logIn).setOnClickListener { logInListener() }
+        vmAuth.view.findViewById<Button>(R.id.logIn)
+            .setOnClickListener { logInListener() }
         vmAuth.view.findViewById<Button>(R.id.googleBtn)
             .setOnClickListener { googleSignInListener() }
-
+        vmAuth.view.findViewById<Button>(R.id.forgotPassword)
+            .setOnClickListener { resetPasswordListener() }
     }
 
     /**

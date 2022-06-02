@@ -28,4 +28,8 @@
     <fragment android:id="@+id/fragment_setting_setup"
         android:name="ch.sdp.vibester.fragment.SettingSetupFragment"
         tools:layout="@layout/fragment_layout_setting"/>
+
+    <fragment android:id="@+id/fragment_choose_online_room"
+        android:name="ch.sdp.vibester.activity.ChoosePartyRoomFragment"
+        tools:layout="@layout/activity_choose_party_room"/>
 </navigation>

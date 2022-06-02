@@ -48,14 +48,12 @@ class SettingSetupFragmentTest {
 
     @Test
     fun checkDefaultSelectDifficulty() {
-        onView(withId(R.id.difficulty_spinner))
-            .check(matches(withSpinnerText(R.string.GameSetup_easy)))
+        onView(withId(R.id.difficulty_spinner)).check(matches(withSpinnerText(R.string.GameSetup_easy)))
     }
 
     @Test
     fun checkDefaultSelectGameSize() {
-        onView(withId(R.id.size_spinner))
-            .check(matches(withSpinnerText(R.string.one)))
+        onView(withId(R.id.size_spinner)).check(matches(withSpinnerText(R.string.one)))
     }
 //    @Test
 //    fun returnFromGenreToGame() {
@@ -81,16 +79,15 @@ class SettingSetupFragmentTest {
         onView(withId(R.id.difficulty_spinner)).perform(ViewActions.click())
         Espresso.onData(Matchers.anything()).atPosition(0).perform(ViewActions.click())
 
-        onView(withId(R.id.difficulty_spinner))
-            .check(matches(withSpinnerText(R.string.GameSetup_easy)))
+        onView(withId(R.id.difficulty_spinner)).check(matches(withSpinnerText(R.string.GameSetup_easy)))
     }
 
     @Test
     fun checkCustomSelectMedium() {
         onView(withId(R.id.difficulty_spinner)).perform(ViewActions.click())
         Espresso.onData(Matchers.anything()).atPosition(1).perform(ViewActions.click())
-        onView(withId(R.id.difficulty_spinner))
-            .check(matches(withSpinnerText(R.string.GameSetup_medium)))
+
+        onView(withId(R.id.difficulty_spinner)).check(matches(withSpinnerText(R.string.GameSetup_medium)))
     }
 
     @Test
@@ -98,8 +95,7 @@ class SettingSetupFragmentTest {
         onView(withId(R.id.difficulty_spinner)).perform(ViewActions.click())
         Espresso.onData(Matchers.anything()).atPosition(2).perform(ViewActions.click())
 
-        onView(withId(R.id.difficulty_spinner))
-            .check(matches(withSpinnerText(R.string.GameSetup_hard)))
+        onView(withId(R.id.difficulty_spinner)).check(matches(withSpinnerText(R.string.GameSetup_hard)))
     }
 
     @Test

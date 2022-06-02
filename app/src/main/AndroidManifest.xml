@@ -28,7 +28,7 @@
             android:name=".activity.QrScanningActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.ChoosePartyRoomActivity"
+            android:name=".activity.ChoosePartyRoomFragment"
             android:exported="false" />
         <activity
             android:name=".activity.PartyRoomActivity"

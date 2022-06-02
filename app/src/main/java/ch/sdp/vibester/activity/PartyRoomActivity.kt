@@ -112,6 +112,10 @@ class PartyRoomActivity : AppCompatActivity() {
         newIntent.putExtra("gameManager", newGameManager)
         newIntent.putExtra("Difficulty", newGameManager.difficultyLevel)
 
+        newIntent.putExtra("onlineGame", true)
+        newIntent.putExtra("userEmail", dataGetter.getCurrentUser()?.email)
+        newIntent.putExtra("roomID", roomID)
+
         startActivity(newIntent)
     }
 

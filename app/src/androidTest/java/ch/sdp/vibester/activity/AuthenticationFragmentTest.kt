@@ -58,6 +58,9 @@ class AuthenticationFragmentTest {
     fun setUp() {
         hiltRule.inject()
         Intents.init()
+        launchFragmentInHiltContainer<AuthenticationFragment>(
+            themeResId = R.style.AppTheme
+        )
     }
 
 
@@ -99,9 +102,7 @@ class AuthenticationFragmentTest {
 
         val mockTask = createMockTask(false)
         every { mockAuthenticator.signIn(username, password) } returns mockTask
-        launchFragmentInHiltContainer<AuthenticationFragment>(
-            themeResId = R.style.AppTheme
-        )
+
         onView(withId(R.id.username)).perform(ViewActions.typeText(username), closeSoftKeyboard())
         onView(withId(R.id.password)).perform(ViewActions.typeText(password), closeSoftKeyboard())
         onView(withId(R.id.logIn)).perform(click())

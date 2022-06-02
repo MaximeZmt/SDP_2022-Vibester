@@ -30,6 +30,8 @@
         tools:layout="@layout/fragment_layout_setting"/>
 
     <fragment android:id="@+id/fragment_choose_online_room"
-        android:name="ch.sdp.vibester.activity.ChoosePartyRoomFragment"
+        android:name="ch.sdp.vibester.fragment.ChoosePartyRoomFragment"
         tools:layout="@layout/activity_choose_party_room"/>
 </navigation>
+
+<!--    fragment_choose_online_room-->

@@ -39,7 +39,7 @@
                 android:layout_marginStart="41dp"
                 android:layout_marginTop="40dp"
                 android:layout_marginEnd="45dp"
-                android:layout_marginBottom="40dp"
+                android:layout_marginBottom="54dp"
                 android:fontFeatureSettings="smcp"
                 android:text="@string/holder_setup_game_type"
                 android:textAlignment="center"

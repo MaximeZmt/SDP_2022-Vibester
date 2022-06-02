@@ -1,4 +1,4 @@
-package ch.sdp.vibester.activity
+package ch.sdp.vibester.activity.download
 
 import android.Manifest
 import android.app.DownloadManager

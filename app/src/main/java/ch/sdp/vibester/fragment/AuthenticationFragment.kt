@@ -152,7 +152,9 @@ class AuthenticationFragment : Fragment(R.layout.fragment_layout_authentication)
                     Log.d(getString(R.string.log_tag), "signInWithCredential:success")
                     if (task.getResult().additionalUserInfo != null) {
                         createAcc = task.getResult().additionalUserInfo!!.isNewUser
-                        createAccount()
+                        if (createAcc) {
+                            createAccount()
+                        }
                     }
                     updateOnSuccess()
                 } else {

@@ -23,7 +23,7 @@
                 android:fontFeatureSettings="smcp"
                 android:text="@string/holder_setup_game_type"
                 android:textAlignment="center"
-                android:textSize="30dp"
+                android:textSize="30sp"
                 android:textStyle="bold" />
 
             <ScrollView
@@ -188,7 +188,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="@string/Multiplayer"
-                        android:textSize="20dp" />
+                        android:textSize="20sp" />
 
                     <LinearLayout
                         android:id="@+id/horilayer_multi"

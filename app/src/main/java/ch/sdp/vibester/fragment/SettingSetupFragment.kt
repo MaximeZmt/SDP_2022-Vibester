@@ -78,28 +78,31 @@ class SettingSetupFragment:Fragment(R.layout.fragment_layout_setting), AdapterVi
     }
 
     override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-        if (parent.id == R.id.difficulty_spinner) {
-            difficulty = parent.getItemAtPosition(position).toString()
-            when (difficulty) {
-                "Easy" -> gameManager.difficultyLevel = 1
-                "Medium" -> gameManager.difficultyLevel = 2
-                "Hard" -> gameManager.difficultyLevel = 3
-            }
-        } else if (parent.id == R.id.size_spinner) {
-            gameSize = parent.getItemAtPosition(position).toString()
-            when (gameSize) {
-                "One" -> gameManager.gameSize = 1
-                "Two" -> gameManager.gameSize = 2
-                "Three" -> gameManager.gameSize = 3
-                "Four" -> gameManager.gameSize = 4
-                "Five" -> gameManager.gameSize = 5
-                "Six" -> gameManager.gameSize = 6
-                "Seven" -> gameManager.gameSize = 7
-                "Eight" -> gameManager.gameSize = 8
-                "Nine" -> gameManager.gameSize = 9
-                "Ten" -> gameManager.gameSize = 10
+        if (::gameManager.isInitialized) {
+            if (parent.id == R.id.difficulty_spinner) {
+                difficulty = parent.getItemAtPosition(position).toString()
+                when (difficulty) {
+                    "Easy" -> gameManager.difficultyLevel = 1
+                    "Medium" -> gameManager.difficultyLevel = 2
+                    "Hard" -> gameManager.difficultyLevel = 3
+                }
+            } else if (parent.id == R.id.size_spinner) {
+                gameSize = parent.getItemAtPosition(position).toString()
+                when (gameSize) {
+                    "One" -> gameManager.gameSize = 1
+                    "Two" -> gameManager.gameSize = 2
+                    "Three" -> gameManager.gameSize = 3
+                    "Four" -> gameManager.gameSize = 4
+                    "Five" -> gameManager.gameSize = 5
+                    "Six" -> gameManager.gameSize = 6
+                    "Seven" -> gameManager.gameSize = 7
+                    "Eight" -> gameManager.gameSize = 8
+                    "Nine" -> gameManager.gameSize = 9
+                    "Ten" -> gameManager.gameSize = 10
+                }
             }
         }
+
     }
 
     override fun onNothingSelected(parent: AdapterView<*>) {

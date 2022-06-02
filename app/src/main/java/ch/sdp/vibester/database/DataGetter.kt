@@ -15,6 +15,7 @@ import com.google.firebase.database.ktx.getValue
 import java.util.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 import kotlin.reflect.KFunction0
 
 /**
@@ -214,6 +215,30 @@ class DataGetter @Inject constructor() {
 
     fun getCurrentUser(): FirebaseUser? {
         return authenticator.getCurrUser()
+    }
+//    callback: ((HashMap<String, Int>) -> Unit)
+    fun readScores(roomID: String, callback: (HashMap<String, Int>) -> Unit) {
+        val queryRooms = dbRoomRef.child(roomID).child("scores")
+
+        val scoresMap = hashMapOf<String, Int>()
+
+        queryRooms.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                for (score in dataSnapshot.children) {
+                    val email = (score.value as HashMap<String, Object>)["first"] as String
+                    val gameScore = ((score.value as HashMap<String, Object>)["second"] as Long).toInt()
+
+                    scoresMap[email] = gameScore
+                }
+                callback(scoresMap)
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Getting Post failed, log a message
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException())
+                // ...
+            }
+        })
     }
 
 

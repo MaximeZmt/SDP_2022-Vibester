@@ -158,7 +158,6 @@ open class GameActivity : AppCompatActivity() {
                 updateOnlineGameScores(userEmail, correctSongList.size, roomID)
 
                 intent.putExtra("onlineGame", onlineGame)
-                intent.putExtra("userEmail", userEmail)
                 intent.putExtra("roomID", roomID)
             }
         }

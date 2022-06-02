@@ -25,6 +25,9 @@ import okhttp3.OkHttpClient
 class TypingGameActivity : GameActivity() {
     private lateinit var gameManager: GameManager
     private var gameIsOn: Boolean = true // done to avoid clicks on songs after the round is over
+    private var onlineGame = false
+    private var userEmail = ""
+    private var roomID = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -37,6 +40,14 @@ class TypingGameActivity : GameActivity() {
         if (getIntent != null) {
             super.setMax(intent)
             gameManager = getIntent.getSerializable("gameManager") as GameManager
+            onlineGame = getIntent.getBoolean("onlineGame", false)
+            userEmail = getIntent.getString("userEmail").toString()
+            roomID = getIntent.getString("roomID").toString()
+
+            Log.w("DEBUG onlinegame in TYPINGGAME", onlineGame.toString())
+            Log.w("DEBUG userEmail in TYPINGGAME", userEmail)
+
+
             setNextButtonListener(ctx, gameManager)
             super.startFirstRound(ctx, gameManager, ::startRoundTyping)
         }
@@ -128,7 +139,7 @@ class TypingGameActivity : GameActivity() {
         if (gameManager.initializeMediaPlayer() && gameManager.playingMediaPlayer()) {
             gameManager.stopMediaPlayer()
         }
-        endRound(gameManager)
+        endRound(gameManager, onlineGame = onlineGame, userEmail = userEmail, roomID = roomID)
     }
 
     /**
@@ -159,10 +170,13 @@ class TypingGameActivity : GameActivity() {
      * Function called in the end of each round. Displays the button "Next" and
      * sets the next songs to play.
      */
-    override fun endRound(gameManager: GameManager, callback: (() -> Unit)?) {
+    override fun endRound(gameManager: GameManager, callback: (() -> Unit)?, onlineGame: Boolean?, userEmail: String?, roomID: String?) {
         gameIsOn = false
         findViewById<EditText>(R.id.yourGuessET).isEnabled = false
-        super.endRound(gameManager, this::setScores)
+        Log.w("DEBUG onlinegame in end round typing game", onlineGame.toString())
+        Log.w("DEBUG userEmail in in end round typing game", userEmail.toString())
+
+        super.endRound(gameManager, this::setScores, onlineGame, userEmail, roomID)
         toggleNextBtnVisibility(true)
     }
 

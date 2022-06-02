@@ -208,6 +208,10 @@ class DataGetter @Inject constructor() {
         dbRoomRef.child(partyRoom.getRoomID()).child("emailList").setValue(partyRoom.getEmailList())
     }
 
+    fun updateRoomScore(score: Pair<String, Int>, roomID: String) {
+        dbRoomRef.child(roomID).child("scores").push().setValue(score)
+    }
+
     fun getCurrentUser(): FirebaseUser? {
         return authenticator.getCurrUser()
     }
@@ -261,6 +265,9 @@ class DataGetter @Inject constructor() {
                 }
         })
     }
+
+
+
 
     /**
      * This functions that updates the field of a room entry

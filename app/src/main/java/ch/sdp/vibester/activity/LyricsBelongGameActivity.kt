@@ -100,8 +100,8 @@ class LyricsBelongGameActivity : GameActivity() {
         barTimer(ctx, findViewById(R.id.progressBarLyrics))
     }
 
-    override fun endRound(gameManager: GameManager, callback: (() -> Unit)?) {
-        super.endRound(gameManager, this::setScores)
+    override fun endRound(gameManager: GameManager, callback: (() -> Unit)?, onlineGame: Boolean?, userEmail: String?, roomID: String?) {
+        super.endRound(gameManager, this::setScores, false, userEmail, roomID)
         toggleBtnVisibility(R.id.nextSongLyrics, true)
     }
 

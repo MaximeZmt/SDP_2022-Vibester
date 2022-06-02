@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Handler
+import android.util.Log
 import android.view.Gravity
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -114,11 +115,16 @@ open class GameActivity : AppCompatActivity() {
         super.onDestroy()
     }
 
+    private fun updateOnlineGameScores(userEmail: String, score: Int, roomID: String) {
+        val score = Pair(userEmail, score)
+        dataGetter.updateRoomScore(score, roomID)
+    }
+
     /**
      * Called upon the ending of a game. Passes gathered information during the game to the next
      * activity through the intent.
      */
-    private fun switchToEnding(gameManager: GameManager) {
+    private fun switchToEnding(gameManager: GameManager, onlineGame: Boolean?= null, userEmail: String?= null, roomID: String?= null) {
         val intent = Intent(this, GameEndingActivity::class.java)
 
         //Set list of incorrect songs
@@ -142,6 +148,20 @@ open class GameActivity : AppCompatActivity() {
 
         intent.putStringArrayListExtra("statNames", statNames)
         intent.putStringArrayListExtra("statValues", statVal)
+
+        Log.w("DEBUG onlinegame", onlineGame.toString())
+        Log.w("DEBUG userEmail", userEmail.toString())
+
+
+        if(onlineGame == true) {
+            if (userEmail != null && roomID != null) {
+                updateOnlineGameScores(userEmail, correctSongList.size, roomID)
+
+                intent.putExtra("onlineGame", onlineGame)
+                intent.putExtra("userEmail", userEmail)
+                intent.putExtra("roomID", roomID)
+            }
+        }
 
         startActivity(intent)
     }
@@ -172,11 +192,14 @@ open class GameActivity : AppCompatActivity() {
      * @param gameManager: the manager for the current game
      * @param callback: a unit function that is called if the game has reached its end
      */
-    open fun endRound(gameManager: GameManager, callback: (()->Unit)?= null) {
+    open fun endRound(gameManager: GameManager, callback: (()->Unit)?= null, onlineGame: Boolean?= null, userEmail: String?= null, roomID: String?= null) {
         checkRunnable()
         if (isEndGame(gameManager)) {
             callback?.invoke()
-            switchToEnding(gameManager)
+            Log.w("DEBUG onlinegame in end round typing game super", onlineGame.toString())
+            Log.w("DEBUG userEmail in in end round typing game super", userEmail.toString())
+
+            switchToEnding(gameManager, onlineGame, userEmail, roomID)
         }
     }
 

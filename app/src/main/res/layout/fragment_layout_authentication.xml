@@ -5,21 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/floral_white"
-    tools:context=".activity.AuthenticationActivity">
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/authentication_returnToMain"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="@color/light_coral"
-        android:clickable="true"
-        android:onClick="returnToMainListener"
-        android:src="@android:drawable/ic_menu_revert"
-        app:borderWidth="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+    tools:context=".fragment.AuthenticationFragment">
 
     <ImageView
         android:id="@+id/authentication_logo"
@@ -105,7 +91,6 @@
 
                 android:backgroundTint="@color/cg_blue"
                 android:elevation="10dp"
-                android:onClick="logInListener"
                 android:stateListAnimator="@null"
                 android:text="@string/authentication_logIn"
                 android:translationZ="10dp" />
@@ -116,7 +101,6 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/cg_blue"
                 android:elevation="10dp"
-                android:onClick="googleSignInListener"
                 android:stateListAnimator="@null"
                 android:text="@string/authentication_googleLogIn"
                 android:translationZ="10dp" />
@@ -127,7 +111,6 @@
                 android:layout_height="48dp"
                 android:backgroundTint="@color/cg_blue"
                 android:elevation="10dp"
-                android:onClick="createAccountListener"
                 android:stateListAnimator="@null"
                 android:text="@string/authentication_createAcc"
                 android:translationZ="10dp" />
@@ -138,7 +121,6 @@
                 android:layout_height="48dp"
                 android:backgroundTint="@color/cg_blue"
                 android:elevation="10dp"
-                android:onClick="resetPasswordListener"
                 android:stateListAnimator="@null"
                 android:text="@string/authentication_forgotPassword"
                 android:translationZ="10dp" />

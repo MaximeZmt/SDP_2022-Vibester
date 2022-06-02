@@ -16,7 +16,7 @@ import ch.sdp.vibester.helper.ViewModel
 
 class ChoosePartyRoomFragment : Fragment(R.layout.activity_choose_party_room) {
     private var vmChooseRoom = ViewModel()
-    private lateinit var gameManager:GameManager
+    private lateinit var gameManager : GameManager
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -34,7 +34,7 @@ class ChoosePartyRoomFragment : Fragment(R.layout.activity_choose_party_room) {
 
 
         joinPartyRoom.setOnClickListener {
-            switchToRoom(partyRoomInput.text.toString(), false)
+            switchToRoom(partyRoomInput.text.toString(), true)
         }
 
         createPartyRoom.setOnClickListener {
@@ -44,10 +44,10 @@ class ChoosePartyRoomFragment : Fragment(R.layout.activity_choose_party_room) {
 
     }
 
-    private fun switchToRoom(roomName: String, createRoom: Boolean) {
+    private fun switchToRoom(roomName: String, joinRoom: Boolean) {
         val newIntent = Intent(vmChooseRoom.ctx, PartyRoomActivity::class.java)
         newIntent.putExtra("roomID", roomName)
-        newIntent.putExtra("createRoom", createRoom)
+        newIntent.putExtra("joinRoom", joinRoom)
         startActivity(newIntent)
     }
 }

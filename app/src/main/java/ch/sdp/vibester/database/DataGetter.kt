@@ -221,7 +221,7 @@ class DataGetter @Inject constructor() {
      */
     fun getRoomData(roomID: String,
                     partyRoomCallback: (PartyRoom, String) -> Unit,
-                    songListCallback: (MutableList<Pair<String, String>>) -> Unit) {
+                    songListCallback: (MutableList<Pair<String, String>>, Int, String, Int) -> Unit) {
 
         dbRoomRef.orderByChild("roomID").equalTo(roomID)
             .addValueEventListener(object : ValueEventListener {
@@ -239,6 +239,7 @@ class DataGetter @Inject constructor() {
                         }
 
                         val gameSongList: MutableList<Pair<String, String>> = mutableListOf()
+
                         for (song in (snapshot.value as Map<String, Object>) ["songList"] as List<*>) {
                             val tempPair: Map<String, String> = song as Map<String, String>
                             gameSongList.add(
@@ -248,7 +249,10 @@ class DataGetter @Inject constructor() {
                                 )
                             )
                         }
-                        songListCallback(gameSongList)
+                        val gameSize: Int = (snapshot.value as Map<String, Object>)["gameSize"] as Int
+                        val gameMode: String = (snapshot.value as Map<String, Object>)["gameMode"] as String
+                        val difficultyLevel: Int = (snapshot.value as Map<String, Object>)["difficulty"] as Int
+                        songListCallback(gameSongList, gameSize, gameMode, difficultyLevel)
                     }
                 }
 

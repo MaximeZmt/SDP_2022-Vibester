@@ -82,8 +82,8 @@ class GameSetupFragment : Fragment(R.layout.fragment_layout_game_setup){
      */
     private fun updateInternet(view: View) {
         val btn: Button = view as Button
-        val isConncted = InternetState.getInternetStatus(vmGameSetup.ctx)
-        if (isConncted) {
+        val isConnected = InternetState.getInternetStatus(vmGameSetup.ctx)
+        if (isConnected) {
             hasInternet = true
             btn.text = getString(R.string.GameSetup_internetSwitchOn)
             btn.setBackgroundColor(vmGameSetup.ctx.getColor(R.color.maximum_yellow_red))

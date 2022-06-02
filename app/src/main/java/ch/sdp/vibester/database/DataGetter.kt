@@ -310,6 +310,7 @@ class DataGetter @Inject constructor() {
      * @param callback callback to be called when the read value is available
      */
     fun readStartGame(roomID: String, callback: (Boolean) -> Unit) {
+        Log.w("DEBUG", roomID)
         val queryRooms = dbRoomRef.child(roomID).child("gameStarted")
 
         val startGameListener = object : ValueEventListener {

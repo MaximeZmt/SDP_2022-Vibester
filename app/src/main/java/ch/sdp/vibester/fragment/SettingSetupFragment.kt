@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import ch.sdp.vibester.R
 import ch.sdp.vibester.activity.BuzzerSetupActivity
 import ch.sdp.vibester.activity.LyricsBelongGameActivity
+import ch.sdp.vibester.activity.PartyRoomActivity
 import ch.sdp.vibester.activity.TypingGameActivity
 import ch.sdp.vibester.database.AppPreferences
 import ch.sdp.vibester.helper.GameManager
@@ -118,7 +119,7 @@ class SettingSetupFragment:Fragment(R.layout.fragment_layout_setting), AdapterVi
             "local_buzzer" -> { switchToGameWithParameters(BuzzerSetupActivity()) }
             "local_typing" -> { switchToGameWithParameters(TypingGameActivity()) }
             "local_lyrics" -> { switchToGameWithParameters(LyricsBelongGameActivity()) }
-            "online_buzzer" -> { switchToGameWithParameters(LyricsBelongGameActivity()) }
+            "online_buzzer" -> { switchToGameWithParameters(PartyRoomActivity()) }
         }
     }
 }

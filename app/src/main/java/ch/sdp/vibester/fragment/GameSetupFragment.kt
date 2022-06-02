@@ -1,36 +1,19 @@
 package ch.sdp.vibester.fragment
 
-import android.content.Intent
 import android.os.Bundle
-import android.os.Environment
-import android.text.Editable
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import ch.sdp.vibester.R
-import ch.sdp.vibester.activity.BuzzerSetupActivity
-import ch.sdp.vibester.activity.ChoosePartyRoomActivity
-import ch.sdp.vibester.activity.LyricsBelongGameActivity
-import ch.sdp.vibester.activity.TypingGameActivity
 import ch.sdp.vibester.api.InternetState
-import ch.sdp.vibester.api.LastfmApiInterface
-import ch.sdp.vibester.api.LastfmMethod
-import ch.sdp.vibester.api.LastfmUri
 import ch.sdp.vibester.database.AppPreferences
 import ch.sdp.vibester.helper.GameManager
 import ch.sdp.vibester.helper.ViewModel
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 /**
 * Game Setup fragment with a button in the bottom navigation.
@@ -83,7 +66,7 @@ class GameSetupFragment : Fragment(R.layout.fragment_layout_game_setup){
             findNavController().navigate(R.id.fragment_setting_setup, bundle)
         }
         else if(gameMode == "online_buzzer"){
-            findNavController().navigate(R.id.fragment_setting_setup, bundle)
+            findNavController().navigate(R.id.fragment_choose_online_room, bundle)
         } else {
             findNavController().navigate(R.id.fragment_genre_setup, bundle)
         }

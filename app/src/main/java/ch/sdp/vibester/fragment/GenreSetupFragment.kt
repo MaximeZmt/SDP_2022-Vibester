@@ -6,6 +6,7 @@ import android.text.Editable
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import ch.sdp.vibester.R
@@ -33,8 +34,13 @@ class GenreSetupFragment: Fragment(R.layout.fragment_layout_genre) {
 
         vmGenreSetup.view = view
         vmGenreSetup.ctx = view.context
-        this.gameManager =  AppPreferences.getObject<GameManager>("gameManager") as GameManager
+
         setGenreListeners()
+
+        val bundle = this.arguments
+        if (bundle != null) {
+            gameManager = bundle.get("gameManager") as GameManager
+        }
 
         searchArtistEditable = vmGenreSetup.view.findViewById<EditText>(R.id.searchArtist).text
 
@@ -58,6 +64,7 @@ class GenreSetupFragment: Fragment(R.layout.fragment_layout_genre) {
      * @param mode: official game mode name
      */
     private fun chooseGenre(method: String = "", artist: String = "", tag: String = "", mode: Int = 0, playOffline: Boolean = false) {
+
         val uri = LastfmUri()
 
         uri.method = method
@@ -67,7 +74,8 @@ class GenreSetupFragment: Fragment(R.layout.fragment_layout_genre) {
         AppPreferences.setStr("gameMode", getString(mode))
         gameManager.gameMode = getString(mode)
         setGameSongList(uri, playOffline)
-        findNavController().navigate(R.id.fragment_setting_setup)
+        val bundle = bundleOf("gameManager" to gameManager)
+        findNavController().navigate(R.id.fragment_setting_setup, bundle)
     }
 
 
@@ -93,6 +101,7 @@ class GenreSetupFragment: Fragment(R.layout.fragment_layout_genre) {
             })
         }
     }
+
     private fun setReturnBtnListener() {
         vmGenreSetup.view.findViewById<FloatingActionButton>(R.id.genreSetup_returnToMain).setOnClickListener {
             findNavController().popBackStack()

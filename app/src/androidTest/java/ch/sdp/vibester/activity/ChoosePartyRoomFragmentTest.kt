@@ -7,12 +7,11 @@ import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.matcher.ViewMatchers
-import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
 import ch.sdp.vibester.database.AppPreferences
 import ch.sdp.vibester.database.DataGetter
-import ch.sdp.vibester.fragment.SettingSetupFragment
+import ch.sdp.vibester.fragment.ChoosePartyRoomFragment
 import ch.sdp.vibester.helper.PartyRoom
 import ch.sdp.vibester.launchFragmentInHiltContainer
 import dagger.hilt.android.testing.BindValue

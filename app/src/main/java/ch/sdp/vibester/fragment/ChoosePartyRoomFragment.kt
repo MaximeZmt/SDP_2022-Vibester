@@ -1,16 +1,15 @@
-package ch.sdp.vibester.activity
+package ch.sdp.vibester.fragment
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.view.Window
 import android.widget.Button
 import android.widget.EditText
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import ch.sdp.vibester.R
+import ch.sdp.vibester.activity.PartyRoomActivity
 import ch.sdp.vibester.helper.GameManager
 import ch.sdp.vibester.helper.ViewModel
 

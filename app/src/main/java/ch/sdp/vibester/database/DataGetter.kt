@@ -249,9 +249,9 @@ class DataGetter @Inject constructor() {
                                 )
                             )
                         }
-                        val gameSize: Int = (snapshot.value as Map<String, Object>)["gameSize"] as Int
+                        val gameSize: Int = ((snapshot.value as Map<String, Object>)["gameSize"] as Long).toInt()
                         val gameMode: String = (snapshot.value as Map<String, Object>)["gameMode"] as String
-                        val difficultyLevel: Int = (snapshot.value as Map<String, Object>)["difficulty"] as Int
+                        val difficultyLevel: Int = ((snapshot.value as Map<String, Object>)["difficulty"] as Long).toInt()
                         songListCallback(gameSongList, gameSize, gameMode, difficultyLevel)
                     }
                 }

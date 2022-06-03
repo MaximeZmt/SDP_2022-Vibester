@@ -135,15 +135,20 @@ class DataGetter @Inject constructor() {
     fun createRoom(callback: (PartyRoom, String) -> Unit) {
         val partyRoom = PartyRoom()
         partyRoom.setEmailList(mutableListOf(authenticator.getCurrUser()?.email!!))
-        val ref = dbRoomRef.push()
-        val key = ref.key
-        if (key != null) {
-            partyRoom.setRoomID(key)
-        }
-        ref.setValue(partyRoom)
-        if (key != null) {
-            callback(partyRoom, key)
-        }
+
+        val charPool : List<Char> = ('0'..'9') + ('a'..'z')
+
+        val randomString = (1..6)
+            .map { _ -> kotlin.random.Random.nextInt(0, charPool.size) }
+            .map(charPool::get)
+            .joinToString("");
+
+        partyRoom.setRoomID(randomString)
+
+        dbRoomRef.child(randomString).setValue(partyRoom)
+
+        callback(partyRoom, randomString)
+
     }
 
 

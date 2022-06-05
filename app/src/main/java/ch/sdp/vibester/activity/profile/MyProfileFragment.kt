@@ -1,12 +1,16 @@
 package ch.sdp.vibester.activity.profile
 
 import android.app.Activity
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
+import android.media.Image
 import android.net.Uri
 import android.os.Bundle
 import android.text.InputType
+import android.util.Log
+import android.view.Gravity
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
@@ -78,7 +82,6 @@ class MyProfileFragment : Fragment(R.layout.activity_profile), OnItemClickListen
         setViewVisibility(view.findViewById(R.id.editUser), true)
         setViewVisibility(view.findViewById(R.id.showQRCode), true)
         setViewVisibility(view.findViewById(R.id.logout), true)
-        setViewVisibility(view.findViewById(R.id.profile_returnToMain), false)
 
         setEditUserNameBtnListener()
         setChangeImageBtnListener()
@@ -159,9 +162,24 @@ class MyProfileFragment : Fragment(R.layout.activity_profile), OnItemClickListen
      * Generic listener for the show qr code button.
      */
     private fun setShowQrCodeBtnListener() {
+        val qrDialog = AlertDialog.Builder(context!!)
         vmMyProfile.view.findViewById<ImageView>(R.id.showQRCode).setOnClickListener {
-            setViewVisibility(vmMyProfile.view.findViewById<ConstraintLayout>(R.id.QrCodePage), true)
-            setViewVisibility(vmMyProfile.view.findViewById<RelativeLayout>(R.id.profileContent), false)
+            //val popUp = PopupWindow(this);
+            Log.e("ERR ", "PLOUP")
+            //val layout = vmMyProfile.view.findViewById<ConstraintLayout>(R.id.QrCodePage)
+            val qrView = layoutInflater.inflate(R.layout.display_qr_code, null)
+            val qrImg = qrView.findViewById<ImageView>(R.id.qrCode)
+            val qrCancel = qrView.findViewById<ImageView>(R.id.qrCode_returnToProfile)
+            val uid = FireBaseAuthenticator().getCurrUID()
+            if (uid != "") {
+                generateQrCode(uid, qrImg)
+            }
+
+            qrDialog.setView(qrView)
+            qrDialog.create()
+            qrDialog.show()
+            //setViewVisibility(vmMyProfile.view.findViewById<ConstraintLayout>(R.id.QrCodePage), true)
+            //setViewVisibility(vmMyProfile.view.findViewById<ConstraintLayout>(R.id.profileLayout), false)
         }
     }
 
@@ -171,7 +189,7 @@ class MyProfileFragment : Fragment(R.layout.activity_profile), OnItemClickListen
     private fun setQrCodeToProfileBtnListener() {
         vmMyProfile.view.findViewById<FloatingActionButton>(R.id.qrCode_returnToProfile).setOnClickListener {
             setViewVisibility(vmMyProfile.view.findViewById<ConstraintLayout>(R.id.QrCodePage), false)
-            setViewVisibility(vmMyProfile.view.findViewById<RelativeLayout>(R.id.profileContent), true)
+            setViewVisibility(vmMyProfile.view.findViewById<ConstraintLayout>(R.id.profileLayout), true)
         }
     }
 
@@ -339,10 +357,6 @@ class MyProfileFragment : Fragment(R.layout.activity_profile), OnItemClickListen
 
         imageGetter.fetchImage("profileImg/${user.uid}", this::setImage)
 
-        if (user.uid != "") {
-            generateQrCode(user.uid)
-        }
-
         if (user.following.isNotEmpty()) {
             loadFollowing(user.following)
         }
@@ -371,7 +385,7 @@ class MyProfileFragment : Fragment(R.layout.activity_profile), OnItemClickListen
      * generate the qr code bitmap of the given data
      * @param data Qr Code data
      */
-    private fun generateQrCode(data: String) {
+    private fun generateQrCode(data: String, imgView: ImageView) {
         val size = 512
         val hints = HashMap<EncodeHintType?, Any?>()
         hints[EncodeHintType.ERROR_CORRECTION] = ErrorCorrectionLevel.H
@@ -388,7 +402,7 @@ class MyProfileFragment : Fragment(R.layout.activity_profile), OnItemClickListen
 
         qrCodeCanvas.drawBitmap(logo, xLogo, yLogo, null)
 
-        vmMyProfile.view.findViewById<ImageView>(R.id.qrCode).setImageBitmap(bmp)
+        imgView.setImageBitmap(bmp)
     }
 
     override fun onItemClick(position: Int) {

@@ -70,7 +70,7 @@ class PublicProfileActivity : AppCompatActivity(), OnItemClickListener {
         setupRecycleViewForFriends()
         followings = ArrayList()
 
-        setRetToMainBtnListener()
+        // TODO remove setRetToMainBtnListener()
         setFollowingScoresBtnListener(R.id.profile_scores, R.id.profile_scroll_stat, R.id.profile_scroll_following)
         setFollowingScoresBtnListener(R.id.profile_following, R.id.profile_scroll_following, R.id.profile_scroll_stat)
 
@@ -103,16 +103,6 @@ class PublicProfileActivity : AppCompatActivity(), OnItemClickListener {
             imageGetter.uploadFile("profileImg/${dataGetter.getCurrentUser()?.uid}", data?.data!!) {
                 imageGetter.fetchImage("profileImg/${dataGetter.getCurrentUser()?.uid}", this::setImage)
             }
-        }
-    }
-
-
-    /**
-     * Generic listener for the return to main button.
-     */
-    private fun setRetToMainBtnListener() {
-        findViewById<FloatingActionButton>(R.id.profile_returnToMain).setOnClickListener {
-            finish()
         }
     }
 

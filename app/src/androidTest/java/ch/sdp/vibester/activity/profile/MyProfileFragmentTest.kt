@@ -197,7 +197,7 @@ class MyProfileFragmentTest {
                 )
             )
 
-        onView(withId(R.id.profileContent)).check(matches(isDisplayed()))
+        onView(withId(R.id.profileLayout)).check(matches(isDisplayed()))
     }
 
 
@@ -216,7 +216,7 @@ class MyProfileFragmentTest {
         onView(withId(R.id.showQRCode)).perform(click())
 
         onView(withId(R.id.QrCodePage)).check(matches(isDisplayed()))
-        onView(withId(R.id.profileContent)).check(matches(not(isDisplayed())))
+        onView(withId(R.id.profileLayout)).check(matches(not(isDisplayed())))
         onView(withId(R.id.qrCode)).check(matches(isDisplayed()))
     }
 
@@ -237,7 +237,7 @@ class MyProfileFragmentTest {
         onView(withId(R.id.qrCode_returnToProfile)).perform(click())
 
         onView(withId(R.id.QrCodePage)).check(matches(not(isDisplayed())))
-        onView(withId(R.id.profileContent)).check(matches(isDisplayed()))
+        onView(withId(R.id.profileLayout)).check(matches(isDisplayed()))
     }
 
 

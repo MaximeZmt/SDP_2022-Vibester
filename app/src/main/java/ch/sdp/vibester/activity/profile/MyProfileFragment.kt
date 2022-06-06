@@ -157,7 +157,7 @@ class MyProfileFragment : Fragment(R.layout.activity_profile), OnItemClickListen
      * Generic listener for the show qr code button.
      */
     private fun setShowQrCodeBtnListener() {
-        val qrDialog = AlertDialog.Builder(context!!)
+        val qrDialog = AlertDialog.Builder(requireContext())
         vmMyProfile.view.findViewById<ImageView>(R.id.showQRCode).setOnClickListener {
             val qrView = layoutInflater.inflate(R.layout.display_qr_code, null)
             val qrImg = qrView.findViewById<ImageView>(R.id.qrCode)

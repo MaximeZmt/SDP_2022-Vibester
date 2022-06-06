@@ -1,7 +1,6 @@
 package ch.sdp.vibester.fragment
 
 import android.content.ContentValues
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -14,7 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
-import ch.sdp.vibester.activity.profile.PublicProfileActivity
+import ch.sdp.vibester.activity.PublicProfileActivity
 import ch.sdp.vibester.database.Database
 import ch.sdp.vibester.database.ImageGetter
 import ch.sdp.vibester.helper.IntentSwitcher

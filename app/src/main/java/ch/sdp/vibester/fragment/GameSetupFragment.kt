@@ -109,13 +109,15 @@ class GameSetupFragment : Fragment(R.layout.fragment_layout_game_setup), Adapter
 
 
     private fun setReturnBtnListener() {
+        val genrePerScoreboard = vmGameSetup.view.findViewById<LinearLayout>(R.id.genrePerScoreboard)
+        val chooseSetting = vmGameSetup.view.findViewById<RelativeLayout>(R.id.chooseSetting)
+
         vmGameSetup.view.findViewById<FloatingActionButton>(R.id.gameSetup_returnToMain).setOnClickListener {
-            if (vmGameSetup.view.findViewById<LinearLayout>(R.id.genrePerScoreboard).visibility == VISIBLE) {
-                toggleViewsVisibility(goneView = vmGameSetup.view.findViewById<LinearLayout>(R.id.genrePerScoreboard),
+            if (genrePerScoreboard.visibility == VISIBLE) {
+                toggleViewsVisibility(goneView = genrePerScoreboard,
                     visibleView = vmGameSetup.view.findViewById<LinearLayout>(R.id.chooseGame))
-            } else if (vmGameSetup.view.findViewById<RelativeLayout>(R.id.chooseSetting).visibility == VISIBLE) {
-                toggleViewsVisibility(goneView = vmGameSetup.view.findViewById<RelativeLayout>(R.id.chooseSetting),
-                    visibleView = vmGameSetup.view.findViewById<LinearLayout>(R.id.genrePerScoreboard))
+            } else if (chooseSetting.visibility == VISIBLE) {
+                toggleViewsVisibility(goneView = chooseSetting, visibleView = genrePerScoreboard)
             }
         }
     }

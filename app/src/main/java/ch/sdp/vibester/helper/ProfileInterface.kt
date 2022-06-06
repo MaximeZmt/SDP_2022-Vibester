@@ -1,8 +1,12 @@
 package ch.sdp.vibester.helper
 
+import android.app.Activity
+import android.content.Intent
 import android.net.Uri
 import android.view.View
 import ch.sdp.vibester.R
+import ch.sdp.vibester.database.DataGetter
+import ch.sdp.vibester.database.ImageGetter
 import ch.sdp.vibester.user.ProfileFollowingAdapter
 import ch.sdp.vibester.user.User
 
@@ -94,5 +98,13 @@ interface ProfileInterface {
      */
     fun setViewVisibility(view: View, isVisible: Boolean) {
         view.visibility = if (isVisible) View.VISIBLE else View.GONE
+    }
+
+    fun onActivityResultHelper(requestCode: Int, resultCode: Int, data: Intent?, imageGetter: ImageGetter, dataGetter: DataGetter) {
+        if (resultCode == Activity.RESULT_OK && requestCode == imageRequestCode) {
+            imageGetter.uploadFile("profileImg/${dataGetter.getCurrentUser()?.uid}", data?.data!!) {
+                imageGetter.fetchImage("profileImg/${dataGetter.getCurrentUser()?.uid}", this::setImage)
+            }
+        }
     }
 }

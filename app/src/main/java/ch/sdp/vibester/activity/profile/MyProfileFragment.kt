@@ -5,17 +5,14 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
-import android.media.Image
 import android.net.Uri
 import android.os.Bundle
 import android.text.InputType
 import android.util.Log
-import android.view.Gravity
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
@@ -31,7 +28,6 @@ import ch.sdp.vibester.helper.ViewModel
 import ch.sdp.vibester.user.OnItemClickListener
 import ch.sdp.vibester.user.ProfileFollowingAdapter
 import ch.sdp.vibester.user.User
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.EncodeHintType
@@ -87,7 +83,6 @@ class MyProfileFragment : Fragment(R.layout.activity_profile), OnItemClickListen
         setChangeImageBtnListener()
         setLogOutBtnListener()
         setShowQrCodeBtnListener()
-        setQrCodeToProfileBtnListener()
     }
 
     private fun queryDatabase() {
@@ -124,7 +119,7 @@ class MyProfileFragment : Fragment(R.layout.activity_profile), OnItemClickListen
      * helper function to show dialog 
      */
     private fun showDialogWhenChangeImage() {
-        showGeneralDialog(R.string.profile_verify_change_profile_pic.toString(), false)
+        showGeneralDialog(getString(R.string.profile_verify_change_profile_pic), false)
     }
 
     /**
@@ -164,35 +159,22 @@ class MyProfileFragment : Fragment(R.layout.activity_profile), OnItemClickListen
     private fun setShowQrCodeBtnListener() {
         val qrDialog = AlertDialog.Builder(context!!)
         vmMyProfile.view.findViewById<ImageView>(R.id.showQRCode).setOnClickListener {
-            //val popUp = PopupWindow(this);
-            Log.e("ERR ", "PLOUP")
-            //val layout = vmMyProfile.view.findViewById<ConstraintLayout>(R.id.QrCodePage)
             val qrView = layoutInflater.inflate(R.layout.display_qr_code, null)
             val qrImg = qrView.findViewById<ImageView>(R.id.qrCode)
-            val qrCancel = qrView.findViewById<ImageView>(R.id.qrCode_returnToProfile)
             val uid = FireBaseAuthenticator().getCurrUID()
             if (uid != "") {
                 generateQrCode(uid, qrImg)
             }
-
+            qrDialog.setNeutralButton("CLOSE",
+                { dialogInterface: DialogInterface, i: Int -> dialogInterface.dismiss()})
             qrDialog.setView(qrView)
             qrDialog.create()
+
             qrDialog.show()
-            //setViewVisibility(vmMyProfile.view.findViewById<ConstraintLayout>(R.id.QrCodePage), true)
-            //setViewVisibility(vmMyProfile.view.findViewById<ConstraintLayout>(R.id.profileLayout), false)
         }
-    }
 
-    /**
-     * Generic listener for the show qr code and return to profile button.
-     */
-    private fun setQrCodeToProfileBtnListener() {
-        vmMyProfile.view.findViewById<FloatingActionButton>(R.id.qrCode_returnToProfile).setOnClickListener {
-            setViewVisibility(vmMyProfile.view.findViewById<ConstraintLayout>(R.id.QrCodePage), false)
-            setViewVisibility(vmMyProfile.view.findViewById<ConstraintLayout>(R.id.profileLayout), true)
-        }
-    }
 
+    }
 
     /**
      * Sets the given view's visibility.

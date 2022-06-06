@@ -216,7 +216,6 @@ class MyProfileFragmentTest {
         onView(withId(R.id.showQRCode)).perform(click())
 
         onView(withId(R.id.QrCodePage)).check(matches(isDisplayed()))
-        onView(withId(R.id.profileLayout)).check(matches(not(isDisplayed())))
         onView(withId(R.id.qrCode)).check(matches(isDisplayed()))
     }
 
@@ -234,10 +233,9 @@ class MyProfileFragmentTest {
         )
 
         onView(withId(R.id.showQRCode)).perform(click())
-        onView(withId(R.id.qrCode_returnToProfile)).perform(click())
+        onView(withText("CLOSE")).perform(click())
 
         onView(withId(R.id.QrCodePage)).check(matches(not(isDisplayed())))
-        onView(withId(R.id.profileLayout)).check(matches(isDisplayed()))
     }
 
 
@@ -279,8 +277,8 @@ class MyProfileFragmentTest {
             themeResId = R.style.AppTheme
         )
 
-        onView(withId(R.id.editUser)).perform(scrollTo(), click())
-        onView(withText("Cancel")).perform(scrollTo(), click())
+        onView(withId(R.id.editUser)).perform(click())
+        onView(withText("Cancel")).perform(click())
 
         onView(withId(R.id.username)).check(matches(withText("Lalisa Bon")))
     }

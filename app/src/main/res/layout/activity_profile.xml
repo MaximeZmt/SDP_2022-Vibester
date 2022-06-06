@@ -191,7 +191,7 @@
             <androidx.core.widget.NestedScrollView
                 android:id="@+id/profile_scroll_following"
                 android:layout_width="match_parent"
-                android:layout_height="318dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
@@ -216,11 +216,9 @@
             <androidx.core.widget.NestedScrollView
                 android:id="@+id/profile_scroll_stat"
                 android:layout_width="match_parent"
-                android:layout_height="318dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
-                android:layout_marginBottom="40dp"
                 app:layout_constraintBottom_toTopOf="@+id/profile_returnToMain"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

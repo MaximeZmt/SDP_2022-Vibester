@@ -78,7 +78,7 @@ class PublicProfileActivity : AppCompatActivity(), OnItemClickListener {
 
     }
 
-    fun queryDatabase() {
+    private fun queryDatabase() {
         dataGetter.getUserData(userId, this::setupProfile)
     }
 
@@ -131,7 +131,7 @@ class PublicProfileActivity : AppCompatActivity(), OnItemClickListener {
      * @param a id of the view to show
      * @param b id of the view to hide
      */
-    fun showAHideB(a: Int, b: Int) {
+    private fun showAHideB(a: Int, b: Int) {
         findViewById<NestedScrollView>(a).visibility = View.VISIBLE
         findViewById<NestedScrollView>(b).visibility = View.GONE
     }
@@ -173,7 +173,7 @@ class PublicProfileActivity : AppCompatActivity(), OnItemClickListener {
      * Function to handle setting up the profile.
      * @param user: The user whose profile we are setting up.
      */
-    fun setupProfile(user: User){
+    private fun setupProfile(user: User){
         // Currently assuming that empty username means no user !
         if (user.username != "") {
             findViewById<TextView>(R.id.username).text =  user.username

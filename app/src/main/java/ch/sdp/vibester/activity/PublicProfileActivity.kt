@@ -51,7 +51,7 @@ class PublicProfileActivity : AppCompatActivity(), OnItemClickListener, ProfileI
     override var followings: MutableList<User> ? = null
     override var profileFollowingAdapter: ProfileFollowingAdapter?= null
 
-    lateinit var userId: String
+    private lateinit var userId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -134,16 +134,6 @@ class PublicProfileActivity : AppCompatActivity(), OnItemClickListener, ProfileI
 
     override fun setTextOfView(id: Int, text: Int) {
         findViewById<TextView>(id).text = text.toString()
-    }
-
-    override fun setTextOfMultipleViews(user: User) {
-        setTextOfView(R.id.profile_total_games_stat, user.totalGames)
-        setTextOfView(R.id.profile_top_tracks, user.scores.getOrDefault("top tracks", 0))
-        setTextOfView(R.id.profile_kpop, user.scores.getOrDefault("kpop", 0))
-        setTextOfView(R.id.profile_rock, user.scores.getOrDefault("rock", 0))
-        setTextOfView(R.id.profile_bts, user.scores.getOrDefault("BTS", 0))
-        setTextOfView(R.id.profile_imagine_dragons, user.scores.getOrDefault("Imagine Dragons", 0))
-        setTextOfView(R.id.profile_billie_eilish, user.scores.getOrDefault("Billie Eilish", 0))
     }
 
     override fun setupProfile(user: User){

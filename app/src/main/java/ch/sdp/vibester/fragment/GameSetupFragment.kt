@@ -79,9 +79,7 @@ class GameSetupFragment : Fragment(R.layout.fragment_layout_game_setup), Adapter
         val billieEilish = vmGameSetup.view.findViewById<Button>(R.id.billieEilishButton)
         val validateSearch = vmGameSetup.view.findViewById<Button>(R.id.validateSearch)
         offline.setOnClickListener { chooseGame("local_buzzer", GameManager(), true) }
-        //kpop.setOnClickListener { chooseGenre(method = LastfmMethod.BY_TAG.method, tag = "kpop", mode = R.string.kpop) }
         kpop.setOnClickListener { chooseGenreByTag("kpop", R.string.kpop) }
-        //rock.setOnClickListener { chooseGenre(method = LastfmMethod.BY_TAG.method, tag = "rock", mode = R.string.rock) }
         rock.setOnClickListener { chooseGenreByTag("rock", R.string.rock) }
         bts.setOnClickListener { chooseGenreByArtist("BTS", R.string.gameGenre_bts) }
         topTracks.setOnClickListener { chooseGenre(method = LastfmMethod.BY_CHART.method, mode = R.string.top_tracks) }
@@ -281,8 +279,8 @@ class GameSetupFragment : Fragment(R.layout.fragment_layout_game_setup), Adapter
      */
     private fun updateInternet(view: View) {
         val btn: Button = view as Button
-        val isConncted = InternetState.getInternetStatus(vmGameSetup.ctx)
-        if (isConncted) {
+        val isConnected = InternetState.getInternetStatus(vmGameSetup.ctx)
+        if (isConnected) {
             hasInternet = true
             btn.text = getString(R.string.GameSetup_internetSwitchOn)
             btn.setBackgroundColor(vmGameSetup.ctx.getColor(R.color.maximum_yellow_red))

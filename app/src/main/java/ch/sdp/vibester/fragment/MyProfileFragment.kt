@@ -127,17 +127,6 @@ class MyProfileFragment : Fragment(R.layout.activity_profile), OnItemClickListen
         showGeneralDialog(R.string.profile_verify_change_profile_pic.toString(), false)
     }
 
-    /**
-     * A function that updates the image in the database.
-     * @param id ID of the image int the database
-     */
-    private fun updateImage(id: String) {
-        imageGetter.deleteImage("profileImg/${id}")
-
-        val intent = Intent(Intent.ACTION_PICK)
-        intent.type = "image/*"
-        startActivityForResult(intent, imageRequestCode)
-    }
 
 
     /**
@@ -220,7 +209,13 @@ class MyProfileFragment : Fragment(R.layout.activity_profile), OnItemClickListen
             builder.setTitle(name)
 
             builder.setPositiveButton("Yes") { _, _ ->
-                dataGetter.getCurrentUser()?.let { updateImage(it.uid) }
+                dataGetter.getCurrentUser()?.let { //updateImage
+                    imageGetter.deleteImage("profileImg/${it.uid}")
+
+                    val intent = Intent(Intent.ACTION_PICK)
+                    intent.type = "image/*"
+                    startActivityForResult(intent, imageRequestCode)
+                }
             }
 
             builder.setNegativeButton("No") { dialog, _ -> dialog.cancel() }
@@ -268,7 +263,6 @@ class MyProfileFragment : Fragment(R.layout.activity_profile), OnItemClickListen
     override fun setTextOfView(id: Int, text: Int) {
         vmMyProfile.view.findViewById<TextView>(id).text = text.toString()
     }
-
 
     override fun setupProfile(user: User){
         // Currently assuming that empty username means no user !

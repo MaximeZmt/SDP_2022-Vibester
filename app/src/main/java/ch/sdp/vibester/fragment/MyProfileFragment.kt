@@ -89,8 +89,9 @@ class MyProfileFragment : Fragment(R.layout.activity_profile), OnItemClickListen
         setEditUserNameBtnListener()
         setChangeImageBtnListener()
         setLogOutBtnListener()
-        setShowQrCodeBtnListener()
-        setQrCodeToProfileBtnListener()
+        /*setShowQrCodeBtnListener()
+        setQrCodeToProfileBtnListener()*/
+        setQrCodeListeners()
     }
 
     private fun setViewsVisibility() {
@@ -153,19 +154,26 @@ class MyProfileFragment : Fragment(R.layout.activity_profile), OnItemClickListen
     /**
      * Generic listener for the show qr code button.
      */
-    private fun setShowQrCodeBtnListener() {
+    /*private fun setShowQrCodeBtnListener() {
         vmMyProfile.view.findViewById<ImageView>(R.id.showQRCode).setOnClickListener {
             showAHideB(qrCodePage, profileContent)
         }
-    }
+    }*/
 
     /**
      * Generic listener for the show qr code and return to profile button.
      */
-    private fun setQrCodeToProfileBtnListener() {
+    /*private fun setQrCodeToProfileBtnListener() {
         vmMyProfile.view.findViewById<FloatingActionButton>(R.id.qrCode_returnToProfile).setOnClickListener {
             showAHideB(profileContent, qrCodePage)
         }
+    }*/
+
+    private fun setQrCodeListeners() {
+        val showQrCode = vmMyProfile.view.findViewById<ImageView>(R.id.showQRCode)
+        val hideQrCode = vmMyProfile.view.findViewById<FloatingActionButton>(R.id.qrCode_returnToProfile)
+        showQrCode.setOnClickListener { showAHideB(qrCodePage, profileContent) }
+        hideQrCode.setOnClickListener { showAHideB(profileContent, qrCodePage)}
     }
 
     /**

@@ -105,6 +105,26 @@ class MyProfileFragmentTest {
 
 
     @Test
+    fun checkChangePhotoCancel() {
+        val inputProfile = User( "Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8, "VvPB47tQCLdjz3YebilS6h5EXdJ3")
+
+        createMockDataGetter(inputProfile)
+        createMockAuthenticator()
+        createMockImageGetter()
+
+        launchFragmentInHiltContainer<MyProfileFragment>(
+            themeResId = R.style.AppTheme
+        )
+
+        onView(withId(R.id.profile_image_CardView)).perform(click())
+        onView(withText("No")).perform(click())
+
+        onView(withId(R.id.profile_image_CardView)).check(matches(isDisplayed()))
+    }
+
+
+
+    @Test
     fun checkProfileData() {
         val inputProfile = User("Lalisa Bon", R.string.test_profile_image.toString(), "lisa@test.com",  12, 8)
 
@@ -284,23 +304,7 @@ class MyProfileFragmentTest {
     }
 
 
-    @Test
-    fun checkChangePhotoCancel() {
-        val inputProfile = User( "Lalisa Bon","bit.ly/3IUnyAF", "lisa@test.com",  12, 8, "VvPB47tQCLdjz3YebilS6h5EXdJ3")
 
-        createMockDataGetter(inputProfile)
-        createMockAuthenticator()
-        createMockImageGetter()
-
-        launchFragmentInHiltContainer<MyProfileFragment>(
-            themeResId = R.style.AppTheme
-        )
-
-        onView(withId(R.id.profile_image_CardView)).perform(click())
-        onView(withText("No")).perform(click())
-
-        onView(withId(R.id.profile_image_CardView)).check(matches(isDisplayed()))
-    }
 
 // FIXME fix the test
 /*

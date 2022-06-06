@@ -97,7 +97,7 @@ class MyProfileFragment : Fragment(R.layout.activity_profile), OnItemClickListen
         val editView = vmMyProfile.view.findViewById<ImageView>(R.id.editUser)
         val qrView = vmMyProfile.view.findViewById<ImageView>(R.id.showQRCode)
         val logoutView = vmMyProfile.view.findViewById<Button>(R.id.logout)
-        val returnView = vmMyProfile.view.findViewById<AppCompatImageView>(R.id.editUser)
+        val returnView = vmMyProfile.view.findViewById<FloatingActionButton>(R.id.profile_returnToMain)
         setViewVisibility(editView, true)
         setViewVisibility(qrView, true)
         setViewVisibility(logoutView, true)

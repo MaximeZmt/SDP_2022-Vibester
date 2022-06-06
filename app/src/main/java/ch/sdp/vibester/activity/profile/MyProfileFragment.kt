@@ -330,7 +330,7 @@ class MyProfileFragment : Fragment(R.layout.activity_profile), OnItemClickListen
      * Function to handle setting up the profile.
      * @param user: The user whose profile we are setting up.
      */
-    fun setupProfile(user: User){
+    private fun setupProfile(user: User){
         // Currently assuming that empty username means no user !
         if (user.username != "") {
             vmMyProfile.view.findViewById<TextView>(R.id.username).text =  user.username

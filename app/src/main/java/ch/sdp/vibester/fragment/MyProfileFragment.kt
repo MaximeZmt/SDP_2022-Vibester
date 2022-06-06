@@ -78,10 +78,11 @@ class MyProfileFragment : Fragment(R.layout.activity_profile), OnItemClickListen
 
         queryDatabase()
 
-        setViewVisibility(view.findViewById(R.id.editUser), true)
+        /*setViewVisibility(view.findViewById(R.id.editUser), true)
         setViewVisibility(view.findViewById(R.id.showQRCode), true)
         setViewVisibility(view.findViewById(R.id.logout), true)
-        setViewVisibility(view.findViewById(R.id.profile_returnToMain), false)
+        setViewVisibility(view.findViewById(R.id.profile_returnToMain), false)*/
+        setViewsVisibility()
 
         setEditUserNameBtnListener()
         setChangeImageBtnListener()
@@ -90,13 +91,23 @@ class MyProfileFragment : Fragment(R.layout.activity_profile), OnItemClickListen
         setQrCodeToProfileBtnListener()
     }
 
+    private fun setViewsVisibility() {
+        val editView = vmMyProfile.view.findViewById<ImageView>(R.id.editUser)
+        val qrView = vmMyProfile.view.findViewById<ImageView>(R.id.showQRCode)
+        val logoutView = vmMyProfile.view.findViewById<Button>(R.id.logout)
+        val returnView = vmMyProfile.view.findViewById<FloatingActionButton>(R.id.editUser)
+        setViewVisibility(editView, true)
+        setViewVisibility(qrView, true)
+        setViewVisibility(logoutView, true)
+        setViewVisibility(returnView, false)
+    }
+
     override fun queryDatabase() {
         val currentUser = authenticator.getCurrUser()
         if (currentUser != null) {
             dataGetter.getUserData(currentUser.uid, this::setupProfile)
         }
     }
-
 
     /**
      * Generic listener for the edit username button.
@@ -127,7 +138,6 @@ class MyProfileFragment : Fragment(R.layout.activity_profile), OnItemClickListen
         showGeneralDialog(R.string.profile_verify_change_profile_pic.toString(), false)
     }
 
-
     /**
      * Generic listener for the log out button.
      */
@@ -137,7 +147,6 @@ class MyProfileFragment : Fragment(R.layout.activity_profile), OnItemClickListen
             findNavController().navigate(R.id.fragment_auth)
         }
     }
-
 
     /**
      * Generic listener for the show qr code button.
@@ -158,7 +167,6 @@ class MyProfileFragment : Fragment(R.layout.activity_profile), OnItemClickListen
             setViewVisibility(vmMyProfile.view.findViewById<RelativeLayout>(R.id.profileContent), true)
         }
     }
-
 
     /**
      * A function that displays the dialog

@@ -97,7 +97,11 @@ class PublicProfileActivity : AppCompatActivity(), OnItemClickListener, ProfileI
     //check the UID here not sure
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        onActivityResultHelper(requestCode, resultCode, data, imageGetter, dataGetter)
+        if (resultCode == Activity.RESULT_OK && requestCode == imageRequestCode) {
+            imageGetter.uploadFile("profileImg/${dataGetter.getCurrentUser()?.uid}", data?.data!!) {
+                imageGetter.fetchImage("profileImg/${dataGetter.getCurrentUser()?.uid}", this::setImage)
+            }
+        }
     }
 
 

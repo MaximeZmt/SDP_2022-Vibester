@@ -106,11 +106,4 @@ interface ProfileInterface {
         followings?.add(following)
     }
 
-    fun onActivityResultHelper(requestCode: Int, resultCode: Int, data: Intent?, imageGetter: ImageGetter, dataGetter: DataGetter) {
-        if (resultCode == Activity.RESULT_OK && requestCode == imageRequestCode) {
-            imageGetter.uploadFile("profileImg/${dataGetter.getCurrentUser()?.uid}", data?.data!!) {
-                imageGetter.fetchImage("profileImg/${dataGetter.getCurrentUser()?.uid}", this::setImage)
-            }
-        }
-    }
 }

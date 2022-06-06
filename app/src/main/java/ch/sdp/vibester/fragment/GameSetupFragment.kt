@@ -43,12 +43,18 @@ class GameSetupFragment : Fragment(R.layout.fragment_layout_game_setup), Adapter
     // TODO: OFFLINE
     private var hasInternet: Boolean = true
     private var vmGameSetup = ViewModel()
+    private lateinit var genrePerScoreboard: View
+    private lateinit var chooseSetting: View
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         vmGameSetup.view = view
         vmGameSetup.ctx = view.context
+
+        genrePerScoreboard = vmGameSetup.view.findViewById<LinearLayout>(R.id.genrePerScoreboard)
+        chooseSetting = vmGameSetup.view.findViewById<RelativeLayout>(R.id.chooseSetting)
+
 
         setGenreListeners()
         setGameModeListeners()
@@ -109,9 +115,6 @@ class GameSetupFragment : Fragment(R.layout.fragment_layout_game_setup), Adapter
 
 
     private fun setReturnBtnListener() {
-        val genrePerScoreboard = vmGameSetup.view.findViewById<LinearLayout>(R.id.genrePerScoreboard)
-        val chooseSetting = vmGameSetup.view.findViewById<RelativeLayout>(R.id.chooseSetting)
-
         vmGameSetup.view.findViewById<FloatingActionButton>(R.id.gameSetup_returnToMain).setOnClickListener {
             if (genrePerScoreboard.visibility == VISIBLE) {
                 toggleViewsVisibility(goneView = genrePerScoreboard,
@@ -258,13 +261,10 @@ class GameSetupFragment : Fragment(R.layout.fragment_layout_game_setup), Adapter
             if (playOffline) {
                 toggleViewsVisibility(
                     goneView = requireView().findViewById<LinearLayout>(R.id.chooseGame),
-                    visibleView = requireView().findViewById<ConstraintLayout>(R.id.chooseSetting)
+                    visibleView = chooseSetting
                 )
             } else {
-                toggleViewsVisibility(
-                    goneView = requireView().findViewById<LinearLayout>(R.id.genrePerScoreboard),
-                    visibleView = requireView().findViewById<ConstraintLayout>(R.id.chooseSetting)
-                )
+                toggleViewsVisibility(goneView = genrePerScoreboard, visibleView = chooseSetting)
             }
 
 

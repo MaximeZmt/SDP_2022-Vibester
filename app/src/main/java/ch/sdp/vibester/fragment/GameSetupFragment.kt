@@ -79,13 +79,23 @@ class GameSetupFragment : Fragment(R.layout.fragment_layout_game_setup), Adapter
         val billieEilish = vmGameSetup.view.findViewById<Button>(R.id.billieEilishButton)
         val validateSearch = vmGameSetup.view.findViewById<Button>(R.id.validateSearch)
         offline.setOnClickListener { chooseGame("local_buzzer", GameManager(), true) }
-        kpop.setOnClickListener { chooseGenre(method = LastfmMethod.BY_TAG.method, tag = "kpop", mode = R.string.kpop) }
-        rock.setOnClickListener { chooseGenre(method = LastfmMethod.BY_TAG.method, tag = "rock", mode = R.string.rock) }
-        bts.setOnClickListener { chooseGenre(method = LastfmMethod.BY_ARTIST.method, artist = "BTS", mode = R.string.gameGenre_bts) }
+        //kpop.setOnClickListener { chooseGenre(method = LastfmMethod.BY_TAG.method, tag = "kpop", mode = R.string.kpop) }
+        kpop.setOnClickListener { chooseGenreByTag("kpop", R.string.kpop) }
+        //rock.setOnClickListener { chooseGenre(method = LastfmMethod.BY_TAG.method, tag = "rock", mode = R.string.rock) }
+        rock.setOnClickListener { chooseGenreByTag("rock", R.string.rock) }
+        bts.setOnClickListener { chooseGenreByArtist("BTS", R.string.gameGenre_bts) }
         topTracks.setOnClickListener { chooseGenre(method = LastfmMethod.BY_CHART.method, mode = R.string.top_tracks) }
-        imagDragons.setOnClickListener{ chooseGenre(method = LastfmMethod.BY_ARTIST.method, artist = "Imagine Dragons", mode = R.string.gameGenre_imagine_dragons) }
-        billieEilish.setOnClickListener { chooseGenre(method = LastfmMethod.BY_ARTIST.method, artist = "Billie Eilish", mode = R.string.gameGenre_billie_eilish) }
-        validateSearch.setOnClickListener{ chooseGenre(method = LastfmMethod.BY_ARTIST.method, artist = searchArtistEditable.toString(), mode = R.string.gameGenre_byArtistSearch) }
+        imagDragons.setOnClickListener{ chooseGenreByArtist("Imagine Dragons", R.string.gameGenre_imagine_dragons) }
+        billieEilish.setOnClickListener { chooseGenreByArtist("Billie Eilish", R.string.gameGenre_billie_eilish) }
+        validateSearch.setOnClickListener{ chooseGenreByArtist(searchArtistEditable.toString(), R.string.gameGenre_byArtistSearch) }
+    }
+
+    private fun chooseGenreByTag(tag: String, mode: Int) {
+        chooseGenre(method = LastfmMethod.BY_TAG.method, tag = tag, mode = mode)
+    }
+
+    private fun chooseGenreByArtist(artist: String, mode: Int) {
+        chooseGenre(method = LastfmMethod.BY_ARTIST.method, artist = artist, mode = mode)
     }
 
     private fun setGameModeListeners() {
@@ -250,7 +260,7 @@ class GameSetupFragment : Fragment(R.layout.fragment_layout_game_setup), Adapter
                     goneView = requireView().findViewById<LinearLayout>(R.id.chooseGame),
                     visibleView = requireView().findViewById<ConstraintLayout>(R.id.chooseSetting)
                 )
-            } else{
+            } else {
                 toggleViewsVisibility(
                     goneView = requireView().findViewById<LinearLayout>(R.id.genrePerScoreboard),
                     visibleView = requireView().findViewById<ConstraintLayout>(R.id.chooseSetting)

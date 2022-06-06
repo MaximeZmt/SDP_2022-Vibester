@@ -17,6 +17,7 @@ import ch.sdp.vibester.database.AppPreferences
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.helper.GameManager
 import ch.sdp.vibester.helper.PartyRoom
+import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -62,6 +63,17 @@ class PartyRoomActivityTest {
         every { mockUsersRepo.updateRoomField<Boolean>(any(), any(), any()) } answers {}
         every { mockUsersRepo.updateRoomField<MutableList<Pair<String, String>>>(any(), any(), any()) } answers {}
 
+        every { mockUsersRepo.getCurrentUser() } returns createMockUser()
+
+    }
+
+    private fun createMockUser(): FirebaseUser {
+        val email = "u@u.c"
+        val uid = "uid"
+        val mockUser = mockk<FirebaseUser>()
+        every { mockUser.email } returns email
+        every { mockUser.uid } returns uid
+        return mockUser
     }
 
     @After

@@ -34,7 +34,20 @@ interface ProfileInterface {
      * @param a id of the view to show
      * @param b id of the view to hide
      */
-    fun showAHideB(a: Int, b: Int)
+    fun showAHideB(a: View, b: View) {
+        a.visibility = View.VISIBLE
+        b.visibility = View.GONE
+    }
+
+    /**
+     * Sets the given view's visibility.
+     * @param view: The given view to modify.
+     * @param isVisible: The indicator of which visibility to choose.
+     * True for VISIBLE, false for GONE.
+     */
+    fun setViewVisibility(view: View, isVisible: Boolean) {
+        view.visibility = if (isVisible) View.VISIBLE else View.GONE
+    }
 
     /**
      * A function that downloads an image and sets it.
@@ -91,16 +104,6 @@ interface ProfileInterface {
      */
     fun addFollowing(following: User) {
         followings?.add(following)
-    }
-
-    /**
-     * Sets the given view's visibility.
-     * @param view: The given view to modify.
-     * @param isVisible: The indicator of which visibility to choose.
-     * True for VISIBLE, false for GONE.
-     */
-    fun setViewVisibility(view: View, isVisible: Boolean) {
-        view.visibility = if (isVisible) View.VISIBLE else View.GONE
     }
 
     fun onActivityResultHelper(requestCode: Int, resultCode: Int, data: Intent?, imageGetter: ImageGetter, dataGetter: DataGetter) {

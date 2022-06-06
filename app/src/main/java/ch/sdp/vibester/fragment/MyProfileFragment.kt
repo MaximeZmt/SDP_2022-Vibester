@@ -62,7 +62,7 @@ class MyProfileFragment : Fragment(R.layout.activity_profile), OnItemClickListen
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if(!authenticator.isLoggedIn()) {
+        if (!authenticator.isLoggedIn()) {
             val navHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.main_bottom_nav_fragment) as NavHostFragment
             val navController = navHostFragment.navController
             navController.navigate(R.id.fragment_auth)
@@ -126,7 +126,6 @@ class MyProfileFragment : Fragment(R.layout.activity_profile), OnItemClickListen
     private fun showDialogWhenChangeImage() {
         showGeneralDialog(R.string.profile_verify_change_profile_pic.toString(), false)
     }
-
 
 
     /**
@@ -245,14 +244,10 @@ class MyProfileFragment : Fragment(R.layout.activity_profile), OnItemClickListen
 
     override fun setFollowingScoresBtnListener(btnId: Int, show: Int, hide: Int) {
         vmMyProfile.view.findViewById<Button>(btnId).setOnClickListener {
-            showAHideB(show, hide)
+            showAHideB(vmMyProfile.view.findViewById<NestedScrollView>(show), vmMyProfile.view.findViewById<NestedScrollView>(hide))
         }
     }
 
-    override fun showAHideB(a: Int, b: Int) {
-        vmMyProfile.view.findViewById<NestedScrollView>(a).visibility = View.VISIBLE
-        vmMyProfile.view.findViewById<NestedScrollView>(b).visibility = View.GONE
-    }
 
     override fun setImage(imageURI: Uri) {
         val avatar = vmMyProfile.view.findViewById<ImageView>(R.id.profile_image_ImageView)

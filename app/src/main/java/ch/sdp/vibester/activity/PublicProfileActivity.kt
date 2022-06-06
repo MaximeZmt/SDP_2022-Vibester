@@ -61,9 +61,9 @@ class PublicProfileActivity : AppCompatActivity(), OnItemClickListener, ProfileI
 
         userId = intent.getStringExtra("UserId").toString()
         if (intent.getStringExtra("ScoresOrFollowing") == R.string.profile_scores.toString()) {
-            showAHideB(R.id.profile_scroll_stat, R.id.profile_scroll_following)
+            showAHideB(findViewById<NestedScrollView>(R.id.profile_scroll_stat), findViewById<NestedScrollView>(R.id.profile_scroll_following))
         } else if (intent.getStringExtra("ScoresOrFollowing") == R.string.profile_following.toString()) {
-            showAHideB(R.id.profile_scroll_following, R.id.profile_scroll_stat)
+            showAHideB(findViewById<NestedScrollView>(R.id.profile_scroll_following), findViewById<NestedScrollView>(R.id.profile_scroll_stat))
         }
 
         setupRecycleViewForFriends()
@@ -112,13 +112,8 @@ class PublicProfileActivity : AppCompatActivity(), OnItemClickListener, ProfileI
 
     override fun setFollowingScoresBtnListener(btnId: Int, show: Int, hide: Int) {
         findViewById<Button>(btnId).setOnClickListener {
-            showAHideB(show, hide)
+            showAHideB(findViewById<NestedScrollView>(show), findViewById<NestedScrollView>(hide))
         }
-    }
-
-    override fun showAHideB(a: Int, b: Int) {
-        findViewById<NestedScrollView>(a).visibility = View.VISIBLE
-        findViewById<NestedScrollView>(b).visibility = View.GONE
     }
 
     override fun setImage(imageURI: Uri) {

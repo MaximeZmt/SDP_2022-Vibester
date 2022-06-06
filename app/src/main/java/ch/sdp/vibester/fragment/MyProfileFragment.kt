@@ -58,6 +58,8 @@ class MyProfileFragment : Fragment(R.layout.activity_profile), OnItemClickListen
     override var profileFollowingAdapter: ProfileFollowingAdapter ?= null
 
     private var vmMyProfile = ViewModel()
+    private lateinit var qrCodePage: View
+    private lateinit var profileContent: View
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -73,15 +75,14 @@ class MyProfileFragment : Fragment(R.layout.activity_profile), OnItemClickListen
         setupRecycleViewForFriends()
         followings = ArrayList()
 
+        qrCodePage = vmMyProfile.view.findViewById<ConstraintLayout>(R.id.QrCodePage)
+        profileContent = vmMyProfile.view.findViewById<RelativeLayout>(R.id.profileContent)
+
         setFollowingScoresBtnListener(R.id.profile_scores, R.id.profile_scroll_stat, R.id.profile_scroll_following)
         setFollowingScoresBtnListener(R.id.profile_following, R.id.profile_scroll_following, R.id.profile_scroll_stat)
 
         queryDatabase()
 
-        /*setViewVisibility(view.findViewById(R.id.editUser), true)
-        setViewVisibility(view.findViewById(R.id.showQRCode), true)
-        setViewVisibility(view.findViewById(R.id.logout), true)
-        setViewVisibility(view.findViewById(R.id.profile_returnToMain), false)*/
         setViewsVisibility()
 
         setEditUserNameBtnListener()
@@ -153,8 +154,7 @@ class MyProfileFragment : Fragment(R.layout.activity_profile), OnItemClickListen
      */
     private fun setShowQrCodeBtnListener() {
         vmMyProfile.view.findViewById<ImageView>(R.id.showQRCode).setOnClickListener {
-            setViewVisibility(vmMyProfile.view.findViewById<ConstraintLayout>(R.id.QrCodePage), true)
-            setViewVisibility(vmMyProfile.view.findViewById<RelativeLayout>(R.id.profileContent), false)
+            showAHideB(qrCodePage, profileContent)
         }
     }
 
@@ -163,8 +163,7 @@ class MyProfileFragment : Fragment(R.layout.activity_profile), OnItemClickListen
      */
     private fun setQrCodeToProfileBtnListener() {
         vmMyProfile.view.findViewById<FloatingActionButton>(R.id.qrCode_returnToProfile).setOnClickListener {
-            setViewVisibility(vmMyProfile.view.findViewById<ConstraintLayout>(R.id.QrCodePage), false)
-            setViewVisibility(vmMyProfile.view.findViewById<RelativeLayout>(R.id.profileContent), true)
+            showAHideB(profileContent, qrCodePage)
         }
     }
 

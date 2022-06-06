@@ -71,7 +71,7 @@ class PublicProfileActivity : AppCompatActivity(), OnItemClickListener, ProfileI
         setupRecycleViewForFriends()
         followings = ArrayList()
 
-        setRetToMainBtnListener()
+        // TODO remove setRetToMainBtnListener()
         setFollowingScoresBtnListener(R.id.profile_scores, R.id.profile_scroll_stat, R.id.profile_scroll_following)
         setFollowingScoresBtnListener(R.id.profile_following, R.id.profile_scroll_following, R.id.profile_scroll_stat)
 
@@ -107,14 +107,6 @@ class PublicProfileActivity : AppCompatActivity(), OnItemClickListener, ProfileI
     }
 
 
-    /**
-     * Generic listener for the return to main button.
-     */
-    private fun setRetToMainBtnListener() {
-        findViewById<FloatingActionButton>(R.id.profile_returnToMain).setOnClickListener {
-            finish()
-        }
-    }
 
     override fun setFollowingScoresBtnListener(btnId: Int, show: Int, hide: Int) {
         findViewById<Button>(btnId).setOnClickListener {
@@ -142,7 +134,7 @@ class PublicProfileActivity : AppCompatActivity(), OnItemClickListener, ProfileI
         imageGetter.fetchImage("profileImg/${user.uid}", this::setImage)
 
         if (user.uid != "") {
-            generateQrCode(user.uid)
+            generateQrCode(user.uid, findViewById(R.id.qrCode))
         }
 
         if (user.following.isNotEmpty()) {
@@ -151,7 +143,7 @@ class PublicProfileActivity : AppCompatActivity(), OnItemClickListener, ProfileI
 
     }
 
-    override fun generateQrCode(data: String) {
+    override fun generateQrCode(data: String, imgView: ImageView) {
         val size = 512
         val hints = HashMap<EncodeHintType?, Any?>()
         hints[EncodeHintType.ERROR_CORRECTION] = ErrorCorrectionLevel.H
@@ -168,7 +160,7 @@ class PublicProfileActivity : AppCompatActivity(), OnItemClickListener, ProfileI
 
         qrCodeCanvas.drawBitmap(logo, xLogo, yLogo, null)
 
-        findViewById<ImageView>(R.id.qrCode).setImageBitmap(bmp)
+        imgView.setImageBitmap(bmp)
     }
 
     override fun onItemClick(position: Int) {

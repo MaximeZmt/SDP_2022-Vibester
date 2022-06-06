@@ -1,12 +1,14 @@
 package ch.sdp.vibester.fragment
 
 import android.app.Activity
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.net.Uri
 import android.os.Bundle
 import android.text.InputType
+import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
@@ -30,7 +32,6 @@ import ch.sdp.vibester.helper.ViewModel
 import ch.sdp.vibester.user.OnItemClickListener
 import ch.sdp.vibester.user.ProfileFollowingAdapter
 import ch.sdp.vibester.user.User
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.EncodeHintType
@@ -60,7 +61,6 @@ class MyProfileFragment : Fragment(R.layout.activity_profile), OnItemClickListen
 
     private var vmMyProfile = ViewModel()
     private lateinit var qrCodePage: View
-    private lateinit var profileContent: View
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -77,7 +77,6 @@ class MyProfileFragment : Fragment(R.layout.activity_profile), OnItemClickListen
         followings = ArrayList()
 
         qrCodePage = vmMyProfile.view.findViewById<ConstraintLayout>(R.id.QrCodePage)
-        profileContent = vmMyProfile.view.findViewById<RelativeLayout>(R.id.profileContent)
 
         setFollowingScoresBtnListener(R.id.profile_scores, R.id.profile_scroll_stat, R.id.profile_scroll_following)
         setFollowingScoresBtnListener(R.id.profile_following, R.id.profile_scroll_following, R.id.profile_scroll_stat)
@@ -89,18 +88,16 @@ class MyProfileFragment : Fragment(R.layout.activity_profile), OnItemClickListen
         setEditUserNameBtnListener()
         setChangeImageBtnListener()
         setLogOutBtnListener()
-        setQrCodeListeners()
+        setShowQrCodeBtnListener()
     }
 
     private fun setViewsVisibility() {
         val editView = vmMyProfile.view.findViewById<ImageView>(R.id.editUser)
         val qrView = vmMyProfile.view.findViewById<ImageView>(R.id.showQRCode)
         val logoutView = vmMyProfile.view.findViewById<Button>(R.id.logout)
-        val returnView = vmMyProfile.view.findViewById<FloatingActionButton>(R.id.profile_returnToMain)
         setViewVisibility(editView, true)
         setViewVisibility(qrView, true)
         setViewVisibility(logoutView, true)
-        setViewVisibility(returnView, false)
     }
 
     override fun queryDatabase() {
@@ -134,7 +131,7 @@ class MyProfileFragment : Fragment(R.layout.activity_profile), OnItemClickListen
      * helper function to show dialog 
      */
     private fun showDialogWhenChangeImage() {
-        showGeneralDialog(R.string.profile_verify_change_profile_pic.toString(), false)
+        showGeneralDialog(getString(R.string.profile_verify_change_profile_pic), false)
     }
 
     /**
@@ -148,12 +145,30 @@ class MyProfileFragment : Fragment(R.layout.activity_profile), OnItemClickListen
     }
 
 
-    private fun setQrCodeListeners() {
-        val showQrCode = vmMyProfile.view.findViewById<ImageView>(R.id.showQRCode)
-        val hideQrCode = vmMyProfile.view.findViewById<FloatingActionButton>(R.id.qrCode_returnToProfile)
-        showQrCode.setOnClickListener { showAHideB(qrCodePage, profileContent) }
-        hideQrCode.setOnClickListener { showAHideB(profileContent, qrCodePage) }
+    /**
+     * Generic listener for the show qr code button.
+     */
+    private fun setShowQrCodeBtnListener() {
+        val qrDialog = AlertDialog.Builder(requireContext())
+        vmMyProfile.view.findViewById<ImageView>(R.id.showQRCode).setOnClickListener {
+            val qrView = layoutInflater.inflate(R.layout.display_qr_code, null)
+            val qrImg = qrView.findViewById<ImageView>(R.id.qrCode)
+            val uid = FireBaseAuthenticator().getCurrUID()
+            if (uid != "") {
+                generateQrCode(uid, qrImg)
+            }
+            qrDialog.setNeutralButton("CLOSE",
+                { dialogInterface: DialogInterface, i: Int -> dialogInterface.dismiss()})
+            qrDialog.setView(qrView)
+            qrDialog.create()
+
+            qrDialog.show()
+        }
+
+
     }
+
+
 
     /**
      * A function that displays the dialog
@@ -269,17 +284,14 @@ class MyProfileFragment : Fragment(R.layout.activity_profile), OnItemClickListen
 
         imageGetter.fetchImage("profileImg/${user.uid}", this::setImage)
 
-        if (user.uid != "") {
-            generateQrCode(user.uid)
-        }
-
         if (user.following.isNotEmpty()) {
             loadFollowing(user.following, dataGetter)
         }
 
     }
 
-    override fun generateQrCode(data: String) {
+
+    override fun generateQrCode(data: String, imgView: ImageView) {
         val size = 512
         val hints = HashMap<EncodeHintType?, Any?>()
         hints[EncodeHintType.ERROR_CORRECTION] = ErrorCorrectionLevel.H
@@ -296,7 +308,7 @@ class MyProfileFragment : Fragment(R.layout.activity_profile), OnItemClickListen
 
         qrCodeCanvas.drawBitmap(logo, xLogo, yLogo, null)
 
-        vmMyProfile.view.findViewById<ImageView>(R.id.qrCode).setImageBitmap(bmp)
+        imgView.setImageBitmap(bmp)
     }
 
     override fun onItemClick(position: Int) {

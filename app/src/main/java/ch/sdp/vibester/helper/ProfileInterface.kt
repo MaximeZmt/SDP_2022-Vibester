@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.view.View
+import android.widget.ImageView
 import ch.sdp.vibester.R
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.database.ImageGetter
@@ -86,7 +87,7 @@ interface ProfileInterface {
      * generate the qr code bitmap of the given data
      * @param data Qr Code data
      */
-    fun generateQrCode(data: String)
+    fun generateQrCode(data: String, imgView: ImageView)
 
     /**
      * helper function to add user from followingMap to followings

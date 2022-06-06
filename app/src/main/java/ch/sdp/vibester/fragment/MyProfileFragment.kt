@@ -10,6 +10,7 @@ import android.text.InputType
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.NestedScrollView
@@ -96,7 +97,7 @@ class MyProfileFragment : Fragment(R.layout.activity_profile), OnItemClickListen
         val editView = vmMyProfile.view.findViewById<ImageView>(R.id.editUser)
         val qrView = vmMyProfile.view.findViewById<ImageView>(R.id.showQRCode)
         val logoutView = vmMyProfile.view.findViewById<Button>(R.id.logout)
-        val returnView = vmMyProfile.view.findViewById<FloatingActionButton>(R.id.editUser)
+        val returnView = vmMyProfile.view.findViewById<AppCompatImageView>(R.id.editUser)
         setViewVisibility(editView, true)
         setViewVisibility(qrView, true)
         setViewVisibility(logoutView, true)

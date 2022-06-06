@@ -92,10 +92,10 @@ class PartyRoomActivityTest {
     fun correctCreation() {
         val ctx: Context = ApplicationProvider.getApplicationContext()
 
-        var mockRoomName = "mockName"
-        var mockUserEmailList = mutableListOf<String>("Email1", "Email2")
-        var mockSongList = mutableListOf<Pair<String, String>>(Pair("mockSong1", "mockSong2"))
-        var mockPartyRoom = PartyRoom()
+        val mockRoomName = "mockName"
+        val mockUserEmailList = mutableListOf<String>("Email1", "Email2")
+        val mockSongList = mutableListOf<Pair<String, String>>(Pair("mockSong1", "mockSong2"))
+        val mockPartyRoom = PartyRoom()
 
         mockPartyRoom.setEmailList(mockUserEmailList)
 
@@ -121,10 +121,10 @@ class PartyRoomActivityTest {
     fun correctJoin() {
         val ctx: Context = ApplicationProvider.getApplicationContext()
 
-        var mockRoomName = "mockName"
-        var mockUserEmailList = mutableListOf<String>("email1, email2")
-        var mockSongList = mutableListOf<Pair<String, String>>(Pair("mockSong1", "mockSong2"))
-        var mockPartyRoom = PartyRoom()
+        val mockRoomName = "mockName"
+        val mockUserEmailList = mutableListOf<String>("email1, email2")
+        val mockSongList = mutableListOf<Pair<String, String>>(Pair("mockSong1", "mockSong2"))
+        val mockPartyRoom = PartyRoom()
 
         mockPartyRoom.setEmailList(mockUserEmailList)
 
@@ -149,10 +149,10 @@ class PartyRoomActivityTest {
     fun correctDifficulty() {
         val ctx: Context = ApplicationProvider.getApplicationContext()
 
-        var mockRoomName = "mockRoom"
-        var mockUserEmailList = mutableListOf<String>("email1, email2")
-        var mockSongList = mutableListOf<Pair<String, String>>(Pair("mockSong1", "mockSong2"))
-        var mockPartyRoom = PartyRoom()
+        val mockRoomName = "mockRoom"
+        val mockUserEmailList = mutableListOf<String>("email1, email2")
+        val mockSongList = mutableListOf<Pair<String, String>>(Pair("mockSong1", "mockSong2"))
+        val mockPartyRoom = PartyRoom()
 
         AppPreferences.init(ctx)
         AppPreferences.setStr(ctx.getString(R.string.preferences_game_mode), "local_typing")
@@ -177,10 +177,10 @@ class PartyRoomActivityTest {
     fun correctRoomID() {
         val ctx: Context = ApplicationProvider.getApplicationContext()
 
-        var mockRoomID = "mockRoom"
-        var mockUserEmailList = mutableListOf<String>("email1, email2")
-        var mockSongList = mutableListOf<Pair<String, String>>(Pair("mockSong1", "mockSong2"))
-        var mockPartyRoom = PartyRoom()
+        val mockRoomID = "mockRoom"
+        val mockUserEmailList = mutableListOf<String>("email1, email2")
+        val mockSongList = mutableListOf<Pair<String, String>>(Pair("mockSong1", "mockSong2"))
+        val mockPartyRoom = PartyRoom()
 
         AppPreferences.init(ctx)
         AppPreferences.setStr(ctx.getString(R.string.preferences_game_mode), "local_typing")

@@ -80,7 +80,10 @@ interface ProfileInterface {
      * @param followingMap user.following
      *
      */
-    fun loadFollowing(followingMap: Map<String, Boolean>)
+    fun loadFollowing(followingMap: Map<String, Boolean>, dataGetter: DataGetter) {
+        followingMap.forEach { (userId, isFollowing) ->  if (isFollowing) dataGetter.getUserData(userId, this::addFollowing) }
+        showFriendsPosition(followings)
+    }
 
     /**
      * callback function to add one user to followings

@@ -145,14 +145,9 @@ class PublicProfileActivity : AppCompatActivity(), OnItemClickListener, ProfileI
         }
 
         if (user.following.isNotEmpty()) {
-            loadFollowing(user.following)
+            loadFollowing(user.following, dataGetter)
         }
 
-    }
-
-    override fun loadFollowing(followingMap: Map<String, Boolean>) {
-        followingMap.forEach { (userId, isFollowing) ->  if (isFollowing) dataGetter.getUserData(userId, this::addFollowing) }
-        showFriendsPosition(followings)
     }
 
     override fun generateQrCode(data: String) {

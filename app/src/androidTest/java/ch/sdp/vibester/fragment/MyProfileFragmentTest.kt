@@ -1,12 +1,9 @@
-package ch.sdp.vibester.activity.profile
+package ch.sdp.vibester.fragment
 
 import android.content.Context
-import android.content.Intent
 import android.view.View
-import androidx.core.os.bundleOf
 
 import androidx.recyclerview.widget.RecyclerView
-import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.UiController
@@ -17,16 +14,13 @@ import androidx.test.espresso.action.ViewActions.scrollTo
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.intent.Intents
-import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.matcher.BoundedMatcher
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
-import ch.sdp.vibester.activity.MainActivity
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.database.ImageGetter
-import ch.sdp.vibester.fragment.AuthenticationFragment
 import ch.sdp.vibester.launchFragmentInHiltContainer
 import ch.sdp.vibester.user.User
 import com.google.firebase.auth.FirebaseUser

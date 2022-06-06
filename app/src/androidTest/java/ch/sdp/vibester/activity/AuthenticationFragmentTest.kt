@@ -7,17 +7,12 @@ import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.closeSoftKeyboard
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
-import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
-import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import ch.sdp.vibester.R
-import ch.sdp.vibester.TestMode
-import ch.sdp.vibester.activity.profile.MyProfileFragment
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.fragment.AuthenticationFragment
-import ch.sdp.vibester.fragment.GameSetupFragment
 import ch.sdp.vibester.launchFragmentInHiltContainer
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task

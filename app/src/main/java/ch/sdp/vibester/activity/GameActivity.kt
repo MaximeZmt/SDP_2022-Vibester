@@ -122,13 +122,11 @@ open class GameActivity : AppCompatActivity() {
         val intent = Intent(this, GameEndingActivity::class.java)
 
         //Set list of incorrect songs
-        val incorrectSongList: ArrayList<String> = ArrayList(
-            gameManager.getWrongSongs().map { it.getTrackName() + " - " + it.getArtistName() })
+        val incorrectSongList: ArrayList<String> = createSongList(gameManager.getWrongSongs())
         intent.putStringArrayListExtra("incorrectSongList", incorrectSongList)
 
         //Set list of correct songs
-        val correctSongList: ArrayList<String> = ArrayList(
-            gameManager.getCorrectSongs().map { it.getTrackName() + " - " + it.getArtistName() })
+        val correctSongList: ArrayList<String> = createSongList(gameManager.getCorrectSongs())
         intent.putStringArrayListExtra("correctSongList", correctSongList)
 
         // Set statistics
@@ -144,6 +142,11 @@ open class GameActivity : AppCompatActivity() {
         intent.putStringArrayListExtra("statValues", statVal)
 
         startActivity(intent)
+    }
+
+
+    private fun createSongList(songs: MutableList<Song>): ArrayList<String> {
+        return ArrayList(songs.map { it.getTrackName() + " - " + it.getArtistName() })
     }
 
     /**

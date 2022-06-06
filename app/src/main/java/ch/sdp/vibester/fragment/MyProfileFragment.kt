@@ -179,17 +179,6 @@ class MyProfileFragment : Fragment(R.layout.activity_profile), OnItemClickListen
 
 
     /**
-     * Sets the given view's visibility.
-     * @param view: The given view to modify.
-     * @param isVisible: The indicator of which visibility to choose.
-     * True for VISIBLE, false for GONE.
-     */
-    private fun setViewVisibility(view: View, isVisible: Boolean){
-        view.visibility = if (isVisible) View.VISIBLE else View.GONE
-    }
-
-
-    /**
      * A function that displays the dialog
      * @param title title of the dialog
      * @param hint hint of the text in the dialog

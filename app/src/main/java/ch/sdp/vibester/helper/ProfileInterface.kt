@@ -1,6 +1,7 @@
 package ch.sdp.vibester.helper
 
 import android.net.Uri
+import android.view.View
 import ch.sdp.vibester.R
 import ch.sdp.vibester.user.ProfileFollowingAdapter
 import ch.sdp.vibester.user.User
@@ -75,9 +76,7 @@ interface ProfileInterface {
      * @param followingMap user.following
      *
      */
-    fun loadFollowing(followingMap: Map<String, Boolean>) {
-
-    }
+    fun loadFollowing(followingMap: Map<String, Boolean>)
 
     /**
      * callback function to add one user to followings
@@ -85,5 +84,15 @@ interface ProfileInterface {
      */
     fun addFollowing(following: User) {
         followings?.add(following)
+    }
+
+    /**
+     * Sets the given view's visibility.
+     * @param view: The given view to modify.
+     * @param isVisible: The indicator of which visibility to choose.
+     * True for VISIBLE, false for GONE.
+     */
+    fun setViewVisibility(view: View, isVisible: Boolean) {
+        view.visibility = if (isVisible) View.VISIBLE else View.GONE
     }
 }

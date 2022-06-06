@@ -248,6 +248,7 @@ class MyProfileFragment : Fragment(R.layout.activity_profile), OnItemClickListen
             showImageChangeDialog(name)
         }
     }
+
     private fun setupRecycleViewForFriends() {
         vmMyProfile.view.findViewById<RecyclerView>(R.id.profile_followingList).apply {
             layoutManager = LinearLayoutManager(context)
@@ -288,7 +289,7 @@ class MyProfileFragment : Fragment(R.layout.activity_profile), OnItemClickListen
      * @param a id of the view to show
      * @param b id of the view to hide
      */
-    fun showAHideB(a: Int, b: Int) {
+    private fun showAHideB(a: Int, b: Int) {
         vmMyProfile.view.findViewById<NestedScrollView>(a).visibility = View.VISIBLE
         vmMyProfile.view.findViewById<NestedScrollView>(b).visibility = View.GONE
     }

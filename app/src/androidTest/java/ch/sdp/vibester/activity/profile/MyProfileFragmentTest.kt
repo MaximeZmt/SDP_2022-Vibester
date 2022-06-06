@@ -343,9 +343,9 @@ class MyProfileFragmentTest {
             themeResId = R.style.AppTheme
         )
 
-        onView(withId(R.id.profile_image_CardView)).perform(click())
+        onView(withId(R.id.profile_image_ImageView)).perform(click())
         onView(withText("NO")).perform(click())
-        onView(withId(R.id.profile_image_CardView)).check(matches(isDisplayed()))
+        onView(withId(R.id.profile_image_ImageView)).check(matches(isDisplayed()))
     }
 
     @Test

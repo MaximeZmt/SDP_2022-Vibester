@@ -55,7 +55,8 @@ class MyProfileFragment : Fragment(R.layout.activity_profile), OnItemClickListen
     override val imageRequestCode = 100
 
     override var followings: MutableList<User> ? = null
-    override var profileFollowingAdapter: ProfileFollowingAdapter?= null
+    override var profileFollowingAdapter: ProfileFollowingAdapter ?= null
+
     private var vmMyProfile = ViewModel()
 
 
@@ -131,20 +132,13 @@ class MyProfileFragment : Fragment(R.layout.activity_profile), OnItemClickListen
      * @param id ID of the image int the database
      */
     private fun updateImage(id: String) {
-        deleteImage(id)
+        imageGetter.deleteImage("profileImg/${id}")
 
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
         startActivityForResult(intent, imageRequestCode)
     }
 
-    /**
-     * A function that deletes an image from the database.
-     * @param id ID of the image int the database
-     */
-    private fun deleteImage(id: String) {
-        imageGetter.deleteImage("profileImg/${id}")
-    }
 
     /**
      * Generic listener for the log out button.
@@ -202,25 +196,11 @@ class MyProfileFragment : Fragment(R.layout.activity_profile), OnItemClickListen
                 dataGetter.setFieldValue(FireBaseAuthenticator().getCurrUID(), "username",  input.text.toString())
             }
         }
+
         builder.setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }
         builder.show()
     }
 
-    /**
-     * A function shows an image change dialog.
-     * @param title title of the dialog
-     */
-    private fun showImageChangeDialog(title: String) {
-        val builder: AlertDialog.Builder = AlertDialog.Builder(vmMyProfile.ctx)
-        builder.setTitle(title)
-
-        builder.setPositiveButton("Yes") { _, _ ->
-            dataGetter.getCurrentUser()?.let { updateImage(it.uid) }
-        }
-
-        builder.setNegativeButton("No") { dialog, _ -> dialog.cancel() }
-        builder.show()
-    }
 
     /**
      * A function shows a dialog.
@@ -235,7 +215,16 @@ class MyProfileFragment : Fragment(R.layout.activity_profile), OnItemClickListen
             showTextDialog(title, hint, R.id.username, name)
         }
         else {
-            showImageChangeDialog(name)
+            // showImageChangeDialog
+            val builder: AlertDialog.Builder = AlertDialog.Builder(vmMyProfile.ctx)
+            builder.setTitle(name)
+
+            builder.setPositiveButton("Yes") { _, _ ->
+                dataGetter.getCurrentUser()?.let { updateImage(it.uid) }
+            }
+
+            builder.setNegativeButton("No") { dialog, _ -> dialog.cancel() }
+            builder.show()
         }
     }
 

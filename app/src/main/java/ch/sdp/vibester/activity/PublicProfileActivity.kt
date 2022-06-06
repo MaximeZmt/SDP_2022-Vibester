@@ -74,7 +74,6 @@ class PublicProfileActivity : AppCompatActivity(), OnItemClickListener, ProfileI
         setFollowingScoresBtnListener(R.id.profile_following, R.id.profile_scroll_following, R.id.profile_scroll_stat)
 
         queryDatabase()
-
     }
 
     override fun queryDatabase() {

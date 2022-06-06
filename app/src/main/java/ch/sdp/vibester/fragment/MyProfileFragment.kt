@@ -248,7 +248,9 @@ class MyProfileFragment : Fragment(R.layout.activity_profile), OnItemClickListen
 
     override fun setFollowingScoresBtnListener(btnId: Int, show: Int, hide: Int) {
         vmMyProfile.view.findViewById<Button>(btnId).setOnClickListener {
-            showAHideB(vmMyProfile.view.findViewById<NestedScrollView>(show), vmMyProfile.view.findViewById<NestedScrollView>(hide))
+            val showView = vmMyProfile.view.findViewById<NestedScrollView>(show)
+            val hideView = vmMyProfile.view.findViewById<NestedScrollView>(hide)
+            showAHideB(showView, hideView)
         }
     }
 

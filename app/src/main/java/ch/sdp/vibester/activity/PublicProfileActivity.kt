@@ -60,10 +60,12 @@ class PublicProfileActivity : AppCompatActivity(), OnItemClickListener, ProfileI
         setContentView(R.layout.activity_profile)
 
         userId = intent.getStringExtra("UserId").toString()
+        val statView = findViewById<NestedScrollView>(R.id.profile_scroll_stat)
+        val followingView = findViewById<NestedScrollView>(R.id.profile_scroll_following)
         if (intent.getStringExtra("ScoresOrFollowing") == R.string.profile_scores.toString()) {
-            showAHideB(findViewById<NestedScrollView>(R.id.profile_scroll_stat), findViewById<NestedScrollView>(R.id.profile_scroll_following))
+            showAHideB(statView, followingView)
         } else if (intent.getStringExtra("ScoresOrFollowing") == R.string.profile_following.toString()) {
-            showAHideB(findViewById<NestedScrollView>(R.id.profile_scroll_following), findViewById<NestedScrollView>(R.id.profile_scroll_stat))
+            showAHideB(followingView, statView)
         }
 
         setupRecycleViewForFriends()

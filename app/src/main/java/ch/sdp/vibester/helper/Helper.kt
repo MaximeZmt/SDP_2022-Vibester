@@ -60,4 +60,8 @@ class Helper {
         val section = if (scoresOrFollowing) R.string.profile_scores else R.string.profile_following
         return mapOf(Pair("UserId", uid), Pair("ScoresOrFollowing", section.toString()))
     }
+
+    fun getShuffledList(songList: MutableList<Pair<String, String>>): MutableList<Pair<String, String>> {
+        return songList.asSequence().shuffled().toMutableList()
+    }
 }

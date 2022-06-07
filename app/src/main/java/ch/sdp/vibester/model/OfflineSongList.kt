@@ -1,8 +1,6 @@
 package ch.sdp.vibester.model
 
-import android.content.Context
-import android.os.Environment
-import ch.sdp.vibester.api.LastfmMethod
+import ch.sdp.vibester.helper.Helper
 import java.io.BufferedReader
 import java.io.File
 import java.io.FileReader
@@ -68,7 +66,7 @@ class OfflineSongList(externalDir: File) {
      * @return MutableList<Pair<String,String>> of type Pair("$songName", "$artistName")
      */
     fun getShuffledDownloadedSongList(): MutableList<Pair<String, String>> {
-        return songList.asSequence().shuffled().toMutableList()
+        return Helper().getShuffledList(songList)
     }
 
     /**

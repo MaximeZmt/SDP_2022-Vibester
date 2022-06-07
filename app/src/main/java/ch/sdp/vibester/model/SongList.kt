@@ -1,6 +1,7 @@
 package ch.sdp.vibester.model
 
 import ch.sdp.vibester.api.LastfmMethod
+import ch.sdp.vibester.helper.Helper
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -70,7 +71,7 @@ class SongList(jsonMeta: String, method: String) {
      * @return MutableList<Pair<String,String>> of type Pair("$songName", "$artistName")
      */
     fun getShuffledSongList(): MutableList<Pair<String, String>> {
-        return songList.asSequence().shuffled().toMutableList()
+        return Helper().getShuffledList(songList)
     }
 
     /**

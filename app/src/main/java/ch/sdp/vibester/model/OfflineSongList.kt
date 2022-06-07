@@ -10,7 +10,7 @@ import java.io.FileReader
  * Mainly, it creates a list of songs in the form Pair("$songName", "$artistName")
  */
 class OfflineSongList(externalDir: File) {
-    private var songList = mutableListOf<Pair<String, String>>()
+    private var offlineSongList = mutableListOf<Pair<String, String>>()
     private val page = "1"
     private val songsPerPage = "100"
     private val totalPages = "20"
@@ -41,7 +41,7 @@ class OfflineSongList(externalDir: File) {
                 if (trimmed.isNotEmpty()) {
                     val split = trimmed.split("-")
                     if (split.size == 2) {
-                        songList.add(Pair(split[0].trim(), split[1].trim()))
+                        offlineSongList.add(Pair(split[0].trim(), split[1].trim()))
                     }
                 }
                 currentLine = reader.readLine()
@@ -56,7 +56,7 @@ class OfflineSongList(externalDir: File) {
      * @return MutableList<Pair<String,String>> of type Pair("$songName", "$artistName")
      */
     fun getSongList(): MutableList<Pair<String, String>> {
-        return songList
+        return offlineSongList
     }
 
     /**
@@ -64,7 +64,7 @@ class OfflineSongList(externalDir: File) {
      * @return MutableList<Pair<String,String>> of type Pair("$songName", "$artistName")
      */
     fun getShuffledDownloadedSongList(): MutableList<Pair<String, String>> {
-        return Helper().getShuffledList(songList)
+        return Helper().getShuffledList(offlineSongList)
     }
 
     /**

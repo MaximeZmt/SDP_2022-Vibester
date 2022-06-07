@@ -29,7 +29,8 @@ class SongListAdapterForEndGame constructor(
      * Create a RecycleView layout with the Song view as an item
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SongListForEndGameViewHolder {
-        val view = AdapterHelper().createViewForViewHolder(parent, R.layout.song_item_download_layout)
+        val layout = R.layout.song_item_download_layout
+        val view = AdapterHelper().createViewForViewHolder(parent, layout)
         return SongListForEndGameViewHolder(view)
     }
 

@@ -112,9 +112,7 @@ class ScoreBoardFragment : Fragment(R.layout.fragment_layout_scoreboard), OnItem
      */
     override fun onItemClick(position: Int) {
         val playerId = players[position].uid
-        //mapOf(Pair("UserId", players[position].uid), Pair("ScoresOrFollowing", R.string.profile_scores.toString()))
-        IntentSwitcher.switch(vmScoreBoard.ctx,
-            PublicProfileActivity::class.java,
+        IntentSwitcher.switch(vmScoreBoard.ctx, PublicProfileActivity::class.java,
             Helper().goToPlayerProfileWithSection(playerId, true))
     }
 

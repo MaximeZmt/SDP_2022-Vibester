@@ -114,7 +114,6 @@ class SearchUserFragment : Fragment(R.layout.fragment_layout_search_user), OnIte
     }
 
     override fun onItemClick(position: Int) {
-        //val extras = mapOf(Pair("UserId", users[position].uid), Pair("ScoresOrFollowing", R.string.profile_following.toString()))
         val extras = Helper().goToPlayerProfileWithSection(users[position].uid, false)
         IntentSwitcher.switch(vmSearchUser.ctx, PublicProfileActivity::class.java, extras)
     }

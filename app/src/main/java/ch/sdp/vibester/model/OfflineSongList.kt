@@ -31,18 +31,17 @@ class OfflineSongList(externalDir: File) {
      * Saves the list of songs in songList
      */
     private fun fillList() {
-        var records = File(externals, "records.txt")
-
+        val records = File(externals, "records.txt")
 
         if (!records.exists() || records.length() == 0L) {
             //There are no downloaded songs, keep the song list empty
             emptySongs = true
         } else {
-            var reader = BufferedReader(FileReader(records))
+            val reader = BufferedReader(FileReader(records))
             var currentLine = reader.readLine()
 
             while (currentLine != null) {
-                var trimmed = currentLine.trim()
+                val trimmed = currentLine.trim()
                 if (trimmed.isNotEmpty()) {
                     val split = trimmed.split("-")
                     if (split.size == 2) {

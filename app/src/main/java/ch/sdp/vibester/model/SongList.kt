@@ -10,8 +10,7 @@ import org.json.JSONObject
  * Mainly, it creates a list of songs in the form Pair("$songName", "$artistName")
  * @param jsonMeta: Lastfm fetched data
  */
-class SongList(jsonMeta: String, method: String) {
-    private var songList = mutableListOf<Pair<String, String>>()
+class SongList(jsonMeta: String, method: String): SuperSongList() {
     private var page = ""
     private var songsPerPage = ""
     private var totalPages = ""
@@ -58,21 +57,6 @@ class SongList(jsonMeta: String, method: String) {
         }
     }
 
-    /**
-     * Getter that return songs for the given tag
-     * @return MutableList<Pair<String,String>> of type Pair("$songName", "$artistName")
-     */
-    fun getSongList(): MutableList<Pair<String, String>> {
-        return songList
-    }
-
-    /**
-     * Getter that return shuffled song list
-     * @return MutableList<Pair<String,String>> of type Pair("$songName", "$artistName")
-     */
-    fun getShuffledSongList(): MutableList<Pair<String, String>> {
-        return Helper().getShuffledList(songList)
-    }
 
     /**
      * Getter that return page number from the query

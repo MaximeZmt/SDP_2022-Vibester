@@ -1,6 +1,5 @@
 package ch.sdp.vibester.model
 
-import ch.sdp.vibester.helper.Helper
 import java.io.BufferedReader
 import java.io.File
 import java.io.FileReader
@@ -9,8 +8,7 @@ import java.io.FileReader
  * Process the fetched data from the external storage of the app.
  * Mainly, it creates a list of songs in the form Pair("$songName", "$artistName")
  */
-class OfflineSongList(externalDir: File) {
-    private var offlineSongList = mutableListOf<Pair<String, String>>()
+class OfflineSongList(externalDir: File): SuperSongList() {
     private val page = "1"
     private val songsPerPage = "100"
     private val totalPages = "20"
@@ -41,7 +39,7 @@ class OfflineSongList(externalDir: File) {
                 if (trimmed.isNotEmpty()) {
                     val split = trimmed.split("-")
                     if (split.size == 2) {
-                        offlineSongList.add(Pair(split[0].trim(), split[1].trim()))
+                        songList.add(Pair(split[0].trim(), split[1].trim()))
                     }
                 }
                 currentLine = reader.readLine()
@@ -52,19 +50,11 @@ class OfflineSongList(externalDir: File) {
     }
 
     /**
-     * Getter that return songs for the given tag
-     * @return MutableList<Pair<String,String>> of type Pair("$songName", "$artistName")
-     */
-    fun getSongList(): MutableList<Pair<String, String>> {
-        return offlineSongList
-    }
-
-    /**
      * Getter that return shuffled song list
      * @return MutableList<Pair<String,String>> of type Pair("$songName", "$artistName")
      */
     fun getShuffledDownloadedSongList(): MutableList<Pair<String, String>> {
-        return Helper().getShuffledList(offlineSongList)
+        return super.getShuffledSongList()
     }
 
     /**

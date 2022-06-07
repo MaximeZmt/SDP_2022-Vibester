@@ -103,9 +103,10 @@ class BuzzerScreenActivity : GameActivity() {
         gameIsOn = true
         toggleBtnVisibility(R.id.skip_buzzer, true)
         findViewById<LinearLayout>(R.id.answer).visibility=View.INVISIBLE
-        val trackName = gameManager.getCurrentSong().getTrackName()
-        val artist = gameManager.getCurrentSong().getArtistName()
-        findViewById<TextView>(R.id.songTitle).text = "$trackName - $artist"
+        //val trackName = gameManager.getCurrentSong().getTrackName()
+        //val artist = gameManager.getCurrentSong().getArtistName()
+        findViewById<TextView>(R.id.songTitle).text =
+            "${gameManager.getCurrentSong().getTrackName()} - ${gameManager.getCurrentSong().getArtistName()}"
         //Checks if internet is available. If not, skip the loading of the artwork from url.
         if (gameManager.getInternet()) {
             Glide.with(ctx).load(gameManager.getCurrentSong().getArtworkUrl()).override(artworkDim, artworkDim).into(findViewById(R.id.songArtwork))
@@ -293,7 +294,7 @@ class BuzzerScreenActivity : GameActivity() {
     /**
      * Fires an intent from the Gamescreen to the Ending Screen
      */
-    fun switchToEnding(gameManager: GameManager) {
+    private fun switchToEnding(gameManager: GameManager) {
         checkAndStopPlayer(gameManager)
         val intent = Intent(this, GameEndingActivity::class.java)
 

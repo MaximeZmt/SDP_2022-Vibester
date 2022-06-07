@@ -1,8 +1,5 @@
 package ch.sdp.vibester.model
 
-import android.content.Context
-import android.os.Environment
-import ch.sdp.vibester.api.LastfmMethod
 import java.io.BufferedReader
 import java.io.File
 import java.io.FileReader
@@ -10,11 +7,8 @@ import java.io.FileReader
 /**
  * Process the fetched data from the external storage of the app.
  * Mainly, it creates a list of songs in the form Pair("$songName", "$artistName")
- * @param ctx: Context of the caller, to fetch the downloaded folder
- * @param method: Chosen playlist type
  */
-class OfflineSongList(externalDir: File) {
-    private var songList = mutableListOf<Pair<String, String>>()
+class OfflineSongList(externalDir: File): SuperSongList() {
     private val page = "1"
     private val songsPerPage = "100"
     private val totalPages = "20"
@@ -31,18 +25,17 @@ class OfflineSongList(externalDir: File) {
      * Saves the list of songs in songList
      */
     private fun fillList() {
-        var records = File(externals, "records.txt")
-
+        val records = File(externals, "records.txt")
 
         if (!records.exists() || records.length() == 0L) {
             //There are no downloaded songs, keep the song list empty
             emptySongs = true
         } else {
-            var reader = BufferedReader(FileReader(records))
+            val reader = BufferedReader(FileReader(records))
             var currentLine = reader.readLine()
 
             while (currentLine != null) {
-                var trimmed = currentLine.trim()
+                val trimmed = currentLine.trim()
                 if (trimmed.isNotEmpty()) {
                     val split = trimmed.split("-")
                     if (split.size == 2) {
@@ -57,19 +50,11 @@ class OfflineSongList(externalDir: File) {
     }
 
     /**
-     * Getter that return songs for the given tag
-     * @return MutableList<Pair<String,String>> of type Pair("$songName", "$artistName")
-     */
-    fun getSongList(): MutableList<Pair<String, String>> {
-        return songList
-    }
-
-    /**
      * Getter that return shuffled song list
      * @return MutableList<Pair<String,String>> of type Pair("$songName", "$artistName")
      */
     fun getShuffledDownloadedSongList(): MutableList<Pair<String, String>> {
-        return songList.asSequence().shuffled().toMutableList()
+        return super.getShuffledSongList()
     }
 
     /**

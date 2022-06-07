@@ -45,9 +45,8 @@ class TypingGameActivity : GameActivity() {
         val inputTxt = findViewById<EditText>(R.id.yourGuessET)
         setGuessLayoutListener(inputTxt, guessLayout)
 
-        findViewById<Button>(R.id.skip_typing).setOnClickListener {
-            checkAnswer(ctx, null, gameManager)
-        }
+        val skipBtn = findViewById<Button>(R.id.skip_typing)
+        skipBtn.setOnClickListener { checkAnswer(ctx, null, gameManager) }
     }
 
     /**

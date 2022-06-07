@@ -55,7 +55,8 @@ class GameEndingActivity : DownloadFunctionalityActivity(), OnItemClickListener 
 
         setUpRecyclerView()
 
-        Helper().setReturnToMainListener(findViewById<FloatingActionButton>(R.id.end_returnToMain), this)
+        val returnBtn = findViewById<FloatingActionButton>(R.id.end_returnToMain)
+        Helper().setReturnToMainListener(returnBtn, this)
 
         createDownloadReceiver(null)
     }

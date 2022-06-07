@@ -37,7 +37,7 @@ class SongListTest {
         assertEquals(songName, mySongsList.getShuffledSongList().get(0).first)
 
 
-        assertEquals(inputSongsList, mySongsList.getSongList())
+        assertEquals(inputSongsList, mySongsList.songList)
         assertEquals(page, mySongsList.getPage())
         assertEquals(songsPerPage, mySongsList.getSongsPerPage())
         assertEquals(totalPages, mySongsList.getTotalPages())

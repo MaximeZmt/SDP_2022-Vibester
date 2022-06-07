@@ -44,7 +44,7 @@ class AuthenticationFragment : Fragment(R.layout.fragment_layout_authentication)
 
     private lateinit var auth: FirebaseAuth
 
-    private lateinit var authentication_status: TextView
+    private lateinit var authenticationStatus: TextView
     private lateinit var username: EditText
     private lateinit var password: EditText
     private var vmAuth = ViewModel()
@@ -55,13 +55,10 @@ class AuthenticationFragment : Fragment(R.layout.fragment_layout_authentication)
         super.onViewCreated(view, savedInstanceState)
         vmAuth.view = view
         vmAuth.ctx = view.context
-        val googleSignInToken =
-            "7687769601-qiqrp6kt48v89ub76k9lkpefh9ls36ha.apps.googleusercontent.com"
+        val googleSignInToken = "7687769601-qiqrp6kt48v89ub76k9lkpefh9ls36ha.apps.googleusercontent.com"
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(googleSignInToken)
-            .requestEmail()
-            .build()
+            .requestIdToken(googleSignInToken).requestEmail().build()
 
         googleSignInClient = GoogleSignIn.getClient(vmAuth.ctx, gso)
 
@@ -69,16 +66,16 @@ class AuthenticationFragment : Fragment(R.layout.fragment_layout_authentication)
 
         username = vmAuth.view.findViewById(R.id.username)
         password = vmAuth.view.findViewById(R.id.password)
-        authentication_status = vmAuth.view.findViewById(R.id.authentication_status)
+        authenticationStatus = vmAuth.view.findViewById(R.id.authentication_status)
 
-        vmAuth.view.findViewById<Button>(R.id.createAcc)
-            .setOnClickListener { createAccountListener() }
-        vmAuth.view.findViewById<Button>(R.id.logIn)
-            .setOnClickListener { logInListener() }
-        vmAuth.view.findViewById<Button>(R.id.googleBtn)
-            .setOnClickListener { googleSignInListener() }
-        vmAuth.view.findViewById<Button>(R.id.forgotPassword)
-            .setOnClickListener { resetPasswordListener() }
+        val createAccount = vmAuth.view.findViewById<Button>(R.id.createAcc)
+        createAccount.setOnClickListener { createAccountListener() }
+        val logIn = vmAuth.view.findViewById<Button>(R.id.logIn)
+        logIn.setOnClickListener { logInListener() }
+        val google = vmAuth.view.findViewById<Button>(R.id.googleBtn)
+        google.setOnClickListener { googleSignInListener() }
+        val forgetPass = vmAuth.view.findViewById<Button>(R.id.forgotPassword)
+        forgetPass.setOnClickListener { resetPasswordListener() }
     }
 
     /**
@@ -106,7 +103,7 @@ class AuthenticationFragment : Fragment(R.layout.fragment_layout_authentication)
     /**
      * Listener bound to the "Reset Password" button in the Authentication activity.
      */
-    fun resetPasswordListener() {
+    private fun resetPasswordListener() {
         resetPassword(username.text.toString())
     }
 
@@ -150,8 +147,8 @@ class AuthenticationFragment : Fragment(R.layout.fragment_layout_authentication)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     Log.d(getString(R.string.log_tag), "signInWithCredential:success")
-                    if (task.getResult().additionalUserInfo != null) {
-                        createAcc = task.getResult().additionalUserInfo!!.isNewUser
+                    if (task.result.additionalUserInfo != null) {
+                        createAcc = task.result.additionalUserInfo!!.isNewUser
                         if (createAcc) {
                             createAccount()
                         }
@@ -170,23 +167,23 @@ class AuthenticationFragment : Fragment(R.layout.fragment_layout_authentication)
 
     /**
      * A function validates email and password
-     * @param email email
-     * @param password passwprd
+     * @param username username
+     * @param password password
      * @return validity of email and password
      */
     private fun credentialsValidation(username: String, password: String): Boolean {
         if (username.isEmpty() || password.isEmpty()) {
-            authentication_status.setText(R.string.authentication_emptyField)
+            authenticationStatus.setText(R.string.authentication_emptyField)
             return false
         }
 
         if (!username.contains('@')) {
-            authentication_status.setText(R.string.authentication_notAnEmail)
+            authenticationStatus.setText(R.string.authentication_notAnEmail)
             return false
         }
 
         if (password.length < 6) {
-            authentication_status.setText(R.string.authentication_shortPassword)
+            authenticationStatus.setText(R.string.authentication_shortPassword)
             return false
         }
         return true
@@ -254,12 +251,11 @@ class AuthenticationFragment : Fragment(R.layout.fragment_layout_authentication)
 
     /**
      *  Reset Password function
-     *  @param email email adress for the password reset
+     *  @param email email address for the password reset
      */
     private fun resetPassword(email: String) {
         auth.sendPasswordResetEmail(email).addOnFailureListener {
-            Toast.makeText(vmAuth.ctx, R.string.authentication_forgotPassword, Toast.LENGTH_SHORT)
-                .show()
+            Toast.makeText(vmAuth.ctx, R.string.authentication_forgotPassword, Toast.LENGTH_SHORT).show()
         }
     }
 }

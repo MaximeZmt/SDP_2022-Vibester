@@ -69,7 +69,7 @@ class ScoreBoardFragmentTest {
                 )
             )
 
-        onView(withId(R.id.profileContent)).check(matches(isDisplayed()))
+        onView(withId(R.id.profileLayout)).check(matches(isDisplayed()))
         onView(withId(R.id.profileStatistics)).check(matches(isDisplayed()))
     }
 

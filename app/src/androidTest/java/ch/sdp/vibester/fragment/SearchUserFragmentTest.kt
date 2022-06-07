@@ -126,7 +126,7 @@ class SearchUserFragmentTest {
                 )
             )
 
-        onView(withId(R.id.profileContent)).check(matches(isDisplayed()))
+        onView(withId(R.id.profileLayout)).check(matches(isDisplayed()))
     }
 
     @Test

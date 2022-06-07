@@ -42,17 +42,19 @@ class GameSetupFragment : Fragment(R.layout.fragment_layout_game_setup){
     }
 
     private fun setGameModeListeners() {
-        vmGameSetup.view.findViewById<Button>(R.id.local_buzzer_game_button)
-            .setOnClickListener { chooseGame("local_buzzer", GameManager()) }
-        vmGameSetup.view.findViewById<Button>(R.id.local_typing_game_button)
-            .setOnClickListener { chooseGame("local_typing", GameManager()) }
-        vmGameSetup.view.findViewById<Button>(R.id.local_lyrics_game_button)
-            .setOnClickListener{ chooseGame("local_lyrics", GameManager()) }
-        vmGameSetup.view.findViewById<Button>(R.id.online_buzzer_game_button)
-            .setOnClickListener { chooseGame("online_buzzer", GameManager()) }
-        vmGameSetup.view.findViewById<Button>(R.id.offline_game_button)
-            .setOnClickListener { chooseGame("local_buzzer", GameManager(), true) }
+        val localBuzzer = vmGameSetup.view.findViewById<Button>(R.id.local_buzzer_game_button)
+        val localTyping = vmGameSetup.view.findViewById<Button>(R.id.local_typing_game_button)
+        val localLyric = vmGameSetup.view.findViewById<Button>(R.id.local_lyrics_game_button)
+        val onlineBuzzer = vmGameSetup.view.findViewById<Button>(R.id.online_buzzer_game_button)
+        val offlineBuzzer = vmGameSetup.view.findViewById<Button>(R.id.offline_game_button)
+        localBuzzer.setOnClickListener { chooseGame("local_buzzer", GameManager()) }
+        localTyping.setOnClickListener { chooseGame("local_typing", GameManager()) }
+        localLyric.setOnClickListener{ chooseGame("local_lyrics", GameManager()) }
+        onlineBuzzer.setOnClickListener { chooseGame("online_buzzer", GameManager()) }
+        offlineBuzzer.setOnClickListener { chooseGame("local_buzzer", GameManager(), true) }
     }
+
+
 
     /**
      * Set game mode. Set appropriate GameManager.

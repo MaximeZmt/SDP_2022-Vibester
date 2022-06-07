@@ -30,7 +30,7 @@
         tools:layout="@layout/activity_choose_party_room"/>
 
     <fragment android:id="@+id/fragment_my_profile"
-        android:name="ch.sdp.vibester.activity.profile.MyProfileFragment"
+        android:name="ch.sdp.vibester.fragment.MyProfileFragment"
         tools:layout="@layout/activity_profile"/>
 
     <fragment android:id="@+id/fragment_auth"

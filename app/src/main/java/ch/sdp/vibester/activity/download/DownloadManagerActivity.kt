@@ -30,10 +30,8 @@ class DownloadManagerActivity : AppCompatActivity(), OnItemClickListener {
 
         setContentView(R.layout.activity_download_manager)
 
-        Helper().setReturnToMainListener(
-            findViewById<FloatingActionButton>(R.id.downloadManager_returnToMain),
-            this
-        )
+        val returnBtn = findViewById<FloatingActionButton>(R.id.downloadManager_returnToMain)
+        Helper().setReturnToMainListener(returnBtn, this)
 
         setUpRecyclerView()
     }

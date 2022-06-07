@@ -8,8 +8,6 @@ import java.io.FileReader
 /**
  * Process the fetched data from the external storage of the app.
  * Mainly, it creates a list of songs in the form Pair("$songName", "$artistName")
- * @param ctx: Context of the caller, to fetch the downloaded folder
- * @param method: Chosen playlist type
  */
 class OfflineSongList(externalDir: File) {
     private var songList = mutableListOf<Pair<String, String>>()

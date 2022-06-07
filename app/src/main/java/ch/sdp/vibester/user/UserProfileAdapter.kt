@@ -103,7 +103,8 @@ class UserProfileAdapter constructor(
                         dataGetter.setFollowing(currentUser.uid, user.uid)
                         changeBtnToImage()
                     } else {
-                        Toast.makeText(it.context, R.string.searchUser_pleaseLogInFirst, Toast.LENGTH_SHORT).show()
+                        val text = R.string.searchUser_pleaseLogInFirst
+                        Toast.makeText(it.context, text, Toast.LENGTH_SHORT).show()
                     }
                 }
             }

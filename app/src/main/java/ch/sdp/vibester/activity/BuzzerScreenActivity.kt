@@ -75,8 +75,7 @@ class BuzzerScreenActivity : GameActivity() {
             buildScores(getPlayers, allPoints)
             buildBuzzers(getPlayers, findViewById(R.id.answer))
 
-            val skipBtn = findViewById<Button>(R.id.skip_buzzer)
-            skipBtn.setOnClickListener { timeoutAnswer(ctx, null, gameManager) }
+            findViewById<Button>(R.id.skip_buzzer).setOnClickListener { timeoutAnswer(ctx, null, gameManager) }
             setAnswerButton(ctx, findViewById(R.id.buttonCorrect), buzzersToRows)
             setAnswerButton(ctx, findViewById(R.id.buttonWrong), buzzersToRows)
             setNextButton(ctx, gameManager)

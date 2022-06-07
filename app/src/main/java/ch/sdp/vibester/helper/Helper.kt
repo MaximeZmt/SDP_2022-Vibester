@@ -5,12 +5,14 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.view.View
 import android.widget.ImageView
+import ch.sdp.vibester.R
 import ch.sdp.vibester.activity.MainActivity
 import ch.sdp.vibester.api.BitmapGetterApi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import java.io.Serializable
 import java.util.concurrent.TimeUnit
 
 class Helper {
@@ -48,5 +50,14 @@ class Helper {
         btn.setOnClickListener {
             IntentSwitcher.switch(ctx, MainActivity::class.java)
         }
+    }
+
+    /**
+     * @param uid uid of the player
+     * @param scoresOrFollowing True goes scores False goes to following
+     */
+    fun goToPlayerProfileWithSection(uid: String, scoresOrFollowing: Boolean): Map<String, Serializable> {
+        val section = if (scoresOrFollowing) R.string.profile_scores else R.string.profile_following
+        return mapOf(Pair("UserId", uid), Pair("ScoresOrFollowing", section.toString()))
     }
 }

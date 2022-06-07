@@ -14,6 +14,7 @@ import ch.sdp.vibester.activity.PublicProfileActivity
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.database.ImageGetter
+import ch.sdp.vibester.helper.Helper
 import ch.sdp.vibester.helper.IntentSwitcher
 import ch.sdp.vibester.helper.ViewModel
 import ch.sdp.vibester.user.OnItemClickListener
@@ -113,7 +114,8 @@ class SearchUserFragment : Fragment(R.layout.fragment_layout_search_user), OnIte
     }
 
     override fun onItemClick(position: Int) {
-        val extras = mapOf(Pair("UserId", users[position].uid), Pair("ScoresOrFollowing", R.string.profile_following.toString()))
+        //val extras = mapOf(Pair("UserId", users[position].uid), Pair("ScoresOrFollowing", R.string.profile_following.toString()))
+        val extras = Helper().goToPlayerProfileWithSection(users[position].uid, false)
         IntentSwitcher.switch(vmSearchUser.ctx, PublicProfileActivity::class.java, extras)
     }
 }

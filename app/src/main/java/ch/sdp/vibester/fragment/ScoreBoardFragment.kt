@@ -16,6 +16,7 @@ import ch.sdp.vibester.R
 import ch.sdp.vibester.activity.PublicProfileActivity
 import ch.sdp.vibester.database.Database
 import ch.sdp.vibester.database.ImageGetter
+import ch.sdp.vibester.helper.Helper
 import ch.sdp.vibester.helper.IntentSwitcher
 import ch.sdp.vibester.helper.ViewModel
 import ch.sdp.vibester.user.OnItemClickListener
@@ -110,9 +111,11 @@ class ScoreBoardFragment : Fragment(R.layout.fragment_layout_scoreboard), OnItem
      * go to the profile of the player at index position
      */
     override fun onItemClick(position: Int) {
+        val playerId = players[position].uid
+        //mapOf(Pair("UserId", players[position].uid), Pair("ScoresOrFollowing", R.string.profile_scores.toString()))
         IntentSwitcher.switch(vmScoreBoard.ctx,
             PublicProfileActivity::class.java,
-            mapOf(Pair("UserId", players[position].uid), Pair("ScoresOrFollowing", R.string.profile_scores.toString())))
+            Helper().goToPlayerProfileWithSection(playerId, true))
     }
 
     private fun setGenreListeners(genre: String){

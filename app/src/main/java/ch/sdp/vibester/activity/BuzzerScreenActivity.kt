@@ -75,7 +75,8 @@ class BuzzerScreenActivity : GameActivity() {
             buildScores(getPlayers, allPoints)
             buildBuzzers(getPlayers, findViewById(R.id.answer))
 
-            findViewById<Button>(R.id.skip_buzzer).setOnClickListener { timeoutAnswer(ctx, null, gameManager) }
+            val skipBtn = findViewById<Button>(R.id.skip_buzzer)
+            skipBtn.setOnClickListener { timeoutAnswer(ctx, null, gameManager) }
             setAnswerButton(ctx, findViewById(R.id.buttonCorrect), buzzersToRows)
             setAnswerButton(ctx, findViewById(R.id.buttonWrong), buzzersToRows)
             setNextButton(ctx, gameManager)
@@ -293,7 +294,7 @@ class BuzzerScreenActivity : GameActivity() {
     /**
      * Fires an intent from the Gamescreen to the Ending Screen
      */
-    fun switchToEnding(gameManager: GameManager) {
+    private fun switchToEnding(gameManager: GameManager) {
         checkAndStopPlayer(gameManager)
         val intent = Intent(this, GameEndingActivity::class.java)
 

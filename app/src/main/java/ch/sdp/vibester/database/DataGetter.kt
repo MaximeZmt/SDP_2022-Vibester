@@ -182,8 +182,7 @@ class DataGetter @Inject constructor() {
                 queryUsers.removeEventListener(this)
             }
             override fun onCancelled(error: DatabaseError) {
-                val msg = "searchByField:onCancelled"
-                Log.w(TAG, msg, error.toException())
+                Log.w(TAG, "searchByField:onCancelled", error.toException())
             }
         })
     }
@@ -287,7 +286,8 @@ class DataGetter @Inject constructor() {
             }
             override fun onCancelled(databaseError: DatabaseError) {
                 val msg = "loadPost:onCancelled"
-                Log.w(TAG, msg, databaseError.toException())
+                val exception = databaseError.toException()
+                Log.w(TAG, msg, exception)
             }
         }
         queryRooms.addValueEventListener(startGameListener)

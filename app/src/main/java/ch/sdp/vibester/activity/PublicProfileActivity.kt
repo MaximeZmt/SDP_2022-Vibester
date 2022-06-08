@@ -100,8 +100,9 @@ class PublicProfileActivity : AppCompatActivity(), OnItemClickListener, ProfileI
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == imageRequestCode) {
-            imageGetter.uploadFile("profileImg/${dataGetter.getCurrentUser()?.uid}", data?.data!!) {
-                imageGetter.fetchImage("profileImg/${dataGetter.getCurrentUser()?.uid}", this::setImage)
+            val uid = dataGetter.getCurrentUser()?.uid
+            imageGetter.uploadFile("profileImg/$uid", data?.data!!) {
+                imageGetter.fetchImage("profileImg/$uid", this::setImage)
             }
         }
     }

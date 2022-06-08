@@ -67,7 +67,6 @@ class ProfileFollowingAdapter(
             }
         }
 
-
         private fun followBtnListener(user: User) {
             itemView.findViewById<Button>(R.id.profile_followingBtn).setOnClickListener {
                 if (currentUser != null) {

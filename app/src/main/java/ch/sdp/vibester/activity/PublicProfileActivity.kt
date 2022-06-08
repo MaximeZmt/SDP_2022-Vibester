@@ -6,7 +6,6 @@ import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.net.Uri
 import android.os.Bundle
-import android.view.View
 import android.view.Window
 import android.widget.Button
 import android.widget.ImageView
@@ -24,7 +23,6 @@ import ch.sdp.vibester.helper.ProfileInterface
 import ch.sdp.vibester.user.OnItemClickListener
 import ch.sdp.vibester.user.ProfileFollowingAdapter
 import ch.sdp.vibester.user.User
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.EncodeHintType
 import com.google.zxing.qrcode.QRCodeWriter

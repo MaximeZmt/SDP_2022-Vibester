@@ -6,7 +6,6 @@ import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.net.Uri
 import android.os.Bundle
-import android.view.View
 import android.view.Window
 import android.widget.Button
 import android.widget.ImageView
@@ -24,7 +23,6 @@ import ch.sdp.vibester.helper.ProfileInterface
 import ch.sdp.vibester.user.OnItemClickListener
 import ch.sdp.vibester.user.ProfileFollowingAdapter
 import ch.sdp.vibester.user.User
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.EncodeHintType
 import com.google.zxing.qrcode.QRCodeWriter
@@ -85,13 +83,13 @@ class PublicProfileActivity : AppCompatActivity(), OnItemClickListener, ProfileI
     override fun setupRecycleViewForFriends() {
         findViewById<RecyclerView>(R.id.profile_followingList).apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = followings?.let { ProfileFollowingAdapter(it, dataGetter, authenticator,this@PublicProfileActivity) }
+            adapter = followings?.let { ProfileFollowingAdapter(it, dataGetter, imageGetter, authenticator,this@PublicProfileActivity) }
             setHasFixedSize(true)
         }
     }
 
     override fun showFriendsPosition(friends: MutableList<User>?) {
-        profileFollowingAdapter = ProfileFollowingAdapter(friends!!, dataGetter, authenticator, this)
+        profileFollowingAdapter = ProfileFollowingAdapter(friends!!, dataGetter, imageGetter, authenticator, this)
         findViewById<RecyclerView>(R.id.profile_followingList)!!.adapter = profileFollowingAdapter
     }
 
@@ -100,8 +98,9 @@ class PublicProfileActivity : AppCompatActivity(), OnItemClickListener, ProfileI
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == imageRequestCode) {
-            imageGetter.uploadFile("profileImg/${dataGetter.getCurrentUser()?.uid}", data?.data!!) {
-                imageGetter.fetchImage("profileImg/${dataGetter.getCurrentUser()?.uid}", this::setImage)
+            val uid = dataGetter.getCurrentUser()?.uid
+            imageGetter.uploadFile("profileImg/$uid", data?.data!!) {
+                imageGetter.fetchImage("profileImg/$uid", this::setImage)
             }
         }
     }

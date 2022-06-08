@@ -42,8 +42,7 @@ class ProfileFollowingAdapter(
     inner class ProfileFollowingViewHolder(itemView: View): RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
         private fun setImage(imageURI: Uri) {
-            val avatar = itemView.findViewById<ImageView>(R.id.profile_following_profile_image)
-            Helper().setImage(imageURI, avatar, imageSize = 100)
+            Helper().setImage(imageURI, itemView.findViewById(R.id.profile_following_profile_image), imageSize = 100)
         }
 
         /**

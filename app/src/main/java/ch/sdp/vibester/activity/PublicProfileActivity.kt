@@ -85,13 +85,13 @@ class PublicProfileActivity : AppCompatActivity(), OnItemClickListener, ProfileI
     override fun setupRecycleViewForFriends() {
         findViewById<RecyclerView>(R.id.profile_followingList).apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = followings?.let { ProfileFollowingAdapter(it, dataGetter, authenticator,this@PublicProfileActivity) }
+            adapter = followings?.let { ProfileFollowingAdapter(it, dataGetter, imageGetter, authenticator,this@PublicProfileActivity) }
             setHasFixedSize(true)
         }
     }
 
     override fun showFriendsPosition(friends: MutableList<User>?) {
-        profileFollowingAdapter = ProfileFollowingAdapter(friends!!, dataGetter, authenticator, this)
+        profileFollowingAdapter = ProfileFollowingAdapter(friends!!, dataGetter, imageGetter, authenticator, this)
         findViewById<RecyclerView>(R.id.profile_followingList)!!.adapter = profileFollowingAdapter
     }
 

@@ -209,6 +209,15 @@ class LyricsBelongGameActivity : GameActivity() {
     }
 
     /**
+     * Shows a given message on a toast.
+     * @param ctx
+     * @param SId: the id of the string (from string.xml) we want to display
+     */
+    private fun toastShowSimpleMsg(ctx: Context, SId: Int) {
+        Toast.makeText(ctx, ctx.getString(SId), Toast.LENGTH_SHORT).show()
+    }
+
+    /**
      * Function to set scores in the end of the game
      */
     private fun setScores() {

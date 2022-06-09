@@ -240,15 +240,6 @@ open class GameActivity : AppCompatActivity() {
         ).show()
     }
 
-    /**
-     * Shows a given message on a toast.
-     * @param ctx
-     * @param SId: the id of the string (from string.xml) we want to display
-     */
-    fun toastShowSimpleMsg(ctx: Context, SId: Int) {
-        Toast.makeText(ctx, ctx.getString(SId), Toast.LENGTH_SHORT).show()
-    }
-
     companion object {
         /**
          * Generate spaces widget programmatically

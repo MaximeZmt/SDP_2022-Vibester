@@ -195,16 +195,6 @@ open class GameActivity : AppCompatActivity() {
     }
 
     /**
-     * Checks if a song chosen by the player matches the played song
-     * @param chosen: the song chosen by the player
-     * @param played: the song currently played
-     * @return a boolean indicating whether the two songs match
-     */
-    fun checkSong(chosen: Song?, played: Song): Boolean {
-        return chosen != null && chosen.getTrackName() == played.getTrackName() && chosen.getArtistName() == played.getArtistName()
-    }
-
-    /**
      * Function used for testing. Do not call unless it is for that specific purpose.
      */
     fun superTestProgressBar(myBar: ProgressBar, progressTime: Int=0) {

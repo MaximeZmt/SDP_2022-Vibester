@@ -191,6 +191,16 @@ class TypingGameActivity : GameActivity() {
         }
     }
 
+    /**
+     * Checks if a song chosen by the player matches the played song
+     * @param chosen: the song chosen by the player
+     * @param played: the song currently played
+     * @return a boolean indicating whether the two songs match
+     */
+    private fun checkSong(chosen: Song?, played: Song): Boolean {
+        return chosen != null && chosen.getTrackName() == played.getTrackName() && chosen.getArtistName() == played.getArtistName()
+    }
+
     /*
      * The following functions are helper for testing
      */

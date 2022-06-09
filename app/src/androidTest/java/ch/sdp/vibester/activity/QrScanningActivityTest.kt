@@ -1,29 +1,22 @@
 package ch.sdp.vibester.activity
 
 import android.app.Activity
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.contrib.ActivityResultMatchers.hasResultCode
 import androidx.test.espresso.intent.Intents
-import androidx.test.espresso.intent.Intents.intended
-import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.GrantPermissionRule
-import ch.sdp.vibester.activity.profile.ProfileActivity
 import ch.sdp.vibester.database.DataGetter
-import ch.sdp.vibester.fragment.SearchUserFragment
 import ch.sdp.vibester.user.User
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import io.mockk.every
 import io.mockk.mockk
-import org.hamcrest.Matchers.allOf
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -45,8 +38,6 @@ class QrScanningActivityTest {
         val mockUser1 = User("mockUser1", uid = "mockUser1uid")
         val mockUser2 = User("mockUser2", uid = "mockUser2uid")
         val mockUser3 = User("mockUser3", uid = "mockUser3uid")
-        val mockUser = User("mockUser", uid = "mockUseruid", following = mapOf(Pair(mockUser2.uid, true), Pair(mockUser3.uid, true)))
-
 
         val mockUIDs = arrayListOf<String>("mockUser1uid", "mockUser2uid", "mockUser3uid")
 
@@ -60,7 +51,7 @@ class QrScanningActivityTest {
     }
 
     @get:Rule(order = 1)
-    var permissionRule = GrantPermissionRule.grant(android.Manifest.permission.CAMERA)
+    var permissionRule: GrantPermissionRule = GrantPermissionRule.grant(android.Manifest.permission.CAMERA)
 
     @Before
     fun setUp() {

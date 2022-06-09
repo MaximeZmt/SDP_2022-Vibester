@@ -4,13 +4,17 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.ImageView
+import ch.sdp.vibester.R
 import ch.sdp.vibester.activity.MainActivity
 import ch.sdp.vibester.api.BitmapGetterApi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import java.io.Serializable
 import java.util.concurrent.TimeUnit
 
 class Helper {
@@ -49,4 +53,37 @@ class Helper {
             IntentSwitcher.switch(ctx, MainActivity::class.java)
         }
     }
+
+    /**
+     * @param uid uid of the player
+     * @param scoresOrFollowing True goes scores False goes to following
+     */
+    fun goToPlayerProfileWithSection(uid: String, scoresOrFollowing: Boolean): Map<String, Serializable> {
+        val section = if (scoresOrFollowing) R.string.profile_scores else R.string.profile_following
+        return mapOf(Pair("UserId", uid), Pair("ScoresOrFollowing", section.toString()))
+    }
+
+    /**
+     * Sets the visibility of the given button to VISIBLE if value is true, GONE otherwise.
+     * @param btn: the Button view we want to change
+     * @param value: true to make the button VISIBLE, false to make it GONE
+     */
+    private fun toggleBtnVisibility(btn: View, value: Boolean) {
+        btn.visibility = if (value) VISIBLE else GONE
+    }
+
+    /**
+     * hide the given button view
+     */
+    fun hideBtn(btn: View) {
+        toggleBtnVisibility(btn, false)
+    }
+
+    /**
+     * display the given button view
+     */
+    fun showBtn(btn: View) {
+        toggleBtnVisibility(btn, true)
+    }
+
 }

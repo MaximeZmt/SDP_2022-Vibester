@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/floral_white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.AuthenticationFragment">
+
+    <ImageView
+        android:id="@+id/authentication_logo"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:contentDescription="@string/app_logo"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@id/authentication_status"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo" />
+
+    <TextView
+        android:id="@+id/authentication_status"
+        android:text="@string/authentication_welcomeToVibester"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/authentication_logo"
+        app:layout_constraintBottom_toTopOf="@id/googleBtn"/>
+
+    <Button
+        android:id="@+id/googleBtn"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/cg_blue"
+        android:elevation="10dp"
+        android:stateListAnimator="@null"
+        android:text="@string/authentication_googleLogIn"
+        android:translationZ="10dp"
+        app:icon="@drawable/glogo"
+        app:iconTint="@null"
+        app:layout_constraintBottom_toTopOf="@id/username"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/authentication_status" />
+
+    <EditText
+        android:id="@+id/username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="email"
+        android:inputType="textPersonName"
+        tools:ignore="TouchTargetSizeCheck"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/googleBtn"
+        app:layout_constraintBottom_toTopOf="@id/password"/>
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="password"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/username"
+        app:layout_constraintBottom_toTopOf="@id/logIn"/>
+
+    <Button
+        android:id="@+id/logIn"
+        android:layout_width="200dp"
+        android:layout_height="48dp"
+        android:backgroundTint="@color/cg_blue"
+        android:elevation="10dp"
+        android:stateListAnimator="@null"
+        android:text="@string/authentication_logIn"
+        android:translationZ="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/password"
+        app:layout_constraintBottom_toTopOf="@id/createAcc"/>
+
+    <Button
+        android:id="@+id/createAcc"
+        android:layout_width="200dp"
+        android:layout_height="48dp"
+        android:backgroundTint="@color/cg_blue"
+        android:elevation="10dp"
+        android:stateListAnimator="@null"
+        android:text="@string/authentication_createAcc"
+        android:translationZ="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/logIn"
+        app:layout_constraintBottom_toTopOf="@id/forgotPassword"/>
+
+    <Button
+        android:id="@+id/forgotPassword"
+        android:layout_width="205dp"
+        android:layout_height="48dp"
+        android:backgroundTint="@color/cg_blue"
+        android:elevation="10dp"
+        android:stateListAnimator="@null"
+        android:text="@string/authentication_forgotPassword"
+        android:translationZ="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/createAcc"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

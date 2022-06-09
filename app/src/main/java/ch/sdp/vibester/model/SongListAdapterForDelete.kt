@@ -15,9 +15,8 @@ class SongListAdapterForDelete constructor(
 ) : RecyclerView.Adapter<SongListAdapterForDelete.SongListForDeleteViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SongListForDeleteViewHolder {
-        return SongListForDeleteViewHolder(
-            AdapterHelper().createViewForViewHolder(parent, R.layout.song_item_delete_layout)
-        )
+        val view = AdapterHelper().createViewForViewHolder(parent, R.layout.song_item_delete_layout)
+        return SongListForDeleteViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: SongListForDeleteViewHolder, position: Int) {

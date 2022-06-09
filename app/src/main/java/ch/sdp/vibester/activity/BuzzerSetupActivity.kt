@@ -8,6 +8,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
 import ch.sdp.vibester.R
+import ch.sdp.vibester.activity.game.BuzzerScreenActivity
 import ch.sdp.vibester.helper.GameManager
 
 /**

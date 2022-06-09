@@ -2,7 +2,6 @@ package ch.sdp.vibester.model
 
 import android.os.Environment
 import androidx.test.platform.app.InstrumentationRegistry
-import ch.sdp.vibester.api.LastfmMethod
 import org.junit.Assert
 import org.junit.Test
 import java.io.File
@@ -24,7 +23,7 @@ class OfflineSongListTest {
         val totalPages = "20"
         val totalSongs = "2000"
 
-        Assert.assertEquals(inputSongsList, mySongsList.getSongList())
+        Assert.assertEquals(inputSongsList, mySongsList.songList)
         Assert.assertEquals(page, mySongsList.getPage())
         Assert.assertEquals(songsPerPage, mySongsList.getSongsPerPage())
         Assert.assertEquals(totalPages, mySongsList.getTotalPages())
@@ -35,7 +34,7 @@ class OfflineSongListTest {
     @Test
     fun addSpecificSongToList() {
         val context = InstrumentationRegistry.getInstrumentation().targetContext.applicationContext
-        var records = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "records.txt")
+        val records = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "records.txt")
         records.createNewFile()
         records.appendText("bones - imagine dragons\n")
 
@@ -53,7 +52,7 @@ class OfflineSongListTest {
         val totalPages = "20"
         val totalSongs = "2000"
 
-        Assert.assertEquals(inputSongsList, mySongsList.getSongList())
+        Assert.assertEquals(inputSongsList, mySongsList.songList)
         Assert.assertEquals(page, mySongsList.getPage())
         Assert.assertEquals(songsPerPage, mySongsList.getSongsPerPage())
         Assert.assertEquals(totalPages, mySongsList.getTotalPages())

@@ -154,7 +154,6 @@ class DataGetter @Inject constructor() {
      * @param callbackUid function to call with found uid
      */
     fun searchByField(field: String, searchInput: String, callback:(ArrayList<User>) -> Unit, callbackUid :(ArrayList<String>) -> Unit) {
-        val uidList: ArrayList<String> = ArrayList()
 
         val queryUsers = //Not very pretty, but otherwise CodeClimate complains about 26 lines
             dbUserRef.orderByChild(field)
@@ -166,6 +165,11 @@ class DataGetter @Inject constructor() {
          * Because it is after most regular characters in Unicode, the query matches all values that start with a inputUsername.
          */
 
+        searchByFieldHelper(queryUsers, callback, callbackUid)
+    }
+
+    private fun searchByFieldHelper(queryUsers: Query, callback:(ArrayList<User>) -> Unit, callbackUid :(ArrayList<String>) -> Unit){
+        val uidList: ArrayList<String> = ArrayList()
         val users: ArrayList<User> = ArrayList()
         queryUsers.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -182,7 +186,8 @@ class DataGetter @Inject constructor() {
                 queryUsers.removeEventListener(this)
             }
             override fun onCancelled(error: DatabaseError) {
-                Log.w(TAG, "searchByField:onCancelled", error.toException())
+                val msg = "searchByField:onCancelled"
+                Log.w(TAG, msg, error.toException())
             }
         })
     }
@@ -196,7 +201,8 @@ class DataGetter @Inject constructor() {
         dbUserRef.child(userId).get().addOnSuccessListener {
             it.getValue<User>()?.let { it1 -> callback(it1) }
         }.addOnFailureListener{
-            Log.d("DataGetter", "getUserData:onCancelled", it)
+            val msg = "getUserData:onCancelled"
+            Log.d("DataGetter", msg, it)
         }
     }
 
@@ -284,7 +290,9 @@ class DataGetter @Inject constructor() {
                 }
             }
             override fun onCancelled(databaseError: DatabaseError) {
-                Log.w(TAG, "loadPost:onCancelled", databaseError.toException())
+                val msg = "loadPost:onCancelled"
+                val exception = databaseError.toException()
+                Log.w(TAG, msg, exception)
             }
         }
         queryRooms.addValueEventListener(startGameListener)

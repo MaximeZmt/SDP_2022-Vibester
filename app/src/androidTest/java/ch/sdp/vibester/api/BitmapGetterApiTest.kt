@@ -26,7 +26,7 @@ class BitmapGetterApiTest {
 
 
     @get:Rule
-    var exception = ExpectedException.none()
+    var exception: ExpectedException = ExpectedException.none()
 
     @Test
     fun badUrlTest() {

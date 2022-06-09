@@ -14,8 +14,8 @@ import androidx.fragment.app.Fragment
 import ch.sdp.vibester.R
 import ch.sdp.vibester.activity.BuzzerSetupActivity
 import ch.sdp.vibester.activity.ChoosePartyRoomActivity
-import ch.sdp.vibester.activity.LyricsBelongGameActivity
-import ch.sdp.vibester.activity.TypingGameActivity
+import ch.sdp.vibester.activity.game.LyricsBelongGameActivity
+import ch.sdp.vibester.activity.game.TypingGameActivity
 import ch.sdp.vibester.api.InternetState
 import ch.sdp.vibester.api.LastfmApiInterface
 import ch.sdp.vibester.api.LastfmMethod
@@ -43,12 +43,18 @@ class GameSetupFragment : Fragment(R.layout.fragment_layout_game_setup), Adapter
     // TODO: OFFLINE
     private var hasInternet: Boolean = true
     private var vmGameSetup = ViewModel()
+    private lateinit var genrePerScoreboard: View
+    private lateinit var chooseSetting: View
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         vmGameSetup.view = view
         vmGameSetup.ctx = view.context
+
+        genrePerScoreboard = vmGameSetup.view.findViewById<LinearLayout>(R.id.genrePerScoreboard)
+        chooseSetting = vmGameSetup.view.findViewById<RelativeLayout>(R.id.chooseSetting)
+
 
         setGenreListeners()
         setGameModeListeners()
@@ -70,36 +76,51 @@ class GameSetupFragment : Fragment(R.layout.fragment_layout_game_setup), Adapter
     }
 
     private fun setGenreListeners(){
-        vmGameSetup.view.findViewById<Button>(R.id.offline_game_button).setOnClickListener { chooseGame("local_buzzer", GameManager(), true) }
-        vmGameSetup.view.findViewById<Button>(R.id.kpopButton).setOnClickListener { chooseGenre(method = LastfmMethod.BY_TAG.method, tag = "kpop", mode = R.string.kpop) }
-        vmGameSetup.view.findViewById<Button>(R.id.rockButton).setOnClickListener { chooseGenre(method = LastfmMethod.BY_TAG.method, tag = "rock", mode = R.string.rock) }
-        vmGameSetup.view.findViewById<Button>(R.id.btsButton).setOnClickListener { chooseGenre(method = LastfmMethod.BY_ARTIST.method, artist = "BTS", mode = R.string.gameGenre_bts) }
-        vmGameSetup.view.findViewById<Button>(R.id.topTracksButton).setOnClickListener { chooseGenre(method = LastfmMethod.BY_CHART.method, mode = R.string.top_tracks) }
-        vmGameSetup.view.findViewById<Button>(R.id.imagDragonsButton).setOnClickListener{ chooseGenre(method = LastfmMethod.BY_ARTIST.method, artist = "Imagine Dragons", mode = R.string.gameGenre_imagine_dragons) }
-        vmGameSetup.view.findViewById<Button>(R.id.billieEilishButton).setOnClickListener { chooseGenre(method = LastfmMethod.BY_ARTIST.method, artist = "Billie Eilish", mode = R.string.gameGenre_billie_eilish) }
-        vmGameSetup.view.findViewById<Button>(R.id.validateSearch).setOnClickListener{ chooseGenre(method = LastfmMethod.BY_ARTIST.method, artist = searchArtistEditable.toString(), mode = R.string.gameGenre_byArtistSearch) }
+        val offline = vmGameSetup.view.findViewById<Button>(R.id.offline_game_button)
+        val kpop = vmGameSetup.view.findViewById<Button>(R.id.kpopButton)
+        val rock = vmGameSetup.view.findViewById<Button>(R.id.rockButton)
+        val bts = vmGameSetup.view.findViewById<Button>(R.id.btsButton)
+        val topTracks = vmGameSetup.view.findViewById<Button>(R.id.topTracksButton)
+        val imagDragons = vmGameSetup.view.findViewById<Button>(R.id.imagDragonsButton)
+        val billieEilish = vmGameSetup.view.findViewById<Button>(R.id.billieEilishButton)
+        val validateSearch = vmGameSetup.view.findViewById<Button>(R.id.validateSearch)
+        offline.setOnClickListener { chooseGame("local_buzzer", GameManager(), true) }
+        kpop.setOnClickListener { chooseGenreByTag("kpop", R.string.kpop) }
+        rock.setOnClickListener { chooseGenreByTag("rock", R.string.rock) }
+        bts.setOnClickListener { chooseGenreByArtist("BTS", R.string.gameGenre_bts) }
+        topTracks.setOnClickListener { chooseGenre(method = LastfmMethod.BY_CHART.method, mode = R.string.top_tracks) }
+        imagDragons.setOnClickListener{ chooseGenreByArtist("Imagine Dragons", R.string.gameGenre_imagine_dragons) }
+        billieEilish.setOnClickListener { chooseGenreByArtist("Billie Eilish", R.string.gameGenre_billie_eilish) }
+        validateSearch.setOnClickListener{ chooseGenreByArtist(searchArtistEditable.toString(), R.string.gameGenre_byArtistSearch) }
+    }
+
+    private fun chooseGenreByTag(tag: String, mode: Int) {
+        chooseGenre(method = LastfmMethod.BY_TAG.method, tag = tag, mode = mode)
+    }
+
+    private fun chooseGenreByArtist(artist: String, mode: Int) {
+        chooseGenre(method = LastfmMethod.BY_ARTIST.method, artist = artist, mode = mode)
     }
 
     private fun setGameModeListeners() {
-        vmGameSetup.view.findViewById<Button>(R.id.local_buzzer_game_button)
-            .setOnClickListener { chooseGame("local_buzzer", GameManager()) }
-        vmGameSetup.view.findViewById<Button>(R.id.local_typing_game_button)
-            .setOnClickListener { chooseGame("local_typing", GameManager()) }
-        vmGameSetup.view.findViewById<Button>(R.id.local_lyrics_game_button)
-            .setOnClickListener{ chooseGame("local_lyrics", GameManager()) }
-        vmGameSetup.view.findViewById<Button>(R.id.online_buzzer_game_button)
-            .setOnClickListener { switchToGameNoParameters(ChoosePartyRoomActivity()) }
+        val localBuzzer = vmGameSetup.view.findViewById<Button>(R.id.local_buzzer_game_button)
+        val localTyping = vmGameSetup.view.findViewById<Button>(R.id.local_typing_game_button)
+        val localLyric = vmGameSetup.view.findViewById<Button>(R.id.local_lyrics_game_button)
+        val onlineBuzzer = vmGameSetup.view.findViewById<Button>(R.id.online_buzzer_game_button)
+        localBuzzer.setOnClickListener { chooseGame("local_buzzer", GameManager()) }
+        localTyping.setOnClickListener { chooseGame("local_typing", GameManager()) }
+        localLyric.setOnClickListener{ chooseGame("local_lyrics", GameManager()) }
+        onlineBuzzer.setOnClickListener { switchToGameNoParameters(ChoosePartyRoomActivity()) }
     }
 
 
     private fun setReturnBtnListener() {
         vmGameSetup.view.findViewById<FloatingActionButton>(R.id.gameSetup_returnToMain).setOnClickListener {
-            if (vmGameSetup.view.findViewById<LinearLayout>(R.id.genrePerScoreboard).visibility == VISIBLE) {
-                toggleViewsVisibility(goneView = vmGameSetup.view.findViewById<LinearLayout>(R.id.genrePerScoreboard),
+            if (genrePerScoreboard.visibility == VISIBLE) {
+                toggleViewsVisibility(goneView = genrePerScoreboard,
                     visibleView = vmGameSetup.view.findViewById<LinearLayout>(R.id.chooseGame))
-            } else if (vmGameSetup.view.findViewById<RelativeLayout>(R.id.chooseSetting).visibility == VISIBLE) {
-                toggleViewsVisibility(goneView = vmGameSetup.view.findViewById<RelativeLayout>(R.id.chooseSetting),
-                    visibleView = vmGameSetup.view.findViewById<LinearLayout>(R.id.genrePerScoreboard))
+            } else if (chooseSetting.visibility == VISIBLE) {
+                toggleViewsVisibility(goneView = chooseSetting, visibleView = genrePerScoreboard)
             }
         }
     }
@@ -240,13 +261,10 @@ class GameSetupFragment : Fragment(R.layout.fragment_layout_game_setup), Adapter
             if (playOffline) {
                 toggleViewsVisibility(
                     goneView = requireView().findViewById<LinearLayout>(R.id.chooseGame),
-                    visibleView = requireView().findViewById<ConstraintLayout>(R.id.chooseSetting)
+                    visibleView = chooseSetting
                 )
-            } else{
-                toggleViewsVisibility(
-                    goneView = requireView().findViewById<LinearLayout>(R.id.genrePerScoreboard),
-                    visibleView = requireView().findViewById<ConstraintLayout>(R.id.chooseSetting)
-                )
+            } else {
+                toggleViewsVisibility(goneView = genrePerScoreboard, visibleView = chooseSetting)
             }
 
 
@@ -263,8 +281,8 @@ class GameSetupFragment : Fragment(R.layout.fragment_layout_game_setup), Adapter
      */
     private fun updateInternet(view: View) {
         val btn: Button = view as Button
-        val isConncted = InternetState.getInternetStatus(vmGameSetup.ctx)
-        if (isConncted) {
+        val isConnected = InternetState.getInternetStatus(vmGameSetup.ctx)
+        if (isConnected) {
             hasInternet = true
             btn.text = getString(R.string.GameSetup_internetSwitchOn)
             btn.setBackgroundColor(vmGameSetup.ctx.getColor(R.color.maximum_yellow_red))

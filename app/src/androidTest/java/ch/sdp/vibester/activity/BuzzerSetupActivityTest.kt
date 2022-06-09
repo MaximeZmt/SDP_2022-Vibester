@@ -14,6 +14,7 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
+import ch.sdp.vibester.activity.game.BuzzerScreenActivity
 import ch.sdp.vibester.api.LastfmMethod
 import ch.sdp.vibester.helper.GameManager
 import dagger.hilt.android.testing.HiltAndroidRule

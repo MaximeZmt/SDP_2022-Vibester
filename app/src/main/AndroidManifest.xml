@@ -43,33 +43,21 @@
             android:name=".activity.BuzzerSetupActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.LyricsBelongGameActivity"
+            android:name=".activity.game.LyricsBelongGameActivity"
             android:exported="false" />
         <activity
             android:name=".activity.GameEndingActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.TypingGameActivity"
+            android:name=".activity.game.TypingGameActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.BuzzerScreenActivity"
+            android:name=".activity.game.BuzzerScreenActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.profile.ProfileActivity"
+            android:name=".activity.PublicProfileActivity"
             android:windowSoftInputMode="adjustPan"
             android:exported="false" />
-        <activity
-            android:name=".activity.profile.MyProfileActivity"
-            android:windowSoftInputMode="adjustPan"
-            android:exported="false" />
-        <activity
-            android:name=".activity.profile.PublicProfileActivity"
-            android:windowSoftInputMode="adjustPan"
-            android:exported="false" />
-        <activity
-            android:name=".activity.AuthenticationActivity"
-            android:exported="true"
-            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name="androidx.test.core.app.InstrumentationActivityInvoker$BootstrapActivity"
             android:theme="@android:style/Theme"

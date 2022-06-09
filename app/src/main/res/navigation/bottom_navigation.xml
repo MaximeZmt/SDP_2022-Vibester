@@ -2,12 +2,8 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/bottom_nav"
-    app:startDestination="@id/welcomeScreenBtn">
-
-    <fragment android:id="@+id/welcomeScreenBtn"
-        android:name="ch.sdp.vibester.fragment.WelcomeScreenFragment"
-        tools:layout="@layout/fragment_welcome_screen"/>
+    android:id="@+id/bottom_navigation"
+    app:startDestination="@id/fragment_game_setup">
 
     <fragment android:id="@+id/fragment_game_setup"
         android:name="ch.sdp.vibester.fragment.GameSetupFragment"
@@ -20,4 +16,12 @@
     <fragment android:id="@+id/fragment_scoreboard"
         android:name="ch.sdp.vibester.fragment.ScoreBoardFragment"
         tools:layout="@layout/fragment_layout_scoreboard"/>
+
+    <fragment android:id="@+id/fragment_my_profile"
+        android:name="ch.sdp.vibester.fragment.MyProfileFragment"
+        tools:layout="@layout/activity_profile"/>
+
+    <fragment android:id="@+id/fragment_auth"
+        android:name="ch.sdp.vibester.fragment.AuthenticationFragment"
+        tools:layout="@layout/fragment_layout_authentication"/>
 </navigation>

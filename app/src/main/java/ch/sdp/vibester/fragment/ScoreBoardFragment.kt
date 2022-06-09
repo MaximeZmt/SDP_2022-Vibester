@@ -1,7 +1,6 @@
 package ch.sdp.vibester.fragment
 
 import android.content.ContentValues
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -14,9 +13,10 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
-import ch.sdp.vibester.activity.profile.PublicProfileActivity
+import ch.sdp.vibester.activity.PublicProfileActivity
 import ch.sdp.vibester.database.Database
 import ch.sdp.vibester.database.ImageGetter
+import ch.sdp.vibester.helper.Helper
 import ch.sdp.vibester.helper.IntentSwitcher
 import ch.sdp.vibester.helper.ViewModel
 import ch.sdp.vibester.user.OnItemClickListener
@@ -44,12 +44,19 @@ class ScoreBoardFragment : Fragment(R.layout.fragment_layout_scoreboard), OnItem
         vmScoreBoard.view = view
         vmScoreBoard.ctx = view.context
 
-        view.findViewById<Button>(R.id.scoreboard_kpopButton).setOnClickListener { setGenreListeners("Kpop") }
-        view.findViewById<Button>(R.id.scoreboard_rockButton).setOnClickListener {setGenreListeners("Rock") }
-        view.findViewById<Button>(R.id.scoreboard_btsButton).setOnClickListener { setGenreListeners("BTS") }
-        view.findViewById<Button>(R.id.scoreboard_topTracksButton).setOnClickListener{ setGenreListeners("top tracks") }
-        view.findViewById<Button>(R.id.scoreboard_imagDragonsButton).setOnClickListener{ setGenreListeners("Imagine Dragons") }
-        view.findViewById<Button>(R.id.scoreboard_billieEilishButton).setOnClickListener { setGenreListeners("Billie Eillish") }
+        val kpop = view.findViewById<Button>(R.id.scoreboard_kpopButton)
+        val rock = view.findViewById<Button>(R.id.scoreboard_rockButton)
+        val bts = view.findViewById<Button>(R.id.scoreboard_btsButton)
+        val topTracks = view.findViewById<Button>(R.id.scoreboard_topTracksButton)
+        val imagDragons = view.findViewById<Button>(R.id.scoreboard_imagDragonsButton)
+        val billieEilish = view.findViewById<Button>(R.id.scoreboard_billieEilishButton)
+
+        kpop.setOnClickListener { setGenreListeners("Kpop") }
+        rock.setOnClickListener {setGenreListeners("Rock") }
+        bts.setOnClickListener { setGenreListeners("BTS") }
+        topTracks.setOnClickListener{ setGenreListeners("top tracks") }
+        imagDragons.setOnClickListener{ setGenreListeners("Imagine Dragons") }
+        billieEilish.setOnClickListener { setGenreListeners("Billie Eillish") }
         setupRecycleView()
     }
 
@@ -111,9 +118,9 @@ class ScoreBoardFragment : Fragment(R.layout.fragment_layout_scoreboard), OnItem
      * go to the profile of the player at index position
      */
     override fun onItemClick(position: Int) {
-        IntentSwitcher.switch(vmScoreBoard.ctx,
-            PublicProfileActivity::class.java,
-            mapOf(Pair("UserId", players[position].uid), Pair("ScoresOrFollowing", R.string.profile_scores.toString())))
+        val playerId = players[position].uid
+        IntentSwitcher.switch(vmScoreBoard.ctx, PublicProfileActivity::class.java,
+            Helper().goToPlayerProfileWithSection(playerId, true))
     }
 
     private fun setGenreListeners(genre: String){

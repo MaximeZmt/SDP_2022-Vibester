@@ -1,5 +1,6 @@
 package ch.sdp.vibester.model
 
+import android.util.Log
 import org.json.JSONObject
 import java.io.Serializable
 
@@ -67,8 +68,11 @@ class Song(jsonO: JSONObject) : Serializable {
         fun singleSong(str: String): Song {
             try {
                 val jsonObj = JSONObject(str)
+                Log.d("debug","doNotRemove1")
                 val jsonArray = jsonObj.getJSONArray("results")
+                Log.d("debug","doNotRemove2")
                 val jsonRes = jsonArray.getJSONObject(0)
+                Log.d("debug","doNotRemove3")
                 return Song(jsonRes)
             } catch (e: Exception) {
                 throw IllegalArgumentException("Song constructor, bad argument")

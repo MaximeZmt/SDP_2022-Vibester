@@ -119,14 +119,14 @@ open class GameManager : Serializable {
      * Add a correct song to a correct guessed song list
      */
     fun addCorrectSong() {
-        correctSongs.add(currentSong)
+        correctSongs.add(getCurrentSong())
     }
 
     /**
      * Add a wrong song to a wrong guessed song list
      */
     fun addWrongSong() {
-        wrongSongs.add(currentSong)
+        wrongSongs.add(getCurrentSong())
     }
 
     /**

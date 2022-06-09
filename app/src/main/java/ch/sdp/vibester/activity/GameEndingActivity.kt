@@ -13,17 +13,22 @@ import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
 import ch.sdp.vibester.activity.download.DownloadFunctionalityActivity
 import ch.sdp.vibester.database.AppPreferences
+import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.helper.Helper
 import ch.sdp.vibester.model.SongListAdapterForEndGame
 import ch.sdp.vibester.user.OnItemClickListener
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
+
 /**
  * Game ending activity with game stats and list of songs quessed correctly/wrong
  */
+@AndroidEntryPoint
 class GameEndingActivity : DownloadFunctionalityActivity(), OnItemClickListener {
 
     private val endStatArrayList =
@@ -40,6 +45,11 @@ class GameEndingActivity : DownloadFunctionalityActivity(), OnItemClickListener 
     private lateinit var songListAdapter: SongListAdapterForEndGame
     private var recyclerView: RecyclerView? = null
 
+    var onlineGame: Boolean = false
+    var roomID: String = ""
+    @Inject
+    lateinit var dataGetter: DataGetter
+
     /**
      * Generic onCreate method. Nothing of interested here.
      */
@@ -47,6 +57,9 @@ class GameEndingActivity : DownloadFunctionalityActivity(), OnItemClickListener 
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
+
+        onlineGame = intent.extras?.getBoolean("onlineGame", false) == true
+        roomID = intent.extras?.getString("roomID").toString()
 
         val gameMode = AppPreferences.getStr(getString(R.string.preferences_game_mode))
         if (gameMode == "local_typing" || gameMode == "local_lyrics") { //|| gameMode == "local_buzzer"
@@ -121,8 +134,9 @@ class GameEndingActivity : DownloadFunctionalityActivity(), OnItemClickListener 
     private fun setupTextView(view: Int, text: String) {
         findViewById<TextView>(view).text = text
     }
-
-    /**
+                
+        
+     /**
      * Handle intent values for multiple players game
      * @param intent: intent received by the activity
      */
@@ -135,29 +149,48 @@ class GameEndingActivity : DownloadFunctionalityActivity(), OnItemClickListener 
         if (intent.hasExtra("Player Scores")) {
             val playerScores =
                 intent.getSerializableExtra("Player Scores")!! as HashMap<String, Int>
-            var i = 0
-            for (pName in playerScores.keys) {
-                val row = findViewById<TableRow>(endStatArrayList[i])
-                row.visibility = View.VISIBLE
 
-                setupTextView(nameIds[i], pName)
-                setupTextView(scoreIds[i], playerScores[pName]!!.toString())
-
-                i += 1
-            }
+            setScoreboardList(playerScores)
         }
 
-        if (intent.hasExtra("incorrectSongList") && intent.hasExtra("correctSongList")){
-            incorrectSongList = intent.getStringArrayListExtra("incorrectSongList") as ArrayList<String>
-            correctSongList = intent.getStringArrayListExtra("correctSongList") as ArrayList<String>
-
-            incorrectSongList.iterator().forEach { Log.e("ERR", it) }
-            correctSongList.iterator().forEach { Log.e("CORR", it) }
-            //Log.e("ERR", incorrectSongList)
+        if(onlineGame) {
+            dataGetter.updateRoomField(roomID, "gameStarted", false)
+            dataGetter.readScores(roomID, this::setScoreboardList)
         }
+
+         if (intent.hasExtra("incorrectSongList") && intent.hasExtra("correctSongList")){
+             incorrectSongList = intent.getStringArrayListExtra("incorrectSongList") as ArrayList<String>
+             correctSongList = intent.getStringArrayListExtra("correctSongList") as ArrayList<String>
+
+             incorrectSongList.iterator().forEach { Log.e("ERR", it) }
+             correctSongList.iterator().forEach { Log.e("CORR", it) }
+             //Log.e("ERR", incorrectSongList)
+         }
 
 
     }
+
+    private fun setScoreboardList(playerScores: HashMap<String, Int>) {
+        var i = 0
+        for (pName in playerScores.keys) {
+            val row = findViewById<TableRow>(endStatArrayList[i])
+            row.visibility = View.VISIBLE
+
+            //createTextView(pName, Gravity.LEFT, row)
+            //createTextView(playerScores[pName]!!.toString(), Gravity.RIGHT, row)
+
+                setupTextView(nameIds[i], pName)
+                setupTextView(scoreIds[i], playerScores[pName]!!.toString())
+          
+            i += 1
+        }
+    }
+        
+        
+        
+        
+
+
 
     /**
      * Handles the case where an item in the recycler view is clicked, i.e the download buttons.

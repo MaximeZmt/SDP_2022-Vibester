@@ -126,7 +126,7 @@ class BuzzerGameActivity : GameActivity() {
      */
     fun timeoutAnswer(ctx: Context, chosenSong: Song? = null, gameManager: GameManager) {
         checkAndStopPlayer(gameManager)
-        toastShowWrong(ctx, gameManager.getCurrentSong())
+        Helper().toastShowWrong(ctx, gameManager.getCurrentSong())
         Helper().hideBtn(skipBtn)
         endRound(gameManager)
     }

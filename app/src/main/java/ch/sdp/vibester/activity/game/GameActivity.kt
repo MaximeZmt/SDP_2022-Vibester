@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Handler
+import android.util.Log
 import android.view.Gravity
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -115,11 +116,16 @@ open class GameActivity : AppCompatActivity() {
         super.onDestroy()
     }
 
+    private fun updateOnlineGameScores(userEmail: String, score: Int, roomID: String) {
+        val score = Pair(userEmail, score)
+        dataGetter.updateRoomScore(score, roomID)
+    }
+
     /**
      * Called upon the ending of a game. Passes gathered information during the game to the next
      * activity through the intent.
      */
-    private fun switchToEnding(gameManager: GameManager) {
+    private fun switchToEnding(gameManager: GameManager, onlineGame: Boolean?= null, userEmail: String?= null, roomID: String?= null) {
         val intent = Intent(this, GameEndingActivity::class.java)
 
         //Set list of incorrect songs
@@ -141,6 +147,19 @@ open class GameActivity : AppCompatActivity() {
 
         intent.putStringArrayListExtra("statNames", statNames)
         intent.putStringArrayListExtra("statValues", statVal)
+
+        Log.w("DEBUG onlinegame", onlineGame.toString())
+        Log.w("DEBUG userEmail", userEmail.toString())
+
+
+        if(onlineGame == true) {
+            if (userEmail != null && roomID != null) {
+                updateOnlineGameScores(userEmail, correctSongList.size, roomID)
+
+                intent.putExtra("onlineGame", onlineGame)
+                intent.putExtra("roomID", roomID)
+            }
+        }
 
         startActivity(intent)
     }
@@ -166,12 +185,15 @@ open class GameActivity : AppCompatActivity() {
      * Function called in the end of each round.
      * @param gameManager: the manager for the current game
      * @param callback: a unit function that is called if the game has reached its end
+     * @param onlineGame: a boolean to know if an online game is being played
+     * @param userEmail: current user email
+     * @param roomID: ID of the current room
      */
-    open fun endRound(gameManager: GameManager, callback: (()->Unit)?= null) {
+    open fun endRound(gameManager: GameManager, callback: (()->Unit)?= null, onlineGame: Boolean?= null, userEmail: String?= null, roomID: String?= null) {
         checkRunnable()
         if (isEndGame(gameManager)) {
             callback?.invoke()
-            switchToEnding(gameManager)
+            switchToEnding(gameManager, onlineGame, userEmail, roomID)
         }
     }
 
@@ -201,27 +223,6 @@ open class GameActivity : AppCompatActivity() {
         myBar.progress = progressTime
     }
 
-    /**
-     * Shows a variable score on a toast.
-     * @param ctx
-     * @param score: the score to show on the toast
-     */
-    fun toastShowCorrect(ctx: Context, score: Int) {
-        Toast.makeText(ctx, ctx.getString(R.string.correct_message, score), Toast.LENGTH_SHORT).show()
-    }
-
-    /**
-     * Shows the correct answer on a toast.
-     * @param ctx
-     * @param itWas: the correct song to display
-     */
-    fun toastShowWrong(ctx: Context, itWas: Song) {
-        Toast.makeText(
-            ctx,
-            ctx.getString(R.string.wrong_message_with_answer, itWas.getTrackName(), itWas.getArtistName()),
-            Toast.LENGTH_SHORT
-        ).show()
-    }
 
     companion object {
         /**

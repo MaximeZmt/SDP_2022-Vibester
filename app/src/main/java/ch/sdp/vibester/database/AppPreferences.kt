@@ -1,7 +1,10 @@
 package ch.sdp.vibester.database
 
+import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
+import com.google.gson.GsonBuilder
 
 /**
  * Share some values across the whole application
@@ -9,36 +12,25 @@ import android.content.SharedPreferences
 object AppPreferences {
     private const val NAME = "Vibester"
     private const val MODE = Context.MODE_PRIVATE
-    private lateinit var preferences: SharedPreferences
+    lateinit var preferences: SharedPreferences
 
     fun init(context: Context) {
         preferences = context.getSharedPreferences(NAME, MODE)
     }
 
-    /**
-     * SharedPreferences extension function, so we won't need to call edit() and apply()
-     * ourselves on every SharedPreferences operation.
-     */
-    private inline fun SharedPreferences.edit(operation:(SharedPreferences.Editor) -> Unit) {
-        val editor = edit()
-        operation(editor)
-        editor.apply()
-    }
-
     fun getStr(key: String): String? {
-        if (this::preferences.isInitialized) {
-            return preferences.getString(key, "")
+        return if (this::preferences.isInitialized) {
+            Log.d(null, "########## preferences is initialized ##########")
+            preferences.getString(key, "")
         } else {
-            return ""
+            Log.d(null, "########## preferences is noooot initialized ##########")
+            ""
         }
-
     }
 
     fun setStr(key: String, value: String){
         if (this::preferences.isInitialized) {
-            preferences.edit {
-                it.putString(key, value)
-            }
+            preferences.edit().putString(key, value).apply()
         }
     }
 }

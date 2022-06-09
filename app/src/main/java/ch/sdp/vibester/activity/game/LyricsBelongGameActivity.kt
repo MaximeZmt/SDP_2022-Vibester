@@ -113,8 +113,8 @@ class LyricsBelongGameActivity : GameActivity() {
         barTimer(ctx, findViewById(R.id.progressBarLyrics))
     }
 
-    override fun endRound(gameManager: GameManager, callback: (() -> Unit)?) {
-        super.endRound(gameManager, this::setScores)
+    override fun endRound(gameManager: GameManager, callback: (() -> Unit)?, onlineGame: Boolean?, userEmail: String?, roomID: String?) {
+        super.endRound(gameManager, this::setScores, false, userEmail, roomID)
         Helper().showBtn(nextBtn)
     }
 
@@ -182,7 +182,7 @@ class LyricsBelongGameActivity : GameActivity() {
      */
     private fun hasWon(ctx: Context, score: Int, hasWon: Boolean) {
         if (hasWon) {
-            toastShowCorrect(ctx, score)
+            Helper().toastShowCorrect(ctx, score)
         } else {
             toastShowSimpleMsg(ctx, R.string.wrong_message)
         }

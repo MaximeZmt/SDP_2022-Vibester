@@ -29,6 +29,10 @@ class TypingGameActivity : GameActivity() {
     private var gameIsOn: Boolean = true // done to avoid clicks on songs after the round is over
     private lateinit var nextBtn: View
 
+    private var onlineGame = false
+    private var userEmail = ""
+    private var roomID = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         super.onCreate(savedInstanceState)
@@ -41,7 +45,13 @@ class TypingGameActivity : GameActivity() {
         val getIntent = intent.extras
         if (getIntent != null) {
             super.setMax(intent)
+
             gameManager = getIntent.getSerializable("gameManager") as GameManager
+
+            onlineGame = getIntent.getBoolean("onlineGame", false)
+            userEmail = getIntent.getString("userEmail").toString()
+            roomID = getIntent.getString("roomID").toString()
+
             setNextButtonListener(ctx, gameManager)
             super.startFirstRound(ctx, gameManager, ::startRoundTyping)
         }
@@ -105,9 +115,9 @@ class TypingGameActivity : GameActivity() {
      */
     private fun hasWon(ctx: Context, hasWon: Boolean, itWas: Song, gameManager: GameManager) {
         if (hasWon) {
-            toastShowCorrect(ctx, gameManager.getCorrectSongs().size)
+            Helper().toastShowCorrect(ctx, gameManager.getCorrectSongs().size)
         } else {
-            toastShowWrong(ctx, itWas)
+            Helper().toastShowWrong(ctx, itWas)
         }
     }
 
@@ -126,7 +136,7 @@ class TypingGameActivity : GameActivity() {
         if (gameManager.initializeMediaPlayer() && gameManager.playingMediaPlayer()) {
             gameManager.stopMediaPlayer()
         }
-        endRound(gameManager)
+        endRound(gameManager, onlineGame = onlineGame, userEmail = userEmail, roomID = roomID)
     }
 
     /**
@@ -157,10 +167,11 @@ class TypingGameActivity : GameActivity() {
      * Function called in the end of each round. Displays the button "Next" and
      * sets the next songs to play.
      */
-    override fun endRound(gameManager: GameManager, callback: (() -> Unit)?) {
+    override fun endRound(gameManager: GameManager, callback: (() -> Unit)?, onlineGame: Boolean?, userEmail: String?, roomID: String?) {
         gameIsOn = false
         findViewById<EditText>(R.id.yourGuessET).isEnabled = false
-        super.endRound(gameManager, this::setScores)
+
+        super.endRound(gameManager, this::setScores, onlineGame, userEmail, roomID)
         Helper().showBtn(nextBtn)
     }
 
@@ -216,7 +227,6 @@ class TypingGameActivity : GameActivity() {
     fun testProgressBarColor(): ColorStateList? {
         return findViewById<ProgressBar>(R.id.progressBarTyping).progressTintList
     }
-
 
 }
 

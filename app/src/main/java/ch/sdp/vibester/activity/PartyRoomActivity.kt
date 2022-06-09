@@ -36,11 +36,12 @@ class PartyRoomActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_party_room)
 
-        val createPartyRoom = intent.getBooleanExtra("createRoom", false)
-        if(createPartyRoom) {
+        val joinRoom = intent.getBooleanExtra("joinRoom", false)
+        if (!joinRoom) {
+            gameManager = intent.getSerializableExtra("gameManager") as GameManager
+            AppPreferences.setStr(getString(R.string.preferences_game_genre), gameManager.gameMode)
             createRoom()
             setGameManager()
-            dataGetter.updateRoomField(roomID, "gameStarted", false)
         }
         else {
             this.roomID = intent.getStringExtra("roomID").toString()
@@ -50,6 +51,7 @@ class PartyRoomActivity : AppCompatActivity() {
         val startGame = findViewById<Button>(R.id.startGame)
 
         startGame.setOnClickListener {
+
             dataGetter.updateRoomField(roomID, "gameStarted", true)
         }
 
@@ -63,11 +65,29 @@ class PartyRoomActivity : AppCompatActivity() {
     }
 
     private fun fetchData(roomID: String) {
-        dataGetter.getRoomData(roomID, this::updateUI, this::setSongs)
+        dataGetter.getRoomData(roomID, this::updateUI, this::setData)
+    }
+
+    private fun setData(gameSongList: MutableList<Pair<String, String>>, gameSize: Int, gameMode: String, difficultyLevel: Int) {
+        gameManager = GameManager()
+
+        gameManager.gameSongList = gameSongList
+        gameManager.gameSize = gameSize
+        gameManager.gameMode = gameMode
+        gameManager.difficultyLevel = difficultyLevel
+
+        AppPreferences.setStr(getString(R.string.preferences_game_genre), gameManager.gameMode)
     }
 
     private fun createRoom() {
         dataGetter.createRoom(this::updateUI)
+    }
+
+    private fun setGameManager() {
+        dataGetter.updateRoomField(roomID, "songList", gameManager.getSongList())
+        dataGetter.updateRoomField(roomID, "difficulty", gameManager.difficultyLevel)
+        dataGetter.updateRoomField(roomID, "gameSize", gameManager.gameSize)
+        dataGetter.updateRoomField(roomID, "gameMode", gameManager.gameMode)
     }
 
     private fun fetchGameStarted(roomName: String, callback: (Boolean) -> Unit) {
@@ -80,55 +100,16 @@ class PartyRoomActivity : AppCompatActivity() {
         }
     }
 
-    private fun  setGameManager() {
-        gameManager = GameManager()
-        gameManager.gameSize = 1
-
-        chooseGenre(method = LastfmMethod.BY_ARTIST.method, artist = "Imagine Dragons", mode = R.string.gameGenre_imagine_dragons)
-    }
-
-
     private fun launchGame(newGameManager: GameManager) {
-
         val newIntent = Intent(this, TypingGameActivity::class.java)
         newIntent.putExtra("gameManager", newGameManager)
-        newIntent.putExtra("Difficulty", R.string.GameSetup_easy)
+        newIntent.putExtra("Difficulty", newGameManager.difficultyLevel)
+
+        newIntent.putExtra("onlineGame", true)
+        newIntent.putExtra("userEmail", dataGetter.getCurrentUser()?.email)
+        newIntent.putExtra("roomID", roomID)
 
         startActivity(newIntent)
-    }
-
-    private fun setGameSongList(uri: LastfmUri, roomID: String) {
-        val service = LastfmApiInterface.createLastfmService()
-        val call = service.getSongList(uri.convertToHashmap())
-        call.enqueue(object : Callback<Any> {
-            override fun onFailure(call: Call<Any>, t: Throwable?) {}
-            override fun onResponse(call: Call<Any>, response: Response<Any>) {
-                gameManager.setGameSongList(Gson().toJson(response.body()), uri.method)
-                dataGetter.updateRoomField(roomID, "songList", gameManager.getSongList())
-            }
-        })
-    }
-
-    private fun chooseGenre(method: String = "", artist: String = "", tag: String = "", mode: Int = 0) {
-        val uri = LastfmUri()
-
-        uri.method = method
-        uri.artist = artist
-        uri.tag = tag
-
-        gameManager.gameMode = getString(mode)
-        AppPreferences.setStr(getString(R.string.preferences_game_genre), getString(mode))
-
-        setGameSongList(uri, roomID)
-    }
-
-    private fun setSongs(gameSongList: MutableList<Pair<String, String>>) {
-        gameManager = GameManager()
-        gameManager.gameSize = 1
-        gameManager.gameMode = getString(R.string.gameGenre_imagine_dragons)
-
-        gameManager.gameSongList = gameSongList
-
     }
 
 }

@@ -1,6 +1,5 @@
 package ch.sdp.vibester.database
 
-import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.util.Log
 import ch.sdp.vibester.auth.FireBaseAuthenticator
@@ -12,10 +11,9 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.Query
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
-import java.util.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList
-import kotlin.reflect.KFunction0
+import kotlin.collections.HashMap
 
 /**
  * The users class which handled all the interactions with the database that are linked to users
@@ -25,6 +23,8 @@ class DataGetter @Inject constructor() {
     private val dbUserRef = Database.get().getReference("users")
     private val dbRoomRef = Database.get().getReference("rooms")
     private val authenticator: FireBaseAuthenticator = FireBaseAuthenticator()
+    private val asMap = "map"
+    private val asHashMap = "hash map"
 
     /**
      * Set field value
@@ -134,15 +134,20 @@ class DataGetter @Inject constructor() {
     fun createRoom(callback: (PartyRoom, String) -> Unit) {
         val partyRoom = PartyRoom()
         partyRoom.setEmailList(mutableListOf(authenticator.getCurrUser()?.email!!))
-        val ref = dbRoomRef.push()
-        val key = ref.key
-        if (key != null) {
-            partyRoom.setRoomID(key)
-        }
-        ref.setValue(partyRoom)
-        if (key != null) {
-            callback(partyRoom, key)
-        }
+
+        val charPool : List<Char> = ('0'..'9') + ('a'..'z')
+
+        val randomString = (1..6)
+            .map { _ -> kotlin.random.Random.nextInt(0, charPool.size) }
+            .map(charPool::get)
+            .joinToString("");
+
+        partyRoom.setRoomID(randomString)
+
+        dbRoomRef.child(randomString).setValue(partyRoom)
+
+        callback(partyRoom, randomString)
+
     }
 
 
@@ -214,8 +219,47 @@ class DataGetter @Inject constructor() {
         dbRoomRef.child(partyRoom.getRoomID()).child("emailList").setValue(partyRoom.getEmailList())
     }
 
+    /**
+     * This function updates the score of the room
+     * @param score scores of the room
+     * @param roomID ID of the room
+     */
+    fun updateRoomScore(score: Pair<String, Int>, roomID: String) {
+        dbRoomRef.child(roomID).child("scores").push().setValue(score)
+    }
+
     fun getCurrentUser(): FirebaseUser? {
         return authenticator.getCurrUser()
+    }
+
+    /**
+     * This function read the score of the room
+     * @param roomID ID of the room
+     * @param callback callback to be called when scores are read
+     */
+    fun readScores(roomID: String, callback: (HashMap<String, Int>) -> Unit) {
+        val queryRooms = dbRoomRef.child(roomID).child("scores")
+
+        val scoresMap = hashMapOf<String, Int>()
+
+        queryRooms.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                for (score in dataSnapshot.children) {
+                    val email = getSnapShotValue(score, "first", asHashMap) as String
+                    val gameScore = getSnapShotValue(score, "second", asHashMap) as Long
+
+                    scoresMap[email] = gameScore.toInt()
+                }
+                callback(scoresMap)
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Getting Post failed, log a message
+                val exception = databaseError.toException()
+                Log.w(TAG, "loadPost:onCancelled", exception)
+                // ...
+            }
+        })
     }
 
 
@@ -227,7 +271,7 @@ class DataGetter @Inject constructor() {
      */
     fun getRoomData(roomID: String,
                     partyRoomCallback: (PartyRoom, String) -> Unit,
-                    songListCallback: (MutableList<Pair<String, String>>) -> Unit) {
+                    songListCallback: (MutableList<Pair<String, String>>, Int, String, Int) -> Unit) {
 
         dbRoomRef.orderByChild("roomID").equalTo(roomID)
             .addValueEventListener(object : ValueEventListener {
@@ -245,6 +289,7 @@ class DataGetter @Inject constructor() {
                         }
 
                         val gameSongList: MutableList<Pair<String, String>> = mutableListOf()
+
                         for (song in (snapshot.value as Map<String, Object>) ["songList"] as List<*>) {
                             val tempPair: Map<String, String> = song as Map<String, String>
                             gameSongList.add(
@@ -254,7 +299,10 @@ class DataGetter @Inject constructor() {
                                 )
                             )
                         }
-                        songListCallback(gameSongList)
+                        val gameSize = getSnapShotValue(snapshot, "gameSize", asMap) as Long
+                        val gameMode = getSnapShotValue(snapshot, "gameMode", asMap) as String
+                        val difficultyLevel = getSnapShotValue(snapshot, "difficulty", asMap) as Long
+                        songListCallback(gameSongList, gameSize.toInt(), gameMode, difficultyLevel.toInt())
                     }
                 }
 
@@ -263,6 +311,17 @@ class DataGetter @Inject constructor() {
                 }
         })
     }
+
+    private fun getSnapShotValue(snapshot: DataSnapshot, keyword: String, format: String): Any? {
+        return if (format == asMap) {
+            (snapshot.value as Map<String, Object>)[keyword]
+        } else if (format == asHashMap) {
+            (snapshot.value as HashMap<String, Object>)[keyword]
+        } else {
+            error("format error when getting snapshot value")
+        }
+    }
+
 
     /**
      * This functions that updates the field of a room entry
@@ -280,6 +339,7 @@ class DataGetter @Inject constructor() {
      * @param callback callback to be called when the read value is available
      */
     fun readStartGame(roomID: String, callback: (Boolean) -> Unit) {
+        Log.w("DEBUG", roomID)
         val queryRooms = dbRoomRef.child(roomID).child("gameStarted")
 
         val startGameListener = object : ValueEventListener {

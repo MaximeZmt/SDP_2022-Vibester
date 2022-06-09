@@ -18,7 +18,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
@@ -150,7 +149,9 @@ class MyProfileFragment : Fragment(R.layout.activity_profile), OnItemClickListen
     private fun setLogOutBtnListener() {
         vmMyProfile.view.findViewById<Button>(R.id.logout).setOnClickListener {
             FirebaseAuth.getInstance().signOut()
-            findNavController().navigate(R.id.fragment_auth)
+            val navHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.main_bottom_nav_fragment) as NavHostFragment
+            val navController = navHostFragment.navController
+            navController.navigate(R.id.fragment_auth)
         }
     }
 

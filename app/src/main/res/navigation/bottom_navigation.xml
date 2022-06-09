@@ -17,6 +17,18 @@
         android:name="ch.sdp.vibester.fragment.ScoreBoardFragment"
         tools:layout="@layout/fragment_layout_scoreboard"/>
 
+    <fragment android:id="@+id/fragment_genre_setup"
+        android:name="ch.sdp.vibester.fragment.GenreSetupFragment"
+        tools:layout="@layout/fragment_layout_genre"/>
+
+    <fragment android:id="@+id/fragment_setting_setup"
+        android:name="ch.sdp.vibester.fragment.SettingSetupFragment"
+        tools:layout="@layout/fragment_layout_setting"/>
+
+    <fragment android:id="@+id/fragment_choose_online_room"
+        android:name="ch.sdp.vibester.fragment.ChoosePartyRoomFragment"
+        tools:layout="@layout/activity_choose_party_room"/>
+
     <fragment android:id="@+id/fragment_my_profile"
         android:name="ch.sdp.vibester.fragment.MyProfileFragment"
         tools:layout="@layout/activity_profile"/>

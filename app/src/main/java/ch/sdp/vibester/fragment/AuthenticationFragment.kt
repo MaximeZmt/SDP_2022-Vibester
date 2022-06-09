@@ -9,7 +9,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import ch.sdp.vibester.R
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
@@ -215,7 +215,9 @@ class AuthenticationFragment : Fragment(R.layout.fragment_layout_authentication)
     }
 
     private fun startProfileActivity() {
-        findNavController().popBackStack()
+        val navHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.main_bottom_nav_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
+        navController.popBackStack()
     }
 
     /**

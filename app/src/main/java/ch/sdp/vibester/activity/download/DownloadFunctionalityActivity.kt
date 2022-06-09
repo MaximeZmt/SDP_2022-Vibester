@@ -63,7 +63,7 @@ open class DownloadFunctionalityActivity : AppCompatActivity() {
             override fun onReceive(context: Context?, intent: Intent?) {
                 val id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
                 if (id == downloadId) {
-                    alert(getString(R.string.download_download_complete), getString(R.string.download_try_another), songNameView)
+                    alert(R.string.download_download_complete, R.string.download_try_another, songNameView)
                 }
             }
         }
@@ -90,12 +90,12 @@ open class DownloadFunctionalityActivity : AppCompatActivity() {
      * @param hint : String to be set as the hint of the textView.
      * @param view : The textView that will be updated.
      */
-    fun alert(toast: String, hint: String?, view: TextView?) {
+    fun alert(toast: Int, hint: Int?, view: TextView?) {
         downloadComplete = true
         downloadStarted = false
-        Toast.makeText(applicationContext, toast, Toast.LENGTH_LONG).show()
+        Toast.makeText(applicationContext, getString(toast), Toast.LENGTH_LONG).show()
         if (hint != null && view != null) {
-            editTextView(hint, view)
+            editTextView(getString(hint), view)
         }
     }
 
@@ -120,7 +120,7 @@ open class DownloadFunctionalityActivity : AppCompatActivity() {
             }
 
             if (checkExistingSong()) {
-                alert(getString(R.string.download_already_done), getString(R.string.download_try_different), songView)
+                alert(R.string.download_already_done, R.string.download_try_different, songView)
             } else { getAndDownload(songView) }
         }
     }
@@ -144,7 +144,7 @@ open class DownloadFunctionalityActivity : AppCompatActivity() {
             songName = song.getTrackName().lowercase() + " - " + song.getArtistName().lowercase()
             checkPermissionsAndDownload()
         } catch (e: IllegalArgumentException) {
-            alert(getString(R.string.download_unable_to_find), getString(R.string.download_retry), songView)
+            alert(R.string.download_unable_to_find, R.string.download_retry, songView)
         }
     }
 

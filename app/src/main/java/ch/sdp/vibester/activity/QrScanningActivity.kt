@@ -1,7 +1,6 @@
 package ch.sdp.vibester.activity
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
@@ -13,8 +12,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.navigation.Navigation
-import androidx.navigation.findNavController
 import ch.sdp.vibester.R
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
@@ -26,7 +23,6 @@ import com.google.android.gms.vision.barcode.Barcode
 import com.google.android.gms.vision.barcode.BarcodeDetector
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.IOException
-import java.io.Serializable
 import javax.inject.Inject
 
 
@@ -134,7 +130,8 @@ class QrScanningActivity : AppCompatActivity() {
     private fun setupBarcodeDetector(barcodeDetector: BarcodeDetector) {
         barcodeDetector.setProcessor(object : Detector.Processor<Barcode> {
             override fun release() {
-                Toast.makeText(applicationContext, getString(R.string.qrScanning_scannerClosed), Toast.LENGTH_SHORT).show()
+                val text = getString(R.string.qrScanning_scannerClosed)
+                Toast.makeText(applicationContext, text, Toast.LENGTH_SHORT).show()
             }
 
             override fun receiveDetections(detections: Detector.Detections<Barcode>) {
@@ -186,7 +183,8 @@ class QrScanningActivity : AppCompatActivity() {
                 finish()
             } else {
                 // Camera permission not granted, come back to previous activity
-                Toast.makeText(applicationContext, getString(R.string.qrScanning_cameraError), Toast.LENGTH_LONG).show()
+                val text = getString(R.string.qrScanning_cameraError)
+                Toast.makeText(applicationContext, text, Toast.LENGTH_LONG).show()
                 finishActivity()
             }
         }

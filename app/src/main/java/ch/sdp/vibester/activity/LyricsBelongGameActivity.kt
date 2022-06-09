@@ -40,11 +40,12 @@ class LyricsBelongGameActivity : GameActivity() {
         if (getIntent != null) {
             gameManager = getIntent.getSerializable("gameManager") as GameManager
             // put in one line to increase coverage
-            findViewById<Button>(R.id.nextSongLyrics).setOnClickListener { startRound(ctx, gameManager) }
+            val nextSong = findViewById<Button>(R.id.nextSongLyrics)
+            nextSong.setOnClickListener { startRoundLyrics(ctx, gameManager) }
             findViewById<Button>(R.id.lyricMatchButton).setOnClickListener { getAndCheckLyrics(ctx, song, speechInput, gameManager) }
 
             gameManager.setNextSong()
-            startRound(ctx, gameManager)
+            startRoundLyrics(ctx, gameManager)
             super.setMax(intent)
         }
 
@@ -87,7 +88,7 @@ class LyricsBelongGameActivity : GameActivity() {
      * @param ctx: Context on which the round is happening.
      * @param gameManager: The gameManager instance that is managing the current game.
      */
-    private fun startRound(ctx: Context, gameManager: GameManager) {
+    private fun startRoundLyrics(ctx: Context, gameManager: GameManager) {
         toggleBtnVisibility(R.id.lyricMatchButton, false)
         toggleBtnVisibility(R.id.nextSongLyrics, false)
         song = gameManager.getCurrentSong()//Song.songBuilder("", "", gameManager.currentSong.getTrackName(), gameManager.currentSong.getArtistName())
@@ -227,7 +228,7 @@ class LyricsBelongGameActivity : GameActivity() {
     }
 
     fun testStartRound(ctx: Context, gameManager: GameManager) {
-        startRound(ctx, gameManager)
+        startRoundLyrics(ctx, gameManager)
     }
 
 }

@@ -157,17 +157,14 @@ class MyProfileFragment : Fragment(R.layout.activity_profile), OnItemClickListen
             if (uid != "") {
                 generateQrCode(uid, qrImg)
             }
-            qrDialog.setNeutralButton("CLOSE",
-                { dialogInterface: DialogInterface, i: Int -> dialogInterface.dismiss()})
+            qrDialog.setNeutralButton("CLOSE"
+            ) { dialogInterface: DialogInterface, _: Int -> dialogInterface.dismiss() }
             qrDialog.setView(qrView)
             qrDialog.create()
 
             qrDialog.show()
         }
-
-
     }
-
 
 
     /**
@@ -234,14 +231,14 @@ class MyProfileFragment : Fragment(R.layout.activity_profile), OnItemClickListen
 
     override fun setupRecycleViewForFriends() {
         vmMyProfile.view.findViewById<RecyclerView>(R.id.profile_followingList).apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = followings?.let { ProfileFollowingAdapter(it, dataGetter, authenticator,this@MyProfileFragment) }
             setHasFixedSize(true)
+            adapter = followings?.let { ProfileFollowingAdapter(it, dataGetter, imageGetter, authenticator,this@MyProfileFragment) }
+            layoutManager = LinearLayoutManager(context)
         }
     }
 
     override fun showFriendsPosition(friends: MutableList<User>?) {
-        profileFollowingAdapter = ProfileFollowingAdapter(friends!!, dataGetter, authenticator, this@MyProfileFragment)
+        profileFollowingAdapter = ProfileFollowingAdapter(friends!!, dataGetter, imageGetter, authenticator, this@MyProfileFragment)
         vmMyProfile.view.findViewById<RecyclerView>(R.id.profile_followingList)!!.adapter = profileFollowingAdapter
     }
 

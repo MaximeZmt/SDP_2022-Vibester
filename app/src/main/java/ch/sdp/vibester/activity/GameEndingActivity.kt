@@ -157,6 +157,17 @@ class GameEndingActivity : DownloadFunctionalityActivity(), OnItemClickListener 
             dataGetter.updateRoomField(roomID, "gameStarted", false)
             dataGetter.readScores(roomID, this::setScoreboardList)
         }
+
+         if (intent.hasExtra("incorrectSongList") && intent.hasExtra("correctSongList")){
+             incorrectSongList = intent.getStringArrayListExtra("incorrectSongList") as ArrayList<String>
+             correctSongList = intent.getStringArrayListExtra("correctSongList") as ArrayList<String>
+
+             incorrectSongList.iterator().forEach { Log.e("ERR", it) }
+             correctSongList.iterator().forEach { Log.e("CORR", it) }
+             //Log.e("ERR", incorrectSongList)
+         }
+
+
     }
 
     private fun setScoreboardList(playerScores: HashMap<String, Int>) {
@@ -179,17 +190,7 @@ class GameEndingActivity : DownloadFunctionalityActivity(), OnItemClickListener 
         
         
 
-        if (intent.hasExtra("incorrectSongList") && intent.hasExtra("correctSongList")){
-            incorrectSongList = intent.getStringArrayListExtra("incorrectSongList") as ArrayList<String>
-            correctSongList = intent.getStringArrayListExtra("correctSongList") as ArrayList<String>
 
-            incorrectSongList.iterator().forEach { Log.e("ERR", it) }
-            correctSongList.iterator().forEach { Log.e("CORR", it) }
-            //Log.e("ERR", incorrectSongList)
-        }
-
-
-    }
 
     /**
      * Handles the case where an item in the recycler view is clicked, i.e the download buttons.

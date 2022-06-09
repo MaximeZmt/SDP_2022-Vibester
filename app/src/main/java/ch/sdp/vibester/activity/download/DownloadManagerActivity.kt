@@ -2,20 +2,16 @@ package ch.sdp.vibester.activity.download
 
 import android.os.Bundle
 import android.os.Environment
-import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.children
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
-import ch.sdp.vibester.helper.Helper
 import ch.sdp.vibester.model.SongListAdapterForDelete
 import ch.sdp.vibester.user.OnItemClickListener
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.io.*
 
 /**
@@ -29,9 +25,6 @@ class DownloadManagerActivity : AppCompatActivity(), OnItemClickListener {
         supportActionBar?.hide()
 
         setContentView(R.layout.activity_download_manager)
-
-        val returnBtn = findViewById<FloatingActionButton>(R.id.downloadManager_returnToMain)
-        Helper().setReturnToMainListener(returnBtn, this)
 
         setUpRecyclerView()
     }

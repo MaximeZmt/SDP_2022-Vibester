@@ -14,10 +14,13 @@ import androidx.test.espresso.action.ViewActions.scrollTo
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.intent.Intents
+import androidx.test.espresso.intent.Intents.intended
+import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.matcher.BoundedMatcher
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
+import ch.sdp.vibester.activity.download.DownloadManagerActivity
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.database.ImageGetter
@@ -295,6 +298,24 @@ class MyProfileFragmentTest {
         onView(withText("Cancel")).perform(click())
 
         onView(withId(R.id.username)).check(matches(withText("Lalisa Bon")))
+    }
+
+    @Test
+    fun checkMyMusicGoToDownloadManager() {
+        val inputProfile = User( "Lalisa Bon", R.string.test_profile_image.toString(), "lisa@test.com",  12, 8)
+        val ctx = ApplicationProvider.getApplicationContext() as Context
+
+        createMockDataGetter(inputProfile)
+        createMockAuthenticator()
+        createMockImageGetter()
+
+        launchFragmentInHiltContainer<MyProfileFragment>(
+            themeResId = R.style.AppTheme
+        )
+
+        onView(withId(R.id.profile_localSongs)).perform(click())
+
+        intended(hasComponent(DownloadManagerActivity::class.java.name))
     }
 
 

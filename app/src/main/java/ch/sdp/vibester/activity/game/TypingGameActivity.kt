@@ -195,7 +195,8 @@ class TypingGameActivity : GameActivity() {
      * The following functions are helper for testing
      */
     fun testProgressBar(progressTime:Int = 0) {
-        superTestProgressBar(findViewById(R.id.progressBarTyping), progressTime)
+        val bar = findViewById<ProgressBar>(R.id.progressBarTyping)
+        superTestProgressBar(bar, progressTime)
     }
 
     fun testFirstRound(ctx: Context, gameManager: GameManager){

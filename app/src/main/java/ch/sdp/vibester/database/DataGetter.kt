@@ -23,6 +23,8 @@ class DataGetter @Inject constructor() {
     private val dbUserRef = Database.get().getReference("users")
     private val dbRoomRef = Database.get().getReference("rooms")
     private val authenticator: FireBaseAuthenticator = FireBaseAuthenticator()
+    private val asMap = "map"
+    private val asHashMap = "hash map"
 
     /**
      * Set field value
@@ -243,10 +245,10 @@ class DataGetter @Inject constructor() {
         queryRooms.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for (score in dataSnapshot.children) {
-                    val email = (score.value as HashMap<String, Object>)["first"] as String
-                    val gameScore = ((score.value as HashMap<String, Object>)["second"] as Long).toInt()
+                    val email = getSnapShotValue(score, "first", asHashMap) as String
+                    val gameScore = getSnapShotValue(score, "second", asHashMap) as Long
 
-                    scoresMap[email] = gameScore
+                    scoresMap[email] = gameScore.toInt()
                 }
                 callback(scoresMap)
             }
@@ -297,12 +299,9 @@ class DataGetter @Inject constructor() {
                                 )
                             )
                         }
-                        //val gameSize: Int = ((snapshot.value as Map<String, Object>)["gameSize"] as Long).toInt()
-                        //val gameMode: String = (snapshot.value as Map<String, Object>)["gameMode"] as String
-                        //val difficultyLevel: Long = (snapshot.value as Map<String, Object>)["difficulty"] as Long
-                        val gameSize = getSnapShotValue(snapshot, "gameSize") as Long
-                        val gameMode = getSnapShotValue(snapshot, "gameMode") as String
-                        val difficultyLevel = getSnapShotValue(snapshot, "difficulty") as Long
+                        val gameSize = getSnapShotValue(snapshot, "gameSize", asMap) as Long
+                        val gameMode = getSnapShotValue(snapshot, "gameMode", asMap) as String
+                        val difficultyLevel = getSnapShotValue(snapshot, "difficulty", asMap) as Long
                         songListCallback(gameSongList, gameSize.toInt(), gameMode, difficultyLevel.toInt())
                     }
                 }
@@ -313,8 +312,14 @@ class DataGetter @Inject constructor() {
         })
     }
 
-    private fun getSnapShotValue(snapshot: DataSnapshot, keyword: String): Object? {
-        return (snapshot.value as Map<String, Object>)[keyword]
+    private fun getSnapShotValue(snapshot: DataSnapshot, keyword: String, format: String): Any? {
+        return if (format == asMap) {
+            (snapshot.value as Map<String, Object>)[keyword]
+        } else if (format == asHashMap) {
+            (snapshot.value as HashMap<String, Object>)[keyword]
+        } else {
+            error("format error when getting snapshot value")
+        }
     }
 
 

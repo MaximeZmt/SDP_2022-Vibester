@@ -3,7 +3,6 @@ package ch.sdp.vibester.fragment
 import android.os.Bundle
 import android.os.Environment
 import android.text.Editable
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -50,16 +49,27 @@ class GenreSetupFragment: Fragment(R.layout.fragment_layout_genre) {
     }
 
     private fun setGenreListeners(){
-        vmGenreSetup.view.findViewById<Button>(R.id.kpopButton).setOnClickListener { chooseGenre(method = LastfmMethod.BY_TAG.method, tag = "kpop", mode = R.string.kpop) }
-        vmGenreSetup.view.findViewById<Button>(R.id.rockButton).setOnClickListener {
-            Log.d(null, "########## enter rock btn click ##########")
-            chooseGenre(method = LastfmMethod.BY_TAG.method, tag = "rock", mode = R.string.rock) }
-        vmGenreSetup.view.findViewById<Button>(R.id.btsButton).setOnClickListener { chooseGenre(method = LastfmMethod.BY_ARTIST.method, artist = "BTS", mode = R.string.gameGenre_bts) }
-        vmGenreSetup.view.findViewById<Button>(R.id.topTracksButton).setOnClickListener { chooseGenre(method = LastfmMethod.BY_CHART.method, mode = R.string.top_tracks) }
-        vmGenreSetup.view.findViewById<Button>(R.id.imagDragonsButton).setOnClickListener{ chooseGenre(method = LastfmMethod.BY_ARTIST.method, artist = "Imagine Dragons", mode = R.string.gameGenre_imagine_dragons) }
-        vmGenreSetup.view.findViewById<Button>(R.id.billieEilishButton).setOnClickListener { chooseGenre(method = LastfmMethod.BY_ARTIST.method, artist = "Billie Eilish", mode = R.string.gameGenre_billie_eilish) }
-        vmGenreSetup.view.findViewById<Button>(R.id.validateSearch).setOnClickListener{ chooseGenre(method = LastfmMethod.BY_ARTIST.method, artist = searchArtistEditable.toString(), mode = R.string.gameGenre_byArtistSearch) }
+        val kpop = vmGenreSetup.view.findViewById<Button>(R.id.kpopButton)
+        val rock = vmGenreSetup.view.findViewById<Button>(R.id.rockButton)
+        val bts = vmGenreSetup.view.findViewById<Button>(R.id.btsButton)
+        val topTracks = vmGenreSetup.view.findViewById<Button>(R.id.topTracksButton)
+        val imagDragons = vmGenreSetup.view.findViewById<Button>(R.id.imagDragonsButton)
+        val billieEilish = vmGenreSetup.view.findViewById<Button>(R.id.billieEilishButton)
+        val validate = vmGenreSetup.view.findViewById<Button>(R.id.validateSearch)
+
+        val searchByTag = LastfmMethod.BY_TAG.method
+        val searchByArtist = LastfmMethod.BY_ARTIST.method
+
+        kpop.setOnClickListener { chooseGenre(method = searchByTag, tag = "kpop", mode = R.string.kpop) }
+        rock.setOnClickListener { chooseGenre(method = searchByTag, tag = "rock", mode = R.string.rock) }
+        bts.setOnClickListener { chooseGenre(method = searchByArtist, artist = "BTS", mode = R.string.gameGenre_bts) }
+        topTracks.setOnClickListener { chooseGenre(method = LastfmMethod.BY_CHART.method, mode = R.string.top_tracks) }
+        imagDragons.setOnClickListener{ chooseGenre(method = searchByArtist, artist = "Imagine Dragons", mode = R.string.gameGenre_imagine_dragons) }
+        billieEilish.setOnClickListener { chooseGenre(method = searchByArtist, artist = "Billie Eilish", mode = R.string.gameGenre_billie_eilish) }
+        validate.setOnClickListener{ chooseGenre(method = searchByArtist, artist = searchArtistEditable.toString(), mode = R.string.gameGenre_byArtistSearch) }
     }
+
+
     /**
      * Set game genre. Fetch the data from Lastfm.
      * @param method: lastfm method to fetch songs: BY_ARTIST, BY_TAG

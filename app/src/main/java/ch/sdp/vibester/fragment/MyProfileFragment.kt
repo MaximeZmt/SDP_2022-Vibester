@@ -119,7 +119,8 @@ class MyProfileFragment : Fragment(R.layout.activity_profile), OnItemClickListen
     }
 
     private fun setLocalMusicBtnListener() {
-        vmMyProfile.view.findViewById<Button>(R.id.profile_localSongs).setOnClickListener {
+        val local = vmMyProfile.view.findViewById<Button>(R.id.profile_localSongs)
+        local.setOnClickListener {
             val newIntent = Intent(activity, DownloadManagerActivity::class.java)
             startActivity(newIntent)
         }

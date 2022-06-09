@@ -126,8 +126,7 @@ class GenreSetupFragment: Fragment(R.layout.fragment_layout_genre) {
     }
 
     private fun setReturnBtnListener() {
-        val returnToMain = vmGenreSetup.view.findViewById<FloatingActionButton>(R.id.genreSetup_returnToMain)
-        returnToMain.setOnClickListener {
+        vmGenreSetup.view.findViewById<FloatingActionButton>(R.id.genreSetup_returnToMain).setOnClickListener {
             findNavController().popBackStack()
         }
     }

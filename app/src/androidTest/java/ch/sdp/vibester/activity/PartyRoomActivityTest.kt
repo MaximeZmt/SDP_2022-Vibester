@@ -207,6 +207,7 @@ class PartyRoomActivityTest {
         intent.putExtra("roomName", mockRoomID)
         intent.putExtra("createRoom", false)
         intent.putExtra("gameManager", setGameManager())
+        intent.putExtra("roomID", mockRoomID)
 
         val scn: ActivityScenario<PartyRoomActivity> = ActivityScenario.launch(intent)
 

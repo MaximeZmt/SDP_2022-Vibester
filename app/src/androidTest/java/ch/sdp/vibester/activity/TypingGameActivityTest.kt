@@ -298,9 +298,12 @@ class TypingGameActivityTest {
             """
 
         val songTest = Song.singleSong(inputTxt)
+
         val gameManager = setGameManager()
         gameManager.setNextSong()
         gameManager.gameSize = 1
+
+
 
         val intent = Intent(ctx, TypingGameActivity::class.java)
         val scn: ActivityScenario<TypingGameActivity> = ActivityScenario.launch(intent)
@@ -319,6 +322,8 @@ class TypingGameActivityTest {
         Intents.intended(IntentMatchers.hasExtra("statNames", statNames))
         Intents.intended(IntentMatchers.hasExtra("statValues", statVal))
         Intents.intended(IntentMatchers.hasExtra("incorrectSongList", incArray))
+/*
+ */
 
     }
 

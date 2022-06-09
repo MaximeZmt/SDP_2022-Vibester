@@ -110,7 +110,7 @@ class LyricsBelongGameActivity : GameActivity() {
      * Displays the given String in lyricResult TextView and renders the check button visible.
      * @param speechInput: The string to display
      */
-    private fun updateSpeechResult(speechInput: String) {
+    fun updateSpeechResult(speechInput: String) {
         findViewById<TextView>(R.id.lyricResult).text = speechInput
         findViewById<Button>(R.id.lyricMatchButton).visibility = View.VISIBLE
     }

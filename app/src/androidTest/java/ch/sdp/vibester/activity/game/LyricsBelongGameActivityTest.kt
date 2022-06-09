@@ -182,21 +182,21 @@ class LyricsBelongGameActivityTest {
     //    assertEquals(true, gameManager.getWrongSongs().size == 0)
     }
     */
-    // TODO fix the test
-//    @Test
-//    fun shouldUpdateSpeechFromInput() {
-//        createMockInvocation()
-//        val intent = Intent(
-//            ApplicationProvider.getApplicationContext(),
-//            LyricsBelongGameActivity::class.java
-//        )
-//        val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
-//        scn.onActivity { activity ->
-//            activity.testUpdateSpeechResult("hey")
-//        }
-//
-//        onView(withId(R.id.lyricResult)).check(matches(withText("hey")))
-//    }
+
+    @Test
+    fun shouldUpdateSpeechFromInput() {
+        createMockInvocation()
+        val intent = Intent(
+            ApplicationProvider.getApplicationContext(),
+            LyricsBelongGameActivity::class.java
+        )
+        val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
+        scn.onActivity { activity ->
+            activity.updateSpeechResult("hey")
+        }
+
+        onView(withId(R.id.lyricResult)).check(matches(withText("hey")))
+    }
 
     @Test
     fun aNextButtonOnClick() {
@@ -246,8 +246,7 @@ class LyricsBelongGameActivityTest {
         onView(withId(R.id.nextSongLyrics)).check(matches(isDisplayed()))
     }
 
-    // FIXME: this test fails after implement QR code reader for no reason
-/*    @Test
+   @Test
     fun btnCheckVisibilityAfterSpeak() {
         createMockInvocation()
         val intent = Intent(
@@ -257,11 +256,11 @@ class LyricsBelongGameActivityTest {
         val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
         onView(withId(R.id.lyricMatchButton)).check(matches(not(isDisplayed())))
         scn.onActivity { activity ->
-            activity.testUpdateSpeechResult("hey")
+            activity.updateSpeechResult("hey")
         }
 
         onView(withId(R.id.lyricMatchButton)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
-    }*/
+    }
 
 
     @Test

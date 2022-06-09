@@ -8,7 +8,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
 import ch.sdp.vibester.R
-import ch.sdp.vibester.activity.game.BuzzerScreenActivity
+import ch.sdp.vibester.activity.game.BuzzerGameActivity
 import ch.sdp.vibester.helper.GameManager
 
 /**
@@ -91,7 +91,7 @@ class BuzzerSetupActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
 
 
     fun switchToGame(view: View) {
-        val intent = Intent(this, BuzzerScreenActivity::class.java)
+        val intent = Intent(this, BuzzerGameActivity::class.java)
         val players = findViewById<LinearLayout>(R.id.playerNames).children.filter { child: View -> child.visibility == View.VISIBLE }
         val pNameArray = arrayOfNulls<String>(players.count())
 

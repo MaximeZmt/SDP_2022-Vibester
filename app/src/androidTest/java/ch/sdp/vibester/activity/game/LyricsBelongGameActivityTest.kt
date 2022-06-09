@@ -184,7 +184,7 @@ class LyricsBelongGameActivityTest {
     */
 
     @Test
-    fun shouldUpdateSpeechFromInput() {
+    fun shouldUpdateSpeechFromInputAndSetBtnVisible() {
         createMockInvocation()
         val intent = Intent(
             ApplicationProvider.getApplicationContext(),
@@ -196,7 +196,9 @@ class LyricsBelongGameActivityTest {
         }
 
         onView(withId(R.id.lyricResult)).check(matches(withText("hey")))
+        onView(withId(R.id.lyricMatchButton)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
     }
+
 
     @Test
     fun aNextButtonOnClick() {
@@ -244,22 +246,6 @@ class LyricsBelongGameActivityTest {
         val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
         onView(withId(R.id.skip_lyrics)).check(matches(isDisplayed())).perform(click())
         onView(withId(R.id.nextSongLyrics)).check(matches(isDisplayed()))
-    }
-
-   @Test
-    fun btnCheckVisibilityAfterSpeak() {
-        createMockInvocation()
-        val intent = Intent(
-            ApplicationProvider.getApplicationContext(),
-            LyricsBelongGameActivity::class.java
-        )
-        val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
-        onView(withId(R.id.lyricMatchButton)).check(matches(not(isDisplayed())))
-        scn.onActivity { activity ->
-            activity.updateSpeechResult("hey")
-        }
-
-        onView(withId(R.id.lyricMatchButton)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
     }
 
 

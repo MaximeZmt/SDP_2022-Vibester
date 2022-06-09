@@ -17,6 +17,9 @@ import ch.sdp.vibester.helper.Helper
 import ch.sdp.vibester.model.SongListAdapterForEndGame
 import ch.sdp.vibester.user.OnItemClickListener
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 /**
  * Game ending activity with game stats and list of songs quessed correctly/wrong
@@ -24,7 +27,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 class GameEndingActivity : DownloadFunctionalityActivity(), OnItemClickListener {
 
     private val endStatArrayList =
-        arrayListOf(R.id.end_stat1, R.id.end_stat2, R.id.end_stat3, R.id.end_stat4)
+        arrayListOf(R.id.end_stat0, R.id.end_stat1, R.id.end_stat2, R.id.end_stat3)
+
+    private val nameIds = arrayListOf(R.id.name_0, R.id.name_1, R.id.name_2, R.id.name_3)
+    private val scoreIds = arrayListOf(R.id.score_0, R.id.score_1, R.id.score_2, R.id.score_3)
 
     private var incorrectSongList: ArrayList<String> = arrayListOf()
     private var correctSongList: ArrayList<String> = arrayListOf()
@@ -43,7 +49,7 @@ class GameEndingActivity : DownloadFunctionalityActivity(), OnItemClickListener 
         supportActionBar?.hide()
 
         val gameMode = AppPreferences.getStr(getString(R.string.preferences_game_mode))
-        if (gameMode == "local_typing" || gameMode == "local_lyrics") {
+        if (gameMode == "local_typing" || gameMode == "local_lyrics") { //|| gameMode == "local_buzzer"
             setContentView(R.layout.activity_end_solo)
             getFromIntentSolo(intent)
         } else {
@@ -108,21 +114,12 @@ class GameEndingActivity : DownloadFunctionalityActivity(), OnItemClickListener 
     }
 
     /**
-     * Creates a text view with a given text and gravity
+     * Puts the given text in the text view
      * @param text: the text to be put in the view
-     * @param gravity: the desired gravity of the view
      * @return the created view
      */
-    private fun createTextView(text: String, gravity: Int, row: TableRow) {
-        val view = TextView(this)
-        view.text = text
-        view.height = 100
-        view.width = 300
-        view.textAlignment = View.TEXT_ALIGNMENT_CENTER
-        view.fontFeatureSettings = "monospace"
-        view.textSize = 20f
-        view.gravity = gravity
-        row.addView(view)
+    private fun setupTextView(view: Int, text: String) {
+        findViewById<TextView>(view).text = text
     }
 
     /**
@@ -143,12 +140,23 @@ class GameEndingActivity : DownloadFunctionalityActivity(), OnItemClickListener 
                 val row = findViewById<TableRow>(endStatArrayList[i])
                 row.visibility = View.VISIBLE
 
-                createTextView(pName, Gravity.LEFT, row)
-                createTextView(playerScores[pName]!!.toString(), Gravity.RIGHT, row)
+                setupTextView(nameIds[i], pName)
+                setupTextView(scoreIds[i], playerScores[pName]!!.toString())
 
                 i += 1
             }
         }
+
+        if (intent.hasExtra("incorrectSongList") && intent.hasExtra("correctSongList")){
+            incorrectSongList = intent.getStringArrayListExtra("incorrectSongList") as ArrayList<String>
+            correctSongList = intent.getStringArrayListExtra("correctSongList") as ArrayList<String>
+
+            incorrectSongList.iterator().forEach { Log.e("ERR", it) }
+            correctSongList.iterator().forEach { Log.e("CORR", it) }
+            //Log.e("ERR", incorrectSongList)
+        }
+
+
     }
 
     /**

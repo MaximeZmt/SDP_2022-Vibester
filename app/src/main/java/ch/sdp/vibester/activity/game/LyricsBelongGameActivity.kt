@@ -88,10 +88,10 @@ class LyricsBelongGameActivity : GameActivity() {
      * @param ctx: Context on which the round is happening.
      * @param gameManager: The gameManager instance that is managing the current game.
      */
-    private fun startRoundLyrics(ctx: Context, gameManager: GameManager) {
+    fun startRoundLyrics(ctx: Context, gameManager: GameManager) {
         toggleBtnVisibility(R.id.lyricMatchButton, false)
         toggleBtnVisibility(R.id.nextSongLyrics, false)
-        song = gameManager.getCurrentSong()//Song.songBuilder("", "", gameManager.currentSong.getTrackName(), gameManager.currentSong.getArtistName())
+        song = gameManager.getCurrentSong()
 
         val frameLay = findViewById<FrameLayout>(R.id.LyricsSongQuestion)
         frameLay.removeAllViews()
@@ -122,7 +122,7 @@ class LyricsBelongGameActivity : GameActivity() {
      * @param speechInput: The inputted string from the speech.
      * @param gameManager: The gameManager instance that is managing the game.
      */
-    private fun getAndCheckLyrics(ctx: Context, song: Song, speechInput: String, gameManager: GameManager) {
+    fun getAndCheckLyrics(ctx: Context, song: Song, speechInput: String, gameManager: GameManager) {
         val service = LyricsOVHApiInterface.createLyricService()
         val call = service.getLyrics(song.getArtistName(), song.getTrackName())
         call.enqueue(object : Callback<Lyric> {
@@ -151,7 +151,7 @@ class LyricsBelongGameActivity : GameActivity() {
      * @param lyrics: Actual lyrics.
      * @param gameManager: The gameManager instance that is managing the game.
      */
-    private fun checkAnswer(ctx: Context, lyricToBeCheck: String, lyrics: String, gameManager: GameManager) {
+    fun checkAnswer(ctx: Context, lyricToBeCheck: String, lyrics: String, gameManager: GameManager) {
          if (lyrics.contains(lyricToBeCheck, ignoreCase = true)) {
              gameManager.addCorrectSong()
              hasWon(ctx, gameManager.getScore(), true)
@@ -215,20 +215,8 @@ class LyricsBelongGameActivity : GameActivity() {
     /*
      * The following functions are helper for testing
      */
-    /*fun testCheckLyrics(ctx: Context, lyricToBeCheck: String, lyrics: String, gameManager: GameManager) {
-        checkAnswer(ctx, lyricToBeCheck, lyrics, gameManager)
-    }*/
-
-    fun testGetAndCheckLyrics(ctx: Context, song: Song, speechInput: String, gameManager: GameManager) {
-        getAndCheckLyrics(ctx, song, speechInput, gameManager)
-    }
-
     fun testProgressBar(progressTime:Int = 0) {
         superTestProgressBar(findViewById(R.id.progressBarLyrics), progressTime)
-    }
-
-    fun testStartRound(ctx: Context, gameManager: GameManager) {
-        startRoundLyrics(ctx, gameManager)
     }
 
 }

@@ -277,7 +277,7 @@ class LyricsBelongGameActivityTest {
         val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
         val ctx = ApplicationProvider.getApplicationContext() as Context
         scn.onActivity { activity ->
-            activity.testGetAndCheckLyrics(ctx, Song.songBuilder("", "", "Monday", "Imagine Dragons"), speechInputCorrect, gameManager)
+            activity.getAndCheckLyrics(ctx, Song.songBuilder("", "", "Monday", "Imagine Dragons"), speechInputCorrect, gameManager)
         }
         /*FIXME: API takes a lot of time to process this request
         comment the following lines if this test fail*/
@@ -286,8 +286,8 @@ class LyricsBelongGameActivityTest {
     }
 
     // FIXME: Intent on GameEnding is fired twice
-/*
-    @Test
+
+    /*@Test
     fun bCheckIntentOnEndingForWrongSong() {
         createMockInvocation()
         val gameManager = setGameManager()
@@ -299,7 +299,7 @@ class LyricsBelongGameActivityTest {
         val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
         val ctx = ApplicationProvider.getApplicationContext() as Context
         scn.onActivity { activity ->
-            activity.testCheckLyrics(ctx, speechInputWrong, lyrics, gameManager)
+            activity.checkAnswer(ctx, speechInputWrong, lyrics, gameManager)
         }
         val incArray: ArrayList<String> = ArrayList(
             gameManager.getWrongSongs().map { it.getTrackName() + " - " + it.getArtistName() })
@@ -319,8 +319,8 @@ class LyricsBelongGameActivityTest {
         Intents.intended(IntentMatchers.hasExtra("str_arr_inc", incArray))
         Intents.intended(IntentMatchers.hasExtra("str_arr_name", statNames))
         Intents.intended(IntentMatchers.hasExtra("str_arr_val", statVal))
-    }
-*/
+    }*/
+
     @Test
     fun checkIntentOnNextRoundForCorrectSong() {
         createMockInvocation()
@@ -334,7 +334,7 @@ class LyricsBelongGameActivityTest {
         val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
         val ctx = ApplicationProvider.getApplicationContext() as Context
         scn.onActivity { activity ->
-            activity.testStartRound(ctx, gameManager)
+            activity.startRoundLyrics(ctx, gameManager)
             currentSong = gameManager.getCurrentSong()
         }
 
@@ -345,8 +345,5 @@ class LyricsBelongGameActivityTest {
         assertEquals(1, gameManager.nextSongInd)
         assertEquals(1, gameManager.numPlayedSongs)
     }
-
-
-
 
 }

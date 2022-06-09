@@ -1,4 +1,4 @@
-package ch.sdp.vibester.activity
+package ch.sdp.vibester.activity.game
 
 import android.content.Context
 import android.content.Intent
@@ -14,6 +14,7 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.GrantPermissionRule
 import ch.sdp.vibester.R
+import ch.sdp.vibester.activity.GameEndingActivity
 import ch.sdp.vibester.api.LastfmMethod
 import ch.sdp.vibester.database.AppPreferences
 import ch.sdp.vibester.database.DataGetter

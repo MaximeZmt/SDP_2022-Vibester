@@ -43,16 +43,16 @@
             android:name=".activity.BuzzerSetupActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.LyricsBelongGameActivity"
+            android:name=".activity.game.LyricsBelongGameActivity"
             android:exported="false" />
         <activity
             android:name=".activity.GameEndingActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.TypingGameActivity"
+            android:name=".activity.game.TypingGameActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.BuzzerScreenActivity"
+            android:name=".activity.game.BuzzerScreenActivity"
             android:exported="false" />
         <activity
             android:name=".activity.PublicProfileActivity"

@@ -1,6 +1,5 @@
 package ch.sdp.vibester.fragment
 
-
 import androidx.core.os.bundleOf
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView

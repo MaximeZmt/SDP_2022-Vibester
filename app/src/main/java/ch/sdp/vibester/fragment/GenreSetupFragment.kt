@@ -49,20 +49,23 @@ class GenreSetupFragment: Fragment(R.layout.fragment_layout_genre) {
     }
 
     private fun setGenreListeners(){
-        val kpop = vmGenreSetup.view.findViewById<Button>(R.id.kpopButton)
-        val rock = vmGenreSetup.view.findViewById<Button>(R.id.rockButton)
-        val bts = vmGenreSetup.view.findViewById<Button>(R.id.btsButton)
-        val topTracks = vmGenreSetup.view.findViewById<Button>(R.id.topTracksButton)
-        val imagDragons = vmGenreSetup.view.findViewById<Button>(R.id.imagDragonsButton)
-        val billieEilish = vmGenreSetup.view.findViewById<Button>(R.id.billieEilishButton)
+        val kpopBtn = vmGenreSetup.view.findViewById<Button>(R.id.kpopButton)
+        val rockBtn = vmGenreSetup.view.findViewById<Button>(R.id.rockButton)
+        val btsBtn = vmGenreSetup.view.findViewById<Button>(R.id.btsButton)
+        val topTracksBtn = vmGenreSetup.view.findViewById<Button>(R.id.topTracksButton)
+        val imagDragonsBtn = vmGenreSetup.view.findViewById<Button>(R.id.imagDragonsButton)
+        val billieEilishBtn = vmGenreSetup.view.findViewById<Button>(R.id.billieEilishButton)
         val validate = vmGenreSetup.view.findViewById<Button>(R.id.validateSearch)
 
-        kpop.setOnClickListener { chooseGenre(tag = "kpop", mode = R.string.kpop) }
-        rock.setOnClickListener { chooseGenre(tag = "rock", mode = R.string.rock) }
-        bts.setOnClickListener { chooseGenre(artist = "BTS", mode = R.string.gameGenre_bts) }
-        topTracks.setOnClickListener { chooseGenre(mode = R.string.top_tracks) }
-        imagDragons.setOnClickListener{ chooseGenre(artist = "Imagine Dragons", mode = R.string.gameGenre_imagine_dragons) }
-        billieEilish.setOnClickListener { chooseGenre(artist = "Billie Eilish", mode = R.string.gameGenre_billie_eilish) }
+        val imagDragons = getString(R.string.gameGenre_imagine_dragons)
+        val billieEilish = getString(R.string.gameGenre_billie_eilish)
+
+        kpopBtn.setOnClickListener { chooseGenre(tag = "kpop", mode = R.string.kpop) }
+        rockBtn.setOnClickListener { chooseGenre(tag = getString(R.string.rock), mode = R.string.rock) }
+        btsBtn.setOnClickListener { chooseGenre(artist = "BTS", mode = R.string.gameGenre_bts) }
+        topTracksBtn.setOnClickListener { chooseGenre(mode = R.string.top_tracks) }
+        imagDragonsBtn.setOnClickListener{ chooseGenre(artist = imagDragons, mode = R.string.gameGenre_imagine_dragons) }
+        billieEilishBtn.setOnClickListener { chooseGenre(artist = billieEilish, mode = R.string.gameGenre_billie_eilish) }
         validate.setOnClickListener{ chooseGenre(artist = searchArtistEditable.toString(), mode = R.string.gameGenre_byArtistSearch) }
     }
 

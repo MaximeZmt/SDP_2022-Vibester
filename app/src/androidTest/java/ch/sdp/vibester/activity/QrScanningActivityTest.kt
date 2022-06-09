@@ -38,8 +38,6 @@ class QrScanningActivityTest {
         val mockUser1 = User("mockUser1", uid = "mockUser1uid")
         val mockUser2 = User("mockUser2", uid = "mockUser2uid")
         val mockUser3 = User("mockUser3", uid = "mockUser3uid")
-        val mockUser = User("mockUser", uid = "mockUseruid", following = mapOf(Pair(mockUser2.uid, true), Pair(mockUser3.uid, true)))
-
 
         val mockUIDs = arrayListOf<String>("mockUser1uid", "mockUser2uid", "mockUser3uid")
 
@@ -53,7 +51,7 @@ class QrScanningActivityTest {
     }
 
     @get:Rule(order = 1)
-    var permissionRule = GrantPermissionRule.grant(android.Manifest.permission.CAMERA)
+    var permissionRule: GrantPermissionRule = GrantPermissionRule.grant(android.Manifest.permission.CAMERA)
 
     @Before
     fun setUp() {

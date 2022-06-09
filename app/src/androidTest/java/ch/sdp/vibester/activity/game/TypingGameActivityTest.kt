@@ -3,6 +3,8 @@ package ch.sdp.vibester.activity.game
 import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
+import android.widget.FrameLayout
+import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
@@ -154,7 +156,7 @@ class TypingGameActivityTest {
         assertEquals(expectedSize, myTest.minimumWidth)
     }
 
-    /*
+
     @Test
     fun guessLayoutTest() {
         createMockDataGetter()
@@ -188,7 +190,7 @@ class TypingGameActivityTest {
         assertEquals(songTest.getTrackName(), gameManager.getCurrentSong().getTrackName())
         assertEquals(gameManager.getCorrectSongs().size, 1)
     }
-     */
+
 
     @Test
     fun checkAnswerCorrectTest() {

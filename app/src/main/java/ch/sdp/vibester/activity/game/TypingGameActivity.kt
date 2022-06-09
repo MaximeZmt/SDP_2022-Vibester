@@ -132,7 +132,7 @@ class TypingGameActivity : GameActivity() {
     /**
      * Create the frame layout and its logic of the suggestion when user is typing
      */
-    private fun guess(song: Song, guessLayout: LinearLayout, ctx: Context, gameManager: GameManager): FrameLayout {
+    fun guess(song: Song, guessLayout: LinearLayout, ctx: Context, gameManager: GameManager): FrameLayout {
         val frameLay = FrameLayout(ctx)
         frameLay.background = DisplayContents.borderGen(ctx, R.color.maximum_yellow_red)
 

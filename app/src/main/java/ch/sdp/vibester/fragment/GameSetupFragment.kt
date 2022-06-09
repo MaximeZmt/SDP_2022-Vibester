@@ -93,7 +93,7 @@ class GameSetupFragment : Fragment(R.layout.fragment_layout_game_setup), Adapter
         val billieEilish = vmGameSetup.view.findViewById<Button>(R.id.billieEilishButton)
         val validateSearch = vmGameSetup.view.findViewById<Button>(R.id.validateSearch)
 
-        val records = File(context!!.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "records.txt")
+        val records = File(requireContext().getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "records.txt")
 
         if (!records.exists() || records.length() == 0L) {
             offline.setOnClickListener { Toast.makeText(it.context, "You don't have any downloaded song", Toast.LENGTH_SHORT).show() }

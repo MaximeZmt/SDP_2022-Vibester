@@ -13,6 +13,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
 import ch.sdp.vibester.activity.BuzzerSetupActivity
 import ch.sdp.vibester.activity.ChoosePartyRoomActivity
+import ch.sdp.vibester.activity.download.DownloadActivity
 import ch.sdp.vibester.activity.game.LyricsBelongGameActivity
 import ch.sdp.vibester.activity.game.TypingGameActivity
 import ch.sdp.vibester.api.InternetState
@@ -68,6 +69,13 @@ class GameSetupFragmentTest {
         InternetState.forceOffline()
         onView(withId(R.id.game_setup_has_internet)).perform(click())
         onView(withId(R.id.game_setup_has_internet)).check(matches(withText("Internet is off")))
+    }
+
+    @Test
+    fun checkDownloadBtnClick() {
+        onView(withId(R.id.download)).perform(click())
+
+        intended(hasComponent(DownloadActivity::class.java.name))
     }
 
     @Test

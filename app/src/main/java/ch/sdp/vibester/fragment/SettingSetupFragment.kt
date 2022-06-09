@@ -44,7 +44,8 @@ class SettingSetupFragment:Fragment(R.layout.fragment_layout_setting), AdapterVi
     }
 
     private fun setReturnBtnListener() {
-        vmSettSetup.view.findViewById<FloatingActionButton>(R.id.gameSetting_returnToMain).setOnClickListener {
+        val returnToMain = vmSettSetup.view.findViewById<FloatingActionButton>(R.id.gameSetting_returnToMain)
+        returnToMain.setOnClickListener {
             findNavController().popBackStack()
         }
     }

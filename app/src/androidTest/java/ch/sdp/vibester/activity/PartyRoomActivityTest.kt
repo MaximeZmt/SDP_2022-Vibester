@@ -97,6 +97,7 @@ class PartyRoomActivityTest {
             completeMiddle += ",$middle"
             i++
         }
+
         gameManager.setGameSongList(epilogue + completeMiddle + prologue, LastfmMethod.BY_TAG.method)
 
         return gameManager

@@ -172,7 +172,6 @@ class TypingGameActivity : GameActivity() {
         findViewById<EditText>(R.id.yourGuessET).isEnabled = false
 
         super.endRound(gameManager, this::setScores, onlineGame, userEmail, roomID)
-
         Helper().showBtn(nextBtn)
     }
 

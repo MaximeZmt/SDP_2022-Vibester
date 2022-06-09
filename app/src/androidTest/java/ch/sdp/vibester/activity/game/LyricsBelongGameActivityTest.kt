@@ -152,12 +152,11 @@ class LyricsBelongGameActivityTest {
         every { mockUsersRepo.updateSubFieldInt(any(), any(), any(), any(), any()) } answers {}
     }
 
-    // FIXME: this test fails after implement QR code reader for no reason
-    /*@Test
+    @Test
     fun elementsShouldBeDisplayedOnCreate() {
         onView(withId(R.id.btnSpeak)).check(matches(isDisplayed()))
         onView(withId(R.id.progressBarLyrics)).check(matches(isDisplayed()))
-    }*/
+    }
 
     /*
     @Test

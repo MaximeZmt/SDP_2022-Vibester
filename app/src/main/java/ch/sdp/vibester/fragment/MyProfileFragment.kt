@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.sdp.vibester.R
 import ch.sdp.vibester.activity.PublicProfileActivity
+import ch.sdp.vibester.activity.download.DownloadManagerActivity
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.database.ImageGetter
@@ -89,6 +90,7 @@ class MyProfileFragment : Fragment(R.layout.activity_profile), OnItemClickListen
         setChangeImageBtnListener()
         setLogOutBtnListener()
         setShowQrCodeBtnListener()
+        setLocalMusicBtnListener()
     }
 
     private fun setViewsVisibility() {
@@ -113,6 +115,13 @@ class MyProfileFragment : Fragment(R.layout.activity_profile), OnItemClickListen
     private fun setEditUserNameBtnListener() {
         vmMyProfile.view.findViewById<ImageView>(R.id.editUser).setOnClickListener {
             showGeneralDialog( "username", true)
+        }
+    }
+
+    private fun setLocalMusicBtnListener() {
+        vmMyProfile.view.findViewById<Button>(R.id.profile_localSongs).setOnClickListener {
+            val newIntent = Intent(activity, DownloadManagerActivity::class.java)
+            startActivity(newIntent)
         }
     }
 

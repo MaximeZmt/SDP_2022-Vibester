@@ -51,9 +51,7 @@ class ChoosePartyRoomActivityTest {
         }
 
 
-        every { mockUsersRepo.readStartGame(any(), any()) } answers {
-            false
-        }
+        every { mockUsersRepo.readStartGame(any(), any()) } answers {}
 
         every { mockUsersRepo.updateRoomField<Boolean>(any(), any(), any()) } answers {}
         every { mockUsersRepo.updateRoomField<MutableList<Pair<String, String>>>(any(), any(), any()) } answers {}
@@ -72,8 +70,8 @@ class ChoosePartyRoomActivityTest {
         val ctx: Context = ApplicationProvider.getApplicationContext()
 
         val roomName = "testRoomName"
-        var mockUserEmailList = mutableListOf<String>("email1, email2")
-        var mockPartyRoom = PartyRoom()
+        val mockUserEmailList = mutableListOf("email1, email2")
+        val mockPartyRoom = PartyRoom()
 
         mockPartyRoom.setEmailList(mockUserEmailList)
 
@@ -99,8 +97,8 @@ class ChoosePartyRoomActivityTest {
         val ctx: Context = ApplicationProvider.getApplicationContext()
 
         val roomName = "testRoomName"
-        var mockUserEmailList = mutableListOf<String>("email1, email2")
-        var mockPartyRoom = PartyRoom()
+        val mockUserEmailList = mutableListOf("email1, email2")
+        val mockPartyRoom = PartyRoom()
 
         mockPartyRoom.setEmailList(mockUserEmailList)
 

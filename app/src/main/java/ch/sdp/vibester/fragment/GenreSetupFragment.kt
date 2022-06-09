@@ -9,7 +9,6 @@ import android.widget.EditText
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.LastfmApiInterface
 import ch.sdp.vibester.api.LastfmMethod
@@ -29,6 +28,7 @@ class GenreSetupFragment: Fragment(R.layout.fragment_layout_genre) {
     lateinit var gameManager: GameManager
     // TODO: OFFLINE
     private var vmGenreSetup = ViewModel()
+    private var test = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -41,6 +41,8 @@ class GenreSetupFragment: Fragment(R.layout.fragment_layout_genre) {
         val bundle = this.arguments
         if (bundle != null) {
             gameManager = bundle.get("gameManager") as GameManager
+            test = bundle.getBoolean("test", false)
+
         }
 
         searchArtistEditable = vmGenreSetup.view.findViewById<EditText>(R.id.searchArtist).text
@@ -96,9 +98,11 @@ class GenreSetupFragment: Fragment(R.layout.fragment_layout_genre) {
         setGameSongList(uri, playOffline)
 
         val bundle = bundleOf("gameManager" to gameManager)
-        val navHostFragment = activity?.supportFragmentManager?.findFragmentById(R.id.main_bottom_nav_fragment) as NavHostFragment
-        val navController = navHostFragment.navController
-        navController.navigate(R.id.fragment_setting_setup, bundle)
+        if(!test) {
+            val navHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.main_bottom_nav_fragment) as NavHostFragment
+            val navController = navHostFragment.navController
+            navController.navigate(R.id.fragment_setting_setup, bundle)
+        }
     }
 
 
@@ -127,7 +131,12 @@ class GenreSetupFragment: Fragment(R.layout.fragment_layout_genre) {
 
     private fun setReturnBtnListener() {
         vmGenreSetup.view.findViewById<FloatingActionButton>(R.id.genreSetup_returnToMain).setOnClickListener {
-            findNavController().popBackStack()
+            if(!test) {
+                val navHostFragment =
+                    requireActivity().supportFragmentManager.findFragmentById(R.id.main_bottom_nav_fragment) as NavHostFragment
+                val navController = navHostFragment.navController
+                navController.popBackStack()
+            }
         }
     }
 }

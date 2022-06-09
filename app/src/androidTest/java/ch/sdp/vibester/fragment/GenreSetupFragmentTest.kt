@@ -37,7 +37,7 @@ class GenreSetupFragmentTest {
         hiltRule.inject()
         Intents.init()
         launchFragmentInHiltContainer<GenreSetupFragment>(
-            fragmentArgs= bundleOf("gameManager" to GameManager()),
+            fragmentArgs= bundleOf(Pair("gameManager",GameManager()), Pair("test", true)),
             themeResId = R.style.AppTheme
         )
         val ctx = InstrumentationRegistry.getInstrumentation().targetContext.applicationContext

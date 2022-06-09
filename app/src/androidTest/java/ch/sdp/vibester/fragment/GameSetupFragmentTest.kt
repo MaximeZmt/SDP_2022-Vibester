@@ -1,5 +1,6 @@
 package ch.sdp.vibester.fragment
 
+import androidx.core.os.bundleOf
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -11,6 +12,7 @@ import ch.sdp.vibester.activity.BuzzerSetupActivity
 import ch.sdp.vibester.activity.game.LyricsBelongGameActivity
 import ch.sdp.vibester.activity.game.TypingGameActivity
 import ch.sdp.vibester.api.InternetState
+import ch.sdp.vibester.helper.GameManager
 import ch.sdp.vibester.launchFragmentInHiltContainer
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -36,6 +38,7 @@ class GameSetupFragmentTest {
         hiltRule.inject()
         Intents.init()
         launchFragmentInHiltContainer<GameSetupFragment>(
+            fragmentArgs= bundleOf(Pair("test", true)),
             themeResId = R.style.AppTheme
         )
     }
@@ -59,16 +62,19 @@ class GameSetupFragmentTest {
 
     @Test
     fun localTypingOnClick() {
+        InternetState.forceOnline()
         onView(withId(R.id.local_typing_game_button)).perform(click())
     }
 
     @Test
     fun localLyricsOnClick() {
+        InternetState.forceOnline()
         onView(withId(R.id.local_lyrics_game_button)).perform(click())
     }
 
     @Test
     fun onlineBuzzerOnClick() {
+        InternetState.forceOnline()
         onView(withId(R.id.online_buzzer_game_button)).perform(click())
     }
 }

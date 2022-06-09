@@ -27,12 +27,18 @@ class GameSetupFragment : Fragment(R.layout.fragment_layout_game_setup){
     // TODO: OFFLINE
     private var hasInternet: Boolean = true
     private var vmGameSetup = ViewModel()
+    private var test: Boolean = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         vmGameSetup.view = view
         vmGameSetup.ctx = view.context
+
+        val bundle = this.arguments
+        if (bundle != null) {
+            test = bundle.getBoolean("test", false)
+        }
 
         setGameModeListeners()
         vmGameSetup.view.findViewById<Button>(R.id.game_setup_has_internet).setOnClickListener { updateInternet(vmGameSetup.view.findViewById(R.id.game_setup_has_internet)) }
@@ -66,17 +72,19 @@ class GameSetupFragment : Fragment(R.layout.fragment_layout_game_setup){
         AppPreferences.setStr(getString(R.string.preferences_game_mode), gameMode)
 
         val bundle = bundleOf("gameManager" to gameManager)
-        val navHostFragment = activity?.supportFragmentManager?.findFragmentById(R.id.main_bottom_nav_fragment) as NavHostFragment
-        val navController = navHostFragment.navController
 
+        var nextLayout = R.id.fragment_genre_setup
         if (playOffline) {
-            navController.navigate(R.id.fragment_setting_setup, bundle)
+            nextLayout = R.id.fragment_setting_setup
         }
         else if (gameMode == "online_buzzer"){
-            navController.navigate(R.id.fragment_choose_online_room, bundle)
+            nextLayout = R.id.fragment_choose_online_room
         }
-        else {
-            navController.navigate(R.id.fragment_genre_setup, bundle)
+
+        if(!test){
+            val navHostFragment = activity?.supportFragmentManager?.findFragmentById(R.id.main_bottom_nav_fragment) as NavHostFragment
+            val navController = navHostFragment.navController
+            navController.navigate(nextLayout, bundle)
         }
     }
 

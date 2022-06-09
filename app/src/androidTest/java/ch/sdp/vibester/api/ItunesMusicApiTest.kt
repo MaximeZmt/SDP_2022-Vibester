@@ -33,14 +33,14 @@ class ItunesMusicApiTest {
         songFut.get()
     }
 
-    @Test
-    fun itunesAPIQueryWorksComplete() {
-        val songFut = ItunesMusicApi.querySong("imagine dragons believer", OkHttpClient(), 1)
-        val song = Song.singleSong(songFut.get())
-        val mediaFut = AudioPlayer.playAudio(song.getPreviewUrl())
-        val player = mediaFut.get()
-        assertEquals(true, player.isPlaying)
-    }
+//    @Test
+//    fun itunesAPIQueryWorksComplete() {
+//        val songFut = ItunesMusicApi.querySong("imagine dragons believer", OkHttpClient(), 1)
+//        val song = Song.singleSong(songFut.get())
+//        val mediaFut = AudioPlayer.playAudio(song.getPreviewUrl())
+//        val player = mediaFut.get()
+//        assertEquals(true, player.isPlaying)
+//    }
 
     @Test
     fun itunesAPIQueryCompleteError() {

@@ -141,7 +141,8 @@ class BuzzerScreenActivity : GameActivity() {
         Helper().showBtn(next)
         checkRunnable()
         if (isEndGame(gameManager)) {
-            this.switchToEnding(gameManager)
+            //super.endRound(gameManager, {})
+            switchToEnding(gameManager)
         }
     }
 
@@ -225,7 +226,11 @@ class BuzzerScreenActivity : GameActivity() {
             if (pressedBuzzer >= 0) {
                 if(button.id==R.id.buttonCorrect)  {
                     scoreUpdater.updateScoresArray(pressedBuzzer, true)
-                } else {scoreUpdater.updateScoresArray(pressedBuzzer, false)}
+                    gameManager.addCorrectSong()
+                } else {
+                    scoreUpdater.updateScoresArray(pressedBuzzer, false)
+                    gameManager.addWrongSong()
+                }
                 val view = map[pressedBuzzer]?.let { it1 -> findViewById<TextView>(it1) }
                 if (view != null && scoreUpdater.getMap().keys.contains(pressedBuzzer)) {
                     view.text=scoreUpdater.getMap()[pressedBuzzer].toString()
@@ -296,8 +301,18 @@ class BuzzerScreenActivity : GameActivity() {
      * Fires an intent from the Gamescreen to the Ending Screen
      */
     private fun switchToEnding(gameManager: GameManager) {
-        checkAndStopPlayer(gameManager)
+
         val intent = Intent(this, GameEndingActivity::class.java)
+        checkAndStopPlayer(gameManager)
+
+        val incorrectSongList: ArrayList<String> = createSongList(gameManager.getWrongSongs())
+        intent.putStringArrayListExtra("incorrectSongList", incorrectSongList)
+
+        //Set list of correct songs
+        val correctSongList: ArrayList<String> = createSongList(gameManager.getCorrectSongs())
+        intent.putStringArrayListExtra("correctSongList", correctSongList)
+
+
 
         //TODO put extras to display in GameEndingActivity
         intent.putExtra("Player Scores", packMapOfScores(this.players, this.scoreUpdater))

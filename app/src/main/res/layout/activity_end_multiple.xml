@@ -166,7 +166,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/end_stat_table"
-        android:layout_marginTop="212dp"
+        android:layout_marginTop="40dp"
         android:background="@color/floral_white"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 

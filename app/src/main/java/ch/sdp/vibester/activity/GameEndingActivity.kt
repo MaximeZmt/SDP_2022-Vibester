@@ -17,6 +17,9 @@ import ch.sdp.vibester.helper.Helper
 import ch.sdp.vibester.model.SongListAdapterForEndGame
 import ch.sdp.vibester.user.OnItemClickListener
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 /**
  * Game ending activity with game stats and list of songs quessed correctly/wrong
@@ -46,7 +49,7 @@ class GameEndingActivity : DownloadFunctionalityActivity(), OnItemClickListener 
         supportActionBar?.hide()
 
         val gameMode = AppPreferences.getStr(getString(R.string.preferences_game_mode))
-        if (gameMode == "local_typing" || gameMode == "local_lyrics") {
+        if (gameMode == "local_typing" || gameMode == "local_lyrics") { //|| gameMode == "local_buzzer"
             setContentView(R.layout.activity_end_solo)
             getFromIntentSolo(intent)
         } else {
@@ -143,6 +146,17 @@ class GameEndingActivity : DownloadFunctionalityActivity(), OnItemClickListener 
                 i += 1
             }
         }
+
+        if (intent.hasExtra("incorrectSongList") && intent.hasExtra("correctSongList")){
+            incorrectSongList = intent.getStringArrayListExtra("incorrectSongList") as ArrayList<String>
+            correctSongList = intent.getStringArrayListExtra("correctSongList") as ArrayList<String>
+
+            incorrectSongList.iterator().forEach { Log.e("ERR", it) }
+            correctSongList.iterator().forEach { Log.e("CORR", it) }
+            //Log.e("ERR", incorrectSongList)
+        }
+
+
     }
 
     /**

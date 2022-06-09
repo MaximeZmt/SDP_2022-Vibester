@@ -37,7 +37,6 @@ class LyricsBelongGameActivityTest {
 
     private val sleepTime: Long = 5000
     private val artistName = "Imagine Dragons"
-    private val speechInputCorrect = "Just a young gun with a quick fuse"
     private val speechInputWrong = "I don't remember the lyrics"
     private val lyrics = "Just a young gun with a quick fuse\n" +
             "I was uptight, wanna let loose\n" +
@@ -252,28 +251,6 @@ class LyricsBelongGameActivityTest {
         val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
         onView(withId(R.id.skip_lyrics)).check(matches(isDisplayed())).perform(click())
         onView(withId(R.id.nextSongLyrics)).check(matches(isDisplayed()))
-    }
-
-
-    @Test
-    fun getAndCheckLyricsGivesCorrectAnswerWhenMatch() {
-
-        createMockInvocation()
-        val gameManager = setGameManager()
-        gameManager.setNextSong()
-        val intent = Intent(
-            ApplicationProvider.getApplicationContext(),
-            LyricsBelongGameActivity::class.java
-        )
-        val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
-        val ctx = ApplicationProvider.getApplicationContext() as Context
-        scn.onActivity { activity ->
-            activity.getAndCheckLyrics(ctx, Song.songBuilder("", "", "Monday", "Imagine Dragons"), speechInputCorrect, gameManager)
-        }
-        /*FIXME: API takes a lot of time to process this request
-        comment the following lines if this test fail*/
-        //Thread.sleep(sleepTime)
-        //assertEquals(true, gameManager.getScore() == 1)
     }
 
     @Test

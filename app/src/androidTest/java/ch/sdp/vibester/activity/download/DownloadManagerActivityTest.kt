@@ -13,14 +13,11 @@ import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.intent.Intents
-import androidx.test.espresso.intent.Intents.intended
-import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.matcher.BoundedMatcher
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.platform.app.InstrumentationRegistry
 import ch.sdp.vibester.R
-import ch.sdp.vibester.activity.MainActivity
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import org.hamcrest.Description
@@ -49,12 +46,6 @@ class DownloadManagerActivityTest {
     @After
     fun clean() {
         Intents.release()
-    }
-
-    @Test
-    fun checkIntentOnGoBack() {
-        onView(withId(R.id.downloadManager_returnToMain)).perform(ViewActions.click())
-        intended(hasComponent(MainActivity::class.java.name))
     }
 
     @Test

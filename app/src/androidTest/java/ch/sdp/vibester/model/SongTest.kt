@@ -40,7 +40,7 @@ class SongTest {
 
 
     @get:Rule
-    var exception = ExpectedException.none()
+    var exception: ExpectedException = ExpectedException.none()
 
     @Test
     fun jsonPreviewParseErrorText() {
@@ -85,7 +85,7 @@ class SongTest {
 }
     """
         )
-        println(test.get(0).getTrackName())
+        println(test[0].getTrackName())
     }
 
     @Test
@@ -111,8 +111,8 @@ class SongTest {
 
     @Test
     fun testBadArgument() {
-        assertThrows(IllegalArgumentException::class.java, {Song(JSONObject("{}"))})
-        assertThrows(IllegalArgumentException::class.java, {Song.listSong("{}")})
+        assertThrows(IllegalArgumentException::class.java) { Song(JSONObject("{}")) }
+        assertThrows(IllegalArgumentException::class.java) { Song.listSong("{}") }
     }
 
 }

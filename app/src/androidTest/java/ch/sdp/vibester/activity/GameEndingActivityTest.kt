@@ -128,8 +128,8 @@ class GameEndingActivityTest {
                     0,
                     clickOnViewChild(R.id.song_download))
             )
-        checkRecyclerSubViews(R.id.end_song_list, 0, withEffectiveVisibility(Visibility.INVISIBLE), R.id.song_download)
-        checkRecyclerSubViews(R.id.end_song_list, 0, withEffectiveVisibility(Visibility.VISIBLE), R.id.song_download_ongoing)
+        checkRecyclerSubViews(R.id.end_song_list, withEffectiveVisibility(Visibility.INVISIBLE), R.id.song_download)
+        checkRecyclerSubViews(R.id.end_song_list, withEffectiveVisibility(Visibility.VISIBLE), R.id.song_download_ongoing)
     }
 
 
@@ -147,20 +147,20 @@ class GameEndingActivityTest {
     /**
      * Custom functions to match the item views inside Recycle View
      */
-    private fun checkRecyclerSubViews(recyclerViewId: Int, position: Int, itemMatcher: Matcher<View?>, subViewId: Int) {
+    private fun checkRecyclerSubViews(recyclerViewId: Int, itemMatcher: Matcher<View?>, subViewId: Int) {
         onView(withId(recyclerViewId)).perform(
-            RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(position))
-            .check(matches(atPositionOnView(position, itemMatcher, subViewId)))
+            RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(0))
+            .check(matches(atPositionOnView(itemMatcher, subViewId)))
     }
 
-    private fun atPositionOnView(position: Int, itemMatcher: Matcher<View?>, targetViewId: Int): Matcher<View?> {
+    private fun atPositionOnView(itemMatcher: Matcher<View?>, targetViewId: Int): Matcher<View?> {
         return object : BoundedMatcher<View?, RecyclerView>(RecyclerView::class.java) {
             override fun describeTo(description: Description) {
-                description.appendText("has view id $itemMatcher at position $position")
+                description.appendText("has view id $itemMatcher at position $0")
             }
 
             override fun matchesSafely(recyclerView: RecyclerView): Boolean {
-                val viewHolder = recyclerView.findViewHolderForAdapterPosition(position)
+                val viewHolder = recyclerView.findViewHolderForAdapterPosition(0)
                 val targetView = viewHolder!!.itemView.findViewById<View>(targetViewId)
                 return itemMatcher.matches(targetView)
             }

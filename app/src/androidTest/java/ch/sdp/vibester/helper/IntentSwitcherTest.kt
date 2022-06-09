@@ -41,7 +41,7 @@ class IntentSwitcherTest {
         val scn: ActivityScenario<MainActivity> = ActivityScenario.launch(intent)
 
         val testMap: HashMap<String, Serializable> = HashMap()
-        testMap.put("test", true)
+        testMap["test"] = true
 
         IntentSwitcher.switch(ApplicationProvider.getApplicationContext(), MainActivity::class.java, testMap)
         Intents.intended(IntentMatchers.hasComponent(MainActivity::class.java.name))

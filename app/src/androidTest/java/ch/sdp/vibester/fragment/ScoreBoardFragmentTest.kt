@@ -78,12 +78,14 @@ class ScoreBoardFragmentTest {
     @Test
     fun topBtnClick() {
         onView(withId(R.id.scoreboard_topTracksButton)).perform(click())
+        onView(withId(R.id.scoreboard_content_scrolling)).check(matches(isDisplayed()))
     }
 
 
     @Test
     fun kpopBtnClick() {
         onView(withId(R.id.scoreboard_kpopButton)).perform(click())
+        onView(withId(R.id.scoreboard_content_scrolling)).check(matches(isDisplayed()))
     }
 
 
@@ -91,15 +93,18 @@ class ScoreBoardFragmentTest {
     @Test
     fun billieEilishButtonClick() {
         onView(withId(R.id.scoreboard_billieEilishButton)).perform(click())
+        onView(withId(R.id.scoreboard_content_scrolling)).check(matches(isDisplayed()))
     }
 
     @Test
     fun imagineDragonsButtonClick() {
         onView(withId(R.id.scoreboard_imagDragonsButton)).perform(click())
+        onView(withId(R.id.scoreboard_content_scrolling)).check(matches(isDisplayed()))
     }
 
     @Test
     fun btsButtonClick() {
         onView(withId(R.id.scoreboard_btsButton)).perform(click())
+        onView(withId(R.id.scoreboard_content_scrolling)).check(matches(isDisplayed()))
     }
 }

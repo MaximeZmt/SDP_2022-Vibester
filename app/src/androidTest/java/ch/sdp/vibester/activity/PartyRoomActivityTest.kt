@@ -13,6 +13,7 @@ import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.LastfmMethod
+import ch.sdp.vibester.activity.game.TypingGameActivity
 import ch.sdp.vibester.database.AppPreferences
 import ch.sdp.vibester.database.DataGetter
 import ch.sdp.vibester.helper.GameManager
@@ -108,8 +109,8 @@ class PartyRoomActivityTest {
         val ctx: Context = ApplicationProvider.getApplicationContext()
 
         val mockRoomName = "mockName"
-        val mockUserEmailList = mutableListOf<String>("Email1", "Email2")
-        val mockSongList = mutableListOf<Pair<String, String>>(Pair("mockSong1", "mockSong2"))
+        val mockUserEmailList = mutableListOf("Email1", "Email2")
+        val mockSongList = mutableListOf(Pair("mockSong1", "mockSong2"))
         val mockPartyRoom = PartyRoom()
 
         mockPartyRoom.setEmailList(mockUserEmailList)
@@ -137,8 +138,8 @@ class PartyRoomActivityTest {
         val ctx: Context = ApplicationProvider.getApplicationContext()
 
         val mockRoomName = "mockName"
-        val mockUserEmailList = mutableListOf<String>("email1, email2")
-        val mockSongList = mutableListOf<Pair<String, String>>(Pair("mockSong1", "mockSong2"))
+        val mockUserEmailList = mutableListOf("email1, email2")
+        val mockSongList = mutableListOf(Pair("mockSong1", "mockSong2"))
         val mockPartyRoom = PartyRoom()
 
         mockPartyRoom.setEmailList(mockUserEmailList)
@@ -165,8 +166,8 @@ class PartyRoomActivityTest {
         val ctx: Context = ApplicationProvider.getApplicationContext()
 
         val mockRoomName = "mockRoom"
-        val mockUserEmailList = mutableListOf<String>("email1, email2")
-        val mockSongList = mutableListOf<Pair<String, String>>(Pair("mockSong1", "mockSong2"))
+        val mockUserEmailList = mutableListOf("email1, email2")
+        val mockSongList = mutableListOf(Pair("mockSong1", "mockSong2"))
         val mockPartyRoom = PartyRoom()
 
         AppPreferences.init(ctx)
@@ -193,8 +194,8 @@ class PartyRoomActivityTest {
         val ctx: Context = ApplicationProvider.getApplicationContext()
 
         val mockRoomID = "mockRoom"
-        val mockUserEmailList = mutableListOf<String>("email1, email2")
-        val mockSongList = mutableListOf<Pair<String, String>>(Pair("mockSong1", "mockSong2"))
+        val mockUserEmailList = mutableListOf("email1, email2")
+        val mockSongList = mutableListOf(Pair("mockSong1", "mockSong2"))
         val mockPartyRoom = PartyRoom()
 
         AppPreferences.init(ctx)

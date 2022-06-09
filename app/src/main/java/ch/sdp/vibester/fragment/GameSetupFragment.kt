@@ -9,6 +9,9 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import ch.sdp.vibester.R
+import ch.sdp.vibester.activity.BuzzerSetupActivity
+import ch.sdp.vibester.activity.game.LyricsBelongGameActivity
+import ch.sdp.vibester.activity.game.TypingGameActivity
 import ch.sdp.vibester.api.InternetState
 import ch.sdp.vibester.database.AppPreferences
 import ch.sdp.vibester.helper.GameManager

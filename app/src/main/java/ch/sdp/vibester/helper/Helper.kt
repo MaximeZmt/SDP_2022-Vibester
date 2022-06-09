@@ -4,6 +4,8 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.ImageView
 import ch.sdp.vibester.R
 import ch.sdp.vibester.activity.MainActivity
@@ -60,4 +62,17 @@ class Helper {
         val section = if (scoresOrFollowing) R.string.profile_scores else R.string.profile_following
         return mapOf(Pair("UserId", uid), Pair("ScoresOrFollowing", section.toString()))
     }
+
+    private fun toggleBtnVisibility(btn: View, value: Boolean) {
+        btn.visibility = if (value) VISIBLE else GONE
+    }
+
+    fun hideBtn(btn: View) {
+        toggleBtnVisibility(btn, false)
+    }
+
+    fun showBtn(btn: View) {
+        toggleBtnVisibility(btn, true)
+    }
+
 }

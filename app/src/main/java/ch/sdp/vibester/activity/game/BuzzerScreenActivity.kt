@@ -11,6 +11,7 @@ import ch.sdp.vibester.BuzzerScoreUpdater
 import ch.sdp.vibester.R
 import ch.sdp.vibester.activity.GameEndingActivity
 import ch.sdp.vibester.helper.GameManager
+import ch.sdp.vibester.helper.Helper
 import ch.sdp.vibester.model.Song
 import com.bumptech.glide.Glide
 import kotlin.collections.ArrayList
@@ -30,6 +31,7 @@ class BuzzerScreenActivity : GameActivity() {
     private lateinit var gameManager: GameManager
     private lateinit var scoreUpdater: BuzzerScoreUpdater
     private lateinit var players: Array<String>
+    private lateinit var skipBtn: View
     private var gameIsOn: Boolean = true
 
     private fun initHashmap(): HashMap<Int, Int> {
@@ -76,7 +78,9 @@ class BuzzerScreenActivity : GameActivity() {
             buildScores(getPlayers, allPoints)
             buildBuzzers(getPlayers, findViewById(R.id.answer))
 
-            findViewById<Button>(R.id.skip_buzzer).setOnClickListener { timeoutAnswer(ctx, null, gameManager) }
+            skipBtn = findViewById<Button>(R.id.skip_buzzer)
+
+            skipBtn.setOnClickListener { timeoutAnswer(ctx, null, gameManager) }
             setAnswerButton(ctx, findViewById(R.id.buttonCorrect), buzzersToRows)
             setAnswerButton(ctx, findViewById(R.id.buttonWrong), buzzersToRows)
             setNextButton(ctx, gameManager)
@@ -102,7 +106,7 @@ class BuzzerScreenActivity : GameActivity() {
      */
     private fun startRoundBuzzer(ctx: Context, gameManager: GameManager) {
         gameIsOn = true
-        toggleBtnVisibility(R.id.skip_buzzer, true)
+        Helper().showBtn(skipBtn)
         findViewById<LinearLayout>(R.id.answer).visibility=View.INVISIBLE
         findViewById<TextView>(R.id.songTitle).text =
             "${gameManager.getCurrentSong().getTrackName()} - ${gameManager.getCurrentSong().getArtistName()}"
@@ -125,7 +129,7 @@ class BuzzerScreenActivity : GameActivity() {
     fun timeoutAnswer(ctx: Context, chosenSong: Song? = null, gameManager: GameManager) {
         checkAndStopPlayer(gameManager)
         toastShowWrong(ctx, gameManager.getCurrentSong())
-        toggleBtnVisibility(R.id.skip_buzzer, false)
+        Helper().hideBtn(skipBtn)
         endRound(gameManager)
     }
 
@@ -135,7 +139,8 @@ class BuzzerScreenActivity : GameActivity() {
      */
     private fun endRound(gameManager: GameManager) {
         gameIsOn = false
-        toggleBtnVisibility(R.id.nextSongBuzzer, true)
+        val next = findViewById<Button>(R.id.nextSongBuzzer)
+        Helper().showBtn(next)
         checkRunnable()
         if (isEndGame(gameManager)) {
             this.switchToEnding(gameManager)
@@ -201,7 +206,7 @@ class BuzzerScreenActivity : GameActivity() {
                 if (findViewById<ProgressBar>(R.id.progressBarBuzzer).progress>0 && findViewById<Button>(R.id.nextSongBuzzer).visibility==View.GONE) {
                     answer.visibility = View.VISIBLE
                     setPressed(button.id)
-                    toggleBtnVisibility(R.id.skip_buzzer, false)
+                    Helper().hideBtn(skipBtn)
                     gameIsOn = false // to stop the bar
                     checkAndStopPlayer(gameManager)
                 }
@@ -243,7 +248,8 @@ class BuzzerScreenActivity : GameActivity() {
      */
     private fun setNextButton(ctx: Context, gameManager: GameManager) {
         findViewById<Button>(R.id.nextSongBuzzer).setOnClickListener {
-            toggleBtnVisibility(R.id.nextSongBuzzer, false)
+            val next = findViewById<Button>(R.id.nextSongBuzzer)
+            Helper().hideBtn(next)
             startRoundBuzzer(ctx, gameManager)
         }
     }

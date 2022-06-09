@@ -157,7 +157,7 @@ open class GameActivity : AppCompatActivity() {
         if (!isEndGame(gameManager)) {
             startRound(ctx, gameManager)
         }
-        else{
+        else {
             switchToEnding(gameManager)
         }
     }

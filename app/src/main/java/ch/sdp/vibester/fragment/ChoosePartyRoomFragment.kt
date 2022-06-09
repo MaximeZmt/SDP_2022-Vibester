@@ -38,7 +38,11 @@ class ChoosePartyRoomFragment : Fragment(R.layout.activity_choose_party_room) {
 
         createPartyRoom.setOnClickListener {
             val bundle = bundleOf("gameManager" to gameManager)
-            findNavController().navigate(R.id.fragment_genre_setup, bundle)
+            if(!test){
+                val navHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.main_bottom_nav_fragment) as NavHostFragment
+                val navController = navHostFragment.navController
+                navController.navigate(R.id.fragment_genre_setup, bundle)
+            }
         }
     }
 

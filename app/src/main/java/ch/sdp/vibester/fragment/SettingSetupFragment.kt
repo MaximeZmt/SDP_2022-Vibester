@@ -7,7 +7,7 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import ch.sdp.vibester.R
 import ch.sdp.vibester.activity.BuzzerSetupActivity
 import ch.sdp.vibester.activity.PartyRoomActivity
@@ -46,7 +46,9 @@ class SettingSetupFragment:Fragment(R.layout.fragment_layout_setting), AdapterVi
     private fun setReturnBtnListener() {
         val returnToMain = vmSettSetup.view.findViewById<FloatingActionButton>(R.id.gameSetting_returnToMain)
         returnToMain.setOnClickListener {
-            findNavController().popBackStack()
+            val navHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.main_bottom_nav_fragment) as NavHostFragment
+            val navController = navHostFragment.navController
+            navController.popBackStack()
         }
     }
 

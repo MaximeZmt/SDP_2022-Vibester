@@ -52,7 +52,7 @@
             android:name=".activity.game.TypingGameActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.game.BuzzerScreenActivity"
+            android:name=".activity.game.BuzzerGameActivity"
             android:exported="false" />
         <activity
             android:name=".activity.PublicProfileActivity"

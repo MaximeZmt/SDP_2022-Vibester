@@ -17,7 +17,7 @@ import com.bumptech.glide.Glide
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
-class BuzzerScreenActivity : GameActivity() {
+class BuzzerGameActivity : GameActivity() {
 
     private val artworkDim = 200
     private val noBuzzerPressed = -1
@@ -58,7 +58,7 @@ class BuzzerScreenActivity : GameActivity() {
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
-        setContentView(R.layout.activity_buzzer_screen)
+        setContentView(R.layout.activity_buzzer_game)
 
         val intentExtras = intent.extras
         if (intentExtras != null) {
@@ -225,10 +225,9 @@ class BuzzerScreenActivity : GameActivity() {
             answer.visibility = View.INVISIBLE
             if (pressedBuzzer >= 0) {
                 if(button.id==R.id.buttonCorrect)  {
-                    scoreUpdater.updateScoresArray(pressedBuzzer, true)
+                    scoreUpdater.updateScoresArray(pressedBuzzer)
                     gameManager.addCorrectSong()
                 } else {
-                    scoreUpdater.updateScoresArray(pressedBuzzer, false)
                     gameManager.addWrongSong()
                 }
                 val view = map[pressedBuzzer]?.let { it1 -> findViewById<TextView>(it1) }

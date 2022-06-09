@@ -14,7 +14,7 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
-import ch.sdp.vibester.activity.game.BuzzerScreenActivity
+import ch.sdp.vibester.activity.game.BuzzerGameActivity
 import ch.sdp.vibester.api.LastfmMethod
 import ch.sdp.vibester.helper.GameManager
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -134,7 +134,7 @@ class BuzzerSetupActivityTest {
         onData(Matchers.anything()).atPosition(0).perform(scrollTo(),click())
         enterNames(1)
         onView(withId(R.id.nb_players_selected)).perform(click())
-        intended(hasComponent(BuzzerScreenActivity::class.java.name))
+        intended(hasComponent(BuzzerGameActivity::class.java.name))
         intended(hasExtra("Number of players", 1))
     }
 
@@ -147,7 +147,7 @@ class BuzzerSetupActivityTest {
         onData(Matchers.anything()).atPosition(1).perform(scrollTo(),click())
         enterNames(2)
         onView(withId(R.id.nb_players_selected)).perform(click())
-        intended(hasComponent(BuzzerScreenActivity::class.java.name))
+        intended(hasComponent(BuzzerGameActivity::class.java.name))
         intended(hasExtra("Number of players", 2))
     }
 
@@ -160,7 +160,7 @@ class BuzzerSetupActivityTest {
         onData(Matchers.anything()).atPosition(2).perform(scrollTo(),click())
         enterNames(3)
         onView(withId(R.id.nb_players_selected)).perform(click())
-        intended(hasComponent(BuzzerScreenActivity::class.java.name))
+        intended(hasComponent(BuzzerGameActivity::class.java.name))
         intended(hasExtra("Number of players", 3))
     }
 
@@ -173,7 +173,7 @@ class BuzzerSetupActivityTest {
         onData(Matchers.anything()).atPosition(3).perform(scrollTo(),click())
         enterNames(4)
         onView(withId(R.id.nb_players_selected)).perform(click())
-        intended(hasComponent(BuzzerScreenActivity::class.java.name))
+        intended(hasComponent(BuzzerGameActivity::class.java.name))
         intended(hasExtra("Number of players", 4))
     }
 

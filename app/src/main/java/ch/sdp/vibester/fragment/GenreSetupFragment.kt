@@ -59,8 +59,9 @@ class GenreSetupFragment: Fragment(R.layout.fragment_layout_genre) {
 
         val imagDragons = getString(R.string.gameGenre_imagine_dragons)
         val billieEilish = getString(R.string.gameGenre_billie_eilish)
+        val kpop = getString(R.string.kpop)
 
-        kpopBtn.setOnClickListener { chooseGenre(tag = "kpop", mode = R.string.kpop) }
+        kpopBtn.setOnClickListener { chooseGenre(tag = kpop, mode = R.string.kpop) }
         rockBtn.setOnClickListener { chooseGenre(tag = getString(R.string.rock), mode = R.string.rock) }
         btsBtn.setOnClickListener { chooseGenre(artist = "BTS", mode = R.string.gameGenre_bts) }
         topTracksBtn.setOnClickListener { chooseGenre(mode = R.string.top_tracks) }

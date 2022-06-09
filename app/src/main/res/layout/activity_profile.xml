@@ -90,7 +90,6 @@
             android:id="@+id/total_games_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:orientation="horizontal"
             android:visibility="visible"
             app:layout_constraintBottom_toTopOf="@id/menu_profile_layout"
@@ -102,6 +101,7 @@
                 android:id="@+id/profile_total_games"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
                 android:background="@drawable/table_shape">
 
                 <TableRow
@@ -129,8 +129,15 @@
                         android:textColor="#000"
                         android:textSize="16sp" />
                 </TableRow>
-
             </TableLayout>
+
+            <Button
+                android:id="@+id/profile_localSongs"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:backgroundTint="@color/cg_blue"
+                android:layout_marginStart="20dp"
+                android:text="my music" />
         </LinearLayout>
 
         <LinearLayout

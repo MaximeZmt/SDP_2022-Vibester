@@ -9,6 +9,7 @@ import android.widget.*
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.LyricsOVHApiInterface
 import ch.sdp.vibester.helper.GameManager
+import ch.sdp.vibester.helper.Helper
 import ch.sdp.vibester.model.Lyric
 import ch.sdp.vibester.model.Song
 import retrofit2.Call
@@ -26,6 +27,8 @@ class LyricsBelongGameActivity : GameActivity() {
     private var speechInput = "-1"
     private lateinit var lyrics: String
     private lateinit var song: Song
+    private lateinit var nextBtn: View
+    private lateinit var matchBtn: View
 
 
     /**
@@ -35,14 +38,16 @@ class LyricsBelongGameActivity : GameActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lyrics_belong_game)
 
+        nextBtn = findViewById<Button>(R.id.nextSongLyrics)
+        matchBtn = findViewById<Button>(R.id.lyricMatchButton)
+
         val ctx: Context = this
         val getIntent = intent.extras
         if (getIntent != null) {
             gameManager = getIntent.getSerializable("gameManager") as GameManager
             // put in one line to increase coverage
-            val nextSong = findViewById<Button>(R.id.nextSongLyrics)
-            nextSong.setOnClickListener { startRoundLyrics(ctx, gameManager) }
-            findViewById<Button>(R.id.lyricMatchButton).setOnClickListener { getAndCheckLyrics(ctx, song, speechInput, gameManager) }
+            nextBtn.setOnClickListener { startRoundLyrics(ctx, gameManager) }
+            matchBtn.setOnClickListener { getAndCheckLyrics(ctx, song, speechInput, gameManager) }
 
             gameManager.setNextSong()
             startRoundLyrics(ctx, gameManager)
@@ -89,8 +94,8 @@ class LyricsBelongGameActivity : GameActivity() {
      * @param gameManager: The gameManager instance that is managing the current game.
      */
     fun startRoundLyrics(ctx: Context, gameManager: GameManager) {
-        toggleBtnVisibility(R.id.lyricMatchButton, false)
-        toggleBtnVisibility(R.id.nextSongLyrics, false)
+        Helper().hideBtn(matchBtn)
+        Helper().hideBtn(nextBtn)
         song = gameManager.getCurrentSong()
 
         val frameLay = findViewById<FrameLayout>(R.id.LyricsSongQuestion)
@@ -103,7 +108,7 @@ class LyricsBelongGameActivity : GameActivity() {
 
     override fun endRound(gameManager: GameManager, callback: (() -> Unit)?) {
         super.endRound(gameManager, this::setScores)
-        toggleBtnVisibility(R.id.nextSongLyrics, true)
+        Helper().showBtn(nextBtn)
     }
 
     /**

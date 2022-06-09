@@ -9,4 +9,14 @@
     <item name="row_1" type="id"/>
     <item name="row_2" type="id"/>
     <item name="row_3" type="id"/>
+
+    <item name="name_0" type="id"/>
+    <item name="name_1" type="id"/>
+    <item name="name_2" type="id"/>
+    <item name="name_3" type="id"/>
+
+    <item name="score_0" type="id"/>
+    <item name="score_1" type="id"/>
+    <item name="score_2" type="id"/>
+    <item name="score_3" type="id"/>
 </resources>

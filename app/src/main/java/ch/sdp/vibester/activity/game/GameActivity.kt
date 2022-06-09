@@ -165,7 +165,7 @@ open class GameActivity : AppCompatActivity() {
     }
 
 
-    private fun createSongList(songs: MutableList<Song>): ArrayList<String> {
+    fun createSongList(songs: MutableList<Song>): ArrayList<String> {
         return ArrayList(songs.map { it.getTrackName() + " - " + it.getArtistName() })
     }
 

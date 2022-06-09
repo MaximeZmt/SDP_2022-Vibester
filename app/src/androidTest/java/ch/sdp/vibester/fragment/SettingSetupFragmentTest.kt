@@ -13,9 +13,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import ch.sdp.vibester.R
 import ch.sdp.vibester.activity.BuzzerSetupActivity
-import ch.sdp.vibester.activity.LyricsBelongGameActivity
-import ch.sdp.vibester.activity.TypingGameActivity
-import ch.sdp.vibester.api.InternetState
+import ch.sdp.vibester.activity.game.LyricsBelongGameActivity
+import ch.sdp.vibester.activity.game.TypingGameActivity
 import ch.sdp.vibester.database.AppPreferences
 import ch.sdp.vibester.helper.GameManager
 import ch.sdp.vibester.launchFragmentInHiltContainer

@@ -215,7 +215,6 @@ class BuzzerScreenActivity : GameActivity() {
 
     /**
      * Connects the answer buttons to the answer layout's visibility
-     * @param ctx
      * @param button: the answer button to be set
      * @param map: a map from the buzzers' IDs to the IDs of each score's position in the score table layout
      */

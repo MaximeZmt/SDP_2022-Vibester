@@ -1,17 +1,17 @@
 package ch.sdp.vibester.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.*
 import androidx.core.os.bundleOf
+import androidx.appcompat.widget.AppCompatButton
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import ch.sdp.vibester.R
-import ch.sdp.vibester.activity.BuzzerSetupActivity
-import ch.sdp.vibester.activity.game.LyricsBelongGameActivity
-import ch.sdp.vibester.activity.game.TypingGameActivity
+import ch.sdp.vibester.activity.download.DownloadActivity
 import ch.sdp.vibester.api.InternetState
 import ch.sdp.vibester.database.AppPreferences
 import ch.sdp.vibester.helper.GameManager
@@ -41,6 +41,12 @@ class GameSetupFragment : Fragment(R.layout.fragment_layout_game_setup){
         }
 
         setGameModeListeners()
+
+        vmGameSetup.view.findViewById<AppCompatButton>(R.id.download).setOnClickListener {
+            val newIntent = Intent(activity, DownloadActivity::class.java)
+            startActivity(newIntent)
+        }
+
         vmGameSetup.view.findViewById<Button>(R.id.game_setup_has_internet).setOnClickListener { updateInternet(vmGameSetup.view.findViewById(R.id.game_setup_has_internet)) }
         updateInternet(vmGameSetup.view.findViewById<Button>(R.id.game_setup_has_internet))
     }

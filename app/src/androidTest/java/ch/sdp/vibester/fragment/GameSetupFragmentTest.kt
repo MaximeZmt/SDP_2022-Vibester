@@ -5,14 +5,13 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
+import androidx.test.espresso.intent.Intents.intended
+import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.R
-import ch.sdp.vibester.activity.BuzzerSetupActivity
-import ch.sdp.vibester.activity.game.LyricsBelongGameActivity
-import ch.sdp.vibester.activity.game.TypingGameActivity
+import ch.sdp.vibester.activity.download.DownloadActivity
 import ch.sdp.vibester.api.InternetState
-import ch.sdp.vibester.helper.GameManager
 import ch.sdp.vibester.launchFragmentInHiltContainer
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -58,6 +57,13 @@ class GameSetupFragmentTest {
     @Test
     fun localBuzzerOnClick() {
         onView(withId(R.id.local_buzzer_game_button)).perform(click())
+    }
+
+    @Test
+    fun checkDownloadBtnClick() {
+        onView(withId(R.id.download)).perform(click())
+
+        intended(hasComponent(DownloadActivity::class.java.name))
     }
 
     @Test

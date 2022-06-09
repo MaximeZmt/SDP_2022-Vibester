@@ -152,7 +152,6 @@ class GameEndingActivity : DownloadFunctionalityActivity(), OnItemClickListener 
                 intent.getSerializableExtra("Player Scores")!! as HashMap<String, Int>
 
             setScoreboardList(playerScores)
-//            }
         }
 
         if(onlineGame) {

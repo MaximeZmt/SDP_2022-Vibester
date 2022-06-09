@@ -1,6 +1,5 @@
 package ch.sdp.vibester.database
 
-import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.util.Log
 import ch.sdp.vibester.auth.FireBaseAuthenticator
@@ -9,14 +8,11 @@ import ch.sdp.vibester.user.User
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.Query
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
-import java.util.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
-import kotlin.reflect.KFunction0
 
 /**
  * The users class which handled all the interactions with the database that are linked to users
@@ -215,6 +211,11 @@ class DataGetter @Inject constructor() {
         dbRoomRef.child(partyRoom.getRoomID()).child("emailList").setValue(partyRoom.getEmailList())
     }
 
+    /**
+     * This function updates the score of the room
+     * @param score scores of the room
+     * @param roomID ID of the room
+     */
     fun updateRoomScore(score: Pair<String, Int>, roomID: String) {
         dbRoomRef.child(roomID).child("scores").push().setValue(score)
     }
@@ -222,7 +223,12 @@ class DataGetter @Inject constructor() {
     fun getCurrentUser(): FirebaseUser? {
         return authenticator.getCurrUser()
     }
-//    callback: ((HashMap<String, Int>) -> Unit)
+
+    /**
+     * This function read the score of the room
+     * @param roomID ID of the room
+     * @param callback callback to be called when scores are read
+     */
     fun readScores(roomID: String, callback: (HashMap<String, Int>) -> Unit) {
         val queryRooms = dbRoomRef.child(roomID).child("scores")
 

@@ -193,14 +193,14 @@ open class GameActivity : AppCompatActivity() {
      * Function called in the end of each round.
      * @param gameManager: the manager for the current game
      * @param callback: a unit function that is called if the game has reached its end
+     * @param onlineGame: a boolean to know if an online game is being played
+     * @param userEmail: current user email
+     * @param roomID: ID of the current room
      */
     open fun endRound(gameManager: GameManager, callback: (()->Unit)?= null, onlineGame: Boolean?= null, userEmail: String?= null, roomID: String?= null) {
         checkRunnable()
         if (isEndGame(gameManager)) {
             callback?.invoke()
-            Log.w("DEBUG onlinegame in end round typing game super", onlineGame.toString())
-            Log.w("DEBUG userEmail in in end round typing game super", userEmail.toString())
-
             switchToEnding(gameManager, onlineGame, userEmail, roomID)
         }
     }

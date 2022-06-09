@@ -58,9 +58,16 @@ class LyricsBelongGameActivity : GameActivity() {
             getSpeechInput()
         }
 
+        setSkipBtnListener(this)
+
+    }
+
+    private fun setSkipBtnListener(ctx: Context) {
         findViewById<Button>(R.id.skip_lyrics).setOnClickListener {
             toastShowSimpleMsg(ctx, R.string.no_lyrics_found)
-            endRound(gameManager)
+            if (this@LyricsBelongGameActivity::gameManager.isInitialized) {
+                endRound(gameManager)
+            }
         }
     }
 

@@ -36,7 +36,6 @@ import org.junit.runner.RunWith
 class LyricsBelongGameActivityTest {
 
     private val sleepTime: Long = 5000
-    private val songName = "Thunder"
     private val artistName = "Imagine Dragons"
     private val speechInputCorrect = "Just a young gun with a quick fuse"
     private val speechInputWrong = "I don't remember the lyrics"
@@ -158,7 +157,7 @@ class LyricsBelongGameActivityTest {
         onView(withId(R.id.progressBarLyrics)).check(matches(isDisplayed()))
     }
 
-    /*
+
     @Test
     fun handleLyricsNoFoundCorrectly() {
         createMockInvocation()
@@ -167,20 +166,28 @@ class LyricsBelongGameActivityTest {
             ApplicationProvider.getApplicationContext(),
             LyricsBelongGameActivity::class.java
         )
+
+        val songName = "test"
+        val songArtist = "Singer"
+        val artworkUrl = "https://none.com"
+        val previewUrl = "https://none.com"
+
+        val mySong = Song.songBuilder(previewUrl, artworkUrl, songName, songArtist)
+
         val scn: ActivityScenario<LyricsBelongGameActivity> = ActivityScenario.launch(intent)
         val ctx = ApplicationProvider.getApplicationContext() as Context
         scn.onActivity { activity ->
-            activity.testGetAndCheckLyrics(ctx, "the best song in the world", "Mr.Mystery", "", gameManager)
+            activity.getAndCheckLyrics(ctx, mySong, "", gameManager)
         }
-        /** FIXME: API takes a lot of time to process this request
-        comment the following lines if this test fail */
-    //   Thread.sleep(sleepTime)
-    //    onView(withId(R.id.nextSongButton)).check(matches(isDisplayed()))
+        /** comment the following lines if this test fail */
+        Thread.sleep(sleepTime)
+        onView(withId(R.id.skip_lyrics)).perform(click())
+
         //song skipped, not consider as wrong
-    //    assertEquals(true, gameManager.getScore() == 0)
-    //    assertEquals(true, gameManager.getWrongSongs().size == 0)
+        assertEquals(true, gameManager.getScore() == 0)
+        assertEquals(true, gameManager.getWrongSongs().size == 0)
     }
-    */
+
 
     @Test
     fun shouldUpdateSpeechFromInputAndSetBtnVisible() {

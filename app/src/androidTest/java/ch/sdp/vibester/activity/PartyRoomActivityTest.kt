@@ -200,7 +200,6 @@ class PartyRoomActivityTest {
         AppPreferences.setStr(ctx.getString(R.string.preferences_game_mode), "local_typing")
         AppPreferences.setStr(ctx.getString(R.string.preferences_game_genre), "imagine dragons")
 
-
         mockPartyRoom.setEmailList(mockUserEmailList)
 
         createMockInvocation(mockPartyRoom, mockSongList, false, mockRoomID)

@@ -214,7 +214,7 @@ class TypingGameActivity : GameActivity() {
     }
 
     fun testProgressBarColor(): ColorStateList? {
-        return superTestProgressBarColor(findViewById(R.id.progressBarTyping))
+        return findViewById<ProgressBar>(R.id.progressBarTyping).progressTintList
     }
 
 

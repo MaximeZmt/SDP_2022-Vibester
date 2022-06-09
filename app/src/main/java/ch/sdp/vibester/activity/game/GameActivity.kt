@@ -202,13 +202,6 @@ open class GameActivity : AppCompatActivity() {
     }
 
     /**
-     * Function used for testing. Do not call unless it is for that specific purpose.
-     */
-    fun superTestProgressBarColor(myBar: ProgressBar): ColorStateList? {
-        return myBar.progressTintList
-    }
-
-    /**
      * Shows a variable score on a toast.
      * @param ctx
      * @param score: the score to show on the toast

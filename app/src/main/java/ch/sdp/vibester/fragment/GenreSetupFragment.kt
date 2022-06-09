@@ -57,37 +57,33 @@ class GenreSetupFragment: Fragment(R.layout.fragment_layout_genre) {
         val billieEilish = vmGenreSetup.view.findViewById<Button>(R.id.billieEilishButton)
         val validate = vmGenreSetup.view.findViewById<Button>(R.id.validateSearch)
 
-
-        kpop.setOnClickListener { chooseGenreByTag("kpop", R.string.kpop) }
-        rock.setOnClickListener { chooseGenreByTag("rock", R.string.rock) }
-        bts.setOnClickListener { chooseGenreByArtist("BTS", R.string.gameGenre_bts) }
-        topTracks.setOnClickListener { chooseGenre(method = LastfmMethod.BY_CHART.method, mode = R.string.top_tracks) }
-        imagDragons.setOnClickListener{ chooseGenreByArtist("Imagine Dragons", R.string.gameGenre_imagine_dragons) }
-        billieEilish.setOnClickListener { chooseGenreByArtist("Billie Eilish", R.string.gameGenre_billie_eilish) }
-        validate.setOnClickListener{ chooseGenreByArtist(searchArtistEditable.toString(), R.string.gameGenre_byArtistSearch) }
+        kpop.setOnClickListener { chooseGenre(tag = "kpop", mode = R.string.kpop) }
+        rock.setOnClickListener { chooseGenre(tag = "rock", mode = R.string.rock) }
+        bts.setOnClickListener { chooseGenre(artist = "BTS", mode = R.string.gameGenre_bts) }
+        topTracks.setOnClickListener { chooseGenre(mode = R.string.top_tracks) }
+        imagDragons.setOnClickListener{ chooseGenre(artist = "Imagine Dragons", mode = R.string.gameGenre_imagine_dragons) }
+        billieEilish.setOnClickListener { chooseGenre(artist = "Billie Eilish", mode = R.string.gameGenre_billie_eilish) }
+        validate.setOnClickListener{ chooseGenre(artist = searchArtistEditable.toString(), mode = R.string.gameGenre_byArtistSearch) }
     }
-
-    private fun chooseGenreByTag(tag: String, mode: Int) {
-        chooseGenre(method = LastfmMethod.BY_TAG.method, tag = tag, mode = mode)
-    }
-
-    private fun chooseGenreByArtist(artist: String, mode: Int) {
-        chooseGenre(method = LastfmMethod.BY_ARTIST.method, artist = artist, mode = mode)
-    }
-
 
     /**
      * Set game genre. Fetch the data from Lastfm.
-     * @param method: lastfm method to fetch songs: BY_ARTIST, BY_TAG
      * @param artist: artist to fetch songs from; used in BY_ARTIST method
      * @param tag: tag (genre) to fetch songs from: used in BY_TAG method
      * @param mode: official game mode name
      */
-    private fun chooseGenre(method: String = "", artist: String = "", tag: String = "", mode: Int = 0, playOffline: Boolean = false) {
+    private fun chooseGenre(artist: String = "", tag: String = "", mode: Int = 0, playOffline: Boolean = false) {
 
         val uri = LastfmUri()
 
-        uri.method = method
+        if (artist != "") {
+            uri.method = LastfmMethod.BY_ARTIST.method
+        } else if (tag != "") {
+            uri.method = LastfmMethod.BY_TAG.method
+        } else {
+            uri.method = LastfmMethod.BY_CHART.method
+        }
+
         uri.artist = artist
         uri.tag = tag
 

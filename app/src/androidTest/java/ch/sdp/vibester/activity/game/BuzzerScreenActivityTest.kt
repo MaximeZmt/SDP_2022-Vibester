@@ -288,7 +288,7 @@ class BuzzerScreenActivityTest {
         val testUpdater = BuzzerScoreUpdater(idArray, scoreArray)
 
         val expectedAnnouncement: String = ctx.getString(R.string.BuzzerScreen_noWinner)
-        var testAnnouncement: String = "a"
+        var testAnnouncement = "a"
         scn.onActivity {   activity ->
             testAnnouncement = activity.prepareWinnerAnnouncement(testUpdater)
         }
@@ -316,7 +316,7 @@ class BuzzerScreenActivityTest {
         val testUpdater = BuzzerScoreUpdater(idArray, scoreArray)
 
         val expectedAnnouncement: String = ctx.getString(R.string.BuzzerScreen_oneWinner) + "Bob"
-        var testAnnouncement: String = "a"
+        var testAnnouncement = "a"
         scn.onActivity {   activity ->
             testAnnouncement = activity.prepareWinnerAnnouncement(testUpdater)
         }
@@ -343,7 +343,7 @@ class BuzzerScreenActivityTest {
         val testUpdater = BuzzerScoreUpdater(idArray, scoreArray)
 
         val expectedAnnouncement: String = ctx.getString(R.string.BuzzerScreen_moreThanOneWinner) + "John and Bob and Mike"
-        var testAnnouncement: String = "a"
+        var testAnnouncement = "a"
         scn.onActivity {   activity ->
             testAnnouncement = activity.prepareWinnerAnnouncement(testUpdater)
         }

@@ -37,6 +37,7 @@ class GameSetupFragmentTest {
     fun setUp() {
         hiltRule.inject()
         Intents.init()
+        InternetState.forceOnline()
         launchFragmentInHiltContainer<GameSetupFragment>(
             fragmentArgs= bundleOf(Pair("test", true)),
             themeResId = R.style.AppTheme
@@ -56,25 +57,21 @@ class GameSetupFragmentTest {
 
     @Test
     fun localBuzzerOnClick() {
-        InternetState.forceOnline()
         onView(withId(R.id.local_buzzer_game_button)).perform(click())
     }
 
     @Test
     fun localTypingOnClick() {
-        InternetState.forceOnline()
         onView(withId(R.id.local_typing_game_button)).perform(click())
     }
 
     @Test
     fun localLyricsOnClick() {
-        InternetState.forceOnline()
         onView(withId(R.id.local_lyrics_game_button)).perform(click())
     }
 
     @Test
     fun onlineBuzzerOnClick() {
-        InternetState.forceOnline()
         onView(withId(R.id.online_buzzer_game_button)).perform(click())
     }
 }

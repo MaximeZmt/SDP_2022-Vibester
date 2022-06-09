@@ -29,12 +29,11 @@ class BuzzerScoreUpdater(ids: ArrayList<Int>, scores: Array<Int>) {
      * updates the score corresponding to the pressed buzzer
      * checks first if the given id is a buzzer id (and not NO_BUZZER_PRESSED)
      */
-    fun updateScoresArray(id: Int, answerCorrect: Boolean) {
+    fun updateScoresArray(id: Int) {
         if (!buzzerToScoreMap.keys.contains(id)) {
             return
         }
-        val point = if (answerCorrect) {1} else {0}
-        val updatedScore = max(buzzerToScoreMap.getOrDefault(id, 0) + point, 0) // should never get to default
+        val updatedScore = buzzerToScoreMap.getOrDefault(id, 0) + 1 // should never get to default
         buzzerToScoreMap.put(id, updatedScore)
     }
 

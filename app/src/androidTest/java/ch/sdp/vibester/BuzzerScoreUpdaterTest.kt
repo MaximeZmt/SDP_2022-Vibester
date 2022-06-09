@@ -25,7 +25,7 @@ public class BuzzerScoreUpdaterTest {
         val scoreArray = arrayOf(0, 0, 0, 0)
         val testUpdater = BuzzerScoreUpdater(idArray, scoreArray)
         for (id in idArray) {
-            testUpdater.updateScoresArray(id, true)
+            testUpdater.updateScoresArray(id)
             assertTrue(testUpdater.getMap()[id] == 1)
         }
     }
@@ -35,19 +35,8 @@ public class BuzzerScoreUpdaterTest {
         val idArray = arrayListOf(R.id.buzzer_0, R.id.buzzer_1, R.id.buzzer_2, R.id.buzzer_3)
         val scoreArray = arrayOf(0, 0, 0, 0)
         val testUpdater = BuzzerScoreUpdater(idArray, scoreArray)
-        testUpdater.updateScoresArray(-1, true)
+        testUpdater.updateScoresArray(-1)
         for (id in idArray) {
-            assertEquals(0, testUpdater.getMap()[id])
-        }
-    }
-
-    @Test
-    fun penaltyOnScoreZeroMakesTheScoreRemainZero() {
-        val idArray = arrayListOf(R.id.buzzer_0, R.id.buzzer_1, R.id.buzzer_2, R.id.buzzer_3)
-        val scoreArray = arrayOf(0, 0, 0, 0)
-        val testUpdater = BuzzerScoreUpdater(idArray, scoreArray)
-        for (id in idArray) {
-            testUpdater.updateScoresArray(id, false)
             assertEquals(0, testUpdater.getMap()[id])
         }
     }

@@ -7,7 +7,7 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import ch.sdp.vibester.R
 import ch.sdp.vibester.activity.PartyRoomActivity
 import ch.sdp.vibester.helper.GameManager
@@ -16,6 +16,7 @@ import ch.sdp.vibester.helper.ViewModel
 class ChoosePartyRoomFragment : Fragment(R.layout.activity_choose_party_room) {
     private var vmChooseRoom = ViewModel()
     private lateinit var gameManager : GameManager
+    private var test = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -24,6 +25,7 @@ class ChoosePartyRoomFragment : Fragment(R.layout.activity_choose_party_room) {
         val bundle = this.arguments
         if (bundle != null) {
             gameManager = bundle.get("gameManager") as GameManager
+            test = bundle.getBoolean("test", false)
         }
 
         val createPartyRoom = vmChooseRoom.view.findViewById<Button>(R.id.createParty)

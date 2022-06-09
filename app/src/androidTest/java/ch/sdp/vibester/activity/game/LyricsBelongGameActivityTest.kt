@@ -285,9 +285,7 @@ class LyricsBelongGameActivityTest {
         //assertEquals(true, gameManager.getScore() == 1)
     }
 
-    // FIXME: Intent on GameEnding is fired twice
-
-    /*@Test
+    @Test
     fun bCheckIntentOnEndingForWrongSong() {
         createMockInvocation()
         val gameManager = setGameManager()
@@ -304,22 +302,17 @@ class LyricsBelongGameActivityTest {
         val incArray: ArrayList<String> = ArrayList(
             gameManager.getWrongSongs().map { it.getTrackName() + " - " + it.getArtistName() })
 
-        val statNames: ArrayList<String> = arrayListOf()
-        val statName = "Total Score"
-        statNames.addAll(arrayOf(statName, statName, statName, statName, statName))
+        val statNames: ArrayList<String> = arrayListOf("Score")
 
-        val statVal: ArrayList<String> = arrayListOf()
-        val score = gameManager.getScore().toString()
-        statVal.addAll(arrayOf(score, score, score, score, score))
+        val statVal: ArrayList<String> = arrayListOf(gameManager.getCorrectSongs().size.toString())
 
         Intents.intended(IntentMatchers.hasComponent(GameEndingActivity::class.java.name))
 
-        Intents.intended(IntentMatchers.hasExtra("nbIncorrectSong", 1))
+        Intents.intended(IntentMatchers.hasExtra("incorrectSongList", incArray))
+        Intents.intended(IntentMatchers.hasExtra("statNames", statNames))
+        Intents.intended(IntentMatchers.hasExtra("statValues", statVal))
 
-        Intents.intended(IntentMatchers.hasExtra("str_arr_inc", incArray))
-        Intents.intended(IntentMatchers.hasExtra("str_arr_name", statNames))
-        Intents.intended(IntentMatchers.hasExtra("str_arr_val", statVal))
-    }*/
+    }
 
     @Test
     fun checkIntentOnNextRoundForCorrectSong() {

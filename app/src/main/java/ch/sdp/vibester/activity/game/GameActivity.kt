@@ -163,15 +163,6 @@ open class GameActivity : AppCompatActivity() {
     }
 
     /**
-     * Sets the visibility of the given button to VISIBLE if value is true, GONE otherwise.
-     * @param btnId: the ID of the Button view we want to change
-     * @param value: true to make the button VISIBLE, false to make it GONE
-     */
-    fun toggleBtnVisibility(btnId: Int, value: Boolean){
-        findViewById<Button>(btnId).visibility = if (value) VISIBLE else GONE
-    }
-
-    /**
      * Function called in the end of each round.
      * @param gameManager: the manager for the current game
      * @param callback: a unit function that is called if the game has reached its end

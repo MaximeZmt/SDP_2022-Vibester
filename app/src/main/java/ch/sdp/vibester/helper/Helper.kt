@@ -63,14 +63,25 @@ class Helper {
         return mapOf(Pair("UserId", uid), Pair("ScoresOrFollowing", section.toString()))
     }
 
+    /**
+     * Sets the visibility of the given button to VISIBLE if value is true, GONE otherwise.
+     * @param btn: the Button view we want to change
+     * @param value: true to make the button VISIBLE, false to make it GONE
+     */
     private fun toggleBtnVisibility(btn: View, value: Boolean) {
         btn.visibility = if (value) VISIBLE else GONE
     }
 
+    /**
+     * hide the given button view
+     */
     fun hideBtn(btn: View) {
         toggleBtnVisibility(btn, false)
     }
 
+    /**
+     * display the given button view
+     */
     fun showBtn(btn: View) {
         toggleBtnVisibility(btn, true)
     }

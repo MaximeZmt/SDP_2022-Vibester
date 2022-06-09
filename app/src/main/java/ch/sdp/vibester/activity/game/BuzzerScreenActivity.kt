@@ -60,8 +60,6 @@ class BuzzerScreenActivity : GameActivity() {
         supportActionBar?.hide()
         setContentView(R.layout.activity_buzzer_screen)
 
-        val ctx: Context = this
-
         val intentExtras = intent.extras
         if (intentExtras != null) {
             super.setMax(intent)
@@ -80,11 +78,11 @@ class BuzzerScreenActivity : GameActivity() {
 
             skipBtn = findViewById<Button>(R.id.skip_buzzer)
 
-            skipBtn.setOnClickListener { timeoutAnswer(ctx, null, gameManager) }
-            setAnswerButton(ctx, findViewById(R.id.buttonCorrect), buzzersToRows)
-            setAnswerButton(ctx, findViewById(R.id.buttonWrong), buzzersToRows)
-            setNextButton(ctx, gameManager)
-            super.startFirstRound(ctx, gameManager, ::startRoundBuzzer)
+            skipBtn.setOnClickListener { timeoutAnswer(this, null, gameManager) }
+            setAnswerButton(findViewById(R.id.buttonCorrect), buzzersToRows)
+            setAnswerButton(findViewById(R.id.buttonWrong), buzzersToRows)
+            setNextButton(this, gameManager)
+            super.startFirstRound(this, gameManager, ::startRoundBuzzer)
         }
     }
 
@@ -221,7 +219,7 @@ class BuzzerScreenActivity : GameActivity() {
      * @param button: the answer button to be set
      * @param map: a map from the buzzers' IDs to the IDs of each score's position in the score table layout
      */
-    private fun setAnswerButton(ctx: Context, button: Button, map: Map<Int, Int>) {
+    private fun setAnswerButton(button: Button, map: Map<Int, Int>) {
         val answer = findViewById<LinearLayout>(R.id.answer)
         button.setOnClickListener {
             answer.visibility = View.INVISIBLE

@@ -10,9 +10,9 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import ch.sdp.vibester.R
 import ch.sdp.vibester.activity.BuzzerSetupActivity
-import ch.sdp.vibester.activity.LyricsBelongGameActivity
 import ch.sdp.vibester.activity.PartyRoomActivity
-import ch.sdp.vibester.activity.TypingGameActivity
+import ch.sdp.vibester.activity.game.LyricsBelongGameActivity
+import ch.sdp.vibester.activity.game.TypingGameActivity
 import ch.sdp.vibester.database.AppPreferences
 import ch.sdp.vibester.helper.GameManager
 import ch.sdp.vibester.helper.ViewModel

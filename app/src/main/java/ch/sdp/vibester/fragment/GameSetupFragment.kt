@@ -17,6 +17,11 @@ import ch.sdp.vibester.database.AppPreferences
 import ch.sdp.vibester.helper.GameManager
 import ch.sdp.vibester.helper.ViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.io.File
+
 
 /**
 * Game Setup fragment with a button in the bottom navigation.
@@ -56,6 +61,42 @@ class GameSetupFragment : Fragment(R.layout.fragment_layout_game_setup){
         updateInternet(vmGameSetup.view.findViewById<Button>(R.id.game_setup_has_internet))
     }
 
+
+    private fun setGenreListeners(){
+        val offline = vmGameSetup.view.findViewById<Button>(R.id.offline_game_button)
+        val kpop = vmGameSetup.view.findViewById<Button>(R.id.kpopButton)
+        val rock = vmGameSetup.view.findViewById<Button>(R.id.rockButton)
+        val bts = vmGameSetup.view.findViewById<Button>(R.id.btsButton)
+        val topTracks = vmGameSetup.view.findViewById<Button>(R.id.topTracksButton)
+        val imagDragons = vmGameSetup.view.findViewById<Button>(R.id.imagDragonsButton)
+        val billieEilish = vmGameSetup.view.findViewById<Button>(R.id.billieEilishButton)
+        val validateSearch = vmGameSetup.view.findViewById<Button>(R.id.validateSearch)
+
+        val records = File(requireContext().getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "records.txt")
+
+        if (!records.exists() || records.length() == 0L) {
+            offline.setOnClickListener { Toast.makeText(it.context, "You don't have any downloaded song", Toast.LENGTH_SHORT).show() }
+        }else{
+            offline.setOnClickListener { chooseGame("local_buzzer", GameManager(), true) }
+        }
+        kpop.setOnClickListener { chooseGenreByTag("kpop", R.string.kpop) }
+        rock.setOnClickListener { chooseGenreByTag("rock", R.string.rock) }
+        bts.setOnClickListener { chooseGenreByArtist("BTS", R.string.gameGenre_bts) }
+        topTracks.setOnClickListener { chooseGenre(method = LastfmMethod.BY_CHART.method, mode = R.string.top_tracks) }
+        imagDragons.setOnClickListener{ chooseGenreByArtist("Imagine Dragons", R.string.gameGenre_imagine_dragons) }
+        billieEilish.setOnClickListener { chooseGenreByArtist("Billie Eilish", R.string.gameGenre_billie_eilish) }
+        validateSearch.setOnClickListener{ chooseGenreByArtist(searchArtistEditable.toString(), R.string.gameGenre_byArtistSearch) }
+    }
+
+    private fun chooseGenreByTag(tag: String, mode: Int) {
+        chooseGenre(method = LastfmMethod.BY_TAG.method, tag = tag, mode = mode)
+    }
+
+    private fun chooseGenreByArtist(artist: String, mode: Int) {
+        chooseGenre(method = LastfmMethod.BY_ARTIST.method, artist = artist, mode = mode)
+    }
+
+
     private fun setGameModeListeners() {
         val localBuzzer = vmGameSetup.view.findViewById<Button>(R.id.local_buzzer_game_button)
         val localTyping = vmGameSetup.view.findViewById<Button>(R.id.local_typing_game_button)
@@ -92,6 +133,35 @@ class GameSetupFragment : Fragment(R.layout.fragment_layout_game_setup){
             val navController = navHostFragment.navController
             navController.navigate(nextLayout, bundle)
         }
+    }
+
+    /**
+     * Set game genre. Fetch the data from Lastfm.
+     * @param method: lastfm method to fetch songs: BY_ARTIST, BY_TAG
+     * @param artist: artist to fetch songs from; used in BY_ARTIST method
+     * @param tag: tag (genre) to fetch songs from: used in BY_TAG method
+     * @param mode: official game mode name
+     */
+    private fun chooseGenre(method: String = "", artist: String = "", tag: String = "", mode: Int = 0, playOffline: Boolean = false) {
+            val uri = LastfmUri()
+
+            uri.method = method
+            uri.artist = artist
+            uri.tag = tag
+
+            if (playOffline) {
+                toggleViewsVisibility(
+                    goneView = requireView().findViewById<LinearLayout>(R.id.chooseGame),
+                    visibleView = chooseSetting
+                )
+            } else {
+                toggleViewsVisibility(goneView = genrePerScoreboard, visibleView = chooseSetting)
+            }
+
+
+            gameManager.gameMode = getString(mode)
+            AppPreferences.setStr(getString(R.string.preferences_game_genre), getString(mode))
+            setGameSongList(uri, playOffline)
     }
 
     /**

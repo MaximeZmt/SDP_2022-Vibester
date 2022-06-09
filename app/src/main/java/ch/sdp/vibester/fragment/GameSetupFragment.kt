@@ -31,6 +31,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.File
 
 /**
 * Game Setup fragment with a button in the bottom navigation.
@@ -91,7 +92,14 @@ class GameSetupFragment : Fragment(R.layout.fragment_layout_game_setup), Adapter
         val imagDragons = vmGameSetup.view.findViewById<Button>(R.id.imagDragonsButton)
         val billieEilish = vmGameSetup.view.findViewById<Button>(R.id.billieEilishButton)
         val validateSearch = vmGameSetup.view.findViewById<Button>(R.id.validateSearch)
-        offline.setOnClickListener { chooseGame("local_buzzer", GameManager(), true) }
+
+        val records = File(requireContext().getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "records.txt")
+
+        if (!records.exists() || records.length() == 0L) {
+            offline.setOnClickListener { Toast.makeText(it.context, "You don't have any downloaded song", Toast.LENGTH_SHORT).show() }
+        }else{
+            offline.setOnClickListener { chooseGame("local_buzzer", GameManager(), true) }
+        }
         kpop.setOnClickListener { chooseGenreByTag("kpop", R.string.kpop) }
         rock.setOnClickListener { chooseGenreByTag("rock", R.string.rock) }
         bts.setOnClickListener { chooseGenreByArtist("BTS", R.string.gameGenre_bts) }
@@ -258,7 +266,6 @@ class GameSetupFragment : Fragment(R.layout.fragment_layout_game_setup), Adapter
      * @param mode: official game mode name
      */
     private fun chooseGenre(method: String = "", artist: String = "", tag: String = "", mode: Int = 0, playOffline: Boolean = false) {
-        if (artist != "") {
             val uri = LastfmUri()
 
             uri.method = method
@@ -278,7 +285,6 @@ class GameSetupFragment : Fragment(R.layout.fragment_layout_game_setup), Adapter
             gameManager.gameMode = getString(mode)
             AppPreferences.setStr(getString(R.string.preferences_game_genre), getString(mode))
             setGameSongList(uri, playOffline)
-        }
     }
 
 

@@ -59,6 +59,7 @@ class PartyRoomActivity : AppCompatActivity() {
         val startGame = findViewById<Button>(R.id.startGame)
 
         startGame.setOnClickListener {
+
             dataGetter.updateRoomField(roomID, "gameStarted", true)
         }
 

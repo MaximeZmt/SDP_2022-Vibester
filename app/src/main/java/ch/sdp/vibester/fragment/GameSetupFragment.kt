@@ -14,8 +14,8 @@ import androidx.fragment.app.Fragment
 import ch.sdp.vibester.R
 import ch.sdp.vibester.activity.BuzzerSetupActivity
 import ch.sdp.vibester.activity.ChoosePartyRoomActivity
-import ch.sdp.vibester.activity.LyricsBelongGameActivity
-import ch.sdp.vibester.activity.TypingGameActivity
+import ch.sdp.vibester.activity.game.LyricsBelongGameActivity
+import ch.sdp.vibester.activity.game.TypingGameActivity
 import ch.sdp.vibester.api.InternetState
 import ch.sdp.vibester.api.LastfmApiInterface
 import ch.sdp.vibester.api.LastfmMethod

@@ -1,4 +1,4 @@
-package ch.sdp.vibester.activity
+package ch.sdp.vibester.activity.game
 
 import android.content.Context
 import android.content.Intent
@@ -11,6 +11,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import ch.sdp.vibester.R
+import ch.sdp.vibester.activity.GameEndingActivity
 import ch.sdp.vibester.api.BitmapGetterApi
 import ch.sdp.vibester.auth.FireBaseAuthenticator
 import ch.sdp.vibester.database.DataGetter
@@ -156,18 +157,9 @@ open class GameActivity : AppCompatActivity() {
         if (!isEndGame(gameManager)) {
             startRound(ctx, gameManager)
         }
-        else{
+        else {
             switchToEnding(gameManager)
         }
-    }
-
-    /**
-     * Sets the visibility of the given button to VISIBLE if value is true, GONE otherwise.
-     * @param btnId: the ID of the Button view we want to change
-     * @param value: true to make the button VISIBLE, false to make it GONE
-     */
-    fun toggleBtnVisibility(btnId: Int, value: Boolean){
-        findViewById<Button>(btnId).visibility = if (value) VISIBLE else GONE
     }
 
     /**
@@ -203,27 +195,10 @@ open class GameActivity : AppCompatActivity() {
     }
 
     /**
-     * Checks if a song chosen by the player matches the played song
-     * @param chosen: the song chosen by the player
-     * @param played: the song currently played
-     * @return a boolean indicating whether the two songs match
-     */
-    fun checkSong(chosen: Song?, played: Song): Boolean {
-        return chosen != null && chosen.getTrackName() == played.getTrackName() && chosen.getArtistName() == played.getArtistName()
-    }
-
-    /**
      * Function used for testing. Do not call unless it is for that specific purpose.
      */
     fun superTestProgressBar(myBar: ProgressBar, progressTime: Int=0) {
         myBar.progress = progressTime
-    }
-
-    /**
-     * Function used for testing. Do not call unless it is for that specific purpose.
-     */
-    fun superTestProgressBarColor(myBar: ProgressBar): ColorStateList? {
-        return myBar.progressTintList
     }
 
     /**
@@ -246,15 +221,6 @@ open class GameActivity : AppCompatActivity() {
             ctx.getString(R.string.wrong_message_with_answer, itWas.getTrackName(), itWas.getArtistName()),
             Toast.LENGTH_SHORT
         ).show()
-    }
-
-    /**
-     * Shows a given message on a toast.
-     * @param ctx
-     * @param SId: the id of the string (from string.xml) we want to display
-     */
-    fun toastShowSimpleMsg(ctx: Context, SId: Int) {
-        Toast.makeText(ctx, ctx.getString(SId), Toast.LENGTH_SHORT).show()
     }
 
     companion object {

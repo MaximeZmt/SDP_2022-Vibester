@@ -1,9 +1,10 @@
-package ch.sdp.vibester.activity
+package ch.sdp.vibester.activity.game
 
 import android.content.Context
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.view.Window
 import android.widget.*
 import androidx.core.content.ContextCompat.getColor
@@ -12,6 +13,7 @@ import ch.sdp.vibester.R
 import ch.sdp.vibester.api.ItunesMusicApi
 import ch.sdp.vibester.helper.DisplayContents
 import ch.sdp.vibester.helper.GameManager
+import ch.sdp.vibester.helper.Helper
 import ch.sdp.vibester.model.Song
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -25,12 +27,15 @@ import okhttp3.OkHttpClient
 class TypingGameActivity : GameActivity() {
     private lateinit var gameManager: GameManager
     private var gameIsOn: Boolean = true // done to avoid clicks on songs after the round is over
+    private lateinit var nextBtn: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
         setContentView(R.layout.activity_typing_game)
+
+        nextBtn = findViewById(R.id.nextSongTyping)
 
         val ctx: Context = this
         val getIntent = intent.extras
@@ -47,6 +52,7 @@ class TypingGameActivity : GameActivity() {
 
         val skipBtn = findViewById<Button>(R.id.skip_typing)
         skipBtn.setOnClickListener { checkAnswer(ctx, null, gameManager) }
+
     }
 
     /**
@@ -86,17 +92,10 @@ class TypingGameActivity : GameActivity() {
     }
 
     /**
-     * Set and remove nextBtn during the game
-     */
-    private fun toggleNextBtnVisibility(value: Boolean){
-        toggleBtnVisibility(R.id.nextSongTyping, value)
-    }
-
-    /**
      * Set listener for nextButton. When pressed, new round will start.
      */
     private fun setNextButtonListener(ctx: Context, gameManager: GameManager){
-        findViewById<Button>(R.id.nextSongTyping).setOnClickListener {
+        nextBtn.setOnClickListener {
             startRoundTyping(ctx, gameManager)
         }
     }
@@ -133,7 +132,7 @@ class TypingGameActivity : GameActivity() {
     /**
      * Create the frame layout and its logic of the suggestion when user is typing
      */
-    private fun guess(song: Song, guessLayout: LinearLayout, ctx: Context, gameManager: GameManager): FrameLayout {
+    fun guess(song: Song, guessLayout: LinearLayout, ctx: Context, gameManager: GameManager): FrameLayout {
         val frameLay = FrameLayout(ctx)
         frameLay.background = DisplayContents.borderGen(ctx, R.color.maximum_yellow_red)
 
@@ -162,7 +161,7 @@ class TypingGameActivity : GameActivity() {
         gameIsOn = false
         findViewById<EditText>(R.id.yourGuessET).isEnabled = false
         super.endRound(gameManager, this::setScores)
-        toggleNextBtnVisibility(true)
+        Helper().showBtn(nextBtn)
     }
 
     /**
@@ -177,7 +176,7 @@ class TypingGameActivity : GameActivity() {
         val roundText = ctx.getString(R.string.TypingGame_currentRound) + gameManager.getPlayedSongsCount().toString() + " / " + gameManager.gameSize.toString()
         val scoreText = ctx.getString(R.string.TypingGame_yourScore) + gameManager.getScore().toString()
         findViewById<TextView>(R.id.playerScore).text = roundText + "\n" + scoreText
-        toggleNextBtnVisibility(false)
+        Helper().hideBtn(nextBtn)
         gameManager.playSong()
         checkRunnable()
         super.barTimer(findViewById(R.id.progressBarTyping), ctx, gameManager, ::checkAnswer)
@@ -192,11 +191,22 @@ class TypingGameActivity : GameActivity() {
         }
     }
 
+    /**
+     * Checks if a song chosen by the player matches the played song
+     * @param chosen: the song chosen by the player
+     * @param played: the song currently played
+     * @return a boolean indicating whether the two songs match
+     */
+    private fun checkSong(chosen: Song?, played: Song): Boolean {
+        return chosen != null && chosen.getTrackName() == played.getTrackName() && chosen.getArtistName() == played.getArtistName()
+    }
+
     /*
      * The following functions are helper for testing
      */
     fun testProgressBar(progressTime:Int = 0) {
-        superTestProgressBar(findViewById(R.id.progressBarTyping), progressTime)
+        val bar = findViewById<ProgressBar>(R.id.progressBarTyping)
+        superTestProgressBar(bar, progressTime)
     }
 
     fun testFirstRound(ctx: Context, gameManager: GameManager){
@@ -204,7 +214,7 @@ class TypingGameActivity : GameActivity() {
     }
 
     fun testProgressBarColor(): ColorStateList? {
-        return superTestProgressBarColor(findViewById(R.id.progressBarTyping))
+        return findViewById<ProgressBar>(R.id.progressBarTyping).progressTintList
     }
 
 

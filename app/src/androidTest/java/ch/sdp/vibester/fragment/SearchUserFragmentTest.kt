@@ -103,15 +103,6 @@ class SearchUserFragmentTest {
         Intents.release()
     }
 
-    //FIXME test is timed out
-/*
-    @Test
-    fun goToScanQr() {
-        onView(withId(R.id.searchUser_scanning)).perform(click())
-        Intents.intended(IntentMatchers.hasComponent(QrScanningActivity::class.java.name))
-    }
- */
-
     @Test
     fun recycleViewToViewTest() {
         onView(withId(R.id.searchList)).check(matches(isDisplayed()))

@@ -154,7 +154,6 @@ class DataGetter @Inject constructor() {
      * @param callbackUid function to call with found uid
      */
     fun searchByField(field: String, searchInput: String, callback:(ArrayList<User>) -> Unit, callbackUid :(ArrayList<String>) -> Unit) {
-        val uidList: ArrayList<String> = ArrayList()
 
         val queryUsers = //Not very pretty, but otherwise CodeClimate complains about 26 lines
             dbUserRef.orderByChild(field)
@@ -166,6 +165,11 @@ class DataGetter @Inject constructor() {
          * Because it is after most regular characters in Unicode, the query matches all values that start with a inputUsername.
          */
 
+        searchByFieldHelper(queryUsers, callback, callbackUid)
+    }
+
+    private fun searchByFieldHelper(queryUsers: Query, callback:(ArrayList<User>) -> Unit, callbackUid :(ArrayList<String>) -> Unit){
+        val uidList: ArrayList<String> = ArrayList()
         val users: ArrayList<User> = ArrayList()
         queryUsers.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -182,7 +186,8 @@ class DataGetter @Inject constructor() {
                 queryUsers.removeEventListener(this)
             }
             override fun onCancelled(error: DatabaseError) {
-                Log.w(TAG, "searchByField:onCancelled", error.toException())
+                val msg = "searchByField:onCancelled"
+                Log.w(TAG, msg, error.toException())
             }
         })
     }

@@ -76,8 +76,8 @@ class BuzzerScreenActivity : GameActivity() {
             buildBuzzers(getPlayers, findViewById(R.id.answer))
 
             findViewById<Button>(R.id.skip_buzzer).setOnClickListener { timeoutAnswer(ctx, null, gameManager) }
-            setAnswerButton(ctx, findViewById(R.id.buttonCorrect), buzzersToRows)
-            setAnswerButton(ctx, findViewById(R.id.buttonWrong), buzzersToRows)
+            setAnswerButton(ctx, findViewById(R.id.buttonCorrect), buzzersToRows, gameManager)
+            setAnswerButton(ctx, findViewById(R.id.buttonWrong), buzzersToRows, gameManager)
             setNextButton(ctx, gameManager)
             super.startFirstRound(ctx, gameManager, ::startRoundBuzzer)
         }
@@ -217,14 +217,18 @@ class BuzzerScreenActivity : GameActivity() {
      * @param button: the answer button to be set
      * @param map: a map from the buzzers' IDs to the IDs of each score's position in the score table layout
      */
-    private fun setAnswerButton(ctx: Context, button: Button, map: Map<Int, Int>) {
+    private fun setAnswerButton(ctx: Context, button: Button, map: Map<Int, Int>, gameManager: GameManager) {
         val answer = findViewById<LinearLayout>(R.id.answer)
         button.setOnClickListener {
             answer.visibility = View.INVISIBLE
             if (pressedBuzzer >= 0) {
                 if(button.id==R.id.buttonCorrect)  {
                     scoreUpdater.updateScoresArray(pressedBuzzer, true)
-                } else {scoreUpdater.updateScoresArray(pressedBuzzer, false)}
+                    gameManager.addCorrectSong()
+                } else {
+                    scoreUpdater.updateScoresArray(pressedBuzzer, false)
+                    gameManager.addWrongSong()
+                }
                 val view = map[pressedBuzzer]?.let { it1 -> findViewById<TextView>(it1) }
                 if (view != null && scoreUpdater.getMap().keys.contains(pressedBuzzer)) {
                     view.text=scoreUpdater.getMap()[pressedBuzzer].toString()
@@ -297,7 +301,16 @@ class BuzzerScreenActivity : GameActivity() {
         checkAndStopPlayer(gameManager)
         val intent = Intent(this, GameEndingActivity::class.java)
 
-        //TODO put extras to display in GameEndingActivity
+        //Set list of incorrect songs
+        val incorrectSongList: ArrayList<String> = ArrayList(
+            gameManager.getWrongSongs().map { it.getTrackName() + " - " + it.getArtistName() })
+        intent.putStringArrayListExtra("incorrectSongList", incorrectSongList)
+
+        //Set list of correct songs
+        val correctSongList: ArrayList<String> = ArrayList(
+            gameManager.getCorrectSongs().map { it.getTrackName() + " - " + it.getArtistName() })
+        intent.putStringArrayListExtra("correctSongList", correctSongList)
+
         intent.putExtra("Player Scores", packMapOfScores(this.players, this.scoreUpdater))
         intent.putExtra("Winner Name", prepareWinnerAnnouncement(scoreUpdater))
         startActivity(intent)

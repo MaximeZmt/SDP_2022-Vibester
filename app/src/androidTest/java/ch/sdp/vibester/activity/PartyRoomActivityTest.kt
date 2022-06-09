@@ -71,8 +71,10 @@ class PartyRoomActivityTest {
         val email = "u@u.c"
         val uid = "uid"
         val mockUser = mockk<FirebaseUser>()
+
         every { mockUser.email } returns email
         every { mockUser.uid } returns uid
+
         return mockUser
     }
 

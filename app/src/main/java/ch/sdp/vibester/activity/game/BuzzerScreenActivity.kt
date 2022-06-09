@@ -124,7 +124,7 @@ class BuzzerScreenActivity : GameActivity() {
      * @param chosenSong: is null here, this function is called when no answer is given
      * @param gameManager: the game manager, which contains the song used for the round
      */
-    private fun timeoutAnswer(ctx: Context, chosenSong: Song? = null, gameManager: GameManager) {
+    fun timeoutAnswer(ctx: Context, chosenSong: Song? = null, gameManager: GameManager) {
         checkAndStopPlayer(gameManager)
         toastShowWrong(ctx, gameManager.getCurrentSong())
         toggleBtnVisibility(R.id.skip_buzzer, false)

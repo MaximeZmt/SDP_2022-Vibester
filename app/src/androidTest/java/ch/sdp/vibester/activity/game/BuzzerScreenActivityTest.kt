@@ -14,6 +14,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.sdp.vibester.BuzzerScoreUpdater
 import ch.sdp.vibester.R
 import ch.sdp.vibester.api.LastfmMethod
+import ch.sdp.vibester.database.AppPreferences
 import ch.sdp.vibester.helper.GameManager
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -145,8 +146,6 @@ class BuzzerScreenActivityTest {
         onView(withId(R.id.answer)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
     }
 
-    // FIXME: mediaPlayer not being initialized makes it impossible to run this test
-/*
     @Test
     fun timeoutAnswerTest() {
         val ctx: Context = ApplicationProvider.getApplicationContext()
@@ -172,7 +171,7 @@ class BuzzerScreenActivityTest {
             Assert.assertEquals(false, activity.testGetGameIsOn())
         }
     }
-*/
+
     @Test
     fun skipTest() {
         val ctx = ApplicationProvider.getApplicationContext() as Context

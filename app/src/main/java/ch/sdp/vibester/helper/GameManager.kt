@@ -257,7 +257,10 @@ open class GameManager : Serializable {
      *          false otherwise
      */
     fun playingMediaPlayer(): Boolean {
-        return mediaPlayer.get().isPlaying
+        if (initializeMediaPlayer()) {
+            return mediaPlayer.get().isPlaying
+        }
+        return false
     }
 
     /**

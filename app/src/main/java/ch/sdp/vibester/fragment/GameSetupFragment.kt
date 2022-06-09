@@ -9,11 +9,13 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatButton
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import ch.sdp.vibester.R
 import ch.sdp.vibester.activity.BuzzerSetupActivity
 import ch.sdp.vibester.activity.ChoosePartyRoomActivity
+import ch.sdp.vibester.activity.download.DownloadActivity
 import ch.sdp.vibester.activity.game.LyricsBelongGameActivity
 import ch.sdp.vibester.activity.game.TypingGameActivity
 import ch.sdp.vibester.api.InternetState
@@ -59,7 +61,12 @@ class GameSetupFragment : Fragment(R.layout.fragment_layout_game_setup), Adapter
         setGenreListeners()
         setGameModeListeners()
 
-        vmGameSetup.view.findViewById<Button>(R.id.difficulty_proceed).setOnClickListener{ proceedGame() }
+        vmGameSetup.view.findViewById<Button>(R.id.difficulty_proceed).setOnClickListener { proceedGame() }
+        vmGameSetup.view.findViewById<AppCompatButton>(R.id.download).setOnClickListener {
+            val newIntent = Intent(activity, DownloadActivity::class.java)
+            startActivity(newIntent)
+        }
+
         vmGameSetup.view.findViewById<Button>(R.id.game_setup_has_internet).setOnClickListener { updateInternet(vmGameSetup.view.findViewById(R.id.game_setup_has_internet)) }
 
         updateInternet(vmGameSetup.view.findViewById<Button>(R.id.game_setup_has_internet))

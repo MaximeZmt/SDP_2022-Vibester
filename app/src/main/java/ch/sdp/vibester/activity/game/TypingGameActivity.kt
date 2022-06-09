@@ -115,9 +115,9 @@ class TypingGameActivity : GameActivity() {
      */
     private fun hasWon(ctx: Context, hasWon: Boolean, itWas: Song, gameManager: GameManager) {
         if (hasWon) {
-            toastShowCorrect(ctx, gameManager.getCorrectSongs().size)
+            Helper().toastShowCorrect(ctx, gameManager.getCorrectSongs().size)
         } else {
-            toastShowWrong(ctx, itWas)
+            Helper().toastShowWrong(ctx, itWas)
         }
     }
 

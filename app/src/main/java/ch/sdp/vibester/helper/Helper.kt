@@ -7,9 +7,11 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.ImageView
+import android.widget.Toast
 import ch.sdp.vibester.R
 import ch.sdp.vibester.activity.MainActivity
 import ch.sdp.vibester.api.BitmapGetterApi
+import ch.sdp.vibester.model.Song
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -84,6 +86,28 @@ class Helper {
      */
     fun showBtn(btn: View) {
         toggleBtnVisibility(btn, true)
+    }
+
+    /**
+     * Shows a variable score on a toast.
+     * @param ctx
+     * @param score: the score to show on the toast
+     */
+    fun toastShowCorrect(ctx: Context, score: Int) {
+        Toast.makeText(ctx, ctx.getString(R.string.correct_message, score), Toast.LENGTH_SHORT).show()
+    }
+
+    /**
+     * Shows the correct answer on a toast.
+     * @param ctx
+     * @param itWas: the correct song to display
+     */
+    fun toastShowWrong(ctx: Context, itWas: Song) {
+        Toast.makeText(
+            ctx,
+            ctx.getString(R.string.wrong_message_with_answer, itWas.getTrackName(), itWas.getArtistName()),
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
 }

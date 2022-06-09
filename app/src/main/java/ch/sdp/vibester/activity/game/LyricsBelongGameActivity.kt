@@ -182,7 +182,7 @@ class LyricsBelongGameActivity : GameActivity() {
      */
     private fun hasWon(ctx: Context, score: Int, hasWon: Boolean) {
         if (hasWon) {
-            toastShowCorrect(ctx, score)
+            Helper().toastShowCorrect(ctx, score)
         } else {
             toastShowSimpleMsg(ctx, R.string.wrong_message)
         }

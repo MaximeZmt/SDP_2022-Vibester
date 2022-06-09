@@ -223,27 +223,6 @@ open class GameActivity : AppCompatActivity() {
         myBar.progress = progressTime
     }
 
-    /**
-     * Shows a variable score on a toast.
-     * @param ctx
-     * @param score: the score to show on the toast
-     */
-    fun toastShowCorrect(ctx: Context, score: Int) {
-        Toast.makeText(ctx, ctx.getString(R.string.correct_message, score), Toast.LENGTH_SHORT).show()
-    }
-
-    /**
-     * Shows the correct answer on a toast.
-     * @param ctx
-     * @param itWas: the correct song to display
-     */
-    fun toastShowWrong(ctx: Context, itWas: Song) {
-        Toast.makeText(
-            ctx,
-            ctx.getString(R.string.wrong_message_with_answer, itWas.getTrackName(), itWas.getArtistName()),
-            Toast.LENGTH_SHORT
-        ).show()
-    }
 
     companion object {
         /**

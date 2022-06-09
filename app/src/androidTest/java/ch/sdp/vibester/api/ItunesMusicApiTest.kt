@@ -19,7 +19,7 @@ class ItunesMusicApiTest {
     }
 
     @get:Rule
-    var exception = ExpectedException.none()
+    var exception: ExpectedException = ExpectedException.none()
 
     @Test
     fun itunesAPIQueryError() {
@@ -33,15 +33,14 @@ class ItunesMusicApiTest {
         songFut.get()
     }
 
-    //FIXME api not working
-//    @Test
-//    fun itunesAPIQueryWorksComplete() {
-//        val songFut = ItunesMusicApi.querySong("imagine dragons believer", OkHttpClient(), 1)
-//        val song = Song.singleSong(songFut.get())
-//        val mediaFut = AudioPlayer.playAudio(song.getPreviewUrl())
-//        val player = mediaFut.get()
-//        assertEquals(true, player.isPlaying)
-//    }
+    @Test
+    fun itunesAPIQueryWorksComplete() {
+        val songFut = ItunesMusicApi.querySong("imagine dragons believer", OkHttpClient(), 1)
+        val song = Song.singleSong(songFut.get())
+        val mediaFut = AudioPlayer.playAudio(song.getPreviewUrl())
+        val player = mediaFut.get()
+        assertEquals(true, player.isPlaying)
+    }
 
     @Test
     fun itunesAPIQueryCompleteError() {

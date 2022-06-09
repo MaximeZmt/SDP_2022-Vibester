@@ -42,6 +42,7 @@ class TypingGameActivity : GameActivity() {
             super.setMax(intent)
 
             gameManager = getIntent.getSerializable("gameManager") as GameManager
+
             onlineGame = getIntent.getBoolean("onlineGame", false)
             userEmail = getIntent.getString("userEmail").toString()
             roomID = getIntent.getString("roomID").toString()
